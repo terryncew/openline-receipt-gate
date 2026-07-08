@@ -1,0 +1,124 @@
+{
+  "repo": "openline-receipt-gate",
+  "version": "0.1.1",
+  "created_at_unix": 1783546889,
+  "claim": "One-line receipt gate for risky agent actions.",
+  "pytest_status": "passed",
+  "demo_status": "passed",
+  "fail_closed_checks": {
+    "missing_badge_exit_code": 1,
+    "malformed_verify_exit_code": 2
+  },
+  "files": [
+    {
+      "path": ".gitignore",
+      "sha256": "24ef39ac9362a975f4c4bf4192762bc8d1c71d1581dd3b42d0f8df7f13d6eb45",
+      "bytes": 81
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "83f1cec7cc6701c9a8004184b541dd1297a5c0aa618d22cfc9036686b4274cfb",
+      "bytes": 985
+    },
+    {
+      "path": "README.md",
+      "sha256": "6486e6f35f22242a81c2767c049c6e32cb892dd4f3d3b3cae6832975827b04e5",
+      "bytes": 3067
+    },
+    {
+      "path": "RUN_REPORT.json",
+      "sha256": "2dda143f030809c581276e6f193bd0207f6e2d66febb1e5255d357620cc7be63",
+      "bytes": 12516
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "sha256": "90c225d46a632fac90e06bbcd1f3910c363eda71bddf4ead5cc3fbb05cbee0ca",
+      "bytes": 1334
+    },
+    {
+      "path": "docs/CLAIM_BOUNDARY.md",
+      "sha256": "ac4ecf70cd990627700fd9587f046c2693ab59957dde9eea97842aa621566057",
+      "bytes": 663
+    },
+    {
+      "path": "docs/RECEIPT_SCHEMA.md",
+      "sha256": "03593054982baec6a6de979077831981b18d1a3eccb06292ddb455c9027b070f",
+      "bytes": 1278
+    },
+    {
+      "path": "examples/demo_all.py",
+      "sha256": "80cc18792ddb90d2ad48e696344a8298f8914a8be0916d9159915bc6bcaa2f05",
+      "bytes": 1725
+    },
+    {
+      "path": "examples/wrap_eval_score.py",
+      "sha256": "e899872098c6af12929435bc6d2bb4e8dcb52121a10c1248c5af5163298976ab",
+      "bytes": 1982
+    },
+    {
+      "path": "examples/wrap_memory_write.py",
+      "sha256": "979e85c6068185700d32599ed336e3917ba1eddf88e37e34cebb8d9d08ade73d",
+      "bytes": 1384
+    },
+    {
+      "path": "examples/wrap_tool_call.py",
+      "sha256": "dbce059229dee7c11fe07a5f9d7c3ff777951af8455ea009cd3819848e543b81",
+      "bytes": 1327
+    },
+    {
+      "path": "launch/thread_copy.md",
+      "sha256": "4828f0ccfc49bdf52b91009d6a1d8e7508d62a35a89ccbff54b71ac1982c9326",
+      "bytes": 523
+    },
+    {
+      "path": "olp_gate/__init__.py",
+      "sha256": "23d1b6a690f71cc76c53c548e2abf3881bde9277cbc863f795e0b36a3afd68e0",
+      "bytes": 217
+    },
+    {
+      "path": "olp_gate/cli.py",
+      "sha256": "3308cde1beb87b043e6f0ec2dd397d8633ac64ad3ec9987bbdab63eadd77ca9e",
+      "bytes": 1344
+    },
+    {
+      "path": "olp_gate/gate.py",
+      "sha256": "4db4e1b082cc75920eb7b51d426013fa3efe45e96bc5954de96473625bf530c1",
+      "bytes": 8470
+    },
+    {
+      "path": "olp_gate/receipts.py",
+      "sha256": "76c95a390d949f4ab46692abcc0362c5da9164cfc760c0905bd07686fd3afa2e",
+      "bytes": 8627
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "fc8a3eefe07859955afcae84b7e585e8c18c880fe1e3ad84c73d30642cd8aa63",
+      "bytes": 351
+    },
+    {
+      "path": "receipts/eval_score_receipts.jsonl",
+      "sha256": "21a422d017228f1390efc35cc8778c6bdd289cbb12a5cd6cf4bd5119df38377c",
+      "bytes": 2574
+    },
+    {
+      "path": "receipts/memory_write_receipts.jsonl",
+      "sha256": "75ce1c8922790bbab65eb803345afd3708c6e589d83efa72fee57ea367ce448c",
+      "bytes": 1770
+    },
+    {
+      "path": "receipts/tool_call_receipts.jsonl",
+      "sha256": "8e88b9d186941a00c4c0cd4da4833411c17c3c67756f761f14458d3be1bc804b",
+      "bytes": 1617
+    },
+    {
+      "path": "results/demo_all_summary.json",
+      "sha256": "e9b4c9a9f85a159e7208801bf5b44ef813b94cd5e6018b860c125177a3e83b26",
+      "bytes": 15356
+    },
+    {
+      "path": "tests/test_receipt_gate.py",
+      "sha256": "98a655d3104773cc991c5887147f92174431fa3a690c564ee27d4578c69de352",
+      "bytes": 5806
+    }
+  ]
+}
