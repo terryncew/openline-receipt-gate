@@ -1,28 +1,9 @@
-I built the smallest OpenLine primitive:
+Most AI receipt work proves an event was recorded. That is useful. I wanted to know what another system could safely do with the receipt after the handoff.
 
-Receipt Gate.
+Receipt Gate now accepts OLP and Agent Receipts, checks the signature, custody, chain, freshness, evidence, and outcome separately, then issues a signed decision: commit, quarantine, deny, no badge, or request rollback.
 
-Add one line around an agent action.
-Get a receipt.
+The important case is a perfectly valid signature with weak evidence. It gets `UNDECIDABLE`, because cryptographic integrity and truth are different jobs.
 
-Missing proof?
-Quarantine.
+Agent receipts make actions auditable. OpenLine makes accountability executable.
 
-No chain?
-No badge.
-
-Malformed receipt file?
-Invalid chain, no traceback.
-
-Raw evidence?
-Not stored by default.
-
-Examples:
-tool call with no evidence hash → quarantined
-memory write without user intent → review required
-eval score without grader receipt → no badge
-clean tool call → committed with receipt
-
-The agent cannot just say it did the thing.
-
-It has to pass the gate.
+Small receipts. Big accountability.

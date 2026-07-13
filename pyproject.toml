@@ -1,11 +1,12 @@
 [project]
 name = "openline-receipt-gate"
-version = "0.1.1"
-description = "One-line receipt gate for risky agent actions."
+version = "0.2.0"
+description = "Proof-to-policy gate for signed AI action receipts."
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
 authors = [{name = "Terrynce White"}]
+dependencies = ["cryptography>=42"]
 
 [project.scripts]
 olp-gate = "olp_gate.cli:main"
@@ -13,3 +14,10 @@ olp-gate = "olp_gate.cli:main"
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["olp_gate"]

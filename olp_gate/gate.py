@@ -11,6 +11,9 @@ class Decision(str, Enum):
     COMMIT = "COMMIT"
     QUARANTINE = "QUARANTINE"
     NO_BADGE = "NO_BADGE"
+    DENY = "DENY"
+    ROLLBACK_REQUEST = "ROLLBACK_REQUEST"
+    UNDECIDABLE = "UNDECIDABLE"
 
 
 @dataclass

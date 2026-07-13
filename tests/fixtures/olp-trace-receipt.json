@@ -1,0 +1,28 @@
+{
+  "algorithm_id": "olp-wire-conformance-0.1",
+  "attestation": "self",
+  "canonicalization_id": "olp-canonical-json-int-v1",
+  "capture_loss": false,
+  "capture_status": "provisional",
+  "completion_policy": {
+    "grace_millis": 30000,
+    "semconv_schema_id": "otel-genai-development-2026-06",
+    "type": "root_close_plus_grace"
+  },
+  "dropped_span_count": 0,
+  "kind": "trace_receipt",
+  "observed_span_count": 2,
+  "payload_hash": "740c20185c8f4aa11994c5dbabe19fd7d0d96decb5684864fe476c5b441620ce",
+  "receipt_version": "0.1",
+  "seal_reason": "grace_elapsed",
+  "semantic_claims": false,
+  "signature": {
+    "algorithm": "Ed25519",
+    "public_key": "03a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8",
+    "value": "5f1ab12176844638a75b0672c3ff41c5e28056ab6f5c19489a007b03f2f0472e50bcee9461c54f437512aefb88aa600c2893663b107363ec1ed0fd240f9ad003"
+  },
+  "spec_uri": "https://github.com/terryncew/olp-wire-canon",
+  "trace_id": "11111111111111111111111111111111",
+  "trace_root": "60e04048f6631b6ab3514cfc82b82266825b2c3090f2e8cf30cc47da22ee2c34",
+  "tree_algorithm": "rfc6962-mth-sha256-promote-odd-v1"
+}

@@ -5,3 +5,12 @@ __pycache__/
 .DS_Store
 receipts/*.jsonl
 results/*.json
+*.egg-info/
+build/
+dist/
+.venv/
+*.key
+*.pem
+.secrets/
+sessions.json
+decision_receipts.jsonl

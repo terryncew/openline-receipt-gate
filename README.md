@@ -1,24 +1,129 @@
 # OpenLine Receipt Gate
 
-One line around a risky agent action.
+Most receipts make the past verifiable. Receipt Gate makes verified history usable by the next decision.
 
-Get a receipt.
+It accepts signed OLP Wire Canon receipts, Agent Receipts v0.1–v0.5, and the older local Receipt Gate chain. It checks integrity, provenance, declared coverage, freshness, evidence, and an independent outcome separately. The result is a signed policy decision:
 
-Missing proof? Quarantine.
+```text
+COMMIT
+QUARANTINE
+DENY
+NO_BADGE
+ROLLBACK_REQUEST
+```
 
-No chain, no badge.
+A valid signature can still produce `UNDECIDABLE`. Signature validity is never treated as evidence sufficiency.
 
-Core rule:
+## Run the discriminating test
 
-> The agent cannot just say it did the thing. It has to pass the gate.
+```bash
+python -m unittest discover -s tests -v
+python -m olp_gate.cli demo-proof-to-policy --output results/proof_to_policy_demo
+node verify-decision-node.mjs results/proof_to_policy_demo/decision_receipts.jsonl \
+  --gate-key 17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce
+```
 
-## Why this exists
+Expected outcomes:
 
-Agents are starting to touch tools, files, memory, eval scores, handoffs, and external systems.
+```text
+valid signature + missing evidence       → UNDECIDABLE / QUARANTINE
+bound evidence + orthogonal outcome      → VERIFIED / COMMIT
+exact replay                             → REJECTED / DENY
+unsupported benchmark score              → UNDECIDABLE / NO_BADGE
+trusted harmful mutation + rollback path → REJECTED / ROLLBACK_REQUEST
+```
 
-Most stacks record traces after the fact.
+The Python and independent Node verifiers both recompute the policy decision from the signed assessment set and policy snapshot. Rewriting a verdict and resealing it produces `decision_recompute_mismatch`.
 
-OpenLine Receipt Gate wraps the boundary crossing itself.
+Run the complete release gate, including a clean install from an unrelated directory and hostile tamper controls:
+
+```bash
+python scripts/release_check.py
+python scripts/verify_manifest.py
+```
+
+## Proof-to-policy flow
+
+```text
+source receipt
+    ↓
+integrity ─ provenance ─ coverage ─ freshness
+    ↓
+source-bound evidence + policy predicates
+    ↓
+orthogonal outcome witness, when required
+    ↓
+VERIFIED / REJECTED / UNDECIDABLE
+    ↓
+COMMIT / QUARANTINE / DENY / NO_BADGE / ROLLBACK_REQUEST
+    ↓
+signed, parent-linked decision receipt
+```
+
+Raw evidence is read for verification and excluded from the decision receipt. The receipt contains artifact hashes, policy identity, reason codes, assessments, binding fields, and the decision.
+
+## Supported inputs
+
+### OLP Wire Canon 0.1
+
+The gate independently verifies the payload hash, Ed25519 signature, strict receipt-kind profile, and amendment continuity. Wire Canon 0.1 remains `self`/`provisional`; a continuous chain therefore earns partial declared coverage rather than proof that every real event was captured.
+
+### Agent Receipts v0.1–v0.5
+
+The gate verifies the embedded Ed25519 proof, declared profile, chain ID, issuer continuity, sequence, previous-receipt hashes, and terminal marker. Verification keys come from an external trust store or a resolvable Ed25519 `did:key`. Trust still requires an explicit trust-store role; key resolution alone does not make an issuer trusted.
+
+The bundled verifier supports the integer-only RFC 8785 subset used by current Agent Receipt protocol fields. A receipt containing floating-point values returns `canonicalization_unsupported`, not a false bad-signature verdict.
+
+The interoperability test includes Agent Receipts' published v0.5 runtime vector at upstream commit `df6833a39743e17127d5ad4b10cdc8f6734d8e03` and independently matches its expected signature and receipt hash.
+
+### Legacy Receipt Gate v0.1.1
+
+The original context-manager API and local JSONL hash chain still work. Legacy records can prove local continuity, but they remain unsigned and therefore cannot earn trusted provenance under the new gate.
+
+## CLI
+
+Create a gate key:
+
+```bash
+olp-gate keygen .secrets/gate.key
+```
+
+The command creates a mode-`0600` Ed25519 key and refuses to overwrite an existing file.
+
+Issue a one-time challenge bound to the expected source receipt:
+
+```bash
+olp-gate challenge state/sessions.json \
+  --run-id run-123 \
+  --session-id session-123 \
+  --source-hash 0123456789abcdef... \
+  --ttl 300
+```
+
+Evaluate a request with policy and trust configuration kept outside the request:
+
+```bash
+olp-gate decide request.json \
+  --policy policy.json \
+  --trust trust.json \
+  --key .secrets/gate.key \
+  --issuer procurement-gate \
+  --ledger state/sessions.json \
+  --out receipts/decision_receipts.jsonl
+```
+
+Verify the output independently:
+
+```bash
+olp-gate verify-decision receipts/decision_receipts.jsonl \
+  --gate-key "$TRUSTED_GATE_PUBLIC_KEY"
+node verify-decision-node.mjs receipts/decision_receipts.jsonl \
+  --gate-key "$TRUSTED_GATE_PUBLIC_KEY"
+```
+
+The trusted gate key must come from receiver-controlled configuration, not from the receipt being checked. Multiple `--gate-key` arguments support an explicit rotation window.
+
+## Legacy one-line wrapper
 
 ```python
 from olp_gate import gate
@@ -32,131 +137,22 @@ with gate(
     g.commit(result, evidence={"query_hash": "sha256:..."})
 ```
 
-If required proof is missing, the gate fails closed.
+This path continues to emit the v0.1.1 local hash chain. Use the proof-to-policy API for signed decisions and external inputs.
 
-## Decisions
+## Boundaries
 
-```text
-COMMIT      required proof exists
-QUARANTINE missing or risky proof; review required
-NO_BADGE    action lacks enough chain to certify
-```
+- `ROLLBACK_REQUEST` is a signed request to a declared actuator. It does not undo an action by itself.
+- A terminal receipt proves the declared receipt chain has an ending marker. It does not prove an actor emitted every consequential event.
+- A matching evidence hash proves artifact correspondence. Policy predicates and independent outcomes determine whether the artifact is sufficient for the declared decision.
+- The local session ledger prevents replay within its custody boundary. A host with full write access can replace the ledger and gate key; external anchoring remains a separate deployment requirement.
+- Agent Receipts compatibility does not claim generic W3C VC ecosystem conformance.
 
-## Fail-closed badge behavior
+Read [`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.md), [`docs/COMPATIBILITY.md`](docs/COMPATIBILITY.md), and [`docs/CLAIM_BOUNDARY.md`](docs/CLAIM_BOUNDARY.md) before making production claims.
 
-```bash
-python -m olp_gate.cli badge does_not_exist.jsonl
-```
+The five-case demo uses fixed, publicly disclosed fixture keys so its output is reproducible. Those keys have no production authority.
 
-returns:
+## Public line
 
-```text
-NO_BADGE
-reason: empty_or_missing_receipt_chain
-exit code: 1
-```
+Agent receipts make actions auditable. OpenLine makes accountability executable.
 
-Malformed JSON returns `INVALID_CHAIN`, not a Python traceback.
-
-## Privacy default
-
-Raw evidence is not stored in receipts by default.
-
-The receipt stores:
-
-```text
-evidence_hash
-evidence_keys
-raw_evidence_stored: false
-```
-
-To store raw evidence, opt in explicitly:
-
-```python
-gate(..., store_raw_evidence=True)
-```
-
-Default rule:
-
-> Proof moves. Data doesn't.
-
-## Receipt fields
-
-Each receipt is JSONL:
-
-```text
-receipt_id
-parent_hash
-timestamp
-action_type
-claim
-evidence_hash
-result_hash
-status
-decision
-policy_flags
-next_use_note
-receipt_hash
-```
-
-This is a local hash chain, not public-key signing.
-
-Say **hash-chained receipts**, not signed receipts.
-
-## Install / run locally
-
-```bash
-python -m pytest -q
-python examples/demo_all.py
-python -m olp_gate.cli verify receipts/tool_call_receipts.jsonl
-python -m olp_gate.cli badge receipts/tool_call_receipts.jsonl
-python -m olp_gate.cli review receipts/tool_call_receipts.jsonl
-```
-
-If installed as a package, the CLI name is:
-
-```bash
-olp-gate verify receipts.jsonl
-olp-gate badge receipts.jsonl
-olp-gate review receipts.jsonl
-```
-
-## Examples
-
-```text
-examples/wrap_tool_call.py
-examples/wrap_memory_write.py
-examples/wrap_eval_score.py
-```
-
-Expected demo behavior:
-
-```text
-clean tool call                  → COMMIT
-missing evidence hash            → QUARANTINE
-memory write without user intent → QUARANTINE
-eval score without grader receipt→ QUARANTINE
-eval score with no chain         → NO_BADGE
-```
-
-## What this is not
-
-No server.
-
-No dashboard.
-
-No external API.
-
-No LangChain dependency.
-
-No observability platform.
-
-This does not magically undo side effects after an action already happened. In production, place the gate before irreversible execution or use it with a staging/quarantine layer.
-
-This is the small gate every agent should pass through before it changes the world.
-
-## Keeper line
-
-A benchmark score without receipts is just a press release.
-
-An agent action without a receipt is just a claim.
+Small receipts. Big accountability.

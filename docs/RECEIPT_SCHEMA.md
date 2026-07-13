@@ -1,62 +1,89 @@
-# Receipt Schema
+# Decision Receipt Schema
 
-## JSONL receipt
+The v0.2 output is an Ed25519-signed JSON object using `olp-canonical-json-int-v1`.
+
+The embedded public key verifies integrity but grants no authority by itself. A receiver must pin the authorized gate public key outside the receipt and supply it to either verifier.
 
 ```json
 {
-  "schema": "openline.receipt_gate.v0.1.1",
-  "receipt_id": "uuid",
-  "parent_hash": "previous receipt hash or null",
-  "timestamp": 0.0,
-  "action_type": "tool_call",
-  "claim": "Search customer records",
-  "evidence_hash": "sha256...",
-  "result_hash": "sha256...",
-  "status": "committed",
-  "decision": "COMMIT",
-  "policy_flags": [],
-  "next_use_note": "Use receipt_hash for audit, handoff, or replay checks.",
-  "metadata": {
-    "evidence_keys": ["query_hash"],
-    "raw_evidence_stored": false
+  "kind": "proof_to_policy_decision_receipt",
+  "receipt_version": "0.2",
+  "algorithm_id": "openline-proof-to-policy-gate-0.2",
+  "canonicalization_id": "olp-canonical-json-int-v1",
+  "issuer": {"id": "procurement-gate"},
+  "created_at": "2026-07-12T00:00:00Z",
+  "request_id": "request-123",
+  "action": {
+    "type": "tool_call",
+    "id": "act-123",
+    "risk_level": "medium",
+    "claim_hash": "sha256 without prefix"
   },
-  "receipt_hash": "sha256..."
+  "source": {
+    "format": "agent_receipts",
+    "receipt_hashes": ["..."],
+    "primary_hash": "...",
+    "source_key_ids": ["did:example:agent#key-1"]
+  },
+  "binding": {
+    "run_id": "run-123",
+    "session_id": "session-123",
+    "sequence": 1,
+    "challenge_nonce": "...",
+    "parent_decision_hash": null,
+    "expected_source_hash": "..."
+  },
+  "policy": {
+    "id": "tool-policy",
+    "version": "1",
+    "hash": "...",
+    "snapshot": {}
+  },
+  "assessments": {
+    "integrity": {"status": "pass", "reason_codes": [], "details": {}},
+    "profile": {"status": "pass", "reason_codes": [], "details": {}},
+    "provenance": {"status": "pass", "reason_codes": [], "details": {}},
+    "independence": {"status": "pass", "reason_codes": [], "details": {}},
+    "coverage": {"status": "pass", "reason_codes": [], "details": {}},
+    "freshness": {"status": "pass", "reason_codes": [], "details": {}},
+    "evidence": {"status": "pass", "reason_codes": [], "details": {}},
+    "outcome": {"status": "pass", "reason_codes": [], "details": {}}
+  },
+  "verdict": "VERIFIED",
+  "decision": "COMMIT",
+  "chain_accepted": true,
+  "reason_codes": [],
+  "privacy": {
+    "raw_evidence_stored": false,
+    "raw_source_disclosure_stored": false
+  },
+  "payload_hash": "...",
+  "signature": {
+    "algorithm": "Ed25519",
+    "public_key": "32-byte lowercase hex",
+    "value": "64-byte lowercase hex"
+  }
 }
 ```
 
-## Decisions
+## Verdict and enforcement are separate
+
+```text
+VERIFIED     enough supported proof for the declared policy
+REJECTED     a declared check failed
+UNDECIDABLE  required information is unavailable or only partial
+```
+
+The enforcement decision maps the verdict into the operational surface:
 
 ```text
 COMMIT
 QUARANTINE
+DENY
 NO_BADGE
+ROLLBACK_REQUEST
 ```
 
-## Policy flags
+## Legacy schema
 
-Common flags:
-
-```text
-missing_evidence_hash
-missing_result_hash
-missing_user_intent
-missing_grader_receipt
-missing_tool_result
-gate_exited_without_commit_or_quarantine
-exception_inside_gate
-```
-
-## Badges
-
-```text
-PASS          chain valid, all actions committed
-REVIEW        chain valid, one or more actions quarantined
-NO_BADGE      missing/empty chain or explicit no-badge action
-INVALID_CHAIN malformed JSON or hash-chain failure
-```
-
-## Hash chain
-
-`receipt_hash` is computed over the canonical receipt body excluding `receipt_hash`.
-
-`parent_hash` links each receipt to the previous receipt in the same file.
+`openline.receipt_gate.v0.1.1` remains supported and is documented by its source implementation. It is a local hash chain rather than a signed v0.2 decision receipt.

@@ -1,62 +1,82 @@
 # Architecture
 
-## Pipeline
+## Two preserved layers
+
+The repository contains two explicitly different mechanisms.
+
+### Legacy action wrapper
+
+The v0.1.1 `gate(...)` context manager emits a local hash-chained receipt. It remains useful for small examples and backwards compatibility. Its records are unsigned.
+
+### Proof-to-policy gateway
+
+The v0.2 gateway receives an already emitted source receipt and produces a separately signed decision receipt. It never edits or upgrades the source receipt.
 
 ```text
-risky action
-  ↓
-ReceiptGate context manager
-  ↓
-policy checks
-  ↓
-COMMIT / QUARANTINE / NO_BADGE
-  ↓
-hash-chained JSONL receipt
-  ↓
-CLI verify / badge / review
+source bundle
+  ├── OLP Wire Canon
+  ├── Agent Receipts
+  └── legacy Receipt Gate
+        ↓
+format adapter
+        ↓
+integrity / profile / provenance / coverage
+        ↓
+challenge, session, source, sequence, parent, freshness
+        ↓
+artifact hash + source commitment + policy assertion
+        ↓
+orthogonal outcome receipt
+        ↓
+policy evaluator
+        ↓
+signed decision receipt
 ```
 
-## v0.1.1 policy checks
+## External authority
 
-The gate can require:
+The policy file, trust store, signing key, and session ledger are CLI arguments. They are not accepted from the untrusted request body.
 
-- evidence hash
-- user intent confirmation
-- grader receipt hash
-- tool result hash
+The request may carry source receipts, disclosures, evidence locations, an outcome receipt, and a previously issued binding. It cannot add a trusted key or change the policy.
 
-The policy is intentionally small.
+## Assessments
 
-## Fail-closed behavior
+Each assessment has its own status and reason codes:
 
-If a gate exits without `commit()`, `quarantine()`, or `no_badge()`, it emits a `NO_BADGE` receipt.
-
-If a required proof field is missing during `commit()`, it emits a `QUARANTINE` receipt.
-
-If an exception happens inside the context manager, it emits a `QUARANTINE` receipt and re-raises.
-
-Missing or empty receipt files return `NO_BADGE`.
-
-Malformed JSON returns `INVALID_CHAIN`.
-
-## Privacy
-
-Raw evidence is not stored by default.
-
-Receipts store `evidence_hash` and `evidence_keys`.
-
-Use `store_raw_evidence=True` only when you explicitly want raw evidence inside the receipt metadata.
-
-## CLI
-
-```bash
-python -m olp_gate.cli verify receipts.jsonl
-python -m olp_gate.cli badge receipts.jsonl
-python -m olp_gate.cli review receipts.jsonl
+```text
+pass
+fail
+partial
+unavailable
 ```
 
-## Design boundary
+`unavailable` differs from `fail`. Missing evidence produces `UNDECIDABLE`; altered evidence produces `REJECTED`.
 
-Receipt Gate is a primitive.
+## Session state
 
-Eval Airlock, Agent Health Monitor, Memory Integrity, and future policies should plug into it instead of becoming separate worlds.
+`SessionLedger` issues a random one-time challenge bound to:
+
+```text
+run_id
+session_id
+sequence
+parent_decision_hash
+expected_source_hash
+expiry
+```
+
+Successful validation consumes the nonce, remembers the source hash, advances the sequence, and records the decision hash as the next parent. Replayed or cross-run requests can receive signed rejection receipts without advancing the accepted decision chain.
+
+## Semantic recomputation
+
+The decision receipt carries the policy snapshot and every assessment. The Python and Node verifiers independently recompute:
+
+```text
+verdict
+decision
+reason codes
+chain acceptance
+policy hash
+```
+
+This catches a verdict, reason-code, or chain-acceptance rewrite that contradicts the included policy snapshot and assessment set, even if that inconsistent object is resealed with the gate key. The portable decision receipt does not include raw source or evidence, so these verifiers do not independently recompute the assessments themselves.

@@ -1,48 +1,280 @@
 {
-  "created_at_unix": 1783546889,
-  "version": "0.1.1",
-  "pytest": {
-    "returncode": 0,
-    "stdout": "\u001b[32m.\u001b[0m\u001b[32m.\u001b[0m\u001b[32m.\u001b[0m\u001b[32m.\u001b[0m\u001b[32m.\u001b[0m\u001b[32m.\u001b[0m\u001b[32m.\u001b[0m\u001b[32m.\u001b[0m\u001b[32m.\u001b[0m\u001b[32m.\u001b[0m\u001b[32m.\u001b[0m\u001b[32m.\u001b[0m\u001b[32m                                                             [100%]\u001b[0m\n\u001b[32m\u001b[32m\u001b[1m12 passed\u001b[0m\u001b[32m in 0.10s\u001b[0m\u001b[0m\n",
-    "stderr": "Spreadsheet runtime warmup failed during python startup\nTraceback (most recent call last):\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py\", line 26, in warm_spreadsheet_runtime_on_startup\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/spreadsheet_warmup.py\", line 785, in warm_spreadsheet_runtime\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/spreadsheet_warmup.py\", line 720, in _warm_feature_flows\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/spreadsheet_warmup.py\", line 704, in _warm_collaboration_flows\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/generated/interface/models.py\", line 30820, in hydrate_crdt_from_proto\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/rpc/remote.py\", line 749, in __call__\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/rpc/client.py\", line 150, in call\nartifact_tool.rpc.client.RemoteError: hydrateCrdtFromProto requires an empty collaborative document.\n"
+  "checks": [
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "expected_returncodes": [
+        0
+      ],
+      "name": "unittest",
+      "passed": true,
+      "returncode": 0,
+      "stderr": "test_agent_evidence_commitment_path_cannot_be_chosen_by_requester (test_proof_to_policy.ProofToPolicyTests.test_agent_evidence_commitment_path_cannot_be_chosen_by_requester) ... ok\ntest_agent_receipt_signature_and_declared_coverage (test_proof_to_policy.ProofToPolicyTests.test_agent_receipt_signature_and_declared_coverage) ... ok\ntest_agent_receipt_tamper_is_rejected (test_proof_to_policy.ProofToPolicyTests.test_agent_receipt_tamper_is_rejected) ... ok\ntest_agent_terminal_marker_must_be_boolean (test_proof_to_policy.ProofToPolicyTests.test_agent_terminal_marker_must_be_boolean) ... ok\ntest_complete_evidence_and_outcome_commit (test_proof_to_policy.ProofToPolicyTests.test_complete_evidence_and_outcome_commit) ... ok\ntest_cross_run_binding_is_denied (test_proof_to_policy.ProofToPolicyTests.test_cross_run_binding_is_denied) ... ok\ntest_decision_log_rejects_duplicate_json_keys (test_proof_to_policy.ProofToPolicyTests.test_decision_log_rejects_duplicate_json_keys) ... ok\ntest_decision_tamper_breaks_signature (test_proof_to_policy.ProofToPolicyTests.test_decision_tamper_breaks_signature) ... ok\ntest_duplicate_json_keys_are_rejected (test_proof_to_policy.ProofToPolicyTests.test_duplicate_json_keys_are_rejected) ... ok\ntest_embedded_decision_key_is_not_implicitly_trusted (test_proof_to_policy.ProofToPolicyTests.test_embedded_decision_key_is_not_implicitly_trusted) ... ok\ntest_evidence_hash_mismatch_is_denied (test_proof_to_policy.ProofToPolicyTests.test_evidence_hash_mismatch_is_denied) ... ok\ntest_evidence_path_cannot_escape_request_directory (test_proof_to_policy.ProofToPolicyTests.test_evidence_path_cannot_escape_request_directory) ... ok\ntest_exact_replay_is_denied_without_advancing_chain (test_proof_to_policy.ProofToPolicyTests.test_exact_replay_is_denied_without_advancing_chain) ... ok\ntest_full_demo_passes (test_proof_to_policy.ProofToPolicyTests.test_full_demo_passes) ... ok\ntest_harmful_outcome_requests_rollback (test_proof_to_policy.ProofToPolicyTests.test_harmful_outcome_requests_rollback) ... ok\ntest_independent_node_verifier_accepts_demo_and_rejects_tamper (test_proof_to_policy.ProofToPolicyTests.test_independent_node_verifier_accepts_demo_and_rejects_tamper) ... ok\ntest_independent_source_requirement_is_not_earned_by_operator_key (test_proof_to_policy.ProofToPolicyTests.test_independent_source_requirement_is_not_earned_by_operator_key) ... ok\ntest_olp_wire_vector_is_integrity_valid_but_coverage_partial (test_proof_to_policy.ProofToPolicyTests.test_olp_wire_vector_is_integrity_valid_but_coverage_partial) ... ok\ntest_only_one_challenge_can_be_pending_per_session (test_proof_to_policy.ProofToPolicyTests.test_only_one_challenge_can_be_pending_per_session) ... ok\ntest_outcome_evidence_rebinding_is_denied (test_proof_to_policy.ProofToPolicyTests.test_outcome_evidence_rebinding_is_denied) ... ok\ntest_outcome_rebound_to_other_source_is_denied (test_proof_to_policy.ProofToPolicyTests.test_outcome_rebound_to_other_source_is_denied) ... ok\ntest_policy_caps_evidence_size (test_proof_to_policy.ProofToPolicyTests.test_policy_caps_evidence_size) ... ok\ntest_policy_rejects_string_booleans_and_unknown_fields (test_proof_to_policy.ProofToPolicyTests.test_policy_rejects_string_booleans_and_unknown_fields) ... ok\ntest_policy_without_replay_guard_does_not_claim_chain_acceptance (test_proof_to_policy.ProofToPolicyTests.test_policy_without_replay_guard_does_not_claim_chain_acceptance) ... ok\ntest_private_key_permissions_are_enforced (test_proof_to_policy.ProofToPolicyTests.test_private_key_permissions_are_enforced) ... ok\ntest_published_agent_receipts_v050_vector_interoperates (test_proof_to_policy.ProofToPolicyTests.test_published_agent_receipts_v050_vector_interoperates) ... ok\ntest_request_cannot_relabel_signed_action_type (test_proof_to_policy.ProofToPolicyTests.test_request_cannot_relabel_signed_action_type) ... ok\ntest_resealed_semantic_forgery_is_recomputed_and_rejected (test_proof_to_policy.ProofToPolicyTests.test_resealed_semantic_forgery_is_recomputed_and_rejected) ... ok\ntest_unsigned_legacy_source_cannot_earn_trusted_commit (test_proof_to_policy.ProofToPolicyTests.test_unsigned_legacy_source_cannot_earn_trusted_commit) ... ok\ntest_valid_signature_without_evidence_is_undecidable (test_proof_to_policy.ProofToPolicyTests.test_valid_signature_without_evidence_is_undecidable) ... ok\ntest_chain_detects_tamper (test_receipt_gate.LegacyReceiptGateTests.test_chain_detects_tamper) ... ok\ntest_clean_tool_call_commits (test_receipt_gate.LegacyReceiptGateTests.test_clean_tool_call_commits) ... ok\ntest_eval_score_requires_grader_receipt (test_receipt_gate.LegacyReceiptGateTests.test_eval_score_requires_grader_receipt) ... ok\ntest_exception_receipt_does_not_store_traceback_by_default (test_receipt_gate.LegacyReceiptGateTests.test_exception_receipt_does_not_store_traceback_by_default) ... ok\ntest_malformed_json_returns_invalid_chain (test_receipt_gate.LegacyReceiptGateTests.test_malformed_json_returns_invalid_chain) ... ok\ntest_memory_write_requires_user_intent (test_receipt_gate.LegacyReceiptGateTests.test_memory_write_requires_user_intent) ... ok\ntest_missing_evidence_quarantines (test_receipt_gate.LegacyReceiptGateTests.test_missing_evidence_quarantines) ... ok\ntest_missing_or_empty_receipt_file_does_not_pass (test_receipt_gate.LegacyReceiptGateTests.test_missing_or_empty_receipt_file_does_not_pass) ... ok\ntest_no_badge_when_context_exits_without_close (test_receipt_gate.LegacyReceiptGateTests.test_no_badge_when_context_exits_without_close) ... ok\ntest_raw_evidence_not_stored_unless_opt_in (test_receipt_gate.LegacyReceiptGateTests.test_raw_evidence_not_stored_unless_opt_in) ... ok\ntest_review_packet_lists_failures (test_receipt_gate.LegacyReceiptGateTests.test_review_packet_lists_failures) ... ok\n\n----------------------------------------------------------------------\nRan 41 tests in 0.468s\n\nOK\n",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "examples/demo_all.py"
+      ],
+      "expected_returncodes": [
+        0
+      ],
+      "name": "legacy_demo",
+      "passed": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\n  \"actions\": {\n    \"clean_tool_call\": \"COMMIT\",\n    \"missing_evidence_tool_call\": \"QUARANTINE\",\n    \"allowed_memory_write\": \"COMMIT\",\n    \"missing_intent_memory_write\": \"QUARANTINE\",\n    \"supported_eval_score\": \"COMMIT\",\n    \"missing_grader_eval_score\": \"QUARANTINE\",\n    \"no_chain_eval_score\": \"NO_BADGE\"\n  },\n  \"summary\": {\n    \"receipts/tool_call_receipts.jsonl\": \"REVIEW\",\n    \"receipts/memory_write_receipts.jsonl\": \"REVIEW\",\n    \"receipts/eval_score_receipts.jsonl\": \"NO_BADGE\"\n  }\n}\n"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-m",
+        "olp_gate.cli",
+        "demo-proof-to-policy",
+        "--output",
+        "/workspace/scratch/4d95a90e4eac/openline-receipt-gate/results/proof_to_policy_demo"
+      ],
+      "expected_returncodes": [
+        0
+      ],
+      "name": "proof_to_policy_demo",
+      "passed": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\n  \"schema\": \"openline.proof_to_policy.demo.v0.2\",\n  \"passed\": true,\n  \"expected\": {\n    \"valid_signature_insufficient_evidence\": [\n      \"UNDECIDABLE\",\n      \"QUARANTINE\"\n    ],\n    \"complete_evidence_trusted_outcome\": [\n      \"VERIFIED\",\n      \"COMMIT\"\n    ],\n    \"exact_replay\": [\n      \"REJECTED\",\n      \"DENY\"\n    ],\n    \"unsupported_score\": [\n      \"UNDECIDABLE\",\n      \"NO_BADGE\"\n    ],\n    \"harmful_mutation\": [\n      \"REJECTED\",\n      \"ROLLBACK_REQUEST\"\n    ]\n  },\n  \"observed\": {\n    \"valid_signature_insufficient_evidence\": [\n      \"UNDECIDABLE\",\n      \"QUARANTINE\"\n    ],\n    \"complete_evidence_trusted_outcome\": [\n      \"VERIFIED\",\n      \"COMMIT\"\n    ],\n    \"exact_replay\": [\n      \"REJECTED\",\n      \"DENY\"\n    ],\n    \"unsupported_score\": [\n      \"UNDECIDABLE\",\n      \"NO_BADGE\"\n    ],\n    \"harmful_mutation\": [\n      \"REJECTED\",\n      \"ROLLBACK_REQUEST\"\n    ]\n  },\n  \"decision_log\": {\n    \"valid\": true,\n    \"count\": 5,\n    \"errors\": [],\n    \"last_hashes\": {\n      \"run-insufficient/session-insufficient\": \"22016b00cb838b287409d61d2460e2a96592829258e7208550a3fd0850734068\",\n      \"run-complete/session-complete\": \"b6766f4c7c1b946a744ec29a36eeb4df2981627e5538922915c8b72760d85678\",\n      \"run-score/session-score\": \"e67b55a64c29710f92aaa9d084e84f0457d1417ad75d83b29b7934e7449340ce\",\n      \"run-mutation/session-mutation\": \"0d5361affc2ee8bc80a2397de3b826622a0aa487e250d7e2d98ef1add34d4f67\"\n    }\n  },\n  \"decision_receipt_count\": 5,\n  \"gate_public_key\": \"17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce\",\n  \"claim_boundary\": \"The demo proves deterministic policy behavior inside declared fixtures, not production safety.\"\n}\n"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-m",
+        "olp_gate.cli",
+        "verify-decision",
+        "/workspace/scratch/4d95a90e4eac/openline-receipt-gate/results/proof_to_policy_demo/decision_receipts.jsonl",
+        "--gate-key",
+        "17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce"
+      ],
+      "expected_returncodes": [
+        0
+      ],
+      "name": "python_decision_verifier",
+      "passed": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\n  \"valid\": true,\n  \"count\": 5,\n  \"errors\": [],\n  \"last_hashes\": {\n    \"run-insufficient/session-insufficient\": \"22016b00cb838b287409d61d2460e2a96592829258e7208550a3fd0850734068\",\n    \"run-complete/session-complete\": \"b6766f4c7c1b946a744ec29a36eeb4df2981627e5538922915c8b72760d85678\",\n    \"run-score/session-score\": \"e67b55a64c29710f92aaa9d084e84f0457d1417ad75d83b29b7934e7449340ce\",\n    \"run-mutation/session-mutation\": \"0d5361affc2ee8bc80a2397de3b826622a0aa487e250d7e2d98ef1add34d4f67\"\n  }\n}\n"
+    },
+    {
+      "command": [
+        "node",
+        "verify-decision-node.mjs",
+        "/workspace/scratch/4d95a90e4eac/openline-receipt-gate/results/proof_to_policy_demo/decision_receipts.jsonl",
+        "--gate-key",
+        "17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce"
+      ],
+      "expected_returncodes": [
+        0
+      ],
+      "name": "node_decision_verifier",
+      "passed": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\n  \"valid\": true,\n  \"count\": 5,\n  \"errors\": []\n}\n"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-m",
+        "compileall",
+        "-q",
+        "olp_gate"
+      ],
+      "expected_returncodes": [
+        0
+      ],
+      "name": "compileall",
+      "passed": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-m",
+        "olp_gate.cli",
+        "verify-decision",
+        "/tmp/openline-release-98e5sse_/tampered.jsonl",
+        "--gate-key",
+        "17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce"
+      ],
+      "expected_returncodes": [
+        2
+      ],
+      "name": "python_rejects_tamper",
+      "passed": true,
+      "returncode": 2,
+      "stderr": "",
+      "stdout": "{\n  \"valid\": false,\n  \"count\": 5,\n  \"errors\": [\n    \"receipt_2:decision_recompute_mismatch\",\n    \"receipt_2:payload_hash_mismatch\"\n  ],\n  \"last_hashes\": {\n    \"run-insufficient/session-insufficient\": \"22016b00cb838b287409d61d2460e2a96592829258e7208550a3fd0850734068\",\n    \"run-complete/session-complete\": \"b6766f4c7c1b946a744ec29a36eeb4df2981627e5538922915c8b72760d85678\",\n    \"run-score/session-score\": \"e67b55a64c29710f92aaa9d084e84f0457d1417ad75d83b29b7934e7449340ce\",\n    \"run-mutation/session-mutation\": \"0d5361affc2ee8bc80a2397de3b826622a0aa487e250d7e2d98ef1add34d4f67\"\n  }\n}\n"
+    },
+    {
+      "command": [
+        "node",
+        "verify-decision-node.mjs",
+        "/tmp/openline-release-98e5sse_/tampered.jsonl",
+        "--gate-key",
+        "17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce"
+      ],
+      "expected_returncodes": [
+        1
+      ],
+      "name": "node_rejects_tamper",
+      "passed": true,
+      "returncode": 1,
+      "stderr": "",
+      "stdout": "{\n  \"valid\": false,\n  \"count\": 5,\n  \"errors\": [\n    \"receipt_2:decision_recompute_mismatch\",\n    \"receipt_2:payload_hash_mismatch\",\n    \"receipt_2:signature_invalid\"\n  ]\n}\n"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-m",
+        "pip",
+        "install",
+        ".",
+        "--target",
+        "/tmp/openline-release-98e5sse_/site",
+        "--no-deps",
+        "--no-build-isolation"
+      ],
+      "expected_returncodes": [
+        0
+      ],
+      "name": "clean_install",
+      "passed": true,
+      "returncode": 0,
+      "stderr": "WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n",
+      "stdout": "Processing ./.\n  Preparing metadata (pyproject.toml): started\n  Preparing metadata (pyproject.toml): finished with status 'done'\nBuilding wheels for collected packages: openline-receipt-gate\n  Building wheel for openline-receipt-gate (pyproject.toml): started\n  Building wheel for openline-receipt-gate (pyproject.toml): finished with status 'done'\n  Created wheel for openline-receipt-gate: filename=openline_receipt_gate-0.2.0-py3-none-any.whl size=39593 sha256=700f72fc469f0cda18bfb882f599ac93a976c253e068b8897e4f68ccc37956d5\n  Stored in directory: /tmp/openline-release-98e5sse_/pip-cache/wheels/67/70/c1/7b94b864b5a436788d25855bb566c12ae8bf53026ad4922207\nSuccessfully built openline-receipt-gate\nInstalling collected packages: openline-receipt-gate\nSuccessfully installed openline-receipt-gate-0.2.0\n"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-m",
+        "olp_gate.cli",
+        "demo-proof-to-policy",
+        "--output",
+        "/tmp/openline-release-98e5sse_/outside/installed_demo"
+      ],
+      "expected_returncodes": [
+        0
+      ],
+      "name": "installed_cli_from_unrelated_cwd",
+      "passed": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\n  \"schema\": \"openline.proof_to_policy.demo.v0.2\",\n  \"passed\": true,\n  \"expected\": {\n    \"valid_signature_insufficient_evidence\": [\n      \"UNDECIDABLE\",\n      \"QUARANTINE\"\n    ],\n    \"complete_evidence_trusted_outcome\": [\n      \"VERIFIED\",\n      \"COMMIT\"\n    ],\n    \"exact_replay\": [\n      \"REJECTED\",\n      \"DENY\"\n    ],\n    \"unsupported_score\": [\n      \"UNDECIDABLE\",\n      \"NO_BADGE\"\n    ],\n    \"harmful_mutation\": [\n      \"REJECTED\",\n      \"ROLLBACK_REQUEST\"\n    ]\n  },\n  \"observed\": {\n    \"valid_signature_insufficient_evidence\": [\n      \"UNDECIDABLE\",\n      \"QUARANTINE\"\n    ],\n    \"complete_evidence_trusted_outcome\": [\n      \"VERIFIED\",\n      \"COMMIT\"\n    ],\n    \"exact_replay\": [\n      \"REJECTED\",\n      \"DENY\"\n    ],\n    \"unsupported_score\": [\n      \"UNDECIDABLE\",\n      \"NO_BADGE\"\n    ],\n    \"harmful_mutation\": [\n      \"REJECTED\",\n      \"ROLLBACK_REQUEST\"\n    ]\n  },\n  \"decision_log\": {\n    \"valid\": true,\n    \"count\": 5,\n    \"errors\": [],\n    \"last_hashes\": {\n      \"run-insufficient/session-insufficient\": \"f96956c10cfff9e531d22f2a170fe38d95ddb2cb23c36a77247e6a48f011da41\",\n      \"run-complete/session-complete\": \"071ecbe44d84413af5a0ba702dff7b52bd89fe5f1095d15a6d823f99d416516d\",\n      \"run-score/session-score\": \"b1c2613c01bf0eb4672594203d1237f19b929c3f540cc59454c36ea4beabcf0d\",\n      \"run-mutation/session-mutation\": \"2781fac90a959b50ee5163537f3723671dc2b69a67fde72920bb917ebba05157\"\n    }\n  },\n  \"decision_receipt_count\": 5,\n  \"gate_public_key\": \"17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce\",\n  \"claim_boundary\": \"The demo proves deterministic policy behavior inside declared fixtures, not production safety.\"\n}\n"
+    },
+    {
+      "command": [
+        "node",
+        "/workspace/scratch/4d95a90e4eac/openline-receipt-gate/verify-decision-node.mjs",
+        "/tmp/openline-release-98e5sse_/outside/installed_demo/decision_receipts.jsonl",
+        "--gate-key",
+        "17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce"
+      ],
+      "expected_returncodes": [
+        0
+      ],
+      "name": "installed_output_node_verification",
+      "passed": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\n  \"valid\": true,\n  \"count\": 5,\n  \"errors\": []\n}\n"
+    }
+  ],
+  "claim_boundary": "A passing synthetic release gate does not prove production safety, issuer honesty, complete capture, witness independence, or rollback execution.",
+  "created_at": "2026-07-13T00:13:18.777818Z",
+  "environment": {
+    "node": "v24.14.0",
+    "platform": "Linux-6.12.47-x86_64-with-glibc2.39",
+    "python": "3.12.13"
   },
-  "demo_all": {
-    "returncode": 0,
-    "stdout": "{\n  \"actions\": {\n    \"clean_tool_call\": \"COMMIT\",\n    \"missing_evidence_tool_call\": \"QUARANTINE\",\n    \"allowed_memory_write\": \"COMMIT\",\n    \"missing_intent_memory_write\": \"QUARANTINE\",\n    \"supported_eval_score\": \"COMMIT\",\n    \"missing_grader_eval_score\": \"QUARANTINE\",\n    \"no_chain_eval_score\": \"NO_BADGE\"\n  },\n  \"summary\": {\n    \"receipts/tool_call_receipts.jsonl\": \"REVIEW\",\n    \"receipts/memory_write_receipts.jsonl\": \"REVIEW\",\n    \"receipts/eval_score_receipts.jsonl\": \"NO_BADGE\"\n  }\n}\n",
-    "stderr": "Spreadsheet runtime warmup failed during python startup\nTraceback (most recent call last):\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py\", line 26, in warm_spreadsheet_runtime_on_startup\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/spreadsheet_warmup.py\", line 785, in warm_spreadsheet_runtime\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/spreadsheet_warmup.py\", line 720, in _warm_feature_flows\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/spreadsheet_warmup.py\", line 704, in _warm_collaboration_flows\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/generated/interface/models.py\", line 30820, in hydrate_crdt_from_proto\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/rpc/remote.py\", line 749, in __call__\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/rpc/client.py\", line 150, in call\nartifact_tool.rpc.client.RemoteError: hydrateCrdtFromProto requires an empty collaborative document.\n"
+  "passed": true,
+  "proof_to_policy_demo": {
+    "claim_boundary": "The demo proves deterministic policy behavior inside declared fixtures, not production safety.",
+    "decision_log": {
+      "count": 5,
+      "errors": [],
+      "last_hashes": {
+        "run-complete/session-complete": "b6766f4c7c1b946a744ec29a36eeb4df2981627e5538922915c8b72760d85678",
+        "run-insufficient/session-insufficient": "22016b00cb838b287409d61d2460e2a96592829258e7208550a3fd0850734068",
+        "run-mutation/session-mutation": "0d5361affc2ee8bc80a2397de3b826622a0aa487e250d7e2d98ef1add34d4f67",
+        "run-score/session-score": "e67b55a64c29710f92aaa9d084e84f0457d1417ad75d83b29b7934e7449340ce"
+      },
+      "valid": true
+    },
+    "decision_receipt_count": 5,
+    "expected": {
+      "complete_evidence_trusted_outcome": [
+        "VERIFIED",
+        "COMMIT"
+      ],
+      "exact_replay": [
+        "REJECTED",
+        "DENY"
+      ],
+      "harmful_mutation": [
+        "REJECTED",
+        "ROLLBACK_REQUEST"
+      ],
+      "unsupported_score": [
+        "UNDECIDABLE",
+        "NO_BADGE"
+      ],
+      "valid_signature_insufficient_evidence": [
+        "UNDECIDABLE",
+        "QUARANTINE"
+      ]
+    },
+    "gate_public_key": "17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce",
+    "observed": {
+      "complete_evidence_trusted_outcome": [
+        "VERIFIED",
+        "COMMIT"
+      ],
+      "exact_replay": [
+        "REJECTED",
+        "DENY"
+      ],
+      "harmful_mutation": [
+        "REJECTED",
+        "ROLLBACK_REQUEST"
+      ],
+      "unsupported_score": [
+        "UNDECIDABLE",
+        "NO_BADGE"
+      ],
+      "valid_signature_insufficient_evidence": [
+        "UNDECIDABLE",
+        "QUARANTINE"
+      ]
+    },
+    "passed": true,
+    "schema": "openline.proof_to_policy.demo.v0.2"
   },
-  "cli_verify": {
-    "returncode": 0,
-    "stdout": "{\n  \"path\": \"receipts/tool_call_receipts.jsonl\",\n  \"valid\": true,\n  \"count\": 2,\n  \"errors\": [],\n  \"missing\": false,\n  \"empty\": false,\n  \"last_hash\": \"b825cecd879064028341cb0d83f907668cd17b3aaa3ade048311a400c3442150\"\n}\n",
-    "stderr": "Spreadsheet runtime warmup failed during python startup\nTraceback (most recent call last):\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py\", line 26, in warm_spreadsheet_runtime_on_startup\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/spreadsheet_warmup.py\", line 785, in warm_spreadsheet_runtime\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/spreadsheet_warmup.py\", line 720, in _warm_feature_flows\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/spreadsheet_warmup.py\", line 704, in _warm_collaboration_flows\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/generated/interface/models.py\", line 30820, in hydrate_crdt_from_proto\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/rpc/remote.py\", line 749, in __call__\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/rpc/client.py\", line 150, in call\nartifact_tool.rpc.client.RemoteError: hydrateCrdtFromProto requires an empty collaborative document.\n"
+  "published_interop_fixture": {
+    "project": "Agent Receipts",
+    "signature_and_hash_match": true,
+    "source_commit": "df6833a39743e17127d5ad4b10cdc8f6734d8e03",
+    "version": "0.5.0"
   },
-  "cli_badge": {
-    "returncode": 1,
-    "stdout": "{\n  \"path\": \"receipts/tool_call_receipts.jsonl\",\n  \"badge\": \"REVIEW\",\n  \"review_required\": true,\n  \"reason\": \"one or more actions were quarantined\",\n  \"counts\": {\n    \"COMMIT\": 1,\n    \"QUARANTINE\": 1,\n    \"NO_BADGE\": 0\n  },\n  \"policy_flags\": {\n    \"missing_evidence_hash\": 1\n  },\n  \"chain\": {\n    \"path\": \"receipts/tool_call_receipts.jsonl\",\n    \"valid\": true,\n    \"count\": 2,\n    \"errors\": [],\n    \"missing\": false,\n    \"empty\": false,\n    \"last_hash\": \"b825cecd879064028341cb0d83f907668cd17b3aaa3ade048311a400c3442150\"\n  }\n}\n",
-    "stderr": "Spreadsheet runtime warmup failed during python startup\nTraceback (most recent call last):\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py\", line 26, in warm_spreadsheet_runtime_on_startup\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/spreadsheet_warmup.py\", line 785, in warm_spreadsheet_runtime\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/spreadsheet_warmup.py\", line 720, in _warm_feature_flows\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/spreadsheet_warmup.py\", line 704, in _warm_collaboration_flows\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/generated/interface/models.py\", line 30820, in hydrate_crdt_from_proto\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/rpc/remote.py\", line 749, in __call__\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/rpc/client.py\", line 150, in call\nartifact_tool.rpc.client.RemoteError: hydrateCrdtFromProto requires an empty collaborative document.\n"
-  },
-  "cli_review": {
-    "returncode": 0,
-    "stdout": "{\n  \"badge\": {\n    \"path\": \"receipts/tool_call_receipts.jsonl\",\n    \"badge\": \"REVIEW\",\n    \"review_required\": true,\n    \"reason\": \"one or more actions were quarantined\",\n    \"counts\": {\n      \"COMMIT\": 1,\n      \"QUARANTINE\": 1,\n      \"NO_BADGE\": 0\n    },\n    \"policy_flags\": {\n      \"missing_evidence_hash\": 1\n    },\n    \"chain\": {\n      \"path\": \"receipts/tool_call_receipts.jsonl\",\n      \"valid\": true,\n      \"count\": 2,\n      \"errors\": [],\n      \"missing\": false,\n      \"empty\": false,\n      \"last_hash\": \"b825cecd879064028341cb0d83f907668cd17b3aaa3ade048311a400c3442150\"\n    }\n  },\n  \"review_items\": [\n    {\n      \"receipt_id\": \"22026f89-7395-4344-a21d-888a7500f671\",\n      \"action_type\": \"tool_call\",\n      \"claim\": \"Search customer records without evidence.\",\n      \"decision\": \"QUARANTINE\",\n      \"status\": \"quarantined\",\n      \"policy_flags\": [\n        \"missing_evidence_hash\"\n      ],\n      \"receipt_hash\": \"b825cecd879064028341cb0d83f907668cd17b3aaa3ade048311a400c3442150\",\n      \"next_use_note\": \"Do not trust this action as committed. Review missing proof before replay or downstream use.\"\n    }\n  ]\n}\n",
-    "stderr": "Spreadsheet runtime warmup failed during python startup\nTraceback (most recent call last):\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py\", line 26, in warm_spreadsheet_runtime_on_startup\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/spreadsheet_warmup.py\", line 785, in warm_spreadsheet_runtime\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/spreadsheet_warmup.py\", line 720, in _warm_feature_flows\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/spreadsheet_warmup.py\", line 704, in _warm_collaboration_flows\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/generated/interface/models.py\", line 30820, in hydrate_crdt_from_proto\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/rpc/remote.py\", line 749, in __call__\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/rpc/client.py\", line 150, in call\nartifact_tool.rpc.client.RemoteError: hydrateCrdtFromProto requires an empty collaborative document.\n"
-  },
-  "cli_missing_badge": {
-    "returncode": 1,
-    "stdout": "{\n  \"path\": \"does_not_exist.jsonl\",\n  \"badge\": \"NO_BADGE\",\n  \"review_required\": true,\n  \"reason\": \"empty_or_missing_receipt_chain\",\n  \"counts\": {\n    \"COMMIT\": 0,\n    \"QUARANTINE\": 0,\n    \"NO_BADGE\": 0\n  },\n  \"policy_flags\": {},\n  \"chain\": {\n    \"path\": \"does_not_exist.jsonl\",\n    \"valid\": false,\n    \"count\": 0,\n    \"errors\": [\n      {\n        \"reason\": \"missing_receipt_file\",\n        \"line_number\": null\n      }\n    ],\n    \"missing\": true,\n    \"empty\": false,\n    \"last_hash\": null\n  }\n}\n",
-    "stderr": "Spreadsheet runtime warmup failed during python startup\nTraceback (most recent call last):\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py\", line 26, in warm_spreadsheet_runtime_on_startup\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/spreadsheet_warmup.py\", line 785, in warm_spreadsheet_runtime\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/spreadsheet_warmup.py\", line 720, in _warm_feature_flows\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/spreadsheet_warmup.py\", line 704, in _warm_collaboration_flows\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/generated/interface/models.py\", line 30820, in hydrate_crdt_from_proto\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/rpc/remote.py\", line 749, in __call__\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/rpc/client.py\", line 150, in call\nartifact_tool.rpc.client.RemoteError: hydrateCrdtFromProto requires an empty collaborative document.\n"
-  },
-  "cli_malformed_verify": {
-    "returncode": 2,
-    "stdout": "{\n  \"path\": \"broken.jsonl\",\n  \"valid\": false,\n  \"count\": 0,\n  \"errors\": [\n    {\n      \"reason\": \"json_parse_error\",\n      \"line_number\": 1,\n      \"message\": \"Expecting ',' delimiter\",\n      \"position\": 20\n    }\n  ],\n  \"missing\": false,\n  \"empty\": false,\n  \"last_hash\": null\n}\n",
-    "stderr": "Spreadsheet runtime warmup failed during python startup\nTraceback (most recent call last):\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/patches/warm_spreadsheet_runtime_on_startup.py\", line 26, in warm_spreadsheet_runtime_on_startup\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/spreadsheet_warmup.py\", line 785, in warm_spreadsheet_runtime\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/spreadsheet_warmup.py\", line 720, in _warm_feature_flows\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/spreadsheet_warmup.py\", line 704, in _warm_collaboration_flows\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/generated/interface/models.py\", line 30820, in hydrate_crdt_from_proto\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/rpc/remote.py\", line 749, in __call__\n  File \"/tmp/tmp.yTcnQsZYiA/artifact_tool_v2-2.8.4/artifact_tool/rpc/client.py\", line 150, in call\nartifact_tool.rpc.client.RemoteError: hydrateCrdtFromProto requires an empty collaborative document.\n"
-  },
-  "demo_decisions": {
-    "clean_tool_call": "COMMIT",
-    "missing_evidence_tool_call": "QUARANTINE",
-    "allowed_memory_write": "COMMIT",
-    "missing_intent_memory_write": "QUARANTINE",
-    "supported_eval_score": "COMMIT",
-    "missing_grader_eval_score": "QUARANTINE",
-    "no_chain_eval_score": "NO_BADGE"
-  }
+  "repo": "openline-receipt-gate",
+  "schema": "openline.release_run_report.v0.2",
+  "test_count": 41,
+  "version": "0.2.0"
 }

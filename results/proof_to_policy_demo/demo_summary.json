@@ -1,0 +1,62 @@
+{
+  "claim_boundary": "The demo proves deterministic policy behavior inside declared fixtures, not production safety.",
+  "decision_log": {
+    "count": 5,
+    "errors": [],
+    "last_hashes": {
+      "run-complete/session-complete": "b6766f4c7c1b946a744ec29a36eeb4df2981627e5538922915c8b72760d85678",
+      "run-insufficient/session-insufficient": "22016b00cb838b287409d61d2460e2a96592829258e7208550a3fd0850734068",
+      "run-mutation/session-mutation": "0d5361affc2ee8bc80a2397de3b826622a0aa487e250d7e2d98ef1add34d4f67",
+      "run-score/session-score": "e67b55a64c29710f92aaa9d084e84f0457d1417ad75d83b29b7934e7449340ce"
+    },
+    "valid": true
+  },
+  "decision_receipt_count": 5,
+  "expected": {
+    "complete_evidence_trusted_outcome": [
+      "VERIFIED",
+      "COMMIT"
+    ],
+    "exact_replay": [
+      "REJECTED",
+      "DENY"
+    ],
+    "harmful_mutation": [
+      "REJECTED",
+      "ROLLBACK_REQUEST"
+    ],
+    "unsupported_score": [
+      "UNDECIDABLE",
+      "NO_BADGE"
+    ],
+    "valid_signature_insufficient_evidence": [
+      "UNDECIDABLE",
+      "QUARANTINE"
+    ]
+  },
+  "gate_public_key": "17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce",
+  "observed": {
+    "complete_evidence_trusted_outcome": [
+      "VERIFIED",
+      "COMMIT"
+    ],
+    "exact_replay": [
+      "REJECTED",
+      "DENY"
+    ],
+    "harmful_mutation": [
+      "REJECTED",
+      "ROLLBACK_REQUEST"
+    ],
+    "unsupported_score": [
+      "UNDECIDABLE",
+      "NO_BADGE"
+    ],
+    "valid_signature_insufficient_evidence": [
+      "UNDECIDABLE",
+      "QUARANTINE"
+    ]
+  },
+  "passed": true,
+  "schema": "openline.proof_to_policy.demo.v0.2"
+}

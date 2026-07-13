@@ -1,124 +1,251 @@
 {
-  "repo": "openline-receipt-gate",
-  "version": "0.1.1",
-  "created_at_unix": 1783546889,
-  "claim": "One-line receipt gate for risky agent actions.",
-  "pytest_status": "passed",
-  "demo_status": "passed",
-  "fail_closed_checks": {
-    "missing_badge_exit_code": 1,
-    "malformed_verify_exit_code": 2
-  },
+  "claim": "Signed source receipts can drive externally configured, independently verifiable policy decisions within declared inputs and trust assumptions.",
+  "created_at": "2026-07-13T00:13:18.787846Z",
   "files": [
     {
+      "bytes": 173,
       "path": ".gitignore",
-      "sha256": "24ef39ac9362a975f4c4bf4192762bc8d1c71d1581dd3b42d0f8df7f13d6eb45",
-      "bytes": 81
+      "sha256": "f3b5b17f63590d6f8406b2bfff83743b4731016c11b3c388a0be4f6a17252326"
     },
     {
+      "bytes": 955,
+      "path": "CHANGELOG.md",
+      "sha256": "e48cb4e6042490042d62129b7efd312cdb7823a1a312449faeea4e98a987ab60"
+    },
+    {
+      "bytes": 985,
       "path": "LICENSE",
-      "sha256": "83f1cec7cc6701c9a8004184b541dd1297a5c0aa618d22cfc9036686b4274cfb",
-      "bytes": 985
+      "sha256": "83f1cec7cc6701c9a8004184b541dd1297a5c0aa618d22cfc9036686b4274cfb"
     },
     {
+      "bytes": 6327,
       "path": "README.md",
-      "sha256": "6486e6f35f22242a81c2767c049c6e32cb892dd4f3d3b3cae6832975827b04e5",
-      "bytes": 3067
+      "sha256": "d1299ffa528581a30c3af8f34df908decd8351fddda148bb510bac89e722d752"
     },
     {
+      "bytes": 20290,
       "path": "RUN_REPORT.json",
-      "sha256": "2dda143f030809c581276e6f193bd0207f6e2d66febb1e5255d357620cc7be63",
-      "bytes": 12516
+      "sha256": "d70030533be9a1ec839ba7693065ff7762f771788b71444be538a6e053f95818"
     },
     {
+      "bytes": 2481,
       "path": "docs/ARCHITECTURE.md",
-      "sha256": "90c225d46a632fac90e06bbcd1f3910c363eda71bddf4ead5cc3fbb05cbee0ca",
-      "bytes": 1334
+      "sha256": "f237b9e914e32482de1c4e2730499489c511ebeb9c0f79c9567e61ef4a997c90"
     },
     {
+      "bytes": 1496,
       "path": "docs/CLAIM_BOUNDARY.md",
-      "sha256": "ac4ecf70cd990627700fd9587f046c2693ab59957dde9eea97842aa621566057",
-      "bytes": 663
+      "sha256": "b37c1507a88c27c5737758765e230978fc2b5e635f770697bc01b343ea43be11"
     },
     {
+      "bytes": 1869,
+      "path": "docs/COMPATIBILITY.md",
+      "sha256": "edf68f737f133a5fa710506b1ffec6fa2d061e9355a8948578bf1b1c7c79c6b2"
+    },
+    {
+      "bytes": 2677,
       "path": "docs/RECEIPT_SCHEMA.md",
-      "sha256": "03593054982baec6a6de979077831981b18d1a3eccb06292ddb455c9027b070f",
-      "bytes": 1278
+      "sha256": "8b64dc99345a38ed9daaea47ddf8fa3719e4b7f0d3aca65f1dbcec9ab39e436c"
     },
     {
+      "bytes": 2428,
+      "path": "docs/THREAT_MODEL.md",
+      "sha256": "454b144d07cf219cd89de3e4fd6e8de27b81cb2b1e4d5c8b9d0a84f9b91d879d"
+    },
+    {
+      "bytes": 1725,
       "path": "examples/demo_all.py",
-      "sha256": "80cc18792ddb90d2ad48e696344a8298f8914a8be0916d9159915bc6bcaa2f05",
-      "bytes": 1725
+      "sha256": "80cc18792ddb90d2ad48e696344a8298f8914a8be0916d9159915bc6bcaa2f05"
     },
     {
+      "bytes": 202,
+      "path": "examples/proof_to_policy_demo.py",
+      "sha256": "b3a2b12e77ffe491105df0dd43d4f199fc227b1621a1c2a7da9aef41e5ba85e5"
+    },
+    {
+      "bytes": 1982,
       "path": "examples/wrap_eval_score.py",
-      "sha256": "e899872098c6af12929435bc6d2bb4e8dcb52121a10c1248c5af5163298976ab",
-      "bytes": 1982
+      "sha256": "e899872098c6af12929435bc6d2bb4e8dcb52121a10c1248c5af5163298976ab"
     },
     {
+      "bytes": 1384,
       "path": "examples/wrap_memory_write.py",
-      "sha256": "979e85c6068185700d32599ed336e3917ba1eddf88e37e34cebb8d9d08ade73d",
-      "bytes": 1384
+      "sha256": "979e85c6068185700d32599ed336e3917ba1eddf88e37e34cebb8d9d08ade73d"
     },
     {
+      "bytes": 1327,
       "path": "examples/wrap_tool_call.py",
-      "sha256": "dbce059229dee7c11fe07a5f9d7c3ff777951af8455ea009cd3819848e543b81",
-      "bytes": 1327
+      "sha256": "dbce059229dee7c11fe07a5f9d7c3ff777951af8455ea009cd3819848e543b81"
     },
     {
+      "bytes": 652,
       "path": "launch/thread_copy.md",
-      "sha256": "4828f0ccfc49bdf52b91009d6a1d8e7508d62a35a89ccbff54b71ac1982c9326",
-      "bytes": 523
+      "sha256": "73facbce23eba2f062773cc86caaca82940bb0ec5d7aaf9eccd11b75809373e4"
     },
     {
+      "bytes": 782,
       "path": "olp_gate/__init__.py",
-      "sha256": "23d1b6a690f71cc76c53c548e2abf3881bde9277cbc863f795e0b36a3afd68e0",
-      "bytes": 217
+      "sha256": "575e5161471f8c2a6025d50bc8cbd467f44de0f9c10fcff7e38dc23425842d26"
     },
     {
+      "bytes": 28810,
+      "path": "olp_gate/adapters.py",
+      "sha256": "63cef0b0ef74d98eef8a7d22191fdefc12cb3e70242e219b1e31b7b7ab5c19e9"
+    },
+    {
+      "bytes": 4666,
       "path": "olp_gate/cli.py",
-      "sha256": "3308cde1beb87b043e6f0ec2dd397d8633ac64ad3ec9987bbdab63eadd77ca9e",
-      "bytes": 1344
+      "sha256": "5a5d2dcd1ff16afcf80647c495ad54a12fc63227f7a62a370fd7608240932534"
     },
     {
+      "bytes": 12361,
+      "path": "olp_gate/crypto.py",
+      "sha256": "fcc11b9ed55a6089b2e59eaaa5e65587728e1dd5b8aa6657844c3b3c24222511"
+    },
+    {
+      "bytes": 13490,
+      "path": "olp_gate/demo.py",
+      "sha256": "cd47b04a44d7c4ce775bd275eee3289f53e5546b2be437c45bbc546e92eb61b7"
+    },
+    {
+      "bytes": 16518,
+      "path": "olp_gate/evidence.py",
+      "sha256": "6831c7bc7248ffda105ac267fcd6fdba75acb11027e8ee40cba4cdb684c20a5b"
+    },
+    {
+      "bytes": 8562,
       "path": "olp_gate/gate.py",
-      "sha256": "4db4e1b082cc75920eb7b51d426013fa3efe45e96bc5954de96473625bf530c1",
-      "bytes": 8470
+      "sha256": "210cfd1737837b702f82dbb0ebe088eda8011e523e9bd7d2089d66be0767b61e"
     },
     {
+      "bytes": 22853,
+      "path": "olp_gate/gateway.py",
+      "sha256": "ea847d52c3ebecc9b5482a7305fdbf918f03a2e3236c4e5e0696787a9da65af3"
+    },
+    {
+      "bytes": 5353,
+      "path": "olp_gate/policy.py",
+      "sha256": "7521ed7bbdd45ffc3c7cf4248bd2b2c5a9bd8f512bce8c0fcc07f68046f4774f"
+    },
+    {
+      "bytes": 8627,
       "path": "olp_gate/receipts.py",
-      "sha256": "76c95a390d949f4ab46692abcc0362c5da9164cfc760c0905bd07686fd3afa2e",
-      "bytes": 8627
+      "sha256": "76c95a390d949f4ab46692abcc0362c5da9164cfc760c0905bd07686fd3afa2e"
     },
     {
+      "bytes": 8917,
+      "path": "olp_gate/session.py",
+      "sha256": "20ebd5ff35bd58cd7f804aa784f135a9adbd50bcce0ba27a3dfef771493b811c"
+    },
+    {
+      "bytes": 521,
       "path": "pyproject.toml",
-      "sha256": "fc8a3eefe07859955afcae84b7e585e8c18c880fe1e3ad84c73d30642cd8aa63",
-      "bytes": 351
+      "sha256": "232dbdc69d57a6699834513db48c14487a820b707fe5b71750f87f0fb3eeba55"
     },
     {
+      "bytes": 2574,
       "path": "receipts/eval_score_receipts.jsonl",
-      "sha256": "21a422d017228f1390efc35cc8778c6bdd289cbb12a5cd6cf4bd5119df38377c",
-      "bytes": 2574
+      "sha256": "5cf777863ab526548ad47c8fb0bb44374957ed9e0eb18fbd15f856806cc68ad5"
     },
     {
+      "bytes": 1771,
       "path": "receipts/memory_write_receipts.jsonl",
-      "sha256": "75ce1c8922790bbab65eb803345afd3708c6e589d83efa72fee57ea367ce448c",
-      "bytes": 1770
+      "sha256": "34185b03843669f5a47118cd169b3a178512cd6d1668fefd595e93a1255686e0"
     },
     {
+      "bytes": 1616,
       "path": "receipts/tool_call_receipts.jsonl",
-      "sha256": "8e88b9d186941a00c4c0cd4da4833411c17c3c67756f761f14458d3be1bc804b",
-      "bytes": 1617
+      "sha256": "57877a0879f465cf3ff56423bced517362a9d5b9985badff8227e973cdb63ba7"
     },
     {
+      "bytes": 15356,
       "path": "results/demo_all_summary.json",
-      "sha256": "e9b4c9a9f85a159e7208801bf5b44ef813b94cd5e6018b860c125177a3e83b26",
-      "bytes": 15356
+      "sha256": "6d16ea14673cd1c5bd6c672ff21d43691036a4f49c95796382ff3fd14c646461"
     },
     {
+      "bytes": 18322,
+      "path": "results/proof_to_policy_demo/decision_receipts.jsonl",
+      "sha256": "e370f2a6ffef53283e94b137b5db904145193e15cb5085bbcc006e05061dc53e"
+    },
+    {
+      "bytes": 1653,
+      "path": "results/proof_to_policy_demo/demo_summary.json",
+      "sha256": "59011fae6bbf1765d99d671b31ff918556ee9a702328147a2e63a3033a78085f"
+    },
+    {
+      "bytes": 37,
+      "path": "results/proof_to_policy_demo/evidence/mutation_result.json",
+      "sha256": "10b2aa7239d122ffe760dd366b8be7f28a8a8f02fad14136ecc3d7d5a314044d"
+    },
+    {
+      "bytes": 39,
+      "path": "results/proof_to_policy_demo/evidence/tool_result.json",
+      "sha256": "2dc839e96b3fdb57992f3a01234c5e87410eb652d9691fd2c9271bc59d598053"
+    },
+    {
+      "bytes": 9628,
+      "path": "scripts/release_check.py",
+      "sha256": "2bcc804f80447e4f9cd2efb663d90b09617f2ebe71549fa0f9b8e492b9934367"
+    },
+    {
+      "bytes": 1994,
+      "path": "scripts/verify_manifest.py",
+      "sha256": "a82c405a518b8b18b6e2487e9abf5ada6609bfb070679b006f1a8f043d5dd917"
+    },
+    {
+      "bytes": 1781,
+      "path": "tests/fixtures/agent-receipts-v050-runtime.json",
+      "sha256": "98e6488baadb7ffbbfb5f48b3b03109d4b56646eef3603fe1bde8dcc7dd18670"
+    },
+    {
+      "bytes": 1130,
+      "path": "tests/fixtures/olp-trace-receipt.json",
+      "sha256": "ea4d358b4ad02c0a39a0e2370d9cd8051fbdc5597a48bdbb845756f4c880678f"
+    },
+    {
+      "bytes": 22124,
+      "path": "tests/test_proof_to_policy.py",
+      "sha256": "d184d838a2fa08bc47cc2875a80bed57cb78e168a28250b80a5865e680caf01c"
+    },
+    {
+      "bytes": 6040,
       "path": "tests/test_receipt_gate.py",
-      "sha256": "98a655d3104773cc991c5887147f92174431fa3a690c564ee27d4578c69de352",
-      "bytes": 5806
+      "sha256": "992bcaafb4cbf04c725393eef4f5511fddbe432077ab98ba0cec80bc78421c24"
+    },
+    {
+      "bytes": 14948,
+      "path": "verify-decision-node.mjs",
+      "sha256": "26b957f5ee3faf701a064daa9b18f24c6481dadb1bf59271ab3f6f8c906ac7a6"
     }
-  ]
+  ],
+  "proof_to_policy_demo": {
+    "decision_receipt_count": 5,
+    "observed": {
+      "complete_evidence_trusted_outcome": [
+        "VERIFIED",
+        "COMMIT"
+      ],
+      "exact_replay": [
+        "REJECTED",
+        "DENY"
+      ],
+      "harmful_mutation": [
+        "REJECTED",
+        "ROLLBACK_REQUEST"
+      ],
+      "unsupported_score": [
+        "UNDECIDABLE",
+        "NO_BADGE"
+      ],
+      "valid_signature_insufficient_evidence": [
+        "UNDECIDABLE",
+        "QUARANTINE"
+      ]
+    },
+    "passed": true
+  },
+  "release_status": "ready",
+  "repo": "openline-receipt-gate",
+  "schema": "openline.release_manifest.v0.2",
+  "version": "0.2.0"
 }
