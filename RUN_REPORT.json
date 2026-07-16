@@ -8,7 +8,7 @@
     },
     {
       "command": [
-        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
         "-m",
         "unittest",
         "discover",
@@ -17,8 +17,8 @@
         "-v"
       ],
       "counts": {
-        "discovered": 51,
-        "executed": 51,
+        "discovered": 54,
+        "executed": 54,
         "skipped": 0
       },
       "expected_returncodes": [
@@ -34,12 +34,12 @@
       },
       "passed": true,
       "returncode": 0,
-      "stderr": "test_bound_evidence_commits_without_upgrading_native_allow (test_pipelock_adapter.PipelockAdapterTests.test_bound_evidence_commits_without_upgrading_native_allow) ... ok\ntest_broken_chain_and_malformed_receipt_are_denied (test_pipelock_adapter.PipelockAdapterTests.test_broken_chain_and_malformed_receipt_are_denied) ... ok\ntest_broken_chain_delegates_rejection_to_native_verifier (test_pipelock_adapter.PipelockAdapterTests.test_broken_chain_delegates_rejection_to_native_verifier) ... ok\ntest_genuine_v2_is_explicitly_unsupported_in_phase_one (test_pipelock_adapter.PipelockAdapterTests.test_genuine_v2_is_explicitly_unsupported_in_phase_one) ... ok\ntest_malformed_v1_is_profile_failure_not_bad_format_guess (test_pipelock_adapter.PipelockAdapterTests.test_malformed_v1_is_profile_failure_not_bad_format_guess) ... ok\ntest_native_block_can_never_be_laundered_into_commit (test_pipelock_adapter.PipelockAdapterTests.test_native_block_can_never_be_laundered_into_commit) ... ok\ntest_published_pipelock_vector_interoperates (test_pipelock_adapter.PipelockAdapterTests.test_published_pipelock_vector_interoperates) ... ok\ntest_unpinned_signature_is_not_trusted_provenance (test_pipelock_adapter.PipelockAdapterTests.test_unpinned_signature_is_not_trusted_provenance) ... ok\ntest_valid_allow_without_required_evidence_is_undecidable (test_pipelock_adapter.PipelockAdapterTests.test_valid_allow_without_required_evidence_is_undecidable) ... ok\ntest_agent_evidence_commitment_path_cannot_be_chosen_by_requester (test_proof_to_policy.ProofToPolicyTests.test_agent_evidence_commitment_path_cannot_be_chosen_by_requester) ... ok\ntest_agent_receipt_signature_and_declared_coverage (test_proof_to_policy.ProofToPolicyTests.test_agent_receipt_signature_and_declared_coverage) ... ok\ntest_agent_receipt_tamper_is_rejected (test_proof_to_policy.ProofToPolicyTests.test_agent_receipt_tamper_is_rejected) ... ok\ntest_agent_terminal_marker_must_be_boolean (test_proof_to_policy.ProofToPolicyTests.test_agent_terminal_marker_must_be_boolean) ... ok\ntest_complete_evidence_and_outcome_commit (test_proof_to_policy.ProofToPolicyTests.test_complete_evidence_and_outcome_commit) ... ok\ntest_cross_run_binding_is_denied (test_proof_to_policy.ProofToPolicyTests.test_cross_run_binding_is_denied) ... ok\ntest_decision_log_rejects_duplicate_json_keys (test_proof_to_policy.ProofToPolicyTests.test_decision_log_rejects_duplicate_json_keys) ... ok\ntest_decision_tamper_breaks_signature (test_proof_to_policy.ProofToPolicyTests.test_decision_tamper_breaks_signature) ... ok\ntest_duplicate_json_keys_are_rejected (test_proof_to_policy.ProofToPolicyTests.test_duplicate_json_keys_are_rejected) ... ok\ntest_embedded_decision_key_is_not_implicitly_trusted (test_proof_to_policy.ProofToPolicyTests.test_embedded_decision_key_is_not_implicitly_trusted) ... ok\ntest_evidence_hash_mismatch_is_denied (test_proof_to_policy.ProofToPolicyTests.test_evidence_hash_mismatch_is_denied) ... ok\ntest_evidence_path_cannot_escape_request_directory (test_proof_to_policy.ProofToPolicyTests.test_evidence_path_cannot_escape_request_directory) ... ok\ntest_exact_replay_is_denied_without_advancing_chain (test_proof_to_policy.ProofToPolicyTests.test_exact_replay_is_denied_without_advancing_chain) ... ok\ntest_full_demo_passes (test_proof_to_policy.ProofToPolicyTests.test_full_demo_passes) ... ok\ntest_harmful_outcome_requests_rollback (test_proof_to_policy.ProofToPolicyTests.test_harmful_outcome_requests_rollback) ... ok\ntest_independent_node_verifier_accepts_demo_and_rejects_tamper (test_proof_to_policy.ProofToPolicyTests.test_independent_node_verifier_accepts_demo_and_rejects_tamper) ... ok\ntest_independent_source_requirement_is_not_earned_by_operator_key (test_proof_to_policy.ProofToPolicyTests.test_independent_source_requirement_is_not_earned_by_operator_key) ... ok\ntest_olp_wire_vector_is_integrity_valid_but_coverage_partial (test_proof_to_policy.ProofToPolicyTests.test_olp_wire_vector_is_integrity_valid_but_coverage_partial) ... ok\ntest_only_one_challenge_can_be_pending_per_session (test_proof_to_policy.ProofToPolicyTests.test_only_one_challenge_can_be_pending_per_session) ... ok\ntest_outcome_evidence_rebinding_is_denied (test_proof_to_policy.ProofToPolicyTests.test_outcome_evidence_rebinding_is_denied) ... ok\ntest_outcome_rebound_to_other_source_is_denied (test_proof_to_policy.ProofToPolicyTests.test_outcome_rebound_to_other_source_is_denied) ... ok\ntest_policy_caps_evidence_size (test_proof_to_policy.ProofToPolicyTests.test_policy_caps_evidence_size) ... ok\ntest_policy_rejects_string_booleans_and_unknown_fields (test_proof_to_policy.ProofToPolicyTests.test_policy_rejects_string_booleans_and_unknown_fields) ... ok\ntest_policy_without_replay_guard_does_not_claim_chain_acceptance (test_proof_to_policy.ProofToPolicyTests.test_policy_without_replay_guard_does_not_claim_chain_acceptance) ... ok\ntest_private_key_permissions_are_enforced (test_proof_to_policy.ProofToPolicyTests.test_private_key_permissions_are_enforced) ... ok\ntest_published_agent_receipts_v050_vector_interoperates (test_proof_to_policy.ProofToPolicyTests.test_published_agent_receipts_v050_vector_interoperates) ... ok\ntest_request_cannot_relabel_signed_action_type (test_proof_to_policy.ProofToPolicyTests.test_request_cannot_relabel_signed_action_type) ... ok\ntest_resealed_semantic_forgery_is_recomputed_and_rejected (test_proof_to_policy.ProofToPolicyTests.test_resealed_semantic_forgery_is_recomputed_and_rejected) ... ok\ntest_unsigned_legacy_source_cannot_earn_trusted_commit (test_proof_to_policy.ProofToPolicyTests.test_unsigned_legacy_source_cannot_earn_trusted_commit) ... ok\ntest_v02_decision_receipt_remains_verifiable_in_python_and_node (test_proof_to_policy.ProofToPolicyTests.test_v02_decision_receipt_remains_verifiable_in_python_and_node) ... ok\ntest_valid_signature_without_evidence_is_undecidable (test_proof_to_policy.ProofToPolicyTests.test_valid_signature_without_evidence_is_undecidable) ... ok\ntest_chain_detects_tamper (test_receipt_gate.LegacyReceiptGateTests.test_chain_detects_tamper) ... ok\ntest_clean_tool_call_commits (test_receipt_gate.LegacyReceiptGateTests.test_clean_tool_call_commits) ... ok\ntest_eval_score_requires_grader_receipt (test_receipt_gate.LegacyReceiptGateTests.test_eval_score_requires_grader_receipt) ... ok\ntest_exception_receipt_does_not_store_traceback_by_default (test_receipt_gate.LegacyReceiptGateTests.test_exception_receipt_does_not_store_traceback_by_default) ... ok\ntest_malformed_json_returns_invalid_chain (test_receipt_gate.LegacyReceiptGateTests.test_malformed_json_returns_invalid_chain) ... ok\ntest_memory_write_requires_user_intent (test_receipt_gate.LegacyReceiptGateTests.test_memory_write_requires_user_intent) ... ok\ntest_missing_evidence_quarantines (test_receipt_gate.LegacyReceiptGateTests.test_missing_evidence_quarantines) ... ok\ntest_missing_or_empty_receipt_file_does_not_pass (test_receipt_gate.LegacyReceiptGateTests.test_missing_or_empty_receipt_file_does_not_pass) ... ok\ntest_no_badge_when_context_exits_without_close (test_receipt_gate.LegacyReceiptGateTests.test_no_badge_when_context_exits_without_close) ... ok\ntest_raw_evidence_not_stored_unless_opt_in (test_receipt_gate.LegacyReceiptGateTests.test_raw_evidence_not_stored_unless_opt_in) ... ok\ntest_review_packet_lists_failures (test_receipt_gate.LegacyReceiptGateTests.test_review_packet_lists_failures) ... ok\n\n----------------------------------------------------------------------\nRan 51 tests in 0.472s\n\nOK\n",
+      "stderr": "test_bound_evidence_commits_without_upgrading_native_allow (test_pipelock_adapter.PipelockAdapterTests.test_bound_evidence_commits_without_upgrading_native_allow) ... ok\ntest_broken_chain_and_malformed_receipt_are_denied (test_pipelock_adapter.PipelockAdapterTests.test_broken_chain_and_malformed_receipt_are_denied) ... ok\ntest_broken_chain_delegates_rejection_to_native_verifier (test_pipelock_adapter.PipelockAdapterTests.test_broken_chain_delegates_rejection_to_native_verifier) ... ok\ntest_genuine_v2_is_explicitly_unsupported_in_phase_one (test_pipelock_adapter.PipelockAdapterTests.test_genuine_v2_is_explicitly_unsupported_in_phase_one) ... ok\ntest_malformed_v1_is_profile_failure_not_bad_format_guess (test_pipelock_adapter.PipelockAdapterTests.test_malformed_v1_is_profile_failure_not_bad_format_guess) ... ok\ntest_native_block_can_never_be_laundered_into_commit (test_pipelock_adapter.PipelockAdapterTests.test_native_block_can_never_be_laundered_into_commit) ... ok\ntest_published_pipelock_vector_interoperates (test_pipelock_adapter.PipelockAdapterTests.test_published_pipelock_vector_interoperates) ... ok\ntest_unpinned_signature_is_not_trusted_provenance (test_pipelock_adapter.PipelockAdapterTests.test_unpinned_signature_is_not_trusted_provenance) ... ok\ntest_valid_allow_without_required_evidence_is_undecidable (test_pipelock_adapter.PipelockAdapterTests.test_valid_allow_without_required_evidence_is_undecidable) ... ok\ntest_clean_clone_falls_back_to_embedded_frozen_protocol (test_pipelock_freeze.PipelockFreezeTests.test_clean_clone_falls_back_to_embedded_frozen_protocol) ... ok\ntest_fallback_rejects_a_resealed_or_wrong_snapshot (test_pipelock_freeze.PipelockFreezeTests.test_fallback_rejects_a_resealed_or_wrong_snapshot) ... ok\ntest_relative_reproduction_output_is_rooted_in_repository (test_pipelock_freeze.PipelockFreezeTests.test_relative_reproduction_output_is_rooted_in_repository) ... ok\ntest_agent_evidence_commitment_path_cannot_be_chosen_by_requester (test_proof_to_policy.ProofToPolicyTests.test_agent_evidence_commitment_path_cannot_be_chosen_by_requester) ... ok\ntest_agent_receipt_signature_and_declared_coverage (test_proof_to_policy.ProofToPolicyTests.test_agent_receipt_signature_and_declared_coverage) ... ok\ntest_agent_receipt_tamper_is_rejected (test_proof_to_policy.ProofToPolicyTests.test_agent_receipt_tamper_is_rejected) ... ok\ntest_agent_terminal_marker_must_be_boolean (test_proof_to_policy.ProofToPolicyTests.test_agent_terminal_marker_must_be_boolean) ... ok\ntest_complete_evidence_and_outcome_commit (test_proof_to_policy.ProofToPolicyTests.test_complete_evidence_and_outcome_commit) ... ok\ntest_cross_run_binding_is_denied (test_proof_to_policy.ProofToPolicyTests.test_cross_run_binding_is_denied) ... ok\ntest_decision_log_rejects_duplicate_json_keys (test_proof_to_policy.ProofToPolicyTests.test_decision_log_rejects_duplicate_json_keys) ... ok\ntest_decision_tamper_breaks_signature (test_proof_to_policy.ProofToPolicyTests.test_decision_tamper_breaks_signature) ... ok\ntest_duplicate_json_keys_are_rejected (test_proof_to_policy.ProofToPolicyTests.test_duplicate_json_keys_are_rejected) ... ok\ntest_embedded_decision_key_is_not_implicitly_trusted (test_proof_to_policy.ProofToPolicyTests.test_embedded_decision_key_is_not_implicitly_trusted) ... ok\ntest_evidence_hash_mismatch_is_denied (test_proof_to_policy.ProofToPolicyTests.test_evidence_hash_mismatch_is_denied) ... ok\ntest_evidence_path_cannot_escape_request_directory (test_proof_to_policy.ProofToPolicyTests.test_evidence_path_cannot_escape_request_directory) ... ok\ntest_exact_replay_is_denied_without_advancing_chain (test_proof_to_policy.ProofToPolicyTests.test_exact_replay_is_denied_without_advancing_chain) ... ok\ntest_full_demo_passes (test_proof_to_policy.ProofToPolicyTests.test_full_demo_passes) ... ok\ntest_harmful_outcome_requests_rollback (test_proof_to_policy.ProofToPolicyTests.test_harmful_outcome_requests_rollback) ... ok\ntest_independent_node_verifier_accepts_demo_and_rejects_tamper (test_proof_to_policy.ProofToPolicyTests.test_independent_node_verifier_accepts_demo_and_rejects_tamper) ... ok\ntest_independent_source_requirement_is_not_earned_by_operator_key (test_proof_to_policy.ProofToPolicyTests.test_independent_source_requirement_is_not_earned_by_operator_key) ... ok\ntest_olp_wire_vector_is_integrity_valid_but_coverage_partial (test_proof_to_policy.ProofToPolicyTests.test_olp_wire_vector_is_integrity_valid_but_coverage_partial) ... ok\ntest_only_one_challenge_can_be_pending_per_session (test_proof_to_policy.ProofToPolicyTests.test_only_one_challenge_can_be_pending_per_session) ... ok\ntest_outcome_evidence_rebinding_is_denied (test_proof_to_policy.ProofToPolicyTests.test_outcome_evidence_rebinding_is_denied) ... ok\ntest_outcome_rebound_to_other_source_is_denied (test_proof_to_policy.ProofToPolicyTests.test_outcome_rebound_to_other_source_is_denied) ... ok\ntest_policy_caps_evidence_size (test_proof_to_policy.ProofToPolicyTests.test_policy_caps_evidence_size) ... ok\ntest_policy_rejects_string_booleans_and_unknown_fields (test_proof_to_policy.ProofToPolicyTests.test_policy_rejects_string_booleans_and_unknown_fields) ... ok\ntest_policy_without_replay_guard_does_not_claim_chain_acceptance (test_proof_to_policy.ProofToPolicyTests.test_policy_without_replay_guard_does_not_claim_chain_acceptance) ... ok\ntest_private_key_permissions_are_enforced (test_proof_to_policy.ProofToPolicyTests.test_private_key_permissions_are_enforced) ... ok\ntest_published_agent_receipts_v050_vector_interoperates (test_proof_to_policy.ProofToPolicyTests.test_published_agent_receipts_v050_vector_interoperates) ... ok\ntest_request_cannot_relabel_signed_action_type (test_proof_to_policy.ProofToPolicyTests.test_request_cannot_relabel_signed_action_type) ... ok\ntest_resealed_semantic_forgery_is_recomputed_and_rejected (test_proof_to_policy.ProofToPolicyTests.test_resealed_semantic_forgery_is_recomputed_and_rejected) ... ok\ntest_unsigned_legacy_source_cannot_earn_trusted_commit (test_proof_to_policy.ProofToPolicyTests.test_unsigned_legacy_source_cannot_earn_trusted_commit) ... ok\ntest_v02_decision_receipt_remains_verifiable_in_python_and_node (test_proof_to_policy.ProofToPolicyTests.test_v02_decision_receipt_remains_verifiable_in_python_and_node) ... ok\ntest_valid_signature_without_evidence_is_undecidable (test_proof_to_policy.ProofToPolicyTests.test_valid_signature_without_evidence_is_undecidable) ... ok\ntest_chain_detects_tamper (test_receipt_gate.LegacyReceiptGateTests.test_chain_detects_tamper) ... ok\ntest_clean_tool_call_commits (test_receipt_gate.LegacyReceiptGateTests.test_clean_tool_call_commits) ... ok\ntest_eval_score_requires_grader_receipt (test_receipt_gate.LegacyReceiptGateTests.test_eval_score_requires_grader_receipt) ... ok\ntest_exception_receipt_does_not_store_traceback_by_default (test_receipt_gate.LegacyReceiptGateTests.test_exception_receipt_does_not_store_traceback_by_default) ... ok\ntest_malformed_json_returns_invalid_chain (test_receipt_gate.LegacyReceiptGateTests.test_malformed_json_returns_invalid_chain) ... ok\ntest_memory_write_requires_user_intent (test_receipt_gate.LegacyReceiptGateTests.test_memory_write_requires_user_intent) ... ok\ntest_missing_evidence_quarantines (test_receipt_gate.LegacyReceiptGateTests.test_missing_evidence_quarantines) ... ok\ntest_missing_or_empty_receipt_file_does_not_pass (test_receipt_gate.LegacyReceiptGateTests.test_missing_or_empty_receipt_file_does_not_pass) ... ok\ntest_no_badge_when_context_exits_without_close (test_receipt_gate.LegacyReceiptGateTests.test_no_badge_when_context_exits_without_close) ... ok\ntest_raw_evidence_not_stored_unless_opt_in (test_receipt_gate.LegacyReceiptGateTests.test_raw_evidence_not_stored_unless_opt_in) ... ok\ntest_review_packet_lists_failures (test_receipt_gate.LegacyReceiptGateTests.test_review_packet_lists_failures) ... ok\n\n----------------------------------------------------------------------\nRan 54 tests in 0.443s\n\nOK\n",
       "stdout": ""
     },
     {
       "command": [
-        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
         "-m",
         "unittest",
         "discover",
@@ -48,8 +48,8 @@
         "-v"
       ],
       "counts": {
-        "discovered": 51,
-        "executed": 42,
+        "discovered": 54,
+        "executed": 45,
         "skipped": 9
       },
       "expected_returncodes": [
@@ -58,12 +58,12 @@
       "name": "unittest_without_optional_pipelock",
       "passed": true,
       "returncode": 0,
-      "stderr": "test_bound_evidence_commits_without_upgrading_native_allow (test_pipelock_adapter.PipelockAdapterTests.test_bound_evidence_commits_without_upgrading_native_allow) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_broken_chain_and_malformed_receipt_are_denied (test_pipelock_adapter.PipelockAdapterTests.test_broken_chain_and_malformed_receipt_are_denied) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_broken_chain_delegates_rejection_to_native_verifier (test_pipelock_adapter.PipelockAdapterTests.test_broken_chain_delegates_rejection_to_native_verifier) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_genuine_v2_is_explicitly_unsupported_in_phase_one (test_pipelock_adapter.PipelockAdapterTests.test_genuine_v2_is_explicitly_unsupported_in_phase_one) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_malformed_v1_is_profile_failure_not_bad_format_guess (test_pipelock_adapter.PipelockAdapterTests.test_malformed_v1_is_profile_failure_not_bad_format_guess) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_native_block_can_never_be_laundered_into_commit (test_pipelock_adapter.PipelockAdapterTests.test_native_block_can_never_be_laundered_into_commit) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_published_pipelock_vector_interoperates (test_pipelock_adapter.PipelockAdapterTests.test_published_pipelock_vector_interoperates) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_unpinned_signature_is_not_trusted_provenance (test_pipelock_adapter.PipelockAdapterTests.test_unpinned_signature_is_not_trusted_provenance) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_valid_allow_without_required_evidence_is_undecidable (test_pipelock_adapter.PipelockAdapterTests.test_valid_allow_without_required_evidence_is_undecidable) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_agent_evidence_commitment_path_cannot_be_chosen_by_requester (test_proof_to_policy.ProofToPolicyTests.test_agent_evidence_commitment_path_cannot_be_chosen_by_requester) ... ok\ntest_agent_receipt_signature_and_declared_coverage (test_proof_to_policy.ProofToPolicyTests.test_agent_receipt_signature_and_declared_coverage) ... ok\ntest_agent_receipt_tamper_is_rejected (test_proof_to_policy.ProofToPolicyTests.test_agent_receipt_tamper_is_rejected) ... ok\ntest_agent_terminal_marker_must_be_boolean (test_proof_to_policy.ProofToPolicyTests.test_agent_terminal_marker_must_be_boolean) ... ok\ntest_complete_evidence_and_outcome_commit (test_proof_to_policy.ProofToPolicyTests.test_complete_evidence_and_outcome_commit) ... ok\ntest_cross_run_binding_is_denied (test_proof_to_policy.ProofToPolicyTests.test_cross_run_binding_is_denied) ... ok\ntest_decision_log_rejects_duplicate_json_keys (test_proof_to_policy.ProofToPolicyTests.test_decision_log_rejects_duplicate_json_keys) ... ok\ntest_decision_tamper_breaks_signature (test_proof_to_policy.ProofToPolicyTests.test_decision_tamper_breaks_signature) ... ok\ntest_duplicate_json_keys_are_rejected (test_proof_to_policy.ProofToPolicyTests.test_duplicate_json_keys_are_rejected) ... ok\ntest_embedded_decision_key_is_not_implicitly_trusted (test_proof_to_policy.ProofToPolicyTests.test_embedded_decision_key_is_not_implicitly_trusted) ... ok\ntest_evidence_hash_mismatch_is_denied (test_proof_to_policy.ProofToPolicyTests.test_evidence_hash_mismatch_is_denied) ... ok\ntest_evidence_path_cannot_escape_request_directory (test_proof_to_policy.ProofToPolicyTests.test_evidence_path_cannot_escape_request_directory) ... ok\ntest_exact_replay_is_denied_without_advancing_chain (test_proof_to_policy.ProofToPolicyTests.test_exact_replay_is_denied_without_advancing_chain) ... ok\ntest_full_demo_passes (test_proof_to_policy.ProofToPolicyTests.test_full_demo_passes) ... ok\ntest_harmful_outcome_requests_rollback (test_proof_to_policy.ProofToPolicyTests.test_harmful_outcome_requests_rollback) ... ok\ntest_independent_node_verifier_accepts_demo_and_rejects_tamper (test_proof_to_policy.ProofToPolicyTests.test_independent_node_verifier_accepts_demo_and_rejects_tamper) ... ok\ntest_independent_source_requirement_is_not_earned_by_operator_key (test_proof_to_policy.ProofToPolicyTests.test_independent_source_requirement_is_not_earned_by_operator_key) ... ok\ntest_olp_wire_vector_is_integrity_valid_but_coverage_partial (test_proof_to_policy.ProofToPolicyTests.test_olp_wire_vector_is_integrity_valid_but_coverage_partial) ... ok\ntest_only_one_challenge_can_be_pending_per_session (test_proof_to_policy.ProofToPolicyTests.test_only_one_challenge_can_be_pending_per_session) ... ok\ntest_outcome_evidence_rebinding_is_denied (test_proof_to_policy.ProofToPolicyTests.test_outcome_evidence_rebinding_is_denied) ... ok\ntest_outcome_rebound_to_other_source_is_denied (test_proof_to_policy.ProofToPolicyTests.test_outcome_rebound_to_other_source_is_denied) ... ok\ntest_policy_caps_evidence_size (test_proof_to_policy.ProofToPolicyTests.test_policy_caps_evidence_size) ... ok\ntest_policy_rejects_string_booleans_and_unknown_fields (test_proof_to_policy.ProofToPolicyTests.test_policy_rejects_string_booleans_and_unknown_fields) ... ok\ntest_policy_without_replay_guard_does_not_claim_chain_acceptance (test_proof_to_policy.ProofToPolicyTests.test_policy_without_replay_guard_does_not_claim_chain_acceptance) ... ok\ntest_private_key_permissions_are_enforced (test_proof_to_policy.ProofToPolicyTests.test_private_key_permissions_are_enforced) ... ok\ntest_published_agent_receipts_v050_vector_interoperates (test_proof_to_policy.ProofToPolicyTests.test_published_agent_receipts_v050_vector_interoperates) ... ok\ntest_request_cannot_relabel_signed_action_type (test_proof_to_policy.ProofToPolicyTests.test_request_cannot_relabel_signed_action_type) ... ok\ntest_resealed_semantic_forgery_is_recomputed_and_rejected (test_proof_to_policy.ProofToPolicyTests.test_resealed_semantic_forgery_is_recomputed_and_rejected) ... ok\ntest_unsigned_legacy_source_cannot_earn_trusted_commit (test_proof_to_policy.ProofToPolicyTests.test_unsigned_legacy_source_cannot_earn_trusted_commit) ... ok\ntest_v02_decision_receipt_remains_verifiable_in_python_and_node (test_proof_to_policy.ProofToPolicyTests.test_v02_decision_receipt_remains_verifiable_in_python_and_node) ... ok\ntest_valid_signature_without_evidence_is_undecidable (test_proof_to_policy.ProofToPolicyTests.test_valid_signature_without_evidence_is_undecidable) ... ok\ntest_chain_detects_tamper (test_receipt_gate.LegacyReceiptGateTests.test_chain_detects_tamper) ... ok\ntest_clean_tool_call_commits (test_receipt_gate.LegacyReceiptGateTests.test_clean_tool_call_commits) ... ok\ntest_eval_score_requires_grader_receipt (test_receipt_gate.LegacyReceiptGateTests.test_eval_score_requires_grader_receipt) ... ok\ntest_exception_receipt_does_not_store_traceback_by_default (test_receipt_gate.LegacyReceiptGateTests.test_exception_receipt_does_not_store_traceback_by_default) ... ok\ntest_malformed_json_returns_invalid_chain (test_receipt_gate.LegacyReceiptGateTests.test_malformed_json_returns_invalid_chain) ... ok\ntest_memory_write_requires_user_intent (test_receipt_gate.LegacyReceiptGateTests.test_memory_write_requires_user_intent) ... ok\ntest_missing_evidence_quarantines (test_receipt_gate.LegacyReceiptGateTests.test_missing_evidence_quarantines) ... ok\ntest_missing_or_empty_receipt_file_does_not_pass (test_receipt_gate.LegacyReceiptGateTests.test_missing_or_empty_receipt_file_does_not_pass) ... ok\ntest_no_badge_when_context_exits_without_close (test_receipt_gate.LegacyReceiptGateTests.test_no_badge_when_context_exits_without_close) ... ok\ntest_raw_evidence_not_stored_unless_opt_in (test_receipt_gate.LegacyReceiptGateTests.test_raw_evidence_not_stored_unless_opt_in) ... ok\ntest_review_packet_lists_failures (test_receipt_gate.LegacyReceiptGateTests.test_review_packet_lists_failures) ... ok\n\n----------------------------------------------------------------------\nRan 51 tests in 0.447s\n\nOK (skipped=9)\n",
+      "stderr": "test_bound_evidence_commits_without_upgrading_native_allow (test_pipelock_adapter.PipelockAdapterTests.test_bound_evidence_commits_without_upgrading_native_allow) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_broken_chain_and_malformed_receipt_are_denied (test_pipelock_adapter.PipelockAdapterTests.test_broken_chain_and_malformed_receipt_are_denied) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_broken_chain_delegates_rejection_to_native_verifier (test_pipelock_adapter.PipelockAdapterTests.test_broken_chain_delegates_rejection_to_native_verifier) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_genuine_v2_is_explicitly_unsupported_in_phase_one (test_pipelock_adapter.PipelockAdapterTests.test_genuine_v2_is_explicitly_unsupported_in_phase_one) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_malformed_v1_is_profile_failure_not_bad_format_guess (test_pipelock_adapter.PipelockAdapterTests.test_malformed_v1_is_profile_failure_not_bad_format_guess) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_native_block_can_never_be_laundered_into_commit (test_pipelock_adapter.PipelockAdapterTests.test_native_block_can_never_be_laundered_into_commit) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_published_pipelock_vector_interoperates (test_pipelock_adapter.PipelockAdapterTests.test_published_pipelock_vector_interoperates) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_unpinned_signature_is_not_trusted_provenance (test_pipelock_adapter.PipelockAdapterTests.test_unpinned_signature_is_not_trusted_provenance) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_valid_allow_without_required_evidence_is_undecidable (test_pipelock_adapter.PipelockAdapterTests.test_valid_allow_without_required_evidence_is_undecidable) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_clean_clone_falls_back_to_embedded_frozen_protocol (test_pipelock_freeze.PipelockFreezeTests.test_clean_clone_falls_back_to_embedded_frozen_protocol) ... ok\ntest_fallback_rejects_a_resealed_or_wrong_snapshot (test_pipelock_freeze.PipelockFreezeTests.test_fallback_rejects_a_resealed_or_wrong_snapshot) ... ok\ntest_relative_reproduction_output_is_rooted_in_repository (test_pipelock_freeze.PipelockFreezeTests.test_relative_reproduction_output_is_rooted_in_repository) ... ok\ntest_agent_evidence_commitment_path_cannot_be_chosen_by_requester (test_proof_to_policy.ProofToPolicyTests.test_agent_evidence_commitment_path_cannot_be_chosen_by_requester) ... ok\ntest_agent_receipt_signature_and_declared_coverage (test_proof_to_policy.ProofToPolicyTests.test_agent_receipt_signature_and_declared_coverage) ... ok\ntest_agent_receipt_tamper_is_rejected (test_proof_to_policy.ProofToPolicyTests.test_agent_receipt_tamper_is_rejected) ... ok\ntest_agent_terminal_marker_must_be_boolean (test_proof_to_policy.ProofToPolicyTests.test_agent_terminal_marker_must_be_boolean) ... ok\ntest_complete_evidence_and_outcome_commit (test_proof_to_policy.ProofToPolicyTests.test_complete_evidence_and_outcome_commit) ... ok\ntest_cross_run_binding_is_denied (test_proof_to_policy.ProofToPolicyTests.test_cross_run_binding_is_denied) ... ok\ntest_decision_log_rejects_duplicate_json_keys (test_proof_to_policy.ProofToPolicyTests.test_decision_log_rejects_duplicate_json_keys) ... ok\ntest_decision_tamper_breaks_signature (test_proof_to_policy.ProofToPolicyTests.test_decision_tamper_breaks_signature) ... ok\ntest_duplicate_json_keys_are_rejected (test_proof_to_policy.ProofToPolicyTests.test_duplicate_json_keys_are_rejected) ... ok\ntest_embedded_decision_key_is_not_implicitly_trusted (test_proof_to_policy.ProofToPolicyTests.test_embedded_decision_key_is_not_implicitly_trusted) ... ok\ntest_evidence_hash_mismatch_is_denied (test_proof_to_policy.ProofToPolicyTests.test_evidence_hash_mismatch_is_denied) ... ok\ntest_evidence_path_cannot_escape_request_directory (test_proof_to_policy.ProofToPolicyTests.test_evidence_path_cannot_escape_request_directory) ... ok\ntest_exact_replay_is_denied_without_advancing_chain (test_proof_to_policy.ProofToPolicyTests.test_exact_replay_is_denied_without_advancing_chain) ... ok\ntest_full_demo_passes (test_proof_to_policy.ProofToPolicyTests.test_full_demo_passes) ... ok\ntest_harmful_outcome_requests_rollback (test_proof_to_policy.ProofToPolicyTests.test_harmful_outcome_requests_rollback) ... ok\ntest_independent_node_verifier_accepts_demo_and_rejects_tamper (test_proof_to_policy.ProofToPolicyTests.test_independent_node_verifier_accepts_demo_and_rejects_tamper) ... ok\ntest_independent_source_requirement_is_not_earned_by_operator_key (test_proof_to_policy.ProofToPolicyTests.test_independent_source_requirement_is_not_earned_by_operator_key) ... ok\ntest_olp_wire_vector_is_integrity_valid_but_coverage_partial (test_proof_to_policy.ProofToPolicyTests.test_olp_wire_vector_is_integrity_valid_but_coverage_partial) ... ok\ntest_only_one_challenge_can_be_pending_per_session (test_proof_to_policy.ProofToPolicyTests.test_only_one_challenge_can_be_pending_per_session) ... ok\ntest_outcome_evidence_rebinding_is_denied (test_proof_to_policy.ProofToPolicyTests.test_outcome_evidence_rebinding_is_denied) ... ok\ntest_outcome_rebound_to_other_source_is_denied (test_proof_to_policy.ProofToPolicyTests.test_outcome_rebound_to_other_source_is_denied) ... ok\ntest_policy_caps_evidence_size (test_proof_to_policy.ProofToPolicyTests.test_policy_caps_evidence_size) ... ok\ntest_policy_rejects_string_booleans_and_unknown_fields (test_proof_to_policy.ProofToPolicyTests.test_policy_rejects_string_booleans_and_unknown_fields) ... ok\ntest_policy_without_replay_guard_does_not_claim_chain_acceptance (test_proof_to_policy.ProofToPolicyTests.test_policy_without_replay_guard_does_not_claim_chain_acceptance) ... ok\ntest_private_key_permissions_are_enforced (test_proof_to_policy.ProofToPolicyTests.test_private_key_permissions_are_enforced) ... ok\ntest_published_agent_receipts_v050_vector_interoperates (test_proof_to_policy.ProofToPolicyTests.test_published_agent_receipts_v050_vector_interoperates) ... ok\ntest_request_cannot_relabel_signed_action_type (test_proof_to_policy.ProofToPolicyTests.test_request_cannot_relabel_signed_action_type) ... ok\ntest_resealed_semantic_forgery_is_recomputed_and_rejected (test_proof_to_policy.ProofToPolicyTests.test_resealed_semantic_forgery_is_recomputed_and_rejected) ... ok\ntest_unsigned_legacy_source_cannot_earn_trusted_commit (test_proof_to_policy.ProofToPolicyTests.test_unsigned_legacy_source_cannot_earn_trusted_commit) ... ok\ntest_v02_decision_receipt_remains_verifiable_in_python_and_node (test_proof_to_policy.ProofToPolicyTests.test_v02_decision_receipt_remains_verifiable_in_python_and_node) ... ok\ntest_valid_signature_without_evidence_is_undecidable (test_proof_to_policy.ProofToPolicyTests.test_valid_signature_without_evidence_is_undecidable) ... ok\ntest_chain_detects_tamper (test_receipt_gate.LegacyReceiptGateTests.test_chain_detects_tamper) ... ok\ntest_clean_tool_call_commits (test_receipt_gate.LegacyReceiptGateTests.test_clean_tool_call_commits) ... ok\ntest_eval_score_requires_grader_receipt (test_receipt_gate.LegacyReceiptGateTests.test_eval_score_requires_grader_receipt) ... ok\ntest_exception_receipt_does_not_store_traceback_by_default (test_receipt_gate.LegacyReceiptGateTests.test_exception_receipt_does_not_store_traceback_by_default) ... ok\ntest_malformed_json_returns_invalid_chain (test_receipt_gate.LegacyReceiptGateTests.test_malformed_json_returns_invalid_chain) ... ok\ntest_memory_write_requires_user_intent (test_receipt_gate.LegacyReceiptGateTests.test_memory_write_requires_user_intent) ... ok\ntest_missing_evidence_quarantines (test_receipt_gate.LegacyReceiptGateTests.test_missing_evidence_quarantines) ... ok\ntest_missing_or_empty_receipt_file_does_not_pass (test_receipt_gate.LegacyReceiptGateTests.test_missing_or_empty_receipt_file_does_not_pass) ... ok\ntest_no_badge_when_context_exits_without_close (test_receipt_gate.LegacyReceiptGateTests.test_no_badge_when_context_exits_without_close) ... ok\ntest_raw_evidence_not_stored_unless_opt_in (test_receipt_gate.LegacyReceiptGateTests.test_raw_evidence_not_stored_unless_opt_in) ... ok\ntest_review_packet_lists_failures (test_receipt_gate.LegacyReceiptGateTests.test_review_packet_lists_failures) ... ok\n\n----------------------------------------------------------------------\nRan 54 tests in 0.411s\n\nOK (skipped=9)\n",
       "stdout": ""
     },
     {
       "command": [
-        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
         "examples/demo_all.py"
       ],
       "expected_returncodes": [
@@ -77,7 +77,7 @@
     },
     {
       "command": [
-        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
         "-m",
         "olp_gate.cli",
         "demo-proof-to-policy",
@@ -91,11 +91,11 @@
       "passed": true,
       "returncode": 0,
       "stderr": "",
-      "stdout": "{\n  \"schema\": \"openline.proof_to_policy.demo.v0.2\",\n  \"passed\": true,\n  \"expected\": {\n    \"valid_signature_insufficient_evidence\": [\n      \"UNDECIDABLE\",\n      \"QUARANTINE\"\n    ],\n    \"complete_evidence_trusted_outcome\": [\n      \"VERIFIED\",\n      \"COMMIT\"\n    ],\n    \"exact_replay\": [\n      \"REJECTED\",\n      \"DENY\"\n    ],\n    \"unsupported_score\": [\n      \"UNDECIDABLE\",\n      \"NO_BADGE\"\n    ],\n    \"harmful_mutation\": [\n      \"REJECTED\",\n      \"ROLLBACK_REQUEST\"\n    ]\n  },\n  \"observed\": {\n    \"valid_signature_insufficient_evidence\": [\n      \"UNDECIDABLE\",\n      \"QUARANTINE\"\n    ],\n    \"complete_evidence_trusted_outcome\": [\n      \"VERIFIED\",\n      \"COMMIT\"\n    ],\n    \"exact_replay\": [\n      \"REJECTED\",\n      \"DENY\"\n    ],\n    \"unsupported_score\": [\n      \"UNDECIDABLE\",\n      \"NO_BADGE\"\n    ],\n    \"harmful_mutation\": [\n      \"REJECTED\",\n      \"ROLLBACK_REQUEST\"\n    ]\n  },\n  \"decision_log\": {\n    \"valid\": true,\n    \"count\": 5,\n    \"errors\": [],\n    \"last_hashes\": {\n      \"run-insufficient/session-insufficient\": \"e7f2105ae01a2a815f364ecc39d067b38bb8af0b54f8e8a982f4e75cd3b6ad3b\",\n      \"run-complete/session-complete\": \"b2aedb19bbef228cd3054e4e700435bb2fb555f1002ffa32d2e50e6da6731eba\",\n      \"run-score/session-score\": \"d440552c41a6264cff59ac61e976f4fc8834b16965895e2850287dda9aedc3db\",\n      \"run-mutation/session-mutation\": \"b6f2ebcf90e13e33505bbaec3454c446990ce919cf80023927326d574014ac20\"\n    }\n  },\n  \"decision_receipt_count\": 5,\n  \"gate_public_key\": \"17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce\",\n  \"claim_boundary\": \"The demo proves deterministic policy behavior inside declared fixtures, not production safety.\"\n}\n"
+      "stdout": "{\n  \"schema\": \"openline.proof_to_policy.demo.v0.2\",\n  \"passed\": true,\n  \"expected\": {\n    \"valid_signature_insufficient_evidence\": [\n      \"UNDECIDABLE\",\n      \"QUARANTINE\"\n    ],\n    \"complete_evidence_trusted_outcome\": [\n      \"VERIFIED\",\n      \"COMMIT\"\n    ],\n    \"exact_replay\": [\n      \"REJECTED\",\n      \"DENY\"\n    ],\n    \"unsupported_score\": [\n      \"UNDECIDABLE\",\n      \"NO_BADGE\"\n    ],\n    \"harmful_mutation\": [\n      \"REJECTED\",\n      \"ROLLBACK_REQUEST\"\n    ]\n  },\n  \"observed\": {\n    \"valid_signature_insufficient_evidence\": [\n      \"UNDECIDABLE\",\n      \"QUARANTINE\"\n    ],\n    \"complete_evidence_trusted_outcome\": [\n      \"VERIFIED\",\n      \"COMMIT\"\n    ],\n    \"exact_replay\": [\n      \"REJECTED\",\n      \"DENY\"\n    ],\n    \"unsupported_score\": [\n      \"UNDECIDABLE\",\n      \"NO_BADGE\"\n    ],\n    \"harmful_mutation\": [\n      \"REJECTED\",\n      \"ROLLBACK_REQUEST\"\n    ]\n  },\n  \"decision_log\": {\n    \"valid\": true,\n    \"count\": 5,\n    \"errors\": [],\n    \"last_hashes\": {\n      \"run-insufficient/session-insufficient\": \"0b2f952ae06bb8f4622e31560632c2e07a0c4180955f66ff72069953223e7eba\",\n      \"run-complete/session-complete\": \"584678c6ca97754cd2fa8cd797e4a209a8866260f4ce870d555ee5d3041273c5\",\n      \"run-score/session-score\": \"effb2ff4108af5cdff9f5a7971353b55983caed490bc5f16db227a71512cb91d\",\n      \"run-mutation/session-mutation\": \"a7a722975f88fadab7786f3c3c344abcb1aa40ff6def570c5d826154169a6b4d\"\n    }\n  },\n  \"decision_receipt_count\": 5,\n  \"gate_public_key\": \"17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce\",\n  \"claim_boundary\": \"The demo proves deterministic policy behavior inside declared fixtures, not production safety.\"\n}\n"
     },
     {
       "command": [
-        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
         "-m",
         "olp_gate.cli",
         "verify-decision",
@@ -110,7 +110,7 @@
       "passed": true,
       "returncode": 0,
       "stderr": "",
-      "stdout": "{\n  \"valid\": true,\n  \"count\": 5,\n  \"errors\": [],\n  \"last_hashes\": {\n    \"run-insufficient/session-insufficient\": \"e7f2105ae01a2a815f364ecc39d067b38bb8af0b54f8e8a982f4e75cd3b6ad3b\",\n    \"run-complete/session-complete\": \"b2aedb19bbef228cd3054e4e700435bb2fb555f1002ffa32d2e50e6da6731eba\",\n    \"run-score/session-score\": \"d440552c41a6264cff59ac61e976f4fc8834b16965895e2850287dda9aedc3db\",\n    \"run-mutation/session-mutation\": \"b6f2ebcf90e13e33505bbaec3454c446990ce919cf80023927326d574014ac20\"\n  }\n}\n"
+      "stdout": "{\n  \"valid\": true,\n  \"count\": 5,\n  \"errors\": [],\n  \"last_hashes\": {\n    \"run-insufficient/session-insufficient\": \"0b2f952ae06bb8f4622e31560632c2e07a0c4180955f66ff72069953223e7eba\",\n    \"run-complete/session-complete\": \"584678c6ca97754cd2fa8cd797e4a209a8866260f4ce870d555ee5d3041273c5\",\n    \"run-score/session-score\": \"effb2ff4108af5cdff9f5a7971353b55983caed490bc5f16db227a71512cb91d\",\n    \"run-mutation/session-mutation\": \"a7a722975f88fadab7786f3c3c344abcb1aa40ff6def570c5d826154169a6b4d\"\n  }\n}\n"
     },
     {
       "command": [
@@ -131,7 +131,7 @@
     },
     {
       "command": [
-        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
         "-m",
         "compileall",
         "-q",
@@ -148,7 +148,7 @@
     },
     {
       "command": [
-        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
         "scripts/verify_pipelock_benchmark.py"
       ],
       "expected_returncodes": [
@@ -158,7 +158,7 @@
       "passed": true,
       "returncode": 0,
       "stderr": "",
-      "stdout": "{\n  \"case_count\": 5,\n  \"errors\": [],\n  \"schema\": \"openline.release_run_report.v0.2\",\n  \"strong_hypothesis_falsified\": true,\n  \"valid\": true,\n  \"version\": \"0.3.0\"\n}\n"
+      "stdout": "{\n  \"case_count\": 5,\n  \"errors\": [],\n  \"freeze_proof\": {\n    \"mode\": \"embedded_snapshot\",\n    \"original_commit\": \"13aa5841343c707db5cf68c5b3195198d5c6814a\",\n    \"snapshot_sha256\": \"59ef16461959e47cb6782f4b8111970e1439d29a4444875178a67238b1a4f209\",\n    \"temporal_limit\": \"The embedded snapshot proves exact frozen bytes inside this release; it does not independently timestamp the freeze.\"\n  },\n  \"schema\": \"openline.release_run_report.v0.2\",\n  \"strong_hypothesis_falsified\": true,\n  \"valid\": true,\n  \"version\": \"0.3.0\"\n}\n"
     },
     {
       "command": [
@@ -179,11 +179,11 @@
     },
     {
       "command": [
-        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
         "-m",
         "olp_gate.cli",
         "verify-decision",
-        "/tmp/openline-release-unaduw5a/tampered.jsonl",
+        "/tmp/openline-release-l9hc029f/tampered.jsonl",
         "--gate-key",
         "17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce"
       ],
@@ -194,13 +194,13 @@
       "passed": true,
       "returncode": 2,
       "stderr": "",
-      "stdout": "{\n  \"valid\": false,\n  \"count\": 5,\n  \"errors\": [\n    \"receipt_2:decision_recompute_mismatch\",\n    \"receipt_2:payload_hash_mismatch\"\n  ],\n  \"last_hashes\": {\n    \"run-insufficient/session-insufficient\": \"e7f2105ae01a2a815f364ecc39d067b38bb8af0b54f8e8a982f4e75cd3b6ad3b\",\n    \"run-complete/session-complete\": \"b2aedb19bbef228cd3054e4e700435bb2fb555f1002ffa32d2e50e6da6731eba\",\n    \"run-score/session-score\": \"d440552c41a6264cff59ac61e976f4fc8834b16965895e2850287dda9aedc3db\",\n    \"run-mutation/session-mutation\": \"b6f2ebcf90e13e33505bbaec3454c446990ce919cf80023927326d574014ac20\"\n  }\n}\n"
+      "stdout": "{\n  \"valid\": false,\n  \"count\": 5,\n  \"errors\": [\n    \"receipt_2:decision_recompute_mismatch\",\n    \"receipt_2:payload_hash_mismatch\"\n  ],\n  \"last_hashes\": {\n    \"run-insufficient/session-insufficient\": \"0b2f952ae06bb8f4622e31560632c2e07a0c4180955f66ff72069953223e7eba\",\n    \"run-complete/session-complete\": \"584678c6ca97754cd2fa8cd797e4a209a8866260f4ce870d555ee5d3041273c5\",\n    \"run-score/session-score\": \"effb2ff4108af5cdff9f5a7971353b55983caed490bc5f16db227a71512cb91d\",\n    \"run-mutation/session-mutation\": \"a7a722975f88fadab7786f3c3c344abcb1aa40ff6def570c5d826154169a6b4d\"\n  }\n}\n"
     },
     {
       "command": [
         "node",
         "verify-decision-node.mjs",
-        "/tmp/openline-release-unaduw5a/tampered.jsonl",
+        "/tmp/openline-release-l9hc029f/tampered.jsonl",
         "--gate-key",
         "17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce"
       ],
@@ -215,13 +215,13 @@
     },
     {
       "command": [
-        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
         "-m",
         "pip",
         "wheel",
         ".",
         "--wheel-dir",
-        "/tmp/openline-release-unaduw5a/wheelhouse",
+        "/tmp/openline-release-l9hc029f/wheelhouse",
         "--no-deps",
         "--no-build-isolation"
       ],
@@ -231,18 +231,18 @@
       "name": "build_release_wheel",
       "passed": true,
       "returncode": 0,
-      "stderr": "",
-      "stdout": "Processing ./.\n  Preparing metadata (pyproject.toml): started\n  Preparing metadata (pyproject.toml): finished with status 'done'\nBuilding wheels for collected packages: openline-receipt-gate\n  Building wheel for openline-receipt-gate (pyproject.toml): started\n  Building wheel for openline-receipt-gate (pyproject.toml): finished with status 'done'\n  Created wheel for openline-receipt-gate: filename=openline_receipt_gate-0.3.0-py3-none-any.whl size=44838 sha256=2c685eb73bea93ea77cd2666c9269186fca4136df2c81e308bbf576a04cdec1e\n  Stored in directory: /tmp/openline-release-unaduw5a/pip-cache/wheels/1f/83/92/0125d799249f38f85cd8b44d4411fe852e953547ff0df38af8\nSuccessfully built openline-receipt-gate\n"
+      "stderr": "\n[notice] A new release of pip is available: 26.0.1 -> 26.1.2\n[notice] To update, run: pip install --upgrade pip\n",
+      "stdout": "Processing ./.\n  Preparing metadata (pyproject.toml): started\n  Preparing metadata (pyproject.toml): finished with status 'done'\nBuilding wheels for collected packages: openline-receipt-gate\n  Building wheel for openline-receipt-gate (pyproject.toml): started\n  Building wheel for openline-receipt-gate (pyproject.toml): finished with status 'done'\n  Created wheel for openline-receipt-gate: filename=openline_receipt_gate-0.3.1-py3-none-any.whl size=45232 sha256=8960a1552c0487d70e368cef091da41831c11d6dad584bc1c97c21e3394f21e9\n  Stored in directory: /tmp/openline-release-l9hc029f/pip-cache/wheels/1f/83/92/0125d799249f38f85cd8b44d4411fe852e953547ff0df38af8\nSuccessfully built openline-receipt-gate\n"
     },
     {
       "command": [
-        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
         "-m",
         "pip",
         "install",
-        "/tmp/openline-release-unaduw5a/wheelhouse/openline_receipt_gate-0.3.0-py3-none-any.whl",
+        "/tmp/openline-release-l9hc029f/wheelhouse/openline_receipt_gate-0.3.1-py3-none-any.whl",
         "--target",
-        "/tmp/openline-release-unaduw5a/site",
+        "/tmp/openline-release-l9hc029f/site",
         "--no-deps",
         "--no-index"
       ],
@@ -253,16 +253,16 @@
       "passed": true,
       "returncode": 0,
       "stderr": "WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n",
-      "stdout": "Processing /tmp/openline-release-unaduw5a/wheelhouse/openline_receipt_gate-0.3.0-py3-none-any.whl\nInstalling collected packages: openline-receipt-gate\nSuccessfully installed openline-receipt-gate-0.3.0\n"
+      "stdout": "Processing /tmp/openline-release-l9hc029f/wheelhouse/openline_receipt_gate-0.3.1-py3-none-any.whl\nInstalling collected packages: openline-receipt-gate\nSuccessfully installed openline-receipt-gate-0.3.1\n"
     },
     {
       "command": [
-        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
         "-m",
         "olp_gate.cli",
         "demo-proof-to-policy",
         "--output",
-        "/tmp/openline-release-unaduw5a/outside/installed_demo"
+        "/tmp/openline-release-l9hc029f/outside/installed_demo"
       ],
       "expected_returncodes": [
         0
@@ -271,13 +271,13 @@
       "passed": true,
       "returncode": 0,
       "stderr": "",
-      "stdout": "{\n  \"schema\": \"openline.proof_to_policy.demo.v0.2\",\n  \"passed\": true,\n  \"expected\": {\n    \"valid_signature_insufficient_evidence\": [\n      \"UNDECIDABLE\",\n      \"QUARANTINE\"\n    ],\n    \"complete_evidence_trusted_outcome\": [\n      \"VERIFIED\",\n      \"COMMIT\"\n    ],\n    \"exact_replay\": [\n      \"REJECTED\",\n      \"DENY\"\n    ],\n    \"unsupported_score\": [\n      \"UNDECIDABLE\",\n      \"NO_BADGE\"\n    ],\n    \"harmful_mutation\": [\n      \"REJECTED\",\n      \"ROLLBACK_REQUEST\"\n    ]\n  },\n  \"observed\": {\n    \"valid_signature_insufficient_evidence\": [\n      \"UNDECIDABLE\",\n      \"QUARANTINE\"\n    ],\n    \"complete_evidence_trusted_outcome\": [\n      \"VERIFIED\",\n      \"COMMIT\"\n    ],\n    \"exact_replay\": [\n      \"REJECTED\",\n      \"DENY\"\n    ],\n    \"unsupported_score\": [\n      \"UNDECIDABLE\",\n      \"NO_BADGE\"\n    ],\n    \"harmful_mutation\": [\n      \"REJECTED\",\n      \"ROLLBACK_REQUEST\"\n    ]\n  },\n  \"decision_log\": {\n    \"valid\": true,\n    \"count\": 5,\n    \"errors\": [],\n    \"last_hashes\": {\n      \"run-insufficient/session-insufficient\": \"cadb5223c5761f6480008ff34cd9b4e92f5f9761fd8dc71d58a0ff4bce837741\",\n      \"run-complete/session-complete\": \"c6b85f617380a5d8a4426783bbe401a0c9b24f970347447c2e3b5476e5ff05eb\",\n      \"run-score/session-score\": \"2fdb12e4292bc9bf801f527a22ad06ce29fbc54a69efa2f2b1695d8b41335440\",\n      \"run-mutation/session-mutation\": \"2d0b079c6b71b69003189531c2665aaf3225ca17a341da6ae438218b19878e56\"\n    }\n  },\n  \"decision_receipt_count\": 5,\n  \"gate_public_key\": \"17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce\",\n  \"claim_boundary\": \"The demo proves deterministic policy behavior inside declared fixtures, not production safety.\"\n}\n"
+      "stdout": "{\n  \"schema\": \"openline.proof_to_policy.demo.v0.2\",\n  \"passed\": true,\n  \"expected\": {\n    \"valid_signature_insufficient_evidence\": [\n      \"UNDECIDABLE\",\n      \"QUARANTINE\"\n    ],\n    \"complete_evidence_trusted_outcome\": [\n      \"VERIFIED\",\n      \"COMMIT\"\n    ],\n    \"exact_replay\": [\n      \"REJECTED\",\n      \"DENY\"\n    ],\n    \"unsupported_score\": [\n      \"UNDECIDABLE\",\n      \"NO_BADGE\"\n    ],\n    \"harmful_mutation\": [\n      \"REJECTED\",\n      \"ROLLBACK_REQUEST\"\n    ]\n  },\n  \"observed\": {\n    \"valid_signature_insufficient_evidence\": [\n      \"UNDECIDABLE\",\n      \"QUARANTINE\"\n    ],\n    \"complete_evidence_trusted_outcome\": [\n      \"VERIFIED\",\n      \"COMMIT\"\n    ],\n    \"exact_replay\": [\n      \"REJECTED\",\n      \"DENY\"\n    ],\n    \"unsupported_score\": [\n      \"UNDECIDABLE\",\n      \"NO_BADGE\"\n    ],\n    \"harmful_mutation\": [\n      \"REJECTED\",\n      \"ROLLBACK_REQUEST\"\n    ]\n  },\n  \"decision_log\": {\n    \"valid\": true,\n    \"count\": 5,\n    \"errors\": [],\n    \"last_hashes\": {\n      \"run-insufficient/session-insufficient\": \"0a37c3a4971668e0a6ce346615bfe203b9db72545a9746a82bab9825da40a5fb\",\n      \"run-complete/session-complete\": \"3b0efb34022807061b1368f4b19c3d02f4a085eb98154aad2261644a1949c7b5\",\n      \"run-score/session-score\": \"99249042e8a1fedc9a8578f2cff6c01645d2364027506cc6c7c749f114f5baf1\",\n      \"run-mutation/session-mutation\": \"7f06d59c5225dadddcab8a45b68da191ed259063530de15857363ffa4eb10037\"\n    }\n  },\n  \"decision_receipt_count\": 5,\n  \"gate_public_key\": \"17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce\",\n  \"claim_boundary\": \"The demo proves deterministic policy behavior inside declared fixtures, not production safety.\"\n}\n"
     },
     {
       "command": [
         "node",
         "/workspace/scratch/ec796a60d935/openline-receipt-gate-pipelock-v0.3.0/verify-decision-node.mjs",
-        "/tmp/openline-release-unaduw5a/outside/installed_demo/decision_receipts.jsonl",
+        "/tmp/openline-release-l9hc029f/outside/installed_demo/decision_receipts.jsonl",
         "--gate-key",
         "17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce"
       ],
@@ -292,7 +292,7 @@
     }
   ],
   "claim_boundary": "A passing synthetic release gate does not prove production safety, issuer honesty, complete capture, witness independence, or rollback execution. Frozen benchmark artifact verification is not a live benchmark rerun.",
-  "created_at": "2026-07-16T00:00:21.339574Z",
+  "created_at": "2026-07-16T16:36:17.918850Z",
   "environment": {
     "node": "v24.14.0",
     "platform": "Linux-6.12.47-x86_64-with-glibc2.39",
@@ -814,10 +814,10 @@
       "count": 5,
       "errors": [],
       "last_hashes": {
-        "run-complete/session-complete": "b2aedb19bbef228cd3054e4e700435bb2fb555f1002ffa32d2e50e6da6731eba",
-        "run-insufficient/session-insufficient": "e7f2105ae01a2a815f364ecc39d067b38bb8af0b54f8e8a982f4e75cd3b6ad3b",
-        "run-mutation/session-mutation": "b6f2ebcf90e13e33505bbaec3454c446990ce919cf80023927326d574014ac20",
-        "run-score/session-score": "d440552c41a6264cff59ac61e976f4fc8834b16965895e2850287dda9aedc3db"
+        "run-complete/session-complete": "584678c6ca97754cd2fa8cd797e4a209a8866260f4ce870d555ee5d3041273c5",
+        "run-insufficient/session-insufficient": "0b2f952ae06bb8f4622e31560632c2e07a0c4180955f66ff72069953223e7eba",
+        "run-mutation/session-mutation": "a7a722975f88fadab7786f3c3c344abcb1aa40ff6def570c5d826154169a6b4d",
+        "run-score/session-score": "effb2ff4108af5cdff9f5a7971353b55983caed490bc5f16db227a71512cb91d"
       },
       "valid": true
     },
@@ -887,20 +887,20 @@
   },
   "repo": "openline-receipt-gate",
   "schema": "openline.release_run_report.v0.2",
-  "test_count": 51,
-  "test_executed": 51,
+  "test_count": 54,
+  "test_executed": 54,
   "test_matrix": {
     "current_environment": {
-      "discovered": 51,
-      "executed": 51,
+      "discovered": 54,
+      "executed": 54,
       "skipped": 0
     },
     "without_optional_pipelock": {
-      "discovered": 51,
-      "executed": 42,
+      "discovered": 54,
+      "executed": 45,
       "skipped": 9
     }
   },
   "test_skipped": 0,
-  "version": "0.3.0"
+  "version": "0.3.1"
 }

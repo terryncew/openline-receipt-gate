@@ -46,7 +46,9 @@ def main() -> int:
         report = load_json(bench / "RUN_REPORT.json")
         cases_spec = load_json(bench / "CASES.json")
         manifest = load_json(bench / "FIXTURE_MANIFEST.json")
+        freeze = load_json(bench / "FREEZE.json")
         amendment = load_json(bench / "AMENDMENT-001.json")
+        amendment_2 = load_json(bench / "AMENDMENT-002.json")
     except (OSError, json.JSONDecodeError) as exc:
         print(json.dumps({"valid": False, "errors": [f"benchmark_unreadable:{exc}"]}, indent=2))
         return 2
@@ -57,6 +59,32 @@ def main() -> int:
     )
     if protocol_hash != recorded_protocol_hash:
         errors.append("protocol_hash_mismatch")
+    if protocol_hash != amendment_2.get("current_protocol_sha256"):
+        errors.append("amendment_2_protocol_hash_mismatch")
+    frozen_snapshot_hash = sha256(bench / "PROTOCOL-FROZEN-v0.3.0.md")
+    if frozen_snapshot_hash != freeze.get("protocol_sha256"):
+        errors.append("embedded_freeze_protocol_hash_mismatch")
+    if frozen_snapshot_hash != amendment_2.get("embedded_snapshot_sha256"):
+        errors.append("amendment_2_snapshot_hash_mismatch")
+    scored_protocol_hash = (
+        report.get("pipelock_head_to_head", {})
+        .get("protocol", {})
+        .get("current_protocol_sha256")
+    )
+    if scored_protocol_hash != amendment_2.get("prior_scored_protocol_sha256"):
+        errors.append("prior_scored_protocol_hash_mismatch")
+    for unchanged in (
+        "cases_changed",
+        "expected_outcomes_changed",
+        "fixtures_changed",
+        "results_changed",
+        "scoring_rule_changed",
+        "source_pins_changed",
+    ):
+        if amendment_2.get(unchanged) is not False:
+            errors.append(f"amendment_2_unexpected_change:{unchanged}")
+    if amendment_2.get("review", {}).get("third_party_independent_reproduction") is not False:
+        errors.append("vendor_review_misclassified")
     if report.get("schema") != "openline.release_run_report.v0.2":
         errors.append("report_schema_invalid")
     if report.get("version") != "0.3.0" or report.get("passed") is not True:
@@ -188,6 +216,15 @@ def main() -> int:
     result = {
         "valid": not errors,
         "schema": report.get("schema"),
+        "freeze_proof": {
+            "mode": "embedded_snapshot",
+            "original_commit": freeze.get("freeze_commit"),
+            "snapshot_sha256": frozen_snapshot_hash,
+            "temporal_limit": (
+                "The embedded snapshot proves exact frozen bytes inside this "
+                "release; it does not independently timestamp the freeze."
+            ),
+        },
         "version": report.get("version"),
         "case_count": len(rows),
         "strong_hypothesis_falsified": finding.get("strong_hypothesis_falsified"),

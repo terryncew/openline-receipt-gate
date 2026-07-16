@@ -38,6 +38,22 @@ fixtures are public conformance artifacts plus one OLP-authored downstream
 evidence companion. Timing and byte counts are reported per lane without a
 combined score.
 
+## Post-publication verification
+
+On 2026-07-16, the Pipelock vendor reran all five native fixtures and the three
+applicable AARP companions directly with Pipelock's own verifiers. Their native
+validity results, action verdicts, and AARP `claimed_unverified` classification
+matched this report. They also confirmed the key interpretation: AARP flagged a
+producer claim it could not verify; OLP separately read and evaluated the
+receiver-required evidence artifact.
+
+This is vendor boundary-accuracy confirmation rather than neutral independent
+reproduction. The review found that the original freeze commit was unavailable
+in the public Git history. v0.3.1 adds a byte-identical embedded copy of the
+original frozen protocol and records the snapshot's temporal limitation, so a
+clean clone can now complete the runner without rewriting the original freeze
+identifier or changing any scored result.
+
 ## Social excerpt
 
 Pipelock caught the network action. Its AARP profile also caught the overclaim.

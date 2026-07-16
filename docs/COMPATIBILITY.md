@@ -72,6 +72,11 @@ for newer v1 action records whose canonical field set grew after that release.
 It is therefore rejected rather than treated as compatible. The frozen benchmark
 and integration suite use v0.2.0 from the exact source commit above.
 
+The v0.3.1 runner carries a byte-identical copy of the original frozen protocol
+so a clean public clone can verify the freeze hash without the unpublished
+intermediate Git commit. This portability fallback does not change fixtures,
+expectations, scores, or the narrower OLP/Pipelock claim boundary.
+
 The signer key must be pinned by an external OLP trust-store record carrying the
 `source` role to establish provenance. Without that pin, the native verifier can
 still establish signature self-consistency, but the adapter reports provenance

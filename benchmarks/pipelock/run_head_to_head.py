@@ -29,6 +29,8 @@ PROTOCOL_PATH = HERE / "PROTOCOL.md"
 PROTOCOL_HASH_PATH = HERE / "PROTOCOL.sha256"
 FREEZE_PATH = HERE / "FREEZE.json"
 AMENDMENT_PATH = HERE / "AMENDMENT-001.json"
+AMENDMENT_2_PATH = HERE / "AMENDMENT-002.json"
+FROZEN_PROTOCOL_PATH = HERE / "PROTOCOL-FROZEN-v0.3.0.md"
 
 
 def sha256_bytes(data: bytes) -> str:
@@ -75,6 +77,87 @@ def benchmark_outcome(observed: dict[str, Any], expected: dict[str, Any]) -> str
     return "correct"
 
 
+def verify_original_protocol(
+    freeze: dict[str, Any],
+    *,
+    repository_root: Path = ROOT,
+    snapshot_path: Path = FROZEN_PROTOCOL_PATH,
+) -> dict[str, Any]:
+    """Verify the original protocol without requiring unpublished Git objects.
+
+    The v0.3.0 release named the real pre-scoring commit, but that intermediate
+    commit was not pushed to the public repository. Prefer the commit when it is
+    locally reachable. Otherwise require the byte-identical protocol snapshot
+    carried by the release. The fallback proves which protocol bytes were
+    frozen; it does not independently timestamp when they were created.
+    """
+
+    expected_hash = str(freeze["protocol_sha256"])
+    errors: list[str] = []
+    try:
+        snapshot_hash = sha256_bytes(snapshot_path.read_bytes())
+    except OSError:
+        snapshot_hash = None
+        errors.append("embedded_freeze_protocol_unavailable")
+    else:
+        if snapshot_hash != expected_hash:
+            errors.append("embedded_freeze_protocol_hash_mismatch")
+
+    freeze_commit = str(freeze["freeze_commit"])
+    try:
+        completed = subprocess.run(
+            [
+                "git",
+                "-C",
+                str(repository_root),
+                "show",
+                f"{freeze_commit}:benchmarks/pipelock/PROTOCOL.md",
+            ],
+            check=False,
+            capture_output=True,
+        )
+    except OSError:
+        completed = None
+
+    commit_reachable = completed is not None and completed.returncode == 0
+    commit_protocol_hash = (
+        sha256_bytes(completed.stdout) if commit_reachable and completed is not None else None
+    )
+    if commit_reachable and commit_protocol_hash != expected_hash:
+        errors.append("original_freeze_protocol_hash_mismatch")
+
+    if commit_reachable:
+        proof_mode = "git_commit"
+    elif snapshot_hash == expected_hash:
+        proof_mode = "embedded_snapshot"
+    else:
+        proof_mode = "unavailable"
+        errors.append("original_freeze_protocol_unverifiable")
+
+    return {
+        "valid": not errors,
+        "errors": sorted(set(errors)),
+        "proof_mode": proof_mode,
+        "freeze_commit": freeze_commit,
+        "freeze_commit_reachable": commit_reachable,
+        "expected_protocol_sha256": expected_hash,
+        "commit_protocol_sha256": commit_protocol_hash,
+        "embedded_snapshot": snapshot_path.name,
+        "embedded_snapshot_sha256": snapshot_hash,
+        "temporal_claim": (
+            "Git history establishes commit ancestry when reachable; the embedded "
+            "snapshot establishes exact frozen bytes but does not independently "
+            "timestamp the pre-scoring event."
+        ),
+    }
+
+
+def repository_output_path(value: Path, *, repository_root: Path = ROOT) -> Path:
+    if value.is_absolute():
+        return value.resolve()
+    return (repository_root / value).resolve()
+
+
 def verify_freeze(
     *,
     pipelock_source: Path,
@@ -83,6 +166,7 @@ def verify_freeze(
     errors: list[str] = []
     freeze = load_json(FREEZE_PATH)
     amendment = load_json(AMENDMENT_PATH)
+    amendment_2 = load_json(AMENDMENT_2_PATH)
     manifest = load_json(MANIFEST_PATH)
     cases_hash = sha256_bytes(CASES_PATH.read_bytes())
     manifest_hash = sha256_bytes(MANIFEST_PATH.read_bytes())
@@ -91,6 +175,8 @@ def verify_freeze(
 
     if protocol_hash != hash_line:
         errors.append("current_protocol_hash_mismatch")
+    if protocol_hash != amendment_2["current_protocol_sha256"]:
+        errors.append("amendment_2_protocol_hash_mismatch")
     if cases_hash != amendment["cases_sha256_unchanged"]:
         errors.append("cases_hash_mismatch")
     changed_manifest = next(
@@ -107,24 +193,10 @@ def verify_freeze(
         if sha256_bytes(path.read_bytes()) != entry["sha256"]:
             errors.append(f"fixture_hash_mismatch:{entry['path']}")
 
-    freeze_commit = str(freeze["freeze_commit"])
-    try:
-        original_protocol = subprocess.run(
-            [
-                "git",
-                "-C",
-                str(ROOT),
-                "show",
-                f"{freeze_commit}:benchmarks/pipelock/PROTOCOL.md",
-            ],
-            check=True,
-            capture_output=True,
-        ).stdout
-    except subprocess.CalledProcessError:
-        errors.append("freeze_commit_unavailable")
-    else:
-        if sha256_bytes(original_protocol) != freeze["protocol_sha256"]:
-            errors.append("original_freeze_protocol_hash_mismatch")
+    original_protocol = verify_original_protocol(freeze)
+    errors.extend(original_protocol["errors"])
+    if amendment_2["embedded_snapshot_sha256"] != freeze["protocol_sha256"]:
+        errors.append("amendment_2_snapshot_hash_mismatch")
 
     actual_sources = {
         "pipelock": git_head(pipelock_source),
@@ -142,6 +214,7 @@ def verify_freeze(
     ancestry = subprocess.run(
         ["git", "-C", str(ROOT), "merge-base", "--is-ancestor", base, "HEAD"],
         check=False,
+        capture_output=True,
     )
     if ancestry.returncode != 0:
         errors.append("openline_base_not_in_history")
@@ -154,8 +227,9 @@ def verify_freeze(
         "original_protocol_sha256": freeze["protocol_sha256"],
         "fixture_manifest_sha256": manifest_hash,
         "cases_sha256": cases_hash,
-        "freeze_commit": freeze_commit,
-        "amendment_id": amendment["amendment_id"],
+        "freeze_commit": freeze["freeze_commit"],
+        "freeze_proof": original_protocol,
+        "amendment_ids": [amendment["amendment_id"], amendment_2["amendment_id"]],
         "source_commits": actual_sources,
     }
 
@@ -252,6 +326,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--decision-log", type=Path, default=HERE / "results" / "decision_receipts.jsonl")
     parser.add_argument("--overwrite", action="store_true")
     args = parser.parse_args(argv)
+
+    # Resolve caller-supplied relative outputs against the repository root just
+    # like the defaults. This keeps report paths portable and avoids a
+    # Path.relative_to failure after an otherwise successful clean-clone run.
+    for attribute in ("output", "report", "decision_log"):
+        setattr(args, attribute, repository_output_path(getattr(args, attribute)))
 
     for path in (args.output, args.report, args.decision_log):
         if path.exists():

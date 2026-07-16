@@ -48,11 +48,9 @@ Inspection of those pins corrected the draft before implementation:
 
 The authoritative native lane is the pinned `pipelock_verify` Python package. The
 pinned in-repo Pipelock Python reference verifier is run as an independent parity
-check. A disagreement in boolean receipt validity makes the affected case
-`undecidable`; the benchmark may not select whichever answer favors OLP.
-Diagnostic strings are recorded but are not scored. Two implementations that
-both reject a receipt remain in validity parity even when they describe the
-rejection differently.
+check. Any disagreement between those two official implementations makes the
+affected case `undecidable`; the benchmark may not select whichever answer favors
+OLP.
 
 All native checks pin the public conformance key
 `890726e93f89e773fb3b4298271245a69c1884fd1003846c3358b8b65a2288fa`.
@@ -200,61 +198,4 @@ and new results retained. Silent edits invalidate the run.
 
 ## Amendments
 
-### A1 — 2026-07-15, before the scored run
-
-The first post-freeze CLI development check exposed a path-containment error in
-the case-1 request companion. Its `artifact_path` was
-`../evidence/case-01-downstream-evidence.json`, while `olp-gate decide` correctly
-confines reads to the request file's directory. The preliminary case therefore
-returned `REJECTED` → `DENY` with
-`evidence_artifact_unreadable:downstream-result`. That preliminary outcome is
-retained here and is not represented as a Pipelock/OLP finding.
-
-The same 138-byte evidence artifact was copied under `requests/evidence/`, and
-the request now uses the contained path
-`evidence/case-01-downstream-evidence.json`. No receipt, evidence content,
-policy, expected outcome, source pin, or scoring rule changed.
-
-| Changed object | Old SHA-256 | New SHA-256 |
-|---|---|---|
-| `requests/case-01-clean-allow.request.json` | `e2fe064f211e9784487b10e555da8ec00adaa2df9ab4b6654a278f09120c6ae9` | `dd360c83128bdfa582d3c39e6227a1869259f1dc6168b23bbc97743920b36c8c` |
-| `FIXTURE_MANIFEST.json` | `684f9046909e5fff4ebb7a643a12dcf8d4b724a2c30505de58deb56d684f746d` | `8c09b5767aa6068eef401279f5e01af23f5b981a71b2122dc273c0814d5ddb27` |
-
-Added file:
-
-| Path | SHA-256 |
-|---|---|
-| `requests/evidence/case-01-downstream-evidence.json` | `df1744878237fb2c84b9c15c7da3292a060247ce39e34e035748a95197807b6f` |
-
-### A2 — 2026-07-16, after the scored run
-
-The Pipelock vendor reproduced the five native outcomes and the three applicable
-AARP outcomes directly with Pipelock's own verifiers. That review found that the
-published repository did not contain the intermediate Git commit named by
-`FREEZE.json`, so `run_head_to_head.py` stopped with
-`freeze_commit_unavailable` on a clean public clone before any fixture ran.
-
-This amendment adds `PROTOCOL-FROZEN-v0.3.0.md`, whose SHA-256 exactly matches
-the original protocol hash already sealed in `FREEZE.json`. The runner still
-prefers the named Git commit when it is reachable; otherwise it verifies the
-embedded byte-identical snapshot. The snapshot establishes the frozen protocol
-content inside the release. It does not create an independent timestamp for the
-pre-scoring event, and the original commit identifier remains visible rather
-than being rewritten to a later release commit.
-
-The same review also exposed wording stricter than the implemented score. The
-two native verifiers agreed that case 3 was invalid while using different error
-text. The protocol now states the rule actually used: boolean-validity
-disagreement makes a case `undecidable`; diagnostic-string differences are
-recorded and do not change parity.
-
-Caller-supplied relative output, report, and decision-log paths are now resolved
-against the repository root. This prevents a successful external run from
-failing only while serializing its decision-log path. It does not affect any
-verification or scoring operation.
-
-No fixture, case, source pin, policy, expected outcome, scoring result, or claim
-boundary changed. The original v0.3.0 `RUN_REPORT.json` remains the scored
-artifact. `AMENDMENT-002.json` records this post-run reproducibility correction
-and the Pipelock vendor's role as boundary reviewer rather than neutral third
-party.
+None at freeze time.

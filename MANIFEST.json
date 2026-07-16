@@ -1,6 +1,6 @@
 {
   "claim": "Signed source receipts can drive externally configured, independently verifiable policy decisions within declared inputs and trust assumptions.",
-  "created_at": "2026-07-16T00:00:21.362146Z",
+  "created_at": "2026-07-16T16:36:17.939479Z",
   "files": [
     {
       "bytes": 233,
@@ -8,9 +8,9 @@
       "sha256": "3c7eead6a0305c8eb0c51850c3a2751dc4925975722b2db46f9714ee5b5865aa"
     },
     {
-      "bytes": 2706,
+      "bytes": 3807,
       "path": "CHANGELOG.md",
-      "sha256": "e7ace6d5a932994cd4a67c4d20e085396bb8cc9ca14704e1d74cba43cd3b5ce7"
+      "sha256": "b8a1c15bb9422482f50ec1dc2978e4de5e30bbb464ec7beb07bebad013bc9555"
     },
     {
       "bytes": 985,
@@ -18,14 +18,14 @@
       "sha256": "83f1cec7cc6701c9a8004184b541dd1297a5c0aa618d22cfc9036686b4274cfb"
     },
     {
-      "bytes": 8751,
+      "bytes": 9873,
       "path": "README.md",
-      "sha256": "1fb5894d496e72a3ecb78b8b727a39f0f27a17368ef2e363b39e813a805b5b11"
+      "sha256": "d55edd8e7535c58a8c508ff59105ecc9a89032b386b22c19366c93535f76e631"
     },
     {
-      "bytes": 52155,
+      "bytes": 53607,
       "path": "RUN_REPORT.json",
-      "sha256": "caab8aa5498e9d77c8ba24592e0fcd1681c9cf8ec1613444a922181e7d8ae6af"
+      "sha256": "35696ef004296e30e93fcdee65062a228e50950aa573f94b1e086c31098dccc4"
     },
     {
       "bytes": 65,
@@ -36,6 +36,11 @@
       "bytes": 1071,
       "path": "benchmarks/pipelock/AMENDMENT-001.json",
       "sha256": "4380166fdf11ff9734d42b0d636ba74fdf9083d48e0e7f3e37701546710e38ec"
+    },
+    {
+      "bytes": 1370,
+      "path": "benchmarks/pipelock/AMENDMENT-002.json",
+      "sha256": "e3f520e9c7dc35c2bd0d976d5d844a69922698f784cee8ee2c72fdbec9e4fe87"
     },
     {
       "bytes": 4368,
@@ -53,19 +58,24 @@
       "sha256": "49e01e4996df10349b42cbdb4865b713360f046c98e9734ad92ab20405765317"
     },
     {
-      "bytes": 15629,
+      "bytes": 14290,
+      "path": "benchmarks/pipelock/PROTOCOL-FROZEN-v0.3.0.md",
+      "sha256": "59ef16461959e47cb6782f4b8111970e1439d29a4444875178a67238b1a4f209"
+    },
+    {
+      "bytes": 17647,
       "path": "benchmarks/pipelock/PROTOCOL.md",
-      "sha256": "03d7360b2ad5f6bdd190829c0652e7137e69ff9424d4282260a31942b1e004f9"
+      "sha256": "8fa561eed7432df1563481284cb6d7158520ad3905a33b2b7b0a96a260548ec4"
     },
     {
       "bytes": 78,
       "path": "benchmarks/pipelock/PROTOCOL.sha256",
-      "sha256": "905c3e73cd7ebe78f02a9e2e78f58917d1a2453692e7cbed1d557f17f0792e99"
+      "sha256": "c6da348aed04f1bff893e5405127b219464d25e7bbe31e2d9c5df49de5d846e9"
     },
     {
-      "bytes": 2306,
+      "bytes": 3205,
       "path": "benchmarks/pipelock/REPORT.md",
-      "sha256": "5a15fc9f5e9d5bf25e7bae34d469857d6795399a3702614e6b6aa095953c4ce0"
+      "sha256": "b2bd85b2b12820726d2cf2453b6f2bce82aeb23af431466138a2e2c81c6d7d3a"
     },
     {
       "bytes": 19441,
@@ -223,9 +233,9 @@
       "sha256": "43e7ba17bd3f75366f45072b7e38c6148eb9c3ef245729641558516037946c59"
     },
     {
-      "bytes": 25994,
+      "bytes": 29274,
       "path": "benchmarks/pipelock/run_head_to_head.py",
-      "sha256": "0adf457f59689f8f8bc4900f6534037f386c18e2473f3f7e0f8ecaa702da48fa"
+      "sha256": "89885352cefe946c71b887939b1b4fe1d8a4f76b656672aa63bc55c899147ee8"
     },
     {
       "bytes": 2773,
@@ -233,14 +243,14 @@
       "sha256": "843b07565b05d778438ef93d1857423b74b7801e0997f8acfa0348bd3b1b72ec"
     },
     {
-      "bytes": 3287,
+      "bytes": 3857,
       "path": "docs/CLAIM_BOUNDARY.md",
-      "sha256": "e5ec6d8e07aee78e6b89e6cd9e2b100509f1d97c71e1c2ff341e9dbe2c55ea71"
+      "sha256": "3b4fb150b51f396fe46a562fa419e316e881e858266b28bb13eb91c815efe726"
     },
     {
-      "bytes": 4339,
+      "bytes": 4639,
       "path": "docs/COMPATIBILITY.md",
-      "sha256": "4831003447e3b3e035b8eb86ed246361611c46e0903e4348b16f9033e3544653"
+      "sha256": "f60585511454a59f0d67e0da67e0e85e117f6820e6cff76fe4f557a105ed97c3"
     },
     {
       "bytes": 2921,
@@ -345,7 +355,7 @@
     {
       "bytes": 521,
       "path": "pyproject.toml",
-      "sha256": "4694dd9c169de55f6a5acaccb56e8bf06a2eb3e2af639df7738d8d4b4437037c"
+      "sha256": "06ed608697904a1c09d051119789806d6f593061d70bac15e995fcc6e5a08de7"
     },
     {
       "bytes": 125,
@@ -355,7 +365,7 @@
     {
       "bytes": 1653,
       "path": "results/proof_to_policy_demo/demo_summary.json",
-      "sha256": "3ade6f3c24eb290e3176dcf0ceaa0cf41128229d49da2d26f61781d243a683bc"
+      "sha256": "bf4ac4472fba54755a0cf68458663725133c72a6174c4d7436ec1f519577fed9"
     },
     {
       "bytes": 37,
@@ -370,7 +380,7 @@
     {
       "bytes": 17892,
       "path": "scripts/release_check.py",
-      "sha256": "b49e796249a65790307776cf2130a93596381c651a3252fa83150cc77abe1a1f"
+      "sha256": "c0fee30f0389fb46f5d25dcc233d33f5f1027050ddb62ca9d36984defc5fd30e"
     },
     {
       "bytes": 1994,
@@ -378,9 +388,9 @@
       "sha256": "a82c405a518b8b18b6e2487e9abf5ada6609bfb070679b006f1a8f043d5dd917"
     },
     {
-      "bytes": 7833,
+      "bytes": 9573,
       "path": "scripts/verify_pipelock_benchmark.py",
-      "sha256": "377d3fd9086ebfe562d7f199c31c8bf4d892375550cacb9a0388f0f76bd9818a"
+      "sha256": "5e5e7354ae2151843031faf3d6ec2caf8f9e8448741547df62ff898039affc8e"
     },
     {
       "bytes": 1781,
@@ -401,6 +411,11 @@
       "bytes": 7744,
       "path": "tests/test_pipelock_adapter.py",
       "sha256": "0c345f75982dbcdc97330eb58caa37b705eef3891f37b383f7a62902aed8fea8"
+    },
+    {
+      "bytes": 2565,
+      "path": "tests/test_pipelock_freeze.py",
+      "sha256": "4e1b3eb25f7ead63ef8a46ff9d549e64d4a26499a7d7024105b31b1be0d4a6ff"
     },
     {
       "bytes": 23379,
@@ -494,5 +509,5 @@
   "release_status": "ready",
   "repo": "openline-receipt-gate",
   "schema": "openline.release_manifest.v0.2",
-  "version": "0.3.0"
+  "version": "0.3.1"
 }

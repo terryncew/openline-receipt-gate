@@ -2,7 +2,7 @@
 
 ## Supported claims
 
-Receipt Gate v0.3 demonstrates that signed action receipts can be converted into deterministic, signed policy decisions while keeping integrity, provenance, coverage, the source action signal, freshness, evidence, and outcome checks separate.
+Receipt Gate v0.3.1 demonstrates that signed action receipts can be converted into deterministic, signed policy decisions while keeping integrity, provenance, coverage, the source action signal, freshness, evidence, and outcome checks separate.
 
 Inside the bundled fixtures:
 
@@ -35,6 +35,12 @@ The AARP companions were authored by OLP against Pipelock's public conformance
 profile. They are not deployment captures and do not measure AARP coverage in a
 real Pipelock installation.
 
+The Pipelock vendor directly reproduced all five native classifications and all
+three applicable AARP classifications with Pipelock's own verifiers. This is a
+vendor boundary-accuracy confirmation, not the neutral third-party reproduction
+requested in the public issue. Their review also produced the v0.3.1
+clean-clone reproducibility correction.
+
 ## Unsupported claims
 
 This release does not establish:
@@ -53,6 +59,7 @@ This release does not establish:
 - EvidenceReceipt v2 interoperability in the phase-1 Pipelock adapter.
 - a live Pipelock benchmark rerun from `scripts/verify_pipelock_benchmark.py`; that script verifies the sealed artifacts, while `run_head_to_head.py` performs the source-pinned live run;
 - compatibility with the currently published `pipelock-verify` v0.1.1 canonical field set. The integration is pinned to v0.2.0 source until PipeLab publishes it.
+- independent proof of when the original protocol snapshot was created. The embedded snapshot proves exact bytes against the pre-existing freeze hash; the original intermediate Git commit was not published with v0.3.0.
 
 ## Honest public claim
 

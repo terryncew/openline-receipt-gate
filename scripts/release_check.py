@@ -19,7 +19,7 @@ from typing import Any
 
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "0.3.0"
+VERSION = "0.3.1"
 PIPELOCK_INTEGRATION_TESTS = 9
 PIPELOCK_VERIFY_COMMIT = "329f1c76fdfa5fc5b165a3794f7c62906a076c03"
 PIPELOCK_REQUIREMENT = (
@@ -319,7 +319,7 @@ def main() -> int:
         steps.append(record)
         passed.append(okay)
         if okay:
-            wheels = sorted(wheelhouse.glob("openline_receipt_gate-0.3.0-*.whl"))
+            wheels = sorted(wheelhouse.glob("openline_receipt_gate-0.3.1-*.whl"))
             if len(wheels) != 1:
                 okay = False
                 steps.append(

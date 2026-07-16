@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.1
+
+- Fixed the clean-clone benchmark blocker reported by the Pipelock vendor: the runner now verifies an embedded byte-identical copy of the original frozen protocol when the unpublished intermediate Git commit is unavailable.
+- Preserved the original freeze commit and hash instead of relabeling a later release commit as the preregistration point.
+- Corrected the protocol wording to match the implemented comparison: boolean-validity disagreement is undecidable, while differing diagnostic strings between two rejecting verifiers are recorded but not scored.
+- Resolved caller-supplied relative benchmark output paths against the repository root so a completed external run can serialize its decision-log path portably.
+- Added a post-run amendment recording that fixtures, source pins, expectations, scoring, results, and the claim boundary remain unchanged.
+- Classified the Pipelock vendor's successful direct rerun as boundary-accuracy confirmation rather than neutral independent reproduction.
+- Added regression tests for clean-clone freeze fallback and corrupted-snapshot rejection.
+
 ## 0.3.0
 
 - Added a Pipelock ActionReceipt v1 adapter that delegates cryptographic and chain verification to the official pinned `pipelock-verify` 0.2.x source release.

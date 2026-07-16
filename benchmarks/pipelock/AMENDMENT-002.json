@@ -1,0 +1,27 @@
+{
+  "amendment_id": "A2",
+  "cases_changed": false,
+  "current_protocol_sha256": "8fa561eed7432df1563481284cb6d7158520ad3905a33b2b7b0a96a260548ec4",
+  "date": "2026-07-16",
+  "embedded_snapshot_path": "PROTOCOL-FROZEN-v0.3.0.md",
+  "embedded_snapshot_sha256": "59ef16461959e47cb6782f4b8111970e1439d29a4444875178a67238b1a4f209",
+  "expected_outcomes_changed": false,
+  "fixtures_changed": false,
+  "original_freeze_commit": "13aa5841343c707db5cf68c5b3195198d5c6814a",
+  "prior_scored_protocol_sha256": "03d7360b2ad5f6bdd190829c0652e7137e69ff9424d4282260a31942b1e004f9",
+  "public_v0_3_0_release_commit": "ebe3dca6047cd66cbf1acf82300868e64443250c",
+  "reason": "Make the original frozen protocol verifiable from a clean public clone, align the disagreement rule with boolean-validity scoring, and resolve caller-supplied result paths portably.",
+  "results_changed": false,
+  "review": {
+    "classification": "vendor_boundary_confirmation",
+    "issue_comment": "https://github.com/terryncew/openline-receipt-gate/issues/1#issuecomment-4993731415",
+    "reviewer": "LuckyPipewrench",
+    "reviewer_role": "Pipelock vendor",
+    "third_party_independent_reproduction": false
+  },
+  "schema": "openline.pipelock_protocol_amendment.v0.1",
+  "scored_run_had_started": true,
+  "scored_run_was_complete": true,
+  "scoring_rule_changed": false,
+  "source_pins_changed": false
+}

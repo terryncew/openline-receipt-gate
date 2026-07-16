@@ -118,6 +118,27 @@ AARP also flagged the unsupported downstream claim. That falsifies the strongest
 proposed wedge. The narrower observed difference is that OLP additionally read
 the receiver-required artifact and emitted a signed `COMMIT` or `QUARANTINE`.
 
+The Pipelock vendor subsequently reproduced the five native classifications and
+the three applicable AARP classifications directly with Pipelock's own
+verifiers. Their review confirmed the boundary description and found one public
+reproduction blocker: v0.3.0 referred to an intermediate freeze commit that was
+never pushed. v0.3.1 preserves that identifier and adds a byte-identical frozen
+protocol snapshot, allowing a clean clone to verify the original hash without
+silently substituting a later commit. The vendor review is recorded as boundary
+confirmation, not neutral third-party reproduction.
+
+For a fresh reproduction that leaves the sealed report untouched, use the same
+pinned source checkouts and write to a new subdirectory:
+
+```bash
+python -m benchmarks.pipelock.run_head_to_head \
+  --pipelock-verify-source ../sources/pipelock-verify-python \
+  --pipelock-source ../sources/pipelock \
+  --output benchmarks/pipelock/results/reproduction/RUN_REPORT.json \
+  --report benchmarks/pipelock/results/reproduction/REPORT.md \
+  --decision-log benchmarks/pipelock/results/reproduction/decision_receipts.jsonl
+```
+
 ### Legacy Receipt Gate v0.1.1
 
 The original context-manager API and local JSONL hash chain still work. Legacy records can prove local continuity, but they remain unsigned and therefore cannot earn trusted provenance under the new gate.
