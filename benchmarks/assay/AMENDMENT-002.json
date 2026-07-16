@@ -1,0 +1,37 @@
+{
+  "amended_at": "2026-07-16T19:34:48Z",
+  "amendment_id": "AMENDMENT-002",
+  "cases_changed": false,
+  "commands_changed": false,
+  "description": "The first complete passing decision log retained Assay's raw native success diagnostic inside signed assessment details. That diagnostic included a temporary filesystem path and was not needed to establish the return code, verifier identity, version, archive hash, or outcome. The adapter now records that no native diagnostic is stored. The runner also normalizes its non-signed temporary paths. The complete prior run is preserved under history/scored-run-001.",
+  "expected_outcomes_changed": false,
+  "fixture_manifest_sha256_unchanged": "fd5dbe8358e495d9bcafb75db9ed693e0b554eb7d8e9a52a6bc386e0c6758f72",
+  "fixtures_changed": false,
+  "implementation_changes": [
+    {
+      "new_sha256": "44aef90cbbd6a917a51eb1ba64ede6ef51417c07844aa5b60aa22ded1bc4058c",
+      "old_sha256": "3649a85eecda9bda029c828c43a7825e026b424c924befc788fbfe0f11eb6309",
+      "path": "olp_gate/adapters_assay.py",
+      "purpose": "exclude raw native verifier diagnostics from signed decision details"
+    },
+    {
+      "new_sha256": "85b31ae6d1805635b3236056552df585e2c1baf49e31c18f28b7a91841fc45b8",
+      "old_sha256": "52bc66dc54f40341e310b5fe931c2bf8cf474bdb44b5d75d289ff9bc6a2b5e24",
+      "path": "benchmarks/assay/run_head_to_head.py",
+      "purpose": "normalize temporary paths in non-signed benchmark diagnostics"
+    }
+  ],
+  "preserved_prior_run": {
+    "path": "benchmarks/assay/history/scored-run-001",
+    "report_md_sha256": "c5e1f83f0622b0bd082dc8d071a955812b61162ff88a55021ae6c081e2cc0a8b",
+    "run_report_sha256": "01adb2a86a4f0490978381b691f2d223037e699ffb82ff182825efaa9c680ec6",
+    "signed_decisions_sha256": "ad1846a3715c7e7a283d391e7236e817ce2803656514015a2be19e1420434e08",
+    "strong_signing_uniqueness_hypothesis_falsified": true
+  },
+  "protocol_sha256_unchanged": "485b0e5c2ee8bfd279bf3373226ed59c999332ee7b25da80d96a2f0477bdbbfe",
+  "results_changed": true,
+  "schema": "openline.assay_head_to_head.amendment.v0.1",
+  "scored_run_had_started": true,
+  "scoring_rule_changed": false,
+  "source_pins_changed": false
+}

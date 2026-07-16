@@ -10,13 +10,16 @@ The v0.1.1 `gate(...)` context manager emits a local hash-chained receipt. It re
 
 ### Proof-to-policy gateway
 
-The v0.3 gateway receives an already emitted source receipt and produces a separately signed decision receipt. It never edits or upgrades the source receipt.
+The v0.4 gateway receives already emitted source receipts or a pinned Assay
+evidence bundle and produces a separately signed decision receipt. It never
+edits or upgrades the source artifact.
 
 ```text
 source bundle
   ├── OLP Wire Canon
   ├── Agent Receipts
   ├── Pipelock ActionReceipt v1
+  ├── Assay Evidence Contract v1 bundle
   └── legacy Receipt Gate
         ↓
 format adapter
@@ -36,9 +39,14 @@ signed decision receipt
 
 ## External authority
 
-The policy file, trust store, signing key, and session ledger are CLI arguments. They are not accepted from the untrusted request body.
+The policy file, trust store, signing key, session ledger, and optional Assay
+executable are trusted caller inputs. They are not accepted from the untrusted
+request body.
 
-The request may carry source receipts, disclosures, evidence locations, an outcome receipt, and a previously issued binding. It cannot add a trusted key or change the policy.
+The request may carry source receipts or one Assay bundle descriptor,
+disclosures, evidence locations, an outcome receipt, and a previously issued
+binding. It cannot add a trusted key, select an executable, or change the
+policy.
 
 ## Assessments
 
@@ -53,9 +61,12 @@ unavailable
 
 `unavailable` differs from `fail`. Missing evidence produces `UNDECIDABLE`; altered evidence produces `REJECTED`.
 
-For Pipelock only, `source_signal` preserves the mediator's action verdict as a
+For Pipelock, `source_signal` preserves the mediator's action verdict as a
 required, separate input. `allow` does not imply `COMMIT`; `block` is a hard
-failure. Other adapters carry a neutral pass for backward-compatible semantics.
+failure. For Assay, it preserves the result of the receiver-registered exact-level
+Trust Basis assertion: pass makes the bundle eligible as an input, while failure
+is a hard failure. Other adapters carry a neutral pass for backward-compatible
+semantics.
 
 ## Session state
 

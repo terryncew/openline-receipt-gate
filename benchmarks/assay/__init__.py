@@ -1,0 +1,1 @@
+"""Frozen Assay interoperability benchmark."""

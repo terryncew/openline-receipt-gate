@@ -102,8 +102,74 @@ The published interop fixture is copied from `agent-egress-bench` commit
 verifier's `allow` result and receipt hash
 `34f2780dcb510c03f55fc31387c993066fad23e328a2bf5f64b630b8d58a0dfb`.
 
+## Assay
+
+Supported profile:
+
+```text
+Assay Evidence Contract bundle schema_version: 1
+Assay CLI: exactly 3.32.0
+receiver descriptor format: assay_evidence_bundle_v1
+```
+
+The receiver descriptor is additive to the v0.2 proof-to-policy request:
+
+```json
+{
+  "source_bundle": {
+    "format": "assay_evidence_bundle_v1",
+    "path": "assay/evidence-bundle.tar.gz",
+    "sha256": "<receiver-declared archive hash>",
+    "trust_basis_requirements": [
+      "bundle_verified=verified"
+    ]
+  }
+}
+```
+
+`source_bundle` and `source_receipts` are mutually exclusive. Bundle paths are
+confined to the request base directory, symlink escapes are rejected, and the
+archive is limited to 100 MB before execution. The request cannot select an
+Assay executable. The trusted caller supplies it with the API argument,
+`--assay-bin`, or `OLP_ASSAY_BIN`.
+
+The adapter delegates to these official commands:
+
+```text
+assay evidence verify
+assay evidence show --format json
+assay trust-basis generate
+assay trust-basis assert --format json
+```
+
+It checks the archive against the receiver-declared SHA-256, requires the exact
+CLI version, records the manifest root and registered claim levels, and retains
+only hashes and bounded metadata in the OLP decision. Raw Assay events are not
+copied into the decision receipt.
+
+An exact-level Trust Basis assertion failure maps to failing `coverage` and
+`source_signal` checks. A passing assertion makes the source eligible as an
+evidence input but remains partial coverage: it does not prove semantic
+completeness for an arbitrary receiver policy. When the bundle's
+`signing_evidence_present` level is `absent`, provenance is explicitly
+unavailable rather than silently upgraded by successful content verification.
+
+The frozen track pins Assay release commit
+`04d3db10adbe191aa731d52a6c2b77dad8bc0ca7` and the official Linux archive
+SHA-256
+`243f5e3935530cb1405dbb54fa57acc944de2800d28537d08dfc305b2a117775`.
+The scored runner verifies that the executed binary is the archive member and
+regenerates the public OpenFeature fixture byte-identically before scoring.
+
+Assay's DSSE attestation envelope is exercised as a benchmark capability
+control, not accepted by this adapter as a substitute for receiver-policy
+recomputation. The passing control establishes that arbitrary-predicate signing
+is not unique to OLP.
+
 ## Interoperability boundary
 
-The adapters consume Agent Receipts and Pipelock receipts as immutable source evidence. They do not rewrite them into OLP receipts or claim that the schemas mean the same thing.
+The adapters consume Agent Receipts, Pipelock receipts, and Assay evidence
+bundles as immutable source evidence. They do not rewrite them into OLP receipts
+or claim that the schemas mean the same thing.
 
 The signed OpenLine decision references the original receipt hash and records the detected source format. This lets either receipt become an input to OpenLine policy without a format war.

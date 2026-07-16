@@ -1,0 +1,6 @@
+{
+  "decision": "COMMIT",
+  "evidence_requirement": "receiver-release-approval",
+  "policy_id": "assay-head-to-head-receiver-policy",
+  "schema": "comparison.receiver_next_use.v0.1"
+}

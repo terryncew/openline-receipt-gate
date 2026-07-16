@@ -1,0 +1,30 @@
+{
+  "action_type": "receiver_release_decision",
+  "binding": {
+    "challenge_nonce": "__ISSUED_AT_RUN__",
+    "expected_source_hash": "06902924787b20aad33b5ec521fb82f3aeec361da290a3b2a862ea149946bc8b",
+    "parent_decision_hash": null,
+    "run_id": "olp_assay_h2h",
+    "sequence": 1,
+    "session_id": "case-03"
+  },
+  "evidence": [
+    {
+      "artifact_path": "evidence/receiver-release-approval.json",
+      "content_hash": "f4b7a95f186c7293a9b9a9a48fa963b6f070b522f3c51ce33e7abef3e41c24f3",
+      "id": "receiver-release-approval",
+      "source_receipt_hash": "06902924787b20aad33b5ec521fb82f3aeec361da290a3b2a862ea149946bc8b"
+    }
+  ],
+  "request_id": "assay-case-03",
+  "schema": "openline.proof_to_policy.request.v0.2",
+  "source_bundle": {
+    "format": "assay_evidence_bundle_v1",
+    "path": "assay/openfeature-decision-receipts.tar.gz",
+    "sha256": "06902924787b20aad33b5ec521fb82f3aeec361da290a3b2a862ea149946bc8b",
+    "trust_basis_requirements": [
+      "bundle_verified=verified",
+      "external_decision_receipt_boundary_visible=verified"
+    ]
+  }
+}

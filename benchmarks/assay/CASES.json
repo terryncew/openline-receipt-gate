@@ -1,0 +1,50 @@
+{
+  "cases": [
+    {
+      "assay_native_valid": true,
+      "assay_trust_assertion": "pass",
+      "case_id": "case-01-clean-with-receiver-evidence",
+      "expected_olp_decision": "COMMIT",
+      "expected_olp_reason_code": null,
+      "expected_olp_verdict": "VERIFIED",
+      "mutation": null
+    },
+    {
+      "assay_native_valid": true,
+      "assay_trust_assertion": "pass",
+      "case_id": "case-02-receiver-evidence-missing",
+      "expected_olp_decision": "QUARANTINE",
+      "expected_olp_reason_code": "evidence:required_evidence_missing:receiver-release-approval",
+      "expected_olp_verdict": "UNDECIDABLE",
+      "mutation": null
+    },
+    {
+      "assay_native_valid": false,
+      "assay_trust_assertion": "unavailable",
+      "case_id": "case-03-tampered-bundle",
+      "expected_olp_decision": "DENY",
+      "expected_olp_reason_code": "integrity:assay_bundle_invalid",
+      "expected_olp_verdict": "REJECTED",
+      "mutation": "flip_archive_byte"
+    },
+    {
+      "assay_native_valid": true,
+      "assay_trust_assertion": "fail",
+      "case_id": "case-04-assay-registered-claim-missing",
+      "expected_olp_decision": "DENY",
+      "expected_olp_reason_code": "source_signal:assay_trust_basis_requirement_failed",
+      "expected_olp_verdict": "REJECTED",
+      "mutation": null
+    },
+    {
+      "assay_native_valid": true,
+      "assay_trust_assertion": "pass",
+      "case_id": "case-05-source-hash-substitution",
+      "expected_olp_decision": "DENY",
+      "expected_olp_reason_code": "integrity:assay_bundle_sha256_mismatch",
+      "expected_olp_verdict": "REJECTED",
+      "mutation": null
+    }
+  ],
+  "schema": "openline.assay_head_to_head.cases.v0.1"
+}

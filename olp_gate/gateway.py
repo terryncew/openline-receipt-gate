@@ -23,6 +23,7 @@ from .adapters import (
     assess_source_bundle,
     parse_timestamp,
 )
+from .adapters_assay import assess_assay_bundle
 from .crypto import (
     DuplicateKeyError,
     olp_canonical_json,
@@ -85,7 +86,8 @@ def _action_fields(
                 risk_level = str(action.get("risk_level")) if action.get("risk_level") is not None else None
         source_type = str(source.get("action_type", "")) or None
         signed_action_type = signed_action_type or source_type
-        action_type = action_type or source_type or str(source.get("kind", "unknown"))
+        source_kind = str(source.get("kind", "")) or None
+        action_type = action_type or source_type or source_kind or requested_action_type
         action_id = action_id or (str(source.get("receipt_id")) if source.get("receipt_id") else None)
     return action_type or requested_action_type or "unknown", action_id, risk_level, signed_action_type
 
@@ -239,6 +241,7 @@ def evaluate_request(
     decision_path: str | Path,
     session_ledger: SessionLedger | None = None,
     base_dir: str | Path | None = None,
+    assay_binary: str | Path | None = None,
     now: datetime | None = None,
 ) -> dict[str, Any]:
     """Evaluate one request and emit a signed, parent-linked decision receipt."""
@@ -252,8 +255,21 @@ def evaluate_request(
         raw_receipts = [request["source_receipt"]]
     if not isinstance(raw_receipts, list) or not all(isinstance(item, Mapping) for item in raw_receipts):
         raw_receipts = []
-    receipts: list[Mapping[str, Any]] = list(raw_receipts)
-    source = assess_source_bundle(receipts, store)
+    source_bundle = request.get("source_bundle")
+    if source_bundle is not None and not isinstance(source_bundle, Mapping):
+        raise ValueError("source_bundle must be an object")
+    if isinstance(source_bundle, Mapping) and raw_receipts:
+        raise ValueError("source_bundle and source_receipts are mutually exclusive")
+    if isinstance(source_bundle, Mapping):
+        receipts: list[Mapping[str, Any]] = [dict(source_bundle)]
+        source = assess_assay_bundle(
+            source_bundle,
+            base_dir=base_dir,
+            assay_binary=assay_binary,
+        )
+    else:
+        receipts = list(raw_receipts)
+        source = assess_source_bundle(receipts, store)
     binding = request.get("binding", {})
     if not isinstance(binding, Mapping):
         binding = {}

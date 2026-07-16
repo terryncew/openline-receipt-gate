@@ -1,0 +1,515 @@
+{
+  "assay_head_to_head": {
+    "aggregate": {
+      "assay_native": {
+        "correct": 5,
+        "incorrect": 0,
+        "undecidable": 0
+      },
+      "assay_trust_basis": {
+        "correct": 5,
+        "incorrect": 0,
+        "undecidable": 0
+      },
+      "olp": {
+        "correct": 5,
+        "incorrect": 0,
+        "undecidable": 0
+      }
+    },
+    "capability_control": {
+      "assay_signed_caller_supplied_receiver_predicate": true,
+      "attestation_path": "benchmarks/assay/results/assay_receiver_predicate.attestation.json",
+      "attestation_sha256": "60379132137d6d77b30c645bba19798c2849fa74b4dd2270ce772b5b524fafb7",
+      "boundary": "This proves that Assay can sign an arbitrary caller-supplied predicate over a verified bundle. It does not show that Assay recomputed the predicate's receiver policy semantics or standardized OLP's five post-ingest dispositions.",
+      "cpu_time_ns": 7704001,
+      "errors": [],
+      "passed": true,
+      "predicate": {
+        "decision": "COMMIT",
+        "evidence_requirement": "receiver-release-approval",
+        "policy_id": "assay-head-to-head-receiver-policy",
+        "schema": "comparison.receiver_next_use.v0.1"
+      },
+      "public_key": "4c71b3dc27513f994bd3391fdfcc6300b2e7daf180979468b34e432cf14e5e35",
+      "semantic_decision_verification_by_assay_cli_observed": false,
+      "strong_signing_uniqueness_hypothesis_falsified": true,
+      "subject": [
+        {
+          "digest": {
+            "sha256": "fbfe6769381e9b70e99a5400889b00ee148300490586ca591a2d7b5fcec2dce1"
+          },
+          "name": "sha256:fbfe6769381e9b70e99a5400889b00ee148300490586ca591a2d7b5fcec2dce1"
+        }
+      ],
+      "verifier_calls": 1,
+      "wall_time_ns": 6925528
+    },
+    "cases": [
+      {
+        "assay_native": {
+          "benchmark_outcome": "correct",
+          "bytes_read": 966,
+          "cpu_time_ns": 6575000,
+          "diagnostic": "Bundle verified (/tmp/olp-assay-head-to-head-exf2kb6k/case-01-clean-with-receiver-evidence/assay/openfeature-decision-receipts.tar.gz): OK",
+          "returncode": 0,
+          "valid": true,
+          "verifier_calls": 1,
+          "wall_time_ns": 5942720
+        },
+        "assay_trust_basis": {
+          "assert_returncode": 0,
+          "assertion": {
+            "claim_identity": "claim.id",
+            "requirements": [
+              {
+                "actual_level": "verified",
+                "claim_id": "bundle_verified",
+                "expected_level": "verified",
+                "status": "passed"
+              },
+              {
+                "actual_level": "verified",
+                "claim_id": "external_decision_receipt_boundary_visible",
+                "expected_level": "verified",
+                "status": "passed"
+              }
+            ],
+            "schema": "assay.trust-basis.assert.v1",
+            "summary": {
+              "failed_requirements": 0,
+              "passed_requirements": 2,
+              "total_requirements": 2
+            }
+          },
+          "benchmark_outcome": "correct",
+          "bytes_read": 966,
+          "cpu_time_ns": 8394998,
+          "generate_returncode": 0,
+          "requirements": [
+            "bundle_verified=verified",
+            "external_decision_receipt_boundary_visible=verified"
+          ],
+          "status": "pass",
+          "verifier_calls": 2,
+          "wall_time_ns": 7718274
+        },
+        "boundary_note": "Assay and OLP are scored only against their own frozen expectations; different outputs may answer different policy questions.",
+        "case_id": "case-01-clean-with-receiver-evidence",
+        "mutation": null,
+        "olp": {
+          "assessment_statuses": {
+            "coverage": "partial",
+            "evidence": "pass",
+            "freshness": "pass",
+            "independence": "pass",
+            "integrity": "pass",
+            "outcome": "pass",
+            "profile": "pass",
+            "provenance": "unavailable",
+            "source_signal": "pass"
+          },
+          "benchmark_outcome": "correct",
+          "bytes_read": 1164,
+          "cpu_time_ns": 35479001,
+          "decision": "COMMIT",
+          "evidence_reads": 1,
+          "mechanism_observed": true,
+          "payload_hash": "233b7f69507af039453d47fdf467b1685ea9e110cdcca5e346d79f5597b17dd0",
+          "reason_codes": [
+            "coverage:assay_registered_claims_satisfied_not_semantic_completeness",
+            "provenance:assay_bundle_signing_evidence_absent"
+          ],
+          "signature_valid": true,
+          "verdict": "VERIFIED",
+          "verifier_calls": 5,
+          "wall_time_ns": 36662817
+        },
+        "source_archive_sha256": "06902924787b20aad33b5ec521fb82f3aeec361da290a3b2a862ea149946bc8b"
+      },
+      {
+        "assay_native": {
+          "benchmark_outcome": "correct",
+          "bytes_read": 966,
+          "cpu_time_ns": 8344000,
+          "diagnostic": "Bundle verified (/tmp/olp-assay-head-to-head-exf2kb6k/case-02-receiver-evidence-missing/assay/openfeature-decision-receipts.tar.gz): OK",
+          "returncode": 0,
+          "valid": true,
+          "verifier_calls": 1,
+          "wall_time_ns": 7698655
+        },
+        "assay_trust_basis": {
+          "assert_returncode": 0,
+          "assertion": {
+            "claim_identity": "claim.id",
+            "requirements": [
+              {
+                "actual_level": "verified",
+                "claim_id": "bundle_verified",
+                "expected_level": "verified",
+                "status": "passed"
+              },
+              {
+                "actual_level": "verified",
+                "claim_id": "external_decision_receipt_boundary_visible",
+                "expected_level": "verified",
+                "status": "passed"
+              }
+            ],
+            "schema": "assay.trust-basis.assert.v1",
+            "summary": {
+              "failed_requirements": 0,
+              "passed_requirements": 2,
+              "total_requirements": 2
+            }
+          },
+          "benchmark_outcome": "correct",
+          "bytes_read": 966,
+          "cpu_time_ns": 20498000,
+          "generate_returncode": 0,
+          "requirements": [
+            "bundle_verified=verified",
+            "external_decision_receipt_boundary_visible=verified"
+          ],
+          "status": "pass",
+          "verifier_calls": 2,
+          "wall_time_ns": 19378798
+        },
+        "boundary_note": "Assay and OLP are scored only against their own frozen expectations; different outputs may answer different policy questions.",
+        "case_id": "case-02-receiver-evidence-missing",
+        "mutation": null,
+        "olp": {
+          "assessment_statuses": {
+            "coverage": "partial",
+            "evidence": "unavailable",
+            "freshness": "pass",
+            "independence": "pass",
+            "integrity": "pass",
+            "outcome": "pass",
+            "profile": "pass",
+            "provenance": "unavailable",
+            "source_signal": "pass"
+          },
+          "benchmark_outcome": "correct",
+          "bytes_read": 966,
+          "cpu_time_ns": 35341001,
+          "decision": "QUARANTINE",
+          "evidence_reads": 0,
+          "mechanism_observed": true,
+          "payload_hash": "82cd41387d8539f756ac62c692f04ff654b83f586cbe81fa795cd2fba0f5fb05",
+          "reason_codes": [
+            "coverage:assay_registered_claims_satisfied_not_semantic_completeness",
+            "evidence:assertion_artifact_unavailable:receiver-release-approval",
+            "evidence:claim_support_missing:receiver_checkout_release_authorized",
+            "evidence:evidence_not_bound_to_source:receiver-release-approval",
+            "evidence:required_evidence_missing:receiver-release-approval",
+            "provenance:assay_bundle_signing_evidence_absent"
+          ],
+          "signature_valid": true,
+          "verdict": "UNDECIDABLE",
+          "verifier_calls": 5,
+          "wall_time_ns": 42317244
+        },
+        "source_archive_sha256": "06902924787b20aad33b5ec521fb82f3aeec361da290a3b2a862ea149946bc8b"
+      },
+      {
+        "assay_native": {
+          "benchmark_outcome": "correct",
+          "bytes_read": 966,
+          "cpu_time_ns": 9804000,
+          "diagnostic": "fatal: Bundle verification failed\n\nCaused by:\n    Contract: Security: JSON parse error: expected value at line 1 column 1 (ContractInvalidJson)",
+          "returncode": 2,
+          "valid": false,
+          "verifier_calls": 1,
+          "wall_time_ns": 8694527
+        },
+        "assay_trust_basis": {
+          "assertion": null,
+          "benchmark_outcome": "correct",
+          "bytes_read": 0,
+          "cpu_time_ns": 0,
+          "requirements": [
+            "bundle_verified=verified",
+            "external_decision_receipt_boundary_visible=verified"
+          ],
+          "status": "unavailable",
+          "verifier_calls": 0,
+          "wall_time_ns": 0
+        },
+        "boundary_note": "Assay and OLP are scored only against their own frozen expectations; different outputs may answer different policy questions.",
+        "case_id": "case-03-tampered-bundle",
+        "mutation": "flip_archive_byte",
+        "olp": {
+          "assessment_statuses": {
+            "coverage": "unavailable",
+            "evidence": "fail",
+            "freshness": "fail",
+            "independence": "pass",
+            "integrity": "fail",
+            "outcome": "pass",
+            "profile": "unavailable",
+            "provenance": "unavailable",
+            "source_signal": "unavailable"
+          },
+          "benchmark_outcome": "correct",
+          "bytes_read": 1164,
+          "cpu_time_ns": 9496000,
+          "decision": "DENY",
+          "evidence_reads": 1,
+          "mechanism_observed": true,
+          "payload_hash": "b25c06f4bab93c678ba58542b813886d11fcf164d08359f97932a92fdba6ee80",
+          "reason_codes": [
+            "coverage:assay_trust_basis_unavailable",
+            "evidence:source_receipt_binding_mismatch:receiver-release-approval",
+            "freshness:actual_source_hash_mismatch",
+            "freshness:expected_source_hash_mismatch",
+            "integrity:assay_bundle_invalid",
+            "integrity:assay_bundle_sha256_mismatch",
+            "profile:assay_verified_manifest_unavailable",
+            "provenance:assay_verified_manifest_unavailable",
+            "source_signal:assay_source_signal_untrusted"
+          ],
+          "signature_valid": true,
+          "verdict": "REJECTED",
+          "verifier_calls": 2,
+          "wall_time_ns": 10218346
+        },
+        "source_archive_sha256": "cb17c5e89f898a8c2587e03539a64d0f2f666c0335d95d725c4fb2d4c16b7470"
+      },
+      {
+        "assay_native": {
+          "benchmark_outcome": "correct",
+          "bytes_read": 966,
+          "cpu_time_ns": 4339000,
+          "diagnostic": "Bundle verified (/tmp/olp-assay-head-to-head-exf2kb6k/case-04-assay-registered-claim-missing/assay/openfeature-decision-receipts.tar.gz): OK",
+          "returncode": 0,
+          "valid": true,
+          "verifier_calls": 1,
+          "wall_time_ns": 4086175
+        },
+        "assay_trust_basis": {
+          "assert_returncode": 1,
+          "assertion": {
+            "claim_identity": "claim.id",
+            "requirements": [
+              {
+                "actual_level": "verified",
+                "claim_id": "bundle_verified",
+                "expected_level": "verified",
+                "status": "passed"
+              },
+              {
+                "actual_level": "verified",
+                "claim_id": "external_decision_receipt_boundary_visible",
+                "expected_level": "verified",
+                "status": "passed"
+              },
+              {
+                "actual_level": "absent",
+                "claim_id": "signing_evidence_present",
+                "expected_level": "verified",
+                "status": "failed"
+              }
+            ],
+            "schema": "assay.trust-basis.assert.v1",
+            "summary": {
+              "failed_requirements": 1,
+              "passed_requirements": 2,
+              "total_requirements": 3
+            }
+          },
+          "benchmark_outcome": "correct",
+          "bytes_read": 966,
+          "cpu_time_ns": 8560000,
+          "generate_returncode": 0,
+          "requirements": [
+            "bundle_verified=verified",
+            "external_decision_receipt_boundary_visible=verified",
+            "signing_evidence_present=verified"
+          ],
+          "status": "fail",
+          "verifier_calls": 2,
+          "wall_time_ns": 8222755
+        },
+        "boundary_note": "Assay and OLP are scored only against their own frozen expectations; different outputs may answer different policy questions.",
+        "case_id": "case-04-assay-registered-claim-missing",
+        "mutation": null,
+        "olp": {
+          "assessment_statuses": {
+            "coverage": "fail",
+            "evidence": "pass",
+            "freshness": "pass",
+            "independence": "pass",
+            "integrity": "pass",
+            "outcome": "pass",
+            "profile": "pass",
+            "provenance": "unavailable",
+            "source_signal": "fail"
+          },
+          "benchmark_outcome": "correct",
+          "bytes_read": 1164,
+          "cpu_time_ns": 35162000,
+          "decision": "DENY",
+          "evidence_reads": 1,
+          "mechanism_observed": true,
+          "payload_hash": "d9fd10177ab6768de75b7d2773f4d7533e50fd20daa92c8a23945a9ee7aabd84",
+          "reason_codes": [
+            "coverage:assay_trust_basis_requirement_failed",
+            "provenance:assay_bundle_signing_evidence_absent",
+            "source_signal:assay_trust_basis_requirement_failed"
+          ],
+          "signature_valid": true,
+          "verdict": "REJECTED",
+          "verifier_calls": 5,
+          "wall_time_ns": 36871622
+        },
+        "source_archive_sha256": "06902924787b20aad33b5ec521fb82f3aeec361da290a3b2a862ea149946bc8b"
+      },
+      {
+        "assay_native": {
+          "benchmark_outcome": "correct",
+          "bytes_read": 966,
+          "cpu_time_ns": 10933001,
+          "diagnostic": "Bundle verified (/tmp/olp-assay-head-to-head-exf2kb6k/case-05-source-hash-substitution/assay/openfeature-decision-receipts.tar.gz): OK",
+          "returncode": 0,
+          "valid": true,
+          "verifier_calls": 1,
+          "wall_time_ns": 9777400
+        },
+        "assay_trust_basis": {
+          "assert_returncode": 0,
+          "assertion": {
+            "claim_identity": "claim.id",
+            "requirements": [
+              {
+                "actual_level": "verified",
+                "claim_id": "bundle_verified",
+                "expected_level": "verified",
+                "status": "passed"
+              },
+              {
+                "actual_level": "verified",
+                "claim_id": "external_decision_receipt_boundary_visible",
+                "expected_level": "verified",
+                "status": "passed"
+              }
+            ],
+            "schema": "assay.trust-basis.assert.v1",
+            "summary": {
+              "failed_requirements": 0,
+              "passed_requirements": 2,
+              "total_requirements": 2
+            }
+          },
+          "benchmark_outcome": "correct",
+          "bytes_read": 966,
+          "cpu_time_ns": 9406999,
+          "generate_returncode": 0,
+          "requirements": [
+            "bundle_verified=verified",
+            "external_decision_receipt_boundary_visible=verified"
+          ],
+          "status": "pass",
+          "verifier_calls": 2,
+          "wall_time_ns": 8103457
+        },
+        "boundary_note": "Assay and OLP are scored only against their own frozen expectations; different outputs may answer different policy questions.",
+        "case_id": "case-05-source-hash-substitution",
+        "mutation": null,
+        "olp": {
+          "assessment_statuses": {
+            "coverage": "partial",
+            "evidence": "pass",
+            "freshness": "pass",
+            "independence": "pass",
+            "integrity": "fail",
+            "outcome": "pass",
+            "profile": "pass",
+            "provenance": "unavailable",
+            "source_signal": "pass"
+          },
+          "benchmark_outcome": "correct",
+          "bytes_read": 1164,
+          "cpu_time_ns": 36256999,
+          "decision": "DENY",
+          "evidence_reads": 1,
+          "mechanism_observed": true,
+          "payload_hash": "b61d240a27d0eaebb9709e1c58cab50da486e75fa79d4928dc7a90ffbe70dd6f",
+          "reason_codes": [
+            "coverage:assay_registered_claims_satisfied_not_semantic_completeness",
+            "integrity:assay_bundle_sha256_mismatch",
+            "provenance:assay_bundle_signing_evidence_absent"
+          ],
+          "signature_valid": true,
+          "verdict": "REJECTED",
+          "verifier_calls": 5,
+          "wall_time_ns": 36709922
+        },
+        "source_archive_sha256": "06902924787b20aad33b5ec521fb82f3aeec361da290a3b2a862ea149946bc8b"
+      }
+    ],
+    "decision_receipts": {
+      "count": 5,
+      "path": "benchmarks/assay/results/decision_receipts.jsonl",
+      "sha256": "ad1846a3715c7e7a283d391e7236e817ce2803656514015a2be19e1420434e08",
+      "trusted_gate_public_key": "3e6ea7acba59568c5f36acb41816fb16ab2b27ab13abd38b0924ca2691ad6599"
+    },
+    "finding": {
+      "permitted_claim": "In this frozen run, OLP preserved an Assay bundle, delegated its native claims to Assay, applied a separate receiver policy, and signed a standardized next-use disposition.",
+      "receiver_specific_observation": "The same Assay-valid source bundle led OLP to COMMIT with the receiver-required artifact and QUARANTINE without it.",
+      "strong_signing_uniqueness_hypothesis_falsified": true
+    },
+    "fixture_regeneration": {
+      "actual_sha256": "06902924787b20aad33b5ec521fb82f3aeec361da290a3b2a862ea149946bc8b",
+      "byte_identical_to_frozen_fixture": true,
+      "command": [
+        "/workspace/scratch/ec796a60d935/assay-v3.32.0-x86_64-unknown-linux-gnu/assay",
+        "evidence",
+        "import",
+        "openfeature-details",
+        "--input",
+        "/workspace/scratch/ec796a60d935/openline-receipt-gate-pipelock-v0.3.0/benchmarks/assay/fixtures/upstream/decision-details.openfeature.jsonl",
+        "--bundle-out",
+        "/tmp/olp-assay-head-to-head-exf2kb6k/regenerated-openfeature-bundle.tar.gz",
+        "--source-artifact-ref",
+        "decision-details.openfeature.jsonl",
+        "--run-id",
+        "olp_assay_h2h",
+        "--import-time",
+        "2026-07-16T12:00:00Z"
+      ],
+      "cpu_time_ns": 5212001,
+      "expected_sha256": "06902924787b20aad33b5ec521fb82f3aeec361da290a3b2a862ea149946bc8b",
+      "returncode": 0,
+      "stderr": "Imported OpenFeature EvaluationDetails decision receipts to /tmp/olp-assay-head-to-head-exf2kb6k/regenerated-openfeature-bundle.tar.gz",
+      "valid": true,
+      "wall_time_ns": 4573751
+    },
+    "passed": true,
+    "protocol": {
+      "cases_sha256": "69d0a7a88294a935e1b1bef6d024ccdb79eefdf32a2aa7c4903f058522fb525e",
+      "errors": [],
+      "fixture_manifest_sha256": "fd5dbe8358e495d9bcafb75db9ed693e0b554eb7d8e9a52a6bc386e0c6758f72",
+      "freeze_commit": "56490b43905aaba45c2c68fa71e6da78188ee3ae",
+      "protocol_sha256": "485b0e5c2ee8bfd279bf3373226ed59c999332ee7b25da80d96a2f0477bdbbfe",
+      "valid": true
+    }
+  },
+  "environment": {
+    "assay": {
+      "archive_binary_sha256": "06b90a3bd67296968378614a3e4df343cc46d70c340f94a4f20b6b20899c60a6",
+      "binary_sha256": "06b90a3bd67296968378614a3e4df343cc46d70c340f94a4f20b6b20899c60a6",
+      "errors": [],
+      "release_archive_sha256": "243f5e3935530cb1405dbb54fa57acc944de2800d28537d08dfc305b2a117775",
+      "release_commit": "04d3db10adbe191aa731d52a6c2b77dad8bc0ca7",
+      "valid": true,
+      "version": "assay 3.32.0"
+    },
+    "platform": "Linux-6.12.13-x86_64-with-glibc2.39",
+    "python": "3.12.13"
+  },
+  "generated_at": "2026-07-16T19:27:04.984125Z",
+  "passed": true,
+  "schema": "openline.release_run_report.v0.2",
+  "version": "0.4.0"
+}

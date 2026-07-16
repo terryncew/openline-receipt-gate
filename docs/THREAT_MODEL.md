@@ -18,6 +18,14 @@
 - evidence-path traversal and symlink escape outside the request directory, plus oversized evidence above the external policy limit.
 - laundering a verified Pipelock `block` action verdict into an OLP `COMMIT`;
 - treating an embedded, self-consistent Pipelock signer key as externally trusted provenance.
+- changing a pinned Assay archive byte or substituting an internally valid
+  archive whose SHA-256 differs from the receiver declaration;
+- Assay bundle path traversal, symlink escape, request-selected verifier
+  execution, and oversized archives above the adapter limit;
+- laundering a failed Assay Trust Basis assertion into a passing OLP source
+  signal;
+- silently treating successful Assay bundle verification as proof of arbitrary
+  receiver-policy completeness.
 
 ## Outside this release
 
@@ -32,6 +40,17 @@
 - Pipelock EvidenceReceipt v2 and mixed v1/v2 chain verification in this phase;
 - any claim that OLP inherits Pipelock's outside-agent, inline mediation boundary;
 - completeness of a Pipelock ActionReceipt chain beyond the receipts actually presented.
+- Assay's inline MCP policy enforcement, signed mandate authorization, eBPF/LSM
+  or Landlock enforcement, and any other live execution boundary;
+- omissions or false source artifacts that remain consistent with Assay's
+  declared bundle and registered claim boundary;
+- truth or receiver-policy correctness of an arbitrary caller-supplied Assay
+  DSSE predicate merely because its signature verifies;
+- Assay DSSE attestation ingestion as a source format. v0.4.0 consumes the
+  verified evidence bundle and exercises attestation only as a capability
+  control;
+- protection when the operator substitutes the trusted Assay executable,
+  receiver policy, bundle pin, OLP key, and release evidence together.
 
 ## Trust-store rule
 

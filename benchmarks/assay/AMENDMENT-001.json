@@ -1,0 +1,40 @@
+{
+  "amended_at": "2026-07-16T19:26:39Z",
+  "amendment_id": "AMENDMENT-001",
+  "cases_changed": false,
+  "commands_changed": false,
+  "description": "The direct script invocation placed benchmarks/assay, not the repository root, on sys.path. The first native and Trust Basis checks completed, then the OLP lane stopped with ModuleNotFoundError before an OLP decision or RUN_REPORT was produced. The runner now prepends its fixed repository root before deferred local imports.",
+  "expected_outcomes_changed": false,
+  "fixture_manifest_sha256_unchanged": "fd5dbe8358e495d9bcafb75db9ed693e0b554eb7d8e9a52a6bc386e0c6758f72",
+  "fixtures_changed": false,
+  "implementation_change": {
+    "new_sha256": "52bc66dc54f40341e310b5fe931c2bf8cf474bdb44b5d75d289ff9bc6a2b5e24",
+    "old_sha256": "429db32a0558627390f085c485db3c242d7288041f198aa866e0c8b86ef94dc1",
+    "path": "benchmarks/assay/run_head_to_head.py"
+  },
+  "operational_attempts": [
+    {
+      "result_artifacts_produced": false,
+      "scoring_started": false,
+      "status": "runtime_preflight_failed",
+      "summary": "The operator's first shell invocation expanded same-line variable assignments as empty strings; the runner received repository-directory paths and stopped before verification."
+    },
+    {
+      "assay_checks_completed": [
+        "fixture_regeneration",
+        "case-01 native bundle verification",
+        "case-01 Trust Basis assertion"
+      ],
+      "olp_decisions_produced": 0,
+      "result_artifacts_produced": false,
+      "scoring_started": true,
+      "status": "runner_import_failed"
+    }
+  ],
+  "protocol_sha256_unchanged": "485b0e5c2ee8bfd279bf3373226ed59c999332ee7b25da80d96a2f0477bdbbfe",
+  "results_changed": false,
+  "schema": "openline.assay_head_to_head.amendment.v0.1",
+  "scored_run_had_started": true,
+  "scoring_rule_changed": false,
+  "source_pins_changed": false
+}

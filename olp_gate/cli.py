@@ -48,6 +48,13 @@ def main(argv: list[str] | None = None) -> int:
     p_decide.add_argument("--issuer", required=True)
     p_decide.add_argument("--ledger", required=True)
     p_decide.add_argument("--out", default="receipts/decision_receipts.jsonl")
+    p_decide.add_argument(
+        "--assay-bin",
+        help=(
+            "Trusted Assay 3.32.0 CLI path for assay_evidence_bundle_v1 input; "
+            "may also be set with OLP_ASSAY_BIN."
+        ),
+    )
 
     p_verify_decision = sub.add_parser("verify-decision", help="Verify signed decision receipts and accepted chains.")
     p_verify_decision.add_argument("path")
@@ -107,6 +114,7 @@ def main(argv: list[str] | None = None) -> int:
             decision_path=args.out,
             session_ledger=SessionLedger(args.ledger),
             base_dir=request_path.parent,
+            assay_binary=args.assay_bin,
         )
         print_json(result)
         return 0 if result["decision"] == "COMMIT" else 1

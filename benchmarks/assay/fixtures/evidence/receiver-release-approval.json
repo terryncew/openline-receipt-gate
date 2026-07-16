@@ -1,0 +1,9 @@
+{
+  "approval": {
+    "approved": true,
+    "scope": "checkout.new_flow",
+    "status": "reviewed"
+  },
+  "artifact_id": "receiver-release-approval",
+  "schema": "openline.receiver_evidence.v0.1"
+}

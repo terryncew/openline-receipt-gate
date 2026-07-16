@@ -2,7 +2,11 @@
 
 Most receipts make the past verifiable. Receipt Gate makes verified history usable by the next decision.
 
-It accepts signed OLP Wire Canon receipts, Agent Receipts v0.1–v0.5, Pipelock ActionReceipt v1, and the older local Receipt Gate chain. It checks integrity, provenance, declared coverage, the source system's action signal, freshness, evidence, and an independent outcome separately. The result is a signed policy decision:
+It accepts signed OLP Wire Canon receipts, Agent Receipts v0.1–v0.5,
+Pipelock ActionReceipt v1, Assay Evidence Contract v1 bundles, and the older
+local Receipt Gate chain. It checks integrity, provenance, declared coverage,
+the source system's action signal, freshness, evidence, and an independent
+outcome separately. The result is a signed policy decision:
 
 ```text
 COMMIT
@@ -23,10 +27,12 @@ node verify-decision-node.mjs results/proof_to_policy_demo/decision_receipts.jso
   --gate-key 17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce
 ```
 
-Without the optional Pipelock verifier, the core suite passes and reports nine
-explicit skips. Install `requirements-pipelock.txt` to execute all integration
-tests; the release report records discovered, executed, and skipped counts for
-both modes.
+Without optional integrations, the core suite passes and reports fourteen
+explicit skips: nine Pipelock tests and five Assay-binary tests. Install
+`requirements-pipelock.txt` and set `OLP_ASSAY_BIN` to the pinned Assay v3.32.0
+executable to run every integration test. Two Assay fail-closed boundary tests
+always run. The release report records discovered, executed, and skipped counts
+for both the current and dependency-absent modes.
 
 Expected outcomes:
 
@@ -139,6 +145,56 @@ python -m benchmarks.pipelock.run_head_to_head \
   --decision-log benchmarks/pipelock/results/reproduction/decision_receipts.jsonl
 ```
 
+### Assay Evidence Contract / Trust Basis v3.32.0
+
+The Assay adapter preserves the incoming `.tar.gz` archive by SHA-256 and
+delegates bundle verification, manifest interpretation, Trust Basis generation,
+and exact-level claim assertions to Assay's official CLI. OLP does not
+reimplement Assay's tar, JCS, event-hash, or bundle-root logic. A failed Assay
+assertion becomes a failed OLP `source_signal` and cannot be repaired or
+laundered by receiver evidence.
+
+The integration is pinned to Assay release `v3.32.0`, source commit
+`04d3db10adbe191aa731d52a6c2b77dad8bc0ca7`, using the official Linux x86-64
+archive with SHA-256
+`243f5e3935530cb1405dbb54fa57acc944de2800d28537d08dfc305b2a117775`.
+The benchmark runner proves that the executed binary is byte-identical to the
+binary inside that archive. Set its path with `OLP_ASSAY_BIN` or pass
+`--assay-bin` to `olp-gate decide`.
+
+The frozen five-case track is in
+[`benchmarks/assay`](benchmarks/assay/PROTOCOL.md). It found:
+
+- Assay native verification met 5/5 frozen expectations;
+- Assay Trust Basis assertions met 5/5, including correctly rejecting an
+  absent registered claim;
+- OLP met 5/5 receiver-policy expectations and never upgraded the failed Assay
+  claim;
+- the identical Assay-valid source bundle led OLP to signed `COMMIT` when the
+  receiver-required artifact existed and signed `QUARANTINE` when it did not;
+  and
+- Assay successfully signed a caller-supplied receiver-style predicate using
+  its DSSE/in-toto attestation command.
+
+That last control falsifies the broad claim that only OLP can sign what a
+receiver may do next. The narrower observed difference is that OLP exposes a
+standardized post-ingest contract: receiver policy snapshot and hash, separate
+assessment axes, three verdicts, five dispositions, replay binding, and
+independent semantic recomputation. The benchmark does not claim Assay cannot
+implement that contract, and it does not give OLP Assay's inline MCP or kernel
+enforcement.
+
+Run the frozen track without changing its sealed result:
+
+```bash
+python benchmarks/assay/run_head_to_head.py \
+  --assay-bin "$OLP_ASSAY_BIN" \
+  --assay-archive "$OLP_ASSAY_ARCHIVE" \
+  --output benchmarks/assay/results/reproduction/RUN_REPORT.json \
+  --report benchmarks/assay/results/reproduction/REPORT.md \
+  --results-dir benchmarks/assay/results/reproduction/artifacts
+```
+
 ### Legacy Receipt Gate v0.1.1
 
 The original context-manager API and local JSONL hash chain still work. Legacy records can prove local continuity, but they remain unsigned and therefore cannot earn trusted provenance under the new gate.
@@ -172,6 +228,7 @@ olp-gate decide request.json \
   --key .secrets/gate.key \
   --issuer procurement-gate \
   --ledger state/sessions.json \
+  --assay-bin "$OLP_ASSAY_BIN" \
   --out receipts/decision_receipts.jsonl
 ```
 
@@ -211,6 +268,11 @@ This path continues to emit the v0.1.1 local hash chain. Use the proof-to-policy
 - Agent Receipts compatibility does not claim generic W3C VC ecosystem conformance.
 - Pipelock compatibility does not give OLP Pipelock's inline mediation boundary.
 - The benchmark's AARP companions are OLP-authored conformance inputs, not receipts captured from a deployed Pipelock instance.
+- Assay compatibility does not give OLP Assay's pre-call MCP policy gate,
+  signed mandate semantics, or kernel enforcement.
+- Assay's frozen bundle is generated from its public OpenFeature fixture; the
+  receiver policy, receiver evidence, and DSSE predicate are OLP-authored and
+  are not represented as deployment captures.
 
 Read [`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.md), [`docs/COMPATIBILITY.md`](docs/COMPATIBILITY.md), and [`docs/CLAIM_BOUNDARY.md`](docs/CLAIM_BOUNDARY.md) before making production claims.
 

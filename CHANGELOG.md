@@ -1,5 +1,38 @@
 # Changelog
 
+## 0.4.0
+
+- Added an Assay Evidence Contract v1 bundle adapter pinned to the official
+  Assay v3.32.0 CLI and release archive.
+- Delegated bundle integrity, manifest interpretation, Trust Basis compilation,
+  and exact-level claim assertions to Assay rather than reimplementing its
+  canonicalization or bundle rules.
+- Added fail-closed path confinement, archive-size limits, receiver SHA-256
+  binding, exact CLI-version checks, and a trusted-caller-only Assay executable
+  boundary.
+- Added `source_bundle` input and `--assay-bin`/`OLP_ASSAY_BIN` configuration
+  while keeping source receipts and source bundles mutually exclusive.
+- Added seven Assay adapter tests: two dependency-independent boundary controls
+  and five live official-binary integration tests that skip explicitly when the
+  optional executable is absent.
+- Added a hash-frozen five-case Assay head-to-head with separate native, Trust
+  Basis, and OLP lanes; all three lanes met 5/5 frozen expectations.
+- Demonstrated that a failed native Assay Trust Basis requirement remains a
+  failed OLP source signal and can never be laundered by receiver evidence.
+- Demonstrated signed `COMMIT` versus `QUARANTINE` from the same Assay-valid
+  bundle depending on a separately required receiver artifact.
+- Added a DSSE capability control that independently verifies Assay signing a
+  caller-supplied receiver-style predicate. This falsifies the broad claim that
+  arbitrary next-use signing is unique to OLP.
+- Narrowed the supported comparison claim to OLP's standardized post-ingest
+  receiver-policy decision contract, without claiming Assay cannot implement
+  equivalent semantics or that OLP inherits Assay's enforcement boundary.
+- Recorded the first partially started run and the single import-bootstrap fix
+  in `AMENDMENT-001.json`; fixtures, expectations, commands, scoring, source
+  pins, and protocol bytes remained unchanged.
+- Added offline verification of the protocol freeze, fixture hashes, Assay
+  attestation, five OLP decisions, and the explicitly falsified hypothesis.
+
 ## 0.3.1
 
 - Fixed the clean-clone benchmark blocker reported by the Pipelock vendor: the runner now verifies an embedded byte-identical copy of the original frozen protocol when the unpublished intermediate Git commit is unavailable.

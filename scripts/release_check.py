@@ -19,8 +19,14 @@ from typing import Any
 
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "0.3.1"
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+VERSION = "0.4.0"
 PIPELOCK_INTEGRATION_TESTS = 9
+ASSAY_INTEGRATION_TESTS = 5
+ASSAY_VERSION = "3.32.0"
+ASSAY_RELEASE_COMMIT = "04d3db10adbe191aa731d52a6c2b77dad8bc0ca7"
+ASSAY_ARCHIVE_SHA256 = "243f5e3935530cb1405dbb54fa57acc944de2800d28537d08dfc305b2a117775"
 PIPELOCK_VERIFY_COMMIT = "329f1c76fdfa5fc5b165a3794f7c62906a076c03"
 PIPELOCK_REQUIREMENT = (
     "pipelock-verify @ "
@@ -82,6 +88,38 @@ def pipelock_runtime() -> dict[str, Any]:
     }
 
 
+def assay_runtime() -> dict[str, Any]:
+    from olp_gate.adapters_assay import find_assay_binary
+
+    binary = find_assay_binary()
+    if binary is None:
+        return {
+            "available": False,
+            "version": None,
+            "supported": False,
+            "binary": None,
+            "release_commit": ASSAY_RELEASE_COMMIT,
+            "release_archive_sha256": ASSAY_ARCHIVE_SHA256,
+            "install_instructions": "benchmarks/assay/PROTOCOL.md",
+        }
+    completed = subprocess.run(
+        [str(binary), "--version"],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    version = completed.stdout.strip()
+    return {
+        "available": True,
+        "version": version or None,
+        "supported": completed.returncode == 0 and version == f"assay {ASSAY_VERSION}",
+        "binary": str(binary),
+        "release_commit": ASSAY_RELEASE_COMMIT,
+        "release_archive_sha256": ASSAY_ARCHIVE_SHA256,
+        "install_instructions": "benchmarks/assay/PROTOCOL.md",
+    }
+
+
 def unittest_counts(record: dict[str, Any]) -> dict[str, int | None]:
     output = f"{record.get('stdout', '')}\n{record.get('stderr', '')}"
     discovered_match = re.search(r"Ran (\d+) tests?", output)
@@ -122,6 +160,7 @@ def write_manifest(
     checks_passed: bool,
     proof_summary: dict[str, Any],
     pipelock_summary: dict[str, Any],
+    assay_summary: dict[str, Any],
     optional_integrations: dict[str, Any],
 ) -> None:
     entries = []
@@ -151,6 +190,13 @@ def write_manifest(
             ),
             "aggregate": pipelock_summary.get("aggregate", {}),
         },
+        "assay_head_to_head": {
+            "passed": assay_summary.get("passed", False),
+            "strong_signing_uniqueness_hypothesis_falsified": assay_summary.get(
+                "strong_signing_uniqueness_hypothesis_falsified"
+            ),
+            "aggregate": assay_summary.get("aggregate", {}),
+        },
         "optional_integrations": optional_integrations,
         "files": entries,
     }
@@ -166,6 +212,7 @@ def main() -> int:
     steps: list[dict[str, Any]] = []
     passed: list[bool] = []
     pipelock_info = pipelock_runtime()
+    assay_info = assay_runtime()
     requirement_value = (ROOT / "requirements-pipelock.txt").read_text(
         encoding="utf-8"
     ).strip()
@@ -193,6 +240,20 @@ def main() -> int:
         benchmark_report = {}
         pipelock_summary = {}
         benchmark_gate_key = ""
+    try:
+        assay_benchmark_report = json.loads(
+            (ROOT / "benchmarks" / "assay" / "RUN_REPORT.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        assay_summary = assay_benchmark_report["assay_head_to_head"]
+        assay_gate_key = str(
+            assay_summary["decision_receipts"]["trusted_gate_public_key"]
+        )
+    except (OSError, json.JSONDecodeError, KeyError, TypeError):
+        assay_benchmark_report = {}
+        assay_summary = {}
+        assay_gate_key = ""
 
     unit_command = [
         sys.executable,
@@ -205,9 +266,13 @@ def main() -> int:
     ]
     unit_record, unit_okay = execute("unittest", unit_command)
     unit_counts = unittest_counts(unit_record)
-    expected_main_skips = 0 if pipelock_info["supported"] else PIPELOCK_INTEGRATION_TESTS
+    expected_main_skips = (
+        (0 if pipelock_info["supported"] else PIPELOCK_INTEGRATION_TESTS)
+        + (0 if assay_info["supported"] else ASSAY_INTEGRATION_TESTS)
+    )
     unit_record["counts"] = unit_counts
     unit_record["optional_pipelock"] = pipelock_info
+    unit_record["optional_assay"] = assay_info
     unit_okay = (
         unit_okay
         and unit_counts["discovered"] is not None
@@ -219,8 +284,9 @@ def main() -> int:
 
     absent_environment = os.environ.copy()
     absent_environment["OLP_TEST_DISABLE_PIPELOCK"] = "1"
+    absent_environment["OLP_TEST_DISABLE_ASSAY"] = "1"
     absent_record, absent_okay = execute(
-        "unittest_without_optional_pipelock",
+        "unittest_without_optional_integrations",
         unit_command,
         env=absent_environment,
     )
@@ -229,7 +295,8 @@ def main() -> int:
     absent_okay = (
         absent_okay
         and absent_counts["discovered"] is not None
-        and absent_counts["skipped"] == PIPELOCK_INTEGRATION_TESTS
+        and absent_counts["skipped"]
+        == PIPELOCK_INTEGRATION_TESTS + ASSAY_INTEGRATION_TESTS
     )
     absent_record["passed"] = absent_okay
     steps.append(absent_record)
@@ -272,13 +339,53 @@ def main() -> int:
                 benchmark_gate_key,
             ],
         ),
+        (
+            "frozen_assay_benchmark_verifier",
+            [sys.executable, "scripts/verify_assay_benchmark.py"],
+        ),
+        (
+            "assay_decisions_node_verifier",
+            [
+                "node",
+                "verify-decision-node.mjs",
+                "benchmarks/assay/results/decision_receipts.jsonl",
+                "--gate-key",
+                assay_gate_key,
+            ],
+        ),
     ):
         record, okay = execute(name, command)
         steps.append(record)
         passed.append(okay)
 
+    assay_live_benchmark_executed = False
+    assay_live_benchmark_passed = False
     with tempfile.TemporaryDirectory(prefix="openline-release-") as temporary:
         temp = Path(temporary)
+        assay_archive_value = os.environ.get("OLP_ASSAY_ARCHIVE")
+        if assay_info["supported"] and assay_archive_value:
+            assay_live_benchmark_executed = True
+            assay_reproduction = temp / "assay-reproduction"
+            record, okay = execute(
+                "live_assay_benchmark_reproduction",
+                [
+                    sys.executable,
+                    "benchmarks/assay/run_head_to_head.py",
+                    "--assay-bin",
+                    str(assay_info["binary"]),
+                    "--assay-archive",
+                    assay_archive_value,
+                    "--output",
+                    str(assay_reproduction / "RUN_REPORT.json"),
+                    "--report",
+                    str(assay_reproduction / "REPORT.md"),
+                    "--results-dir",
+                    str(assay_reproduction / "results"),
+                ],
+            )
+            assay_live_benchmark_passed = okay
+            steps.append(record)
+            passed.append(okay)
         tampered = temp / "tampered.jsonl"
         source_log = proof_output / "decision_receipts.jsonl"
         if source_log.exists():
@@ -319,7 +426,7 @@ def main() -> int:
         steps.append(record)
         passed.append(okay)
         if okay:
-            wheels = sorted(wheelhouse.glob("openline_receipt_gate-0.3.1-*.whl"))
+            wheels = sorted(wheelhouse.glob("openline_receipt_gate-0.4.0-*.whl"))
             if len(wheels) != 1:
                 okay = False
                 steps.append(
@@ -392,11 +499,24 @@ def main() -> int:
         )
         is True
     )
+    passed.append(assay_benchmark_report.get("passed") is True)
+    passed.append(
+        assay_summary.get("capability_control", {}).get(
+            "strong_signing_uniqueness_hypothesis_falsified"
+        )
+        is True
+    )
     release_passed = all(passed)
     live_pipelock_tests_passed = bool(
         pipelock_info["supported"]
         and unit_okay
         and unit_counts["skipped"] == 0
+    )
+    live_assay_tests_passed = bool(
+        assay_info["supported"]
+        and unit_okay
+        and unit_counts["skipped"]
+        == (0 if pipelock_info["supported"] else PIPELOCK_INTEGRATION_TESTS)
     )
     optional_integrations = {
         "pipelock": {
@@ -405,6 +525,15 @@ def main() -> int:
             "live_adapter_tests_passed": live_pipelock_tests_passed,
             "dependency_absent_suite_passed": absent_okay,
             "integration_test_count": PIPELOCK_INTEGRATION_TESTS,
+        },
+        "assay": {
+            **assay_info,
+            "live_adapter_tests_executed": assay_info["supported"],
+            "live_adapter_tests_passed": live_assay_tests_passed,
+            "live_benchmark_executed": assay_live_benchmark_executed,
+            "live_benchmark_passed": assay_live_benchmark_passed,
+            "dependency_absent_suite_passed": absent_okay,
+            "integration_test_count": ASSAY_INTEGRATION_TESTS,
         }
     }
     report = {
@@ -424,7 +553,7 @@ def main() -> int:
         "test_skipped": unit_counts["skipped"],
         "test_matrix": {
             "current_environment": unit_counts,
-            "without_optional_pipelock": absent_counts,
+            "without_optional_integrations": absent_counts,
         },
         "optional_integrations": optional_integrations,
         "published_interop_fixture": {
@@ -442,9 +571,21 @@ def main() -> int:
             "live_adapter_tests_executed": pipelock_info["supported"],
             "live_adapter_tests_passed": live_pipelock_tests_passed,
         },
+        "published_assay_interop_fixture": {
+            "project": "Assay Evidence Contract / Trust Basis",
+            "version": ASSAY_VERSION,
+            "assay_source_commit": ASSAY_RELEASE_COMMIT,
+            "assay_release_archive_sha256": ASSAY_ARCHIVE_SHA256,
+            "sealed_benchmark_artifacts_verified": release_passed,
+            "live_adapter_tests_executed": assay_info["supported"],
+            "live_adapter_tests_passed": live_assay_tests_passed,
+            "live_benchmark_executed": assay_live_benchmark_executed,
+            "live_benchmark_passed": assay_live_benchmark_passed,
+        },
         "proof_to_policy_demo": proof_summary,
         "pipelock_head_to_head": pipelock_summary,
-        "claim_boundary": "A passing synthetic release gate does not prove production safety, issuer honesty, complete capture, witness independence, or rollback execution. Frozen benchmark artifact verification is not a live benchmark rerun.",
+        "assay_head_to_head": assay_summary,
+        "claim_boundary": "A passing synthetic release gate does not prove production safety, issuer honesty, complete capture, witness independence, or rollback execution. Frozen benchmark artifact verification is distinct from an optional live benchmark rerun. Assay can sign caller-supplied DSSE predicates; OLP's observed addition is its standardized receiver-policy decision contract, not unique signing.",
     }
     (ROOT / "RUN_REPORT.json").write_text(
         json.dumps(report, indent=2, sort_keys=True) + "\n",
@@ -459,6 +600,13 @@ def main() -> int:
                 "flagship_finding", {}
             ).get("strong_hypothesis_falsified"),
             "aggregate": pipelock_summary.get("aggregate", {}),
+        },
+        assay_summary={
+            "passed": assay_benchmark_report.get("passed", False),
+            "strong_signing_uniqueness_hypothesis_falsified": assay_summary.get(
+                "capability_control", {}
+            ).get("strong_signing_uniqueness_hypothesis_falsified"),
+            "aggregate": assay_summary.get("aggregate", {}),
         },
         optional_integrations=optional_integrations,
     )

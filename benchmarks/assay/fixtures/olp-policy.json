@@ -1,0 +1,37 @@
+{
+  "evidence_assertions": [
+    {
+      "evidence_id": "receiver-release-approval",
+      "op": "equals",
+      "path": "approval.approved",
+      "value": true
+    },
+    {
+      "evidence_id": "receiver-release-approval",
+      "op": "equals",
+      "path": "approval.scope",
+      "value": "checkout.new_flow"
+    }
+  ],
+  "max_evidence_bytes": 1000000,
+  "max_source_age_seconds": null,
+  "metadata": {
+    "benchmark": "assay-head-to-head",
+    "claim_boundary": "receiver policy over an unchanged Assay bundle and separately supplied receiver evidence"
+  },
+  "policy_id": "assay-head-to-head-receiver-policy",
+  "require_declared_coverage": false,
+  "require_evidence": true,
+  "require_independent_source": false,
+  "require_outcome_witness": false,
+  "require_replay_guard": true,
+  "require_source_bound_evidence": true,
+  "require_trusted_source": false,
+  "required_claim_ids": [
+    "receiver_checkout_release_authorized"
+  ],
+  "required_evidence_ids": [
+    "receiver-release-approval"
+  ],
+  "version": "1"
+}

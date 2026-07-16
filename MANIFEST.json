@@ -1,6 +1,27 @@
 {
+  "assay_head_to_head": {
+    "aggregate": {
+      "assay_native": {
+        "correct": 5,
+        "incorrect": 0,
+        "undecidable": 0
+      },
+      "assay_trust_basis": {
+        "correct": 5,
+        "incorrect": 0,
+        "undecidable": 0
+      },
+      "olp": {
+        "correct": 5,
+        "incorrect": 0,
+        "undecidable": 0
+      }
+    },
+    "passed": true,
+    "strong_signing_uniqueness_hypothesis_falsified": true
+  },
   "claim": "Signed source receipts can drive externally configured, independently verifiable policy decisions within declared inputs and trust assumptions.",
-  "created_at": "2026-07-16T16:36:17.939479Z",
+  "created_at": "2026-07-16T19:37:03.481569Z",
   "files": [
     {
       "bytes": 233,
@@ -8,9 +29,9 @@
       "sha256": "3c7eead6a0305c8eb0c51850c3a2751dc4925975722b2db46f9714ee5b5865aa"
     },
     {
-      "bytes": 3807,
+      "bytes": 5862,
       "path": "CHANGELOG.md",
-      "sha256": "b8a1c15bb9422482f50ec1dc2978e4de5e30bbb464ec7beb07bebad013bc9555"
+      "sha256": "2111bf514f6c8d0b8ec303278c75e54147133dfa47600306fdbee181b8c00b65"
     },
     {
       "bytes": 985,
@@ -18,19 +39,179 @@
       "sha256": "83f1cec7cc6701c9a8004184b541dd1297a5c0aa618d22cfc9036686b4274cfb"
     },
     {
-      "bytes": 9873,
+      "bytes": 12812,
       "path": "README.md",
-      "sha256": "d55edd8e7535c58a8c508ff59105ecc9a89032b386b22c19366c93535f76e631"
+      "sha256": "3b93696d7fe0ed20e7bedd836f357beca922d5852eda7ba65877e86d199817de"
     },
     {
-      "bytes": 53607,
+      "bytes": 97953,
       "path": "RUN_REPORT.json",
-      "sha256": "35696ef004296e30e93fcdee65062a228e50950aa573f94b1e086c31098dccc4"
+      "sha256": "dce59b8fdf0d561c57af4cd433d82a9811f7cb1942485f8ed06e2053ff466a5f"
     },
     {
       "bytes": 65,
       "path": "benchmarks/__init__.py",
       "sha256": "ef1160967240e058fe32b991311b74e9b41e67e409e4f4645f13c66c56907ab0"
+    },
+    {
+      "bytes": 1873,
+      "path": "benchmarks/assay/AMENDMENT-001.json",
+      "sha256": "a08e8c2cc13ec188438a3905c406ee854b867d0d83faa552433472da86a073ee"
+    },
+    {
+      "bytes": 2182,
+      "path": "benchmarks/assay/AMENDMENT-002.json",
+      "sha256": "439434f40a4982dba188419861c93941c7d058af65ab71352f907f09a1540c8e"
+    },
+    {
+      "bytes": 1695,
+      "path": "benchmarks/assay/CASES.json",
+      "sha256": "69d0a7a88294a935e1b1bef6d024ccdb79eefdf32a2aa7c4903f058522fb525e"
+    },
+    {
+      "bytes": 3317,
+      "path": "benchmarks/assay/FIXTURE_MANIFEST.json",
+      "sha256": "fd5dbe8358e495d9bcafb75db9ed693e0b554eb7d8e9a52a6bc386e0c6758f72"
+    },
+    {
+      "bytes": 775,
+      "path": "benchmarks/assay/FREEZE.json",
+      "sha256": "b7c76aa6d89df7290f72232f7075b5b50e0192b50677f64c4ca032692541dd20"
+    },
+    {
+      "bytes": 12002,
+      "path": "benchmarks/assay/PROTOCOL-FROZEN-v0.4.0.md",
+      "sha256": "485b0e5c2ee8bfd279bf3373226ed59c999332ee7b25da80d96a2f0477bdbbfe"
+    },
+    {
+      "bytes": 12002,
+      "path": "benchmarks/assay/PROTOCOL.md",
+      "sha256": "485b0e5c2ee8bfd279bf3373226ed59c999332ee7b25da80d96a2f0477bdbbfe"
+    },
+    {
+      "bytes": 78,
+      "path": "benchmarks/assay/PROTOCOL.sha256",
+      "sha256": "81af8e700821dc423beae509d2a091af9fba439cef06e940ed03deec1de9ad1b"
+    },
+    {
+      "bytes": 2659,
+      "path": "benchmarks/assay/REPORT.md",
+      "sha256": "c5e1f83f0622b0bd082dc8d071a955812b61162ff88a55021ae6c081e2cc0a8b"
+    },
+    {
+      "bytes": 19557,
+      "path": "benchmarks/assay/RUN_REPORT.json",
+      "sha256": "21f0378170179677a90cd2e55c5c921ce18d6aa5d07952b634ba353a7df9b96f"
+    },
+    {
+      "bytes": 1070,
+      "path": "benchmarks/assay/THIRD_PARTY_LICENSES/MIT.txt",
+      "sha256": "8b936013c3f73431f008a9a794c979590dc5d156a76613dfb6ff5d047df0cef0"
+    },
+    {
+      "bytes": 621,
+      "path": "benchmarks/assay/THIRD_PARTY_NOTICE.md",
+      "sha256": "a12bec1ce2de853d9401dbce8dda196843cecceeed8e1a9639eff4d9c9c6ae7a"
+    },
+    {
+      "bytes": 47,
+      "path": "benchmarks/assay/__init__.py",
+      "sha256": "166bdd35d851ccdbbe9686e1c2b422c00e227953c8669e601c4bc95e67fd5e06"
+    },
+    {
+      "bytes": 966,
+      "path": "benchmarks/assay/fixtures/assay/openfeature-decision-receipts.tar.gz",
+      "sha256": "06902924787b20aad33b5ec521fb82f3aeec361da290a3b2a862ea149946bc8b"
+    },
+    {
+      "bytes": 1075,
+      "path": "benchmarks/assay/fixtures/case-01-clean-with-receiver-evidence.request.json",
+      "sha256": "0f2a840ce9b8938b8a609533aabe526408e7cf03f734351bc29e493b5bf8c618"
+    },
+    {
+      "bytes": 767,
+      "path": "benchmarks/assay/fixtures/case-02-receiver-evidence-missing.request.json",
+      "sha256": "710aa2a404aef680c6feaedec4afa20f6523982e310e54d7e5b8f1268748c5c3"
+    },
+    {
+      "bytes": 1075,
+      "path": "benchmarks/assay/fixtures/case-03-tampered-bundle.request.json",
+      "sha256": "18b0158519f6ad8836d2d3a8fde824f97a6f37246f0dc6fb39076f6e787cec29"
+    },
+    {
+      "bytes": 1118,
+      "path": "benchmarks/assay/fixtures/case-04-assay-registered-claim-missing.request.json",
+      "sha256": "12642fb02844293d7ad56b471c40ff60217e89837cd85ea8ad515fad43d9c682"
+    },
+    {
+      "bytes": 1075,
+      "path": "benchmarks/assay/fixtures/case-05-source-hash-substitution.request.json",
+      "sha256": "0cab473da8ce8a4afd65f9e7869b040aebf856ed2f0e3875d8edf1dcd602c0a0"
+    },
+    {
+      "bytes": 198,
+      "path": "benchmarks/assay/fixtures/evidence/receiver-release-approval.json",
+      "sha256": "f4b7a95f186c7293a9b9a9a48fa963b6f070b522f3c51ce33e7abef3e41c24f3"
+    },
+    {
+      "bytes": 1026,
+      "path": "benchmarks/assay/fixtures/olp-policy.json",
+      "sha256": "e277b892177130ec2f63d1a94865b6b71343122cc1aadced5e5d7a6b430a20fb"
+    },
+    {
+      "bytes": 17,
+      "path": "benchmarks/assay/fixtures/olp-trust.json",
+      "sha256": "755b6f135a7892adf30fad3ee287c568bd1a031f6dbe171a8117af8af16762bc"
+    },
+    {
+      "bytes": 184,
+      "path": "benchmarks/assay/fixtures/receiver-predicate.json",
+      "sha256": "9a597c6aecdb71ad917dc4cd25584767ad84479419cce7d9b46af3f78e111b78"
+    },
+    {
+      "bytes": 470,
+      "path": "benchmarks/assay/fixtures/upstream/decision-details.openfeature.jsonl",
+      "sha256": "72b1eaa773be72f6ddfa56ae4547605c1f5e8be9e5db7841bd7947a4215979b0"
+    },
+    {
+      "bytes": 1203,
+      "path": "benchmarks/assay/history/scored-run-001/README.md",
+      "sha256": "bd378e3acd274207a6fbbbc8c15c87d0cc747d1448825ab24439f1025a2a4bf0"
+    },
+    {
+      "bytes": 2659,
+      "path": "benchmarks/assay/history/scored-run-001/REPORT.md",
+      "sha256": "c5e1f83f0622b0bd082dc8d071a955812b61162ff88a55021ae6c081e2cc0a8b"
+    },
+    {
+      "bytes": 20160,
+      "path": "benchmarks/assay/history/scored-run-001/RUN_REPORT.json",
+      "sha256": "01adb2a86a4f0490978381b691f2d223037e699ffb82ff182825efaa9c680ec6"
+    },
+    {
+      "bytes": 926,
+      "path": "benchmarks/assay/history/scored-run-001/results/assay_receiver_predicate.attestation.json",
+      "sha256": "60379132137d6d77b30c645bba19798c2849fa74b4dd2270ce772b5b524fafb7"
+    },
+    {
+      "bytes": 31325,
+      "path": "benchmarks/assay/history/scored-run-001/results/decision_receipts.jsonl",
+      "sha256": "ad1846a3715c7e7a283d391e7236e817ce2803656514015a2be19e1420434e08"
+    },
+    {
+      "bytes": 926,
+      "path": "benchmarks/assay/results/assay_receiver_predicate.attestation.json",
+      "sha256": "60379132137d6d77b30c645bba19798c2849fa74b4dd2270ce772b5b524fafb7"
+    },
+    {
+      "bytes": 30607,
+      "path": "benchmarks/assay/results/decision_receipts.jsonl",
+      "sha256": "87ee5402501dd7e25c979b5f736a6012b7abfc413a2fdb292432d40767482167"
+    },
+    {
+      "bytes": 28407,
+      "path": "benchmarks/assay/run_head_to_head.py",
+      "sha256": "85b31ae6d1805635b3236056552df585e2c1baf49e31c18f28b7a91841fc45b8"
     },
     {
       "bytes": 1071,
@@ -238,19 +419,19 @@
       "sha256": "89885352cefe946c71b887939b1b4fe1d8a4f76b656672aa63bc55c899147ee8"
     },
     {
-      "bytes": 2773,
+      "bytes": 3110,
       "path": "docs/ARCHITECTURE.md",
-      "sha256": "843b07565b05d778438ef93d1857423b74b7801e0997f8acfa0348bd3b1b72ec"
+      "sha256": "fceee94520ac318c5d64d5b375399778588c5319db47c710334ca2a8ea68d5b8"
     },
     {
-      "bytes": 3857,
+      "bytes": 6047,
       "path": "docs/CLAIM_BOUNDARY.md",
-      "sha256": "3b4fb150b51f396fe46a562fa419e316e881e858266b28bb13eb91c815efe726"
+      "sha256": "0c45ec7313c2c3c260e3bdd6813d1f9229853e1cf7f0c81feeec5bfbca563979"
     },
     {
-      "bytes": 4639,
+      "bytes": 6998,
       "path": "docs/COMPATIBILITY.md",
-      "sha256": "f60585511454a59f0d67e0da67e0e85e117f6820e6cff76fe4f557a105ed97c3"
+      "sha256": "d64066e415845291f0bb344f1edc92761cc5e5c14d246444d7d42d16ece2f411"
     },
     {
       "bytes": 2921,
@@ -258,9 +439,9 @@
       "sha256": "31a4b725b0255e464593800797f2c44a0459c742a38d8df16c71f120d2344431"
     },
     {
-      "bytes": 2879,
+      "bytes": 4054,
       "path": "docs/THREAT_MODEL.md",
-      "sha256": "cd1201feba118b0d5755311b8a4c07fe83dabe88e4cbef4ee986bceb7b758966"
+      "sha256": "795ead63c2e85343f8cb467af22043fbce3a4895a2518bed8fa4aa2cfa6e6dc2"
     },
     {
       "bytes": 1725,
@@ -288,14 +469,14 @@
       "sha256": "dbce059229dee7c11fe07a5f9d7c3ff777951af8455ea009cd3819848e543b81"
     },
     {
-      "bytes": 411,
+      "bytes": 379,
       "path": "launch/thread_copy.md",
-      "sha256": "d56acc414741621c53034c3b1cc57d5b09cac1392dd8b360be7780c2213d5fe2"
+      "sha256": "ed1b001c193f55bd0ebbeb173d4da835dec0494af75f1e1d489248af9dcba2ae"
     },
     {
       "bytes": 782,
       "path": "olp_gate/__init__.py",
-      "sha256": "e6936f6b79c881abef73edc47a9920e8356d4d67f7f7985423f05ec50164140e"
+      "sha256": "ce0d8391041753c1a15e3fa27311fba67bf0182fa03e3c9e46248de43a006a9d"
     },
     {
       "bytes": 30740,
@@ -303,14 +484,19 @@
       "sha256": "9e06e5eaff769b0ffce5c4b597e6406a8ca832b6bcc4dba5dd66db1913298981"
     },
     {
+      "bytes": 15048,
+      "path": "olp_gate/adapters_assay.py",
+      "sha256": "44aef90cbbd6a917a51eb1ba64ede6ef51417c07844aa5b60aa22ded1bc4058c"
+    },
+    {
       "bytes": 12834,
       "path": "olp_gate/adapters_pipelock.py",
       "sha256": "d326cf65f3bc4ac8413c600c570941f2196cd3f13d0c47f6995e228b3e1c2a6f"
     },
     {
-      "bytes": 4666,
+      "bytes": 4920,
       "path": "olp_gate/cli.py",
-      "sha256": "5a5d2dcd1ff16afcf80647c495ad54a12fc63227f7a62a370fd7608240932534"
+      "sha256": "81129db073f420d9d9a99e4e1b7be8bc1b1aa35db7e4842e81a26732de702ddf"
     },
     {
       "bytes": 12361,
@@ -333,9 +519,9 @@
       "sha256": "210cfd1737837b702f82dbb0ebe088eda8011e523e9bd7d2089d66be0767b61e"
     },
     {
-      "bytes": 23912,
+      "bytes": 24642,
       "path": "olp_gate/gateway.py",
-      "sha256": "9835afa27ccda3a96bb62179e643b74f60bcba1ff8a5e867bd406d1080daab5d"
+      "sha256": "50bf577fe1fc6e66e61646c2a835fdbf67721afac69c8adbdc5b12a7d54e7e38"
     },
     {
       "bytes": 5353,
@@ -355,7 +541,7 @@
     {
       "bytes": 521,
       "path": "pyproject.toml",
-      "sha256": "06ed608697904a1c09d051119789806d6f593061d70bac15e995fcc6e5a08de7"
+      "sha256": "e8fc52df8446d1fdde82796152c0b334863cd112d5e833cf07a3960c02d86c8e"
     },
     {
       "bytes": 125,
@@ -365,7 +551,7 @@
     {
       "bytes": 1653,
       "path": "results/proof_to_policy_demo/demo_summary.json",
-      "sha256": "bf4ac4472fba54755a0cf68458663725133c72a6174c4d7436ec1f519577fed9"
+      "sha256": "0e23fab8a2a463e9f061ebc73e6d9a2843252157042007508b70e65a35e8f37a"
     },
     {
       "bytes": 37,
@@ -378,9 +564,14 @@
       "sha256": "2dc839e96b3fdb57992f3a01234c5e87410eb652d9691fd2c9271bc59d598053"
     },
     {
-      "bytes": 17892,
+      "bytes": 23959,
       "path": "scripts/release_check.py",
-      "sha256": "c0fee30f0389fb46f5d25dcc233d33f5f1027050ddb62ca9d36984defc5fd30e"
+      "sha256": "5f42797ef0436530e03157dc741fc5c8faaa16a2279046c15bfae2711a50ce87"
+    },
+    {
+      "bytes": 17789,
+      "path": "scripts/verify_assay_benchmark.py",
+      "sha256": "6e3ded03918df919cc57b0b71b0c6ef028646941a8388b40bffd013b40f9e6fb"
     },
     {
       "bytes": 1994,
@@ -406,6 +597,11 @@
       "bytes": 1218,
       "path": "tests/fixtures/pipelock-evidence-v2-proxy-decision.json",
       "sha256": "c3e7515c0a0299839416268339c5a97205f99eb3337c85df8fae706009cca4c3"
+    },
+    {
+      "bytes": 7910,
+      "path": "tests/test_assay_adapter.py",
+      "sha256": "728ddb901a337cc0a6b429c68785a14f7bd6c843d830dc31473501657181f8a8"
     },
     {
       "bytes": 7744,
@@ -434,16 +630,31 @@
     }
   ],
   "optional_integrations": {
-    "pipelock": {
+    "assay": {
       "available": true,
+      "binary": "/workspace/scratch/ec796a60d935/assay-v3.32.0-x86_64-unknown-linux-gnu/assay",
+      "dependency_absent_suite_passed": true,
+      "install_instructions": "benchmarks/assay/PROTOCOL.md",
+      "integration_test_count": 5,
+      "live_adapter_tests_executed": true,
+      "live_adapter_tests_passed": true,
+      "live_benchmark_executed": true,
+      "live_benchmark_passed": true,
+      "release_archive_sha256": "243f5e3935530cb1405dbb54fa57acc944de2800d28537d08dfc305b2a117775",
+      "release_commit": "04d3db10adbe191aa731d52a6c2b77dad8bc0ca7",
+      "supported": true,
+      "version": "assay 3.32.0"
+    },
+    "pipelock": {
+      "available": false,
       "dependency_absent_suite_passed": true,
       "install_command": "pip install -r requirements-pipelock.txt",
       "integration_test_count": 9,
-      "live_adapter_tests_executed": true,
-      "live_adapter_tests_passed": true,
+      "live_adapter_tests_executed": false,
+      "live_adapter_tests_passed": false,
       "source_commit": "329f1c76fdfa5fc5b165a3794f7c62906a076c03",
-      "supported": true,
-      "version": "0.2.0"
+      "supported": false,
+      "version": null
     }
   },
   "pipelock_head_to_head": {
@@ -509,5 +720,5 @@
   "release_status": "ready",
   "repo": "openline-receipt-gate",
   "schema": "openline.release_manifest.v0.2",
-  "version": "0.3.1"
+  "version": "0.4.0"
 }

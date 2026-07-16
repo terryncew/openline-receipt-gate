@@ -1,0 +1,15 @@
+{
+  "cases_sha256": "69d0a7a88294a935e1b1bef6d024ccdb79eefdf32a2aa7c4903f058522fb525e",
+  "fixture_manifest_sha256": "fd5dbe8358e495d9bcafb75db9ed693e0b554eb7d8e9a52a6bc386e0c6758f72",
+  "freeze_commit": "56490b43905aaba45c2c68fa71e6da78188ee3ae",
+  "frozen_at": "2026-07-16T19:25:17Z",
+  "protocol_sha256": "485b0e5c2ee8bfd279bf3373226ed59c999332ee7b25da80d96a2f0477bdbbfe",
+  "schema": "openline.assay_head_to_head.freeze.v0.1",
+  "scored_run_had_started": false,
+  "source_pins": {
+    "assay_release_archive_sha256": "243f5e3935530cb1405dbb54fa57acc944de2800d28537d08dfc305b2a117775",
+    "assay_release_commit": "04d3db10adbe191aa731d52a6c2b77dad8bc0ca7",
+    "assay_version": "3.32.0",
+    "openline_receipt_gate_base": "7674f7d7bc95efc8eae5e12ad76d348f01d8b8f7"
+  }
+}
