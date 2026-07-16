@@ -1,0 +1,8 @@
+{
+  "cases_sha256": "29698f0d517be8405331f49660758c7f3c22ba77ff536602ebf288471ecc8124",
+  "fixture_manifest_sha256": "684f9046909e5fff4ebb7a643a12dcf8d4b724a2c30505de58deb56d684f746d",
+  "freeze_commit": "13aa5841343c707db5cf68c5b3195198d5c6814a",
+  "frozen_before_scoring": true,
+  "protocol_sha256": "59ef16461959e47cb6782f4b8111970e1439d29a4444875178a67238b1a4f209",
+  "schema": "openline.pipelock_protocol_freeze.v0.1"
+}

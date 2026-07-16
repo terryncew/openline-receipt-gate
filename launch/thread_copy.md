@@ -1,9 +1,5 @@
-Most AI receipt work proves an event was recorded. That is useful. I wanted to know what another system could safely do with the receipt after the handoff.
+Most AI receipts prove an action was recorded. OLP asks what the receiver can safely do next.
 
-Receipt Gate now accepts OLP and Agent Receipts, checks the signature, custody, chain, freshness, evidence, and outcome separately, then issues a signed decision: commit, quarantine, deny, no badge, or request rollback.
-
-The important case is a perfectly valid signature with weak evidence. It gets `UNDECIDABLE`, because cryptographic integrity and truth are different jobs.
-
-Agent receipts make actions auditable. OpenLine makes accountability executable.
+Receipt Gate now accepts OLP, Agent Receipts, and Pipelock. In the frozen comparison, Pipelock's AARP correctly flagged an unsupported claim. OLP took the next step: it checked the evidence the receiver required, then signed COMMIT when it existed and QUARANTINE when it didn't.
 
 Small receipts. Big accountability.

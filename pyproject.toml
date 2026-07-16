@@ -1,6 +1,6 @@
 [project]
 name = "openline-receipt-gate"
-version = "0.2.0"
+version = "0.3.0"
 description = "Proof-to-policy gate for signed AI action receipts."
 readme = "README.md"
 requires-python = ">=3.10"

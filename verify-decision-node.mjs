@@ -121,14 +121,15 @@ function chooseDecision(receipt) {
     }
     return ['REJECTED', 'DENY'];
   }
-  if (['integrity', 'profile', 'freshness'].some((name) => assessments[name]?.status === 'fail')) {
+  const sourceSignalNames = receipt.receipt_version === '0.3' ? ['source_signal'] : [];
+  if (['integrity', 'profile', 'freshness', ...sourceSignalNames].some((name) => assessments[name]?.status === 'fail')) {
     return ['REJECTED', noBadge ? 'NO_BADGE' : 'DENY'];
   }
   if ((policy.deny_risk_levels || []).includes(action.risk_level)) return ['REJECTED', 'DENY'];
   if (assessments.evidence?.status === 'fail' || assessments.outcome?.status === 'fail') {
     return ['REJECTED', noBadge ? 'NO_BADGE' : 'DENY'];
   }
-  const required = ['integrity', 'profile', 'freshness'];
+  const required = ['integrity', 'profile', 'freshness', ...sourceSignalNames];
   if (policy.require_trusted_source === true) required.push('provenance');
   if (policy.require_independent_source === true) required.push('independence');
   if (policy.require_declared_coverage === true) required.push('coverage');
@@ -211,8 +212,12 @@ function verifyReceipt(receipt, trustedGateKeys) {
     errors.push(`canonicalization_error:${error.message}`);
   }
   if (receipt.kind !== 'proof_to_policy_decision_receipt') errors.push('decision_profile_invalid');
-  if (receipt.receipt_version !== '0.2') errors.push('decision_version_unsupported');
-  if (receipt.algorithm_id !== 'openline-proof-to-policy-gate-0.2') errors.push('decision_algorithm_unsupported');
+  if (!['0.2', '0.3'].includes(receipt.receipt_version)) errors.push('decision_version_unsupported');
+  const expectedAlgorithm = {
+    '0.2': 'openline-proof-to-policy-gate-0.2',
+    '0.3': 'openline-proof-to-policy-gate-0.3',
+  }[receipt.receipt_version];
+  if (receipt.algorithm_id !== expectedAlgorithm) errors.push('decision_algorithm_unsupported');
   if (receipt.canonicalization_id !== 'olp-canonical-json-int-v1') errors.push('decision_canonicalization_unsupported');
   if (typeof receipt.created_at !== 'string' || Number.isNaN(Date.parse(receipt.created_at))) {
     errors.push('decision_timestamp_invalid');
@@ -246,7 +251,9 @@ function verifyReceipt(receipt, trustedGateKeys) {
       errors.push('policy_identity_mismatch');
     }
     const validStatuses = new Set(['pass', 'fail', 'partial', 'unavailable']);
-    for (const name of ['integrity', 'profile', 'provenance', 'independence', 'coverage', 'freshness', 'evidence', 'outcome']) {
+    const assessmentNames = ['integrity', 'profile', 'provenance', 'independence', 'coverage', 'freshness', 'evidence', 'outcome'];
+    if (receipt.receipt_version === '0.3') assessmentNames.push('source_signal');
+    for (const name of assessmentNames) {
       const check = receipt.assessments?.[name];
       if (
         !check

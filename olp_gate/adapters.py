@@ -1,4 +1,4 @@
-"""Input adapters and trust assessments for OLP and Agent Receipts."""
+"""Input adapters and trust assessments for OLP, Agent Receipts, and Pipelock."""
 
 from __future__ import annotations
 
@@ -88,6 +88,7 @@ class SourceAssessment:
     provenance: Check
     coverage: Check
     profile: Check
+    source_signal: Check
 
     def as_dict(self) -> dict[str, Any]:
         return {
@@ -101,6 +102,7 @@ class SourceAssessment:
             "provenance": self.provenance.as_dict(),
             "coverage": self.coverage.as_dict(),
             "profile": self.profile.as_dict(),
+            "source_signal": self.source_signal.as_dict(),
         }
 
 
@@ -125,6 +127,16 @@ def parse_timestamp(value: Any) -> datetime | None:
 
 
 def detect_source_format(receipt: Mapping[str, Any]) -> str:
+    if receipt.get("record_type") == "evidence_receipt_v2":
+        return "pipelock_evidence_receipt_v2"
+    if (
+        receipt.get("record_type") in (None, "action_receipt_v1")
+        and receipt.get("version") == 1
+        and isinstance(receipt.get("action_record"), Mapping)
+        and "signature" in receipt
+        and "signer_key" in receipt
+    ):
+        return "pipelock_action_receipt_v1"
     if receipt.get("canonicalization_id") == "olp-canonical-json-int-v1" and "signature" in receipt:
         return "olp_wire_canon"
     types = receipt.get("type", [])
@@ -362,6 +374,7 @@ def _assess_olp(receipts: Sequence[Mapping[str, Any]], trust_store: TrustStore) 
         provenance=_trusted_provenance(sorted(set(key_ids)), trust_store),
         coverage=coverage,
         profile=profile,
+        source_signal=Check(PASS, [], {"required": False}),
     )
 
 
@@ -562,6 +575,7 @@ def _assess_agent(receipts: Sequence[Mapping[str, Any]], trust_store: TrustStore
         provenance=_trusted_provenance(sorted(set(key_ids)), trust_store),
         coverage=coverage,
         profile=Check(FAIL, profile_errors) if profile_errors else Check(PASS),
+        source_signal=Check(PASS, [], {"required": False}),
     )
 
 
@@ -595,6 +609,7 @@ def _assess_legacy(receipts: Sequence[Mapping[str, Any]], trust_store: TrustStor
         provenance=Check(UNAVAILABLE, ["legacy_chain_is_unsigned"]),
         coverage=Check(PARTIAL, ["legacy_tail_completeness_unproved"]),
         profile=Check(PASS),
+        source_signal=Check(PASS, [], {"required": False}),
     )
 
 
@@ -615,6 +630,7 @@ def assess_source_bundle(
             provenance=Check(UNAVAILABLE, ["source_key_unavailable"]),
             coverage=Check(FAIL, ["source_receipt_missing"]),
             profile=Check(FAIL, ["source_receipt_missing"]),
+            source_signal=Check(UNAVAILABLE, ["source_receipt_missing"]),
         )
     formats = {detect_source_format(receipt) for receipt in receipts}
     if len(formats) != 1:
@@ -629,6 +645,7 @@ def assess_source_bundle(
             provenance=Check(UNAVAILABLE, ["mixed_source_formats"]),
             coverage=Check(FAIL, ["mixed_source_formats"]),
             profile=Check(FAIL, ["mixed_source_formats"]),
+            source_signal=Check(UNAVAILABLE, ["mixed_source_formats"]),
         )
     source_format = next(iter(formats))
     if source_format == "olp_wire_canon":
@@ -637,6 +654,29 @@ def assess_source_bundle(
         return _assess_agent(receipts, store)
     if source_format == "receipt_gate_legacy":
         return _assess_legacy(receipts, store)
+    if source_format == "pipelock_action_receipt_v1":
+        from .adapters_pipelock import PipelockFormatUnsupported, assess_pipelock_v1
+
+        try:
+            return assess_pipelock_v1(receipts, store)
+        except PipelockFormatUnsupported as exc:
+            return SourceAssessment(
+                source_format=source_format,
+                receipt_hashes=[],
+                primary_hash=None,
+                source_key_ids=[],
+                source_binding={},
+                source_timestamp=None,
+                integrity=Check(UNAVAILABLE, [exc.reason_code]),
+                provenance=Check(UNAVAILABLE, [exc.reason_code]),
+                coverage=Check(UNAVAILABLE, [exc.reason_code]),
+                profile=Check(FAIL, [exc.reason_code]),
+                source_signal=Check(UNAVAILABLE, [exc.reason_code]),
+            )
+    if source_format == "pipelock_evidence_receipt_v2":
+        from .adapters_pipelock import assess_unsupported_pipelock_v2
+
+        return assess_unsupported_pipelock_v2(receipts)
     return SourceAssessment(
         source_format="unknown",
         receipt_hashes=[],
@@ -648,4 +688,5 @@ def assess_source_bundle(
         provenance=Check(UNAVAILABLE, ["unknown_source_format"]),
         coverage=Check(UNAVAILABLE, ["unknown_source_format"]),
         profile=Check(FAIL, ["unknown_source_format"]),
+        source_signal=Check(UNAVAILABLE, ["unknown_source_format"]),
     )

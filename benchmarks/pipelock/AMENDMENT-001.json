@@ -1,0 +1,27 @@
+{
+  "amendment_id": "A1",
+  "cases_sha256_unchanged": "29698f0d517be8405331f49660758c7f3c22ba77ff536602ebf288471ecc8124",
+  "changed": [
+    {
+      "new_sha256": "dd360c83128bdfa582d3c39e6227a1869259f1dc6168b23bbc97743920b36c8c",
+      "old_sha256": "e2fe064f211e9784487b10e555da8ec00adaa2df9ab4b6654a278f09120c6ae9",
+      "path": "fixtures/requests/case-01-clean-allow.request.json"
+    },
+    {
+      "new_sha256": "8c09b5767aa6068eef401279f5e01af23f5b981a71b2122dc273c0814d5ddb27",
+      "old_sha256": "684f9046909e5fff4ebb7a643a12dcf8d4b724a2c30505de58deb56d684f746d",
+      "path": "FIXTURE_MANIFEST.json"
+    }
+  ],
+  "date": "2026-07-15",
+  "expected_outcomes_changed": false,
+  "preliminary_observation": {
+    "case_id": "case-01-clean-allow",
+    "decision": "DENY",
+    "reason": "evidence_artifact_unreadable:downstream-result",
+    "verdict": "REJECTED"
+  },
+  "reason": "Keep the direct CLI evidence path inside the request directory's enforced read boundary.",
+  "schema": "openline.pipelock_protocol_amendment.v0.1",
+  "scored_run_had_started": false
+}

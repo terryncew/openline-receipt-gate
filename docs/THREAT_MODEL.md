@@ -2,7 +2,7 @@
 
 ## Defended in this release
 
-- post-signature mutation of OLP, Agent Receipt, outcome, or decision objects;
+- post-signature mutation of OLP, Agent Receipt, Pipelock ActionReceipt v1, outcome, or decision objects;
 - payload-hash rewriting without the applicable signing key;
 - locally resealed decision forgery that contradicts the signed policy and assessments;
 - missing or altered evidence artifacts;
@@ -16,6 +16,8 @@
 - an arbitrary self-signed decision being mistaken for an authorized gate decision (verifiers require an externally pinned gate key);
 - duplicate JSON keys in requests, policies, trust stores, JSON evidence, session state, and decision logs;
 - evidence-path traversal and symlink escape outside the request directory, plus oversized evidence above the external policy limit.
+- laundering a verified Pipelock `block` action verdict into an OLP `COMMIT`;
+- treating an embedded, self-consistent Pipelock signer key as externally trusted provenance.
 
 ## Outside this release
 
@@ -27,6 +29,9 @@
 - network distribution, transparency-log anchoring, HSM/KMS custody, and key rotation;
 - execution of the requested rollback;
 - undetected deletion of a valid tail from a local decision JSONL without an externally retained terminal anchor.
+- Pipelock EvidenceReceipt v2 and mixed v1/v2 chain verification in this phase;
+- any claim that OLP inherits Pipelock's outside-agent, inline mediation boundary;
+- completeness of a Pipelock ActionReceipt chain beyond the receipts actually presented.
 
 ## Trust-store rule
 

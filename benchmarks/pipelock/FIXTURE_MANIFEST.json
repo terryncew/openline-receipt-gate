@@ -1,0 +1,187 @@
+{
+  "cases_sha256": "29698f0d517be8405331f49660758c7f3c22ba77ff536602ebf288471ecc8124",
+  "files": [
+    {
+      "bytes": 937,
+      "origin": "OLP-authored benchmark companion",
+      "path": "aarp/case-01-clean-allow.aarp.json",
+      "sha256": "fcbe8f5c93fe5733c84009394e65c22f2b67bdd81c6189e4040806d32322e60a"
+    },
+    {
+      "bytes": 884,
+      "origin": "OLP-authored benchmark companion",
+      "path": "aarp/case-02-allow-missing-evidence.aarp.json",
+      "sha256": "be36df99593fa4f420de9e45be7fe9ba04061f8769c73f11fcac0230d38b6d20"
+    },
+    {
+      "bytes": 845,
+      "origin": "OLP-authored benchmark companion",
+      "path": "aarp/case-04-native-block.aarp.json",
+      "sha256": "fdca7ece1e0156f6e1f0fd0c273a555c5b1a29153bc9ee488ac33fc9d948434b"
+    },
+    {
+      "bytes": 1069,
+      "origin": "Pipelock AARP conformance corpus byte-for-byte copy",
+      "path": "aarp/pipelock-aarp-test-keys.json",
+      "sha256": "ac68a3841dee0f524e86b7244d3ba26117f3f6d66d225016610f574db8efdfa4",
+      "upstream_commit": "371893f0084ed693c1f69adf6da81c269e84aeff"
+    },
+    {
+      "bytes": 311,
+      "origin": "Pipelock AARP conformance corpus byte-for-byte copy",
+      "path": "aarp/pipelock-aarp-trust.json",
+      "sha256": "781f2db33e6fdce6d1ce77c75f317bb63b3d0769bfaed18520f792d5381fcf99",
+      "upstream_commit": "371893f0084ed693c1f69adf6da81c269e84aeff"
+    },
+    {
+      "bytes": 138,
+      "origin": "OLP-authored benchmark companion",
+      "path": "evidence/case-01-downstream-evidence.json",
+      "sha256": "df1744878237fb2c84b9c15c7da3292a060247ce39e34e035748a95197807b6f"
+    },
+    {
+      "bytes": 883,
+      "origin": "OLP-authored benchmark companion",
+      "path": "olp-policy.json",
+      "sha256": "910aad3ebf03ca8e33cfd13ce7a79221baa1200184398ea9fe09b137ea59bbc4"
+    },
+    {
+      "bytes": 329,
+      "origin": "OLP-authored benchmark companion",
+      "path": "olp-trust.json",
+      "sha256": "ec2dc0063c330e701acadacbbe74e2d553bd5eadd5448ce7302054d232895396"
+    },
+    {
+      "bytes": 1590,
+      "origin": "OLP-authored benchmark companion",
+      "path": "requests/case-01-clean-allow.request.json",
+      "sha256": "dd360c83128bdfa582d3c39e6227a1869259f1dc6168b23bbc97743920b36c8c"
+    },
+    {
+      "bytes": 1443,
+      "origin": "OLP-authored benchmark companion",
+      "path": "requests/case-02-allow-missing-evidence.request.json",
+      "sha256": "0fb92ae665086dd51742d235e362701823038749dd752da896c5b32664b97988"
+    },
+    {
+      "bytes": 5621,
+      "origin": "OLP-authored benchmark companion",
+      "path": "requests/case-03-broken-chain.request.json",
+      "sha256": "f3fc06ec49967ee11a024d1f7ca184224ba203c79f0148b76ab569645ed64ee6"
+    },
+    {
+      "bytes": 1402,
+      "origin": "OLP-authored benchmark companion",
+      "path": "requests/case-04-native-block.request.json",
+      "sha256": "acfaa4c968d07fb470511b158b143d1b0b99b1133c6ed5dc3821a29fa9c985fe"
+    },
+    {
+      "bytes": 1261,
+      "origin": "OLP-authored benchmark companion",
+      "path": "requests/case-05-malformed-v1.request.json",
+      "sha256": "83051c87a6889b33217dfaca868df4816c28fa948a05c194ab0b4574c74f8afa"
+    },
+    {
+      "bytes": 138,
+      "origin": "OLP-authored benchmark companion",
+      "path": "requests/evidence/case-01-downstream-evidence.json",
+      "sha256": "df1744878237fb2c84b9c15c7da3292a060247ce39e34e035748a95197807b6f"
+    },
+    {
+      "bytes": 904,
+      "origin": "agent-egress-bench byte-for-byte copy",
+      "path": "upstream/case-01-clean-allow.json",
+      "sha256": "9e09b65b77ecba26c564b4816ae1d67eec5ff64faf3a1ad83b39ac7276fb890a",
+      "upstream_commit": "1a0d386f3d3d9370dbb6f9c86c92c403fb529cb4",
+      "upstream_path": "receipts/v0/conformance/golden/01-allow-clean-get.json"
+    },
+    {
+      "bytes": 530,
+      "origin": "agent-egress-bench byte-for-byte copy",
+      "path": "upstream/case-01-clean-allow.upstream-expect.json",
+      "sha256": "ebed9b73ea5a3a6a32394938b53760ad294958ddb5abbc38741d642acb7eb69d",
+      "upstream_commit": "1a0d386f3d3d9370dbb6f9c86c92c403fb529cb4",
+      "upstream_path": "receipts/v0/conformance/golden/01-allow-clean-get.expect.json"
+    },
+    {
+      "bytes": 1031,
+      "origin": "agent-egress-bench byte-for-byte copy",
+      "path": "upstream/case-02-allow-missing-evidence.json",
+      "sha256": "52665c3b54b604a916a8742e798eed43b293d4a8b1c2361dec3bfec5fd3a29cf",
+      "upstream_commit": "1a0d386f3d3d9370dbb6f9c86c92c403fb529cb4",
+      "upstream_path": "receipts/v0/conformance/golden/02-allow-suppressed-allowlist.json"
+    },
+    {
+      "bytes": 586,
+      "origin": "agent-egress-bench byte-for-byte copy",
+      "path": "upstream/case-02-allow-missing-evidence.upstream-expect.json",
+      "sha256": "d13fd15436188e67139d9dbe34e45588776bf3a0ce6e6a2dc6a0e170f09bd05c",
+      "upstream_commit": "1a0d386f3d3d9370dbb6f9c86c92c403fb529cb4",
+      "upstream_path": "receipts/v0/conformance/golden/02-allow-suppressed-allowlist.expect.json"
+    },
+    {
+      "bytes": 4140,
+      "origin": "agent-egress-bench byte-for-byte copy",
+      "path": "upstream/case-03-broken-chain.jsonl",
+      "sha256": "0f69a43de0b9c62854299ac764b6d6dd62acc8c196c66bd98d52c2ffd9b63cc7",
+      "upstream_commit": "1a0d386f3d3d9370dbb6f9c86c92c403fb529cb4",
+      "upstream_path": "receipts/v0/conformance/malicious/m08-tampered-chain-prev-hash.jsonl"
+    },
+    {
+      "bytes": 508,
+      "origin": "agent-egress-bench byte-for-byte copy",
+      "path": "upstream/case-03-broken-chain.upstream-expect.json",
+      "sha256": "d3260db60813d5cbff1a9e593276213afbd6b8c5f0fbb6b9d549e79706a080e4",
+      "upstream_commit": "1a0d386f3d3d9370dbb6f9c86c92c403fb529cb4",
+      "upstream_path": "receipts/v0/conformance/malicious/m08-tampered-chain-prev-hash.expect.json"
+    },
+    {
+      "bytes": 1005,
+      "origin": "agent-egress-bench byte-for-byte copy",
+      "path": "upstream/case-04-native-block.json",
+      "sha256": "400af9641503a49e48e8d549c9959b4e132fae637363be36503b28b351f8c414",
+      "upstream_commit": "1a0d386f3d3d9370dbb6f9c86c92c403fb529cb4",
+      "upstream_path": "receipts/v0/conformance/golden/03-block-dlp-aws-key.json"
+    },
+    {
+      "bytes": 566,
+      "origin": "agent-egress-bench byte-for-byte copy",
+      "path": "upstream/case-04-native-block.upstream-expect.json",
+      "sha256": "ed5d355dc70d50130e73bdfe7d93d7378d0cdc98b03dff7058da882bf72a3852",
+      "upstream_commit": "1a0d386f3d3d9370dbb6f9c86c92c403fb529cb4",
+      "upstream_path": "receipts/v0/conformance/golden/03-block-dlp-aws-key.expect.json"
+    },
+    {
+      "bytes": 880,
+      "origin": "agent-egress-bench byte-for-byte copy",
+      "path": "upstream/case-05-malformed-v1.json",
+      "sha256": "ee930eb7dcbc220c9c887cf854b685a958af1a98ee269d76ace3caa7403b6152",
+      "upstream_commit": "1a0d386f3d3d9370dbb6f9c86c92c403fb529cb4",
+      "upstream_path": "receipts/v0/conformance/malicious/m06-missing-required-verdict.json"
+    },
+    {
+      "bytes": 546,
+      "origin": "agent-egress-bench byte-for-byte copy",
+      "path": "upstream/case-05-malformed-v1.upstream-expect.json",
+      "sha256": "1fd541bf4edb64e2d7a5fb4e2b92ffecc609c6224d1bc351637c94e4e8c88bce",
+      "upstream_commit": "1a0d386f3d3d9370dbb6f9c86c92c403fb529cb4",
+      "upstream_path": "receipts/v0/conformance/malicious/m06-missing-required-verdict.expect.json"
+    },
+    {
+      "bytes": 340,
+      "origin": "agent-egress-bench byte-for-byte copy",
+      "path": "upstream/pipelock-conformance-test-key.json",
+      "sha256": "b944df5273ce1aacfd1a348ef99bc1cf62eb8b7d4c7736dbe40ae4ce2f38e6fc",
+      "upstream_commit": "1a0d386f3d3d9370dbb6f9c86c92c403fb529cb4",
+      "upstream_path": "receipts/v0/conformance/_generator/test-key.json"
+    }
+  ],
+  "prepared_without_scoring": true,
+  "schema": "openline.pipelock_fixture_manifest.v0.1",
+  "source_commits": {
+    "agent_egress_bench": "1a0d386f3d3d9370dbb6f9c86c92c403fb529cb4",
+    "openline_receipt_gate_base": "2d8474f821df1ea4ffdd300f78f039b686811912",
+    "pipelock": "371893f0084ed693c1f69adf6da81c269e84aeff",
+    "pipelock_verify_python": "329f1c76fdfa5fc5b165a3794f7c62906a076c03"
+  }
+}

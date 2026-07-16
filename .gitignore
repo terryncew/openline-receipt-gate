@@ -11,6 +11,8 @@ dist/
 .venv/
 *.key
 *.pem
+*.lock
 .secrets/
 sessions.json
 decision_receipts.jsonl
+!benchmarks/pipelock/results/decision_receipts.jsonl

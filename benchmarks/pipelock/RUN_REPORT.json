@@ -1,0 +1,536 @@
+{
+  "checks": [
+    {
+      "details": {
+        "amendment_id": "A1",
+        "cases_sha256": "29698f0d517be8405331f49660758c7f3c22ba77ff536602ebf288471ecc8124",
+        "current_protocol_sha256": "03d7360b2ad5f6bdd190829c0652e7137e69ff9424d4282260a31942b1e004f9",
+        "errors": [],
+        "fixture_manifest_sha256": "8c09b5767aa6068eef401279f5e01af23f5b981a71b2122dc273c0814d5ddb27",
+        "freeze_commit": "13aa5841343c707db5cf68c5b3195198d5c6814a",
+        "original_protocol_sha256": "59ef16461959e47cb6782f4b8111970e1439d29a4444875178a67238b1a4f209",
+        "source_commits": {
+          "openline_receipt_gate_base": "2d8474f821df1ea4ffdd300f78f039b686811912",
+          "pipelock": "371893f0084ed693c1f69adf6da81c269e84aeff",
+          "pipelock_verify_python": "329f1c76fdfa5fc5b165a3794f7c62906a076c03"
+        },
+        "valid": true
+      },
+      "name": "protocol_and_fixture_freeze",
+      "passed": true
+    },
+    {
+      "name": "all_frozen_expectations",
+      "passed": true
+    }
+  ],
+  "claim_boundary": "A five-case conformance benchmark does not prove production safety, complete mediation, evidence truth, universal superiority, or deployed-agent transfer.",
+  "created_at": "2026-07-15T23:27:50.870610Z",
+  "environment": {
+    "pipelock_aarp_verify": "0.1.0-in-repo-reference",
+    "pipelock_verify": "0.2.0",
+    "platform": "Linux-6.12.47-x86_64-with-glibc2.39",
+    "python": "3.12.13"
+  },
+  "passed": true,
+  "pipelock_head_to_head": {
+    "aggregate": {
+      "case_count": 5,
+      "native_action_verdicts": {
+        "allow": 2,
+        "block": 1,
+        "none": 2
+      },
+      "olp": {
+        "correct": 5,
+        "incorrect": 0,
+        "undecidable": 0
+      },
+      "olp_system_verdicts": {
+        "REJECTED": 3,
+        "UNDECIDABLE": 1,
+        "VERIFIED": 1
+      },
+      "pipelock_aarp": {
+        "correct": 3,
+        "incorrect": 0,
+        "not_applicable": 2,
+        "undecidable": 0
+      },
+      "pipelock_native": {
+        "correct": 5,
+        "incorrect": 0,
+        "undecidable": 0
+      },
+      "reference_boolean_parity": 5
+    },
+    "cases": [
+      {
+        "case_id": "case-01-clean-allow",
+        "fixture": "upstream/case-01-clean-allow.json",
+        "fixture_sha256": "9e09b65b77ecba26c564b4816ae1d67eec5ff64faf3a1ad83b39ac7276fb890a",
+        "olp": {
+          "assessment_statuses": {
+            "coverage": "partial",
+            "evidence": "pass",
+            "freshness": "pass",
+            "independence": "pass",
+            "integrity": "pass",
+            "outcome": "pass",
+            "profile": "pass",
+            "provenance": "pass",
+            "source_signal": "pass"
+          },
+          "benchmark_outcome": "correct",
+          "cpu_time_ns": 1671479,
+          "decision": "COMMIT",
+          "decision_signature_verified": true,
+          "evidence_bytes_read": 138,
+          "evidence_reads": 1,
+          "reason_codes": [
+            "coverage:pipelock_action_chain_tail_completeness_unproved"
+          ],
+          "receipt_bytes_read": 904,
+          "retrieval_failures": [],
+          "tool_calls": 4,
+          "verdict": "VERIFIED",
+          "wall_time_ns": 4321826
+        },
+        "pipelock_aarp": {
+          "assertion_signed": true,
+          "benchmark_outcome": "correct",
+          "bytes_read": 1248,
+          "claimed_unverified": [],
+          "cpu_time_ns": 373877,
+          "does_not_assert": [
+            "absence_of_bypass",
+            "action_safety",
+            "all_tools_discovered",
+            "complete_mediation",
+            "delegated_actions_mediated",
+            "efficacy",
+            "hosted_saas_actions_mediated",
+            "intent_correctness",
+            "key_non_compromise",
+            "local_side_effects_mediated",
+            "policy_correctness",
+            "semantic_equivalence_after_modify"
+          ],
+          "overclaim_risks": [
+            "signature_valid_is_not_transparency_inclusion"
+          ],
+          "system_outcome": "appraised",
+          "tool_calls": 1,
+          "verified_claims": [
+            "mediator_key_pinned",
+            "receipt_signature_valid"
+          ],
+          "wall_time_ns": 374595
+        },
+        "pipelock_native": {
+          "action_verdict": "allow",
+          "benchmark_outcome": "correct",
+          "bytes_read": 904,
+          "chain_broken_at_seq": null,
+          "cpu_time_ns": 544491,
+          "error": null,
+          "root_hash": "34f2780dcb510c03f55fc31387c993066fad23e328a2bf5f64b630b8d58a0dfb",
+          "signatures_verified": true,
+          "tool_calls": 1,
+          "trusted_key_pinned": true,
+          "valid": true,
+          "wall_time_ns": 548196
+        },
+        "pipelock_reference_python": {
+          "boolean_parity_with_native": true,
+          "bytes_read": 904,
+          "cpu_time_ns": 255691,
+          "error": null,
+          "tool_calls": 1,
+          "valid": true,
+          "verdict": "allow",
+          "wall_time_ns": 256607
+        }
+      },
+      {
+        "case_id": "case-02-allow-missing-evidence",
+        "fixture": "upstream/case-02-allow-missing-evidence.json",
+        "fixture_sha256": "52665c3b54b604a916a8742e798eed43b293d4a8b1c2361dec3bfec5fd3a29cf",
+        "olp": {
+          "assessment_statuses": {
+            "coverage": "partial",
+            "evidence": "unavailable",
+            "freshness": "pass",
+            "independence": "pass",
+            "integrity": "pass",
+            "outcome": "pass",
+            "profile": "pass",
+            "provenance": "pass",
+            "source_signal": "pass"
+          },
+          "benchmark_outcome": "correct",
+          "cpu_time_ns": 1042121,
+          "decision": "QUARANTINE",
+          "decision_signature_verified": true,
+          "evidence_bytes_read": 0,
+          "evidence_reads": 0,
+          "reason_codes": [
+            "coverage:pipelock_action_chain_tail_completeness_unproved",
+            "evidence:assertion_artifact_unavailable:downstream-result",
+            "evidence:claim_support_missing:conformance-00000",
+            "evidence:evidence_not_bound_to_source:downstream-result",
+            "evidence:required_evidence_missing:downstream-result"
+          ],
+          "receipt_bytes_read": 1031,
+          "retrieval_failures": [
+            "assertion_artifact_unavailable:downstream-result",
+            "claim_support_missing:conformance-00000",
+            "required_evidence_missing:downstream-result"
+          ],
+          "tool_calls": 4,
+          "verdict": "UNDECIDABLE",
+          "wall_time_ns": 1863991
+        },
+        "pipelock_aarp": {
+          "assertion_signed": true,
+          "benchmark_outcome": "correct",
+          "bytes_read": 1195,
+          "claimed_unverified": [
+            "downstream_claim_evidence_sufficient"
+          ],
+          "cpu_time_ns": 347928,
+          "does_not_assert": [
+            "absence_of_bypass",
+            "action_safety",
+            "all_tools_discovered",
+            "complete_mediation",
+            "delegated_actions_mediated",
+            "efficacy",
+            "hosted_saas_actions_mediated",
+            "intent_correctness",
+            "key_non_compromise",
+            "local_side_effects_mediated",
+            "policy_correctness",
+            "semantic_equivalence_after_modify"
+          ],
+          "overclaim_risks": [
+            "signature_valid_is_not_transparency_inclusion"
+          ],
+          "system_outcome": "appraised",
+          "tool_calls": 1,
+          "verified_claims": [
+            "mediator_key_pinned",
+            "receipt_signature_valid"
+          ],
+          "wall_time_ns": 348816
+        },
+        "pipelock_native": {
+          "action_verdict": "allow",
+          "benchmark_outcome": "correct",
+          "bytes_read": 1031,
+          "chain_broken_at_seq": null,
+          "cpu_time_ns": 197184,
+          "error": null,
+          "root_hash": "e3a1eeb8b2bcaeb86d90893fb58250608153655d44906cc427db46e8ca7bda89",
+          "signatures_verified": true,
+          "tool_calls": 1,
+          "trusted_key_pinned": true,
+          "valid": true,
+          "wall_time_ns": 198189
+        },
+        "pipelock_reference_python": {
+          "boolean_parity_with_native": true,
+          "bytes_read": 1031,
+          "cpu_time_ns": 218735,
+          "error": null,
+          "tool_calls": 1,
+          "valid": true,
+          "verdict": "allow",
+          "wall_time_ns": 219330
+        }
+      },
+      {
+        "case_id": "case-03-broken-chain",
+        "fixture": "upstream/case-03-broken-chain.jsonl",
+        "fixture_sha256": "0f69a43de0b9c62854299ac764b6d6dd62acc8c196c66bd98d52c2ffd9b63cc7",
+        "olp": {
+          "assessment_statuses": {
+            "coverage": "fail",
+            "evidence": "unavailable",
+            "freshness": "pass",
+            "independence": "pass",
+            "integrity": "fail",
+            "outcome": "pass",
+            "profile": "pass",
+            "provenance": "pass",
+            "source_signal": "unavailable"
+          },
+          "benchmark_outcome": "correct",
+          "cpu_time_ns": 2171423,
+          "decision": "DENY",
+          "decision_signature_verified": true,
+          "evidence_bytes_read": 0,
+          "evidence_reads": 0,
+          "reason_codes": [
+            "coverage:pipelock_chain_invalid",
+            "evidence:assertion_artifact_unavailable:downstream-result",
+            "evidence:claim_support_missing:conformance-00000",
+            "evidence:evidence_not_bound_to_source:downstream-result",
+            "evidence:required_evidence_missing:downstream-result",
+            "integrity:pipelock_chain_invalid",
+            "source_signal:pipelock_source_verdict_untrusted"
+          ],
+          "receipt_bytes_read": 4140,
+          "retrieval_failures": [
+            "assertion_artifact_unavailable:downstream-result",
+            "claim_support_missing:conformance-00000",
+            "required_evidence_missing:downstream-result"
+          ],
+          "tool_calls": 8,
+          "verdict": "REJECTED",
+          "wall_time_ns": 3021546
+        },
+        "pipelock_aarp": {
+          "benchmark_outcome": "not_applicable",
+          "bytes_read": 0,
+          "cpu_time_ns": 0,
+          "reason": "native receipt chain rejected",
+          "system_outcome": "not_applicable_after_native_rejection",
+          "tool_calls": 0,
+          "wall_time_ns": 0
+        },
+        "pipelock_native": {
+          "action_verdict": null,
+          "benchmark_outcome": "correct",
+          "bytes_read": 4140,
+          "chain_broken_at_seq": 3,
+          "cpu_time_ns": 783647,
+          "error": "seq 3: chain_prev_hash mismatch",
+          "root_hash": null,
+          "signatures_verified": false,
+          "tool_calls": 1,
+          "trusted_key_pinned": true,
+          "valid": false,
+          "wall_time_ns": 785284
+        },
+        "pipelock_reference_python": {
+          "boolean_parity_with_native": true,
+          "bytes_read": 4140,
+          "cpu_time_ns": 77526,
+          "error": "line 1: unexpected recorder entry type None",
+          "tool_calls": 1,
+          "valid": false,
+          "verdict": null,
+          "wall_time_ns": 78068
+        }
+      },
+      {
+        "case_id": "case-04-native-block",
+        "fixture": "upstream/case-04-native-block.json",
+        "fixture_sha256": "400af9641503a49e48e8d549c9959b4e132fae637363be36503b28b351f8c414",
+        "olp": {
+          "assessment_statuses": {
+            "coverage": "partial",
+            "evidence": "unavailable",
+            "freshness": "pass",
+            "independence": "pass",
+            "integrity": "pass",
+            "outcome": "pass",
+            "profile": "pass",
+            "provenance": "pass",
+            "source_signal": "fail"
+          },
+          "benchmark_outcome": "correct",
+          "cpu_time_ns": 961563,
+          "decision": "DENY",
+          "decision_signature_verified": true,
+          "evidence_bytes_read": 0,
+          "evidence_reads": 0,
+          "reason_codes": [
+            "coverage:pipelock_action_chain_tail_completeness_unproved",
+            "evidence:assertion_artifact_unavailable:downstream-result",
+            "evidence:claim_support_missing:conformance-00000",
+            "evidence:evidence_not_bound_to_source:downstream-result",
+            "evidence:required_evidence_missing:downstream-result",
+            "source_signal:pipelock_source_verdict_block"
+          ],
+          "receipt_bytes_read": 1005,
+          "retrieval_failures": [
+            "assertion_artifact_unavailable:downstream-result",
+            "claim_support_missing:conformance-00000",
+            "required_evidence_missing:downstream-result"
+          ],
+          "tool_calls": 4,
+          "verdict": "REJECTED",
+          "wall_time_ns": 1747936
+        },
+        "pipelock_aarp": {
+          "assertion_signed": true,
+          "benchmark_outcome": "correct",
+          "bytes_read": 1156,
+          "claimed_unverified": [],
+          "cpu_time_ns": 319135,
+          "does_not_assert": [
+            "absence_of_bypass",
+            "action_safety",
+            "all_tools_discovered",
+            "complete_mediation",
+            "delegated_actions_mediated",
+            "efficacy",
+            "hosted_saas_actions_mediated",
+            "intent_correctness",
+            "key_non_compromise",
+            "local_side_effects_mediated",
+            "policy_correctness",
+            "semantic_equivalence_after_modify"
+          ],
+          "overclaim_risks": [
+            "signature_valid_is_not_transparency_inclusion"
+          ],
+          "system_outcome": "appraised",
+          "tool_calls": 1,
+          "verified_claims": [
+            "mediator_key_pinned",
+            "receipt_signature_valid"
+          ],
+          "wall_time_ns": 319833
+        },
+        "pipelock_native": {
+          "action_verdict": "block",
+          "benchmark_outcome": "correct",
+          "bytes_read": 1005,
+          "chain_broken_at_seq": null,
+          "cpu_time_ns": 231575,
+          "error": null,
+          "root_hash": "4d0a6c5fba58235b51f8e66fec9573d78fa1f39b2ba01740ac1dabd349788159",
+          "signatures_verified": true,
+          "tool_calls": 1,
+          "trusted_key_pinned": true,
+          "valid": true,
+          "wall_time_ns": 232991
+        },
+        "pipelock_reference_python": {
+          "boolean_parity_with_native": true,
+          "bytes_read": 1005,
+          "cpu_time_ns": 221049,
+          "error": null,
+          "tool_calls": 1,
+          "valid": true,
+          "verdict": "block",
+          "wall_time_ns": 221664
+        }
+      },
+      {
+        "case_id": "case-05-malformed-v1",
+        "fixture": "upstream/case-05-malformed-v1.json",
+        "fixture_sha256": "ee930eb7dcbc220c9c887cf854b685a958af1a98ee269d76ace3caa7403b6152",
+        "olp": {
+          "assessment_statuses": {
+            "coverage": "fail",
+            "evidence": "unavailable",
+            "freshness": "pass",
+            "independence": "pass",
+            "integrity": "fail",
+            "outcome": "pass",
+            "profile": "fail",
+            "provenance": "unavailable",
+            "source_signal": "unavailable"
+          },
+          "benchmark_outcome": "correct",
+          "cpu_time_ns": 699672,
+          "decision": "DENY",
+          "decision_signature_verified": true,
+          "evidence_bytes_read": 0,
+          "evidence_reads": 0,
+          "reason_codes": [
+            "coverage:pipelock_chain_invalid",
+            "evidence:assertion_artifact_unavailable:downstream-result",
+            "evidence:claim_support_missing:conformance-00000",
+            "evidence:evidence_not_bound_to_source:downstream-result",
+            "evidence:required_evidence_missing:downstream-result",
+            "integrity:pipelock_chain_invalid",
+            "integrity:pipelock_receipt_invalid",
+            "profile:pipelock_profile_invalid",
+            "provenance:pipelock_provenance_not_established",
+            "source_signal:pipelock_source_verdict_untrusted"
+          ],
+          "receipt_bytes_read": 880,
+          "retrieval_failures": [
+            "assertion_artifact_unavailable:downstream-result",
+            "claim_support_missing:conformance-00000",
+            "required_evidence_missing:downstream-result"
+          ],
+          "tool_calls": 4,
+          "verdict": "REJECTED",
+          "wall_time_ns": 1464058
+        },
+        "pipelock_aarp": {
+          "benchmark_outcome": "not_applicable",
+          "bytes_read": 0,
+          "cpu_time_ns": 0,
+          "reason": "native receipt rejected",
+          "system_outcome": "not_applicable_after_native_rejection",
+          "tool_calls": 0,
+          "wall_time_ns": 0
+        },
+        "pipelock_native": {
+          "action_verdict": null,
+          "benchmark_outcome": "correct",
+          "bytes_read": 880,
+          "chain_broken_at_seq": null,
+          "cpu_time_ns": 48642,
+          "error": "invalid action record: verdict is required",
+          "root_hash": null,
+          "signatures_verified": false,
+          "tool_calls": 1,
+          "trusted_key_pinned": true,
+          "valid": false,
+          "wall_time_ns": 49464
+        },
+        "pipelock_reference_python": {
+          "boolean_parity_with_native": true,
+          "bytes_read": 880,
+          "cpu_time_ns": 64085,
+          "error": "verdict is required",
+          "tool_calls": 1,
+          "valid": false,
+          "verdict": null,
+          "wall_time_ns": 64597
+        }
+      }
+    ],
+    "decision_receipts": {
+      "count": 5,
+      "path": "benchmarks/pipelock/results/decision_receipts.jsonl",
+      "sha256": "43e7ba17bd3f75366f45072b7e38c6148eb9c3ef245729641558516037946c59",
+      "trusted_gate_public_key": "64f2b1e70db1381118c6e91efa676986fc916b6791f10a259a5a9e2370664465"
+    },
+    "flagship_finding": {
+      "aarp_flagged_claim_unverified": true,
+      "native_allow_with_missing_downstream_evidence_observed": true,
+      "olp_quarantined_missing_evidence": true,
+      "strong_hypothesis_falsified": true,
+      "supported_claim": "In these frozen fixtures, AARP exposed the unsupported assurance claim, while OLP additionally read receiver-required evidence and emitted a signed COMMIT or QUARANTINE disposition."
+    },
+    "protocol": {
+      "amendment_id": "A1",
+      "cases_sha256": "29698f0d517be8405331f49660758c7f3c22ba77ff536602ebf288471ecc8124",
+      "current_protocol_sha256": "03d7360b2ad5f6bdd190829c0652e7137e69ff9424d4282260a31942b1e004f9",
+      "errors": [],
+      "fixture_manifest_sha256": "8c09b5767aa6068eef401279f5e01af23f5b981a71b2122dc273c0814d5ddb27",
+      "freeze_commit": "13aa5841343c707db5cf68c5b3195198d5c6814a",
+      "original_protocol_sha256": "59ef16461959e47cb6782f4b8111970e1439d29a4444875178a67238b1a4f209",
+      "source_commits": {
+        "openline_receipt_gate_base": "2d8474f821df1ea4ffdd300f78f039b686811912",
+        "pipelock": "371893f0084ed693c1f69adf6da81c269e84aeff",
+        "pipelock_verify_python": "329f1c76fdfa5fc5b165a3794f7c62906a076c03"
+      },
+      "valid": true
+    },
+    "work_cost_note": "Wall/CPU timing is descriptive, run-specific, and excluded from reproducibility claims; no combined score is computed."
+  },
+  "repo": "openline-receipt-gate",
+  "schema": "openline.release_run_report.v0.2",
+  "test_count": 5,
+  "version": "0.3.0"
+}

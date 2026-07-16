@@ -371,6 +371,33 @@ class ProofToPolicyTests(unittest.TestCase):
         decision["decision"] = "DENY"
         self.assertFalse(verify_decision_receipt(decision, [self.gate_public_key])["valid"])
 
+    def test_v02_decision_receipt_remains_verifiable_in_python_and_node(self) -> None:
+        _source, request, policy = self.complete_case("v02-compat")
+        current = self.evaluate(request, policy)
+        body = dict(current)
+        body.pop("payload_hash")
+        body.pop("signature")
+        body["receipt_version"] = "0.2"
+        body["algorithm_id"] = "openline-proof-to-policy-gate-0.2"
+        body["assessments"] = dict(body["assessments"])
+        body["assessments"].pop("source_signal")
+        legacy = sign_olp_body(body, self.gate_key)
+
+        result = verify_decision_receipt(legacy, [self.gate_public_key])
+        self.assertTrue(result["valid"], result["errors"])
+
+        path = self.root / "v02-decision.jsonl"
+        path.write_text(json.dumps(legacy, separators=(",", ":")) + "\n", encoding="utf-8")
+        verifier = Path(__file__).resolve().parents[1] / "verify-decision-node.mjs"
+        node = subprocess.run(
+            ["node", str(verifier), str(path), "--gate-key", self.gate_public_key],
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(node.returncode, 0, node.stdout + node.stderr)
+        self.assertTrue(json.loads(node.stdout)["valid"])
+
     def test_resealed_semantic_forgery_is_recomputed_and_rejected(self) -> None:
         _source, request, policy = self.complete_case("recompute")
         decision = self.evaluate(request, policy)

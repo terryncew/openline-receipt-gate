@@ -66,6 +66,15 @@ def _action_fields(
     risk_level: str | None = None
     if receipts:
         source = receipts[-1]
+        pipelock_action = source.get("action_record")
+        if isinstance(pipelock_action, Mapping):
+            signed_action_type = str(pipelock_action.get("action_type", "")) or None
+            action_type = signed_action_type or action_type
+            action_id = (
+                str(pipelock_action.get("action_id"))
+                if pipelock_action.get("action_id") is not None
+                else None
+            )
         subject = source.get("credentialSubject")
         if isinstance(subject, Mapping):
             action = subject.get("action")
@@ -170,7 +179,7 @@ def _choose_decision(
             return REJECTED, ROLLBACK_REQUEST
         return REJECTED, DENY
 
-    hard_fail_names = {"integrity", "profile", "freshness"}
+    hard_fail_names = {"integrity", "profile", "freshness", "source_signal"}
     if any(assessments[name].status == FAIL for name in hard_fail_names):
         return REJECTED, NO_BADGE if no_badge else DENY
 
@@ -180,7 +189,7 @@ def _choose_decision(
     if assessments["evidence"].status == FAIL or assessments["outcome"].status == FAIL:
         return REJECTED, NO_BADGE if no_badge else DENY
 
-    required: list[str] = ["integrity", "profile", "freshness"]
+    required: list[str] = ["integrity", "profile", "freshness", "source_signal"]
     if policy.require_trusted_source:
         required.append("provenance")
     if policy.require_independent_source:
@@ -264,6 +273,7 @@ def evaluate_request(
         "provenance": source.provenance,
         "independence": _independence_check(source, spec),
         "coverage": source.coverage,
+        "source_signal": source.source_signal,
         "freshness": _assess_freshness(
             source=source,
             binding=binding,
@@ -305,7 +315,10 @@ def evaluate_request(
             {**assessments["profile"].details, "signed_action_type": signed_action_type},
         )
 
-    if assessments["outcome"].status == PASS:
+    if (
+        assessments["outcome"].status == PASS
+        and "evidence_hash" in assessments["outcome"].details
+    ):
         artifact_hashes = set(assessments["evidence"].details.get("artifact_hashes", {}).values())
         outcome_evidence_hash = normalize_hash(assessments["outcome"].details.get("evidence_hash"))
         if artifact_hashes and outcome_evidence_hash not in artifact_hashes:
@@ -328,8 +341,8 @@ def evaluate_request(
     claim_hash = sha256_hex(str(claim).encode("utf-8")) if claim is not None else None
     body = {
         "kind": "proof_to_policy_decision_receipt",
-        "receipt_version": "0.2",
-        "algorithm_id": "openline-proof-to-policy-gate-0.2",
+        "receipt_version": "0.3",
+        "algorithm_id": "openline-proof-to-policy-gate-0.3",
         "canonicalization_id": "olp-canonical-json-int-v1",
         "spec_uri": "https://github.com/terryncew/openline-receipt-gate",
         "issuer": {"id": issuer_id},
@@ -406,11 +419,16 @@ def verify_decision_receipt(
         errors.append("gate_key_not_trusted")
     if receipt.get("kind") != "proof_to_policy_decision_receipt":
         errors.append("decision_profile_invalid")
-    if receipt.get("receipt_version") != "0.2":
+    decision_version = receipt.get("receipt_version")
+    if decision_version not in {"0.2", "0.3"}:
         errors.append("decision_version_unsupported")
     if receipt.get("canonicalization_id") != "olp-canonical-json-int-v1":
         errors.append("decision_canonicalization_unsupported")
-    if receipt.get("algorithm_id") != "openline-proof-to-policy-gate-0.2":
+    expected_algorithm = {
+        "0.2": "openline-proof-to-policy-gate-0.2",
+        "0.3": "openline-proof-to-policy-gate-0.3",
+    }.get(str(decision_version))
+    if receipt.get("algorithm_id") != expected_algorithm:
         errors.append("decision_algorithm_unsupported")
     if parse_timestamp(receipt.get("created_at")) is None:
         errors.append("decision_timestamp_invalid")
@@ -454,10 +472,13 @@ def verify_decision_receipt(
             if spec.policy_id != policy_value.get("id") or spec.version != policy_value.get("version"):
                 errors.append("policy_identity_mismatch")
             checks: dict[str, Check] = {}
-            for name in (
+            assessment_names = [
                 "integrity", "profile", "provenance", "independence",
                 "coverage", "freshness", "evidence", "outcome",
-            ):
+            ]
+            if decision_version == "0.3":
+                assessment_names.append("source_signal")
+            for name in assessment_names:
                 raw = assessments_value.get(name)
                 if not isinstance(raw, Mapping):
                     raise ValueError(f"assessment_missing:{name}")
@@ -474,6 +495,8 @@ def verify_decision_receipt(
                     reason_codes=list(raw.get("reason_codes", [])),
                     details=dict(raw.get("details", {})),
                 )
+            if decision_version == "0.2":
+                checks["source_signal"] = Check(PASS, [], {"required": False})
             expected_verdict, expected_decision = _choose_decision(
                 action_type=str(action.get("type", "unknown")),
                 risk_level=str(action.get("risk_level")) if action.get("risk_level") is not None else None,

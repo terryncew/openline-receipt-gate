@@ -1,14 +1,14 @@
 # Decision Receipt Schema
 
-The v0.2 output is an Ed25519-signed JSON object using `olp-canonical-json-int-v1`.
+The v0.3 output is an Ed25519-signed JSON object using `olp-canonical-json-int-v1`.
 
 The embedded public key verifies integrity but grants no authority by itself. A receiver must pin the authorized gate public key outside the receipt and supply it to either verifier.
 
 ```json
 {
   "kind": "proof_to_policy_decision_receipt",
-  "receipt_version": "0.2",
-  "algorithm_id": "openline-proof-to-policy-gate-0.2",
+  "receipt_version": "0.3",
+  "algorithm_id": "openline-proof-to-policy-gate-0.3",
   "canonicalization_id": "olp-canonical-json-int-v1",
   "issuer": {"id": "procurement-gate"},
   "created_at": "2026-07-12T00:00:00Z",
@@ -45,6 +45,7 @@ The embedded public key verifies integrity but grants no authority by itself. A 
     "provenance": {"status": "pass", "reason_codes": [], "details": {}},
     "independence": {"status": "pass", "reason_codes": [], "details": {}},
     "coverage": {"status": "pass", "reason_codes": [], "details": {}},
+    "source_signal": {"status": "pass", "reason_codes": [], "details": {}},
     "freshness": {"status": "pass", "reason_codes": [], "details": {}},
     "evidence": {"status": "pass", "reason_codes": [], "details": {}},
     "outcome": {"status": "pass", "reason_codes": [], "details": {}}
@@ -86,4 +87,7 @@ ROLLBACK_REQUEST
 
 ## Legacy schema
 
-`openline.receipt_gate.v0.1.1` remains supported and is documented by its source implementation. It is a local hash chain rather than a signed v0.2 decision receipt.
+The Python and Node verifiers continue to accept signed v0.2 decision receipts.
+They apply v0.2's original assessment set when recomputing those decisions.
+
+`openline.receipt_gate.v0.1.1` remains supported and is documented by its source implementation. It is a local hash chain rather than a signed proof-to-policy decision receipt.

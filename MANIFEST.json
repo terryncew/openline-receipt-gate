@@ -1,16 +1,16 @@
 {
   "claim": "Signed source receipts can drive externally configured, independently verifiable policy decisions within declared inputs and trust assumptions.",
-  "created_at": "2026-07-13T00:13:18.787846Z",
+  "created_at": "2026-07-16T00:00:21.362146Z",
   "files": [
     {
-      "bytes": 173,
+      "bytes": 233,
       "path": ".gitignore",
-      "sha256": "f3b5b17f63590d6f8406b2bfff83743b4731016c11b3c388a0be4f6a17252326"
+      "sha256": "3c7eead6a0305c8eb0c51850c3a2751dc4925975722b2db46f9714ee5b5865aa"
     },
     {
-      "bytes": 955,
+      "bytes": 2706,
       "path": "CHANGELOG.md",
-      "sha256": "e48cb4e6042490042d62129b7efd312cdb7823a1a312449faeea4e98a987ab60"
+      "sha256": "e7ace6d5a932994cd4a67c4d20e085396bb8cc9ca14704e1d74cba43cd3b5ce7"
     },
     {
       "bytes": 985,
@@ -18,39 +18,239 @@
       "sha256": "83f1cec7cc6701c9a8004184b541dd1297a5c0aa618d22cfc9036686b4274cfb"
     },
     {
-      "bytes": 6327,
+      "bytes": 8751,
       "path": "README.md",
-      "sha256": "d1299ffa528581a30c3af8f34df908decd8351fddda148bb510bac89e722d752"
+      "sha256": "1fb5894d496e72a3ecb78b8b727a39f0f27a17368ef2e363b39e813a805b5b11"
     },
     {
-      "bytes": 20290,
+      "bytes": 52155,
       "path": "RUN_REPORT.json",
-      "sha256": "d70030533be9a1ec839ba7693065ff7762f771788b71444be538a6e053f95818"
+      "sha256": "caab8aa5498e9d77c8ba24592e0fcd1681c9cf8ec1613444a922181e7d8ae6af"
     },
     {
-      "bytes": 2481,
+      "bytes": 65,
+      "path": "benchmarks/__init__.py",
+      "sha256": "ef1160967240e058fe32b991311b74e9b41e67e409e4f4645f13c66c56907ab0"
+    },
+    {
+      "bytes": 1071,
+      "path": "benchmarks/pipelock/AMENDMENT-001.json",
+      "sha256": "4380166fdf11ff9734d42b0d636ba74fdf9083d48e0e7f3e37701546710e38ec"
+    },
+    {
+      "bytes": 4368,
+      "path": "benchmarks/pipelock/CASES.json",
+      "sha256": "29698f0d517be8405331f49660758c7f3c22ba77ff536602ebf288471ecc8124"
+    },
+    {
+      "bytes": 8150,
+      "path": "benchmarks/pipelock/FIXTURE_MANIFEST.json",
+      "sha256": "8c09b5767aa6068eef401279f5e01af23f5b981a71b2122dc273c0814d5ddb27"
+    },
+    {
+      "bytes": 425,
+      "path": "benchmarks/pipelock/FREEZE.json",
+      "sha256": "49e01e4996df10349b42cbdb4865b713360f046c98e9734ad92ab20405765317"
+    },
+    {
+      "bytes": 15629,
+      "path": "benchmarks/pipelock/PROTOCOL.md",
+      "sha256": "03d7360b2ad5f6bdd190829c0652e7137e69ff9424d4282260a31942b1e004f9"
+    },
+    {
+      "bytes": 78,
+      "path": "benchmarks/pipelock/PROTOCOL.sha256",
+      "sha256": "905c3e73cd7ebe78f02a9e2e78f58917d1a2453692e7cbed1d557f17f0792e99"
+    },
+    {
+      "bytes": 2306,
+      "path": "benchmarks/pipelock/REPORT.md",
+      "sha256": "5a15fc9f5e9d5bf25e7bae34d469857d6795399a3702614e6b6aa095953c4ce0"
+    },
+    {
+      "bytes": 19441,
+      "path": "benchmarks/pipelock/RUN_REPORT.json",
+      "sha256": "c5abda5bd8b8b235c2aa5b42aac5047330dec9bb3a82d1042008682b6f1233b4"
+    },
+    {
+      "bytes": 10710,
+      "path": "benchmarks/pipelock/THIRD_PARTY_LICENSES/Apache-2.0.txt",
+      "sha256": "f96142faf0853c6e475eedce81dc816b22f638c32f1119a9f3d7fb50993595a4"
+    },
+    {
+      "bytes": 740,
+      "path": "benchmarks/pipelock/THIRD_PARTY_NOTICE.md",
+      "sha256": "fe9d398f0e0fe6cbbc9055bdf883ed959e6bec7114244e1fc5153642c6349898"
+    },
+    {
+      "bytes": 63,
+      "path": "benchmarks/pipelock/__init__.py",
+      "sha256": "5305d20f4a7f6963e1adb7512979176859ae8a209c18eb54e06c73e9d02f5cfa"
+    },
+    {
+      "bytes": 937,
+      "path": "benchmarks/pipelock/fixtures/aarp/case-01-clean-allow.aarp.json",
+      "sha256": "fcbe8f5c93fe5733c84009394e65c22f2b67bdd81c6189e4040806d32322e60a"
+    },
+    {
+      "bytes": 884,
+      "path": "benchmarks/pipelock/fixtures/aarp/case-02-allow-missing-evidence.aarp.json",
+      "sha256": "be36df99593fa4f420de9e45be7fe9ba04061f8769c73f11fcac0230d38b6d20"
+    },
+    {
+      "bytes": 845,
+      "path": "benchmarks/pipelock/fixtures/aarp/case-04-native-block.aarp.json",
+      "sha256": "fdca7ece1e0156f6e1f0fd0c273a555c5b1a29153bc9ee488ac33fc9d948434b"
+    },
+    {
+      "bytes": 1069,
+      "path": "benchmarks/pipelock/fixtures/aarp/pipelock-aarp-test-keys.json",
+      "sha256": "ac68a3841dee0f524e86b7244d3ba26117f3f6d66d225016610f574db8efdfa4"
+    },
+    {
+      "bytes": 311,
+      "path": "benchmarks/pipelock/fixtures/aarp/pipelock-aarp-trust.json",
+      "sha256": "781f2db33e6fdce6d1ce77c75f317bb63b3d0769bfaed18520f792d5381fcf99"
+    },
+    {
+      "bytes": 138,
+      "path": "benchmarks/pipelock/fixtures/evidence/case-01-downstream-evidence.json",
+      "sha256": "df1744878237fb2c84b9c15c7da3292a060247ce39e34e035748a95197807b6f"
+    },
+    {
+      "bytes": 883,
+      "path": "benchmarks/pipelock/fixtures/olp-policy.json",
+      "sha256": "910aad3ebf03ca8e33cfd13ce7a79221baa1200184398ea9fe09b137ea59bbc4"
+    },
+    {
+      "bytes": 329,
+      "path": "benchmarks/pipelock/fixtures/olp-trust.json",
+      "sha256": "ec2dc0063c330e701acadacbbe74e2d553bd5eadd5448ce7302054d232895396"
+    },
+    {
+      "bytes": 1590,
+      "path": "benchmarks/pipelock/fixtures/requests/case-01-clean-allow.request.json",
+      "sha256": "dd360c83128bdfa582d3c39e6227a1869259f1dc6168b23bbc97743920b36c8c"
+    },
+    {
+      "bytes": 1443,
+      "path": "benchmarks/pipelock/fixtures/requests/case-02-allow-missing-evidence.request.json",
+      "sha256": "0fb92ae665086dd51742d235e362701823038749dd752da896c5b32664b97988"
+    },
+    {
+      "bytes": 5621,
+      "path": "benchmarks/pipelock/fixtures/requests/case-03-broken-chain.request.json",
+      "sha256": "f3fc06ec49967ee11a024d1f7ca184224ba203c79f0148b76ab569645ed64ee6"
+    },
+    {
+      "bytes": 1402,
+      "path": "benchmarks/pipelock/fixtures/requests/case-04-native-block.request.json",
+      "sha256": "acfaa4c968d07fb470511b158b143d1b0b99b1133c6ed5dc3821a29fa9c985fe"
+    },
+    {
+      "bytes": 1261,
+      "path": "benchmarks/pipelock/fixtures/requests/case-05-malformed-v1.request.json",
+      "sha256": "83051c87a6889b33217dfaca868df4816c28fa948a05c194ab0b4574c74f8afa"
+    },
+    {
+      "bytes": 138,
+      "path": "benchmarks/pipelock/fixtures/requests/evidence/case-01-downstream-evidence.json",
+      "sha256": "df1744878237fb2c84b9c15c7da3292a060247ce39e34e035748a95197807b6f"
+    },
+    {
+      "bytes": 904,
+      "path": "benchmarks/pipelock/fixtures/upstream/case-01-clean-allow.json",
+      "sha256": "9e09b65b77ecba26c564b4816ae1d67eec5ff64faf3a1ad83b39ac7276fb890a"
+    },
+    {
+      "bytes": 530,
+      "path": "benchmarks/pipelock/fixtures/upstream/case-01-clean-allow.upstream-expect.json",
+      "sha256": "ebed9b73ea5a3a6a32394938b53760ad294958ddb5abbc38741d642acb7eb69d"
+    },
+    {
+      "bytes": 1031,
+      "path": "benchmarks/pipelock/fixtures/upstream/case-02-allow-missing-evidence.json",
+      "sha256": "52665c3b54b604a916a8742e798eed43b293d4a8b1c2361dec3bfec5fd3a29cf"
+    },
+    {
+      "bytes": 586,
+      "path": "benchmarks/pipelock/fixtures/upstream/case-02-allow-missing-evidence.upstream-expect.json",
+      "sha256": "d13fd15436188e67139d9dbe34e45588776bf3a0ce6e6a2dc6a0e170f09bd05c"
+    },
+    {
+      "bytes": 4140,
+      "path": "benchmarks/pipelock/fixtures/upstream/case-03-broken-chain.jsonl",
+      "sha256": "0f69a43de0b9c62854299ac764b6d6dd62acc8c196c66bd98d52c2ffd9b63cc7"
+    },
+    {
+      "bytes": 508,
+      "path": "benchmarks/pipelock/fixtures/upstream/case-03-broken-chain.upstream-expect.json",
+      "sha256": "d3260db60813d5cbff1a9e593276213afbd6b8c5f0fbb6b9d549e79706a080e4"
+    },
+    {
+      "bytes": 1005,
+      "path": "benchmarks/pipelock/fixtures/upstream/case-04-native-block.json",
+      "sha256": "400af9641503a49e48e8d549c9959b4e132fae637363be36503b28b351f8c414"
+    },
+    {
+      "bytes": 566,
+      "path": "benchmarks/pipelock/fixtures/upstream/case-04-native-block.upstream-expect.json",
+      "sha256": "ed5d355dc70d50130e73bdfe7d93d7378d0cdc98b03dff7058da882bf72a3852"
+    },
+    {
+      "bytes": 880,
+      "path": "benchmarks/pipelock/fixtures/upstream/case-05-malformed-v1.json",
+      "sha256": "ee930eb7dcbc220c9c887cf854b685a958af1a98ee269d76ace3caa7403b6152"
+    },
+    {
+      "bytes": 546,
+      "path": "benchmarks/pipelock/fixtures/upstream/case-05-malformed-v1.upstream-expect.json",
+      "sha256": "1fd541bf4edb64e2d7a5fb4e2b92ffecc609c6224d1bc351637c94e4e8c88bce"
+    },
+    {
+      "bytes": 340,
+      "path": "benchmarks/pipelock/fixtures/upstream/pipelock-conformance-test-key.json",
+      "sha256": "b944df5273ce1aacfd1a348ef99bc1cf62eb8b7d4c7736dbe40ae4ce2f38e6fc"
+    },
+    {
+      "bytes": 15770,
+      "path": "benchmarks/pipelock/prepare_fixtures.py",
+      "sha256": "8b244b24f3c60ec1f64c3cc6d089a0303a31ced26875a3f8ba0b243a66fbc22f"
+    },
+    {
+      "bytes": 22662,
+      "path": "benchmarks/pipelock/results/decision_receipts.jsonl",
+      "sha256": "43e7ba17bd3f75366f45072b7e38c6148eb9c3ef245729641558516037946c59"
+    },
+    {
+      "bytes": 25994,
+      "path": "benchmarks/pipelock/run_head_to_head.py",
+      "sha256": "0adf457f59689f8f8bc4900f6534037f386c18e2473f3f7e0f8ecaa702da48fa"
+    },
+    {
+      "bytes": 2773,
       "path": "docs/ARCHITECTURE.md",
-      "sha256": "f237b9e914e32482de1c4e2730499489c511ebeb9c0f79c9567e61ef4a997c90"
+      "sha256": "843b07565b05d778438ef93d1857423b74b7801e0997f8acfa0348bd3b1b72ec"
     },
     {
-      "bytes": 1496,
+      "bytes": 3287,
       "path": "docs/CLAIM_BOUNDARY.md",
-      "sha256": "b37c1507a88c27c5737758765e230978fc2b5e635f770697bc01b343ea43be11"
+      "sha256": "e5ec6d8e07aee78e6b89e6cd9e2b100509f1d97c71e1c2ff341e9dbe2c55ea71"
     },
     {
-      "bytes": 1869,
+      "bytes": 4339,
       "path": "docs/COMPATIBILITY.md",
-      "sha256": "edf68f737f133a5fa710506b1ffec6fa2d061e9355a8948578bf1b1c7c79c6b2"
+      "sha256": "4831003447e3b3e035b8eb86ed246361611c46e0903e4348b16f9033e3544653"
     },
     {
-      "bytes": 2677,
+      "bytes": 2921,
       "path": "docs/RECEIPT_SCHEMA.md",
-      "sha256": "8b64dc99345a38ed9daaea47ddf8fa3719e4b7f0d3aca65f1dbcec9ab39e436c"
+      "sha256": "31a4b725b0255e464593800797f2c44a0459c742a38d8df16c71f120d2344431"
     },
     {
-      "bytes": 2428,
+      "bytes": 2879,
       "path": "docs/THREAT_MODEL.md",
-      "sha256": "454b144d07cf219cd89de3e4fd6e8de27b81cb2b1e4d5c8b9d0a84f9b91d879d"
+      "sha256": "cd1201feba118b0d5755311b8a4c07fe83dabe88e4cbef4ee986bceb7b758966"
     },
     {
       "bytes": 1725,
@@ -78,19 +278,24 @@
       "sha256": "dbce059229dee7c11fe07a5f9d7c3ff777951af8455ea009cd3819848e543b81"
     },
     {
-      "bytes": 652,
+      "bytes": 411,
       "path": "launch/thread_copy.md",
-      "sha256": "73facbce23eba2f062773cc86caaca82940bb0ec5d7aaf9eccd11b75809373e4"
+      "sha256": "d56acc414741621c53034c3b1cc57d5b09cac1392dd8b360be7780c2213d5fe2"
     },
     {
       "bytes": 782,
       "path": "olp_gate/__init__.py",
-      "sha256": "575e5161471f8c2a6025d50bc8cbd467f44de0f9c10fcff7e38dc23425842d26"
+      "sha256": "e6936f6b79c881abef73edc47a9920e8356d4d67f7f7985423f05ec50164140e"
     },
     {
-      "bytes": 28810,
+      "bytes": 30740,
       "path": "olp_gate/adapters.py",
-      "sha256": "63cef0b0ef74d98eef8a7d22191fdefc12cb3e70242e219b1e31b7b7ab5c19e9"
+      "sha256": "9e06e5eaff769b0ffce5c4b597e6406a8ca832b6bcc4dba5dd66db1913298981"
+    },
+    {
+      "bytes": 12834,
+      "path": "olp_gate/adapters_pipelock.py",
+      "sha256": "d326cf65f3bc4ac8413c600c570941f2196cd3f13d0c47f6995e228b3e1c2a6f"
     },
     {
       "bytes": 4666,
@@ -118,9 +323,9 @@
       "sha256": "210cfd1737837b702f82dbb0ebe088eda8011e523e9bd7d2089d66be0767b61e"
     },
     {
-      "bytes": 22853,
+      "bytes": 23912,
       "path": "olp_gate/gateway.py",
-      "sha256": "ea847d52c3ebecc9b5482a7305fdbf918f03a2e3236c4e5e0696787a9da65af3"
+      "sha256": "9835afa27ccda3a96bb62179e643b74f60bcba1ff8a5e867bd406d1080daab5d"
     },
     {
       "bytes": 5353,
@@ -140,37 +345,17 @@
     {
       "bytes": 521,
       "path": "pyproject.toml",
-      "sha256": "232dbdc69d57a6699834513db48c14487a820b707fe5b71750f87f0fb3eeba55"
+      "sha256": "4694dd9c169de55f6a5acaccb56e8bf06a2eb3e2af639df7738d8d4b4437037c"
     },
     {
-      "bytes": 2574,
-      "path": "receipts/eval_score_receipts.jsonl",
-      "sha256": "5cf777863ab526548ad47c8fb0bb44374957ed9e0eb18fbd15f856806cc68ad5"
-    },
-    {
-      "bytes": 1771,
-      "path": "receipts/memory_write_receipts.jsonl",
-      "sha256": "34185b03843669f5a47118cd169b3a178512cd6d1668fefd595e93a1255686e0"
-    },
-    {
-      "bytes": 1616,
-      "path": "receipts/tool_call_receipts.jsonl",
-      "sha256": "57877a0879f465cf3ff56423bced517362a9d5b9985badff8227e973cdb63ba7"
-    },
-    {
-      "bytes": 15356,
-      "path": "results/demo_all_summary.json",
-      "sha256": "6d16ea14673cd1c5bd6c672ff21d43691036a4f49c95796382ff3fd14c646461"
-    },
-    {
-      "bytes": 18322,
-      "path": "results/proof_to_policy_demo/decision_receipts.jsonl",
-      "sha256": "e370f2a6ffef53283e94b137b5db904145193e15cb5085bbcc006e05061dc53e"
+      "bytes": 125,
+      "path": "requirements-pipelock.txt",
+      "sha256": "de510b2adac790ed767b35908b07bd028929bb1de276557416f3532b9a7857c2"
     },
     {
       "bytes": 1653,
       "path": "results/proof_to_policy_demo/demo_summary.json",
-      "sha256": "59011fae6bbf1765d99d671b31ff918556ee9a702328147a2e63a3033a78085f"
+      "sha256": "3ade6f3c24eb290e3176dcf0ceaa0cf41128229d49da2d26f61781d243a683bc"
     },
     {
       "bytes": 37,
@@ -183,14 +368,19 @@
       "sha256": "2dc839e96b3fdb57992f3a01234c5e87410eb652d9691fd2c9271bc59d598053"
     },
     {
-      "bytes": 9628,
+      "bytes": 17892,
       "path": "scripts/release_check.py",
-      "sha256": "2bcc804f80447e4f9cd2efb663d90b09617f2ebe71549fa0f9b8e492b9934367"
+      "sha256": "b49e796249a65790307776cf2130a93596381c651a3252fa83150cc77abe1a1f"
     },
     {
       "bytes": 1994,
       "path": "scripts/verify_manifest.py",
       "sha256": "a82c405a518b8b18b6e2487e9abf5ada6609bfb070679b006f1a8f043d5dd917"
+    },
+    {
+      "bytes": 7833,
+      "path": "scripts/verify_pipelock_benchmark.py",
+      "sha256": "377d3fd9086ebfe562d7f199c31c8bf4d892375550cacb9a0388f0f76bd9818a"
     },
     {
       "bytes": 1781,
@@ -203,9 +393,19 @@
       "sha256": "ea4d358b4ad02c0a39a0e2370d9cd8051fbdc5597a48bdbb845756f4c880678f"
     },
     {
-      "bytes": 22124,
+      "bytes": 1218,
+      "path": "tests/fixtures/pipelock-evidence-v2-proxy-decision.json",
+      "sha256": "c3e7515c0a0299839416268339c5a97205f99eb3337c85df8fae706009cca4c3"
+    },
+    {
+      "bytes": 7744,
+      "path": "tests/test_pipelock_adapter.py",
+      "sha256": "0c345f75982dbcdc97330eb58caa37b705eef3891f37b383f7a62902aed8fea8"
+    },
+    {
+      "bytes": 23379,
       "path": "tests/test_proof_to_policy.py",
-      "sha256": "d184d838a2fa08bc47cc2875a80bed57cb78e168a28250b80a5865e680caf01c"
+      "sha256": "95c7f69a2eb5c0756ce2eff595639c7f741a0cd77b2dbbf1d1efd16c0db06280"
     },
     {
       "bytes": 6040,
@@ -213,11 +413,58 @@
       "sha256": "992bcaafb4cbf04c725393eef4f5511fddbe432077ab98ba0cec80bc78421c24"
     },
     {
-      "bytes": 14948,
+      "bytes": 15361,
       "path": "verify-decision-node.mjs",
-      "sha256": "26b957f5ee3faf701a064daa9b18f24c6481dadb1bf59271ab3f6f8c906ac7a6"
+      "sha256": "547f7897ff463c6717e6e3154430062d35b46cafbd6c3c5c9beec3796dba2137"
     }
   ],
+  "optional_integrations": {
+    "pipelock": {
+      "available": true,
+      "dependency_absent_suite_passed": true,
+      "install_command": "pip install -r requirements-pipelock.txt",
+      "integration_test_count": 9,
+      "live_adapter_tests_executed": true,
+      "live_adapter_tests_passed": true,
+      "source_commit": "329f1c76fdfa5fc5b165a3794f7c62906a076c03",
+      "supported": true,
+      "version": "0.2.0"
+    }
+  },
+  "pipelock_head_to_head": {
+    "aggregate": {
+      "case_count": 5,
+      "native_action_verdicts": {
+        "allow": 2,
+        "block": 1,
+        "none": 2
+      },
+      "olp": {
+        "correct": 5,
+        "incorrect": 0,
+        "undecidable": 0
+      },
+      "olp_system_verdicts": {
+        "REJECTED": 3,
+        "UNDECIDABLE": 1,
+        "VERIFIED": 1
+      },
+      "pipelock_aarp": {
+        "correct": 3,
+        "incorrect": 0,
+        "not_applicable": 2,
+        "undecidable": 0
+      },
+      "pipelock_native": {
+        "correct": 5,
+        "incorrect": 0,
+        "undecidable": 0
+      },
+      "reference_boolean_parity": 5
+    },
+    "passed": true,
+    "strong_hypothesis_falsified": true
+  },
   "proof_to_policy_demo": {
     "decision_receipt_count": 5,
     "observed": {
@@ -247,5 +494,5 @@
   "release_status": "ready",
   "repo": "openline-receipt-gate",
   "schema": "openline.release_manifest.v0.2",
-  "version": "0.2.0"
+  "version": "0.3.0"
 }

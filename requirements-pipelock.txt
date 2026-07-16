@@ -1,0 +1,1 @@
+pipelock-verify @ git+https://github.com/luckyPipewrench/pipelock-verify-python.git@329f1c76fdfa5fc5b165a3794f7c62906a076c03

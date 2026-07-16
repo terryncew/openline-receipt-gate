@@ -10,17 +10,18 @@ The v0.1.1 `gate(...)` context manager emits a local hash-chained receipt. It re
 
 ### Proof-to-policy gateway
 
-The v0.2 gateway receives an already emitted source receipt and produces a separately signed decision receipt. It never edits or upgrades the source receipt.
+The v0.3 gateway receives an already emitted source receipt and produces a separately signed decision receipt. It never edits or upgrades the source receipt.
 
 ```text
 source bundle
   ├── OLP Wire Canon
   ├── Agent Receipts
+  ├── Pipelock ActionReceipt v1
   └── legacy Receipt Gate
         ↓
 format adapter
         ↓
-integrity / profile / provenance / coverage
+integrity / profile / provenance / coverage / source signal
         ↓
 challenge, session, source, sequence, parent, freshness
         ↓
@@ -51,6 +52,10 @@ unavailable
 ```
 
 `unavailable` differs from `fail`. Missing evidence produces `UNDECIDABLE`; altered evidence produces `REJECTED`.
+
+For Pipelock only, `source_signal` preserves the mediator's action verdict as a
+required, separate input. `allow` does not imply `COMMIT`; `block` is a hard
+failure. Other adapters carry a neutral pass for backward-compatible semantics.
 
 ## Session state
 

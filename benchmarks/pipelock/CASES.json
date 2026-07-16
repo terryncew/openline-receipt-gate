@@ -1,0 +1,155 @@
+{
+  "cases": [
+    {
+      "aarp_expected": {
+        "assertion_signed": true,
+        "claimed_unverified_include": [],
+        "verified_claims_include": [
+          "mediator_key_pinned",
+          "receipt_signature_valid"
+        ]
+      },
+      "aarp_fixture": "aarp/case-01-clean-allow.aarp.json",
+      "case_id": "case-01-clean-allow",
+      "evidence": [
+        {
+          "artifact_path": "evidence/case-01-downstream-evidence.json",
+          "content_hash": "df1744878237fb2c84b9c15c7da3292a060247ce39e34e035748a95197807b6f",
+          "id": "downstream-result",
+          "source_receipt_hash": "34f2780dcb510c03f55fc31387c993066fad23e328a2bf5f64b630b8d58a0dfb"
+        }
+      ],
+      "fixture": "upstream/case-01-clean-allow.json",
+      "input_mode": "single",
+      "native_expected": {
+        "action_verdict": "allow",
+        "valid": true
+      },
+      "olp_expected": {
+        "decision": "COMMIT",
+        "verdict": "VERIFIED"
+      }
+    },
+    {
+      "aarp_expected": {
+        "assertion_signed": true,
+        "claimed_unverified_include": [
+          "downstream_claim_evidence_sufficient"
+        ],
+        "verified_claims_include": [
+          "mediator_key_pinned",
+          "receipt_signature_valid"
+        ]
+      },
+      "aarp_fixture": "aarp/case-02-allow-missing-evidence.aarp.json",
+      "case_id": "case-02-allow-missing-evidence",
+      "evidence": [],
+      "fixture": "upstream/case-02-allow-missing-evidence.json",
+      "input_mode": "single",
+      "native_expected": {
+        "action_verdict": "allow",
+        "valid": true
+      },
+      "olp_expected": {
+        "decision": "QUARANTINE",
+        "verdict": "UNDECIDABLE"
+      }
+    },
+    {
+      "aarp_expected": {
+        "not_applicable": "native receipt chain rejected"
+      },
+      "aarp_fixture": null,
+      "case_id": "case-03-broken-chain",
+      "evidence": [],
+      "fixture": "upstream/case-03-broken-chain.jsonl",
+      "input_mode": "chain",
+      "native_expected": {
+        "action_verdict": null,
+        "valid": false
+      },
+      "olp_expected": {
+        "decision": "DENY",
+        "verdict": "REJECTED"
+      }
+    },
+    {
+      "aarp_expected": {
+        "assertion_signed": true,
+        "claimed_unverified_include": [],
+        "verified_claims_include": [
+          "mediator_key_pinned",
+          "receipt_signature_valid"
+        ]
+      },
+      "aarp_fixture": "aarp/case-04-native-block.aarp.json",
+      "case_id": "case-04-native-block",
+      "evidence": [],
+      "fixture": "upstream/case-04-native-block.json",
+      "input_mode": "single",
+      "native_expected": {
+        "action_verdict": "block",
+        "valid": true
+      },
+      "olp_expected": {
+        "decision": "DENY",
+        "verdict": "REJECTED"
+      }
+    },
+    {
+      "aarp_expected": {
+        "not_applicable": "native receipt rejected"
+      },
+      "aarp_fixture": null,
+      "case_id": "case-05-malformed-v1",
+      "evidence": [],
+      "fixture": "upstream/case-05-malformed-v1.json",
+      "input_mode": "single",
+      "native_expected": {
+        "action_verdict": null,
+        "valid": false
+      },
+      "olp_expected": {
+        "decision": "DENY",
+        "verdict": "REJECTED"
+      }
+    }
+  ],
+  "pipelock_signer_key": "890726e93f89e773fb3b4298271245a69c1884fd1003846c3358b8b65a2288fa",
+  "policy": {
+    "deny_risk_levels": [],
+    "evidence_assertions": [
+      {
+        "evidence_id": "downstream-result",
+        "op": "equals",
+        "path": "status",
+        "value": "complete"
+      }
+    ],
+    "max_evidence_bytes": 1000000,
+    "max_source_age_seconds": null,
+    "metadata": {
+      "purpose": "isolate receiver-side evidence sufficiency from Pipelock mediation"
+    },
+    "no_badge_action_types": [
+      "eval_score_claim"
+    ],
+    "policy_id": "pipelock-head-to-head-v1",
+    "require_declared_coverage": false,
+    "require_evidence": true,
+    "require_independent_source": false,
+    "require_outcome_witness": false,
+    "require_replay_guard": false,
+    "require_source_bound_evidence": true,
+    "require_trusted_source": true,
+    "required_claim_ids": [
+      "conformance-00000"
+    ],
+    "required_evidence_ids": [
+      "downstream-result"
+    ],
+    "rollback_on_harm": true,
+    "version": "frozen-2026-07-15"
+  },
+  "schema": "openline.pipelock_benchmark_cases.v0.1"
+}

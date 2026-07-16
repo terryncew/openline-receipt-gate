@@ -2,7 +2,7 @@
 
 Most receipts make the past verifiable. Receipt Gate makes verified history usable by the next decision.
 
-It accepts signed OLP Wire Canon receipts, Agent Receipts v0.1–v0.5, and the older local Receipt Gate chain. It checks integrity, provenance, declared coverage, freshness, evidence, and an independent outcome separately. The result is a signed policy decision:
+It accepts signed OLP Wire Canon receipts, Agent Receipts v0.1–v0.5, Pipelock ActionReceipt v1, and the older local Receipt Gate chain. It checks integrity, provenance, declared coverage, the source system's action signal, freshness, evidence, and an independent outcome separately. The result is a signed policy decision:
 
 ```text
 COMMIT
@@ -23,6 +23,11 @@ node verify-decision-node.mjs results/proof_to_policy_demo/decision_receipts.jso
   --gate-key 17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce
 ```
 
+Without the optional Pipelock verifier, the core suite passes and reports nine
+explicit skips. Install `requirements-pipelock.txt` to execute all integration
+tests; the release report records discovered, executed, and skipped counts for
+both modes.
+
 Expected outcomes:
 
 ```text
@@ -35,7 +40,8 @@ trusted harmful mutation + rollback path → REJECTED / ROLLBACK_REQUEST
 
 The Python and independent Node verifiers both recompute the policy decision from the signed assessment set and policy snapshot. Rewriting a verdict and resealing it produces `decision_recompute_mismatch`.
 
-Run the complete release gate, including a clean install from an unrelated directory and hostile tamper controls:
+Run the complete release gate, including hostile tamper controls and an offline
+install of the built wheel into an empty target from an unrelated directory:
 
 ```bash
 python scripts/release_check.py
@@ -75,6 +81,42 @@ The gate verifies the embedded Ed25519 proof, declared profile, chain ID, issuer
 The bundled verifier supports the integer-only RFC 8785 subset used by current Agent Receipt protocol fields. A receipt containing floating-point values returns `canonicalization_unsupported`, not a false bad-signature verdict.
 
 The interoperability test includes Agent Receipts' published v0.5 runtime vector at upstream commit `df6833a39743e17127d5ad4b10cdc8f6734d8e03` and independently matches its expected signature and receipt hash.
+
+### Pipelock ActionReceipt v1
+
+The adapter delegates signature, profile, and chain verification to the official
+`pipelock-verify` 0.2.x source release for ActionReceipt v1. It pins the signer through the external OLP
+trust store and keeps Pipelock's action verdict separate from OLP's receiver
+disposition. An `allow` is advisory evidence, never an automatic `COMMIT`; a
+verified `block` fails the required `source_signal` assessment and can never be
+laundered into a commit.
+
+EvidenceReceipt v2 is detected but deliberately unsupported in this phase. It
+returns an explicit `canonicalization_unsupported`/phase-boundary result instead
+of a false bad-signature diagnosis.
+
+Install the exact verifier used by the frozen benchmark:
+
+```bash
+pip install -r requirements-pipelock.txt
+```
+
+If the official verifier is absent or outside the supported range, the
+adapter returns `pipelock_verifier_unavailable` or a version-unsupported result.
+It never falls back to locally reimplemented cryptography.
+
+PyPI currently exposes v0.1.1. It is deliberately unsupported here: it verifies
+the simplest public fixture but fails newer signed v1 fixtures whose action
+records use fields added after its canonical field set. The pinned source
+install avoids misreporting those receipts as bad signatures. When PipeLab
+publishes v0.2.0, this can become a normal versioned package extra.
+
+The frozen five-case benchmark is in [`benchmarks/pipelock`](benchmarks/pipelock/PROTOCOL.md).
+It uses pinned public Pipelock fixtures and reports the result that actually
+occurred: native Pipelock and OLP met all frozen expectations, while Pipelock
+AARP also flagged the unsupported downstream claim. That falsifies the strongest
+proposed wedge. The narrower observed difference is that OLP additionally read
+the receiver-required artifact and emitted a signed `COMMIT` or `QUARANTINE`.
 
 ### Legacy Receipt Gate v0.1.1
 
@@ -146,6 +188,8 @@ This path continues to emit the v0.1.1 local hash chain. Use the proof-to-policy
 - A matching evidence hash proves artifact correspondence. Policy predicates and independent outcomes determine whether the artifact is sufficient for the declared decision.
 - The local session ledger prevents replay within its custody boundary. A host with full write access can replace the ledger and gate key; external anchoring remains a separate deployment requirement.
 - Agent Receipts compatibility does not claim generic W3C VC ecosystem conformance.
+- Pipelock compatibility does not give OLP Pipelock's inline mediation boundary.
+- The benchmark's AARP companions are OLP-authored conformance inputs, not receipts captured from a deployed Pipelock instance.
 
 Read [`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.md), [`docs/COMPATIBILITY.md`](docs/COMPATIBILITY.md), and [`docs/CLAIM_BOUNDARY.md`](docs/CLAIM_BOUNDARY.md) before making production claims.
 

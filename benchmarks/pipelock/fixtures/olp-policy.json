@@ -1,0 +1,35 @@
+{
+  "deny_risk_levels": [],
+  "evidence_assertions": [
+    {
+      "evidence_id": "downstream-result",
+      "op": "equals",
+      "path": "status",
+      "value": "complete"
+    }
+  ],
+  "max_evidence_bytes": 1000000,
+  "max_source_age_seconds": null,
+  "metadata": {
+    "purpose": "isolate receiver-side evidence sufficiency from Pipelock mediation"
+  },
+  "no_badge_action_types": [
+    "eval_score_claim"
+  ],
+  "policy_id": "pipelock-head-to-head-v1",
+  "require_declared_coverage": false,
+  "require_evidence": true,
+  "require_independent_source": false,
+  "require_outcome_witness": false,
+  "require_replay_guard": false,
+  "require_source_bound_evidence": true,
+  "require_trusted_source": true,
+  "required_claim_ids": [
+    "conformance-00000"
+  ],
+  "required_evidence_ids": [
+    "downstream-result"
+  ],
+  "rollback_on_harm": true,
+  "version": "frozen-2026-07-15"
+}
