@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import hashlib
 import importlib
+import importlib.metadata
 import json
 import os
 import platform
@@ -21,9 +22,12 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
-VERSION = "0.4.0"
+VERSION = "0.5.0rc2"
 PIPELOCK_INTEGRATION_TESTS = 9
 ASSAY_INTEGRATION_TESTS = 5
+MODEL_SWAP_INTEGRATION_TESTS = 8
+HALF_LIFE_VERSION = "0.2.0rc5"
+HALF_LIFE_COMMIT = "70121b53e86196d69b2c3457174b38ad32667b43"
 ASSAY_VERSION = "3.32.0"
 ASSAY_RELEASE_COMMIT = "04d3db10adbe191aa731d52a6c2b77dad8bc0ca7"
 ASSAY_ARCHIVE_SHA256 = "243f5e3935530cb1405dbb54fa57acc944de2800d28537d08dfc305b2a117775"
@@ -32,6 +36,11 @@ PIPELOCK_REQUIREMENT = (
     "pipelock-verify @ "
     "git+https://github.com/luckyPipewrench/pipelock-verify-python.git@"
     f"{PIPELOCK_VERIFY_COMMIT}"
+)
+MODEL_SWAP_REQUIREMENT = (
+    "openline-half-life @ "
+    "git+https://github.com/terryncew/openline-half-life.git@"
+    f"{HALF_LIFE_COMMIT}"
 )
 
 
@@ -120,6 +129,32 @@ def assay_runtime() -> dict[str, Any]:
     }
 
 
+def model_swap_runtime() -> dict[str, Any]:
+    root_value = os.environ.get("OLP_HALF_LIFE_ROOT")
+    root = Path(root_value).resolve() if root_value else None
+    fixture_files = (
+        root / "examples" / "demo_output" / "half_life_receipt.json",
+        root / "policy" / "succession_policy_public_key.hex",
+        root / "policy" / "compaction_policy_public_key.hex",
+    ) if root is not None else ()
+    try:
+        version = importlib.metadata.version("openline-half-life")
+    except importlib.metadata.PackageNotFoundError:
+        version = None
+    available = version is not None and bool(fixture_files) and all(
+        path.is_file() for path in fixture_files
+    )
+    return {
+        "available": available,
+        "version": version,
+        "supported": available and version == HALF_LIFE_VERSION,
+        "source_commit": HALF_LIFE_COMMIT,
+        "fixture_root": str(root) if root is not None else None,
+        "install_command": "pip install -r requirements-model-swap.txt",
+        "required_for_v0.5_release": True,
+    }
+
+
 def unittest_counts(record: dict[str, Any]) -> dict[str, int | None]:
     output = f"{record.get('stdout', '')}\n{record.get('stderr', '')}"
     discovered_match = re.search(r"Ran (\d+) tests?", output)
@@ -136,18 +171,12 @@ def unittest_counts(record: dict[str, Any]) -> dict[str, int | None]:
 def releasable_files() -> list[Path]:
     excluded_parts = {".git", "__pycache__", ".pytest_cache", "build", "dist"}
     excluded_names = {"MANIFEST.json", "session_ledger.json", "session_ledger.json.lock"}
-    ephemeral_outputs = {
-        "results/demo_all_summary.json",
-        "results/proof_to_policy_demo/decision_receipts.jsonl",
-    }
     files: list[Path] = []
     for path in ROOT.rglob("*"):
         relative = path.relative_to(ROOT)
         if path.is_symlink() or not path.is_file() or any(part in excluded_parts or part.endswith(".egg-info") for part in relative.parts):
             continue
         if relative.parts and relative.parts[0] == "receipts":
-            continue
-        if relative.as_posix() in ephemeral_outputs:
             continue
         if path.name in excluded_names or path.suffix in {".pyc", ".key", ".pem", ".zip", ".lock"}:
             continue
@@ -159,6 +188,8 @@ def write_manifest(
     *,
     checks_passed: bool,
     proof_summary: dict[str, Any],
+    model_swap_summary: dict[str, Any],
+    verified_commit_summary: dict[str, Any],
     pipelock_summary: dict[str, Any],
     assay_summary: dict[str, Any],
     optional_integrations: dict[str, Any],
@@ -182,6 +213,36 @@ def write_manifest(
             "passed": proof_summary.get("passed", False),
             "decision_receipt_count": proof_summary.get("decision_receipt_count", 0),
             "observed": proof_summary.get("observed", {}),
+        },
+        "verified_model_swap": {
+            "passed": model_swap_summary.get("passed", False),
+            "decision": model_swap_summary.get("decision"),
+            "capsule_matches_oracle": model_swap_summary.get(
+                "capsule_matches_oracle"
+            ),
+            "archive_matches_oracle": model_swap_summary.get(
+                "archive_matches_oracle"
+            ),
+            "summary_lost_count": model_swap_summary.get("summary_lost_count"),
+            "proof_card_sha256": model_swap_summary.get("proof_card_sha256"),
+        },
+        "verified_commit": {
+            "passed": verified_commit_summary.get("passed", False),
+            "decision": verified_commit_summary.get("decision"),
+            "authorization_hash": verified_commit_summary.get(
+                "authorization_hash"
+            ),
+            "action_hash": verified_commit_summary.get("action_hash"),
+            "mutations_blocked_before_execution": verified_commit_summary.get(
+                "mutations_blocked_before_execution"
+            ),
+            "simultaneous_authorized": verified_commit_summary.get(
+                "simultaneous_authorized"
+            ),
+            "simultaneous_blocked": verified_commit_summary.get(
+                "simultaneous_blocked"
+            ),
+            "replay_blocked": verified_commit_summary.get("replay_blocked"),
         },
         "pipelock_head_to_head": {
             "passed": pipelock_summary.get("passed", False),
@@ -208,11 +269,16 @@ def write_manifest(
 
 def main() -> int:
     proof_output = ROOT / "results" / "proof_to_policy_demo"
+    model_swap_output = ROOT / "results" / "verified_model_swap_demo"
+    verified_commit_output = ROOT / "results" / "verified_commit_demo"
     shutil.rmtree(proof_output, ignore_errors=True)
+    shutil.rmtree(model_swap_output, ignore_errors=True)
+    shutil.rmtree(verified_commit_output, ignore_errors=True)
     steps: list[dict[str, Any]] = []
     passed: list[bool] = []
     pipelock_info = pipelock_runtime()
     assay_info = assay_runtime()
+    model_swap_info = model_swap_runtime()
     requirement_value = (ROOT / "requirements-pipelock.txt").read_text(
         encoding="utf-8"
     ).strip()
@@ -226,6 +292,29 @@ def main() -> int:
         }
     )
     passed.append(requirement_okay)
+    model_swap_requirement_value = (
+        ROOT / "requirements-model-swap.txt"
+    ).read_text(encoding="utf-8").strip()
+    model_swap_requirement_okay = (
+        model_swap_requirement_value == MODEL_SWAP_REQUIREMENT
+    )
+    steps.append(
+        {
+            "name": "model_swap_dependency_pin",
+            "passed": model_swap_requirement_okay,
+            "expected_commit": HALF_LIFE_COMMIT,
+            "requirement": model_swap_requirement_value,
+        }
+    )
+    passed.append(model_swap_requirement_okay)
+    steps.append(
+        {
+            "name": "model_swap_runtime_and_fixture_required",
+            "passed": model_swap_info["supported"],
+            **model_swap_info,
+        }
+    )
+    passed.append(bool(model_swap_info["supported"]))
     try:
         benchmark_report = json.loads(
             (ROOT / "benchmarks" / "pipelock" / "RUN_REPORT.json").read_text(
@@ -269,6 +358,7 @@ def main() -> int:
     expected_main_skips = (
         (0 if pipelock_info["supported"] else PIPELOCK_INTEGRATION_TESTS)
         + (0 if assay_info["supported"] else ASSAY_INTEGRATION_TESTS)
+        + (0 if model_swap_info["supported"] else MODEL_SWAP_INTEGRATION_TESTS)
     )
     unit_record["counts"] = unit_counts
     unit_record["optional_pipelock"] = pipelock_info
@@ -285,6 +375,7 @@ def main() -> int:
     absent_environment = os.environ.copy()
     absent_environment["OLP_TEST_DISABLE_PIPELOCK"] = "1"
     absent_environment["OLP_TEST_DISABLE_ASSAY"] = "1"
+    absent_environment.pop("OLP_HALF_LIFE_ROOT", None)
     absent_record, absent_okay = execute(
         "unittest_without_optional_integrations",
         unit_command,
@@ -296,7 +387,9 @@ def main() -> int:
         absent_okay
         and absent_counts["discovered"] is not None
         and absent_counts["skipped"]
-        == PIPELOCK_INTEGRATION_TESTS + ASSAY_INTEGRATION_TESTS
+        == PIPELOCK_INTEGRATION_TESTS
+        + ASSAY_INTEGRATION_TESTS
+        + MODEL_SWAP_INTEGRATION_TESTS
     )
     absent_record["passed"] = absent_okay
     steps.append(absent_record)
@@ -309,6 +402,136 @@ def main() -> int:
         record, okay = execute(name, command)
         steps.append(record)
         passed.append(okay)
+
+    model_swap_summary: dict[str, Any] = {}
+    verified_commit_summary: dict[str, Any] = {}
+    if model_swap_info["supported"]:
+        half_life_root = Path(str(model_swap_info["fixture_root"]))
+        model_swap_command = [
+            sys.executable,
+            "-m",
+            "olp_gate.cli",
+            "demo-model-swap",
+            "--half-life-output",
+            str(half_life_root / "examples" / "demo_output"),
+            "--succession-policy-key",
+            str(half_life_root / "policy" / "succession_policy_public_key.hex"),
+            "--compaction-policy-key",
+            str(half_life_root / "policy" / "compaction_policy_public_key.hex"),
+            "--source-model",
+            "fixture/source-model",
+            "--target-model",
+            "fixture/target-model",
+            "--output",
+            str(model_swap_output),
+        ]
+        record, okay = execute("verified_model_swap_demo", model_swap_command)
+        steps.append(record)
+        passed.append(okay)
+        if okay:
+            try:
+                model_swap_summary = json.loads(record["stdout"])
+            except (json.JSONDecodeError, TypeError):
+                model_swap_summary = {}
+                okay = False
+                passed.append(False)
+                steps.append(
+                    {
+                        "name": "verified_model_swap_summary_parse",
+                        "passed": False,
+                    }
+                )
+        if okay:
+            verify_command = [
+                sys.executable,
+                "-m",
+                "olp_gate.cli",
+                "verify-model-swap",
+                str(model_swap_output),
+                "--half-life-output",
+                str(half_life_root / "examples" / "demo_output"),
+                "--succession-policy-key",
+                str(half_life_root / "policy" / "succession_policy_public_key.hex"),
+                "--compaction-policy-key",
+                str(half_life_root / "policy" / "compaction_policy_public_key.hex"),
+                "--gate-key",
+                str(model_swap_summary.get("gate_public_key", "")),
+            ]
+            record, okay = execute("verified_model_swap_receiver_regrade", verify_command)
+            steps.append(record)
+            passed.append(okay)
+
+        verified_commit_command = [
+            sys.executable,
+            "-m",
+            "olp_gate.cli",
+            "demo-verified-commit",
+            "--half-life-output",
+            str(half_life_root / "examples" / "demo_output"),
+            "--succession-policy-key",
+            str(half_life_root / "policy" / "succession_policy_public_key.hex"),
+            "--compaction-policy-key",
+            str(half_life_root / "policy" / "compaction_policy_public_key.hex"),
+            "--source-model",
+            "fixture/model-a",
+            "--target-model",
+            "fixture/model-b",
+            "--output",
+            str(verified_commit_output),
+        ]
+        record, commit_okay = execute(
+            "verified_commit_model_swap_and_action_demo",
+            verified_commit_command,
+        )
+        steps.append(record)
+        passed.append(commit_okay)
+        if commit_okay:
+            try:
+                verified_commit_summary = json.loads(record["stdout"])
+            except (json.JSONDecodeError, TypeError):
+                verified_commit_summary = {}
+                commit_okay = False
+                passed.append(False)
+                steps.append(
+                    {
+                        "name": "verified_commit_summary_parse",
+                        "passed": False,
+                    }
+                )
+        if commit_okay:
+            verify_commit_command = [
+                sys.executable,
+                "-m",
+                "olp_gate.cli",
+                "verify-verified-commit",
+                str(verified_commit_output),
+                "--half-life-output",
+                str(half_life_root / "examples" / "demo_output"),
+                "--succession-policy-key",
+                str(half_life_root / "policy" / "succession_policy_public_key.hex"),
+                "--compaction-policy-key",
+                str(half_life_root / "policy" / "compaction_policy_public_key.hex"),
+                "--gate-key",
+                str(verified_commit_summary.get("gate_public_key", "")),
+            ]
+            record, commit_okay = execute(
+                "verified_commit_receiver_regrade",
+                verify_commit_command,
+            )
+            steps.append(record)
+            passed.append(commit_okay)
+            record, node_commit_okay = execute(
+                "verified_commit_node_decision_verifier",
+                [
+                    "node",
+                    "verify-decision-node.mjs",
+                    str(verified_commit_output / "decision_receipts.jsonl"),
+                    "--gate-key",
+                    str(verified_commit_summary.get("gate_public_key", "")),
+                ],
+            )
+            steps.append(record)
+            passed.append(node_commit_okay)
 
     try:
         initial_summary = json.loads((proof_output / "demo_summary.json").read_text(encoding="utf-8"))
@@ -426,7 +649,7 @@ def main() -> int:
         steps.append(record)
         passed.append(okay)
         if okay:
-            wheels = sorted(wheelhouse.glob("openline_receipt_gate-0.4.0-*.whl"))
+            wheels = sorted(wheelhouse.glob("openline_receipt_gate-0.5.0rc2-*.whl"))
             if len(wheels) != 1:
                 okay = False
                 steps.append(
@@ -506,17 +729,40 @@ def main() -> int:
         )
         is True
     )
+    passed.append(model_swap_summary.get("passed") is True)
+    passed.append(model_swap_summary.get("decision") == "COMMIT")
+    passed.append(model_swap_summary.get("capsule_matches_oracle") is True)
+    passed.append(model_swap_summary.get("archive_matches_oracle") is True)
+    passed.append(verified_commit_summary.get("passed") is True)
+    passed.append(verified_commit_summary.get("decision") == "COMMIT")
+    passed.append(verified_commit_summary.get("mutation_count") == 9)
+    passed.append(
+        verified_commit_summary.get("mutations_blocked_before_execution") == 9
+    )
+    passed.append(verified_commit_summary.get("simultaneous_authorized") == 1)
+    passed.append(verified_commit_summary.get("simultaneous_blocked") == 1)
+    passed.append(verified_commit_summary.get("replay_blocked") is True)
     release_passed = all(passed)
     live_pipelock_tests_passed = bool(
         pipelock_info["supported"]
         and unit_okay
-        and unit_counts["skipped"] == 0
+        and unit_counts["skipped"]
+        == (0 if assay_info["supported"] else ASSAY_INTEGRATION_TESTS)
+        + (0 if model_swap_info["supported"] else MODEL_SWAP_INTEGRATION_TESTS)
     )
     live_assay_tests_passed = bool(
         assay_info["supported"]
         and unit_okay
         and unit_counts["skipped"]
         == (0 if pipelock_info["supported"] else PIPELOCK_INTEGRATION_TESTS)
+        + (0 if model_swap_info["supported"] else MODEL_SWAP_INTEGRATION_TESTS)
+    )
+    live_model_swap_tests_passed = bool(
+        model_swap_info["supported"]
+        and unit_okay
+        and unit_counts["skipped"]
+        == (0 if pipelock_info["supported"] else PIPELOCK_INTEGRATION_TESTS)
+        + (0 if assay_info["supported"] else ASSAY_INTEGRATION_TESTS)
     )
     optional_integrations = {
         "pipelock": {
@@ -534,7 +780,19 @@ def main() -> int:
             "live_benchmark_passed": assay_live_benchmark_passed,
             "dependency_absent_suite_passed": absent_okay,
             "integration_test_count": ASSAY_INTEGRATION_TESTS,
-        }
+        },
+        "verified_model_swap": {
+            **model_swap_info,
+            "live_integration_tests_executed": model_swap_info["supported"],
+            "live_integration_tests_passed": live_model_swap_tests_passed,
+            "demo_executed": bool(model_swap_summary),
+            "demo_passed": model_swap_summary.get("passed") is True,
+            "verified_commit_demo_executed": bool(verified_commit_summary),
+            "verified_commit_demo_passed": verified_commit_summary.get("passed")
+            is True,
+            "dependency_absent_suite_passed": absent_okay,
+            "integration_test_count": MODEL_SWAP_INTEGRATION_TESTS,
+        },
     }
     report = {
         "schema": "openline.release_run_report.v0.2",
@@ -582,10 +840,12 @@ def main() -> int:
             "live_benchmark_executed": assay_live_benchmark_executed,
             "live_benchmark_passed": assay_live_benchmark_passed,
         },
+        "verified_model_swap": model_swap_summary,
+        "verified_commit": verified_commit_summary,
         "proof_to_policy_demo": proof_summary,
         "pipelock_head_to_head": pipelock_summary,
         "assay_head_to_head": assay_summary,
-        "claim_boundary": "A passing synthetic release gate does not prove production safety, issuer honesty, complete capture, witness independence, or rollback execution. Frozen benchmark artifact verification is distinct from an optional live benchmark rerun. Assay can sign caller-supplied DSSE predicates; OLP's observed addition is its standardized receiver-policy decision contract, not unique signing.",
+        "claim_boundary": "A passing deterministic release gate does not prove production safety, issuer honesty, complete capture, live provider execution, universal model portability, legal ownership, witness independence, rollback execution, or globally exactly-once side effects. Verified Model Swap is exact only over the disclosed receiver decision projection and externally pinned Half-Life fixture. Verified Commit proves receiver-side one-use authorization only when the destination tool enters through the disclosed checker and shares its atomic ledger; a crash after consumption fails closed.",
     }
     (ROOT / "RUN_REPORT.json").write_text(
         json.dumps(report, indent=2, sort_keys=True) + "\n",
@@ -594,6 +854,8 @@ def main() -> int:
     write_manifest(
         checks_passed=release_passed,
         proof_summary=proof_summary,
+        model_swap_summary=model_swap_summary,
+        verified_commit_summary=verified_commit_summary,
         pipelock_summary={
             "passed": benchmark_report.get("passed", False),
             "strong_hypothesis_falsified": pipelock_summary.get(
@@ -621,6 +883,7 @@ def main() -> int:
         "passed": release_passed and manifest_check.returncode == 0,
         "release_checks": len(steps),
         "proof_to_policy_cases": proof_summary.get("decision_receipt_count", 0),
+        "verified_commit_passed": verified_commit_summary.get("passed", False),
         "manifest": json.loads(manifest_check.stdout) if manifest_check.stdout else {"valid": False},
     }, indent=2, sort_keys=True))
     return 0 if release_passed and manifest_check.returncode == 0 else 2

@@ -1,12 +1,17 @@
 [project]
 name = "openline-receipt-gate"
-version = "0.4.0"
+version = "0.5.0rc2"
 description = "Proof-to-policy gate for signed AI action receipts."
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
 authors = [{name = "Terrynce White"}]
 dependencies = ["cryptography>=42"]
+
+[project.optional-dependencies]
+model-swap = [
+  "openline-half-life @ git+https://github.com/terryncew/openline-half-life.git@70121b53e86196d69b2c3457174b38ad32667b43",
+]
 
 [project.scripts]
 olp-gate = "olp_gate.cli:main"

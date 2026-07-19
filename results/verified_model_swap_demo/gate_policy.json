@@ -1,0 +1,60 @@
+{
+  "deny_risk_levels": [],
+  "evidence_assertions": [
+    {
+      "evidence_id": "model_swap_proof_card",
+      "op": "equals",
+      "path": "authority.candidate_self_grading_allowed",
+      "value": false
+    },
+    {
+      "evidence_id": "model_swap_proof_card",
+      "op": "equals",
+      "path": "half_life_verification.valid",
+      "value": true
+    },
+    {
+      "evidence_id": "model_swap_proof_card",
+      "op": "equals",
+      "path": "independent_grade.capsule_matches_oracle",
+      "value": true
+    },
+    {
+      "evidence_id": "model_swap_proof_card",
+      "op": "equals",
+      "path": "independent_grade.archive_matches_oracle",
+      "value": true
+    },
+    {
+      "evidence_id": "model_swap_proof_card",
+      "op": "equals",
+      "path": "independent_grade.passed",
+      "value": true
+    }
+  ],
+  "max_evidence_bytes": 10000000,
+  "max_source_age_seconds": 300,
+  "metadata": {
+    "irreversible_action_gate": true,
+    "profile": "verified_model_swap/v1"
+  },
+  "no_badge_action_types": [
+    "eval_score_claim"
+  ],
+  "policy_id": "verified-model-swap.receiver-policy",
+  "require_declared_coverage": true,
+  "require_evidence": true,
+  "require_independent_source": false,
+  "require_outcome_witness": true,
+  "require_replay_guard": true,
+  "require_source_bound_evidence": true,
+  "require_trusted_source": true,
+  "required_claim_ids": [
+    "verified-model-swap-demo"
+  ],
+  "required_evidence_ids": [
+    "model_swap_proof_card"
+  ],
+  "rollback_on_harm": true,
+  "version": "1"
+}

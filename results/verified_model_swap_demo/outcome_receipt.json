@@ -1,0 +1,22 @@
+{
+  "algorithm_id": "openline-orthogonal-outcome-0.2",
+  "canonicalization_id": "olp-canonical-json-int-v1",
+  "evidence_hash": "f59d968bcc6b7a33f2e88a6a7482f0df344bb586b175095c3fac63aa06f3f05a",
+  "kind": "witness_outcome_receipt",
+  "observed_at": "2026-07-19T06:27:26.648039Z",
+  "outcome": {
+    "harmful": false,
+    "rollback_supported": true,
+    "status": "pass"
+  },
+  "payload_hash": "3007c425868ae6f6ec43be530cfd8d41609c3ba48ed91e566437e640410455ec",
+  "receipt_version": "0.2",
+  "signature": {
+    "algorithm": "Ed25519",
+    "public_key": "2012cb90ca60e8e5d8daf66e2272d2233e0486d557e8c66141ed8920177d7eb7",
+    "value": "95aa93b01364d6027d660060b1683b92ca41ce51ffd17a8077a95cc8f70e105567d9e5accf14ee9b8a1f6b51fcc6505cb6569e5e9390887cb561377a21befa0d"
+  },
+  "source_receipt_hash": "3e7b42ff6fad94519356fcf6c2466dacf67e33ca5c2e04bac0d01eaecfb54761",
+  "spec_uri": "https://github.com/terryncew/openline-receipt-gate",
+  "witness_id": "receiver-independent-grader"
+}

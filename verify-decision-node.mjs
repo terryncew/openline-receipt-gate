@@ -121,8 +121,9 @@ function chooseDecision(receipt) {
     }
     return ['REJECTED', 'DENY'];
   }
-  const sourceSignalNames = receipt.receipt_version === '0.3' ? ['source_signal'] : [];
-  if (['integrity', 'profile', 'freshness', ...sourceSignalNames].some((name) => assessments[name]?.status === 'fail')) {
+  const sourceSignalNames = ['0.3', '0.4'].includes(receipt.receipt_version) ? ['source_signal'] : [];
+  const verifiedCommitNames = receipt.receipt_version === '0.4' ? ['verified_commit'] : [];
+  if (['integrity', 'profile', 'freshness', ...sourceSignalNames, ...verifiedCommitNames].some((name) => assessments[name]?.status === 'fail')) {
     return ['REJECTED', noBadge ? 'NO_BADGE' : 'DENY'];
   }
   if ((policy.deny_risk_levels || []).includes(action.risk_level)) return ['REJECTED', 'DENY'];
@@ -135,10 +136,135 @@ function chooseDecision(receipt) {
   if (policy.require_declared_coverage === true) required.push('coverage');
   if (policy.require_evidence === true) required.push('evidence');
   if (policy.require_outcome_witness === true) required.push('outcome');
+  if (assessments.verified_commit?.details?.required === true) required.push('verified_commit');
   if (required.some((name) => assessments[name]?.status !== 'pass')) {
     return ['UNDECIDABLE', noBadge ? 'NO_BADGE' : 'QUARANTINE'];
   }
   return ['VERIFIED', 'COMMIT'];
+}
+
+function sha256Canonical(value) {
+  return crypto.createHash('sha256').update(Buffer.from(canonical(value), 'ascii')).digest('hex');
+}
+
+function isHash(value) {
+  return typeof value === 'string' && /^[0-9a-f]{64}$/.test(value);
+}
+
+function validateCommitAuthorization(receipt) {
+  const errors = [];
+  const details = receipt.assessments?.verified_commit?.details || {};
+  const required = details.required === true;
+  const authorization = receipt.commit_authorization;
+  if (!required) {
+    if (authorization !== null && authorization !== undefined) errors.push('unexpected_commit_authorization');
+    return errors;
+  }
+  if (receipt.decision !== 'COMMIT' || receipt.verdict !== 'VERIFIED') {
+    if (authorization !== null && authorization !== undefined) errors.push('noncommit_authorization_present');
+    return errors;
+  }
+  if (!authorization || typeof authorization !== 'object' || Array.isArray(authorization)) {
+    return ['commit_authorization_missing'];
+  }
+  const expectedAuthorizationFields = [
+    'profile', 'tool', 'target', 'settings_hash', 'run_id', 'capsule_hash',
+    'evidence_hashes', 'policy_hash', 'expires_at', 'one_use_code_hash',
+    'action_hash', 'authorization_hash',
+  ].sort();
+  if (Object.keys(authorization).sort().join('\u001f') !== expectedAuthorizationFields.join('\u001f')) {
+    errors.push('commit_authorization_shape_invalid');
+  }
+  if (authorization.profile !== 'verified_commit/v1') errors.push('commit_authorization_profile_invalid');
+  for (const name of ['tool', 'target', 'run_id']) {
+    if (typeof authorization[name] !== 'string' || !authorization[name]) errors.push(`commit_authorization_${name}_invalid`);
+  }
+  for (const name of [
+    'settings_hash', 'capsule_hash', 'policy_hash', 'one_use_code_hash',
+    'action_hash', 'authorization_hash',
+  ]) if (!isHash(authorization[name])) errors.push(`commit_authorization_${name}_invalid`);
+  if (
+    !Array.isArray(authorization.evidence_hashes)
+    || !authorization.evidence_hashes.every(isHash)
+    || new Set(authorization.evidence_hashes).size !== authorization.evidence_hashes.length
+    || JSON.stringify([...authorization.evidence_hashes].sort()) !== JSON.stringify(authorization.evidence_hashes)
+  ) errors.push('commit_authorization_evidence_hashes_invalid');
+
+  if (authorization.policy_hash !== receipt.policy?.hash) errors.push('commit_authorization_policy_mismatch');
+  if (authorization.run_id !== receipt.binding?.run_id) errors.push('commit_authorization_run_mismatch');
+  const actualEvidence = Object.values(receipt.assessments?.evidence?.details?.artifact_hashes || {}).sort();
+  if (JSON.stringify(actualEvidence) !== JSON.stringify(authorization.evidence_hashes || [])) {
+    errors.push('commit_authorization_evidence_mismatch');
+  }
+
+  const verifiedPolicy = receipt.policy?.snapshot?.metadata?.verified_commit;
+  const expectedPolicyFields = [
+    'required', 'tool', 'target', 'settings_hash', 'run_id', 'capsule_hash',
+    'evidence_hashes', 'max_ttl_seconds',
+  ].sort();
+  if (!verifiedPolicy || typeof verifiedPolicy !== 'object' || Array.isArray(verifiedPolicy)) {
+    errors.push('verified_commit_policy_missing');
+  } else {
+    if (Object.keys(verifiedPolicy).sort().join('\u001f') !== expectedPolicyFields.join('\u001f')) {
+      errors.push('verified_commit_policy_shape_invalid');
+    }
+    if (verifiedPolicy.required !== true) errors.push('verified_commit_policy_not_required');
+    try {
+      for (const name of ['tool', 'target', 'settings_hash', 'run_id', 'capsule_hash', 'evidence_hashes']) {
+        if (canonical(authorization[name]) !== canonical(verifiedPolicy[name])) {
+          errors.push(`commit_authorization_policy_${name}_mismatch`);
+        }
+      }
+    } catch {
+      errors.push('verified_commit_policy_canonicalization_unsupported');
+    }
+    if (!Number.isSafeInteger(verifiedPolicy.max_ttl_seconds) || verifiedPolicy.max_ttl_seconds <= 0) {
+      errors.push('verified_commit_policy_ttl_invalid');
+    }
+  }
+
+  try {
+    const actionBinding = {
+      tool: authorization.tool,
+      target: authorization.target,
+      settings_hash: authorization.settings_hash,
+      run_id: authorization.run_id,
+      capsule_hash: authorization.capsule_hash,
+      evidence_hashes: authorization.evidence_hashes,
+      policy_hash: authorization.policy_hash,
+    };
+    if (authorization.action_hash !== sha256Canonical(actionBinding)) {
+      errors.push('commit_authorization_action_hash_mismatch');
+    }
+    const body = { ...authorization };
+    delete body.authorization_hash;
+    if (authorization.authorization_hash !== sha256Canonical(body)) {
+      errors.push('commit_authorization_hash_mismatch');
+    }
+  } catch {
+    errors.push('commit_authorization_canonicalization_unsupported');
+  }
+
+  const created = Date.parse(receipt.created_at);
+  const expires = Date.parse(authorization.expires_at);
+  if (Number.isNaN(expires)) errors.push('commit_authorization_expiry_invalid');
+  else if (Number.isNaN(created) || expires <= created) errors.push('commit_authorization_expiry_not_after_issue');
+  else if (
+    verifiedPolicy
+    && Number.isSafeInteger(verifiedPolicy.max_ttl_seconds)
+    && expires - created > verifiedPolicy.max_ttl_seconds * 1000
+  ) errors.push('commit_authorization_ttl_exceeds_policy');
+
+  try {
+    if (!details.authorization || canonical(details.authorization) !== canonical(authorization)) {
+      errors.push('commit_authorization_assessment_mismatch');
+    }
+  } catch {
+    errors.push('commit_authorization_assessment_canonicalization_unsupported');
+  }
+  if (details.raw_settings_stored !== false) errors.push('commit_authorization_settings_privacy_invalid');
+  if (details.raw_one_use_code_stored !== false) errors.push('commit_authorization_code_privacy_invalid');
+  return [...new Set(errors)].sort();
 }
 
 function recomputedReasons(assessments) {
@@ -212,10 +338,11 @@ function verifyReceipt(receipt, trustedGateKeys) {
     errors.push(`canonicalization_error:${error.message}`);
   }
   if (receipt.kind !== 'proof_to_policy_decision_receipt') errors.push('decision_profile_invalid');
-  if (!['0.2', '0.3'].includes(receipt.receipt_version)) errors.push('decision_version_unsupported');
+  if (!['0.2', '0.3', '0.4'].includes(receipt.receipt_version)) errors.push('decision_version_unsupported');
   const expectedAlgorithm = {
     '0.2': 'openline-proof-to-policy-gate-0.2',
     '0.3': 'openline-proof-to-policy-gate-0.3',
+    '0.4': 'openline-proof-to-policy-gate-0.4',
   }[receipt.receipt_version];
   if (receipt.algorithm_id !== expectedAlgorithm) errors.push('decision_algorithm_unsupported');
   if (receipt.canonicalization_id !== 'olp-canonical-json-int-v1') errors.push('decision_canonicalization_unsupported');
@@ -252,7 +379,8 @@ function verifyReceipt(receipt, trustedGateKeys) {
     }
     const validStatuses = new Set(['pass', 'fail', 'partial', 'unavailable']);
     const assessmentNames = ['integrity', 'profile', 'provenance', 'independence', 'coverage', 'freshness', 'evidence', 'outcome'];
-    if (receipt.receipt_version === '0.3') assessmentNames.push('source_signal');
+    if (['0.3', '0.4'].includes(receipt.receipt_version)) assessmentNames.push('source_signal');
+    if (receipt.receipt_version === '0.4') assessmentNames.push('verified_commit');
     for (const name of assessmentNames) {
       const check = receipt.assessments?.[name];
       if (
@@ -275,6 +403,11 @@ function verifyReceipt(receipt, trustedGateKeys) {
     if (receipt.chain_accepted !== expectedAccepted) errors.push('chain_acceptance_recompute_mismatch');
   } catch (error) {
     errors.push(`decision_semantic_recompute_error:${error.message}`);
+  }
+  if (receipt.receipt_version === '0.4') {
+    validateCommitAuthorization(receipt).forEach((error) => errors.push(error));
+  } else if (receipt.commit_authorization !== null && receipt.commit_authorization !== undefined) {
+    errors.push('legacy_commit_authorization_present');
   }
   return [...new Set(errors)].sort();
 }

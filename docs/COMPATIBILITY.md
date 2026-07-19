@@ -43,6 +43,42 @@ Verification methods can be supplied through the external trust store. Ed25519 `
 
 Agent Receipt extensions containing floating-point values return `canonicalization_unsupported`. The gate refuses to guess at ECMAScript number serialization.
 
+## OpenLine Half-Life / Verified Model Swap
+
+The v0.5 integration is pinned to:
+
+```text
+openline-half-life 0.2.0rc5
+commit 70121b53e86196d69b2c3457174b38ad32667b43
+receipt bundle openline.half-life.receipt-bundle.v3
+causal capsule openline.half-life.causal-capsule.v1
+decision equivalence openline.half-life.decision-equivalence.v1
+```
+
+Install it with `pip install -r requirements-model-swap.txt`. The receiver must
+also provide the succession-policy and compaction-policy public-key pins from
+outside the Half-Life output. Receipt Gate delegates Half-Life artifact and
+archive verification to the pinned package, then calls its independent raw
+history replay and exact receiver projection. It does not accept the stored
+equivalence boolean or a capsule signature as sufficient evidence by itself.
+
+Other Half-Life versions are not release-qualified by this candidate. A missing
+runtime skips the eight integration tests in an ordinary core test run and holds
+the complete v0.5 release gate.
+
+## Decision receipts / Verified Commit
+
+The Python and Node verifiers accept signed decision receipt versions v0.2,
+v0.3, and v0.4. Only v0.4 may carry `commit_authorization`; a legacy receipt
+with that field populated fails semantic verification. Verified Commit uses the
+existing receipt kind and `COMMIT` disposition.
+
+The reference tool-side checker is Python and relies on `fcntl` locking plus
+atomic replacement. It is intended for POSIX receiver processes sharing one
+ledger path. Equivalent non-POSIX or distributed adapters must provide their
+own atomic compare-and-consume boundary; signature verification alone is not an
+enforcement substitute.
+
 ## Pipelock
 
 Supported phase-1 profile:

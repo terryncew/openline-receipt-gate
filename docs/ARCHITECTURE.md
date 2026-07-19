@@ -35,6 +35,8 @@ orthogonal outcome receipt
 policy evaluator
         ↓
 signed decision receipt
+        ↓ optional exact authorization
+receiver-owned atomic consume → destination tool
 ```
 
 ## External authority
@@ -96,3 +98,56 @@ policy hash
 ```
 
 This catches a verdict, reason-code, or chain-acceptance rewrite that contradicts the included policy snapshot and assessment set, even if that inconsistent object is resealed with the gate key. The portable decision receipt does not include raw source or evidence, so these verifiers do not independently recompute the assessments themselves.
+
+## Verified Model Swap boundary
+
+The v0.5 model-swap profile is an orchestration layer over the two existing
+systems. It does not copy Half-Life's compactor or create a second disposition
+engine.
+
+```text
+verified raw Half-Life history -------------------+
+                                                   +-> independent replay -> oracle
+ordinary summary -> candidate projection ---------+                       |
+verified capsule -> candidate projection ----------+-> exact comparison ---+
+hash-addressed archive -> authenticated rehydrate -+                       |
+                                                                           v
+proof_card.json -> source-bound evidence -> Receipt Gate -> signed decision
+                                                                           |
+                                                                           v
+                                                    DSM display-only projection
+```
+
+The receiver supplies the succession-policy pin, compaction-policy pin, trusted
+gate key, policy, and grader identity. Model adapters supply candidate outputs;
+they do not choose the oracle or disposition. `verified_model_swap.latest.json`
+is a bounded display projection. A DSM client may render it but must not upgrade,
+recompute, or certify the result.
+
+## Verified Commit boundary
+
+Verified Commit is a v0.4 extension inside the same signed decision. The
+receiver's external policy selects the exact action; the request cannot grant
+itself broader authority. The Gate hashes settings and a receiver-held one-use
+code, binds them to tool, target, run, capsule, evidence, policy, and expiry,
+and signs the result only when the disposition is already `COMMIT`.
+
+```text
+signed COMMIT + exact authorization + attempted action + receiver-held code
+                                      |
+                                      v
+                           Python semantic verifier
+                                      |
+                                      v
+                       receiver atomic consumption ledger
+                          |                         |
+                       BLOCK                    consume
+                                                    |
+                                                    v
+                                            destination callback
+```
+
+The ledger is not portable proof. It is receiver-local enforcement state. Its
+atomic consume occurs before callback invocation, so concurrent and sequential
+replay fail closed within that shared ledger. Global coordination, bypass-path
+mediation, and side-effect rollback remain deployment responsibilities.

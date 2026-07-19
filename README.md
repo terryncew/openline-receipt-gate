@@ -18,6 +18,115 @@ ROLLBACK_REQUEST
 
 A valid signature can still produce `UNDECIDABLE`. Signature validity is never treated as evidence sufficiency.
 
+## Verified Commit (v0.5.0rc2)
+
+Proof travels; permission belongs to the receiver.
+
+Verified Commit keeps the existing `COMMIT` disposition and the existing
+`proof_to_policy_decision_receipt`. When a receiver chooses to authorize a
+consequential tool call, the signed receipt additionally binds the exact:
+
+```text
+tool · target · settings hash · run · capsule · evidence · policy · expiry · one-use code hash
+```
+
+The destination tool checks that signed authorization against its own trusted
+gate key and atomically consumes it before calling the tool. Changed settings,
+wrong targets, expiry, replay, and concurrent double use fail before execution.
+An ordinary `COMMIT` without `commit_authorization` remains valid evidence, but
+it grants no portable tool permission.
+
+Run the disclosed Model A → Model B → one approved write proof:
+
+```bash
+pip install -r requirements-model-swap.txt
+export OLP_HALF_LIFE_ROOT=../openline-half-life
+
+olp-gate demo-verified-commit \
+  --half-life-output "$OLP_HALF_LIFE_ROOT/examples/demo_output" \
+  --succession-policy-key "$OLP_HALF_LIFE_ROOT/policy/succession_policy_public_key.hex" \
+  --compaction-policy-key "$OLP_HALF_LIFE_ROOT/policy/compaction_policy_public_key.hex" \
+  --source-model fixture/model-a \
+  --target-model fixture/model-b \
+  --output results/verified_commit_demo
+```
+
+The demo tries nine mutations, two simultaneous uses, and a sequential replay.
+It records every receiver-side result and independently regrades the model-swap
+proof. For a real tool adapter, keep the check and side effect in one entry
+point:
+
+```python
+from olp_gate import VerifiedCommitLedger
+
+result = VerifiedCommitLedger("state/commit-ledger.json").execute_once(
+    signed_decision,
+    exact_action,
+    one_use_code=receiver_held_code,
+    trusted_gate_keys=[receiver_gate_public_key],
+    executor=lambda: destination_tool(**exact_action["settings"]),
+)
+if not result["authorized"]:
+    raise PermissionError(result["reason_codes"])
+```
+
+`check_and_consume()` is exposed for adapter internals, but separating it from
+the tool call creates a time-of-check/time-of-use boundary. Prefer
+`execute_once()`. See [`docs/VERIFIED_COMMIT.md`](docs/VERIFIED_COMMIT.md).
+
+## Verified Model Swap (introduced in v0.5.0rc1)
+
+Verified Model Swap asks one bounded question: can a different model receive the
+agent's decision-relevant state without changing what the receiver would allow?
+
+It grades three lanes against an independent replay of the raw verified history:
+
+```text
+uninterrupted full history     -> receiver oracle
+ordinary active-state summary -> measured omissions
+Half-Life causal capsule      -> exact COMMIT / QUARANTINE / DENY comparison
+```
+
+The candidate adapter, Half-Life compactor, and DSM display cannot grade the
+trial. Receipt Gate authenticates Half-Life's policies, chain, archive, and
+decision-equivalence output; independently replays the raw history; restores the
+cold archive; then binds the proof card as evidence in the existing
+`proof_to_policy_decision_receipt`. No score, receipt family, disposition, or
+automatic retirement rule is added.
+
+Install the pinned integration and run the disclosed offline fixture:
+
+```bash
+pip install -r requirements-model-swap.txt
+export OLP_HALF_LIFE_ROOT=../openline-half-life
+
+olp-gate demo-model-swap \
+  --half-life-output "$OLP_HALF_LIFE_ROOT/examples/demo_output" \
+  --succession-policy-key "$OLP_HALF_LIFE_ROOT/policy/succession_policy_public_key.hex" \
+  --compaction-policy-key "$OLP_HALF_LIFE_ROOT/policy/compaction_policy_public_key.hex" \
+  --source-model fixture/source-model \
+  --target-model fixture/target-model \
+  --output results/verified_model_swap_demo
+```
+
+Verify it from the receiver side with the externally retained gate public key:
+
+```bash
+olp-gate verify-model-swap results/verified_model_swap_demo \
+  --half-life-output "$OLP_HALF_LIFE_ROOT/examples/demo_output" \
+  --succession-policy-key "$OLP_HALF_LIFE_ROOT/policy/succession_policy_public_key.hex" \
+  --compaction-policy-key "$OLP_HALF_LIFE_ROOT/policy/compaction_policy_public_key.hex" \
+  --gate-key <receiver-gate-public-key>
+```
+
+For a production run, use `olp-gate model-swap` with three distinct mode-0600
+keys: source/orchestrator, independent grader, and receiver gate. Model and
+adapter identifiers remain caller declarations until a provider adapter emits
+separately verifiable execution evidence. The built-in demo proves the offline
+protocol boundary, not a live commercial-provider swap. Separate keys establish
+key separation only; the receiver must still establish controller independence,
+custody, and trust roles outside this bundle.
+
 ## Run the discriminating test
 
 ```bash
@@ -27,12 +136,16 @@ node verify-decision-node.mjs results/proof_to_policy_demo/decision_receipts.jso
   --gate-key 17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce
 ```
 
-Without optional integrations, the core suite passes and reports fourteen
-explicit skips: nine Pipelock tests and five Assay-binary tests. Install
-`requirements-pipelock.txt` and set `OLP_ASSAY_BIN` to the pinned Assay v3.32.0
-executable to run every integration test. Two Assay fail-closed boundary tests
-always run. The release report records discovered, executed, and skipped counts
-for both the current and dependency-absent modes.
+Without optional integrations, the core suite passes and reports twenty-two
+explicit skips: nine Pipelock tests, five Assay-binary tests, and eight Verified
+Model Swap tests. Install `requirements-pipelock.txt`, set `OLP_ASSAY_BIN` to the
+pinned Assay v3.32.0 executable, and install `requirements-model-swap.txt` with
+`OLP_HALF_LIFE_ROOT` set to run every integration test. Two Assay fail-closed
+boundary tests and the pure model-swap summary control always run. Because
+Verified Commit is the flagship v0.5.0rc2 change, so the complete release gate
+holds unless its pinned Half-Life runtime and fixture are present. The release
+report records discovered, executed, and skipped counts for both the current and
+dependency-absent modes.
 
 Expected outcomes:
 
@@ -70,9 +183,16 @@ VERIFIED / REJECTED / UNDECIDABLE
 COMMIT / QUARANTINE / DENY / NO_BADGE / ROLLBACK_REQUEST
     ↓
 signed, parent-linked decision receipt
+    ↓ (only when exact permission is present)
+receiver-side atomic consume → destination tool
 ```
 
-Raw evidence is read for verification and excluded from the decision receipt. The receipt contains artifact hashes, policy identity, reason codes, assessments, binding fields, and the decision.
+Raw evidence is read for verification and excluded from the decision receipt.
+The receipt contains artifact hashes, policy identity, reason codes,
+assessments, binding fields, and the decision. Verified Commit additionally
+stores exact non-secret identifiers plus hashes of settings and the receiver-held
+one-use code; neither raw settings nor the raw code is stored in the signed
+receipt.
 
 ## Supported inputs
 
@@ -270,6 +390,11 @@ This path continues to emit the v0.1.1 local hash chain. Use the proof-to-policy
 - The benchmark's AARP companions are OLP-authored conformance inputs, not receipts captured from a deployed Pipelock instance.
 - Assay compatibility does not give OLP Assay's pre-call MCP policy gate,
   signed mandate semantics, or kernel enforcement.
+- Verified Commit is enforced only at a destination tool that enters through
+  `VerifiedCommitLedger` (or an equivalent receiver implementation) and shares
+  the same atomic consumption state. It does not constrain bypass paths.
+- One-use authorization is not a claim of globally exactly-once side effects.
+  A crash after consumption fails closed; retry requires a new authorization.
 - Assay's frozen bundle is generated from its public OpenFeature fixture; the
   receiver policy, receiver evidence, and DSSE predicate are OLP-authored and
   are not represented as deployment captures.
@@ -280,6 +405,6 @@ The five-case demo uses fixed, publicly disclosed fixture keys so its output is 
 
 ## Public line
 
-Agent receipts make actions auditable. OpenLine makes accountability executable.
+Proof travels. Permission belongs to the receiver.
 
 Small receipts. Big accountability.

@@ -26,6 +26,24 @@
   signal;
 - silently treating successful Assay bundle verification as proof of arbitrary
   receiver-policy completeness.
+- model-swap candidate output that drops, changes, or invents a receiver
+  decision relative to independent raw-history replay;
+- a causal capsule that disagrees with the independently reconstructed
+  full-history decision table;
+- cold-archive path substitution, receipt tampering, source-chain gaps, or
+  rehydration under an unpinned Half-Life compaction policy;
+- one key impersonating the swap source, independent grader, and receiver gate;
+- proof-card mutation after the source receipt and outcome witness bind its
+  exact bytes;
+- a DSM display projection attempting to replace the signed receiver decision.
+- changed tool, target, settings, run, capsule, evidence, or receiver-policy
+  bindings presented to the Verified Commit tool boundary;
+- expired, wrong-code, sequentially replayed, or concurrently replayed Verified
+  Commit authorization against one shared atomic receiver ledger;
+- a valid ordinary `COMMIT` being treated as portable tool permission when it
+  has no `commit_authorization`;
+- callback invocation after a failed Verified Commit check in the reference
+  `execute_once()` boundary.
 
 ## Outside this release
 
@@ -51,6 +69,24 @@
   control;
 - protection when the operator substitutes the trusted Assay executable,
   receiver policy, bundle pin, OLP key, and release evidence together.
+- a false but correctly signed candidate projection when the receiver also
+  substitutes the raw history, both Half-Life policy pins, grader key, gate key,
+  and proof evidence together;
+- provider API authentication, billing, availability, or proof that a declared
+  provider/model actually executed the adapter call;
+- recovery of private model weights, hidden reasoning, or unobserved state;
+- authority for DSM to grade or enforce a swap. DSM is a display consumer only.
+- organizational independence from distinct key material alone. Separate keys
+  do not prove separate controllers, HSM custody, or non-collusion.
+- tool routes that do not call the Verified Commit checker;
+- global replay protection across independent ledgers or hosts without shared
+  atomic state;
+- globally exactly-once side effects, compensation, or rollback after the
+  receiver consumes permission;
+- availability after a crash between atomic consumption and callback
+  completion. This interval fails closed and requires a newly authorized action;
+- confidentiality of the action identifiers, settings supplied to the local
+  tool adapter, or a receiver code disclosed outside receiver custody.
 
 ## Trust-store rule
 

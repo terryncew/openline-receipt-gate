@@ -1,0 +1,20 @@
+{
+  "keys": {
+    "2012cb90ca60e8e5d8daf66e2272d2233e0486d557e8c66141ed8920177d7eb7": {
+      "controller": "receiver-independent-grader",
+      "independence": "receiver",
+      "public_key": "2012cb90ca60e8e5d8daf66e2272d2233e0486d557e8c66141ed8920177d7eb7",
+      "roles": [
+        "outcome"
+      ]
+    },
+    "did:example:verified-model-swap-orchestrator#key-1": {
+      "controller": "model-swap-orchestrator",
+      "independence": "operator",
+      "public_key": "c050c5637a44fa8629fff3cccce2300cb362a63d99d95fc54145266f4332445a",
+      "roles": [
+        "source"
+      ]
+    }
+  }
+}

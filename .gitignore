@@ -16,3 +16,7 @@ dist/
 sessions.json
 decision_receipts.jsonl
 !benchmarks/pipelock/results/decision_receipts.jsonl
+!benchmarks/assay/results/decision_receipts.jsonl
+!benchmarks/assay/history/scored-run-001/results/decision_receipts.jsonl
+!results/verified_model_swap_demo/decision_receipts.jsonl
+!results/verified_commit_demo/decision_receipts.jsonl

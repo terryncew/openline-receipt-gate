@@ -21,17 +21,17 @@
     "strong_signing_uniqueness_hypothesis_falsified": true
   },
   "claim": "Signed source receipts can drive externally configured, independently verifiable policy decisions within declared inputs and trust assumptions.",
-  "created_at": "2026-07-16T19:37:03.481569Z",
+  "created_at": "2026-07-19T06:27:34.129315Z",
   "files": [
     {
-      "bytes": 233,
+      "bytes": 468,
       "path": ".gitignore",
-      "sha256": "3c7eead6a0305c8eb0c51850c3a2751dc4925975722b2db46f9714ee5b5865aa"
+      "sha256": "175945241f915fe2c9f1cd49c9c29c1a74973643be517d3d4cc49af4e8839c72"
     },
     {
-      "bytes": 5862,
+      "bytes": 8556,
       "path": "CHANGELOG.md",
-      "sha256": "2111bf514f6c8d0b8ec303278c75e54147133dfa47600306fdbee181b8c00b65"
+      "sha256": "c0f4f985aa5e1ae19a8d9d07026f8ac79986ed83af8ce9b4dc3ce9d3427c95dc"
     },
     {
       "bytes": 985,
@@ -39,14 +39,14 @@
       "sha256": "83f1cec7cc6701c9a8004184b541dd1297a5c0aa618d22cfc9036686b4274cfb"
     },
     {
-      "bytes": 12812,
+      "bytes": 18408,
       "path": "README.md",
-      "sha256": "3b93696d7fe0ed20e7bedd836f357beca922d5852eda7ba65877e86d199817de"
+      "sha256": "1c01625bf2b0274fa50b65e7d1d69a988fa0f69ec51ea6e710c40be04f255d6c"
     },
     {
-      "bytes": 97953,
+      "bytes": 100077,
       "path": "RUN_REPORT.json",
-      "sha256": "dce59b8fdf0d561c57af4cd433d82a9811f7cb1942485f8ed06e2053ff466a5f"
+      "sha256": "24f3c696fa6ee62ebcc7c0b130b40a98a0557936e6df7e80c03bbb0e7fe71c35"
     },
     {
       "bytes": 65,
@@ -419,29 +419,34 @@
       "sha256": "89885352cefe946c71b887939b1b4fe1d8a4f76b656672aa63bc55c899147ee8"
     },
     {
-      "bytes": 3110,
+      "bytes": 5879,
       "path": "docs/ARCHITECTURE.md",
-      "sha256": "fceee94520ac318c5d64d5b375399778588c5319db47c710334ca2a8ea68d5b8"
+      "sha256": "b11fa7e14efa38722ebc33f789475e576f06b23e702ec998a34d88e627ed70a3"
     },
     {
-      "bytes": 6047,
+      "bytes": 8684,
       "path": "docs/CLAIM_BOUNDARY.md",
-      "sha256": "0c45ec7313c2c3c260e3bdd6813d1f9229853e1cf7f0c81feeec5bfbca563979"
+      "sha256": "0b26d5a3023d927d31bca8b36bcbbc32f69ad19eba2b2f6479f6eb4ca70fa30b"
     },
     {
-      "bytes": 6998,
+      "bytes": 8650,
       "path": "docs/COMPATIBILITY.md",
-      "sha256": "d64066e415845291f0bb344f1edc92761cc5e5c14d246444d7d42d16ece2f411"
+      "sha256": "c447b659f3d67f130fd857250f36322296c24d5f1642a09a2522a90193771b69"
     },
     {
-      "bytes": 2921,
+      "bytes": 4181,
       "path": "docs/RECEIPT_SCHEMA.md",
-      "sha256": "31a4b725b0255e464593800797f2c44a0459c742a38d8df16c71f120d2344431"
+      "sha256": "2b7195a83fd1fa70de168f0f520a426208c28d29e6b90a39a0af9856dfc1d4fb"
     },
     {
-      "bytes": 4054,
+      "bytes": 6346,
       "path": "docs/THREAT_MODEL.md",
-      "sha256": "795ead63c2e85343f8cb467af22043fbce3a4895a2518bed8fa4aa2cfa6e6dc2"
+      "sha256": "88f93a1b4d70727b780a6238ee1e7d0f949bace036a54991c05b99737a31fc93"
+    },
+    {
+      "bytes": 3443,
+      "path": "docs/VERIFIED_COMMIT.md",
+      "sha256": "a53ddd4da12ceb365d35272b67e42ef6046496167fd72bd8cb9e9199a181bf09"
     },
     {
       "bytes": 1725,
@@ -474,9 +479,9 @@
       "sha256": "ed1b001c193f55bd0ebbeb173d4da835dec0494af75f1e1d489248af9dcba2ae"
     },
     {
-      "bytes": 782,
+      "bytes": 1403,
       "path": "olp_gate/__init__.py",
-      "sha256": "ce0d8391041753c1a15e3fa27311fba67bf0182fa03e3c9e46248de43a006a9d"
+      "sha256": "7ca16f48752b19335f60ff0b0033d4f832aeb91e2fbf0bc32b0c452a06ff4377"
     },
     {
       "bytes": 30740,
@@ -494,9 +499,9 @@
       "sha256": "d326cf65f3bc4ac8413c600c570941f2196cd3f13d0c47f6995e228b3e1c2a6f"
     },
     {
-      "bytes": 4920,
+      "bytes": 12187,
       "path": "olp_gate/cli.py",
-      "sha256": "81129db073f420d9d9a99e4e1b7be8bc1b1aa35db7e4842e81a26732de702ddf"
+      "sha256": "be1932ddfd1b05f1519668b3640e448cb831859f1b18941ef9279f782ed94ddd"
     },
     {
       "bytes": 12361,
@@ -519,9 +524,14 @@
       "sha256": "210cfd1737837b702f82dbb0ebe088eda8011e523e9bd7d2089d66be0767b61e"
     },
     {
-      "bytes": 24642,
+      "bytes": 25985,
       "path": "olp_gate/gateway.py",
-      "sha256": "50bf577fe1fc6e66e61646c2a835fdbf67721afac69c8adbdc5b12a7d54e7e38"
+      "sha256": "54159bd48c2eaa75a8f2f8ddd2532ca46d82f54d5dd24285b625f1979cd4472d"
+    },
+    {
+      "bytes": 42664,
+      "path": "olp_gate/model_swap.py",
+      "sha256": "5d3536156ad10f6e105d4b1740c5900f2ad48ef6c6b0d8f75011db7f83a26ab9"
     },
     {
       "bytes": 5353,
@@ -539,9 +549,19 @@
       "sha256": "20ebd5ff35bd58cd7f804aa784f135a9adbd50bcce0ba27a3dfef771493b811c"
     },
     {
-      "bytes": 521,
+      "bytes": 49351,
+      "path": "olp_gate/verified_commit.py",
+      "sha256": "931e07e8e1755b5c450d55512d62454535fe23487219bbff2741bcb6c8b63fcb"
+    },
+    {
+      "bytes": 697,
       "path": "pyproject.toml",
-      "sha256": "e8fc52df8446d1fdde82796152c0b334863cd112d5e833cf07a3960c02d86c8e"
+      "sha256": "cde91684f9176f6c7233e5063c11d296ccb9564ba3d0b7439f35360e68a70497"
+    },
+    {
+      "bytes": 118,
+      "path": "requirements-model-swap.txt",
+      "sha256": "6f96f82c6760203f8d17819f23ddf5180b3d90f9110e84dcd227c7f1e6b77290"
     },
     {
       "bytes": 125,
@@ -549,9 +569,19 @@
       "sha256": "de510b2adac790ed767b35908b07bd028929bb1de276557416f3532b9a7857c2"
     },
     {
+      "bytes": 15357,
+      "path": "results/demo_all_summary.json",
+      "sha256": "00626507fd674341c684b3d9f91a58e581f16398e454d80b4bd67540d8bf8348"
+    },
+    {
+      "bytes": 19677,
+      "path": "results/proof_to_policy_demo/decision_receipts.jsonl",
+      "sha256": "a67528293ceac21045012729fa13b94acae143c47af5a74e8a22ce2b45715da4"
+    },
+    {
       "bytes": 1653,
       "path": "results/proof_to_policy_demo/demo_summary.json",
-      "sha256": "0e23fab8a2a463e9f061ebc73e6d9a2843252157042007508b70e65a35e8f37a"
+      "sha256": "d09f80edf50b64bf100136988496415a169363558f67537fdb5a953bf0de2ba0"
     },
     {
       "bytes": 37,
@@ -564,9 +594,104 @@
       "sha256": "2dc839e96b3fdb57992f3a01234c5e87410eb652d9691fd2c9271bc59d598053"
     },
     {
-      "bytes": 23959,
+      "bytes": 723,
+      "path": "results/verified_commit_demo/approved_action.json",
+      "sha256": "44b5afaac889104d57e5d53e84aaccd0e02148883f2942b2db733f2ad7405f07"
+    },
+    {
+      "bytes": 6708,
+      "path": "results/verified_commit_demo/decision_receipts.jsonl",
+      "sha256": "f949c1b0ccc57c29232ea3c0dc859f9c1cf114eaf8f56be7619dba2ea79b5fe1"
+    },
+    {
+      "bytes": 2027,
+      "path": "results/verified_commit_demo/gate_policy.json",
+      "sha256": "f11f630bfa4dd3b3cd751cfa84f04fc9f447bc1734a39fb84563f6f5ecdfbe24"
+    },
+    {
+      "bytes": 4302,
+      "path": "results/verified_commit_demo/gate_request.json",
+      "sha256": "ae60e732e6a0fed36c14a72fa86fbd42056019422abff9d29a45292f63f96a5d"
+    },
+    {
+      "bytes": 594,
+      "path": "results/verified_commit_demo/gate_trust.json",
+      "sha256": "eb6c45838708346758ed6845b8c5cbcff2fecbc1662fc97c3cfca9616e5faa1b"
+    },
+    {
+      "bytes": 979,
+      "path": "results/verified_commit_demo/outcome_receipt.json",
+      "sha256": "5ee313a197fc6750b2f13fd47a57c6be89ac52b2d027fe12fe24defb4eaf55e2"
+    },
+    {
+      "bytes": 22223,
+      "path": "results/verified_commit_demo/proof_card.json",
+      "sha256": "a122d8d04a9f8100e663fe31f8c6cb5ea942663a5fea1d6ad152f9afe422eb14"
+    },
+    {
+      "bytes": 1415,
+      "path": "results/verified_commit_demo/source_receipt.json",
+      "sha256": "cc13c9d6cb54a9c5b4606bd0350697a0397f05114e07b671727d661d6ebd89cf"
+    },
+    {
+      "bytes": 8508,
+      "path": "results/verified_commit_demo/verified_commit_ledger.json",
+      "sha256": "67d2b632e905c43449de15b5a215bafd681905ff8b27ee2a9c4321ff89d0f8b3"
+    },
+    {
+      "bytes": 3842,
+      "path": "results/verified_commit_demo/verified_commit_summary.json",
+      "sha256": "a1f4670b86aced54f939749bc52bc2b12576cbb624c06385b24ef38e5868e224"
+    },
+    {
+      "bytes": 33000,
+      "path": "results/verified_commit_demo/verified_model_swap.latest.json",
+      "sha256": "4f40494ee5c163a4b62ebd04ff64c8b8667db2a3d967f415a686d60a7fdec17b"
+    },
+    {
+      "bytes": 4726,
+      "path": "results/verified_model_swap_demo/decision_receipts.jsonl",
+      "sha256": "3a9a8179bcd8a9b3a4c6190e5d2a3ee30eaafc899b557d9ed80ab1c1da2a54c7"
+    },
+    {
+      "bytes": 1521,
+      "path": "results/verified_model_swap_demo/gate_policy.json",
+      "sha256": "b769f2283f11536de4f98943ffa3674a0d0bee0cad0d5128f2361002aaf2a717"
+    },
+    {
+      "bytes": 3566,
+      "path": "results/verified_model_swap_demo/gate_request.json",
+      "sha256": "02bdc25e734293656f364b87772a7347f82ddf9d45b11500ab093cfe4ac7c883"
+    },
+    {
+      "bytes": 594,
+      "path": "results/verified_model_swap_demo/gate_trust.json",
+      "sha256": "eb6c45838708346758ed6845b8c5cbcff2fecbc1662fc97c3cfca9616e5faa1b"
+    },
+    {
+      "bytes": 979,
+      "path": "results/verified_model_swap_demo/outcome_receipt.json",
+      "sha256": "9360d39d5f402cdf935a9226c7513cad91b24203bde35017794cae7d24b9bdc5"
+    },
+    {
+      "bytes": 22233,
+      "path": "results/verified_model_swap_demo/proof_card.json",
+      "sha256": "f59d968bcc6b7a33f2e88a6a7482f0df344bb586b175095c3fac63aa06f3f05a"
+    },
+    {
+      "bytes": 1415,
+      "path": "results/verified_model_swap_demo/source_receipt.json",
+      "sha256": "3fcd8c0d0880a9f967629873b90f0bf5620b945a5c9ebef37c2507b98df67239"
+    },
+    {
+      "bytes": 30517,
+      "path": "results/verified_model_swap_demo/verified_model_swap.latest.json",
+      "sha256": "cef416500309a135610d9cacb2bac7e69d391eb2b396d04cc345518cd5bffd27"
+    },
+    {
+      "bytes": 35413,
       "path": "scripts/release_check.py",
-      "sha256": "5f42797ef0436530e03157dc741fc5c8faaa16a2279046c15bfae2711a50ce87"
+      "sha256": "31e7c5850797940bb9e94c8afd758f5468e1073d56e9368b24986025eafac949"
     },
     {
       "bytes": 17789,
@@ -604,6 +729,11 @@
       "sha256": "728ddb901a337cc0a6b429c68785a14f7bd6c843d830dc31473501657181f8a8"
     },
     {
+      "bytes": 13585,
+      "path": "tests/test_model_swap.py",
+      "sha256": "47289364e5b58093c255d6705d4642ee371eb7ac4c2db67bddbb02d59d43be7c"
+    },
+    {
       "bytes": 7744,
       "path": "tests/test_pipelock_adapter.py",
       "sha256": "0c345f75982dbcdc97330eb58caa37b705eef3891f37b383f7a62902aed8fea8"
@@ -624,26 +754,31 @@
       "sha256": "992bcaafb4cbf04c725393eef4f5511fddbe432077ab98ba0cec80bc78421c24"
     },
     {
-      "bytes": 15361,
+      "bytes": 16116,
+      "path": "tests/test_verified_commit.py",
+      "sha256": "413610ad299fec7e9a73ba154de9e13b7fef1856357bdbaecca1744e0ace7333"
+    },
+    {
+      "bytes": 21841,
       "path": "verify-decision-node.mjs",
-      "sha256": "547f7897ff463c6717e6e3154430062d35b46cafbd6c3c5c9beec3796dba2137"
+      "sha256": "89354b17da6587d11fad1c2a47dc9d84b759c6bdb91888f1c58092d6e5e18ae3"
     }
   ],
   "optional_integrations": {
     "assay": {
-      "available": true,
-      "binary": "/workspace/scratch/ec796a60d935/assay-v3.32.0-x86_64-unknown-linux-gnu/assay",
+      "available": false,
+      "binary": null,
       "dependency_absent_suite_passed": true,
       "install_instructions": "benchmarks/assay/PROTOCOL.md",
       "integration_test_count": 5,
-      "live_adapter_tests_executed": true,
-      "live_adapter_tests_passed": true,
-      "live_benchmark_executed": true,
-      "live_benchmark_passed": true,
+      "live_adapter_tests_executed": false,
+      "live_adapter_tests_passed": false,
+      "live_benchmark_executed": false,
+      "live_benchmark_passed": false,
       "release_archive_sha256": "243f5e3935530cb1405dbb54fa57acc944de2800d28537d08dfc305b2a117775",
       "release_commit": "04d3db10adbe191aa731d52a6c2b77dad8bc0ca7",
-      "supported": true,
-      "version": "assay 3.32.0"
+      "supported": false,
+      "version": null
     },
     "pipelock": {
       "available": false,
@@ -655,6 +790,23 @@
       "source_commit": "329f1c76fdfa5fc5b165a3794f7c62906a076c03",
       "supported": false,
       "version": null
+    },
+    "verified_model_swap": {
+      "available": true,
+      "demo_executed": true,
+      "demo_passed": true,
+      "dependency_absent_suite_passed": true,
+      "fixture_root": "/workspace/scratch/f244fb2c8a90/verified-model-swap/openline-half-life",
+      "install_command": "pip install -r requirements-model-swap.txt",
+      "integration_test_count": 8,
+      "live_integration_tests_executed": true,
+      "live_integration_tests_passed": true,
+      "required_for_v0.5_release": true,
+      "source_commit": "70121b53e86196d69b2c3457174b38ad32667b43",
+      "supported": true,
+      "verified_commit_demo_executed": true,
+      "verified_commit_demo_passed": true,
+      "version": "0.2.0rc5"
     }
   },
   "pipelock_head_to_head": {
@@ -720,5 +872,23 @@
   "release_status": "ready",
   "repo": "openline-receipt-gate",
   "schema": "openline.release_manifest.v0.2",
-  "version": "0.4.0"
+  "verified_commit": {
+    "action_hash": "4e6ae4542be7a23322ec614951d50285ad2a8c523dda4f70a0fc0147800f6caa",
+    "authorization_hash": "7ffbed23da2b398b31b462a39bbc43fb9d64d567e9fae1872e6b23e0d2353d81",
+    "decision": "COMMIT",
+    "mutations_blocked_before_execution": 9,
+    "passed": true,
+    "replay_blocked": true,
+    "simultaneous_authorized": 1,
+    "simultaneous_blocked": 1
+  },
+  "verified_model_swap": {
+    "archive_matches_oracle": true,
+    "capsule_matches_oracle": true,
+    "decision": "COMMIT",
+    "passed": true,
+    "proof_card_sha256": "f59d968bcc6b7a33f2e88a6a7482f0df344bb586b175095c3fac63aa06f3f05a",
+    "summary_lost_count": 7
+  },
+  "version": "0.5.0rc2"
 }

@@ -1,0 +1,72 @@
+{
+  "deny_risk_levels": [],
+  "evidence_assertions": [
+    {
+      "evidence_id": "model_swap_proof_card",
+      "op": "equals",
+      "path": "authority.candidate_self_grading_allowed",
+      "value": false
+    },
+    {
+      "evidence_id": "model_swap_proof_card",
+      "op": "equals",
+      "path": "half_life_verification.valid",
+      "value": true
+    },
+    {
+      "evidence_id": "model_swap_proof_card",
+      "op": "equals",
+      "path": "independent_grade.capsule_matches_oracle",
+      "value": true
+    },
+    {
+      "evidence_id": "model_swap_proof_card",
+      "op": "equals",
+      "path": "independent_grade.archive_matches_oracle",
+      "value": true
+    },
+    {
+      "evidence_id": "model_swap_proof_card",
+      "op": "equals",
+      "path": "independent_grade.passed",
+      "value": true
+    }
+  ],
+  "max_evidence_bytes": 10000000,
+  "max_source_age_seconds": 300,
+  "metadata": {
+    "irreversible_action_gate": true,
+    "profile": "verified_model_swap/v1",
+    "verified_commit": {
+      "capsule_hash": "8436eae8c2e158a44d06b66284d9b9b632df98c7572dc49b22467df0c4f49d1a",
+      "evidence_hashes": [
+        "a122d8d04a9f8100e663fe31f8c6cb5ea942663a5fea1d6ad152f9afe422eb14"
+      ],
+      "max_ttl_seconds": 300,
+      "required": true,
+      "run_id": "verified-model-swap-demo",
+      "settings_hash": "e826d77ee2f77f0896af8e4a9f5cd917e1e9c0b0e490f89318cb63ce00790605",
+      "target": "artifact://approved_action.json",
+      "tool": "filesystem.write"
+    }
+  },
+  "no_badge_action_types": [
+    "eval_score_claim"
+  ],
+  "policy_id": "verified-model-swap.receiver-policy",
+  "require_declared_coverage": true,
+  "require_evidence": true,
+  "require_independent_source": false,
+  "require_outcome_witness": true,
+  "require_replay_guard": true,
+  "require_source_bound_evidence": true,
+  "require_trusted_source": true,
+  "required_claim_ids": [
+    "verified-model-swap-demo"
+  ],
+  "required_evidence_ids": [
+    "model_swap_proof_card"
+  ],
+  "rollback_on_harm": true,
+  "version": "1"
+}

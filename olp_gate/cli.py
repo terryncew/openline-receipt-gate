@@ -4,13 +4,17 @@ import argparse
 import json
 from pathlib import Path
 
+from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
+
 from .adapters import TrustStore
 from .crypto import generate_private_key_file, load_private_key, strict_json_load
 from .demo import run_demo
 from .gateway import evaluate_request, verify_decision_log
+from .model_swap import run_verified_model_swap, verify_model_swap_output
 from .policy import PolicySpec
 from .receipts import verify_chain, summarize_badge, review_packet
 from .session import SessionLedger
+from .verified_commit import run_verified_commit_demo, verify_verified_commit_output
 
 
 def print_json(obj: object) -> None:
@@ -67,6 +71,68 @@ def main(argv: list[str] | None = None) -> int:
 
     p_demo = sub.add_parser("demo-proof-to-policy", help="Run the five discriminating proof-to-policy cases.")
     p_demo.add_argument("--output", default="results/proof_to_policy_demo")
+
+    def add_model_swap_inputs(target: argparse.ArgumentParser) -> None:
+        target.add_argument("--half-life-output", required=True)
+        target.add_argument("--succession-policy-key", required=True)
+        target.add_argument("--compaction-policy-key", required=True)
+        target.add_argument("--source-model", required=True)
+        target.add_argument("--target-model", required=True)
+        target.add_argument("--output", required=True)
+        target.add_argument("--source-adapter", default="offline-deterministic-source-v1")
+        target.add_argument("--target-adapter", default="offline-deterministic-target-v1")
+        target.add_argument("--trial-id", default="verified-model-swap-demo")
+
+    p_model_swap = sub.add_parser(
+        "model-swap",
+        help="Independently grade three continuity lanes and issue a receiver decision.",
+    )
+    add_model_swap_inputs(p_model_swap)
+    p_model_swap.add_argument("--source-key", required=True)
+    p_model_swap.add_argument("--grader-key", required=True)
+    p_model_swap.add_argument("--gate-key", required=True)
+    p_model_swap.add_argument("--issuer", required=True)
+    p_model_swap.add_argument(
+        "--commit-action",
+        help="JSON file containing exactly tool, target, and settings.",
+    )
+    p_model_swap.add_argument(
+        "--commit-code-file",
+        help="Mode-0600 file containing the receiver-held 64-hex one-use code.",
+    )
+    p_model_swap.add_argument("--commit-ttl", type=int, default=300)
+
+    p_model_swap_demo = sub.add_parser(
+        "demo-model-swap",
+        help="Run the offline model-swap fixture with public, non-production keys.",
+    )
+    add_model_swap_inputs(p_model_swap_demo)
+
+    p_commit_demo = sub.add_parser(
+        "demo-verified-commit",
+        help="Prove Model A -> Model B followed by one receiver-approved action.",
+    )
+    add_model_swap_inputs(p_commit_demo)
+
+    p_verify_model_swap = sub.add_parser(
+        "verify-model-swap",
+        help="Regrade a model-swap proof and verify its signed receiver decision.",
+    )
+    p_verify_model_swap.add_argument("output")
+    p_verify_model_swap.add_argument("--half-life-output", required=True)
+    p_verify_model_swap.add_argument("--succession-policy-key", required=True)
+    p_verify_model_swap.add_argument("--compaction-policy-key", required=True)
+    p_verify_model_swap.add_argument("--gate-key", action="append", required=True)
+
+    p_verify_commit = sub.add_parser(
+        "verify-verified-commit",
+        help="Recheck the signed permission and receiver-side execution record.",
+    )
+    p_verify_commit.add_argument("output")
+    p_verify_commit.add_argument("--half-life-output", required=True)
+    p_verify_commit.add_argument("--succession-policy-key", required=True)
+    p_verify_commit.add_argument("--compaction-policy-key", required=True)
+    p_verify_commit.add_argument("--gate-key", action="append", required=True)
 
     args = parser.parse_args(argv)
 
@@ -128,6 +194,93 @@ def main(argv: list[str] | None = None) -> int:
         result = run_demo(args.output)
         print_json(result)
         return 0 if result["passed"] else 2
+
+    if args.cmd in {"model-swap", "demo-model-swap"}:
+        if args.cmd == "demo-model-swap":
+            source_key = Ed25519PrivateKey.from_private_bytes(bytes.fromhex("51" * 32))
+            grader_key = Ed25519PrivateKey.from_private_bytes(bytes.fromhex("52" * 32))
+            gate_key = Ed25519PrivateKey.from_private_bytes(bytes.fromhex("53" * 32))
+            issuer = "openline-public-model-swap-demo-gate"
+        else:
+            source_key = load_private_key(args.source_key)
+            grader_key = load_private_key(args.grader_key)
+            gate_key = load_private_key(args.gate_key)
+            issuer = args.issuer
+        commit_action = None
+        commit_code = None
+        if args.cmd == "model-swap":
+            if bool(args.commit_action) != bool(args.commit_code_file):
+                parser.error("--commit-action and --commit-code-file must be used together")
+            if args.commit_action:
+                commit_action = strict_json_load(args.commit_action)
+                commit_code_path = Path(args.commit_code_file)
+                if commit_code_path.stat().st_mode & 0o077:
+                    parser.error("--commit-code-file must not be group/world accessible")
+                commit_code = commit_code_path.read_text(encoding="ascii").strip()
+        result = run_verified_model_swap(
+            args.half_life_output,
+            args.output,
+            succession_policy_public_key_path=args.succession_policy_key,
+            compaction_policy_public_key_path=args.compaction_policy_key,
+            source_model=args.source_model,
+            target_model=args.target_model,
+            source_signing_key=source_key,
+            grader_signing_key=grader_key,
+            gate_signing_key=gate_key,
+            gate_issuer=issuer,
+            source_adapter=args.source_adapter,
+            target_adapter=args.target_adapter,
+            trial_id=args.trial_id,
+            commit_action=commit_action,
+            commit_one_use_code=commit_code,
+            commit_ttl_seconds=(args.commit_ttl if args.cmd == "model-swap" else 300),
+        )
+        print_json(result)
+        return 0 if result["passed"] else 2
+
+    if args.cmd == "verify-model-swap":
+        result = verify_model_swap_output(
+            args.output,
+            trusted_gate_keys=args.gate_key,
+            half_life_output=args.half_life_output,
+            succession_policy_public_key_path=args.succession_policy_key,
+            compaction_policy_public_key_path=args.compaction_policy_key,
+        )
+        print_json(result)
+        return 0 if result["valid"] else 2
+
+    if args.cmd == "demo-verified-commit":
+        source_key = Ed25519PrivateKey.from_private_bytes(bytes.fromhex("51" * 32))
+        grader_key = Ed25519PrivateKey.from_private_bytes(bytes.fromhex("52" * 32))
+        gate_key = Ed25519PrivateKey.from_private_bytes(bytes.fromhex("53" * 32))
+        result = run_verified_commit_demo(
+            args.half_life_output,
+            args.output,
+            succession_policy_public_key_path=args.succession_policy_key,
+            compaction_policy_public_key_path=args.compaction_policy_key,
+            source_model=args.source_model,
+            target_model=args.target_model,
+            source_signing_key=source_key,
+            grader_signing_key=grader_key,
+            gate_signing_key=gate_key,
+            gate_issuer="openline-public-verified-commit-demo-gate",
+            source_adapter=args.source_adapter,
+            target_adapter=args.target_adapter,
+            trial_id=args.trial_id,
+        )
+        print_json(result)
+        return 0 if result["passed"] else 2
+
+    if args.cmd == "verify-verified-commit":
+        result = verify_verified_commit_output(
+            args.output,
+            trusted_gate_keys=args.gate_key,
+            half_life_output=args.half_life_output,
+            succession_policy_public_key_path=args.succession_policy_key,
+            compaction_policy_public_key_path=args.compaction_policy_key,
+        )
+        print_json(result)
+        return 0 if result["valid"] else 2
 
     return 2
 

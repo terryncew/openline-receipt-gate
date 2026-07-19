@@ -35,6 +35,11 @@ from .crypto import (
 from .evidence import assess_evidence, assess_outcome, normalize_hash
 from .policy import PolicySpec
 from .session import SessionLedger
+from .verified_commit import (
+    assess_verified_commit,
+    commit_authorization_from_check,
+    validate_commit_authorization,
+)
 
 
 VERIFIED = "VERIFIED"
@@ -181,7 +186,13 @@ def _choose_decision(
             return REJECTED, ROLLBACK_REQUEST
         return REJECTED, DENY
 
-    hard_fail_names = {"integrity", "profile", "freshness", "source_signal"}
+    hard_fail_names = {
+        "integrity",
+        "profile",
+        "freshness",
+        "source_signal",
+        "verified_commit",
+    }
     if any(assessments[name].status == FAIL for name in hard_fail_names):
         return REJECTED, NO_BADGE if no_badge else DENY
 
@@ -202,6 +213,8 @@ def _choose_decision(
         required.append("evidence")
     if policy.require_outcome_witness:
         required.append("outcome")
+    if assessments["verified_commit"].details.get("required") is True:
+        required.append("verified_commit")
 
     if any(assessments[name].status != PASS for name in required):
         return UNDECIDABLE, NO_BADGE if no_badge else QUARANTINE
@@ -317,6 +330,14 @@ def evaluate_request(
         ) if spec.require_outcome_witness or isinstance(request.get("outcome_receipt"), Mapping)
         else Check(PASS, [], {"required": False}),
     }
+    assessments["verified_commit"] = assess_verified_commit(
+        request,
+        policy_metadata=spec.metadata,
+        policy_hash=spec.policy_hash,
+        binding=binding,
+        evidence_check=assessments["evidence"],
+        now=current_time,
+    )
 
     requested_action_type = request.get("action_type")
     if (
@@ -357,8 +378,8 @@ def evaluate_request(
     claim_hash = sha256_hex(str(claim).encode("utf-8")) if claim is not None else None
     body = {
         "kind": "proof_to_policy_decision_receipt",
-        "receipt_version": "0.3",
-        "algorithm_id": "openline-proof-to-policy-gate-0.3",
+        "receipt_version": "0.4",
+        "algorithm_id": "openline-proof-to-policy-gate-0.4",
         "canonicalization_id": "olp-canonical-json-int-v1",
         "spec_uri": "https://github.com/terryncew/openline-receipt-gate",
         "issuer": {"id": issuer_id},
@@ -393,6 +414,10 @@ def evaluate_request(
         "assessments": {name: check.as_dict() for name, check in assessments.items()},
         "verdict": verdict,
         "decision": decision,
+        "commit_authorization": commit_authorization_from_check(
+            assessments["verified_commit"],
+            decision,
+        ),
         "chain_accepted": chain_accepted,
         "reason_codes": reasons,
         "privacy": {
@@ -436,13 +461,14 @@ def verify_decision_receipt(
     if receipt.get("kind") != "proof_to_policy_decision_receipt":
         errors.append("decision_profile_invalid")
     decision_version = receipt.get("receipt_version")
-    if decision_version not in {"0.2", "0.3"}:
+    if decision_version not in {"0.2", "0.3", "0.4"}:
         errors.append("decision_version_unsupported")
     if receipt.get("canonicalization_id") != "olp-canonical-json-int-v1":
         errors.append("decision_canonicalization_unsupported")
     expected_algorithm = {
         "0.2": "openline-proof-to-policy-gate-0.2",
         "0.3": "openline-proof-to-policy-gate-0.3",
+        "0.4": "openline-proof-to-policy-gate-0.4",
     }.get(str(decision_version))
     if receipt.get("algorithm_id") != expected_algorithm:
         errors.append("decision_algorithm_unsupported")
@@ -492,8 +518,10 @@ def verify_decision_receipt(
                 "integrity", "profile", "provenance", "independence",
                 "coverage", "freshness", "evidence", "outcome",
             ]
-            if decision_version == "0.3":
+            if decision_version in {"0.3", "0.4"}:
                 assessment_names.append("source_signal")
+            if decision_version == "0.4":
+                assessment_names.append("verified_commit")
             for name in assessment_names:
                 raw = assessments_value.get(name)
                 if not isinstance(raw, Mapping):
@@ -513,6 +541,12 @@ def verify_decision_receipt(
                 )
             if decision_version == "0.2":
                 checks["source_signal"] = Check(PASS, [], {"required": False})
+            if decision_version in {"0.2", "0.3"}:
+                checks["verified_commit"] = Check(
+                    PASS,
+                    [],
+                    {"required": False, "profile": "verified_commit/v1"},
+                )
             expected_verdict, expected_decision = _choose_decision(
                 action_type=str(action.get("type", "unknown")),
                 risk_level=str(action.get("risk_level")) if action.get("risk_level") is not None else None,
@@ -529,6 +563,10 @@ def verify_decision_receipt(
                 errors.append("chain_acceptance_recompute_mismatch")
         except (TypeError, ValueError, KeyError) as exc:
             errors.append(f"decision_semantic_recompute_error:{exc}")
+    if decision_version == "0.4":
+        errors.extend(validate_commit_authorization(receipt))
+    elif receipt.get("commit_authorization") is not None:
+        errors.append("legacy_commit_authorization_present")
     return {
         "valid": not errors,
         "errors": sorted(set(errors)),

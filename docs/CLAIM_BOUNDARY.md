@@ -2,7 +2,7 @@
 
 ## Supported claims
 
-Receipt Gate v0.4.0 demonstrates that signed action receipts and a pinned Assay
+Receipt Gate v0.5.0rc2 demonstrates that signed action receipts and a pinned Assay
 evidence bundle can be converted into deterministic, signed policy decisions
 while keeping integrity, provenance, coverage, the source action signal,
 freshness, evidence, and outcome checks separate.
@@ -16,6 +16,37 @@ Inside the bundled fixtures:
 - a harmful witnessed mutation requests rollback only when rollback support is declared.
 
 The decision is independently recomputed from the signed assessment set and policy snapshot.
+
+The Verified Model Swap review candidate additionally demonstrates, inside the
+disclosed deterministic Half-Life fixture, that:
+
+- raw verified history and the verified causal capsule produce the same exact
+  16-entry receiver decision table;
+- the disclosed ordinary summary baseline omits seven negative-history
+  tombstones while preserving the active commitments;
+- all seven omitted decisions can be restored from a policy-pinned,
+  hash-addressed archive; and
+- Receipt Gate emits its existing signed `COMMIT` only after the independent
+  replay, capsule comparison, archive recovery, source binding, orthogonal
+  outcome, and receiver evidence predicates pass.
+
+The candidate adapters, Half-Life compactor, and DSM display are not grading
+authorities.
+
+Verified Commit additionally demonstrates, inside the disclosed receiver-side
+boundary, that:
+
+- the existing signed `COMMIT` can bind one exact tool, target, settings hash,
+  run, capsule, evidence set, policy, expiry, and one-use code hash;
+- changed fields, a wrong code, expiry, and replay are blocked before the tool
+  callback starts;
+- two simultaneous uses of one authorization produce one authorized callback
+  and one blocked attempt against the shared atomic ledger; and
+- an ordinary `COMMIT` without the optional authorization grants no tool
+  permission.
+
+This is receiver-side exactly-once authorization, not globally exactly-once
+execution. A crash after consumption fails closed and requires new permission.
 
 ## Frozen Pipelock result
 
@@ -104,6 +135,25 @@ This release does not establish:
 - a claim that the Assay-originated OpenFeature bundle was captured from a live
   deployment. The receiver policy, artifact, requests, and predicate are
   OLP-authored benchmark inputs.
+- proof that the caller-declared source or target model identifiers correspond
+  to a live commercial-provider execution;
+- universal model portability, legal ownership of an agent identity, or
+  preservation of private latent state;
+- a claim that every ordinary summary loses the seven decisions observed in the
+  disclosed baseline;
+- semantic truth from exact decision equivalence; equivalence is limited to the
+  disclosed receiver projection and policy pins;
+- permission for DSM, a candidate model, or the compactor to certify its own
+  output.
+- controller independence merely because source, grader, and gate signatures
+  use three different keys; custody and trust roles remain receiver
+  configuration.
+- enforcement of a destination tool that bypasses the Verified Commit checker;
+- cross-host or cross-ledger replay protection without a shared atomic backend;
+- globally exactly-once side effects, transactional rollback, or automatic
+  retry after a callback or process failure;
+- secrecy of a low-entropy caller-chosen one-use code. The reference generator
+  produces 256 random bits, and production custody belongs to the receiver.
 
 ## Honest public claim
 

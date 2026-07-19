@@ -1,0 +1,49 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2",
+    "https://agentreceipts.ai/context/v2"
+  ],
+  "credentialSubject": {
+    "action": {
+      "id": "verified-model-swap-demo",
+      "risk_level": "high",
+      "timestamp": "2026-07-19T06:27:26.558323Z",
+      "type": "verified_model_swap"
+    },
+    "chain": {
+      "chain_id": "verified-model-swap-demo",
+      "previous_receipt_hash": null,
+      "sequence": 1,
+      "status": "complete",
+      "terminal": true
+    },
+    "outcome": {
+      "response_hash": "sha256:f59d968bcc6b7a33f2e88a6a7482f0df344bb586b175095c3fac63aa06f3f05a",
+      "reversible": true,
+      "status": "success"
+    },
+    "principal": {
+      "id": "did:example:receiver",
+      "type": "HumanPrincipal"
+    }
+  },
+  "id": "urn:receipt:verified-model-swap-demo",
+  "issuanceDate": "2026-07-19T06:27:26.558323Z",
+  "issuer": {
+    "id": "did:example:verified-model-swap-orchestrator",
+    "session_id": "verified-model-swap-demo",
+    "type": "AIAgent"
+  },
+  "proof": {
+    "created": "2026-07-19T06:27:26.558323Z",
+    "proofPurpose": "assertionMethod",
+    "proofValue": "uUv3RD5EhxHeMIMcJ_vJeeeQnIrtr2XptUW5BDJT37hFNdNF0N35QJfWRWnhq6ZVE616ZlNsYshLZ-rW0YrWGAg",
+    "type": "Ed25519Signature2020",
+    "verificationMethod": "did:example:verified-model-swap-orchestrator#key-1"
+  },
+  "type": [
+    "VerifiableCredential",
+    "AgentReceipt"
+  ],
+  "version": "0.5.0"
+}

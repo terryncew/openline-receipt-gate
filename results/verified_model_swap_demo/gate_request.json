@@ -1,0 +1,96 @@
+{
+  "action_type": "verified_model_swap",
+  "binding": {
+    "challenge_expires_at": "2026-07-19T06:32:26.646386Z",
+    "challenge_nonce": "808f1568e44254c3b9a08b27d4ff1c8b",
+    "expected_source_hash": "3e7b42ff6fad94519356fcf6c2466dacf67e33ca5c2e04bac0d01eaecfb54761",
+    "parent_decision_hash": null,
+    "run_id": "verified-model-swap-demo",
+    "sequence": 1,
+    "session_id": "verified-model-swap-demo"
+  },
+  "claim": "Change the model without losing receiver-relevant continuity.",
+  "evidence": [
+    {
+      "artifact_path": "proof_card.json",
+      "content_hash": "f59d968bcc6b7a33f2e88a6a7482f0df344bb586b175095c3fac63aa06f3f05a",
+      "id": "model_swap_proof_card",
+      "source_commitment_path": "credentialSubject.outcome.response_hash"
+    }
+  ],
+  "outcome_receipt": {
+    "algorithm_id": "openline-orthogonal-outcome-0.2",
+    "canonicalization_id": "olp-canonical-json-int-v1",
+    "evidence_hash": "f59d968bcc6b7a33f2e88a6a7482f0df344bb586b175095c3fac63aa06f3f05a",
+    "kind": "witness_outcome_receipt",
+    "observed_at": "2026-07-19T06:27:26.648039Z",
+    "outcome": {
+      "harmful": false,
+      "rollback_supported": true,
+      "status": "pass"
+    },
+    "payload_hash": "3007c425868ae6f6ec43be530cfd8d41609c3ba48ed91e566437e640410455ec",
+    "receipt_version": "0.2",
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "2012cb90ca60e8e5d8daf66e2272d2233e0486d557e8c66141ed8920177d7eb7",
+      "value": "95aa93b01364d6027d660060b1683b92ca41ce51ffd17a8077a95cc8f70e105567d9e5accf14ee9b8a1f6b51fcc6505cb6569e5e9390887cb561377a21befa0d"
+    },
+    "source_receipt_hash": "3e7b42ff6fad94519356fcf6c2466dacf67e33ca5c2e04bac0d01eaecfb54761",
+    "spec_uri": "https://github.com/terryncew/openline-receipt-gate",
+    "witness_id": "receiver-independent-grader"
+  },
+  "request_id": "verified-model-swap-demo-receiver-decision",
+  "schema": "openline.proof_to_policy.request.v0.2",
+  "source_receipts": [
+    {
+      "@context": [
+        "https://www.w3.org/ns/credentials/v2",
+        "https://agentreceipts.ai/context/v2"
+      ],
+      "credentialSubject": {
+        "action": {
+          "id": "verified-model-swap-demo",
+          "risk_level": "high",
+          "timestamp": "2026-07-19T06:27:26.558323Z",
+          "type": "verified_model_swap"
+        },
+        "chain": {
+          "chain_id": "verified-model-swap-demo",
+          "previous_receipt_hash": null,
+          "sequence": 1,
+          "status": "complete",
+          "terminal": true
+        },
+        "outcome": {
+          "response_hash": "sha256:f59d968bcc6b7a33f2e88a6a7482f0df344bb586b175095c3fac63aa06f3f05a",
+          "reversible": true,
+          "status": "success"
+        },
+        "principal": {
+          "id": "did:example:receiver",
+          "type": "HumanPrincipal"
+        }
+      },
+      "id": "urn:receipt:verified-model-swap-demo",
+      "issuanceDate": "2026-07-19T06:27:26.558323Z",
+      "issuer": {
+        "id": "did:example:verified-model-swap-orchestrator",
+        "session_id": "verified-model-swap-demo",
+        "type": "AIAgent"
+      },
+      "proof": {
+        "created": "2026-07-19T06:27:26.558323Z",
+        "proofPurpose": "assertionMethod",
+        "proofValue": "uUv3RD5EhxHeMIMcJ_vJeeeQnIrtr2XptUW5BDJT37hFNdNF0N35QJfWRWnhq6ZVE616ZlNsYshLZ-rW0YrWGAg",
+        "type": "Ed25519Signature2020",
+        "verificationMethod": "did:example:verified-model-swap-orchestrator#key-1"
+      },
+      "type": [
+        "VerifiableCredential",
+        "AgentReceipt"
+      ],
+      "version": "0.5.0"
+    }
+  ]
+}

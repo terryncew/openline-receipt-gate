@@ -1,5 +1,51 @@
 # Changelog
 
+## 0.5.0rc2
+
+- Added Verified Commit inside the existing `proof_to_policy_decision_receipt`;
+  no receipt family, disposition, score, repository, marketplace, staking,
+  certification, or predictive layer was added.
+- Bound exact tool, target, settings hash, run, Half-Life capsule, evidence set,
+  receiver policy, expiry, one-use code hash, action hash, and authorization hash
+  into a v0.4 signed decision.
+- Added Python and Node semantic recomputation for the authorization while
+  retaining v0.2 and v0.3 decision verification.
+- Added the receiver-side `VerifiedCommitLedger`, which atomically verifies and
+  consumes permission before invoking a destination callback and records
+  authorized, blocked, completed, and failed attempts.
+- Added hostile controls for changed tool, target, settings, run, capsule,
+  evidence, policy, wrong code, expiry, replay, receipt tampering, callback
+  failure, and two simultaneous uses.
+- Added a Model A → Model B → one approved write proof and an independent output
+  verifier. The fixture remains offline and does not attest live provider calls.
+- Kept the public claim to receiver-side one-use authorization within one shared
+  atomic ledger. Global exactly-once execution and checker bypass remain outside
+  the release boundary.
+
+## 0.5.0rc1
+
+- Added Verified Model Swap as a Receipt Gate profile rather than a new
+  repository, score, disposition, or receipt family.
+- Added an independently graded three-lane trial: full-history oracle, disclosed
+  ordinary summary, and verified Half-Life causal capsule.
+- Pinned OpenLine Half-Life at commit
+  `70121b53e86196d69b2c3457174b38ad32667b43` as an optional integration.
+- Recomputed the raw-history receiver decision table outside the compactor and
+  required exact `COMMIT` / `QUARANTINE` / `DENY` equivalence.
+- Added policy-pinned cold-archive authentication and rehydration, with explicit
+  reporting of what the summary lost and what had to return.
+- Bound the proof card to an Agent Receipt v0.5 source commitment, a distinct
+  orthogonal outcome witness, and the existing signed proof-to-policy decision.
+- Added a bounded DSM projection marked display-only; DSM is never a grading
+  authority.
+- Added hostile tests for capsule loss, proof-card/source/outcome/projection
+  mutation, untrusted Half-Life policy pins, and source/grader/gate key collapse.
+- Restored the two byte-exact, hash-matching frozen Assay decision logs that the
+  v0.4 verifier referenced but the repository omitted; both signed runs now
+  survive clean extraction.
+- Kept the public claim limited to the deterministic fixture until a real
+  provider adapter supplies separately verifiable execution evidence.
+
 ## 0.4.0
 
 - Added an Assay Evidence Contract v1 bundle adapter pinned to the official
