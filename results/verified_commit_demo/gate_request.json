@@ -1,9 +1,9 @@
 {
   "action_type": "verified_model_swap",
   "binding": {
-    "challenge_expires_at": "2026-07-19T06:32:27.061260Z",
-    "challenge_nonce": "510e3c21f06802ae42475d6163d38d50",
-    "expected_source_hash": "2e5676f6d14fbd01670c3e65ca16af097fb018bb72cd8c5d8c817d478cad7455",
+    "challenge_expires_at": "2026-07-19T07:12:17.952850Z",
+    "challenge_nonce": "bcae0832779d8cd46da433c5c86ce89f",
+    "expected_source_hash": "5f9ce3e1f70db83cb50c2654d0eae3dbc0ca41d5b91a13231dcc02d19740e20d",
     "parent_decision_hash": null,
     "run_id": "verified-model-swap-demo",
     "sequence": 1,
@@ -13,12 +13,12 @@
   "commit_request": {
     "capsule_hash": "8436eae8c2e158a44d06b66284d9b9b632df98c7572dc49b22467df0c4f49d1a",
     "evidence_hashes": [
-      "a122d8d04a9f8100e663fe31f8c6cb5ea942663a5fea1d6ad152f9afe422eb14"
+      "d9e279858684af0942275d912e866da26d30278dfd103da69f1ab5a5d6860426"
     ],
-    "expires_at": "2026-07-19T06:32:26.970059Z",
-    "one_use_code_hash": "e385224e705bc1740db917c92ea57850d7336eb6cf960d83f4bc174693349050",
+    "expires_at": "2026-07-19T07:12:17.865092Z",
+    "one_use_code_hash": "02579523963b3cb0cc1762664fc7a46ce96e6f4655a6982290608eec5c77c7b7",
     "one_use_code_redacted": true,
-    "policy_hash": "e78481e82eeeb2b9aa4824676a2e81bca1df0ec8a538f5acbb825b4dac6e29c7",
+    "policy_hash": "d644f1101afe6f4160649056aedf5f0a686e986060a84f1d2dfd9ac08b1860ba",
     "run_id": "verified-model-swap-demo",
     "settings": {
       "content": "portable permission spent once",
@@ -31,7 +31,7 @@
   "evidence": [
     {
       "artifact_path": "proof_card.json",
-      "content_hash": "a122d8d04a9f8100e663fe31f8c6cb5ea942663a5fea1d6ad152f9afe422eb14",
+      "content_hash": "d9e279858684af0942275d912e866da26d30278dfd103da69f1ab5a5d6860426",
       "id": "model_swap_proof_card",
       "source_commitment_path": "credentialSubject.outcome.response_hash"
     }
@@ -39,22 +39,22 @@
   "outcome_receipt": {
     "algorithm_id": "openline-orthogonal-outcome-0.2",
     "canonicalization_id": "olp-canonical-json-int-v1",
-    "evidence_hash": "a122d8d04a9f8100e663fe31f8c6cb5ea942663a5fea1d6ad152f9afe422eb14",
+    "evidence_hash": "d9e279858684af0942275d912e866da26d30278dfd103da69f1ab5a5d6860426",
     "kind": "witness_outcome_receipt",
-    "observed_at": "2026-07-19T06:27:27.062748Z",
+    "observed_at": "2026-07-19T07:07:17.954293Z",
     "outcome": {
       "harmful": false,
       "rollback_supported": true,
       "status": "pass"
     },
-    "payload_hash": "2c29dcf5c3bafd9ed5cf024e4bad3bf7f00f7333078093d5fa8791d7b593f1a9",
+    "payload_hash": "912984229438a572b04613c37e402c4a9c27b1b6a61c4f20caa83fa239d4a692",
     "receipt_version": "0.2",
     "signature": {
       "algorithm": "Ed25519",
       "public_key": "2012cb90ca60e8e5d8daf66e2272d2233e0486d557e8c66141ed8920177d7eb7",
-      "value": "339e1d42fe99300ca6440743aea41dfac1f383bfd6c968fc8bd104168a7ec138a04fa4f225b17dcc793cbfb2e32d6a84ee246d2bd56d98bb30e23f11e4a03609"
+      "value": "fba80e0c5ae1aeed17be71b8251b39346e89061bed979ee28a5876143b3100e5978acd993621171ad07e87417b72f20b1afc2c27ebbf5d39bcb95ba4811ef601"
     },
-    "source_receipt_hash": "2e5676f6d14fbd01670c3e65ca16af097fb018bb72cd8c5d8c817d478cad7455",
+    "source_receipt_hash": "5f9ce3e1f70db83cb50c2654d0eae3dbc0ca41d5b91a13231dcc02d19740e20d",
     "spec_uri": "https://github.com/terryncew/openline-receipt-gate",
     "witness_id": "receiver-independent-grader"
   },
@@ -70,7 +70,7 @@
         "action": {
           "id": "verified-model-swap-demo",
           "risk_level": "high",
-          "timestamp": "2026-07-19T06:27:26.970059Z",
+          "timestamp": "2026-07-19T07:07:17.865092Z",
           "type": "verified_model_swap"
         },
         "chain": {
@@ -81,7 +81,7 @@
           "terminal": true
         },
         "outcome": {
-          "response_hash": "sha256:a122d8d04a9f8100e663fe31f8c6cb5ea942663a5fea1d6ad152f9afe422eb14",
+          "response_hash": "sha256:d9e279858684af0942275d912e866da26d30278dfd103da69f1ab5a5d6860426",
           "reversible": true,
           "status": "success"
         },
@@ -91,16 +91,16 @@
         }
       },
       "id": "urn:receipt:verified-model-swap-demo",
-      "issuanceDate": "2026-07-19T06:27:26.970059Z",
+      "issuanceDate": "2026-07-19T07:07:17.865092Z",
       "issuer": {
         "id": "did:example:verified-model-swap-orchestrator",
         "session_id": "verified-model-swap-demo",
         "type": "AIAgent"
       },
       "proof": {
-        "created": "2026-07-19T06:27:26.970059Z",
+        "created": "2026-07-19T07:07:17.865092Z",
         "proofPurpose": "assertionMethod",
-        "proofValue": "uqdLZPFQ0HBCM4vVf59e-vyoHMmwQQ6trkiOCdmfJXTxDHIf2Iu3McQlKMgBHSOeOfqXNmxLxNdo7Usi_8bc6Dg",
+        "proofValue": "uQQEDyhxlY18CSl6zz463aJIXuZCZX-8rAtmjWiO9C76YoEZ4sZpllqfakx18dGrjOeQvNVhOYPq6vXkzRJ-hBQ",
         "type": "Ed25519Signature2020",
         "verificationMethod": "did:example:verified-model-swap-orchestrator#key-1"
       },

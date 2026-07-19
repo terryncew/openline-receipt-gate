@@ -167,6 +167,11 @@ python scripts/release_check.py
 python scripts/verify_manifest.py
 ```
 
+The checked-in GitHub Actions workflow runs this same complete gate with Python
+3.12, Node 24, and the exact Half-Life commit declared in
+`requirements-model-swap.txt`. It does not treat the dependency-absent skip
+suite as release evidence.
+
 ## Proof-to-policy flow
 
 ```text

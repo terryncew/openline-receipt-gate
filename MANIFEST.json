@@ -21,17 +21,22 @@
     "strong_signing_uniqueness_hypothesis_falsified": true
   },
   "claim": "Signed source receipts can drive externally configured, independently verifiable policy decisions within declared inputs and trust assumptions.",
-  "created_at": "2026-07-19T06:27:34.129315Z",
+  "created_at": "2026-07-19T07:07:24.886126Z",
   "files": [
+    {
+      "bytes": 1679,
+      "path": ".github/workflows/release-check.yml",
+      "sha256": "5435b5589a312d103a4ead47b48b5e6b2b72271a17a5b86e5cf787155b0a0e81"
+    },
     {
       "bytes": 468,
       "path": ".gitignore",
       "sha256": "175945241f915fe2c9f1cd49c9c29c1a74973643be517d3d4cc49af4e8839c72"
     },
     {
-      "bytes": 8556,
+      "bytes": 9095,
       "path": "CHANGELOG.md",
-      "sha256": "c0f4f985aa5e1ae19a8d9d07026f8ac79986ed83af8ce9b4dc3ce9d3427c95dc"
+      "sha256": "bcc12cf5bb90ed21e64291d36c79bccb142c39bbe4e20994c22b6ffb060cbe24"
     },
     {
       "bytes": 985,
@@ -39,14 +44,14 @@
       "sha256": "83f1cec7cc6701c9a8004184b541dd1297a5c0aa618d22cfc9036686b4274cfb"
     },
     {
-      "bytes": 18408,
+      "bytes": 18650,
       "path": "README.md",
-      "sha256": "1c01625bf2b0274fa50b65e7d1d69a988fa0f69ec51ea6e710c40be04f255d6c"
+      "sha256": "7c01e4315027e3f06766440d1584f272508be029e8f600354a38d6619846a024"
     },
     {
-      "bytes": 100077,
+      "bytes": 100671,
       "path": "RUN_REPORT.json",
-      "sha256": "24f3c696fa6ee62ebcc7c0b130b40a98a0557936e6df7e80c03bbb0e7fe71c35"
+      "sha256": "72a61d5711a5c3760e4d3c8b56b57f736e1a010ed045f48122b4f8f68673cb62"
     },
     {
       "bytes": 65,
@@ -571,17 +576,17 @@
     {
       "bytes": 15357,
       "path": "results/demo_all_summary.json",
-      "sha256": "00626507fd674341c684b3d9f91a58e581f16398e454d80b4bd67540d8bf8348"
+      "sha256": "d67f35c797134e61dc651244e338d70e3077c82b3bac87d3b9cefd10b5d1502f"
     },
     {
       "bytes": 19677,
       "path": "results/proof_to_policy_demo/decision_receipts.jsonl",
-      "sha256": "a67528293ceac21045012729fa13b94acae143c47af5a74e8a22ce2b45715da4"
+      "sha256": "23abd691f15dfb4fda865f5c4658960f1cfdbaa2496f674eda7d82eda2a84dfd"
     },
     {
       "bytes": 1653,
       "path": "results/proof_to_policy_demo/demo_summary.json",
-      "sha256": "d09f80edf50b64bf100136988496415a169363558f67537fdb5a953bf0de2ba0"
+      "sha256": "71e7ff0b8e84841bba01c8a00c9cf93962b6dbc04f797e745dd15d9dbc31fb6e"
     },
     {
       "bytes": 37,
@@ -596,22 +601,22 @@
     {
       "bytes": 723,
       "path": "results/verified_commit_demo/approved_action.json",
-      "sha256": "44b5afaac889104d57e5d53e84aaccd0e02148883f2942b2db733f2ad7405f07"
+      "sha256": "b2ef06126dcf7007117994b8e4bd79ad96d1495aa91ee1bc84770a79447e511f"
     },
     {
       "bytes": 6708,
       "path": "results/verified_commit_demo/decision_receipts.jsonl",
-      "sha256": "f949c1b0ccc57c29232ea3c0dc859f9c1cf114eaf8f56be7619dba2ea79b5fe1"
+      "sha256": "fa2dcc771e622fc71f8a54b4124baeaabef419b5c77da8cc162ecbc9156263ad"
     },
     {
       "bytes": 2027,
       "path": "results/verified_commit_demo/gate_policy.json",
-      "sha256": "f11f630bfa4dd3b3cd751cfa84f04fc9f447bc1734a39fb84563f6f5ecdfbe24"
+      "sha256": "25cb59b5a1fdf25a7ef50a3d9e889d95fca69e45b95862fdbd6465f6838faeda"
     },
     {
       "bytes": 4302,
       "path": "results/verified_commit_demo/gate_request.json",
-      "sha256": "ae60e732e6a0fed36c14a72fa86fbd42056019422abff9d29a45292f63f96a5d"
+      "sha256": "f43eebf5cb4314a3b79c97ea13276c1bcb04a19f2f5794135b6cbbd236c375af"
     },
     {
       "bytes": 594,
@@ -621,37 +626,37 @@
     {
       "bytes": 979,
       "path": "results/verified_commit_demo/outcome_receipt.json",
-      "sha256": "5ee313a197fc6750b2f13fd47a57c6be89ac52b2d027fe12fe24defb4eaf55e2"
+      "sha256": "32536b60c8e970bd9ba9b648ef5dabbdc0078acc52fb0102ab6063a4b873e23f"
     },
     {
       "bytes": 22223,
       "path": "results/verified_commit_demo/proof_card.json",
-      "sha256": "a122d8d04a9f8100e663fe31f8c6cb5ea942663a5fea1d6ad152f9afe422eb14"
+      "sha256": "d9e279858684af0942275d912e866da26d30278dfd103da69f1ab5a5d6860426"
     },
     {
       "bytes": 1415,
       "path": "results/verified_commit_demo/source_receipt.json",
-      "sha256": "cc13c9d6cb54a9c5b4606bd0350697a0397f05114e07b671727d661d6ebd89cf"
+      "sha256": "118b4f95b0c79b54ee5141d7653394c036795cfa617569ff834a5112db8d540f"
     },
     {
       "bytes": 8508,
       "path": "results/verified_commit_demo/verified_commit_ledger.json",
-      "sha256": "67d2b632e905c43449de15b5a215bafd681905ff8b27ee2a9c4321ff89d0f8b3"
+      "sha256": "592fd3d77832d76f06338bba7d687f4da11e669e4476af090f5d97ac5d872e24"
     },
     {
       "bytes": 3842,
       "path": "results/verified_commit_demo/verified_commit_summary.json",
-      "sha256": "a1f4670b86aced54f939749bc52bc2b12576cbb624c06385b24ef38e5868e224"
+      "sha256": "907fb6ad50a253b8200f0896a4be0c0a08cfe76eb6464eaa4531d3e43b18deb7"
     },
     {
       "bytes": 33000,
       "path": "results/verified_commit_demo/verified_model_swap.latest.json",
-      "sha256": "4f40494ee5c163a4b62ebd04ff64c8b8667db2a3d967f415a686d60a7fdec17b"
+      "sha256": "290006955090edf9e17281cc0f862f0e6f0e37ae415dd066dbb2e3a85b2a5128"
     },
     {
       "bytes": 4726,
       "path": "results/verified_model_swap_demo/decision_receipts.jsonl",
-      "sha256": "3a9a8179bcd8a9b3a4c6190e5d2a3ee30eaafc899b557d9ed80ab1c1da2a54c7"
+      "sha256": "4ba2b8a4291489b0f8e5a120a67c0e1b4a89c74c6eae2bafa3bea1fd8345c9d8"
     },
     {
       "bytes": 1521,
@@ -661,7 +666,7 @@
     {
       "bytes": 3566,
       "path": "results/verified_model_swap_demo/gate_request.json",
-      "sha256": "02bdc25e734293656f364b87772a7347f82ddf9d45b11500ab093cfe4ac7c883"
+      "sha256": "81779d961042e4c49e7d90206cce5dc9b21c15a045ed9618efcc515b4e58dfe5"
     },
     {
       "bytes": 594,
@@ -671,27 +676,27 @@
     {
       "bytes": 979,
       "path": "results/verified_model_swap_demo/outcome_receipt.json",
-      "sha256": "9360d39d5f402cdf935a9226c7513cad91b24203bde35017794cae7d24b9bdc5"
+      "sha256": "69eb1935cd69669eedec1856b72c1ab2f34b0abe2dea58c01750b02a35ed3b60"
     },
     {
       "bytes": 22233,
       "path": "results/verified_model_swap_demo/proof_card.json",
-      "sha256": "f59d968bcc6b7a33f2e88a6a7482f0df344bb586b175095c3fac63aa06f3f05a"
+      "sha256": "1bf34b9391ad20d6a8bcbeafa5a3b8ac452c5f2bc533c27f46c2a206810bab73"
     },
     {
       "bytes": 1415,
       "path": "results/verified_model_swap_demo/source_receipt.json",
-      "sha256": "3fcd8c0d0880a9f967629873b90f0bf5620b945a5c9ebef37c2507b98df67239"
+      "sha256": "0bc585716fa41b6b8a7a83e920f904c6de62592a85e7d36b74af860630977c35"
     },
     {
       "bytes": 30517,
       "path": "results/verified_model_swap_demo/verified_model_swap.latest.json",
-      "sha256": "cef416500309a135610d9cacb2bac7e69d391eb2b396d04cc345518cd5bffd27"
+      "sha256": "b2138d002b4c2ad10215dd2d6da4e1b034f7ce15adcf5936ee5d00636a414052"
     },
     {
-      "bytes": 35413,
+      "bytes": 36301,
       "path": "scripts/release_check.py",
-      "sha256": "31e7c5850797940bb9e94c8afd758f5468e1073d56e9368b24986025eafac949"
+      "sha256": "789e7ce1bf5ef28c7ef5971e0d1e141a10c42ad504973f1231cb01dd340cabc3"
     },
     {
       "bytes": 17789,
@@ -729,9 +734,9 @@
       "sha256": "728ddb901a337cc0a6b429c68785a14f7bd6c843d830dc31473501657181f8a8"
     },
     {
-      "bytes": 13585,
+      "bytes": 13710,
       "path": "tests/test_model_swap.py",
-      "sha256": "47289364e5b58093c255d6705d4642ee371eb7ac4c2db67bddbb02d59d43be7c"
+      "sha256": "779a6ade71407e685c310dfb6e46c15f87bb2ba33b04629d77c9bebaf6424adc"
     },
     {
       "bytes": 7744,
@@ -873,8 +878,8 @@
   "repo": "openline-receipt-gate",
   "schema": "openline.release_manifest.v0.2",
   "verified_commit": {
-    "action_hash": "4e6ae4542be7a23322ec614951d50285ad2a8c523dda4f70a0fc0147800f6caa",
-    "authorization_hash": "7ffbed23da2b398b31b462a39bbc43fb9d64d567e9fae1872e6b23e0d2353d81",
+    "action_hash": "2c87810b764794f23cb374b040cc9b878999a2212223812a9bb42829292f54f8",
+    "authorization_hash": "683288e3e96a9bf7bf62ace3e4543238d21ef183aa2fb341bba126b331e13d10",
     "decision": "COMMIT",
     "mutations_blocked_before_execution": 9,
     "passed": true,
@@ -887,7 +892,7 @@
     "capsule_matches_oracle": true,
     "decision": "COMMIT",
     "passed": true,
-    "proof_card_sha256": "f59d968bcc6b7a33f2e88a6a7482f0df344bb586b175095c3fac63aa06f3f05a",
+    "proof_card_sha256": "1bf34b9391ad20d6a8bcbeafa5a3b8ac452c5f2bc533c27f46c2a206810bab73",
     "summary_lost_count": 7
   },
   "version": "0.5.0rc2"

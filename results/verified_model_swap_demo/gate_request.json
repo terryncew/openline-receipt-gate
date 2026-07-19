@@ -1,9 +1,9 @@
 {
   "action_type": "verified_model_swap",
   "binding": {
-    "challenge_expires_at": "2026-07-19T06:32:26.646386Z",
-    "challenge_nonce": "808f1568e44254c3b9a08b27d4ff1c8b",
-    "expected_source_hash": "3e7b42ff6fad94519356fcf6c2466dacf67e33ca5c2e04bac0d01eaecfb54761",
+    "challenge_expires_at": "2026-07-19T07:12:17.535373Z",
+    "challenge_nonce": "9eeb5cbcff1f9a5ecd40f78d930fd696",
+    "expected_source_hash": "6fad4eb0d678d710073e0bf893278155a1487b14e4597fc6766b14c4e00b794d",
     "parent_decision_hash": null,
     "run_id": "verified-model-swap-demo",
     "sequence": 1,
@@ -13,7 +13,7 @@
   "evidence": [
     {
       "artifact_path": "proof_card.json",
-      "content_hash": "f59d968bcc6b7a33f2e88a6a7482f0df344bb586b175095c3fac63aa06f3f05a",
+      "content_hash": "1bf34b9391ad20d6a8bcbeafa5a3b8ac452c5f2bc533c27f46c2a206810bab73",
       "id": "model_swap_proof_card",
       "source_commitment_path": "credentialSubject.outcome.response_hash"
     }
@@ -21,22 +21,22 @@
   "outcome_receipt": {
     "algorithm_id": "openline-orthogonal-outcome-0.2",
     "canonicalization_id": "olp-canonical-json-int-v1",
-    "evidence_hash": "f59d968bcc6b7a33f2e88a6a7482f0df344bb586b175095c3fac63aa06f3f05a",
+    "evidence_hash": "1bf34b9391ad20d6a8bcbeafa5a3b8ac452c5f2bc533c27f46c2a206810bab73",
     "kind": "witness_outcome_receipt",
-    "observed_at": "2026-07-19T06:27:26.648039Z",
+    "observed_at": "2026-07-19T07:07:17.537048Z",
     "outcome": {
       "harmful": false,
       "rollback_supported": true,
       "status": "pass"
     },
-    "payload_hash": "3007c425868ae6f6ec43be530cfd8d41609c3ba48ed91e566437e640410455ec",
+    "payload_hash": "2ca7a0864f02c6e6f01fc39c2756168cbc5255ffb3e7d6b71c879b7dfe8791be",
     "receipt_version": "0.2",
     "signature": {
       "algorithm": "Ed25519",
       "public_key": "2012cb90ca60e8e5d8daf66e2272d2233e0486d557e8c66141ed8920177d7eb7",
-      "value": "95aa93b01364d6027d660060b1683b92ca41ce51ffd17a8077a95cc8f70e105567d9e5accf14ee9b8a1f6b51fcc6505cb6569e5e9390887cb561377a21befa0d"
+      "value": "23757da9483125a1344599cc3eba0335384e61fe9fa0e8b113b1284540d0f959a9336e9ff9c64864a0099dbb3ee6ae8f2bd8359e5be13767f1400f1868038a0b"
     },
-    "source_receipt_hash": "3e7b42ff6fad94519356fcf6c2466dacf67e33ca5c2e04bac0d01eaecfb54761",
+    "source_receipt_hash": "6fad4eb0d678d710073e0bf893278155a1487b14e4597fc6766b14c4e00b794d",
     "spec_uri": "https://github.com/terryncew/openline-receipt-gate",
     "witness_id": "receiver-independent-grader"
   },
@@ -52,7 +52,7 @@
         "action": {
           "id": "verified-model-swap-demo",
           "risk_level": "high",
-          "timestamp": "2026-07-19T06:27:26.558323Z",
+          "timestamp": "2026-07-19T07:07:17.445436Z",
           "type": "verified_model_swap"
         },
         "chain": {
@@ -63,7 +63,7 @@
           "terminal": true
         },
         "outcome": {
-          "response_hash": "sha256:f59d968bcc6b7a33f2e88a6a7482f0df344bb586b175095c3fac63aa06f3f05a",
+          "response_hash": "sha256:1bf34b9391ad20d6a8bcbeafa5a3b8ac452c5f2bc533c27f46c2a206810bab73",
           "reversible": true,
           "status": "success"
         },
@@ -73,16 +73,16 @@
         }
       },
       "id": "urn:receipt:verified-model-swap-demo",
-      "issuanceDate": "2026-07-19T06:27:26.558323Z",
+      "issuanceDate": "2026-07-19T07:07:17.445436Z",
       "issuer": {
         "id": "did:example:verified-model-swap-orchestrator",
         "session_id": "verified-model-swap-demo",
         "type": "AIAgent"
       },
       "proof": {
-        "created": "2026-07-19T06:27:26.558323Z",
+        "created": "2026-07-19T07:07:17.445436Z",
         "proofPurpose": "assertionMethod",
-        "proofValue": "uUv3RD5EhxHeMIMcJ_vJeeeQnIrtr2XptUW5BDJT37hFNdNF0N35QJfWRWnhq6ZVE616ZlNsYshLZ-rW0YrWGAg",
+        "proofValue": "upe4SizoTWIp6ZV2btW8oK95gHZIFnoKeCheLFIkvQJwWJz9ezD88Uv0BUlMR4oNmkmWyIae0eMD3YJ_MphptAw",
         "type": "Ed25519Signature2020",
         "verificationMethod": "did:example:verified-model-swap-orchestrator#key-1"
       },

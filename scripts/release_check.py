@@ -42,6 +42,16 @@ MODEL_SWAP_REQUIREMENT = (
     "git+https://github.com/terryncew/openline-half-life.git@"
     f"{HALF_LIFE_COMMIT}"
 )
+CI_WORKFLOW_PATH = ROOT / ".github" / "workflows" / "release-check.yml"
+CI_REQUIRED_SNIPPETS = (
+    "actions/checkout@v6",
+    "actions/setup-python@v6",
+    "actions/setup-node@v6",
+    HALF_LIFE_COMMIT,
+    "OLP_HALF_LIFE_ROOT",
+    "python scripts/release_check.py",
+    "python scripts/verify_manifest.py",
+)
 
 
 def iso_now() -> str:
@@ -307,6 +317,24 @@ def main() -> int:
         }
     )
     passed.append(model_swap_requirement_okay)
+    try:
+        ci_workflow_text = CI_WORKFLOW_PATH.read_text(encoding="utf-8")
+    except OSError:
+        ci_workflow_text = ""
+    ci_missing = [
+        snippet for snippet in CI_REQUIRED_SNIPPETS
+        if snippet not in ci_workflow_text
+    ]
+    ci_workflow_okay = not ci_missing
+    steps.append(
+        {
+            "name": "github_actions_release_gate",
+            "passed": ci_workflow_okay,
+            "path": str(CI_WORKFLOW_PATH.relative_to(ROOT)),
+            "missing_required_snippets": ci_missing,
+        }
+    )
+    passed.append(ci_workflow_okay)
     steps.append(
         {
             "name": "model_swap_runtime_and_fixture_required",

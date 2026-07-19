@@ -146,8 +146,11 @@ class ModelSwapIntegrationTests(unittest.TestCase):
             original_source = source_path.read_bytes()
             source = json.loads(original_source)
             proof_value = source["proof"]["proofValue"]
-            source["proof"]["proofValue"] = proof_value[:-1] + (
-                "A" if proof_value[-1] != "A" else "B"
+            tamper_at = len(proof_value) // 2
+            source["proof"]["proofValue"] = (
+                proof_value[:tamper_at]
+                + ("A" if proof_value[tamper_at] != "A" else "B")
+                + proof_value[tamper_at + 1 :]
             )
             source_path.write_text(json.dumps(source, sort_keys=True) + "\n", encoding="utf-8")
             self.assertIn("source_receipt_integrity_invalid", verify()["errors"])

@@ -1,0 +1,58 @@
+name: release-check
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      HALF_LIFE_COMMIT: 70121b53e86196d69b2c3457174b38ad32667b43
+
+    steps:
+      - name: Check out Receipt Gate
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          package-manager-cache: false
+
+      - name: Install Receipt Gate
+        run: python -m pip install .
+
+      - name: Install pinned Half-Life fixture
+        shell: bash
+        run: |
+          set -euo pipefail
+          half_life_root="$RUNNER_TEMP/openline-half-life"
+          git init "$half_life_root"
+          git -C "$half_life_root" remote add origin https://github.com/terryncew/openline-half-life.git
+          git -C "$half_life_root" fetch --depth=1 origin "$HALF_LIFE_COMMIT"
+          git -C "$half_life_root" checkout --detach FETCH_HEAD
+          test "$(git -C "$half_life_root" rev-parse HEAD)" = "$HALF_LIFE_COMMIT"
+          python -m pip install "$half_life_root"
+          printf 'OLP_HALF_LIFE_ROOT=%s\n' "$half_life_root" >> "$GITHUB_ENV"
+
+      - name: Compile Python sources
+        run: python -m compileall -q olp_gate benchmarks examples scripts tests
+
+      - name: Run complete release gate
+        run: python scripts/release_check.py
+
+      - name: Verify generated manifest independently
+        run: python scripts/verify_manifest.py

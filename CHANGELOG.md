@@ -2,6 +2,14 @@
 
 ## 0.5.0rc2
 
+- Added a read-only GitHub Actions release gate using Python 3.12 and Node 24.
+  CI fetches the exact pinned Half-Life commit outside the repository, verifies
+  its checkout, runs the complete release checker, and independently verifies
+  the generated manifest.
+- Added a release-check regression guard so a future archive cannot silently
+  omit or weaken the required CI workflow.
+- Hardened the source-receipt tamper fixture to alter a significant Base64URL
+  character rather than trailing unused bits, guaranteeing signature failure.
 - Added Verified Commit inside the existing `proof_to_policy_decision_receipt`;
   no receipt family, disposition, score, repository, marketplace, staking,
   certification, or predictive layer was added.
