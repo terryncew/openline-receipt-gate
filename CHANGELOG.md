@@ -2,6 +2,10 @@
 
 ## 0.5.0rc2
 
+- Fixed clean-runner CI wheel construction by installing the exact declared
+  `setuptools` and `wheel` build prerequisites before the no-isolation release
+  build. The release summary now names failed checks and includes their output
+  tails instead of returning an opaque `passed: false` result.
 - Added a read-only GitHub Actions release gate using Python 3.12 and Node 24.
   CI fetches the exact pinned Half-Life commit outside the repository, verifies
   its checkout, runs the complete release checker, and independently verifies

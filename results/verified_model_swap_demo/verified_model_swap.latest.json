@@ -20,7 +20,7 @@
       "evidence": {
         "details": {
           "artifact_hashes": {
-            "model_swap_proof_card": "1bf34b9391ad20d6a8bcbeafa5a3b8ac452c5f2bc533c27f46c2a206810bab73"
+            "model_swap_proof_card": "f52c711c82d02a389b8763b5981cc7fffc7b758c178a02611b5dbf47aa8dd878"
           },
           "bound_evidence_ids": [
             "model_swap_proof_card"
@@ -41,7 +41,7 @@
         "details": {
           "replay_guard": {
             "details": {
-              "challenge_issued_at": "2026-07-19T07:07:17.535373Z"
+              "challenge_issued_at": "2026-07-19T07:26:56.922029Z"
             },
             "reason_codes": [],
             "status": "pass"
@@ -65,7 +65,7 @@
       },
       "outcome": {
         "details": {
-          "evidence_hash": "1bf34b9391ad20d6a8bcbeafa5a3b8ac452c5f2bc533c27f46c2a206810bab73",
+          "evidence_hash": "f52c711c82d02a389b8763b5981cc7fffc7b758c178a02611b5dbf47aa8dd878",
           "harmful": false,
           "independence": "receiver",
           "rollback_supported": true,
@@ -111,8 +111,8 @@
       }
     },
     "binding": {
-      "challenge_nonce": "9eeb5cbcff1f9a5ecd40f78d930fd696",
-      "expected_source_hash": "6fad4eb0d678d710073e0bf893278155a1487b14e4597fc6766b14c4e00b794d",
+      "challenge_nonce": "bdaa481ed470d47e87dec77622218803",
+      "expected_source_hash": "29c23f9326057e5c77edb7ab001c3dd12939c0a8418627ac7ec2f2204870fca2",
       "parent_decision_hash": null,
       "run_id": "verified-model-swap-demo",
       "sequence": 1,
@@ -121,13 +121,13 @@
     "canonicalization_id": "olp-canonical-json-int-v1",
     "chain_accepted": true,
     "commit_authorization": null,
-    "created_at": "2026-07-19T07:07:17.537626Z",
+    "created_at": "2026-07-19T07:26:56.924412Z",
     "decision": "COMMIT",
     "issuer": {
       "id": "openline-public-model-swap-demo-gate"
     },
     "kind": "proof_to_policy_decision_receipt",
-    "payload_hash": "af156a8c21b1501f2e3878bd5c99069bb8e081fa7e588536feae862d5f30a7ff",
+    "payload_hash": "afae4fa23da18a1c0845f0fbdcb50e49ff99aadf45e6d6e2ac86343d9ea58ee8",
     "policy": {
       "hash": "67f1efaff234f7a15401d8dda1ce9eaf087d213b39317f1e9eaf22fc0ac7df79",
       "id": "verified-model-swap.receiver-policy",
@@ -203,13 +203,13 @@
     "signature": {
       "algorithm": "Ed25519",
       "public_key": "f80cccdce4ae1c07ae208a2adf99a310ae4207e0306fa0236110b06827bbb8d0",
-      "value": "633feef7704152df92452b0fbcdb0a88ddf069aa951aeca1f5573ab8767ef129bec15f05ef2939cf5893ffa4a3c3fcd5206fa73c1bfbe5f58456d301950cc209"
+      "value": "332d24629cf0238ec00e475b95181766f68f36f279b826033fb5e1310473003d88f315afc4978754ae27f366e853e16d6a5fb233e3e56b1ae0be01d807287105"
     },
     "source": {
       "format": "agent_receipts",
-      "primary_hash": "6fad4eb0d678d710073e0bf893278155a1487b14e4597fc6766b14c4e00b794d",
+      "primary_hash": "29c23f9326057e5c77edb7ab001c3dd12939c0a8418627ac7ec2f2204870fca2",
       "receipt_hashes": [
-        "6fad4eb0d678d710073e0bf893278155a1487b14e4597fc6766b14c4e00b794d"
+        "29c23f9326057e5c77edb7ab001c3dd12939c0a8418627ac7ec2f2204870fca2"
       ],
       "source_key_ids": [
         "did:example:verified-model-swap-orchestrator#key-1"
@@ -220,8 +220,8 @@
   },
   "grading_authority": "receipt-gate-output; DSM must not recompute",
   "integrity": {
-    "decision_receipt_payload_hash": "af156a8c21b1501f2e3878bd5c99069bb8e081fa7e588536feae862d5f30a7ff",
-    "proof_card_file_sha256": "1bf34b9391ad20d6a8bcbeafa5a3b8ac452c5f2bc533c27f46c2a206810bab73"
+    "decision_receipt_payload_hash": "afae4fa23da18a1c0845f0fbdcb50e49ff99aadf45e6d6e2ac86343d9ea58ee8",
+    "proof_card_file_sha256": "f52c711c82d02a389b8763b5981cc7fffc7b758c178a02611b5dbf47aa8dd878"
   },
   "proof_card": {
     "authority": {
@@ -281,7 +281,7 @@
       "headline": "Change the model without losing the agent.",
       "subhead": "The capsule kept the receiver decisions the ordinary summary dropped."
     },
-    "generated_at": "2026-07-19T07:07:17.445436Z",
+    "generated_at": "2026-07-19T07:26:56.833165Z",
     "half_life_verification": {
       "bundle_chain_valid": true,
       "bundle_schema": "openline.half-life.receipt-bundle.v3",
@@ -652,7 +652,7 @@
       "evaluator": "independent_reference_replay_v1"
     },
     "profile": "verified_model_swap/v1",
-    "proof_hash": "018b93309fcb9601e35413a16c2e64d4e776952ad2b6ba5dc54ebdbfd5d01403",
+    "proof_hash": "44184e569df9f024f91202cca2ae70aaf4ecfb9b3b7ec204d55fe6e783d38d51",
     "receiver_controls": {
       "automatic_compaction_authorized": false,
       "automatic_retirement_authorized": false,

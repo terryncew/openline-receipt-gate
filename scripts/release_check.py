@@ -49,6 +49,8 @@ CI_REQUIRED_SNIPPETS = (
     "actions/setup-node@v6",
     HALF_LIFE_COMMIT,
     "OLP_HALF_LIFE_ROOT",
+    'python -m pip install "setuptools==82.0.1" "wheel==0.47.0"',
+    "python -m pip install --no-build-isolation .",
     "python scripts/release_check.py",
     "python scripts/verify_manifest.py",
 )
@@ -741,35 +743,68 @@ def main() -> int:
         proof_summary = json.loads((proof_output / "demo_summary.json").read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
         proof_summary = {}
-    passed.append(proof_summary.get("passed") is True)
-    passed.append(proof_summary.get("decision_receipt_count") == 5)
-    passed.append(benchmark_report.get("passed") is True)
-    passed.append(
-        pipelock_summary.get("flagship_finding", {}).get(
-            "strong_hypothesis_falsified"
+    release_assertions = {
+        "proof_summary_passed": proof_summary.get("passed") is True,
+        "proof_case_count_is_five": proof_summary.get(
+            "decision_receipt_count"
         )
-        is True
-    )
-    passed.append(assay_benchmark_report.get("passed") is True)
-    passed.append(
-        assay_summary.get("capability_control", {}).get(
-            "strong_signing_uniqueness_hypothesis_falsified"
+        == 5,
+        "pipelock_benchmark_passed": benchmark_report.get("passed") is True,
+        "pipelock_strong_hypothesis_falsified": pipelock_summary.get(
+            "flagship_finding", {}
+        ).get("strong_hypothesis_falsified")
+        is True,
+        "assay_benchmark_passed": assay_benchmark_report.get("passed") is True,
+        "assay_signing_uniqueness_hypothesis_falsified": assay_summary.get(
+            "capability_control", {}
+        ).get("strong_signing_uniqueness_hypothesis_falsified")
+        is True,
+        "model_swap_passed": model_swap_summary.get("passed") is True,
+        "model_swap_committed": model_swap_summary.get("decision") == "COMMIT",
+        "model_swap_capsule_matches_oracle": model_swap_summary.get(
+            "capsule_matches_oracle"
         )
-        is True
+        is True,
+        "model_swap_archive_matches_oracle": model_swap_summary.get(
+            "archive_matches_oracle"
+        )
+        is True,
+        "verified_commit_passed": verified_commit_summary.get("passed") is True,
+        "verified_commit_committed": verified_commit_summary.get("decision")
+        == "COMMIT",
+        "verified_commit_mutation_count_is_nine": verified_commit_summary.get(
+            "mutation_count"
+        )
+        == 9,
+        "verified_commit_all_mutations_blocked": verified_commit_summary.get(
+            "mutations_blocked_before_execution"
+        )
+        == 9,
+        "verified_commit_one_simultaneous_authorized": verified_commit_summary.get(
+            "simultaneous_authorized"
+        )
+        == 1,
+        "verified_commit_one_simultaneous_blocked": verified_commit_summary.get(
+            "simultaneous_blocked"
+        )
+        == 1,
+        "verified_commit_replay_blocked": verified_commit_summary.get(
+            "replay_blocked"
+        )
+        is True,
+    }
+    release_assertions_okay = all(release_assertions.values())
+    steps.append(
+        {
+            "name": "release_assertions",
+            "passed": release_assertions_okay,
+            "conditions": release_assertions,
+            "failed_conditions": sorted(
+                name for name, okay in release_assertions.items() if not okay
+            ),
+        }
     )
-    passed.append(model_swap_summary.get("passed") is True)
-    passed.append(model_swap_summary.get("decision") == "COMMIT")
-    passed.append(model_swap_summary.get("capsule_matches_oracle") is True)
-    passed.append(model_swap_summary.get("archive_matches_oracle") is True)
-    passed.append(verified_commit_summary.get("passed") is True)
-    passed.append(verified_commit_summary.get("decision") == "COMMIT")
-    passed.append(verified_commit_summary.get("mutation_count") == 9)
-    passed.append(
-        verified_commit_summary.get("mutations_blocked_before_execution") == 9
-    )
-    passed.append(verified_commit_summary.get("simultaneous_authorized") == 1)
-    passed.append(verified_commit_summary.get("simultaneous_blocked") == 1)
-    passed.append(verified_commit_summary.get("replay_blocked") is True)
+    passed.append(release_assertions_okay)
     release_passed = all(passed)
     live_pipelock_tests_passed = bool(
         pipelock_info["supported"]
@@ -907,9 +942,27 @@ def main() -> int:
         capture_output=True,
         text=True,
     )
+    failed_checks = []
+    for step in steps:
+        if step.get("passed") is not False:
+            continue
+        failure = {
+            "name": step.get("name", "unnamed_check"),
+            "returncode": step.get("returncode"),
+        }
+        if step.get("error"):
+            failure["error"] = step["error"]
+        if step.get("failed_conditions"):
+            failure["failed_conditions"] = step["failed_conditions"]
+        if step.get("stdout"):
+            failure["stdout_tail"] = str(step["stdout"])[-4000:]
+        if step.get("stderr"):
+            failure["stderr_tail"] = str(step["stderr"])[-4000:]
+        failed_checks.append(failure)
     print(json.dumps({
         "passed": release_passed and manifest_check.returncode == 0,
         "release_checks": len(steps),
+        "failed_checks": failed_checks,
         "proof_to_policy_cases": proof_summary.get("decision_receipt_count", 0),
         "verified_commit_passed": verified_commit_summary.get("passed", False),
         "manifest": json.loads(manifest_check.stdout) if manifest_check.stdout else {"valid": False},

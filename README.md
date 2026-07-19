@@ -170,7 +170,9 @@ python scripts/verify_manifest.py
 The checked-in GitHub Actions workflow runs this same complete gate with Python
 3.12, Node 24, and the exact Half-Life commit declared in
 `requirements-model-swap.txt`. It does not treat the dependency-absent skip
-suite as release evidence.
+suite as release evidence. It installs the exact build prerequisites declared
+in `pyproject.toml` before the no-build-isolation wheel check. Failed release
+checks are named in the JSON summary with bounded stdout/stderr tails.
 
 ## Proof-to-policy flow
 
