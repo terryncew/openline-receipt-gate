@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import multiprocessing as mp
+import os
 import tempfile
 import threading
 import unittest
@@ -31,6 +33,44 @@ def _iso(value: datetime) -> str:
 
 def _copy(value: dict) -> dict:
     return json.loads(json.dumps(value))
+
+
+def _process_use(
+    index,
+    barrier,
+    queue,
+    receipt,
+    action,
+    code,
+    gate_key,
+    ledger_path,
+    marker_path,
+):
+    barrier.wait()
+
+    def execute():
+        descriptor = os.open(marker_path, os.O_CREAT | os.O_WRONLY | os.O_APPEND, 0o600)
+        try:
+            os.write(descriptor, f"{index}\n".encode("ascii"))
+            os.fsync(descriptor)
+        finally:
+            os.close(descriptor)
+        return {"process": index}
+
+    result = VerifiedCommitLedger(ledger_path).execute_once(
+        receipt,
+        action,
+        one_use_code=code,
+        trusted_gate_keys=[gate_key],
+        executor=execute,
+        attempt_label=f"process-{index}",
+    )
+    queue.put(
+        {
+            "authorized": result["authorized"],
+            "reason_codes": result["reason_codes"],
+        }
+    )
 
 
 class VerifiedCommitTests(unittest.TestCase):
@@ -300,6 +340,54 @@ class VerifiedCommitTests(unittest.TestCase):
         self.assertEqual(len(calls), 1)
         blocked = next(item for item in results if not item["authorized"])
         self.assertIn("authorization_replay", blocked["reason_codes"])
+
+    def test_thirty_two_processes_allow_exactly_one_execution(self) -> None:
+        if "fork" not in mp.get_all_start_methods():
+            self.skipTest("reference ledger process race requires POSIX fork")
+        receipt, action, code, _expiry = self.issue("process-race")
+        context = mp.get_context("fork")
+        barrier = context.Barrier(32)
+        queue = context.Queue()
+        ledger_path = str(self.root / "process-race-ledger.json")
+        marker_path = str(self.root / "process-race-executions.txt")
+        processes = [
+            context.Process(
+                target=_process_use,
+                args=(
+                    index,
+                    barrier,
+                    queue,
+                    receipt,
+                    action,
+                    code,
+                    self.gate_public_key,
+                    ledger_path,
+                    marker_path,
+                ),
+            )
+            for index in range(32)
+        ]
+        for process in processes:
+            process.start()
+        results = [queue.get(timeout=30) for _ in processes]
+        for process in processes:
+            process.join(timeout=30)
+        self.assertEqual([process.exitcode for process in processes], [0] * 32)
+        self.assertEqual(sum(item["authorized"] for item in results), 1)
+        self.assertTrue(
+            all(
+                "authorization_replay" in item["reason_codes"]
+                for item in results
+                if not item["authorized"]
+            )
+        )
+        executions = Path(marker_path).read_text(encoding="ascii").splitlines()
+        self.assertEqual(len(executions), 1)
+        state = VerifiedCommitLedger(ledger_path).read_state()
+        self.assertEqual(
+            sum(item["result"] == "AUTHORIZED" for item in state["attempts"]),
+            1,
+        )
 
     def test_tampered_receipt_is_blocked_before_execution(self) -> None:
         receipt, action, code, _expiry = self.issue("tampered")

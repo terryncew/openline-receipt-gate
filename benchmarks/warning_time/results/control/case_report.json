@@ -1,0 +1,30 @@
+{
+  "bad_action_prevented_in_enforcement": false,
+  "bad_action_reached_in_observe_only": false,
+  "bad_action_step": 9,
+  "bad_action_timestamp": "2026-07-26T00:00:09Z",
+  "case": "control",
+  "clean_run_false_alarm": false,
+  "corruption_injected": false,
+  "decision_log_valid": true,
+  "final_gate_decision": "COMMIT",
+  "first_crossing_by_metric": {
+    "delta_hol_micros": null,
+    "kappa_micros": null,
+    "vkd_micros": null
+  },
+  "first_warning_step": null,
+  "first_warning_timestamp": null,
+  "gate_intervention_step": null,
+  "gate_intervention_timestamp": null,
+  "gate_lead_time_steps": null,
+  "hypothetical_action_step_reached_in_observe_only": true,
+  "injection_step": null,
+  "missed_corruption": false,
+  "no_advance_warning": false,
+  "partition": "heldout",
+  "schema": "openline.warning-time.case-report.v4",
+  "seed": 2101,
+  "warning_time_interpretation": "no_warning",
+  "warning_time_steps": null
+}

@@ -1,0 +1,6 @@
+{"case":"unflagged_contradiction","gate_decision":null,"schema":"openline.warning-time.enforcement-step.v4","seed":2101,"status":"continued","step":1,"timestamp":"2026-07-26T00:00:01Z"}
+{"case":"unflagged_contradiction","gate_decision":null,"schema":"openline.warning-time.enforcement-step.v4","seed":2101,"status":"continued","step":2,"timestamp":"2026-07-26T00:00:02Z"}
+{"case":"unflagged_contradiction","gate_decision":"COMMIT","schema":"openline.warning-time.enforcement-step.v4","seed":2101,"status":"continued","step":3,"timestamp":"2026-07-26T00:00:03Z"}
+{"case":"unflagged_contradiction","gate_decision":null,"schema":"openline.warning-time.enforcement-step.v4","seed":2101,"status":"continued","step":4,"timestamp":"2026-07-26T00:00:04Z"}
+{"case":"unflagged_contradiction","gate_decision":null,"schema":"openline.warning-time.enforcement-step.v4","seed":2101,"status":"continued","step":5,"timestamp":"2026-07-26T00:00:05Z"}
+{"case":"unflagged_contradiction","gate_decision":"DENY","schema":"openline.warning-time.enforcement-step.v4","seed":2101,"status":"blocked","step":6,"timestamp":"2026-07-26T00:00:06Z"}

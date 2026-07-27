@@ -1,0 +1,38 @@
+{
+  "calibration_evidence_hash": "7c80e92c12c3782dbc7a2c923331131ed82cc224f25ba01c7351d3131fd66c50",
+  "calibration_method": "clean_max_plus_twice_clean_range_v3",
+  "calibration_run_count": 40,
+  "clean_value_ranges_micros": {
+    "delta_hol_micros": {
+      "maximum": 67793,
+      "minimum": 57057,
+      "range": 10736
+    },
+    "kappa_micros": {
+      "maximum": 101898,
+      "minimum": 92029,
+      "range": 9869
+    },
+    "vkd_micros": {
+      "maximum": 48883,
+      "minimum": 40002,
+      "range": 8881
+    }
+  },
+  "corrupted_runs_used_for_calibration": false,
+  "frozen_before_heldout_runs": true,
+  "heldout_runs_used_for_calibration": false,
+  "margins_micros": {
+    "delta_hol_micros": 21472,
+    "kappa_micros": 19738,
+    "vkd_micros": 17762
+  },
+  "scenario_id": "dsm-receipt-gate-three-agent-handoff",
+  "schema": "openline.warning-time.thresholds.v4",
+  "thresholds_hash": "d371b012827cbfeb684323845ce8f97d39f8b0eded5003a00df6f028d4c39938",
+  "thresholds_micros": {
+    "delta_hol_micros": 89265,
+    "kappa_micros": 121636,
+    "vkd_micros": 66645
+  }
+}

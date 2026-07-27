@@ -1,0 +1,16 @@
+{
+  "clean_state_with_corrupt_display_label_first_warning": null,
+  "corrupt_state_with_control_display_label_first_warning": 4,
+  "forbidden_metric_parameters": [],
+  "interpretation": "Swapping report labels does not change metrics. Only the observable state mutation changes the warning result.",
+  "metric_function_parameters": [
+    "seed",
+    "step",
+    "observation",
+    "previous_observation"
+  ],
+  "passed": true,
+  "pre_injection_observations_and_metrics_identical": true,
+  "schema": "openline.warning-time.label-leak-probe.v2",
+  "seed": 9901
+}

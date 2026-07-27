@@ -1,0 +1,30 @@
+{
+  "bad_action_prevented_in_enforcement": true,
+  "bad_action_reached_in_observe_only": true,
+  "bad_action_step": 9,
+  "bad_action_timestamp": "2026-07-26T00:00:09Z",
+  "case": "unflagged_contradiction",
+  "clean_run_false_alarm": false,
+  "corruption_injected": true,
+  "decision_log_valid": true,
+  "final_gate_decision": "DENY",
+  "first_crossing_by_metric": {
+    "delta_hol_micros": 4,
+    "kappa_micros": 4,
+    "vkd_micros": 4
+  },
+  "first_warning_step": 4,
+  "first_warning_timestamp": "2026-07-26T00:00:04Z",
+  "gate_intervention_step": 6,
+  "gate_intervention_timestamp": "2026-07-26T00:00:06Z",
+  "gate_lead_time_steps": 3,
+  "hypothetical_action_step_reached_in_observe_only": true,
+  "injection_step": 4,
+  "missed_corruption": false,
+  "no_advance_warning": false,
+  "partition": "heldout",
+  "schema": "openline.warning-time.case-report.v4",
+  "seed": 2101,
+  "warning_time_interpretation": "positive_advance_warning",
+  "warning_time_steps": 5
+}

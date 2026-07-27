@@ -1,0 +1,25 @@
+{
+  "consumed_nonces": {
+    "e48d1144008fe90321043fc1bba958e9": {
+      "consumed_at": "2026-07-27T04:11:43.597469Z",
+      "decision_hash": "bbfcc1902614dace97cd9f9cdfd55114fd655c9bfb86615ff4d7a9080fad97d0",
+      "run_id": "verified-model-swap-demo",
+      "sequence": 1,
+      "session_id": "verified-model-swap-demo",
+      "source_hash": "72a355ac79a63ef60494fae674b48988d7d27f8454ad3f35988a4d717fc4367a"
+    }
+  },
+  "schema": "openline.proof_to_policy.sessions.v0.2",
+  "sessions": {
+    "verified-model-swap-demo\u001fverified-model-swap-demo": {
+      "next_sequence": 2,
+      "parent_decision_hash": "bbfcc1902614dace97cd9f9cdfd55114fd655c9bfb86615ff4d7a9080fad97d0",
+      "pending": {},
+      "run_id": "verified-model-swap-demo",
+      "seen_source_hashes": [
+        "72a355ac79a63ef60494fae674b48988d7d27f8454ad3f35988a4d717fc4367a"
+      ],
+      "session_id": "verified-model-swap-demo"
+    }
+  }
+}

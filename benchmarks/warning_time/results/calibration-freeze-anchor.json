@@ -1,0 +1,27 @@
+{
+  "anchor_id": "dsm-receipt-gate-warning-time-v4-external-custody",
+  "anchor_type": "private_external_custody",
+  "anchored_at": "2026-07-27T02:05:26.465390Z",
+  "calibration_evidence_hash": "7c80e92c12c3782dbc7a2c923331131ed82cc224f25ba01c7351d3131fd66c50",
+  "external_publication": {
+    "custody_created_at": "2026-07-27T02:04:45Z",
+    "file_id": "file_00000000d040823092d32a3c71c4cd8a",
+    "library_file_id": "libfile_3042dc8558d8819195cef437938028c1",
+    "path": "/OpenLine/Calibration Anchors/warning-time-v4-calibration-freeze-publication.json",
+    "service": "chatgpt_file_library",
+    "size_bytes": 1366
+  },
+  "payload_hash": "2d515119634f4252031488381b08e6ef9c53f0571460af2eee5a09871b2d5433",
+  "private_witness_key_distributed": false,
+  "profile_payload_hash": "9e8175cdc54348832242785e0b86798195df0e4133ea457057e208e7f81a5068",
+  "publication_file_sha256": "7b1d01d5804d713ffe846551c60733496aa9f878f4d114441af5234ebd8d314e",
+  "publication_payload_hash": "3d8e5a07a9b15845a0f6c90f68de972533c83ac4c77cab74be5a6eb74c1586cf",
+  "schema": "openline.calibration-freeze-anchor.v2",
+  "signature": {
+    "algorithm": "Ed25519",
+    "public_key": "b42a57cd7505596299c16e281d87ccf1963dfafce80f95c7793994617d4cc151",
+    "value": "a4ee0df1a227bbb72bd6e4d5fdc4ee08bd2be0e096556e0272a628db28d06ed04e8641661fbae1562ac72105258e8db3d3678d6336b0e1f6d4a31585a980dc03"
+  },
+  "thresholds_hash": "d371b012827cbfeb684323845ce8f97d39f8b0eded5003a00df6f028d4c39938",
+  "witness_boundary": "The freeze publication was deposited in a storage surface outside the repository before held-out evaluation. This establishes private custody order for the user, not a public transparency-log timestamp or production authority."
+}

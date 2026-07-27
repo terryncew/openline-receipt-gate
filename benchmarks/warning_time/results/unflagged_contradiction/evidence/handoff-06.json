@@ -1,0 +1,1 @@
+{"claim_consistent": false, "counterevidence_present": true, "missing_required_evidence_ids": [], "observable_state_sha256": "9476194d98a9b2f5b83eee1ce297901bfb4cd4e3c359750090c0a743c8a1bd34", "required_constraint_preserved": true, "unflagged_conflicts": [{"claim_id": "conflicting_region_claim", "constraint_id": "region_constraint"}]}

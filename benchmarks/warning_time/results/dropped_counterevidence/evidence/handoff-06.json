@@ -1,0 +1,1 @@
+{"claim_consistent": true, "counterevidence_present": false, "missing_required_evidence_ids": ["counter_assessment"], "observable_state_sha256": "44662662209637fb0e0faa3c945817f3750f3632b5af60aa8b16a1dcd2b80687", "required_constraint_preserved": true, "unflagged_conflicts": []}

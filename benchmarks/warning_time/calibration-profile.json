@@ -1,0 +1,121 @@
+{
+  "applicability": {
+    "agent_stack_id": "dsm-three-agent-fixed-handoff-v1",
+    "graph_structure_hash": "48949303f332a6176f699eeafb45c959b800aa99ec1299704c5c6c5fed80a2e5",
+    "prompt_hashes": {
+      "executor.txt": "ea34ce88b2bc5bfa9b9a24df3ccd77b7a13486832bf866b8524018d8f8c7a2d9",
+      "planner.txt": "98fa2651f30cf2d75aacc2d8994443db20e54fe13465fe340b61bf5fd8ce2802",
+      "researcher.txt": "d6a48336d2e6f95e625a0b0071af176abe11175cf0e170695d24c64fe627ae19"
+    },
+    "receipt_gate_policy": {
+      "policy_id": "benchmark.warning-time.handoff",
+      "version": "1"
+    },
+    "scenario_id": "dsm-receipt-gate-three-agent-handoff",
+    "seed_partition_hash": "ce2e46a40fa8eb8acd75d67c9f6f728e60aa9d6938c8cfabb7c2eca60125120c"
+  },
+  "calibration": {
+    "calibration_evidence_artifact": "calibration-evidence.json",
+    "calibration_evidence_hash": "7c80e92c12c3782dbc7a2c923331131ed82cc224f25ba01c7351d3131fd66c50",
+    "clean_run_count": 40,
+    "corrupted_runs_used": false,
+    "heldout_runs_used": false,
+    "method": "clean_max_plus_twice_clean_range_v3",
+    "thresholds_artifact": "thresholds.json",
+    "thresholds_hash": "d371b012827cbfeb684323845ce8f97d39f8b0eded5003a00df6f028d4c39938",
+    "thresholds_micros": {
+      "delta_hol_micros": 89265,
+      "kappa_micros": 121636,
+      "vkd_micros": 66645
+    }
+  },
+  "claim_boundary": "Successful held-out separation establishes predictive usefulness for the named synthetic agent stack and failure cases only. It does not prove the metric ontology is true, establish a universal threshold, supply live COLE scoring, or authorize an action.",
+  "created_at": "2026-07-27T02:04:33.933783Z",
+  "expires_at": "2026-08-26T02:04:33.933783Z",
+  "freshness": {
+    "created_at_must_not_be_future": true,
+    "expires_at_enforced": true,
+    "max_future_clock_skew_seconds": 300,
+    "source_change_invalidates": true,
+    "validity_days": 30
+  },
+  "governance": {
+    "may_govern": [
+      "emit_early_warning",
+      "require_receipt_gate_reappraisal"
+    ],
+    "may_not_govern": [
+      "COMMIT",
+      "QUARANTINE",
+      "DENY",
+      "downstream_tool_execution",
+      "automatic_model_retirement"
+    ],
+    "receiver_gate_remains_authoritative": true
+  },
+  "heldout_plan": {
+    "clean_run_count": 20,
+    "corruption_run_count_by_case": {
+      "dropped_counterevidence": 20,
+      "unflagged_contradiction": 20
+    },
+    "external_freeze_anchor_required": true,
+    "results_not_used_to_set_thresholds": true
+  },
+  "metrics": {
+    "direction": {
+      "delta_hol_micros": "higher_is_more_warning",
+      "kappa_micros": "higher_is_more_warning",
+      "vkd_micros": "higher_is_more_warning"
+    },
+    "forbidden_inputs": [
+      "ground_truth_case_label",
+      "corruption_label",
+      "injection_step",
+      "bad_action_label"
+    ],
+    "input_boundary": "observable_state_and_previous_observable_state_only",
+    "observable_fixture_source_sha256": "7e83955106385199aa2102dc9bbdfe08e7153a65bb3f142851504c3ceeb7c34f",
+    "source_file": "metric_proxies.py",
+    "source_sha256": "181b599165b7b71f947f8f14f7ba63214b8ebf64dec418d062a19bbff19133df",
+    "units": {
+      "delta_hol_micros": "micros",
+      "kappa_micros": "micros",
+      "vkd_micros": "micros"
+    },
+    "versions": {
+      "delta_hol_micros": "dsm.observable-delta-hol-proxy.v2",
+      "kappa_micros": "dsm.observable-kappa-proxy.v2",
+      "vkd_micros": "dsm.observable-vkd-proxy.v2"
+    }
+  },
+  "payload_hash": "9e8175cdc54348832242785e0b86798195df0e4133ea457057e208e7f81a5068",
+  "profile_id": "dsm-receipt-gate-warning-time-v4",
+  "profile_kind": "synthetic_warning_time_calibration",
+  "schema": "openline.calibration-profile.v3",
+  "signature": {
+    "algorithm": "Ed25519",
+    "public_key": "fec1428673f6afe89264b3807344ae8b269d125a503855202687db5a7128579f",
+    "value": "7523f4c2fce0547059095915132e17713dd5b194abc002bcde91954b9f780ea7b99cfd252fc15ed9845c6c7320eca7e3182ce8a49a06f8d4f2700dbf73c1720c"
+  },
+  "signer_id": "openline-warning-time-calibration-fixture",
+  "surfaces": [
+    "openline-receipt-gate",
+    "dynamic-sentience-maps"
+  ],
+  "trust_boundary": "The bundled profile signing key is deterministic fixture material. The profile signature proves artifact integrity inside this benchmark, not production identity. Chronology must be established separately by the external freeze anchor.",
+  "validity": {
+    "invalidated_by": [
+      "graph_structure_change",
+      "prompt_change",
+      "metric_version_change",
+      "metric_source_change",
+      "observable_fixture_change",
+      "receipt_gate_policy_change",
+      "seed_partition_change",
+      "profile_expiration"
+    ],
+    "named_stack_only": true,
+    "portable_object": "calibration_provenance_not_universal_threshold"
+  }
+}

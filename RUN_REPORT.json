@@ -527,7 +527,7 @@
     },
     {
       "command": [
-        "/tmp/receipt-gate-ci-fixed-venv/bin/python",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
         "-m",
         "unittest",
         "discover",
@@ -536,8 +536,8 @@
         "-v"
       ],
       "counts": {
-        "discovered": 80,
-        "executed": 66,
+        "discovered": 93,
+        "executed": 79,
         "skipped": 14
       },
       "expected_returncodes": [
@@ -562,12 +562,12 @@
       },
       "passed": true,
       "returncode": 0,
-      "stderr": "test_path_escape_is_rejected_before_verifier_execution (test_assay_adapter.AssayAdapterFailClosedTests.test_path_escape_is_rejected_before_verifier_execution) ... ok\ntest_request_cannot_select_a_verifier_executable (test_assay_adapter.AssayAdapterFailClosedTests.test_request_cannot_select_a_verifier_executable) ... ok\ntest_native_trust_basis_failure_is_never_laundered (test_assay_adapter.AssayAdapterIntegrationTests.test_native_trust_basis_failure_is_never_laundered) ... skipped 'optional Assay integration missing: set OLP_ASSAY_BIN to the pinned assay 3.32.0 binary'\ntest_official_bundle_and_trust_basis_are_delegated_to_assay (test_assay_adapter.AssayAdapterIntegrationTests.test_official_bundle_and_trust_basis_are_delegated_to_assay) ... skipped 'optional Assay integration missing: set OLP_ASSAY_BIN to the pinned assay 3.32.0 binary'\ntest_receiver_evidence_changes_only_olp_next_use_decision (test_assay_adapter.AssayAdapterIntegrationTests.test_receiver_evidence_changes_only_olp_next_use_decision) ... skipped 'optional Assay integration missing: set OLP_ASSAY_BIN to the pinned assay 3.32.0 binary'\ntest_tampered_archive_is_rejected_by_the_official_verifier (test_assay_adapter.AssayAdapterIntegrationTests.test_tampered_archive_is_rejected_by_the_official_verifier) ... skipped 'optional Assay integration missing: set OLP_ASSAY_BIN to the pinned assay 3.32.0 binary'\ntest_valid_assay_bundle_with_wrong_receiver_pin_is_denied (test_assay_adapter.AssayAdapterIntegrationTests.test_valid_assay_bundle_with_wrong_receiver_pin_is_denied) ... skipped 'optional Assay integration missing: set OLP_ASSAY_BIN to the pinned assay 3.32.0 binary'\ntest_capsule_mismatch_holds_even_when_candidate_supplies_it (test_model_swap.ModelSwapIntegrationTests.test_capsule_mismatch_holds_even_when_candidate_supplies_it) ... ok\ntest_proof_card_tamper_is_detected (test_model_swap.ModelSwapIntegrationTests.test_proof_card_tamper_is_detected) ... ok\ntest_receiver_gate_commits_bound_swap_evidence (test_model_swap.ModelSwapIntegrationTests.test_receiver_gate_commits_bound_swap_evidence) ... ok\ntest_source_grader_and_gate_keys_must_be_separate (test_model_swap.ModelSwapIntegrationTests.test_source_grader_and_gate_keys_must_be_separate) ... ok\ntest_three_lane_proof_is_independently_graded (test_model_swap.ModelSwapIntegrationTests.test_three_lane_proof_is_independently_graded) ... ok\ntest_untrusted_half_life_policy_pin_fails_closed (test_model_swap.ModelSwapIntegrationTests.test_untrusted_half_life_policy_pin_fails_closed) ... ok\ntest_verified_commit_demo_blocks_mutations_replay_and_double_use (test_model_swap.ModelSwapIntegrationTests.test_verified_commit_demo_blocks_mutations_replay_and_double_use) ... ok\ntest_verified_commit_execution_record_tamper_is_detected (test_model_swap.ModelSwapIntegrationTests.test_verified_commit_execution_record_tamper_is_detected) ... ok\ntest_ordinary_summary_discloses_what_it_drops (test_model_swap.ModelSwapPureTests.test_ordinary_summary_discloses_what_it_drops) ... ok\ntest_bound_evidence_commits_without_upgrading_native_allow (test_pipelock_adapter.PipelockAdapterTests.test_bound_evidence_commits_without_upgrading_native_allow) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_broken_chain_and_malformed_receipt_are_denied (test_pipelock_adapter.PipelockAdapterTests.test_broken_chain_and_malformed_receipt_are_denied) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_broken_chain_delegates_rejection_to_native_verifier (test_pipelock_adapter.PipelockAdapterTests.test_broken_chain_delegates_rejection_to_native_verifier) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_genuine_v2_is_explicitly_unsupported_in_phase_one (test_pipelock_adapter.PipelockAdapterTests.test_genuine_v2_is_explicitly_unsupported_in_phase_one) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_malformed_v1_is_profile_failure_not_bad_format_guess (test_pipelock_adapter.PipelockAdapterTests.test_malformed_v1_is_profile_failure_not_bad_format_guess) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_native_block_can_never_be_laundered_into_commit (test_pipelock_adapter.PipelockAdapterTests.test_native_block_can_never_be_laundered_into_commit) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_published_pipelock_vector_interoperates (test_pipelock_adapter.PipelockAdapterTests.test_published_pipelock_vector_interoperates) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_unpinned_signature_is_not_trusted_provenance (test_pipelock_adapter.PipelockAdapterTests.test_unpinned_signature_is_not_trusted_provenance) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_valid_allow_without_required_evidence_is_undecidable (test_pipelock_adapter.PipelockAdapterTests.test_valid_allow_without_required_evidence_is_undecidable) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_clean_clone_falls_back_to_embedded_frozen_protocol (test_pipelock_freeze.PipelockFreezeTests.test_clean_clone_falls_back_to_embedded_frozen_protocol) ... ok\ntest_fallback_rejects_a_resealed_or_wrong_snapshot (test_pipelock_freeze.PipelockFreezeTests.test_fallback_rejects_a_resealed_or_wrong_snapshot) ... ok\ntest_relative_reproduction_output_is_rooted_in_repository (test_pipelock_freeze.PipelockFreezeTests.test_relative_reproduction_output_is_rooted_in_repository) ... ok\ntest_agent_evidence_commitment_path_cannot_be_chosen_by_requester (test_proof_to_policy.ProofToPolicyTests.test_agent_evidence_commitment_path_cannot_be_chosen_by_requester) ... ok\ntest_agent_receipt_signature_and_declared_coverage (test_proof_to_policy.ProofToPolicyTests.test_agent_receipt_signature_and_declared_coverage) ... ok\ntest_agent_receipt_tamper_is_rejected (test_proof_to_policy.ProofToPolicyTests.test_agent_receipt_tamper_is_rejected) ... ok\ntest_agent_terminal_marker_must_be_boolean (test_proof_to_policy.ProofToPolicyTests.test_agent_terminal_marker_must_be_boolean) ... ok\ntest_complete_evidence_and_outcome_commit (test_proof_to_policy.ProofToPolicyTests.test_complete_evidence_and_outcome_commit) ... ok\ntest_cross_run_binding_is_denied (test_proof_to_policy.ProofToPolicyTests.test_cross_run_binding_is_denied) ... ok\ntest_decision_log_rejects_duplicate_json_keys (test_proof_to_policy.ProofToPolicyTests.test_decision_log_rejects_duplicate_json_keys) ... ok\ntest_decision_tamper_breaks_signature (test_proof_to_policy.ProofToPolicyTests.test_decision_tamper_breaks_signature) ... ok\ntest_duplicate_json_keys_are_rejected (test_proof_to_policy.ProofToPolicyTests.test_duplicate_json_keys_are_rejected) ... ok\ntest_embedded_decision_key_is_not_implicitly_trusted (test_proof_to_policy.ProofToPolicyTests.test_embedded_decision_key_is_not_implicitly_trusted) ... ok\ntest_evidence_hash_mismatch_is_denied (test_proof_to_policy.ProofToPolicyTests.test_evidence_hash_mismatch_is_denied) ... ok\ntest_evidence_path_cannot_escape_request_directory (test_proof_to_policy.ProofToPolicyTests.test_evidence_path_cannot_escape_request_directory) ... ok\ntest_exact_replay_is_denied_without_advancing_chain (test_proof_to_policy.ProofToPolicyTests.test_exact_replay_is_denied_without_advancing_chain) ... ok\ntest_full_demo_passes (test_proof_to_policy.ProofToPolicyTests.test_full_demo_passes) ... ok\ntest_harmful_outcome_requests_rollback (test_proof_to_policy.ProofToPolicyTests.test_harmful_outcome_requests_rollback) ... ok\ntest_independent_node_verifier_accepts_demo_and_rejects_tamper (test_proof_to_policy.ProofToPolicyTests.test_independent_node_verifier_accepts_demo_and_rejects_tamper) ... ok\ntest_independent_source_requirement_is_not_earned_by_operator_key (test_proof_to_policy.ProofToPolicyTests.test_independent_source_requirement_is_not_earned_by_operator_key) ... ok\ntest_olp_wire_vector_is_integrity_valid_but_coverage_partial (test_proof_to_policy.ProofToPolicyTests.test_olp_wire_vector_is_integrity_valid_but_coverage_partial) ... ok\ntest_only_one_challenge_can_be_pending_per_session (test_proof_to_policy.ProofToPolicyTests.test_only_one_challenge_can_be_pending_per_session) ... ok\ntest_outcome_evidence_rebinding_is_denied (test_proof_to_policy.ProofToPolicyTests.test_outcome_evidence_rebinding_is_denied) ... ok\ntest_outcome_rebound_to_other_source_is_denied (test_proof_to_policy.ProofToPolicyTests.test_outcome_rebound_to_other_source_is_denied) ... ok\ntest_policy_caps_evidence_size (test_proof_to_policy.ProofToPolicyTests.test_policy_caps_evidence_size) ... ok\ntest_policy_rejects_string_booleans_and_unknown_fields (test_proof_to_policy.ProofToPolicyTests.test_policy_rejects_string_booleans_and_unknown_fields) ... ok\ntest_policy_without_replay_guard_does_not_claim_chain_acceptance (test_proof_to_policy.ProofToPolicyTests.test_policy_without_replay_guard_does_not_claim_chain_acceptance) ... ok\ntest_private_key_permissions_are_enforced (test_proof_to_policy.ProofToPolicyTests.test_private_key_permissions_are_enforced) ... ok\ntest_published_agent_receipts_v050_vector_interoperates (test_proof_to_policy.ProofToPolicyTests.test_published_agent_receipts_v050_vector_interoperates) ... ok\ntest_request_cannot_relabel_signed_action_type (test_proof_to_policy.ProofToPolicyTests.test_request_cannot_relabel_signed_action_type) ... ok\ntest_resealed_semantic_forgery_is_recomputed_and_rejected (test_proof_to_policy.ProofToPolicyTests.test_resealed_semantic_forgery_is_recomputed_and_rejected) ... ok\ntest_unsigned_legacy_source_cannot_earn_trusted_commit (test_proof_to_policy.ProofToPolicyTests.test_unsigned_legacy_source_cannot_earn_trusted_commit) ... ok\ntest_v02_decision_receipt_remains_verifiable_in_python_and_node (test_proof_to_policy.ProofToPolicyTests.test_v02_decision_receipt_remains_verifiable_in_python_and_node) ... ok\ntest_valid_signature_without_evidence_is_undecidable (test_proof_to_policy.ProofToPolicyTests.test_valid_signature_without_evidence_is_undecidable) ... ok\ntest_chain_detects_tamper (test_receipt_gate.LegacyReceiptGateTests.test_chain_detects_tamper) ... ok\ntest_clean_tool_call_commits (test_receipt_gate.LegacyReceiptGateTests.test_clean_tool_call_commits) ... ok\ntest_eval_score_requires_grader_receipt (test_receipt_gate.LegacyReceiptGateTests.test_eval_score_requires_grader_receipt) ... ok\ntest_exception_receipt_does_not_store_traceback_by_default (test_receipt_gate.LegacyReceiptGateTests.test_exception_receipt_does_not_store_traceback_by_default) ... ok\ntest_malformed_json_returns_invalid_chain (test_receipt_gate.LegacyReceiptGateTests.test_malformed_json_returns_invalid_chain) ... ok\ntest_memory_write_requires_user_intent (test_receipt_gate.LegacyReceiptGateTests.test_memory_write_requires_user_intent) ... ok\ntest_missing_evidence_quarantines (test_receipt_gate.LegacyReceiptGateTests.test_missing_evidence_quarantines) ... ok\ntest_missing_or_empty_receipt_file_does_not_pass (test_receipt_gate.LegacyReceiptGateTests.test_missing_or_empty_receipt_file_does_not_pass) ... ok\ntest_no_badge_when_context_exits_without_close (test_receipt_gate.LegacyReceiptGateTests.test_no_badge_when_context_exits_without_close) ... ok\ntest_raw_evidence_not_stored_unless_opt_in (test_receipt_gate.LegacyReceiptGateTests.test_raw_evidence_not_stored_unless_opt_in) ... ok\ntest_review_packet_lists_failures (test_receipt_gate.LegacyReceiptGateTests.test_review_packet_lists_failures) ... ok\ntest_changed_fields_and_wrong_code_are_blocked_before_execution (test_verified_commit.VerifiedCommitTests.test_changed_fields_and_wrong_code_are_blocked_before_execution) ... ok\ntest_exact_action_executes_once_then_replay_is_blocked (test_verified_commit.VerifiedCommitTests.test_exact_action_executes_once_then_replay_is_blocked) ... ok\ntest_executor_failure_spends_permission_and_fails_closed (test_verified_commit.VerifiedCommitTests.test_executor_failure_spends_permission_and_fails_closed) ... ok\ntest_existing_commit_receipt_carries_exact_private_authorization (test_verified_commit.VerifiedCommitTests.test_existing_commit_receipt_carries_exact_private_authorization) ... ok\ntest_expired_permission_is_blocked_before_execution (test_verified_commit.VerifiedCommitTests.test_expired_permission_is_blocked_before_execution) ... ok\ntest_ordinary_commit_is_not_portable_tool_permission (test_verified_commit.VerifiedCommitTests.test_ordinary_commit_is_not_portable_tool_permission) ... ok\ntest_receiver_policy_mismatch_denies_authorization (test_verified_commit.VerifiedCommitTests.test_receiver_policy_mismatch_denies_authorization) ... ok\ntest_required_permission_request_cannot_be_omitted (test_verified_commit.VerifiedCommitTests.test_required_permission_request_cannot_be_omitted) ... ok\ntest_tampered_receipt_is_blocked_before_execution (test_verified_commit.VerifiedCommitTests.test_tampered_receipt_is_blocked_before_execution) ... ok\ntest_two_simultaneous_uses_allow_exactly_one_execution (test_verified_commit.VerifiedCommitTests.test_two_simultaneous_uses_allow_exactly_one_execution) ... ok\n\n----------------------------------------------------------------------\nRan 80 tests in 2.269s\n\nOK (skipped=14)\n",
+      "stderr": "test_path_escape_is_rejected_before_verifier_execution (test_assay_adapter.AssayAdapterFailClosedTests.test_path_escape_is_rejected_before_verifier_execution) ... ok\ntest_request_cannot_select_a_verifier_executable (test_assay_adapter.AssayAdapterFailClosedTests.test_request_cannot_select_a_verifier_executable) ... ok\ntest_native_trust_basis_failure_is_never_laundered (test_assay_adapter.AssayAdapterIntegrationTests.test_native_trust_basis_failure_is_never_laundered) ... skipped 'optional Assay integration missing: set OLP_ASSAY_BIN to the pinned assay 3.32.0 binary'\ntest_official_bundle_and_trust_basis_are_delegated_to_assay (test_assay_adapter.AssayAdapterIntegrationTests.test_official_bundle_and_trust_basis_are_delegated_to_assay) ... skipped 'optional Assay integration missing: set OLP_ASSAY_BIN to the pinned assay 3.32.0 binary'\ntest_receiver_evidence_changes_only_olp_next_use_decision (test_assay_adapter.AssayAdapterIntegrationTests.test_receiver_evidence_changes_only_olp_next_use_decision) ... skipped 'optional Assay integration missing: set OLP_ASSAY_BIN to the pinned assay 3.32.0 binary'\ntest_tampered_archive_is_rejected_by_the_official_verifier (test_assay_adapter.AssayAdapterIntegrationTests.test_tampered_archive_is_rejected_by_the_official_verifier) ... skipped 'optional Assay integration missing: set OLP_ASSAY_BIN to the pinned assay 3.32.0 binary'\ntest_valid_assay_bundle_with_wrong_receiver_pin_is_denied (test_assay_adapter.AssayAdapterIntegrationTests.test_valid_assay_bundle_with_wrong_receiver_pin_is_denied) ... skipped 'optional Assay integration missing: set OLP_ASSAY_BIN to the pinned assay 3.32.0 binary'\ntest_capsule_mismatch_holds_even_when_candidate_supplies_it (test_model_swap.ModelSwapIntegrationTests.test_capsule_mismatch_holds_even_when_candidate_supplies_it) ... ok\ntest_proof_card_tamper_is_detected (test_model_swap.ModelSwapIntegrationTests.test_proof_card_tamper_is_detected) ... ok\ntest_receiver_gate_commits_bound_swap_evidence (test_model_swap.ModelSwapIntegrationTests.test_receiver_gate_commits_bound_swap_evidence) ... ok\ntest_source_grader_and_gate_keys_must_be_separate (test_model_swap.ModelSwapIntegrationTests.test_source_grader_and_gate_keys_must_be_separate) ... ok\ntest_three_lane_proof_is_independently_graded (test_model_swap.ModelSwapIntegrationTests.test_three_lane_proof_is_independently_graded) ... ok\ntest_untrusted_half_life_policy_pin_fails_closed (test_model_swap.ModelSwapIntegrationTests.test_untrusted_half_life_policy_pin_fails_closed) ... ok\ntest_verified_commit_demo_blocks_mutations_replay_and_double_use (test_model_swap.ModelSwapIntegrationTests.test_verified_commit_demo_blocks_mutations_replay_and_double_use) ... ok\ntest_verified_commit_execution_record_tamper_is_detected (test_model_swap.ModelSwapIntegrationTests.test_verified_commit_execution_record_tamper_is_detected) ... ok\ntest_ordinary_summary_discloses_what_it_drops (test_model_swap.ModelSwapPureTests.test_ordinary_summary_discloses_what_it_drops) ... ok\ntest_bound_evidence_commits_without_upgrading_native_allow (test_pipelock_adapter.PipelockAdapterTests.test_bound_evidence_commits_without_upgrading_native_allow) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_broken_chain_and_malformed_receipt_are_denied (test_pipelock_adapter.PipelockAdapterTests.test_broken_chain_and_malformed_receipt_are_denied) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_broken_chain_delegates_rejection_to_native_verifier (test_pipelock_adapter.PipelockAdapterTests.test_broken_chain_delegates_rejection_to_native_verifier) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_genuine_v2_is_explicitly_unsupported_in_phase_one (test_pipelock_adapter.PipelockAdapterTests.test_genuine_v2_is_explicitly_unsupported_in_phase_one) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_malformed_v1_is_profile_failure_not_bad_format_guess (test_pipelock_adapter.PipelockAdapterTests.test_malformed_v1_is_profile_failure_not_bad_format_guess) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_native_block_can_never_be_laundered_into_commit (test_pipelock_adapter.PipelockAdapterTests.test_native_block_can_never_be_laundered_into_commit) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_published_pipelock_vector_interoperates (test_pipelock_adapter.PipelockAdapterTests.test_published_pipelock_vector_interoperates) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_unpinned_signature_is_not_trusted_provenance (test_pipelock_adapter.PipelockAdapterTests.test_unpinned_signature_is_not_trusted_provenance) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_valid_allow_without_required_evidence_is_undecidable (test_pipelock_adapter.PipelockAdapterTests.test_valid_allow_without_required_evidence_is_undecidable) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_clean_clone_falls_back_to_embedded_frozen_protocol (test_pipelock_freeze.PipelockFreezeTests.test_clean_clone_falls_back_to_embedded_frozen_protocol) ... ok\ntest_fallback_rejects_a_resealed_or_wrong_snapshot (test_pipelock_freeze.PipelockFreezeTests.test_fallback_rejects_a_resealed_or_wrong_snapshot) ... ok\ntest_relative_reproduction_output_is_rooted_in_repository (test_pipelock_freeze.PipelockFreezeTests.test_relative_reproduction_output_is_rooted_in_repository) ... ok\ntest_agent_evidence_commitment_path_cannot_be_chosen_by_requester (test_proof_to_policy.ProofToPolicyTests.test_agent_evidence_commitment_path_cannot_be_chosen_by_requester) ... ok\ntest_agent_receipt_signature_and_declared_coverage (test_proof_to_policy.ProofToPolicyTests.test_agent_receipt_signature_and_declared_coverage) ... ok\ntest_agent_receipt_tamper_is_rejected (test_proof_to_policy.ProofToPolicyTests.test_agent_receipt_tamper_is_rejected) ... ok\ntest_agent_terminal_marker_must_be_boolean (test_proof_to_policy.ProofToPolicyTests.test_agent_terminal_marker_must_be_boolean) ... ok\ntest_complete_evidence_and_outcome_commit (test_proof_to_policy.ProofToPolicyTests.test_complete_evidence_and_outcome_commit) ... ok\ntest_cross_run_binding_is_denied (test_proof_to_policy.ProofToPolicyTests.test_cross_run_binding_is_denied) ... ok\ntest_decision_log_rejects_duplicate_json_keys (test_proof_to_policy.ProofToPolicyTests.test_decision_log_rejects_duplicate_json_keys) ... ok\ntest_decision_tamper_breaks_signature (test_proof_to_policy.ProofToPolicyTests.test_decision_tamper_breaks_signature) ... ok\ntest_duplicate_json_keys_are_rejected (test_proof_to_policy.ProofToPolicyTests.test_duplicate_json_keys_are_rejected) ... ok\ntest_embedded_decision_key_is_not_implicitly_trusted (test_proof_to_policy.ProofToPolicyTests.test_embedded_decision_key_is_not_implicitly_trusted) ... ok\ntest_evidence_hash_mismatch_is_denied (test_proof_to_policy.ProofToPolicyTests.test_evidence_hash_mismatch_is_denied) ... ok\ntest_evidence_path_cannot_escape_request_directory (test_proof_to_policy.ProofToPolicyTests.test_evidence_path_cannot_escape_request_directory) ... ok\ntest_exact_replay_is_denied_without_advancing_chain (test_proof_to_policy.ProofToPolicyTests.test_exact_replay_is_denied_without_advancing_chain) ... ok\ntest_full_demo_passes (test_proof_to_policy.ProofToPolicyTests.test_full_demo_passes) ... ok\ntest_harmful_outcome_requests_rollback (test_proof_to_policy.ProofToPolicyTests.test_harmful_outcome_requests_rollback) ... ok\ntest_independent_node_verifier_accepts_demo_and_rejects_tamper (test_proof_to_policy.ProofToPolicyTests.test_independent_node_verifier_accepts_demo_and_rejects_tamper) ... ok\ntest_independent_source_requirement_is_not_earned_by_operator_key (test_proof_to_policy.ProofToPolicyTests.test_independent_source_requirement_is_not_earned_by_operator_key) ... ok\ntest_olp_wire_vector_is_integrity_valid_but_coverage_partial (test_proof_to_policy.ProofToPolicyTests.test_olp_wire_vector_is_integrity_valid_but_coverage_partial) ... ok\ntest_only_one_challenge_can_be_pending_per_session (test_proof_to_policy.ProofToPolicyTests.test_only_one_challenge_can_be_pending_per_session) ... ok\ntest_outcome_evidence_rebinding_is_denied (test_proof_to_policy.ProofToPolicyTests.test_outcome_evidence_rebinding_is_denied) ... ok\ntest_outcome_rebound_to_other_source_is_denied (test_proof_to_policy.ProofToPolicyTests.test_outcome_rebound_to_other_source_is_denied) ... ok\ntest_policy_caps_evidence_size (test_proof_to_policy.ProofToPolicyTests.test_policy_caps_evidence_size) ... ok\ntest_policy_rejects_string_booleans_and_unknown_fields (test_proof_to_policy.ProofToPolicyTests.test_policy_rejects_string_booleans_and_unknown_fields) ... ok\ntest_policy_without_replay_guard_does_not_claim_chain_acceptance (test_proof_to_policy.ProofToPolicyTests.test_policy_without_replay_guard_does_not_claim_chain_acceptance) ... ok\ntest_private_key_permissions_are_enforced (test_proof_to_policy.ProofToPolicyTests.test_private_key_permissions_are_enforced) ... ok\ntest_published_agent_receipts_v050_vector_interoperates (test_proof_to_policy.ProofToPolicyTests.test_published_agent_receipts_v050_vector_interoperates) ... ok\ntest_request_cannot_relabel_signed_action_type (test_proof_to_policy.ProofToPolicyTests.test_request_cannot_relabel_signed_action_type) ... ok\ntest_resealed_semantic_forgery_is_recomputed_and_rejected (test_proof_to_policy.ProofToPolicyTests.test_resealed_semantic_forgery_is_recomputed_and_rejected) ... ok\ntest_unsigned_legacy_source_cannot_earn_trusted_commit (test_proof_to_policy.ProofToPolicyTests.test_unsigned_legacy_source_cannot_earn_trusted_commit) ... ok\ntest_v02_decision_receipt_remains_verifiable_in_python_and_node (test_proof_to_policy.ProofToPolicyTests.test_v02_decision_receipt_remains_verifiable_in_python_and_node) ... ok\ntest_valid_signature_without_evidence_is_undecidable (test_proof_to_policy.ProofToPolicyTests.test_valid_signature_without_evidence_is_undecidable) ... ok\ntest_chain_detects_tamper (test_receipt_gate.LegacyReceiptGateTests.test_chain_detects_tamper) ... ok\ntest_clean_tool_call_commits (test_receipt_gate.LegacyReceiptGateTests.test_clean_tool_call_commits) ... ok\ntest_eval_score_requires_grader_receipt (test_receipt_gate.LegacyReceiptGateTests.test_eval_score_requires_grader_receipt) ... ok\ntest_exception_receipt_does_not_store_traceback_by_default (test_receipt_gate.LegacyReceiptGateTests.test_exception_receipt_does_not_store_traceback_by_default) ... ok\ntest_malformed_json_returns_invalid_chain (test_receipt_gate.LegacyReceiptGateTests.test_malformed_json_returns_invalid_chain) ... ok\ntest_memory_write_requires_user_intent (test_receipt_gate.LegacyReceiptGateTests.test_memory_write_requires_user_intent) ... ok\ntest_missing_evidence_quarantines (test_receipt_gate.LegacyReceiptGateTests.test_missing_evidence_quarantines) ... ok\ntest_missing_or_empty_receipt_file_does_not_pass (test_receipt_gate.LegacyReceiptGateTests.test_missing_or_empty_receipt_file_does_not_pass) ... ok\ntest_no_badge_when_context_exits_without_close (test_receipt_gate.LegacyReceiptGateTests.test_no_badge_when_context_exits_without_close) ... ok\ntest_raw_evidence_not_stored_unless_opt_in (test_receipt_gate.LegacyReceiptGateTests.test_raw_evidence_not_stored_unless_opt_in) ... ok\ntest_review_packet_lists_failures (test_receipt_gate.LegacyReceiptGateTests.test_review_packet_lists_failures) ... ok\ntest_changed_fields_and_wrong_code_are_blocked_before_execution (test_verified_commit.VerifiedCommitTests.test_changed_fields_and_wrong_code_are_blocked_before_execution) ... ok\ntest_exact_action_executes_once_then_replay_is_blocked (test_verified_commit.VerifiedCommitTests.test_exact_action_executes_once_then_replay_is_blocked) ... ok\ntest_executor_failure_spends_permission_and_fails_closed (test_verified_commit.VerifiedCommitTests.test_executor_failure_spends_permission_and_fails_closed) ... ok\ntest_existing_commit_receipt_carries_exact_private_authorization (test_verified_commit.VerifiedCommitTests.test_existing_commit_receipt_carries_exact_private_authorization) ... ok\ntest_expired_permission_is_blocked_before_execution (test_verified_commit.VerifiedCommitTests.test_expired_permission_is_blocked_before_execution) ... ok\ntest_ordinary_commit_is_not_portable_tool_permission (test_verified_commit.VerifiedCommitTests.test_ordinary_commit_is_not_portable_tool_permission) ... ok\ntest_receiver_policy_mismatch_denies_authorization (test_verified_commit.VerifiedCommitTests.test_receiver_policy_mismatch_denies_authorization) ... ok\ntest_required_permission_request_cannot_be_omitted (test_verified_commit.VerifiedCommitTests.test_required_permission_request_cannot_be_omitted) ... ok\ntest_tampered_receipt_is_blocked_before_execution (test_verified_commit.VerifiedCommitTests.test_tampered_receipt_is_blocked_before_execution) ... ok\ntest_thirty_two_processes_allow_exactly_one_execution (test_verified_commit.VerifiedCommitTests.test_thirty_two_processes_allow_exactly_one_execution) ... ok\ntest_two_simultaneous_uses_allow_exactly_one_execution (test_verified_commit.VerifiedCommitTests.test_two_simultaneous_uses_allow_exactly_one_execution) ... ok\ntest_calibration_is_disjoint_and_heldout_seeds_are_paired (test_warning_time_benchmark.WarningTimeBenchmarkTests.test_calibration_is_disjoint_and_heldout_seeds_are_paired) ... ok\ntest_clean_calibration_and_thresholds_reproduce_without_heldout_data (test_warning_time_benchmark.WarningTimeBenchmarkTests.test_clean_calibration_and_thresholds_reproduce_without_heldout_data) ... ok\ntest_external_anchor_cannot_choose_its_own_witness (test_warning_time_benchmark.WarningTimeBenchmarkTests.test_external_anchor_cannot_choose_its_own_witness) ... ok\ntest_heldout_counts_decisions_and_enforcement_are_separate (test_warning_time_benchmark.WarningTimeBenchmarkTests.test_heldout_counts_decisions_and_enforcement_are_separate) ... ok\ntest_independent_verifier_does_not_import_benchmark_modules (test_warning_time_benchmark.WarningTimeBenchmarkTests.test_independent_verifier_does_not_import_benchmark_modules) ... ok\ntest_label_swap_probe_uses_same_seed_and_follows_state_not_label (test_warning_time_benchmark.WarningTimeBenchmarkTests.test_label_swap_probe_uses_same_seed_and_follows_state_not_label) ... ok\ntest_metric_function_has_no_ground_truth_or_case_parameter (test_warning_time_benchmark.WarningTimeBenchmarkTests.test_metric_function_has_no_ground_truth_or_case_parameter) ... ok\ntest_paired_runs_match_control_before_injection (test_warning_time_benchmark.WarningTimeBenchmarkTests.test_paired_runs_match_control_before_injection) ... ok\ntest_profile_freshness_rejects_future_and_expired_profiles (test_warning_time_benchmark.WarningTimeBenchmarkTests.test_profile_freshness_rejects_future_and_expired_profiles) ... ok\ntest_profile_publication_and_external_anchor_verify (test_warning_time_benchmark.WarningTimeBenchmarkTests.test_profile_publication_and_external_anchor_verify) ... ok\ntest_reference_decision_logs_are_signed_and_chain_verify (test_warning_time_benchmark.WarningTimeBenchmarkTests.test_reference_decision_logs_are_signed_and_chain_verify) ... ok\ntest_warning_time_is_bad_action_minus_first_warning (test_warning_time_benchmark.WarningTimeBenchmarkTests.test_warning_time_is_bad_action_minus_first_warning) ... ok\n\n----------------------------------------------------------------------\nRan 93 tests in 4.258s\n\nOK (skipped=14)\n",
       "stdout": ""
     },
     {
       "command": [
-        "/tmp/receipt-gate-ci-fixed-venv/bin/python",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
         "-m",
         "unittest",
         "discover",
@@ -576,8 +576,8 @@
         "-v"
       ],
       "counts": {
-        "discovered": 80,
-        "executed": 58,
+        "discovered": 93,
+        "executed": 71,
         "skipped": 22
       },
       "expected_returncodes": [
@@ -586,12 +586,12 @@
       "name": "unittest_without_optional_integrations",
       "passed": true,
       "returncode": 0,
-      "stderr": "test_path_escape_is_rejected_before_verifier_execution (test_assay_adapter.AssayAdapterFailClosedTests.test_path_escape_is_rejected_before_verifier_execution) ... ok\ntest_request_cannot_select_a_verifier_executable (test_assay_adapter.AssayAdapterFailClosedTests.test_request_cannot_select_a_verifier_executable) ... ok\ntest_native_trust_basis_failure_is_never_laundered (test_assay_adapter.AssayAdapterIntegrationTests.test_native_trust_basis_failure_is_never_laundered) ... skipped 'optional Assay integration missing: set OLP_ASSAY_BIN to the pinned assay 3.32.0 binary'\ntest_official_bundle_and_trust_basis_are_delegated_to_assay (test_assay_adapter.AssayAdapterIntegrationTests.test_official_bundle_and_trust_basis_are_delegated_to_assay) ... skipped 'optional Assay integration missing: set OLP_ASSAY_BIN to the pinned assay 3.32.0 binary'\ntest_receiver_evidence_changes_only_olp_next_use_decision (test_assay_adapter.AssayAdapterIntegrationTests.test_receiver_evidence_changes_only_olp_next_use_decision) ... skipped 'optional Assay integration missing: set OLP_ASSAY_BIN to the pinned assay 3.32.0 binary'\ntest_tampered_archive_is_rejected_by_the_official_verifier (test_assay_adapter.AssayAdapterIntegrationTests.test_tampered_archive_is_rejected_by_the_official_verifier) ... skipped 'optional Assay integration missing: set OLP_ASSAY_BIN to the pinned assay 3.32.0 binary'\ntest_valid_assay_bundle_with_wrong_receiver_pin_is_denied (test_assay_adapter.AssayAdapterIntegrationTests.test_valid_assay_bundle_with_wrong_receiver_pin_is_denied) ... skipped 'optional Assay integration missing: set OLP_ASSAY_BIN to the pinned assay 3.32.0 binary'\ntest_capsule_mismatch_holds_even_when_candidate_supplies_it (test_model_swap.ModelSwapIntegrationTests.test_capsule_mismatch_holds_even_when_candidate_supplies_it) ... skipped 'optional Verified Model Swap integration missing: install requirements-model-swap.txt and set OLP_HALF_LIFE_ROOT'\ntest_proof_card_tamper_is_detected (test_model_swap.ModelSwapIntegrationTests.test_proof_card_tamper_is_detected) ... skipped 'optional Verified Model Swap integration missing: install requirements-model-swap.txt and set OLP_HALF_LIFE_ROOT'\ntest_receiver_gate_commits_bound_swap_evidence (test_model_swap.ModelSwapIntegrationTests.test_receiver_gate_commits_bound_swap_evidence) ... skipped 'optional Verified Model Swap integration missing: install requirements-model-swap.txt and set OLP_HALF_LIFE_ROOT'\ntest_source_grader_and_gate_keys_must_be_separate (test_model_swap.ModelSwapIntegrationTests.test_source_grader_and_gate_keys_must_be_separate) ... skipped 'optional Verified Model Swap integration missing: install requirements-model-swap.txt and set OLP_HALF_LIFE_ROOT'\ntest_three_lane_proof_is_independently_graded (test_model_swap.ModelSwapIntegrationTests.test_three_lane_proof_is_independently_graded) ... skipped 'optional Verified Model Swap integration missing: install requirements-model-swap.txt and set OLP_HALF_LIFE_ROOT'\ntest_untrusted_half_life_policy_pin_fails_closed (test_model_swap.ModelSwapIntegrationTests.test_untrusted_half_life_policy_pin_fails_closed) ... skipped 'optional Verified Model Swap integration missing: install requirements-model-swap.txt and set OLP_HALF_LIFE_ROOT'\ntest_verified_commit_demo_blocks_mutations_replay_and_double_use (test_model_swap.ModelSwapIntegrationTests.test_verified_commit_demo_blocks_mutations_replay_and_double_use) ... skipped 'optional Verified Model Swap integration missing: install requirements-model-swap.txt and set OLP_HALF_LIFE_ROOT'\ntest_verified_commit_execution_record_tamper_is_detected (test_model_swap.ModelSwapIntegrationTests.test_verified_commit_execution_record_tamper_is_detected) ... skipped 'optional Verified Model Swap integration missing: install requirements-model-swap.txt and set OLP_HALF_LIFE_ROOT'\ntest_ordinary_summary_discloses_what_it_drops (test_model_swap.ModelSwapPureTests.test_ordinary_summary_discloses_what_it_drops) ... ok\ntest_bound_evidence_commits_without_upgrading_native_allow (test_pipelock_adapter.PipelockAdapterTests.test_bound_evidence_commits_without_upgrading_native_allow) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_broken_chain_and_malformed_receipt_are_denied (test_pipelock_adapter.PipelockAdapterTests.test_broken_chain_and_malformed_receipt_are_denied) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_broken_chain_delegates_rejection_to_native_verifier (test_pipelock_adapter.PipelockAdapterTests.test_broken_chain_delegates_rejection_to_native_verifier) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_genuine_v2_is_explicitly_unsupported_in_phase_one (test_pipelock_adapter.PipelockAdapterTests.test_genuine_v2_is_explicitly_unsupported_in_phase_one) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_malformed_v1_is_profile_failure_not_bad_format_guess (test_pipelock_adapter.PipelockAdapterTests.test_malformed_v1_is_profile_failure_not_bad_format_guess) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_native_block_can_never_be_laundered_into_commit (test_pipelock_adapter.PipelockAdapterTests.test_native_block_can_never_be_laundered_into_commit) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_published_pipelock_vector_interoperates (test_pipelock_adapter.PipelockAdapterTests.test_published_pipelock_vector_interoperates) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_unpinned_signature_is_not_trusted_provenance (test_pipelock_adapter.PipelockAdapterTests.test_unpinned_signature_is_not_trusted_provenance) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_valid_allow_without_required_evidence_is_undecidable (test_pipelock_adapter.PipelockAdapterTests.test_valid_allow_without_required_evidence_is_undecidable) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_clean_clone_falls_back_to_embedded_frozen_protocol (test_pipelock_freeze.PipelockFreezeTests.test_clean_clone_falls_back_to_embedded_frozen_protocol) ... ok\ntest_fallback_rejects_a_resealed_or_wrong_snapshot (test_pipelock_freeze.PipelockFreezeTests.test_fallback_rejects_a_resealed_or_wrong_snapshot) ... ok\ntest_relative_reproduction_output_is_rooted_in_repository (test_pipelock_freeze.PipelockFreezeTests.test_relative_reproduction_output_is_rooted_in_repository) ... ok\ntest_agent_evidence_commitment_path_cannot_be_chosen_by_requester (test_proof_to_policy.ProofToPolicyTests.test_agent_evidence_commitment_path_cannot_be_chosen_by_requester) ... ok\ntest_agent_receipt_signature_and_declared_coverage (test_proof_to_policy.ProofToPolicyTests.test_agent_receipt_signature_and_declared_coverage) ... ok\ntest_agent_receipt_tamper_is_rejected (test_proof_to_policy.ProofToPolicyTests.test_agent_receipt_tamper_is_rejected) ... ok\ntest_agent_terminal_marker_must_be_boolean (test_proof_to_policy.ProofToPolicyTests.test_agent_terminal_marker_must_be_boolean) ... ok\ntest_complete_evidence_and_outcome_commit (test_proof_to_policy.ProofToPolicyTests.test_complete_evidence_and_outcome_commit) ... ok\ntest_cross_run_binding_is_denied (test_proof_to_policy.ProofToPolicyTests.test_cross_run_binding_is_denied) ... ok\ntest_decision_log_rejects_duplicate_json_keys (test_proof_to_policy.ProofToPolicyTests.test_decision_log_rejects_duplicate_json_keys) ... ok\ntest_decision_tamper_breaks_signature (test_proof_to_policy.ProofToPolicyTests.test_decision_tamper_breaks_signature) ... ok\ntest_duplicate_json_keys_are_rejected (test_proof_to_policy.ProofToPolicyTests.test_duplicate_json_keys_are_rejected) ... ok\ntest_embedded_decision_key_is_not_implicitly_trusted (test_proof_to_policy.ProofToPolicyTests.test_embedded_decision_key_is_not_implicitly_trusted) ... ok\ntest_evidence_hash_mismatch_is_denied (test_proof_to_policy.ProofToPolicyTests.test_evidence_hash_mismatch_is_denied) ... ok\ntest_evidence_path_cannot_escape_request_directory (test_proof_to_policy.ProofToPolicyTests.test_evidence_path_cannot_escape_request_directory) ... ok\ntest_exact_replay_is_denied_without_advancing_chain (test_proof_to_policy.ProofToPolicyTests.test_exact_replay_is_denied_without_advancing_chain) ... ok\ntest_full_demo_passes (test_proof_to_policy.ProofToPolicyTests.test_full_demo_passes) ... ok\ntest_harmful_outcome_requests_rollback (test_proof_to_policy.ProofToPolicyTests.test_harmful_outcome_requests_rollback) ... ok\ntest_independent_node_verifier_accepts_demo_and_rejects_tamper (test_proof_to_policy.ProofToPolicyTests.test_independent_node_verifier_accepts_demo_and_rejects_tamper) ... ok\ntest_independent_source_requirement_is_not_earned_by_operator_key (test_proof_to_policy.ProofToPolicyTests.test_independent_source_requirement_is_not_earned_by_operator_key) ... ok\ntest_olp_wire_vector_is_integrity_valid_but_coverage_partial (test_proof_to_policy.ProofToPolicyTests.test_olp_wire_vector_is_integrity_valid_but_coverage_partial) ... ok\ntest_only_one_challenge_can_be_pending_per_session (test_proof_to_policy.ProofToPolicyTests.test_only_one_challenge_can_be_pending_per_session) ... ok\ntest_outcome_evidence_rebinding_is_denied (test_proof_to_policy.ProofToPolicyTests.test_outcome_evidence_rebinding_is_denied) ... ok\ntest_outcome_rebound_to_other_source_is_denied (test_proof_to_policy.ProofToPolicyTests.test_outcome_rebound_to_other_source_is_denied) ... ok\ntest_policy_caps_evidence_size (test_proof_to_policy.ProofToPolicyTests.test_policy_caps_evidence_size) ... ok\ntest_policy_rejects_string_booleans_and_unknown_fields (test_proof_to_policy.ProofToPolicyTests.test_policy_rejects_string_booleans_and_unknown_fields) ... ok\ntest_policy_without_replay_guard_does_not_claim_chain_acceptance (test_proof_to_policy.ProofToPolicyTests.test_policy_without_replay_guard_does_not_claim_chain_acceptance) ... ok\ntest_private_key_permissions_are_enforced (test_proof_to_policy.ProofToPolicyTests.test_private_key_permissions_are_enforced) ... ok\ntest_published_agent_receipts_v050_vector_interoperates (test_proof_to_policy.ProofToPolicyTests.test_published_agent_receipts_v050_vector_interoperates) ... ok\ntest_request_cannot_relabel_signed_action_type (test_proof_to_policy.ProofToPolicyTests.test_request_cannot_relabel_signed_action_type) ... ok\ntest_resealed_semantic_forgery_is_recomputed_and_rejected (test_proof_to_policy.ProofToPolicyTests.test_resealed_semantic_forgery_is_recomputed_and_rejected) ... ok\ntest_unsigned_legacy_source_cannot_earn_trusted_commit (test_proof_to_policy.ProofToPolicyTests.test_unsigned_legacy_source_cannot_earn_trusted_commit) ... ok\ntest_v02_decision_receipt_remains_verifiable_in_python_and_node (test_proof_to_policy.ProofToPolicyTests.test_v02_decision_receipt_remains_verifiable_in_python_and_node) ... ok\ntest_valid_signature_without_evidence_is_undecidable (test_proof_to_policy.ProofToPolicyTests.test_valid_signature_without_evidence_is_undecidable) ... ok\ntest_chain_detects_tamper (test_receipt_gate.LegacyReceiptGateTests.test_chain_detects_tamper) ... ok\ntest_clean_tool_call_commits (test_receipt_gate.LegacyReceiptGateTests.test_clean_tool_call_commits) ... ok\ntest_eval_score_requires_grader_receipt (test_receipt_gate.LegacyReceiptGateTests.test_eval_score_requires_grader_receipt) ... ok\ntest_exception_receipt_does_not_store_traceback_by_default (test_receipt_gate.LegacyReceiptGateTests.test_exception_receipt_does_not_store_traceback_by_default) ... ok\ntest_malformed_json_returns_invalid_chain (test_receipt_gate.LegacyReceiptGateTests.test_malformed_json_returns_invalid_chain) ... ok\ntest_memory_write_requires_user_intent (test_receipt_gate.LegacyReceiptGateTests.test_memory_write_requires_user_intent) ... ok\ntest_missing_evidence_quarantines (test_receipt_gate.LegacyReceiptGateTests.test_missing_evidence_quarantines) ... ok\ntest_missing_or_empty_receipt_file_does_not_pass (test_receipt_gate.LegacyReceiptGateTests.test_missing_or_empty_receipt_file_does_not_pass) ... ok\ntest_no_badge_when_context_exits_without_close (test_receipt_gate.LegacyReceiptGateTests.test_no_badge_when_context_exits_without_close) ... ok\ntest_raw_evidence_not_stored_unless_opt_in (test_receipt_gate.LegacyReceiptGateTests.test_raw_evidence_not_stored_unless_opt_in) ... ok\ntest_review_packet_lists_failures (test_receipt_gate.LegacyReceiptGateTests.test_review_packet_lists_failures) ... ok\ntest_changed_fields_and_wrong_code_are_blocked_before_execution (test_verified_commit.VerifiedCommitTests.test_changed_fields_and_wrong_code_are_blocked_before_execution) ... ok\ntest_exact_action_executes_once_then_replay_is_blocked (test_verified_commit.VerifiedCommitTests.test_exact_action_executes_once_then_replay_is_blocked) ... ok\ntest_executor_failure_spends_permission_and_fails_closed (test_verified_commit.VerifiedCommitTests.test_executor_failure_spends_permission_and_fails_closed) ... ok\ntest_existing_commit_receipt_carries_exact_private_authorization (test_verified_commit.VerifiedCommitTests.test_existing_commit_receipt_carries_exact_private_authorization) ... ok\ntest_expired_permission_is_blocked_before_execution (test_verified_commit.VerifiedCommitTests.test_expired_permission_is_blocked_before_execution) ... ok\ntest_ordinary_commit_is_not_portable_tool_permission (test_verified_commit.VerifiedCommitTests.test_ordinary_commit_is_not_portable_tool_permission) ... ok\ntest_receiver_policy_mismatch_denies_authorization (test_verified_commit.VerifiedCommitTests.test_receiver_policy_mismatch_denies_authorization) ... ok\ntest_required_permission_request_cannot_be_omitted (test_verified_commit.VerifiedCommitTests.test_required_permission_request_cannot_be_omitted) ... ok\ntest_tampered_receipt_is_blocked_before_execution (test_verified_commit.VerifiedCommitTests.test_tampered_receipt_is_blocked_before_execution) ... ok\ntest_two_simultaneous_uses_allow_exactly_one_execution (test_verified_commit.VerifiedCommitTests.test_two_simultaneous_uses_allow_exactly_one_execution) ... ok\n\n----------------------------------------------------------------------\nRan 80 tests in 0.510s\n\nOK (skipped=22)\n",
+      "stderr": "2.0 binary'\ntest_official_bundle_and_trust_basis_are_delegated_to_assay (test_assay_adapter.AssayAdapterIntegrationTests.test_official_bundle_and_trust_basis_are_delegated_to_assay) ... skipped 'optional Assay integration missing: set OLP_ASSAY_BIN to the pinned assay 3.32.0 binary'\ntest_receiver_evidence_changes_only_olp_next_use_decision (test_assay_adapter.AssayAdapterIntegrationTests.test_receiver_evidence_changes_only_olp_next_use_decision) ... skipped 'optional Assay integration missing: set OLP_ASSAY_BIN to the pinned assay 3.32.0 binary'\ntest_tampered_archive_is_rejected_by_the_official_verifier (test_assay_adapter.AssayAdapterIntegrationTests.test_tampered_archive_is_rejected_by_the_official_verifier) ... skipped 'optional Assay integration missing: set OLP_ASSAY_BIN to the pinned assay 3.32.0 binary'\ntest_valid_assay_bundle_with_wrong_receiver_pin_is_denied (test_assay_adapter.AssayAdapterIntegrationTests.test_valid_assay_bundle_with_wrong_receiver_pin_is_denied) ... skipped 'optional Assay integration missing: set OLP_ASSAY_BIN to the pinned assay 3.32.0 binary'\ntest_capsule_mismatch_holds_even_when_candidate_supplies_it (test_model_swap.ModelSwapIntegrationTests.test_capsule_mismatch_holds_even_when_candidate_supplies_it) ... skipped 'optional Verified Model Swap integration missing: install requirements-model-swap.txt and set OLP_HALF_LIFE_ROOT'\ntest_proof_card_tamper_is_detected (test_model_swap.ModelSwapIntegrationTests.test_proof_card_tamper_is_detected) ... skipped 'optional Verified Model Swap integration missing: install requirements-model-swap.txt and set OLP_HALF_LIFE_ROOT'\ntest_receiver_gate_commits_bound_swap_evidence (test_model_swap.ModelSwapIntegrationTests.test_receiver_gate_commits_bound_swap_evidence) ... skipped 'optional Verified Model Swap integration missing: install requirements-model-swap.txt and set OLP_HALF_LIFE_ROOT'\ntest_source_grader_and_gate_keys_must_be_separate (test_model_swap.ModelSwapIntegrationTests.test_source_grader_and_gate_keys_must_be_separate) ... skipped 'optional Verified Model Swap integration missing: install requirements-model-swap.txt and set OLP_HALF_LIFE_ROOT'\ntest_three_lane_proof_is_independently_graded (test_model_swap.ModelSwapIntegrationTests.test_three_lane_proof_is_independently_graded) ... skipped 'optional Verified Model Swap integration missing: install requirements-model-swap.txt and set OLP_HALF_LIFE_ROOT'\ntest_untrusted_half_life_policy_pin_fails_closed (test_model_swap.ModelSwapIntegrationTests.test_untrusted_half_life_policy_pin_fails_closed) ... skipped 'optional Verified Model Swap integration missing: install requirements-model-swap.txt and set OLP_HALF_LIFE_ROOT'\ntest_verified_commit_demo_blocks_mutations_replay_and_double_use (test_model_swap.ModelSwapIntegrationTests.test_verified_commit_demo_blocks_mutations_replay_and_double_use) ... skipped 'optional Verified Model Swap integration missing: install requirements-model-swap.txt and set OLP_HALF_LIFE_ROOT'\ntest_verified_commit_execution_record_tamper_is_detected (test_model_swap.ModelSwapIntegrationTests.test_verified_commit_execution_record_tamper_is_detected) ... skipped 'optional Verified Model Swap integration missing: install requirements-model-swap.txt and set OLP_HALF_LIFE_ROOT'\ntest_ordinary_summary_discloses_what_it_drops (test_model_swap.ModelSwapPureTests.test_ordinary_summary_discloses_what_it_drops) ... ok\ntest_bound_evidence_commits_without_upgrading_native_allow (test_pipelock_adapter.PipelockAdapterTests.test_bound_evidence_commits_without_upgrading_native_allow) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_broken_chain_and_malformed_receipt_are_denied (test_pipelock_adapter.PipelockAdapterTests.test_broken_chain_and_malformed_receipt_are_denied) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_broken_chain_delegates_rejection_to_native_verifier (test_pipelock_adapter.PipelockAdapterTests.test_broken_chain_delegates_rejection_to_native_verifier) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_genuine_v2_is_explicitly_unsupported_in_phase_one (test_pipelock_adapter.PipelockAdapterTests.test_genuine_v2_is_explicitly_unsupported_in_phase_one) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_malformed_v1_is_profile_failure_not_bad_format_guess (test_pipelock_adapter.PipelockAdapterTests.test_malformed_v1_is_profile_failure_not_bad_format_guess) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_native_block_can_never_be_laundered_into_commit (test_pipelock_adapter.PipelockAdapterTests.test_native_block_can_never_be_laundered_into_commit) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_published_pipelock_vector_interoperates (test_pipelock_adapter.PipelockAdapterTests.test_published_pipelock_vector_interoperates) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_unpinned_signature_is_not_trusted_provenance (test_pipelock_adapter.PipelockAdapterTests.test_unpinned_signature_is_not_trusted_provenance) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_valid_allow_without_required_evidence_is_undecidable (test_pipelock_adapter.PipelockAdapterTests.test_valid_allow_without_required_evidence_is_undecidable) ... skipped 'optional dependency missing: pip install -r requirements-pipelock.txt'\ntest_clean_clone_falls_back_to_embedded_frozen_protocol (test_pipelock_freeze.PipelockFreezeTests.test_clean_clone_falls_back_to_embedded_frozen_protocol) ... ok\ntest_fallback_rejects_a_resealed_or_wrong_snapshot (test_pipelock_freeze.PipelockFreezeTests.test_fallback_rejects_a_resealed_or_wrong_snapshot) ... ok\ntest_relative_reproduction_output_is_rooted_in_repository (test_pipelock_freeze.PipelockFreezeTests.test_relative_reproduction_output_is_rooted_in_repository) ... ok\ntest_agent_evidence_commitment_path_cannot_be_chosen_by_requester (test_proof_to_policy.ProofToPolicyTests.test_agent_evidence_commitment_path_cannot_be_chosen_by_requester) ... ok\ntest_agent_receipt_signature_and_declared_coverage (test_proof_to_policy.ProofToPolicyTests.test_agent_receipt_signature_and_declared_coverage) ... ok\ntest_agent_receipt_tamper_is_rejected (test_proof_to_policy.ProofToPolicyTests.test_agent_receipt_tamper_is_rejected) ... ok\ntest_agent_terminal_marker_must_be_boolean (test_proof_to_policy.ProofToPolicyTests.test_agent_terminal_marker_must_be_boolean) ... ok\ntest_complete_evidence_and_outcome_commit (test_proof_to_policy.ProofToPolicyTests.test_complete_evidence_and_outcome_commit) ... ok\ntest_cross_run_binding_is_denied (test_proof_to_policy.ProofToPolicyTests.test_cross_run_binding_is_denied) ... ok\ntest_decision_log_rejects_duplicate_json_keys (test_proof_to_policy.ProofToPolicyTests.test_decision_log_rejects_duplicate_json_keys) ... ok\ntest_decision_tamper_breaks_signature (test_proof_to_policy.ProofToPolicyTests.test_decision_tamper_breaks_signature) ... ok\ntest_duplicate_json_keys_are_rejected (test_proof_to_policy.ProofToPolicyTests.test_duplicate_json_keys_are_rejected) ... ok\ntest_embedded_decision_key_is_not_implicitly_trusted (test_proof_to_policy.ProofToPolicyTests.test_embedded_decision_key_is_not_implicitly_trusted) ... ok\ntest_evidence_hash_mismatch_is_denied (test_proof_to_policy.ProofToPolicyTests.test_evidence_hash_mismatch_is_denied) ... ok\ntest_evidence_path_cannot_escape_request_directory (test_proof_to_policy.ProofToPolicyTests.test_evidence_path_cannot_escape_request_directory) ... ok\ntest_exact_replay_is_denied_without_advancing_chain (test_proof_to_policy.ProofToPolicyTests.test_exact_replay_is_denied_without_advancing_chain) ... ok\ntest_full_demo_passes (test_proof_to_policy.ProofToPolicyTests.test_full_demo_passes) ... ok\ntest_harmful_outcome_requests_rollback (test_proof_to_policy.ProofToPolicyTests.test_harmful_outcome_requests_rollback) ... ok\ntest_independent_node_verifier_accepts_demo_and_rejects_tamper (test_proof_to_policy.ProofToPolicyTests.test_independent_node_verifier_accepts_demo_and_rejects_tamper) ... ok\ntest_independent_source_requirement_is_not_earned_by_operator_key (test_proof_to_policy.ProofToPolicyTests.test_independent_source_requirement_is_not_earned_by_operator_key) ... ok\ntest_olp_wire_vector_is_integrity_valid_but_coverage_partial (test_proof_to_policy.ProofToPolicyTests.test_olp_wire_vector_is_integrity_valid_but_coverage_partial) ... ok\ntest_only_one_challenge_can_be_pending_per_session (test_proof_to_policy.ProofToPolicyTests.test_only_one_challenge_can_be_pending_per_session) ... ok\ntest_outcome_evidence_rebinding_is_denied (test_proof_to_policy.ProofToPolicyTests.test_outcome_evidence_rebinding_is_denied) ... ok\ntest_outcome_rebound_to_other_source_is_denied (test_proof_to_policy.ProofToPolicyTests.test_outcome_rebound_to_other_source_is_denied) ... ok\ntest_policy_caps_evidence_size (test_proof_to_policy.ProofToPolicyTests.test_policy_caps_evidence_size) ... ok\ntest_policy_rejects_string_booleans_and_unknown_fields (test_proof_to_policy.ProofToPolicyTests.test_policy_rejects_string_booleans_and_unknown_fields) ... ok\ntest_policy_without_replay_guard_does_not_claim_chain_acceptance (test_proof_to_policy.ProofToPolicyTests.test_policy_without_replay_guard_does_not_claim_chain_acceptance) ... ok\ntest_private_key_permissions_are_enforced (test_proof_to_policy.ProofToPolicyTests.test_private_key_permissions_are_enforced) ... ok\ntest_published_agent_receipts_v050_vector_interoperates (test_proof_to_policy.ProofToPolicyTests.test_published_agent_receipts_v050_vector_interoperates) ... ok\ntest_request_cannot_relabel_signed_action_type (test_proof_to_policy.ProofToPolicyTests.test_request_cannot_relabel_signed_action_type) ... ok\ntest_resealed_semantic_forgery_is_recomputed_and_rejected (test_proof_to_policy.ProofToPolicyTests.test_resealed_semantic_forgery_is_recomputed_and_rejected) ... ok\ntest_unsigned_legacy_source_cannot_earn_trusted_commit (test_proof_to_policy.ProofToPolicyTests.test_unsigned_legacy_source_cannot_earn_trusted_commit) ... ok\ntest_v02_decision_receipt_remains_verifiable_in_python_and_node (test_proof_to_policy.ProofToPolicyTests.test_v02_decision_receipt_remains_verifiable_in_python_and_node) ... ok\ntest_valid_signature_without_evidence_is_undecidable (test_proof_to_policy.ProofToPolicyTests.test_valid_signature_without_evidence_is_undecidable) ... ok\ntest_chain_detects_tamper (test_receipt_gate.LegacyReceiptGateTests.test_chain_detects_tamper) ... ok\ntest_clean_tool_call_commits (test_receipt_gate.LegacyReceiptGateTests.test_clean_tool_call_commits) ... ok\ntest_eval_score_requires_grader_receipt (test_receipt_gate.LegacyReceiptGateTests.test_eval_score_requires_grader_receipt) ... ok\ntest_exception_receipt_does_not_store_traceback_by_default (test_receipt_gate.LegacyReceiptGateTests.test_exception_receipt_does_not_store_traceback_by_default) ... ok\ntest_malformed_json_returns_invalid_chain (test_receipt_gate.LegacyReceiptGateTests.test_malformed_json_returns_invalid_chain) ... ok\ntest_memory_write_requires_user_intent (test_receipt_gate.LegacyReceiptGateTests.test_memory_write_requires_user_intent) ... ok\ntest_missing_evidence_quarantines (test_receipt_gate.LegacyReceiptGateTests.test_missing_evidence_quarantines) ... ok\ntest_missing_or_empty_receipt_file_does_not_pass (test_receipt_gate.LegacyReceiptGateTests.test_missing_or_empty_receipt_file_does_not_pass) ... ok\ntest_no_badge_when_context_exits_without_close (test_receipt_gate.LegacyReceiptGateTests.test_no_badge_when_context_exits_without_close) ... ok\ntest_raw_evidence_not_stored_unless_opt_in (test_receipt_gate.LegacyReceiptGateTests.test_raw_evidence_not_stored_unless_opt_in) ... ok\ntest_review_packet_lists_failures (test_receipt_gate.LegacyReceiptGateTests.test_review_packet_lists_failures) ... ok\ntest_changed_fields_and_wrong_code_are_blocked_before_execution (test_verified_commit.VerifiedCommitTests.test_changed_fields_and_wrong_code_are_blocked_before_execution) ... ok\ntest_exact_action_executes_once_then_replay_is_blocked (test_verified_commit.VerifiedCommitTests.test_exact_action_executes_once_then_replay_is_blocked) ... ok\ntest_executor_failure_spends_permission_and_fails_closed (test_verified_commit.VerifiedCommitTests.test_executor_failure_spends_permission_and_fails_closed) ... ok\ntest_existing_commit_receipt_carries_exact_private_authorization (test_verified_commit.VerifiedCommitTests.test_existing_commit_receipt_carries_exact_private_authorization) ... ok\ntest_expired_permission_is_blocked_before_execution (test_verified_commit.VerifiedCommitTests.test_expired_permission_is_blocked_before_execution) ... ok\ntest_ordinary_commit_is_not_portable_tool_permission (test_verified_commit.VerifiedCommitTests.test_ordinary_commit_is_not_portable_tool_permission) ... ok\ntest_receiver_policy_mismatch_denies_authorization (test_verified_commit.VerifiedCommitTests.test_receiver_policy_mismatch_denies_authorization) ... ok\ntest_required_permission_request_cannot_be_omitted (test_verified_commit.VerifiedCommitTests.test_required_permission_request_cannot_be_omitted) ... ok\ntest_tampered_receipt_is_blocked_before_execution (test_verified_commit.VerifiedCommitTests.test_tampered_receipt_is_blocked_before_execution) ... ok\ntest_thirty_two_processes_allow_exactly_one_execution (test_verified_commit.VerifiedCommitTests.test_thirty_two_processes_allow_exactly_one_execution) ... ok\ntest_two_simultaneous_uses_allow_exactly_one_execution (test_verified_commit.VerifiedCommitTests.test_two_simultaneous_uses_allow_exactly_one_execution) ... ok\ntest_calibration_is_disjoint_and_heldout_seeds_are_paired (test_warning_time_benchmark.WarningTimeBenchmarkTests.test_calibration_is_disjoint_and_heldout_seeds_are_paired) ... ok\ntest_clean_calibration_and_thresholds_reproduce_without_heldout_data (test_warning_time_benchmark.WarningTimeBenchmarkTests.test_clean_calibration_and_thresholds_reproduce_without_heldout_data) ... ok\ntest_external_anchor_cannot_choose_its_own_witness (test_warning_time_benchmark.WarningTimeBenchmarkTests.test_external_anchor_cannot_choose_its_own_witness) ... ok\ntest_heldout_counts_decisions_and_enforcement_are_separate (test_warning_time_benchmark.WarningTimeBenchmarkTests.test_heldout_counts_decisions_and_enforcement_are_separate) ... ok\ntest_independent_verifier_does_not_import_benchmark_modules (test_warning_time_benchmark.WarningTimeBenchmarkTests.test_independent_verifier_does_not_import_benchmark_modules) ... ok\ntest_label_swap_probe_uses_same_seed_and_follows_state_not_label (test_warning_time_benchmark.WarningTimeBenchmarkTests.test_label_swap_probe_uses_same_seed_and_follows_state_not_label) ... ok\ntest_metric_function_has_no_ground_truth_or_case_parameter (test_warning_time_benchmark.WarningTimeBenchmarkTests.test_metric_function_has_no_ground_truth_or_case_parameter) ... ok\ntest_paired_runs_match_control_before_injection (test_warning_time_benchmark.WarningTimeBenchmarkTests.test_paired_runs_match_control_before_injection) ... ok\ntest_profile_freshness_rejects_future_and_expired_profiles (test_warning_time_benchmark.WarningTimeBenchmarkTests.test_profile_freshness_rejects_future_and_expired_profiles) ... ok\ntest_profile_publication_and_external_anchor_verify (test_warning_time_benchmark.WarningTimeBenchmarkTests.test_profile_publication_and_external_anchor_verify) ... ok\ntest_reference_decision_logs_are_signed_and_chain_verify (test_warning_time_benchmark.WarningTimeBenchmarkTests.test_reference_decision_logs_are_signed_and_chain_verify) ... ok\ntest_warning_time_is_bad_action_minus_first_warning (test_warning_time_benchmark.WarningTimeBenchmarkTests.test_warning_time_is_bad_action_minus_first_warning) ... ok\n\n----------------------------------------------------------------------\nRan 93 tests in 2.180s\n\nOK (skipped=22)\n",
       "stdout": ""
     },
     {
       "command": [
-        "/tmp/receipt-gate-ci-fixed-venv/bin/python",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
         "examples/demo_all.py"
       ],
       "expected_returncodes": [
@@ -605,12 +605,12 @@
     },
     {
       "command": [
-        "/tmp/receipt-gate-ci-fixed-venv/bin/python",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
         "-m",
         "olp_gate.cli",
         "demo-proof-to-policy",
         "--output",
-        "/workspace/scratch/f244fb2c8a90/audits/receipt-gate-ci-fix/work/results/proof_to_policy_demo"
+        "/workspace/scratch/f244fb2c8a90/final-build/openline-receipt-gate-v0.5.0rc5-final/results/proof_to_policy_demo"
       ],
       "expected_returncodes": [
         0
@@ -619,11 +619,11 @@
       "passed": true,
       "returncode": 0,
       "stderr": "",
-      "stdout": "{\n  \"schema\": \"openline.proof_to_policy.demo.v0.2\",\n  \"passed\": true,\n  \"expected\": {\n    \"valid_signature_insufficient_evidence\": [\n      \"UNDECIDABLE\",\n      \"QUARANTINE\"\n    ],\n    \"complete_evidence_trusted_outcome\": [\n      \"VERIFIED\",\n      \"COMMIT\"\n    ],\n    \"exact_replay\": [\n      \"REJECTED\",\n      \"DENY\"\n    ],\n    \"unsupported_score\": [\n      \"UNDECIDABLE\",\n      \"NO_BADGE\"\n    ],\n    \"harmful_mutation\": [\n      \"REJECTED\",\n      \"ROLLBACK_REQUEST\"\n    ]\n  },\n  \"observed\": {\n    \"valid_signature_insufficient_evidence\": [\n      \"UNDECIDABLE\",\n      \"QUARANTINE\"\n    ],\n    \"complete_evidence_trusted_outcome\": [\n      \"VERIFIED\",\n      \"COMMIT\"\n    ],\n    \"exact_replay\": [\n      \"REJECTED\",\n      \"DENY\"\n    ],\n    \"unsupported_score\": [\n      \"UNDECIDABLE\",\n      \"NO_BADGE\"\n    ],\n    \"harmful_mutation\": [\n      \"REJECTED\",\n      \"ROLLBACK_REQUEST\"\n    ]\n  },\n  \"decision_log\": {\n    \"valid\": true,\n    \"count\": 5,\n    \"errors\": [],\n    \"last_hashes\": {\n      \"run-insufficient/session-insufficient\": \"7465d6a85b61953f07378384ec483d99f31819f2cfbc5602d21cb4f860b52a16\",\n      \"run-complete/session-complete\": \"ac5c651db7c3c630d002e08eab57c8d35e1c5fba006041cac1d4c73d5c00e2a6\",\n      \"run-score/session-score\": \"253b31bda18d34ffc64b31258f36b953695a561a50407be5e646e171fd5da935\",\n      \"run-mutation/session-mutation\": \"e46df94589e33b9b37f8eea24eaf02c8b089d99b724004e84e217bc530d54e6f\"\n    }\n  },\n  \"decision_receipt_count\": 5,\n  \"gate_public_key\": \"17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce\",\n  \"claim_boundary\": \"The demo proves deterministic policy behavior inside declared fixtures, not production safety.\"\n}\n"
+      "stdout": "{\n  \"schema\": \"openline.proof_to_policy.demo.v0.2\",\n  \"passed\": true,\n  \"expected\": {\n    \"valid_signature_insufficient_evidence\": [\n      \"UNDECIDABLE\",\n      \"QUARANTINE\"\n    ],\n    \"complete_evidence_trusted_outcome\": [\n      \"VERIFIED\",\n      \"COMMIT\"\n    ],\n    \"exact_replay\": [\n      \"REJECTED\",\n      \"DENY\"\n    ],\n    \"unsupported_score\": [\n      \"UNDECIDABLE\",\n      \"NO_BADGE\"\n    ],\n    \"harmful_mutation\": [\n      \"REJECTED\",\n      \"ROLLBACK_REQUEST\"\n    ]\n  },\n  \"observed\": {\n    \"valid_signature_insufficient_evidence\": [\n      \"UNDECIDABLE\",\n      \"QUARANTINE\"\n    ],\n    \"complete_evidence_trusted_outcome\": [\n      \"VERIFIED\",\n      \"COMMIT\"\n    ],\n    \"exact_replay\": [\n      \"REJECTED\",\n      \"DENY\"\n    ],\n    \"unsupported_score\": [\n      \"UNDECIDABLE\",\n      \"NO_BADGE\"\n    ],\n    \"harmful_mutation\": [\n      \"REJECTED\",\n      \"ROLLBACK_REQUEST\"\n    ]\n  },\n  \"decision_log\": {\n    \"valid\": true,\n    \"count\": 5,\n    \"errors\": [],\n    \"last_hashes\": {\n      \"run-insufficient/session-insufficient\": \"4d8317676a301aeb87e0d1625832f16a6b69b363220e12fdb4dcd70d06f37127\",\n      \"run-complete/session-complete\": \"1a840968c225ab402f51f91c47113be655415d4fb59f8fdfc096479ffd12b6c1\",\n      \"run-score/session-score\": \"2904ebf4eedb0088ec666e8aff18462520fe7d9ee456557c96dbf20e2fc638a7\",\n      \"run-mutation/session-mutation\": \"1339beacb46877ad9d7996955398d129fad0f28eef79c6633ef3d270a1b431be\"\n    }\n  },\n  \"decision_receipt_count\": 5,\n  \"gate_public_key\": \"17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce\",\n  \"claim_boundary\": \"The demo proves deterministic policy behavior inside declared fixtures, not production safety.\"\n}\n"
     },
     {
       "command": [
-        "/tmp/receipt-gate-ci-fixed-venv/bin/python",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
         "-m",
         "olp_gate.cli",
         "demo-model-swap",
@@ -638,7 +638,7 @@
         "--target-model",
         "fixture/target-model",
         "--output",
-        "/workspace/scratch/f244fb2c8a90/audits/receipt-gate-ci-fix/work/results/verified_model_swap_demo"
+        "/workspace/scratch/f244fb2c8a90/final-build/openline-receipt-gate-v0.5.0rc5-final/results/verified_model_swap_demo"
       ],
       "expected_returncodes": [
         0
@@ -647,15 +647,15 @@
       "passed": true,
       "returncode": 0,
       "stderr": "",
-      "stdout": "{\n  \"passed\": true,\n  \"decision\": \"COMMIT\",\n  \"verdict\": \"VERIFIED\",\n  \"gate_public_key\": \"f80cccdce4ae1c07ae208a2adf99a310ae4207e0306fa0236110b06827bbb8d0\",\n  \"proof_hash\": \"44184e569df9f024f91202cca2ae70aaf4ecfb9b3b7ec204d55fe6e783d38d51\",\n  \"proof_card_sha256\": \"f52c711c82d02a389b8763b5981cc7fffc7b758c178a02611b5dbf47aa8dd878\",\n  \"summary_lost_count\": 7,\n  \"capsule_matches_oracle\": true,\n  \"archive_matches_oracle\": true,\n  \"output_dir\": \"/workspace/scratch/f244fb2c8a90/audits/receipt-gate-ci-fix/work/results/verified_model_swap_demo\",\n  \"verification\": {\n    \"valid\": true,\n    \"errors\": [],\n    \"decision_log\": {\n      \"valid\": true,\n      \"count\": 1,\n      \"errors\": [],\n      \"last_hashes\": {\n        \"verified-model-swap-demo/verified-model-swap-demo\": \"afae4fa23da18a1c0845f0fbdcb50e49ff99aadf45e6d6e2ac86343d9ea58ee8\"\n      }\n    },\n    \"proof_card_sha256\": \"f52c711c82d02a389b8763b5981cc7fffc7b758c178a02611b5dbf47aa8dd878\",\n    \"decision\": \"COMMIT\",\n    \"verdict\": \"VERIFIED\",\n    \"independent_grade_passed\": true\n  },\n  \"verified_commit\": {\n    \"requested\": false,\n    \"authorized\": false,\n    \"authorization_hash\": null,\n    \"expires_at\": null\n  }\n}\n"
+      "stdout": "{\n  \"passed\": true,\n  \"decision\": \"COMMIT\",\n  \"verdict\": \"VERIFIED\",\n  \"gate_public_key\": \"f80cccdce4ae1c07ae208a2adf99a310ae4207e0306fa0236110b06827bbb8d0\",\n  \"proof_hash\": \"bde83a1f1649d421104b57c0951dc96e3d67e0e4b053c135a94f8ba4c19e8f20\",\n  \"proof_card_sha256\": \"c5c671f5f33d095ffa1f8b30728a5409ae3c2199f80f081146ecb30cd0148cc2\",\n  \"summary_lost_count\": 7,\n  \"capsule_matches_oracle\": true,\n  \"archive_matches_oracle\": true,\n  \"output_dir\": \"/workspace/scratch/f244fb2c8a90/final-build/openline-receipt-gate-v0.5.0rc5-final/results/verified_model_swap_demo\",\n  \"verification\": {\n    \"valid\": true,\n    \"errors\": [],\n    \"decision_log\": {\n      \"valid\": true,\n      \"count\": 1,\n      \"errors\": [],\n      \"last_hashes\": {\n        \"verified-model-swap-demo/verified-model-swap-demo\": \"23a610d08a13144168cb3fbb45578b7d43208e08ad7e847c597de14c90f803d8\"\n      }\n    },\n    \"proof_card_sha256\": \"c5c671f5f33d095ffa1f8b30728a5409ae3c2199f80f081146ecb30cd0148cc2\",\n    \"decision\": \"COMMIT\",\n    \"verdict\": \"VERIFIED\",\n    \"independent_grade_passed\": true\n  },\n  \"verified_commit\": {\n    \"requested\": false,\n    \"authorized\": false,\n    \"authorization_hash\": null,\n    \"expires_at\": null\n  }\n}\n"
     },
     {
       "command": [
-        "/tmp/receipt-gate-ci-fixed-venv/bin/python",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
         "-m",
         "olp_gate.cli",
         "verify-model-swap",
-        "/workspace/scratch/f244fb2c8a90/audits/receipt-gate-ci-fix/work/results/verified_model_swap_demo",
+        "/workspace/scratch/f244fb2c8a90/final-build/openline-receipt-gate-v0.5.0rc5-final/results/verified_model_swap_demo",
         "--half-life-output",
         "/workspace/scratch/f244fb2c8a90/verified-model-swap/openline-half-life/examples/demo_output",
         "--succession-policy-key",
@@ -672,11 +672,11 @@
       "passed": true,
       "returncode": 0,
       "stderr": "",
-      "stdout": "{\n  \"valid\": true,\n  \"errors\": [],\n  \"decision_log\": {\n    \"valid\": true,\n    \"count\": 1,\n    \"errors\": [],\n    \"last_hashes\": {\n      \"verified-model-swap-demo/verified-model-swap-demo\": \"afae4fa23da18a1c0845f0fbdcb50e49ff99aadf45e6d6e2ac86343d9ea58ee8\"\n    }\n  },\n  \"proof_card_sha256\": \"f52c711c82d02a389b8763b5981cc7fffc7b758c178a02611b5dbf47aa8dd878\",\n  \"decision\": \"COMMIT\",\n  \"verdict\": \"VERIFIED\",\n  \"independent_grade_passed\": true\n}\n"
+      "stdout": "{\n  \"valid\": true,\n  \"errors\": [],\n  \"decision_log\": {\n    \"valid\": true,\n    \"count\": 1,\n    \"errors\": [],\n    \"last_hashes\": {\n      \"verified-model-swap-demo/verified-model-swap-demo\": \"23a610d08a13144168cb3fbb45578b7d43208e08ad7e847c597de14c90f803d8\"\n    }\n  },\n  \"proof_card_sha256\": \"c5c671f5f33d095ffa1f8b30728a5409ae3c2199f80f081146ecb30cd0148cc2\",\n  \"decision\": \"COMMIT\",\n  \"verdict\": \"VERIFIED\",\n  \"independent_grade_passed\": true\n}\n"
     },
     {
       "command": [
-        "/tmp/receipt-gate-ci-fixed-venv/bin/python",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
         "-m",
         "olp_gate.cli",
         "demo-verified-commit",
@@ -691,7 +691,7 @@
         "--target-model",
         "fixture/model-b",
         "--output",
-        "/workspace/scratch/f244fb2c8a90/audits/receipt-gate-ci-fix/work/results/verified_commit_demo"
+        "/workspace/scratch/f244fb2c8a90/final-build/openline-receipt-gate-v0.5.0rc5-final/results/verified_commit_demo"
       ],
       "expected_returncodes": [
         0
@@ -700,15 +700,15 @@
       "passed": true,
       "returncode": 0,
       "stderr": "",
-      "stdout": "{\n  \"passed\": true,\n  \"decision\": \"COMMIT\",\n  \"verdict\": \"VERIFIED\",\n  \"gate_public_key\": \"f80cccdce4ae1c07ae208a2adf99a310ae4207e0306fa0236110b06827bbb8d0\",\n  \"authorization_hash\": \"8fa0229e206f43842a134529f564fe04974f91f9a85ee8aee0a7f441840234ee\",\n  \"action_hash\": \"a82f6358c7096aceca459647d4b274baafc17929815954a209a4bbc460c3999c\",\n  \"mutation_count\": 9,\n  \"mutations_blocked_before_execution\": 9,\n  \"simultaneous_authorized\": 1,\n  \"simultaneous_blocked\": 1,\n  \"replay_blocked\": true,\n  \"approved_action_file_sha256\": \"6a7d11f8cf7b79b16bf4e5407e604bb244f807265f7a5a5e9dd65931a224b674\",\n  \"output_dir\": \"/workspace/scratch/f244fb2c8a90/audits/receipt-gate-ci-fix/work/results/verified_commit_demo\",\n  \"verification\": {\n    \"valid\": true,\n    \"errors\": [],\n    \"model_swap\": {\n      \"valid\": true,\n      \"errors\": [],\n      \"decision_log\": {\n        \"valid\": true,\n        \"count\": 1,\n        \"errors\": [],\n        \"last_hashes\": {\n          \"verified-model-swap-demo/verified-model-swap-demo\": \"1a65f5be065eee868a8479df52c8538cc083bb8728da51f9bdf96724cb6f0273\"\n        }\n      },\n      \"proof_card_sha256\": \"cde5e2c43f96223ab84eebcac2d83d71cb4a7ce95f646aa48c554e31d1ada6b6\",\n      \"decision\": \"COMMIT\",\n      \"verdict\": \"VERIFIED\",\n      \"independent_grade_passed\": true\n    },\n    \"decision_payload_hash\": \"1a65f5be065eee868a8479df52c8538cc083bb8728da51f9bdf96724cb6f0273\",\n    \"authorization_hash\": \"8fa0229e206f43842a134529f564fe04974f91f9a85ee8aee0a7f441840234ee\",\n    \"authorized_attempts\": 1,\n    \"blocked_attempts\": 11,\n    \"completed_attempts\": 1,\n    \"executed_action_file_sha256\": \"6a7d11f8cf7b79b16bf4e5407e604bb244f807265f7a5a5e9dd65931a224b674\"\n  }\n}\n"
+      "stdout": "{\n  \"passed\": true,\n  \"decision\": \"COMMIT\",\n  \"verdict\": \"VERIFIED\",\n  \"gate_public_key\": \"f80cccdce4ae1c07ae208a2adf99a310ae4207e0306fa0236110b06827bbb8d0\",\n  \"authorization_hash\": \"eda3cb98d144d28d98357d957995a869efbed8fc30efa4a9f13f14db6ad81be2\",\n  \"action_hash\": \"158449f8f1de023ad6810038e279c641fe2146a25cc95b22617960dd6e4ea54b\",\n  \"mutation_count\": 9,\n  \"mutations_blocked_before_execution\": 9,\n  \"simultaneous_authorized\": 1,\n  \"simultaneous_blocked\": 1,\n  \"replay_blocked\": true,\n  \"approved_action_file_sha256\": \"dc149f29dd589c3751dca868a59bf371215873bb4202d712dd885f312032b305\",\n  \"output_dir\": \"/workspace/scratch/f244fb2c8a90/final-build/openline-receipt-gate-v0.5.0rc5-final/results/verified_commit_demo\",\n  \"verification\": {\n    \"valid\": true,\n    \"errors\": [],\n    \"model_swap\": {\n      \"valid\": true,\n      \"errors\": [],\n      \"decision_log\": {\n        \"valid\": true,\n        \"count\": 1,\n        \"errors\": [],\n        \"last_hashes\": {\n          \"verified-model-swap-demo/verified-model-swap-demo\": \"bbfcc1902614dace97cd9f9cdfd55114fd655c9bfb86615ff4d7a9080fad97d0\"\n        }\n      },\n      \"proof_card_sha256\": \"450f984377fe358b2e1879b5399e93b127de9a112b6a6ded0a056a97a63b8030\",\n      \"decision\": \"COMMIT\",\n      \"verdict\": \"VERIFIED\",\n      \"independent_grade_passed\": true\n    },\n    \"decision_payload_hash\": \"bbfcc1902614dace97cd9f9cdfd55114fd655c9bfb86615ff4d7a9080fad97d0\",\n    \"authorization_hash\": \"eda3cb98d144d28d98357d957995a869efbed8fc30efa4a9f13f14db6ad81be2\",\n    \"authorized_attempts\": 1,\n    \"blocked_attempts\": 11,\n    \"completed_attempts\": 1,\n    \"executed_action_file_sha256\": \"dc149f29dd589c3751dca868a59bf371215873bb4202d712dd885f312032b305\"\n  }\n}\n"
     },
     {
       "command": [
-        "/tmp/receipt-gate-ci-fixed-venv/bin/python",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
         "-m",
         "olp_gate.cli",
         "verify-verified-commit",
-        "/workspace/scratch/f244fb2c8a90/audits/receipt-gate-ci-fix/work/results/verified_commit_demo",
+        "/workspace/scratch/f244fb2c8a90/final-build/openline-receipt-gate-v0.5.0rc5-final/results/verified_commit_demo",
         "--half-life-output",
         "/workspace/scratch/f244fb2c8a90/verified-model-swap/openline-half-life/examples/demo_output",
         "--succession-policy-key",
@@ -725,13 +725,13 @@
       "passed": true,
       "returncode": 0,
       "stderr": "",
-      "stdout": "{\n  \"valid\": true,\n  \"errors\": [],\n  \"model_swap\": {\n    \"valid\": true,\n    \"errors\": [],\n    \"decision_log\": {\n      \"valid\": true,\n      \"count\": 1,\n      \"errors\": [],\n      \"last_hashes\": {\n        \"verified-model-swap-demo/verified-model-swap-demo\": \"1a65f5be065eee868a8479df52c8538cc083bb8728da51f9bdf96724cb6f0273\"\n      }\n    },\n    \"proof_card_sha256\": \"cde5e2c43f96223ab84eebcac2d83d71cb4a7ce95f646aa48c554e31d1ada6b6\",\n    \"decision\": \"COMMIT\",\n    \"verdict\": \"VERIFIED\",\n    \"independent_grade_passed\": true\n  },\n  \"decision_payload_hash\": \"1a65f5be065eee868a8479df52c8538cc083bb8728da51f9bdf96724cb6f0273\",\n  \"authorization_hash\": \"8fa0229e206f43842a134529f564fe04974f91f9a85ee8aee0a7f441840234ee\",\n  \"authorized_attempts\": 1,\n  \"blocked_attempts\": 11,\n  \"completed_attempts\": 1,\n  \"executed_action_file_sha256\": \"6a7d11f8cf7b79b16bf4e5407e604bb244f807265f7a5a5e9dd65931a224b674\"\n}\n"
+      "stdout": "{\n  \"valid\": true,\n  \"errors\": [],\n  \"model_swap\": {\n    \"valid\": true,\n    \"errors\": [],\n    \"decision_log\": {\n      \"valid\": true,\n      \"count\": 1,\n      \"errors\": [],\n      \"last_hashes\": {\n        \"verified-model-swap-demo/verified-model-swap-demo\": \"bbfcc1902614dace97cd9f9cdfd55114fd655c9bfb86615ff4d7a9080fad97d0\"\n      }\n    },\n    \"proof_card_sha256\": \"450f984377fe358b2e1879b5399e93b127de9a112b6a6ded0a056a97a63b8030\",\n    \"decision\": \"COMMIT\",\n    \"verdict\": \"VERIFIED\",\n    \"independent_grade_passed\": true\n  },\n  \"decision_payload_hash\": \"bbfcc1902614dace97cd9f9cdfd55114fd655c9bfb86615ff4d7a9080fad97d0\",\n  \"authorization_hash\": \"eda3cb98d144d28d98357d957995a869efbed8fc30efa4a9f13f14db6ad81be2\",\n  \"authorized_attempts\": 1,\n  \"blocked_attempts\": 11,\n  \"completed_attempts\": 1,\n  \"executed_action_file_sha256\": \"dc149f29dd589c3751dca868a59bf371215873bb4202d712dd885f312032b305\"\n}\n"
     },
     {
       "command": [
         "node",
         "verify-decision-node.mjs",
-        "/workspace/scratch/f244fb2c8a90/audits/receipt-gate-ci-fix/work/results/verified_commit_demo/decision_receipts.jsonl",
+        "/workspace/scratch/f244fb2c8a90/final-build/openline-receipt-gate-v0.5.0rc5-final/results/verified_commit_demo/decision_receipts.jsonl",
         "--gate-key",
         "f80cccdce4ae1c07ae208a2adf99a310ae4207e0306fa0236110b06827bbb8d0"
       ],
@@ -746,11 +746,11 @@
     },
     {
       "command": [
-        "/tmp/receipt-gate-ci-fixed-venv/bin/python",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
         "-m",
         "olp_gate.cli",
         "verify-decision",
-        "/workspace/scratch/f244fb2c8a90/audits/receipt-gate-ci-fix/work/results/proof_to_policy_demo/decision_receipts.jsonl",
+        "/workspace/scratch/f244fb2c8a90/final-build/openline-receipt-gate-v0.5.0rc5-final/results/proof_to_policy_demo/decision_receipts.jsonl",
         "--gate-key",
         "17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce"
       ],
@@ -761,13 +761,13 @@
       "passed": true,
       "returncode": 0,
       "stderr": "",
-      "stdout": "{\n  \"valid\": true,\n  \"count\": 5,\n  \"errors\": [],\n  \"last_hashes\": {\n    \"run-insufficient/session-insufficient\": \"7465d6a85b61953f07378384ec483d99f31819f2cfbc5602d21cb4f860b52a16\",\n    \"run-complete/session-complete\": \"ac5c651db7c3c630d002e08eab57c8d35e1c5fba006041cac1d4c73d5c00e2a6\",\n    \"run-score/session-score\": \"253b31bda18d34ffc64b31258f36b953695a561a50407be5e646e171fd5da935\",\n    \"run-mutation/session-mutation\": \"e46df94589e33b9b37f8eea24eaf02c8b089d99b724004e84e217bc530d54e6f\"\n  }\n}\n"
+      "stdout": "{\n  \"valid\": true,\n  \"count\": 5,\n  \"errors\": [],\n  \"last_hashes\": {\n    \"run-insufficient/session-insufficient\": \"4d8317676a301aeb87e0d1625832f16a6b69b363220e12fdb4dcd70d06f37127\",\n    \"run-complete/session-complete\": \"1a840968c225ab402f51f91c47113be655415d4fb59f8fdfc096479ffd12b6c1\",\n    \"run-score/session-score\": \"2904ebf4eedb0088ec666e8aff18462520fe7d9ee456557c96dbf20e2fc638a7\",\n    \"run-mutation/session-mutation\": \"1339beacb46877ad9d7996955398d129fad0f28eef79c6633ef3d270a1b431be\"\n  }\n}\n"
     },
     {
       "command": [
         "node",
         "verify-decision-node.mjs",
-        "/workspace/scratch/f244fb2c8a90/audits/receipt-gate-ci-fix/work/results/proof_to_policy_demo/decision_receipts.jsonl",
+        "/workspace/scratch/f244fb2c8a90/final-build/openline-receipt-gate-v0.5.0rc5-final/results/proof_to_policy_demo/decision_receipts.jsonl",
         "--gate-key",
         "17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce"
       ],
@@ -782,11 +782,12 @@
     },
     {
       "command": [
-        "/tmp/receipt-gate-ci-fixed-venv/bin/python",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
         "-m",
         "compileall",
         "-q",
-        "olp_gate"
+        "olp_gate",
+        "benchmarks"
       ],
       "expected_returncodes": [
         0
@@ -799,7 +800,21 @@
     },
     {
       "command": [
-        "/tmp/receipt-gate-ci-fixed-venv/bin/python",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/verify_warning_time_benchmark.py"
+      ],
+      "expected_returncodes": [
+        0
+      ],
+      "name": "warning_time_benchmark_verifier",
+      "passed": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\n  \"calibration_clean_runs\": 40,\n  \"calibration_evidence_hash\": \"7c80e92c12c3782dbc7a2c923331131ed82cc224f25ba01c7351d3131fd66c50\",\n  \"claim_boundary\": \"This seeded synthetic benchmark tests whether a disclosed representation predicts named handoff failures on this exact agent stack. It does not prove the metric ontology is true, establish universal thresholds, or authorize production actions.\",\n  \"clean_false_alarms\": 0,\n  \"errors\": [],\n  \"external_anchor_payload_hash\": \"2d515119634f4252031488381b08e6ef9c53f0571460af2eee5a09871b2d5433\",\n  \"external_custody_path\": \"/OpenLine/Calibration Anchors/warning-time-v4-calibration-freeze-publication.json\",\n  \"final_decision_counts\": {\n    \"control\": {\n      \"COMMIT\": 20\n    },\n    \"dropped_counterevidence\": {\n      \"QUARANTINE\": 20\n    },\n    \"unflagged_contradiction\": {\n      \"DENY\": 20\n    }\n  },\n  \"freeze_publication_payload_hash\": \"3d8e5a07a9b15845a0f6c90f68de972533c83ac4c77cab74be5a6eb74c1586cf\",\n  \"heldout_clean_runs\": 20,\n  \"heldout_corruption_runs\": 40,\n  \"independent_of_benchmark_modules\": true,\n  \"metric_function_boundary\": {\n    \"forbidden\": [],\n    \"parameters\": [\n      \"seed\",\n      \"step\",\n      \"observation\",\n      \"previous_observation\"\n    ]\n  },\n  \"missed_corruptions\": 0,\n  \"no_advance_warning_corruptions\": 0,\n  \"paired_heldout_seeds\": true,\n  \"profile_payload_hash\": \"9e8175cdc54348832242785e0b86798195df0e4133ea457057e208e7f81a5068\",\n  \"report_hash\": \"1ef425d5eebede165630469e63d93555bb4a99ceb4c59c842b4ac9b0b03c3db5\",\n  \"schema\": \"openline.warning-time.independent-verification.v4\",\n  \"thresholds_hash\": \"d371b012827cbfeb684323845ce8f97d39f8b0eded5003a00df6f028d4c39938\",\n  \"valid\": true\n}\n"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
         "scripts/verify_pipelock_benchmark.py"
       ],
       "expected_returncodes": [
@@ -830,7 +845,7 @@
     },
     {
       "command": [
-        "/tmp/receipt-gate-ci-fixed-venv/bin/python",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
         "scripts/verify_assay_benchmark.py"
       ],
       "expected_returncodes": [
@@ -861,11 +876,11 @@
     },
     {
       "command": [
-        "/tmp/receipt-gate-ci-fixed-venv/bin/python",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
         "-m",
         "olp_gate.cli",
         "verify-decision",
-        "/tmp/openline-release-zfflvw21/tampered.jsonl",
+        "/tmp/openline-release-bzotybfv/tampered.jsonl",
         "--gate-key",
         "17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce"
       ],
@@ -876,13 +891,13 @@
       "passed": true,
       "returncode": 2,
       "stderr": "",
-      "stdout": "{\n  \"valid\": false,\n  \"count\": 5,\n  \"errors\": [\n    \"receipt_2:decision_recompute_mismatch\",\n    \"receipt_2:payload_hash_mismatch\"\n  ],\n  \"last_hashes\": {\n    \"run-insufficient/session-insufficient\": \"7465d6a85b61953f07378384ec483d99f31819f2cfbc5602d21cb4f860b52a16\",\n    \"run-complete/session-complete\": \"ac5c651db7c3c630d002e08eab57c8d35e1c5fba006041cac1d4c73d5c00e2a6\",\n    \"run-score/session-score\": \"253b31bda18d34ffc64b31258f36b953695a561a50407be5e646e171fd5da935\",\n    \"run-mutation/session-mutation\": \"e46df94589e33b9b37f8eea24eaf02c8b089d99b724004e84e217bc530d54e6f\"\n  }\n}\n"
+      "stdout": "{\n  \"valid\": false,\n  \"count\": 5,\n  \"errors\": [\n    \"receipt_2:decision_recompute_mismatch\",\n    \"receipt_2:payload_hash_mismatch\"\n  ],\n  \"last_hashes\": {\n    \"run-insufficient/session-insufficient\": \"4d8317676a301aeb87e0d1625832f16a6b69b363220e12fdb4dcd70d06f37127\",\n    \"run-complete/session-complete\": \"1a840968c225ab402f51f91c47113be655415d4fb59f8fdfc096479ffd12b6c1\",\n    \"run-score/session-score\": \"2904ebf4eedb0088ec666e8aff18462520fe7d9ee456557c96dbf20e2fc638a7\",\n    \"run-mutation/session-mutation\": \"1339beacb46877ad9d7996955398d129fad0f28eef79c6633ef3d270a1b431be\"\n  }\n}\n"
     },
     {
       "command": [
         "node",
         "verify-decision-node.mjs",
-        "/tmp/openline-release-zfflvw21/tampered.jsonl",
+        "/tmp/openline-release-bzotybfv/tampered.jsonl",
         "--gate-key",
         "17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce"
       ],
@@ -897,13 +912,13 @@
     },
     {
       "command": [
-        "/tmp/receipt-gate-ci-fixed-venv/bin/python",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
         "-m",
         "pip",
         "wheel",
         ".",
         "--wheel-dir",
-        "/tmp/openline-release-zfflvw21/wheelhouse",
+        "/tmp/openline-release-bzotybfv/wheelhouse",
         "--no-deps",
         "--no-build-isolation"
       ],
@@ -914,17 +929,17 @@
       "passed": true,
       "returncode": 0,
       "stderr": "",
-      "stdout": "Processing /workspace/scratch/f244fb2c8a90/audits/receipt-gate-ci-fix/work\n  Preparing metadata (pyproject.toml): started\n  Preparing metadata (pyproject.toml): finished with status 'done'\nBuilding wheels for collected packages: openline-receipt-gate\n  Building wheel for openline-receipt-gate (pyproject.toml): started\n  Building wheel for openline-receipt-gate (pyproject.toml): finished with status 'done'\n  Created wheel for openline-receipt-gate: filename=openline_receipt_gate-0.5.0rc2-py3-none-any.whl size=74380 sha256=0e97b025355adf4d67a79cc3b4e961c951cd11f31234aaa13e36a5b02dbca7fd\n  Stored in directory: /tmp/pip-ephem-wheel-cache-w9v8hv39/wheels/54/cc/c5/c29abecd1b6554fc68b5b701f4a7a15399b0a76cc991baad52\nSuccessfully built openline-receipt-gate\n"
+      "stdout": "Processing /workspace/scratch/f244fb2c8a90/final-build/openline-receipt-gate-v0.5.0rc5-final\n  Preparing metadata (pyproject.toml): started\n  Preparing metadata (pyproject.toml): finished with status 'done'\nBuilding wheels for collected packages: openline-receipt-gate\n  Building wheel for openline-receipt-gate (pyproject.toml): started\n  Building wheel for openline-receipt-gate (pyproject.toml): finished with status 'done'\n  Created wheel for openline-receipt-gate: filename=openline_receipt_gate-0.5.0rc5-py3-none-any.whl size=75445 sha256=aafe9001a8edb6249c5397bb9965d8b2588acc1303635f23005d7af9ec481c26\n  Stored in directory: /tmp/openline-release-bzotybfv/pip-cache/wheels/fd/75/e6/799f684fde9f2133716dc8ec2b1e23f13c9733c2ff05c07ec6\nSuccessfully built openline-receipt-gate\n"
     },
     {
       "command": [
-        "/tmp/receipt-gate-ci-fixed-venv/bin/python",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
         "-m",
         "pip",
         "install",
-        "/tmp/openline-release-zfflvw21/wheelhouse/openline_receipt_gate-0.5.0rc2-py3-none-any.whl",
+        "/tmp/openline-release-bzotybfv/wheelhouse/openline_receipt_gate-0.5.0rc5-py3-none-any.whl",
         "--target",
-        "/tmp/openline-release-zfflvw21/site",
+        "/tmp/openline-release-bzotybfv/site",
         "--no-deps",
         "--no-index"
       ],
@@ -934,17 +949,17 @@
       "name": "clean_wheel_install",
       "passed": true,
       "returncode": 0,
-      "stderr": "",
-      "stdout": "Processing /tmp/openline-release-zfflvw21/wheelhouse/openline_receipt_gate-0.5.0rc2-py3-none-any.whl\nInstalling collected packages: openline-receipt-gate\nSuccessfully installed openline-receipt-gate-0.5.0rc2\n"
+      "stderr": "WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n",
+      "stdout": "Processing /tmp/openline-release-bzotybfv/wheelhouse/openline_receipt_gate-0.5.0rc5-py3-none-any.whl\nInstalling collected packages: openline-receipt-gate\nSuccessfully installed openline-receipt-gate-0.5.0rc5\n"
     },
     {
       "command": [
-        "/tmp/receipt-gate-ci-fixed-venv/bin/python",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
         "-m",
         "olp_gate.cli",
         "demo-proof-to-policy",
         "--output",
-        "/tmp/openline-release-zfflvw21/outside/installed_demo"
+        "/tmp/openline-release-bzotybfv/outside/installed_demo"
       ],
       "expected_returncodes": [
         0
@@ -953,13 +968,13 @@
       "passed": true,
       "returncode": 0,
       "stderr": "",
-      "stdout": "{\n  \"schema\": \"openline.proof_to_policy.demo.v0.2\",\n  \"passed\": true,\n  \"expected\": {\n    \"valid_signature_insufficient_evidence\": [\n      \"UNDECIDABLE\",\n      \"QUARANTINE\"\n    ],\n    \"complete_evidence_trusted_outcome\": [\n      \"VERIFIED\",\n      \"COMMIT\"\n    ],\n    \"exact_replay\": [\n      \"REJECTED\",\n      \"DENY\"\n    ],\n    \"unsupported_score\": [\n      \"UNDECIDABLE\",\n      \"NO_BADGE\"\n    ],\n    \"harmful_mutation\": [\n      \"REJECTED\",\n      \"ROLLBACK_REQUEST\"\n    ]\n  },\n  \"observed\": {\n    \"valid_signature_insufficient_evidence\": [\n      \"UNDECIDABLE\",\n      \"QUARANTINE\"\n    ],\n    \"complete_evidence_trusted_outcome\": [\n      \"VERIFIED\",\n      \"COMMIT\"\n    ],\n    \"exact_replay\": [\n      \"REJECTED\",\n      \"DENY\"\n    ],\n    \"unsupported_score\": [\n      \"UNDECIDABLE\",\n      \"NO_BADGE\"\n    ],\n    \"harmful_mutation\": [\n      \"REJECTED\",\n      \"ROLLBACK_REQUEST\"\n    ]\n  },\n  \"decision_log\": {\n    \"valid\": true,\n    \"count\": 5,\n    \"errors\": [],\n    \"last_hashes\": {\n      \"run-insufficient/session-insufficient\": \"64c0e1960b063cb121050acdc285359bdc524304a7d2dc968d1b5a60091195c1\",\n      \"run-complete/session-complete\": \"5da262f5618f99f05ed0441dbdec6a3b28a03fd3d6ee955dd80eb38e693f8f22\",\n      \"run-score/session-score\": \"9285e2494652c8ec94c3b0932a54568e050d677a156255c89b2030fa387405c3\",\n      \"run-mutation/session-mutation\": \"5725666e873d5351a90a2a29e37cd710ea390aef45ff2b8e06bd914550627b44\"\n    }\n  },\n  \"decision_receipt_count\": 5,\n  \"gate_public_key\": \"17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce\",\n  \"claim_boundary\": \"The demo proves deterministic policy behavior inside declared fixtures, not production safety.\"\n}\n"
+      "stdout": "{\n  \"schema\": \"openline.proof_to_policy.demo.v0.2\",\n  \"passed\": true,\n  \"expected\": {\n    \"valid_signature_insufficient_evidence\": [\n      \"UNDECIDABLE\",\n      \"QUARANTINE\"\n    ],\n    \"complete_evidence_trusted_outcome\": [\n      \"VERIFIED\",\n      \"COMMIT\"\n    ],\n    \"exact_replay\": [\n      \"REJECTED\",\n      \"DENY\"\n    ],\n    \"unsupported_score\": [\n      \"UNDECIDABLE\",\n      \"NO_BADGE\"\n    ],\n    \"harmful_mutation\": [\n      \"REJECTED\",\n      \"ROLLBACK_REQUEST\"\n    ]\n  },\n  \"observed\": {\n    \"valid_signature_insufficient_evidence\": [\n      \"UNDECIDABLE\",\n      \"QUARANTINE\"\n    ],\n    \"complete_evidence_trusted_outcome\": [\n      \"VERIFIED\",\n      \"COMMIT\"\n    ],\n    \"exact_replay\": [\n      \"REJECTED\",\n      \"DENY\"\n    ],\n    \"unsupported_score\": [\n      \"UNDECIDABLE\",\n      \"NO_BADGE\"\n    ],\n    \"harmful_mutation\": [\n      \"REJECTED\",\n      \"ROLLBACK_REQUEST\"\n    ]\n  },\n  \"decision_log\": {\n    \"valid\": true,\n    \"count\": 5,\n    \"errors\": [],\n    \"last_hashes\": {\n      \"run-insufficient/session-insufficient\": \"44c5b3d9319c3334c4e498faa37d3ff9337befa0309e6425adfc978c0e1e0c77\",\n      \"run-complete/session-complete\": \"423eec0d28b9d7aafdb2830d4305bd096360f877d7bb3a2bf2df762eb045cabb\",\n      \"run-score/session-score\": \"220809cc458d1053af1245217f7db6d0477fd2da001015c931af0871e648a0a8\",\n      \"run-mutation/session-mutation\": \"b009a9cd9717c9bbd63590e03fff70eda971a0a298c668775a4942120673b265\"\n    }\n  },\n  \"decision_receipt_count\": 5,\n  \"gate_public_key\": \"17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce\",\n  \"claim_boundary\": \"The demo proves deterministic policy behavior inside declared fixtures, not production safety.\"\n}\n"
     },
     {
       "command": [
         "node",
-        "/workspace/scratch/f244fb2c8a90/audits/receipt-gate-ci-fix/work/verify-decision-node.mjs",
-        "/tmp/openline-release-zfflvw21/outside/installed_demo/decision_receipts.jsonl",
+        "/workspace/scratch/f244fb2c8a90/final-build/openline-receipt-gate-v0.5.0rc5-final/verify-decision-node.mjs",
+        "/tmp/openline-release-bzotybfv/outside/installed_demo/decision_receipts.jsonl",
         "--gate-key",
         "17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce"
       ],
@@ -990,7 +1005,18 @@
         "verified_commit_one_simultaneous_authorized": true,
         "verified_commit_one_simultaneous_blocked": true,
         "verified_commit_passed": true,
-        "verified_commit_replay_blocked": true
+        "verified_commit_replay_blocked": true,
+        "warning_time_calibration_and_heldout_split": true,
+        "warning_time_chronology_valid": true,
+        "warning_time_decisions_match": true,
+        "warning_time_external_custody_anchor_valid": true,
+        "warning_time_heldout_clean_false_alarms_zero": true,
+        "warning_time_label_swap_probe_passed": true,
+        "warning_time_missed_corruptions_zero": true,
+        "warning_time_observable_state_only": true,
+        "warning_time_paired_heldout_seeds": true,
+        "warning_time_positive_windows": true,
+        "warning_time_profile_signature_valid": true
       },
       "failed_conditions": [],
       "name": "release_assertions",
@@ -998,10 +1024,10 @@
     }
   ],
   "claim_boundary": "A passing deterministic release gate does not prove production safety, issuer honesty, complete capture, live provider execution, universal model portability, legal ownership, witness independence, rollback execution, or globally exactly-once side effects. Verified Model Swap is exact only over the disclosed receiver decision projection and externally pinned Half-Life fixture. Verified Commit proves receiver-side one-use authorization only when the destination tool enters through the disclosed checker and shares its atomic ledger; a crash after consumption fails closed.",
-  "created_at": "2026-07-19T07:27:04.254245Z",
+  "created_at": "2026-07-27T04:11:50.744698Z",
   "environment": {
     "node": "v24.14.0",
-    "platform": "Linux-6.12.47-x86_64-with-glibc2.39",
+    "platform": "Linux-6.12.13-x86_64-with-glibc2.39",
     "python": "3.12.13"
   },
   "optional_integrations": {
@@ -1552,10 +1578,10 @@
       "count": 5,
       "errors": [],
       "last_hashes": {
-        "run-complete/session-complete": "ac5c651db7c3c630d002e08eab57c8d35e1c5fba006041cac1d4c73d5c00e2a6",
-        "run-insufficient/session-insufficient": "7465d6a85b61953f07378384ec483d99f31819f2cfbc5602d21cb4f860b52a16",
-        "run-mutation/session-mutation": "e46df94589e33b9b37f8eea24eaf02c8b089d99b724004e84e217bc530d54e6f",
-        "run-score/session-score": "253b31bda18d34ffc64b31258f36b953695a561a50407be5e646e171fd5da935"
+        "run-complete/session-complete": "1a840968c225ab402f51f91c47113be655415d4fb59f8fdfc096479ffd12b6c1",
+        "run-insufficient/session-insufficient": "4d8317676a301aeb87e0d1625832f16a6b69b363220e12fdb4dcd70d06f37127",
+        "run-mutation/session-mutation": "1339beacb46877ad9d7996955398d129fad0f28eef79c6633ef3d270a1b431be",
+        "run-score/session-score": "2904ebf4eedb0088ec666e8aff18462520fe7d9ee456557c96dbf20e2fc638a7"
       },
       "valid": true
     },
@@ -1636,56 +1662,56 @@
   },
   "repo": "openline-receipt-gate",
   "schema": "openline.release_run_report.v0.2",
-  "test_count": 80,
-  "test_executed": 66,
+  "test_count": 93,
+  "test_executed": 79,
   "test_matrix": {
     "current_environment": {
-      "discovered": 80,
-      "executed": 66,
+      "discovered": 93,
+      "executed": 79,
       "skipped": 14
     },
     "without_optional_integrations": {
-      "discovered": 80,
-      "executed": 58,
+      "discovered": 93,
+      "executed": 71,
       "skipped": 22
     }
   },
   "test_skipped": 14,
   "verified_commit": {
-    "action_hash": "a82f6358c7096aceca459647d4b274baafc17929815954a209a4bbc460c3999c",
-    "approved_action_file_sha256": "6a7d11f8cf7b79b16bf4e5407e604bb244f807265f7a5a5e9dd65931a224b674",
-    "authorization_hash": "8fa0229e206f43842a134529f564fe04974f91f9a85ee8aee0a7f441840234ee",
+    "action_hash": "158449f8f1de023ad6810038e279c641fe2146a25cc95b22617960dd6e4ea54b",
+    "approved_action_file_sha256": "dc149f29dd589c3751dca868a59bf371215873bb4202d712dd885f312032b305",
+    "authorization_hash": "eda3cb98d144d28d98357d957995a869efbed8fc30efa4a9f13f14db6ad81be2",
     "decision": "COMMIT",
     "gate_public_key": "f80cccdce4ae1c07ae208a2adf99a310ae4207e0306fa0236110b06827bbb8d0",
     "mutation_count": 9,
     "mutations_blocked_before_execution": 9,
-    "output_dir": "/workspace/scratch/f244fb2c8a90/audits/receipt-gate-ci-fix/work/results/verified_commit_demo",
+    "output_dir": "/workspace/scratch/f244fb2c8a90/final-build/openline-receipt-gate-v0.5.0rc5-final/results/verified_commit_demo",
     "passed": true,
     "replay_blocked": true,
     "simultaneous_authorized": 1,
     "simultaneous_blocked": 1,
     "verdict": "VERIFIED",
     "verification": {
-      "authorization_hash": "8fa0229e206f43842a134529f564fe04974f91f9a85ee8aee0a7f441840234ee",
+      "authorization_hash": "eda3cb98d144d28d98357d957995a869efbed8fc30efa4a9f13f14db6ad81be2",
       "authorized_attempts": 1,
       "blocked_attempts": 11,
       "completed_attempts": 1,
-      "decision_payload_hash": "1a65f5be065eee868a8479df52c8538cc083bb8728da51f9bdf96724cb6f0273",
+      "decision_payload_hash": "bbfcc1902614dace97cd9f9cdfd55114fd655c9bfb86615ff4d7a9080fad97d0",
       "errors": [],
-      "executed_action_file_sha256": "6a7d11f8cf7b79b16bf4e5407e604bb244f807265f7a5a5e9dd65931a224b674",
+      "executed_action_file_sha256": "dc149f29dd589c3751dca868a59bf371215873bb4202d712dd885f312032b305",
       "model_swap": {
         "decision": "COMMIT",
         "decision_log": {
           "count": 1,
           "errors": [],
           "last_hashes": {
-            "verified-model-swap-demo/verified-model-swap-demo": "1a65f5be065eee868a8479df52c8538cc083bb8728da51f9bdf96724cb6f0273"
+            "verified-model-swap-demo/verified-model-swap-demo": "bbfcc1902614dace97cd9f9cdfd55114fd655c9bfb86615ff4d7a9080fad97d0"
           },
           "valid": true
         },
         "errors": [],
         "independent_grade_passed": true,
-        "proof_card_sha256": "cde5e2c43f96223ab84eebcac2d83d71cb4a7ce95f646aa48c554e31d1ada6b6",
+        "proof_card_sha256": "450f984377fe358b2e1879b5399e93b127de9a112b6a6ded0a056a97a63b8030",
         "valid": true,
         "verdict": "VERIFIED"
       },
@@ -1697,10 +1723,10 @@
     "capsule_matches_oracle": true,
     "decision": "COMMIT",
     "gate_public_key": "f80cccdce4ae1c07ae208a2adf99a310ae4207e0306fa0236110b06827bbb8d0",
-    "output_dir": "/workspace/scratch/f244fb2c8a90/audits/receipt-gate-ci-fix/work/results/verified_model_swap_demo",
+    "output_dir": "/workspace/scratch/f244fb2c8a90/final-build/openline-receipt-gate-v0.5.0rc5-final/results/verified_model_swap_demo",
     "passed": true,
-    "proof_card_sha256": "f52c711c82d02a389b8763b5981cc7fffc7b758c178a02611b5dbf47aa8dd878",
-    "proof_hash": "44184e569df9f024f91202cca2ae70aaf4ecfb9b3b7ec204d55fe6e783d38d51",
+    "proof_card_sha256": "c5c671f5f33d095ffa1f8b30728a5409ae3c2199f80f081146ecb30cd0148cc2",
+    "proof_hash": "bde83a1f1649d421104b57c0951dc96e3d67e0e4b053c135a94f8ba4c19e8f20",
     "summary_lost_count": 7,
     "verdict": "VERIFIED",
     "verification": {
@@ -1709,13 +1735,13 @@
         "count": 1,
         "errors": [],
         "last_hashes": {
-          "verified-model-swap-demo/verified-model-swap-demo": "afae4fa23da18a1c0845f0fbdcb50e49ff99aadf45e6d6e2ac86343d9ea58ee8"
+          "verified-model-swap-demo/verified-model-swap-demo": "23a610d08a13144168cb3fbb45578b7d43208e08ad7e847c597de14c90f803d8"
         },
         "valid": true
       },
       "errors": [],
       "independent_grade_passed": true,
-      "proof_card_sha256": "f52c711c82d02a389b8763b5981cc7fffc7b758c178a02611b5dbf47aa8dd878",
+      "proof_card_sha256": "c5c671f5f33d095ffa1f8b30728a5409ae3c2199f80f081146ecb30cd0148cc2",
       "valid": true,
       "verdict": "VERIFIED"
     },
@@ -1726,5 +1752,228 @@
       "requested": false
     }
   },
-  "version": "0.5.0rc2"
+  "version": "0.5.0rc5",
+  "warning_time_benchmark": {
+    "agent_stack_id": "dsm-three-agent-fixed-handoff-v1",
+    "aggregate": {
+      "final_decision_counts": {
+        "control": {
+          "COMMIT": 20
+        },
+        "dropped_counterevidence": {
+          "QUARANTINE": 20
+        },
+        "unflagged_contradiction": {
+          "DENY": 20
+        }
+      },
+      "heldout_clean_run_false_alarms": 0,
+      "heldout_clean_runs_evaluated": 20,
+      "heldout_corruption_runs": 40,
+      "missed_corruptions": 0,
+      "no_advance_warning_corruptions": 0,
+      "prevented_bad_actions_in_enforcement": 40
+    },
+    "artifact_hashes": {
+      "control/case_report.json": "9cfd0a021f0970169c672efe2850bd536b133063b359d2eadf257655abc913c7",
+      "control/decision_receipts.jsonl": "fdde3374a7d69ed5debd82fc0170fb1d079a83acf7ac79caeaa514e2eb3b3760",
+      "control/enforcement_trace.jsonl": "8a2a6c32500dc1b4edf2475f957e3203ed0b0eaed7c9fdd330f298ea5cc71f9c",
+      "control/evidence/handoff-03.json": "b47c4c6ee6c859d2c1c98a15ee03c0e07372582d07f5988fbbcd896b054076ab",
+      "control/evidence/handoff-06.json": "f0a9ca22a0300e6fdda3cdce0865b031db9d12c537d448b95068f2b1b4d680a0",
+      "control/gate_trace.jsonl": "f13495abe80773287096294c1dd87f80223a62ff3f56c02a94f6e3af357055a2",
+      "control/metric_trace.jsonl": "789f313e093748cfbf13da436b81509b1caac811f87a7c69324acc1e3cf441ca",
+      "control/trajectory.jsonl": "5065cb31b36cc3b9cb1be7b88fec4f203c27f26338eec82ca9adcde4847916b8",
+      "dropped_counterevidence/case_report.json": "02b965faa818f0641baa474843c8b0540699fbcd2a9c41232d92f8e83573e589",
+      "dropped_counterevidence/decision_receipts.jsonl": "1594c0ec772dbcb046685c684b8ff7b8071cbc8196dae7c56ab1afb21693519a",
+      "dropped_counterevidence/enforcement_trace.jsonl": "e47d0dd4cb6f8fd3aff228de5fa14f537384568498f9985b6cd1628c2dcdd62f",
+      "dropped_counterevidence/evidence/handoff-03.json": "b47c4c6ee6c859d2c1c98a15ee03c0e07372582d07f5988fbbcd896b054076ab",
+      "dropped_counterevidence/evidence/handoff-06.json": "fa8d854a1d426439796e2d77929a372a45b95c27fa8c6a8c36e882a144cf7032",
+      "dropped_counterevidence/gate_trace.jsonl": "536bca40d0c43b12c608fd7261aad2c0547cc59d1b4e1f564b9ee024c49a7737",
+      "dropped_counterevidence/metric_trace.jsonl": "67d32a879018a6f69caf361ca52a4b7ff836790401d4b87eb4d40dba7b866ce0",
+      "dropped_counterevidence/trajectory.jsonl": "e46fa5f5b5d74191ba270e5ac21a08d19679195a9e6684d04040199698637e8c",
+      "heldout_results.jsonl": "646ff71fcd82dc10da2a3163bdbac58874bbfd342742739d3da18740ec70810f",
+      "label_leak_probe.json": "f6af9af627155747740483de48a83ba05780024434d277440ef51a47c35c402f",
+      "unflagged_contradiction/case_report.json": "d6ea5d8834d4c1d6c6d2dab48ace52af33a5f19cc0225950a53b569a4998de6c",
+      "unflagged_contradiction/decision_receipts.jsonl": "5f08d4651c836bceeaf2211cc33d88d8ccfc0551baa2aa77aa619a61a4b2feff",
+      "unflagged_contradiction/enforcement_trace.jsonl": "c5ca9866426663e70c0b03f7d8aab0eac4c5e2818eddb06b358bc5bf564febe1",
+      "unflagged_contradiction/evidence/handoff-03.json": "b47c4c6ee6c859d2c1c98a15ee03c0e07372582d07f5988fbbcd896b054076ab",
+      "unflagged_contradiction/evidence/handoff-06.json": "277a2a39bd7edf96cea355443b6e2a945e1c7c81da67947269968410da159c9a",
+      "unflagged_contradiction/gate_trace.jsonl": "8ab12b7d7fd11f77ebcb7d527cb0b390eb9a735f69f36bad703b14204c71f7f2",
+      "unflagged_contradiction/metric_trace.jsonl": "1952a1e05bf9b033d33fe906ac8a95888d12a733871ce77713c0ba10ec2f7be0",
+      "unflagged_contradiction/trajectory.jsonl": "7e7f13c92dac4014cdc4f8c4482829086ff9e2e72993c85b3a48daff6205d1b6"
+    },
+    "calibration_evidence_hash": "7c80e92c12c3782dbc7a2c923331131ed82cc224f25ba01c7351d3131fd66c50",
+    "calibration_profile_fresh": true,
+    "calibration_profile_payload_hash": "9e8175cdc54348832242785e0b86798195df0e4133ea457057e208e7f81a5068",
+    "calibration_profile_public_key": "fec1428673f6afe89264b3807344ae8b269d125a503855202687db5a7128579f",
+    "calibration_profile_signature_valid": true,
+    "claim_boundary": "This seeded synthetic benchmark tests whether a disclosed representation predicts named handoff failures on this exact agent stack. It does not prove the metric ontology is true, establish universal thresholds, or authorize production actions.",
+    "evaluation_completed_at": "2026-07-27T03:02:39.234923Z",
+    "evaluation_started_at": "2026-07-27T03:02:38.815632Z",
+    "external_freeze_anchor": {
+      "custody_created_at": "2026-07-27T02:04:45Z",
+      "file_id": "file_00000000d040823092d32a3c71c4cd8a",
+      "library_file_id": "libfile_3042dc8558d8819195cef437938028c1",
+      "path": "/OpenLine/Calibration Anchors/warning-time-v4-calibration-freeze-publication.json",
+      "service": "chatgpt_file_library",
+      "size_bytes": 1366,
+      "visibility": "private_user_library"
+    },
+    "external_freeze_anchor_payload_hash": "2d515119634f4252031488381b08e6ef9c53f0571460af2eee5a09871b2d5433",
+    "external_freeze_anchor_valid": true,
+    "formula": "warning_time_steps = bad_action_step - first_warning_step",
+    "freeze_publication_payload_hash": "3d8e5a07a9b15845a0f6c90f68de972533c83ac4c77cab74be5a6eb74c1586cf",
+    "freeze_publication_signature_valid": true,
+    "gate_public_key": "5b6489c9c7fd0dcf50545e7c164886ef40491ec06c7f1b123041797e8117535e",
+    "heldout": {
+      "calibration_clean_runs": 40,
+      "clean_runs": 20,
+      "corruption_runs_by_case": {
+        "dropped_counterevidence": 20,
+        "unflagged_contradiction": 20
+      },
+      "sample_size_boundary": "This fixture uses 100 total runs as an initial disclosed experiment design, not as a universal minimum or law.",
+      "total_runs": 100,
+      "warning_time_distribution": {
+        "dropped_counterevidence": {
+          "count": 20,
+          "counts": {
+            "5": 20
+          },
+          "maximum_steps": 5,
+          "median_low_steps": 5,
+          "minimum_steps": 5
+        },
+        "unflagged_contradiction": {
+          "count": 20,
+          "counts": {
+            "5": 20
+          },
+          "maximum_steps": 5,
+          "median_low_steps": 5,
+          "minimum_steps": 5
+        }
+      }
+    },
+    "interpretation": "Held-out separation shows that this disclosed observable-state representation is useful for predicting the named failures on this exact synthetic stack. It does not prove the ontology is true.",
+    "label_leak_probe": {
+      "clean_state_with_corrupt_display_label_first_warning": null,
+      "corrupt_state_with_control_display_label_first_warning": 4,
+      "forbidden_metric_parameters": [],
+      "interpretation": "Swapping report labels does not change metrics. Only the observable state mutation changes the warning result.",
+      "metric_function_parameters": [
+        "seed",
+        "step",
+        "observation",
+        "previous_observation"
+      ],
+      "passed": true,
+      "pre_injection_observations_and_metrics_identical": true,
+      "schema": "openline.warning-time.label-leak-probe.v2",
+      "seed": 9901
+    },
+    "metric_input_boundary": "observable_state_and_previous_observable_state_only",
+    "metric_source_sha256": "181b599165b7b71f947f8f14f7ba63214b8ebf64dec418d062a19bbff19133df",
+    "observable_fixture_source_sha256": "7e83955106385199aa2102dc9bbdfe08e7153a65bb3f142851504c3ceeb7c34f",
+    "paired_heldout_seeds": true,
+    "reference_cases": {
+      "control": {
+        "bad_action_prevented_in_enforcement": false,
+        "bad_action_reached_in_observe_only": false,
+        "bad_action_step": 9,
+        "bad_action_timestamp": "2026-07-26T00:00:09Z",
+        "case": "control",
+        "clean_run_false_alarm": false,
+        "corruption_injected": false,
+        "decision_log_valid": true,
+        "final_gate_decision": "COMMIT",
+        "first_crossing_by_metric": {
+          "delta_hol_micros": null,
+          "kappa_micros": null,
+          "vkd_micros": null
+        },
+        "first_warning_step": null,
+        "first_warning_timestamp": null,
+        "gate_intervention_step": null,
+        "gate_intervention_timestamp": null,
+        "gate_lead_time_steps": null,
+        "hypothetical_action_step_reached_in_observe_only": true,
+        "injection_step": null,
+        "missed_corruption": false,
+        "no_advance_warning": false,
+        "partition": "heldout",
+        "schema": "openline.warning-time.case-report.v4",
+        "seed": 2101,
+        "warning_time_interpretation": "no_warning",
+        "warning_time_steps": null
+      },
+      "dropped_counterevidence": {
+        "bad_action_prevented_in_enforcement": true,
+        "bad_action_reached_in_observe_only": true,
+        "bad_action_step": 9,
+        "bad_action_timestamp": "2026-07-26T00:00:09Z",
+        "case": "dropped_counterevidence",
+        "clean_run_false_alarm": false,
+        "corruption_injected": true,
+        "decision_log_valid": true,
+        "final_gate_decision": "QUARANTINE",
+        "first_crossing_by_metric": {
+          "delta_hol_micros": 4,
+          "kappa_micros": 4,
+          "vkd_micros": 4
+        },
+        "first_warning_step": 4,
+        "first_warning_timestamp": "2026-07-26T00:00:04Z",
+        "gate_intervention_step": 6,
+        "gate_intervention_timestamp": "2026-07-26T00:00:06Z",
+        "gate_lead_time_steps": 3,
+        "hypothetical_action_step_reached_in_observe_only": true,
+        "injection_step": 4,
+        "missed_corruption": false,
+        "no_advance_warning": false,
+        "partition": "heldout",
+        "schema": "openline.warning-time.case-report.v4",
+        "seed": 2101,
+        "warning_time_interpretation": "positive_advance_warning",
+        "warning_time_steps": 5
+      },
+      "unflagged_contradiction": {
+        "bad_action_prevented_in_enforcement": true,
+        "bad_action_reached_in_observe_only": true,
+        "bad_action_step": 9,
+        "bad_action_timestamp": "2026-07-26T00:00:09Z",
+        "case": "unflagged_contradiction",
+        "clean_run_false_alarm": false,
+        "corruption_injected": true,
+        "decision_log_valid": true,
+        "final_gate_decision": "DENY",
+        "first_crossing_by_metric": {
+          "delta_hol_micros": 4,
+          "kappa_micros": 4,
+          "vkd_micros": 4
+        },
+        "first_warning_step": 4,
+        "first_warning_timestamp": "2026-07-26T00:00:04Z",
+        "gate_intervention_step": 6,
+        "gate_intervention_timestamp": "2026-07-26T00:00:06Z",
+        "gate_lead_time_steps": 3,
+        "hypothetical_action_step_reached_in_observe_only": true,
+        "injection_step": 4,
+        "missed_corruption": false,
+        "no_advance_warning": false,
+        "partition": "heldout",
+        "schema": "openline.warning-time.case-report.v4",
+        "seed": 2101,
+        "warning_time_interpretation": "positive_advance_warning",
+        "warning_time_steps": 5
+      }
+    },
+    "report_hash": "1ef425d5eebede165630469e63d93555bb4a99ceb4c59c842b4ac9b0b03c3db5",
+    "scenario_id": "dsm-receipt-gate-three-agent-handoff",
+    "schema": "openline.warning-time.benchmark-report.v4",
+    "thresholds_frozen_before_heldout_runs": true,
+    "thresholds_hash": "d371b012827cbfeb684323845ce8f97d39f8b0eded5003a00df6f028d4c39938",
+    "thresholds_used_corrupted_runs": false,
+    "thresholds_used_heldout_runs": false
+  }
 }

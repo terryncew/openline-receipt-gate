@@ -1,5 +1,59 @@
 # Changelog
 
+## 0.5.0rc5
+
+- Pins the exact warning-time external-anchor witness public key and payload
+  hash in both the benchmark verifier and the standalone independent verifier.
+  A correctly signed replacement anchor under an attacker-selected key now
+  fails closed.
+- Adds an adversarial signer-substitution test for the external custody anchor.
+- Expands Verified Commit concurrency evidence from two threads to a
+  32-process POSIX race and requires exactly one executor invocation.
+- Keeps the custody claim bounded: the offline checks validate the pinned
+  anchor and declared chronology, while the referenced Library object's
+  existence and bytes remain an external evidence check.
+
+## 0.5.0rc4
+
+- Rebuilt the warning-time calibration after an adversarial audit showed the
+  prior proxy accepted the ground-truth case label. The metric function now
+  accepts only the observable current and previous trace state plus seed and
+  step; it cannot receive the case, corruption label, injection step, or
+  expected outcome.
+- Added a label-swap falsifier. A clean observable trace relabeled as corrupted
+  does not warn, while a corrupted observable trace relabeled as control does.
+  The same 20 held-out seeds are paired across all three conditions so the seed
+  cannot encode the case.
+- Calibrated κ, Δ_hol, and VKD proxy thresholds from 40 clean runs only. The
+  thresholds and signed profile were frozen before the 60 held-out runs and
+  bound to a private external-custody anchor. That anchor proves custody order
+  inside the connected file library; it is not a public transparency timestamp
+  or production trust authority.
+- Replaced the old verifier with an independent implementation that imports no
+  warning-time benchmark modules. It parses the metric source signature,
+  independently recomputes observable features, all 40 clean traces,
+  thresholds, all 60 held-out trajectories, receipt signatures, decisions,
+  warning times, and artifact hashes.
+- Added profile future-skew and expiry checks, real creation/evaluation
+  timestamps, and signed bindings for the calibration evidence, thresholds,
+  freeze publication, external custody anchor, metric source, and observable
+  fixture.
+- Corrected all stale five/six-run claims. The held-out fixture reports 0/20
+  clean false alarms, 0/40 missed corruptions, +5 reference metric warning,
+  +3 Receipt Gate lead, and separate final counts of 20 COMMIT, 20 QUARANTINE,
+  and 20 DENY.
+- Preserved the hard claim boundary: this synthetic result shows predictive
+  usefulness for two named failures on one disclosed representation and agent
+  stack. It does not prove the ontology is true, establish universal
+  thresholds, provide production COLE scoring, or authorize downstream action.
+
+## 0.5.0rc3 — rejected calibration candidate
+
+- The original signed calibration candidate is retained only as audit history.
+  Its metric proxy accepted the ground-truth case label, so its reported
+  warning-time separation was not valid evidence of predictive usefulness.
+  Do not release or cite its 0/40 miss or +4-step warning claims.
+
 ## 0.5.0rc2
 
 - Fixed clean-runner CI wheel construction by installing the exact declared

@@ -22,7 +22,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
-VERSION = "0.5.0rc2"
+VERSION = "0.5.0rc5"
 PIPELOCK_INTEGRATION_TESTS = 9
 ASSAY_INTEGRATION_TESTS = 5
 MODEL_SWAP_INTEGRATION_TESTS = 8
@@ -53,6 +53,7 @@ CI_REQUIRED_SNIPPETS = (
     "python -m pip install --no-build-isolation .",
     "python scripts/release_check.py",
     "python scripts/verify_manifest.py",
+    "python scripts/verify_warning_time_benchmark.py",
 )
 
 
@@ -204,6 +205,7 @@ def write_manifest(
     verified_commit_summary: dict[str, Any],
     pipelock_summary: dict[str, Any],
     assay_summary: dict[str, Any],
+    warning_time_summary: dict[str, Any],
     optional_integrations: dict[str, Any],
 ) -> None:
     entries = []
@@ -262,6 +264,29 @@ def write_manifest(
                 "strong_hypothesis_falsified"
             ),
             "aggregate": pipelock_summary.get("aggregate", {}),
+        },
+        "warning_time_benchmark": {
+            "report_hash": warning_time_summary.get("report_hash"),
+            "calibration_profile_payload_hash": warning_time_summary.get("calibration_profile_payload_hash"),
+            "calibration_profile_signature_valid": warning_time_summary.get("calibration_profile_signature_valid"),
+            "calibration_evidence_hash": warning_time_summary.get("calibration_evidence_hash"),
+            "thresholds_hash": warning_time_summary.get("thresholds_hash"),
+            "metric_input_boundary": warning_time_summary.get("metric_input_boundary"),
+            "label_leak_probe_passed": warning_time_summary.get("label_leak_probe", {}).get("passed"),
+            "paired_heldout_seeds": warning_time_summary.get("paired_heldout_seeds"),
+            "external_freeze_anchor_valid": warning_time_summary.get("external_freeze_anchor_valid"),
+            "external_freeze_anchor": warning_time_summary.get("external_freeze_anchor"),
+            "calibration_clean_runs": warning_time_summary.get("heldout", {}).get("calibration_clean_runs"),
+            "heldout_clean_runs_evaluated": warning_time_summary.get("aggregate", {}).get("heldout_clean_runs_evaluated"),
+            "heldout_clean_run_false_alarms": warning_time_summary.get("aggregate", {}).get("heldout_clean_run_false_alarms"),
+            "heldout_corruption_runs": warning_time_summary.get("aggregate", {}).get("heldout_corruption_runs"),
+            "missed_corruptions": warning_time_summary.get("aggregate", {}).get("missed_corruptions"),
+            "final_decision_counts": warning_time_summary.get("aggregate", {}).get("final_decision_counts", {}),
+            "reference_warning_times": {
+                case: warning_time_summary.get("reference_cases", {}).get(case, {}).get("warning_time_steps")
+                for case in ("dropped_counterevidence", "unflagged_contradiction")
+            },
+            "interpretation": warning_time_summary.get("interpretation"),
         },
         "assay_head_to_head": {
             "passed": assay_summary.get("passed", False),
@@ -373,6 +398,14 @@ def main() -> int:
         assay_benchmark_report = {}
         assay_summary = {}
         assay_gate_key = ""
+    try:
+        warning_time_report = json.loads(
+            (ROOT / "benchmarks" / "warning_time" / "results" / "benchmark_report.json").read_text(
+                encoding="utf-8"
+            )
+        )
+    except (OSError, json.JSONDecodeError, KeyError, TypeError):
+        warning_time_report = {}
 
     unit_command = [
         sys.executable,
@@ -577,7 +610,11 @@ def main() -> int:
             "node_decision_verifier",
             ["node", "verify-decision-node.mjs", str(proof_output / "decision_receipts.jsonl"), "--gate-key", fixture_gate_key],
         ),
-        ("compileall", [sys.executable, "-m", "compileall", "-q", "olp_gate"]),
+        ("compileall", [sys.executable, "-m", "compileall", "-q", "olp_gate", "benchmarks"]),
+        (
+            "warning_time_benchmark_verifier",
+            [sys.executable, "scripts/verify_warning_time_benchmark.py"],
+        ),
         (
             "frozen_pipelock_benchmark_verifier",
             [sys.executable, "scripts/verify_pipelock_benchmark.py"],
@@ -679,7 +716,7 @@ def main() -> int:
         steps.append(record)
         passed.append(okay)
         if okay:
-            wheels = sorted(wheelhouse.glob("openline_receipt_gate-0.5.0rc2-*.whl"))
+            wheels = sorted(wheelhouse.glob("openline_receipt_gate-0.5.0rc5-*.whl"))
             if len(wheels) != 1:
                 okay = False
                 steps.append(
@@ -749,6 +786,53 @@ def main() -> int:
             "decision_receipt_count"
         )
         == 5,
+        "warning_time_profile_signature_valid": warning_time_report.get(
+            "calibration_profile_signature_valid"
+        ) is True,
+        "warning_time_calibration_and_heldout_split": (
+            warning_time_report.get("heldout", {}).get("calibration_clean_runs") == 40
+            and warning_time_report.get("aggregate", {}).get("heldout_clean_runs_evaluated") == 20
+            and warning_time_report.get("aggregate", {}).get("heldout_corruption_runs") == 40
+        ),
+        "warning_time_heldout_clean_false_alarms_zero": warning_time_report.get("aggregate", {}).get(
+            "heldout_clean_run_false_alarms"
+        ) == 0,
+        "warning_time_missed_corruptions_zero": warning_time_report.get("aggregate", {}).get(
+            "missed_corruptions"
+        ) == 0,
+        "warning_time_decisions_match": warning_time_report.get("aggregate", {}).get(
+            "final_decision_counts"
+        ) == {
+            "control": {"COMMIT": 20},
+            "dropped_counterevidence": {"QUARANTINE": 20},
+            "unflagged_contradiction": {"DENY": 20},
+        },
+        "warning_time_positive_windows": all(
+            warning_time_report.get("reference_cases", {}).get(case, {}).get("warning_time_steps", 0) > 0
+            for case in ("dropped_counterevidence", "unflagged_contradiction")
+        ),
+        "warning_time_observable_state_only": warning_time_report.get(
+            "metric_input_boundary"
+        ) == "observable_state_and_previous_observable_state_only",
+        "warning_time_label_swap_probe_passed": warning_time_report.get(
+            "label_leak_probe", {}
+        ).get("passed") is True,
+        "warning_time_paired_heldout_seeds": warning_time_report.get(
+            "paired_heldout_seeds"
+        ) is True,
+        "warning_time_external_custody_anchor_valid": (
+            warning_time_report.get("external_freeze_anchor_valid") is True
+            and warning_time_report.get("external_freeze_anchor", {}).get("service")
+            == "chatgpt_file_library"
+            and warning_time_report.get("external_freeze_anchor", {}).get("visibility")
+            == "private_user_library"
+        ),
+        "warning_time_chronology_valid": (
+            bool(warning_time_report.get("evaluation_started_at"))
+            and bool(warning_time_report.get("external_freeze_anchor", {}).get("custody_created_at"))
+            and warning_time_report.get("evaluation_started_at")
+            > warning_time_report.get("external_freeze_anchor", {}).get("custody_created_at")
+        ),
         "pipelock_benchmark_passed": benchmark_report.get("passed") is True,
         "pipelock_strong_hypothesis_falsified": pipelock_summary.get(
             "flagship_finding", {}
@@ -906,6 +990,7 @@ def main() -> int:
         "verified_model_swap": model_swap_summary,
         "verified_commit": verified_commit_summary,
         "proof_to_policy_demo": proof_summary,
+        "warning_time_benchmark": warning_time_report,
         "pipelock_head_to_head": pipelock_summary,
         "assay_head_to_head": assay_summary,
         "claim_boundary": "A passing deterministic release gate does not prove production safety, issuer honesty, complete capture, live provider execution, universal model portability, legal ownership, witness independence, rollback execution, or globally exactly-once side effects. Verified Model Swap is exact only over the disclosed receiver decision projection and externally pinned Half-Life fixture. Verified Commit proves receiver-side one-use authorization only when the destination tool enters through the disclosed checker and shares its atomic ledger; a crash after consumption fails closed.",
@@ -926,6 +1011,7 @@ def main() -> int:
             ).get("strong_hypothesis_falsified"),
             "aggregate": pipelock_summary.get("aggregate", {}),
         },
+        warning_time_summary=warning_time_report,
         assay_summary={
             "passed": assay_benchmark_report.get("passed", False),
             "strong_signing_uniqueness_hypothesis_falsified": assay_summary.get(

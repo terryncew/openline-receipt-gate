@@ -54,6 +54,9 @@ jobs:
       - name: Compile Python sources
         run: python -m compileall -q olp_gate benchmarks examples scripts tests
 
+      - name: Verify frozen warning-time benchmark
+        run: python scripts/verify_warning_time_benchmark.py
+
       - name: Run complete release gate
         run: python scripts/release_check.py
 

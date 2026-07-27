@@ -1,0 +1,21 @@
+{
+  "calibration_evidence_hash": "7c80e92c12c3782dbc7a2c923331131ed82cc224f25ba01c7351d3131fd66c50",
+  "heldout_evaluation_started": false,
+  "metric_source_sha256": "181b599165b7b71f947f8f14f7ba63214b8ebf64dec418d062a19bbff19133df",
+  "next_required_step": "Create an external GitHub issue anchor containing these exact hashes.",
+  "observable_fixture_source_sha256": "7e83955106385199aa2102dc9bbdfe08e7153a65bb3f142851504c3ceeb7c34f",
+  "payload_hash": "3d8e5a07a9b15845a0f6c90f68de972533c83ac4c77cab74be5a6eb74c1586cf",
+  "profile_payload_hash": "9e8175cdc54348832242785e0b86798195df0e4133ea457057e208e7f81a5068",
+  "publication_id": "dsm-receipt-gate-warning-time-v4-freeze",
+  "published_at": "2026-07-27T02:04:33.934563Z",
+  "purpose": "Freeze the calibration digest before any held-out evaluation begins.",
+  "scenario_id": "dsm-receipt-gate-three-agent-handoff",
+  "schema": "openline.calibration-freeze-publication.v2",
+  "signature": {
+    "algorithm": "Ed25519",
+    "public_key": "555f469c22188e90015bdd85b889678d459f86bdf8f7bd34971b10b9b3858609",
+    "value": "ff43aaa647ccec4a40190ca20f180218ff630c1b45eff148a8fa42bc3e2493e35e6d61cdd02eb684c25b919ee90fe482d8940769613f059f3ef5c229122bad07"
+  },
+  "signer_id": "openline-warning-time-freeze-publication-fixture",
+  "thresholds_hash": "d371b012827cbfeb684323845ce8f97d39f8b0eded5003a00df6f028d4c39938"
+}

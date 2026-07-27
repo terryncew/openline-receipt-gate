@@ -2,7 +2,7 @@
 
 ## Supported claims
 
-Receipt Gate v0.5.0rc2 demonstrates that signed action receipts and a pinned Assay
+Receipt Gate v0.5.0rc5 demonstrates that signed action receipts and a pinned Assay
 evidence bundle can be converted into deterministic, signed policy decisions
 while keeping integrity, provenance, coverage, the source action signal,
 freshness, evidence, and outcome checks separate.
@@ -16,6 +16,40 @@ Inside the bundled fixtures:
 - a harmful witnessed mutation requests rollback only when rollback support is declared.
 
 The decision is independently recomputed from the signed assessment set and policy snapshot.
+
+The v0.5.0rc5 warning-time benchmark additionally demonstrates, inside one
+seeded synthetic three-agent fixture, that:
+
+- the metric proxy receives observable trace state rather than a case or
+  corruption label;
+- a label-swap probe follows the observable mutation rather than the displayed
+  case name;
+- 40 clean calibration runs determine the frozen thresholds;
+- the same 20 held-out seeds are paired across control, dropped-counterevidence,
+  and contradiction conditions;
+- 20 held-out clean controls produce zero warnings and end in `COMMIT`;
+- 20 dropped-counterevidence runs produce no misses, +5 reference metric
+  warning, +3 Receipt Gate lead, and final `QUARANTINE` decisions;
+- 20 unflagged-contradiction runs produce no misses, +5 reference metric
+  warning, +3 Receipt Gate lead, and final `DENY` decisions; and
+- enforcement replay stops all 40 corrupted runs before the declared bad-action
+  step.
+
+The frozen profile points to a separate private file-library custody surface
+created before held-out evaluation. The offline verifier pins the exact witness
+key and anchor payload rather than accepting a signer selected by the anchor.
+Existence and bytes of the referenced Library object remain an external evidence
+check. This establishes bounded custody order, not public timestamping,
+independent publication, or production trust. The
+standalone verifier imports no warning-time benchmark modules and independently
+recomputes the metrics, thresholds, trajectories, signed decision logs, and
+aggregate results.
+
+Warning time and final disposition remain separate measurements. Successful
+separation shows predictive usefulness for the named failures on this exact
+synthetic representation and agent stack. It does not prove that κ, Δ_hol, or
+VKD describe a true or universal ontology, establish universal thresholds,
+provide live COLE scoring, or authorize production actions.
 
 The Verified Model Swap review candidate additionally demonstrates, inside the
 disclosed deterministic Half-Life fixture, that:
@@ -114,6 +148,7 @@ This release does not establish:
 - truth from signatures or hashes alone;
 - production safety or regulatory compliance;
 - calibrated COLE drift prediction;
+- universal warning-time thresholds or generalization from the synthetic DSM / Receipt Gate timing fixture;
 - automatic rollback without an external actuator;
 - operator independence when the operator controls the gate, key, trust store, and ledger;
 - complete RFC 8785 support for Agent Receipt extensions containing floats;

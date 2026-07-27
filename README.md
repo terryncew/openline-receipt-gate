@@ -18,7 +18,64 @@ ROLLBACK_REQUEST
 
 A valid signature can still produce `UNDECIDABLE`. Signature validity is never treated as evidence sufficiency.
 
-## Verified Commit (v0.5.0rc2)
+## Warning Time benchmark (v0.5.0rc5)
+
+An early-warning metric matters only when it creates a measurable window in
+which Receipt Gate can prevent a bad action. The corrected DSM / Receipt Gate
+benchmark freezes a **signed Calibration Profile** before held-out evaluation.
+The profile binds the graph, prompts, observable-state metric source, clean
+calibration evidence, thresholds, paired seed design, private custody anchor,
+and the limited actions those thresholds may govern.
+
+```text
+warning_time_steps = bad_action_step - first_warning_step
+gate_lead_time_steps = bad_action_step - gate_intervention_step
+```
+
+The metric function receives only seed, step, current observable state, and
+previous observable state. It does not receive the case label, corruption type,
+injection step, or expected result. A label-swap probe confirms that warnings
+follow the state mutation rather than the displayed label. The same 20 held-out
+seeds are reused across all three conditions so the seed cannot identify the
+case.
+
+The disclosed experiment uses 40 clean calibration runs and 60 held-out runs.
+One hundred total runs is this fixture's starting design, not a universal
+requirement. The held-out result is:
+
+```text
+clean controls               0 / 20 false alarms · 20 COMMIT
+dropped counter-evidence     0 / 20 missed · reference warning +5 · 20 QUARANTINE
+unflagged contradiction      0 / 20 missed · reference warning +5 · 20 DENY
+Receipt Gate lead            +3 steps in both reference corruptions
+```
+
+Reproduce it:
+
+```bash
+python -m benchmarks.warning_time.run_benchmark \
+  --output benchmarks/warning_time/results
+python scripts/verify_warning_time_benchmark.py
+```
+
+The standalone verifier imports no warning-time benchmark modules and
+independently recomputes the observable features, metric values, clean-only
+thresholds, held-out trajectories, signatures, decisions, warning times, and
+hashes. It also pins the exact external-anchor witness key and payload hash, so
+an attacker-selected signer cannot certify substituted custody metadata. The
+frozen publication's referenced private Library object must still be checked
+outside the offline verifier. This proves bounded custody order for the
+disclosed artifact, not a public transparency timestamp or production
+authority.
+
+The signed profile may emit a warning or require Receipt Gate reappraisal. It
+may not issue COMMIT, QUARANTINE, or DENY, authorize execution, or retire a
+model. Successful held-out separation establishes predictive usefulness for
+the named synthetic stack and failures only; it does not prove the κ, Δ_hol,
+or VKD ontology is true. See
+[`benchmarks/warning_time/README.md`](benchmarks/warning_time/README.md).
+
+## Verified Commit
 
 Proof travels; permission belongs to the receiver.
 
@@ -52,6 +109,8 @@ olp-gate demo-verified-commit \
 ```
 
 The demo tries nine mutations, two simultaneous uses, and a sequential replay.
+The release suite additionally races 32 receiver processes against one
+authorization and requires exactly one tool invocation.
 It records every receiver-side result and independently regrades the model-swap
 proof. For a real tool adapter, keep the check and side effect in one entry
 point:
@@ -142,7 +201,7 @@ Model Swap tests. Install `requirements-pipelock.txt`, set `OLP_ASSAY_BIN` to th
 pinned Assay v3.32.0 executable, and install `requirements-model-swap.txt` with
 `OLP_HALF_LIFE_ROOT` set to run every integration test. Two Assay fail-closed
 boundary tests and the pure model-swap summary control always run. Because
-Verified Commit is the flagship v0.5.0rc2 change, so the complete release gate
+Verified Commit remains an inherited release-critical feature, so the complete release gate
 holds unless its pinned Half-Life runtime and fixture are present. The release
 report records discovered, executed, and skipped counts for both the current and
 dependency-absent modes.
