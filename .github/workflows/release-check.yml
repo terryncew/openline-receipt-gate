@@ -54,6 +54,22 @@ jobs:
       - name: Compile Python sources
         run: python -m compileall -q olp_gate benchmarks examples scripts tests
 
+      - name: Verify frozen benchmark source closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          for artifact in \
+            benchmarks/warning_time/results/control/decision_receipts.jsonl \
+            benchmarks/warning_time/results/dropped_counterevidence/decision_receipts.jsonl \
+            benchmarks/warning_time/results/unflagged_contradiction/decision_receipts.jsonl
+          do
+            git ls-files --error-unmatch -- "$artifact" >/dev/null
+            if git check-ignore --no-index --quiet -- "$artifact"; then
+              printf 'ignored frozen artifact: %s\n' "$artifact" >&2
+              exit 1
+            fi
+          done
+
       - name: Verify frozen warning-time benchmark
         run: python scripts/verify_warning_time_benchmark.py
 

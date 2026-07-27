@@ -56,7 +56,7 @@
     "headline": "Change the model without losing the agent.",
     "subhead": "The capsule kept the receiver decisions the ordinary summary dropped."
   },
-  "generated_at": "2026-07-27T04:11:43.077779Z",
+  "generated_at": "2026-07-27T06:11:02.904666Z",
   "half_life_verification": {
     "bundle_chain_valid": true,
     "bundle_schema": "openline.half-life.receipt-bundle.v3",
@@ -427,7 +427,7 @@
     "evaluator": "independent_reference_replay_v1"
   },
   "profile": "verified_model_swap/v1",
-  "proof_hash": "bde83a1f1649d421104b57c0951dc96e3d67e0e4b053c135a94f8ba4c19e8f20",
+  "proof_hash": "4fbbf91d0d61d304720b0c56d1258b72507efcca423973015bf1db6d533a171a",
   "receiver_controls": {
     "automatic_compaction_authorized": false,
     "automatic_retirement_authorized": false,

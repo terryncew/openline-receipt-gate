@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import inspect
 import json
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -221,6 +222,59 @@ class WarningTimeBenchmarkTests(unittest.TestCase):
         self.assertTrue(result["valid"], result)
         self.assertTrue(result["independent_of_benchmark_modules"])
         self.assertTrue(result["paired_heldout_seeds"])
+
+    def test_frozen_decision_logs_are_present_and_not_gitignored(self) -> None:
+        results = ROOT / "results"
+        report = load_json(results / "benchmark_report.json")
+        expected = [
+            f"{case}/decision_receipts.jsonl"
+            for case in CASES
+        ]
+        self.assertTrue(set(expected).issubset(report["artifact_hashes"]))
+        for relative in expected:
+            self.assertTrue((results / relative).is_file(), relative)
+
+        git = shutil.which("git")
+        self.assertIsNotNone(git, "git is required for the release source-closure test")
+        with tempfile.TemporaryDirectory() as temporary:
+            checkout = Path(temporary)
+            initialized = subprocess.run(
+                [str(git), "init", "-q"],
+                cwd=checkout,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            self.assertEqual(initialized.returncode, 0, initialized.stderr)
+            (checkout / ".gitignore").write_text(
+                (ROOT.parent.parent / ".gitignore").read_text(encoding="utf-8"),
+                encoding="utf-8",
+            )
+            for relative in expected:
+                path = checkout / "benchmarks" / "warning_time" / "results" / relative
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text("{}\n", encoding="utf-8")
+                ignored = subprocess.run(
+                    [
+                        str(git),
+                        "-c",
+                        "core.excludesFile=/dev/null",
+                        "check-ignore",
+                        "--no-index",
+                        "--quiet",
+                        "--",
+                        str(path.relative_to(checkout)),
+                    ],
+                    cwd=checkout,
+                    capture_output=True,
+                    text=True,
+                    check=False,
+                )
+                self.assertEqual(
+                    ignored.returncode,
+                    1,
+                    f"{relative} is still excluded by .gitignore",
+                )
 
 
 if __name__ == "__main__":

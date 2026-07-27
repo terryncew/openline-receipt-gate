@@ -40,7 +40,7 @@
     "verified_commit": {
       "capsule_hash": "8436eae8c2e158a44d06b66284d9b9b632df98c7572dc49b22467df0c4f49d1a",
       "evidence_hashes": [
-        "450f984377fe358b2e1879b5399e93b127de9a112b6a6ded0a056a97a63b8030"
+        "89386889cbf954ad0991a9a6cb8e9818361f190b31e8c35fa519412dbaef7dc7"
       ],
       "max_ttl_seconds": 300,
       "required": true,

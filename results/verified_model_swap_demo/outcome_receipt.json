@@ -1,22 +1,22 @@
 {
   "algorithm_id": "openline-orthogonal-outcome-0.2",
   "canonicalization_id": "olp-canonical-json-int-v1",
-  "evidence_hash": "c5c671f5f33d095ffa1f8b30728a5409ae3c2199f80f081146ecb30cd0148cc2",
+  "evidence_hash": "6b554b624457c69b7a4e8447c045957176b04e0cf0b4a4ee8241868b5faa7fd9",
   "kind": "witness_outcome_receipt",
-  "observed_at": "2026-07-27T04:11:43.168374Z",
+  "observed_at": "2026-07-27T06:11:02.995471Z",
   "outcome": {
     "harmful": false,
     "rollback_supported": true,
     "status": "pass"
   },
-  "payload_hash": "27eb9f4f43474934bb6ec63ed000745304877d5965a6bde73547109f39b754f9",
+  "payload_hash": "8182b091da1f7e400b6063c93fe4445987f7165d10dd3e8976c727c0a3497c19",
   "receipt_version": "0.2",
   "signature": {
     "algorithm": "Ed25519",
     "public_key": "2012cb90ca60e8e5d8daf66e2272d2233e0486d557e8c66141ed8920177d7eb7",
-    "value": "32e15fc8034e314349806d2ac7ea7409681ffa48d01539aa434b12cccde3e97ee00ca955df05bc54a6474881ab162f2853b52eeb1950130d8dc5b4a4b954540c"
+    "value": "5b91b3472ae5748969d7aecf6da3d5e301c5f55853bb012aeb5d271d1a94b69dd805c4879dce543208597eb96e556320c25d81ea459576151dd3b98d3921df06"
   },
-  "source_receipt_hash": "58ab1275f190383137f37fa409a36d7217963f3a9994acf3c1e900b1f9f70b29",
+  "source_receipt_hash": "d97112381409fb2ebf6fb749fa0b2b205d8d2b509a06ede13e5d084637bc015f",
   "spec_uri": "https://github.com/terryncew/openline-receipt-gate",
   "witness_id": "receiver-independent-grader"
 }

@@ -2,6 +2,15 @@
 
 ## 0.5.0rc5
 
+- Corrects the release source closure: the three frozen warning-time decision
+  logs were present and hash-correct in the root-ready archive but omitted by
+  Git because a repository-wide `decision_receipts.jsonl` ignore rule lacked a
+  warning-time exception. The exception is now explicit.
+- Adds a checkout-level CI guard that requires all three frozen decision logs
+  to be tracked and not ignored before the independent benchmark verifier runs.
+- Adds a regression test for the exact ignore-rule failure. The benchmark
+  thresholds, signed calibration, held-out episodes, and reported results are
+  unchanged.
 - Pins the exact warning-time external-anchor witness public key and payload
   hash in both the benchmark verifier and the standalone independent verifier.
   A correctly signed replacement anchor under an attacker-selected key now
