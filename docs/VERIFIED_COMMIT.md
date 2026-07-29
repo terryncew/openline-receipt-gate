@@ -72,6 +72,13 @@ replacement. Failed checks are recorded with reason codes and `not_started`.
 The one authorized attempt is consumed before callback invocation. If the
 callback throws or the process dies after consumption, replay stays blocked.
 
+Receiver adapters may also pass a canonical `replay_scope_hash`. The ledger
+atomically consumes that scope with the decision and code, so distinct valid
+authorizations for the same receiver-defined effect identity cannot both run.
+The x402 Transaction Airlock derives this scope from the payment's scheme,
+network, asset, payer, signature model, and nonce. A generic caller is
+responsible for deriving any replay scope correctly.
+
 The ledger is local enforcement state, not a new receipt and not an independent
 witness. A deployment that needs cross-host coordination must place equivalent
 atomic state behind every applicable tool boundary. A tool reachable without

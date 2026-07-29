@@ -22,7 +22,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
-VERSION = "0.5.0rc5"
+VERSION = "0.5.0rc6"
 PIPELOCK_INTEGRATION_TESTS = 9
 ASSAY_INTEGRATION_TESTS = 5
 MODEL_SWAP_INTEGRATION_TESTS = 8
@@ -55,9 +55,13 @@ CI_REQUIRED_SNIPPETS = (
     "benchmarks/warning_time/results/control/decision_receipts.jsonl",
     "benchmarks/warning_time/results/dropped_counterevidence/decision_receipts.jsonl",
     "benchmarks/warning_time/results/unflagged_contradiction/decision_receipts.jsonl",
+    "benchmarks/x402_airlock/FREEZE.json",
+    "benchmarks/x402_airlock/results/hostile_report.json",
     "python scripts/release_check.py",
     "python scripts/verify_manifest.py",
     "python scripts/verify_warning_time_benchmark.py",
+    "python benchmarks/x402_airlock/run_hostile_suite.py",
+    "python scripts/verify_x402_airlock.py",
 )
 
 
@@ -210,6 +214,7 @@ def write_manifest(
     pipelock_summary: dict[str, Any],
     assay_summary: dict[str, Any],
     warning_time_summary: dict[str, Any],
+    x402_airlock_summary: dict[str, Any],
     optional_integrations: dict[str, Any],
 ) -> None:
     entries = []
@@ -291,6 +296,27 @@ def write_manifest(
                 for case in ("dropped_counterevidence", "unflagged_contradiction")
             },
             "interpretation": warning_time_summary.get("interpretation"),
+        },
+        "x402_transaction_airlock": {
+            "valid": x402_airlock_summary.get("valid", False),
+            "source": x402_airlock_summary.get("source"),
+            "case_count": x402_airlock_summary.get("case_count"),
+            "passed_cases": x402_airlock_summary.get("passed_cases"),
+            "rules_covered": x402_airlock_summary.get(
+                "rules_covered", []
+            ),
+            "required_falsifier_axes": x402_airlock_summary.get(
+                "required_falsifier_axes", {}
+            ),
+            "settlement_callback_count": x402_airlock_summary.get(
+                "settlement_callback_count"
+            ),
+            "release_callback_count": x402_airlock_summary.get(
+                "release_callback_count"
+            ),
+            "resource_release_confirmed_count": x402_airlock_summary.get(
+                "resource_release_confirmed_count"
+            ),
         },
         "assay_head_to_head": {
             "passed": assay_summary.get("passed", False),
@@ -410,6 +436,18 @@ def main() -> int:
         )
     except (OSError, json.JSONDecodeError, KeyError, TypeError):
         warning_time_report = {}
+    try:
+        x402_airlock_report = json.loads(
+            (
+                ROOT
+                / "benchmarks"
+                / "x402_airlock"
+                / "results"
+                / "hostile_report.json"
+            ).read_text(encoding="utf-8")
+        )
+    except (OSError, json.JSONDecodeError, KeyError, TypeError):
+        x402_airlock_report = {}
 
     unit_command = [
         sys.executable,
@@ -620,6 +658,17 @@ def main() -> int:
             [sys.executable, "scripts/verify_warning_time_benchmark.py"],
         ),
         (
+            "x402_transaction_airlock_hostile_suite",
+            [
+                sys.executable,
+                "benchmarks/x402_airlock/run_hostile_suite.py",
+            ],
+        ),
+        (
+            "x402_transaction_airlock_independent_verifier",
+            [sys.executable, "scripts/verify_x402_airlock.py"],
+        ),
+        (
             "frozen_pipelock_benchmark_verifier",
             [sys.executable, "scripts/verify_pipelock_benchmark.py"],
         ),
@@ -651,6 +700,19 @@ def main() -> int:
         record, okay = execute(name, command)
         steps.append(record)
         passed.append(okay)
+
+    try:
+        x402_airlock_report = json.loads(
+            (
+                ROOT
+                / "benchmarks"
+                / "x402_airlock"
+                / "results"
+                / "hostile_report.json"
+            ).read_text(encoding="utf-8")
+        )
+    except (OSError, json.JSONDecodeError, KeyError, TypeError):
+        x402_airlock_report = {}
 
     assay_live_benchmark_executed = False
     assay_live_benchmark_passed = False
@@ -720,7 +782,7 @@ def main() -> int:
         steps.append(record)
         passed.append(okay)
         if okay:
-            wheels = sorted(wheelhouse.glob("openline_receipt_gate-0.5.0rc5-*.whl"))
+            wheels = sorted(wheelhouse.glob("openline_receipt_gate-0.5.0rc6-*.whl"))
             if len(wheels) != 1:
                 okay = False
                 steps.append(
@@ -836,6 +898,29 @@ def main() -> int:
             and bool(warning_time_report.get("external_freeze_anchor", {}).get("custody_created_at"))
             and warning_time_report.get("evaluation_started_at")
             > warning_time_report.get("external_freeze_anchor", {}).get("custody_created_at")
+        ),
+        "x402_airlock_report_valid": x402_airlock_report.get("valid")
+        is True,
+        "x402_airlock_all_56_cases_passed": (
+            x402_airlock_report.get("case_count") == 56
+            and x402_airlock_report.get("passed_cases") == 56
+            and x402_airlock_report.get("failed_cases") == []
+        ),
+        "x402_airlock_covers_sr1_through_sr8": set(
+            x402_airlock_report.get("rules_covered", [])
+        )
+        == {f"SR{index}" for index in range(1, 9)},
+        "x402_airlock_falsifier_axes_blocked": (
+            x402_airlock_report.get("required_falsifier_axes")
+            == {
+                "amount": True,
+                "asset": True,
+                "expiry": True,
+                "network": True,
+                "recipient": True,
+                "replay": True,
+                "verification_settlement_divergence": True,
+            }
         ),
         "pipelock_benchmark_passed": benchmark_report.get("passed") is True,
         "pipelock_strong_hypothesis_falsified": pipelock_summary.get(
@@ -995,9 +1080,10 @@ def main() -> int:
         "verified_commit": verified_commit_summary,
         "proof_to_policy_demo": proof_summary,
         "warning_time_benchmark": warning_time_report,
+        "x402_transaction_airlock": x402_airlock_report,
         "pipelock_head_to_head": pipelock_summary,
         "assay_head_to_head": assay_summary,
-        "claim_boundary": "A passing deterministic release gate does not prove production safety, issuer honesty, complete capture, live provider execution, universal model portability, legal ownership, witness independence, rollback execution, or globally exactly-once side effects. Verified Model Swap is exact only over the disclosed receiver decision projection and externally pinned Half-Life fixture. Verified Commit proves receiver-side one-use authorization only when the destination tool enters through the disclosed checker and shares its atomic ledger; a crash after consumption fails closed.",
+        "claim_boundary": "A passing deterministic release gate does not prove production safety, issuer honesty, complete capture, live provider execution, universal model portability, legal ownership, witness independence, rollback execution, or globally exactly-once side effects. Verified Model Swap is exact only over the disclosed receiver decision projection and externally pinned Half-Life fixture. Verified Commit proves receiver-side one-use authorization only when the destination tool enters through the disclosed checker and shares its atomic ledger; a crash after consumption fails closed. The x402 Transaction Airlock result is a synthetic adapter test against frozen hostile cases, not an audit of a live facilitator, wallet, chain, or receiver data provider.",
     }
     (ROOT / "RUN_REPORT.json").write_text(
         json.dumps(report, indent=2, sort_keys=True) + "\n",
@@ -1016,6 +1102,7 @@ def main() -> int:
             "aggregate": pipelock_summary.get("aggregate", {}),
         },
         warning_time_summary=warning_time_report,
+        x402_airlock_summary=x402_airlock_report,
         assay_summary={
             "passed": assay_benchmark_report.get("passed", False),
             "strong_signing_uniqueness_hypothesis_falsified": assay_summary.get(

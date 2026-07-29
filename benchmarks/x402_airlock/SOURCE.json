@@ -1,0 +1,22 @@
+{
+  "schema": "openline.x402-airlock.source.v1",
+  "checked_at": "2026-07-28T08:00:00Z",
+  "study": {
+    "arxiv_id": "2607.19545",
+    "authors": [
+      "Qinying Wang",
+      "Yong Yang",
+      "Yuan Chen",
+      "Shouling Ji",
+      "Mathias Payer"
+    ],
+    "published": "2026-07-21",
+    "title": "When HTTP 402 Meets the Blockchain: Risks on Emerging x402 Payments",
+    "version": "v1"
+  },
+  "source_urls": [
+    "https://arxiv.org/abs/2607.19545",
+    "https://arxiv.org/html/2607.19545v1"
+  ],
+  "use_boundary": "The study supplies the frozen threat classes and eight rule labels. This synthetic suite is an OLP control mapping, not a reproduction of any named facilitator or a claim that OLP was evaluated by the paper's authors."
+}

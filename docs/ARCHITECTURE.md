@@ -151,3 +151,26 @@ The ledger is not portable proof. It is receiver-local enforcement state. Its
 atomic consume occurs before callback invocation, so concurrent and sequential
 replay fail closed within that shared ledger. Global coordination, bypass-path
 mediation, and side-effect rollback remain deployment responsibilities.
+
+## x402 Transaction Airlock boundary
+
+The x402 adapter is a settings and preflight profile inside Verified Commit,
+not another receipt. Receipt issuance validates a closed normalized transaction
+and signed receiver policy. The destination then follows this order:
+
+```text
+signed COMMIT → atomic consume → fresh receiver snapshot → settlement callback
+                                                        → independent confirmation
+                                                        → optional resource release
+```
+
+The fresh snapshot binds the original verification context, declared
+requirements, exact payment, authorization hash, nonce, balance, and
+settleability. Confirmation must bind the transaction hash returned by the
+settlement callback plus the exact network, asset, amount, recipient, and nonce.
+Only then may the protected resource be released.
+
+The receiver implements the snapshot, settlement, confirmation, and release
+callbacks. The reference code cannot make an off-chain observation and an
+on-chain effect globally atomic; the selected chain and closed settlement
+template must enforce any remaining mutable conditions.

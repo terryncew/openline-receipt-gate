@@ -1,0 +1,2484 @@
+{
+  "case_count": 56,
+  "failed_cases": [],
+  "passed_cases": 56,
+  "release_callback_count": 11,
+  "required_falsifier_axes": {
+    "amount": true,
+    "asset": true,
+    "expiry": true,
+    "network": true,
+    "recipient": true,
+    "replay": true,
+    "verification_settlement_divergence": true
+  },
+  "resource_release_confirmed_count": 5,
+  "results": [
+    {
+      "case_id": "control-clean-confirmed",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 1,
+        "blocked_count": 0,
+        "pre_effect_blocked": false,
+        "reason_contains": [],
+        "receipt_decision": "COMMIT",
+        "release_calls": 1,
+        "released_count": 1,
+        "settlement_calls": 1
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 1,
+        "blocked_count": 0,
+        "pre_effect_blocked": false,
+        "reason_codes": [],
+        "receipt_decision": "COMMIT",
+        "release_calls": 1,
+        "released_count": 1,
+        "settlement_calls": 1
+      },
+      "operation": "clean",
+      "passed": true,
+      "rule_ids": [
+        "SR1",
+        "SR2",
+        "SR3",
+        "SR4",
+        "SR5",
+        "SR6",
+        "SR7",
+        "SR8"
+      ]
+    },
+    {
+      "case_id": "action-network-mutated",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "settings_mismatch"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": "network",
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "action_hash_mismatch",
+          "settings_mismatch"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "action_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR1",
+        "SR7"
+      ]
+    },
+    {
+      "case_id": "action-asset-mutated",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "settings_mismatch"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": "asset",
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "action_hash_mismatch",
+          "settings_mismatch"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "action_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR1",
+        "SR7"
+      ]
+    },
+    {
+      "case_id": "action-recipient-mutated",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "settings_mismatch"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": "recipient",
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "action_hash_mismatch",
+          "settings_mismatch"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "action_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR1",
+        "SR7"
+      ]
+    },
+    {
+      "case_id": "action-amount-mutated",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "settings_mismatch"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": "amount",
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "action_hash_mismatch",
+          "settings_mismatch"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "action_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR1",
+        "SR7"
+      ]
+    },
+    {
+      "case_id": "action-scheme-mutated",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "settings_mismatch"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "action_hash_mismatch",
+          "settings_mismatch"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "action_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR1",
+        "SR7"
+      ]
+    },
+    {
+      "case_id": "action-target-mutated",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "target_mismatch"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "action_hash_mismatch",
+          "target_mismatch"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "action_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR1",
+        "SR8"
+      ]
+    },
+    {
+      "case_id": "issue-network-mismatch",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "verified_commit:x402_airlock:sr1_network_mismatch"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "verified_commit:x402_airlock:sr1_network_mismatch"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "issue_settings_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR1"
+      ]
+    },
+    {
+      "case_id": "issue-asset-mismatch",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "verified_commit:x402_airlock:sr1_asset_mismatch"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "verified_commit:x402_airlock:sr1_asset_mismatch"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "issue_settings_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR1"
+      ]
+    },
+    {
+      "case_id": "issue-recipient-mismatch",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "verified_commit:x402_airlock:sr1_recipient_mismatch"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "verified_commit:x402_airlock:sr1_recipient_mismatch"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "issue_settings_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR1"
+      ]
+    },
+    {
+      "case_id": "issue-amount-mismatch",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "verified_commit:x402_airlock:sr1_amount_mismatch"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "verified_commit:x402_airlock:sr1_amount_mismatch"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "issue_settings_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR1"
+      ]
+    },
+    {
+      "case_id": "issue-scheme-mismatch",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "verified_commit:x402_airlock:sr1_scheme_mismatch"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "verified_commit:x402_airlock:sr1_scheme_mismatch"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "issue_settings_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR1"
+      ]
+    },
+    {
+      "case_id": "issue-signature-model-not-allowed",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "verified_commit:x402_airlock:sr2_signature_model_not_allowed"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "verified_commit:x402_airlock:sr2_signature_model_not_allowed"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "issue_settings_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR2"
+      ]
+    },
+    {
+      "case_id": "issue-authorization-expired",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "verified_commit:x402_airlock:sr3_authorization_expired"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": "expiry",
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "verified_commit:x402_airlock:sr3_authorization_expired",
+          "verified_commit:x402_airlock:sr5_freshness_bound_too_short"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "issue_settings_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR3"
+      ]
+    },
+    {
+      "case_id": "issue-authorization-not-yet-valid",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "verified_commit:x402_airlock:sr3_authorization_not_yet_valid"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "verified_commit:x402_airlock:sr3_authorization_not_yet_valid"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "issue_settings_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR3"
+      ]
+    },
+    {
+      "case_id": "permission-expired-before-use",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "authorization_expired"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": "expiry",
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "authorization_expired"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "permission_expired",
+      "passed": true,
+      "rule_ids": [
+        "SR3"
+      ]
+    },
+    {
+      "case_id": "issue-zero-amount",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "verified_commit:x402_airlock:sr5_amount_not_positive"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "verified_commit:x402_airlock:sr5_amount_below_receiver_minimum",
+          "verified_commit:x402_airlock:sr5_amount_not_positive"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "issue_settings_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR5"
+      ]
+    },
+    {
+      "case_id": "issue-amount-above-receiver-limit",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "verified_commit:x402_airlock:sr5_amount_above_receiver_maximum"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "verified_commit:x402_airlock:sr5_amount_above_receiver_maximum"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "issue_settings_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR5"
+      ]
+    },
+    {
+      "case_id": "issue-validity-too-short",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "verified_commit:x402_airlock:sr5_freshness_bound_too_short"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "verified_commit:x402_airlock:sr5_freshness_bound_too_short"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "issue_settings_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR3",
+        "SR5"
+      ]
+    },
+    {
+      "case_id": "issue-fee-above-cap",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "verified_commit:x402_airlock:sr6_fee_limit_exceeded"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "verified_commit:x402_airlock:sr6_fee_limit_exceeded"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "issue_settings_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR6"
+      ]
+    },
+    {
+      "case_id": "issue-gas-above-cap",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "verified_commit:x402_airlock:sr6_gas_limit_exceeded"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "verified_commit:x402_airlock:sr6_gas_limit_exceeded"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "issue_settings_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR6"
+      ]
+    },
+    {
+      "case_id": "issue-compute-above-cap",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "verified_commit:x402_airlock:sr6_compute_limit_exceeded"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "verified_commit:x402_airlock:sr6_compute_limit_exceeded"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "issue_settings_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR6"
+      ]
+    },
+    {
+      "case_id": "issue-instruction-injection",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "verified_commit:x402_airlock:sr8_execution_template_not_allowed"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "verified_commit:x402_airlock:sr8_execution_template_not_allowed"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "issue_settings_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR8"
+      ]
+    },
+    {
+      "case_id": "issue-signer-injection",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "verified_commit:x402_airlock:sr8_execution_template_not_allowed"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "verified_commit:x402_airlock:sr8_execution_template_not_allowed"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "issue_settings_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR8"
+      ]
+    },
+    {
+      "case_id": "issue-unknown-execution-field",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "verified_commit:x402_airlock:x402_execution_shape_invalid"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "verified_commit:x402_airlock:x402_execution_shape_invalid"
+        ],
+        "receipt_decision": "DENY",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "issue_settings_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR8"
+      ]
+    },
+    {
+      "case_id": "preflight-authorization-not-authentic",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "sr2_authorization_not_authentic"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "sr2_authorization_not_authentic"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "snapshot_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR2",
+        "SR7"
+      ]
+    },
+    {
+      "case_id": "preflight-authorization-hash-diverged",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "sr2_authorization_hash_mismatch"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": "verification_settlement_divergence",
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "sr2_authorization_hash_mismatch"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "snapshot_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR2",
+        "SR7"
+      ]
+    },
+    {
+      "case_id": "preflight-nonce-reused",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "sr5_nonce_already_used"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": "replay",
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "sr5_nonce_already_used"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "snapshot_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR5",
+        "SR7"
+      ]
+    },
+    {
+      "case_id": "preflight-insufficient-balance",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "sr5_insufficient_balance"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "sr5_insufficient_balance"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "snapshot_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR5",
+        "SR7"
+      ]
+    },
+    {
+      "case_id": "preflight-not-settleable",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "sr5_payment_not_settleable"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "sr5_payment_not_settleable"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "snapshot_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR5",
+        "SR7"
+      ]
+    },
+    {
+      "case_id": "preflight-snapshot-stale",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "sr7_receiver_snapshot_stale"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": "verification_settlement_divergence",
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "sr7_receiver_snapshot_stale"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "snapshot_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR7"
+      ]
+    },
+    {
+      "case_id": "preflight-verification-context-diverged",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "sr7_verification_context_diverged"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": "verification_settlement_divergence",
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "sr7_verification_context_diverged"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "snapshot_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR7"
+      ]
+    },
+    {
+      "case_id": "preflight-requirements-diverged",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "sr7_requirements_context_diverged"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": "verification_settlement_divergence",
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "sr7_requirements_context_diverged"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "snapshot_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR1",
+        "SR7"
+      ]
+    },
+    {
+      "case_id": "preflight-payment-diverged",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "sr7_payment_context_diverged"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": "verification_settlement_divergence",
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "sr7_payment_context_diverged"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "snapshot_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR1",
+        "SR7"
+      ]
+    },
+    {
+      "case_id": "preflight-unknown-snapshot-field",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "sr7_receiver_snapshot_shape_invalid"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "sr7_receiver_snapshot_shape_invalid"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "snapshot_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR7",
+        "SR8"
+      ]
+    },
+    {
+      "case_id": "preflight-provider-error",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "receiver_preflight_error:RuntimeError"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "receiver_preflight_error:RuntimeError"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "snapshot_provider_error",
+      "passed": true,
+      "rule_ids": [
+        "SR7"
+      ]
+    },
+    {
+      "case_id": "generic-ledger-bypass",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "receiver_preflight_required"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 0,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "receiver_preflight_required"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 0
+      },
+      "operation": "generic_bypass",
+      "passed": true,
+      "rule_ids": [
+        "SR7"
+      ]
+    },
+    {
+      "case_id": "confirmation-not-confirmed",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 1,
+        "blocked_count": 0,
+        "pre_effect_blocked": false,
+        "reason_contains": [
+          "sr4_settlement_not_confirmed"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 1
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 1,
+        "blocked_count": 0,
+        "pre_effect_blocked": false,
+        "reason_codes": [
+          "sr4_settlement_not_confirmed"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 1
+      },
+      "operation": "confirmation_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR4"
+      ]
+    },
+    {
+      "case_id": "confirmation-transaction-diverged",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 1,
+        "blocked_count": 0,
+        "pre_effect_blocked": false,
+        "reason_contains": [
+          "sr4_settlement_transaction_hash_mismatch"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 1
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 1,
+        "blocked_count": 0,
+        "pre_effect_blocked": false,
+        "reason_codes": [
+          "sr4_settlement_transaction_hash_mismatch"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 1
+      },
+      "operation": "settlement_transaction_divergence",
+      "passed": true,
+      "rule_ids": [
+        "SR4",
+        "SR7"
+      ]
+    },
+    {
+      "case_id": "confirmation-network-mismatch",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 1,
+        "blocked_count": 0,
+        "pre_effect_blocked": false,
+        "reason_contains": [
+          "sr4_settlement_network_mismatch"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 1
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 1,
+        "blocked_count": 0,
+        "pre_effect_blocked": false,
+        "reason_codes": [
+          "sr4_settlement_network_mismatch"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 1
+      },
+      "operation": "confirmation_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR1",
+        "SR4"
+      ]
+    },
+    {
+      "case_id": "confirmation-asset-mismatch",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 1,
+        "blocked_count": 0,
+        "pre_effect_blocked": false,
+        "reason_contains": [
+          "sr4_settlement_asset_mismatch"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 1
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 1,
+        "blocked_count": 0,
+        "pre_effect_blocked": false,
+        "reason_codes": [
+          "sr4_settlement_asset_mismatch"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 1
+      },
+      "operation": "confirmation_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR1",
+        "SR4"
+      ]
+    },
+    {
+      "case_id": "confirmation-amount-mismatch",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 1,
+        "blocked_count": 0,
+        "pre_effect_blocked": false,
+        "reason_contains": [
+          "sr4_settlement_amount_atomic_mismatch"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 1
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 1,
+        "blocked_count": 0,
+        "pre_effect_blocked": false,
+        "reason_codes": [
+          "sr4_settlement_amount_atomic_mismatch"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 1
+      },
+      "operation": "confirmation_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR1",
+        "SR4"
+      ]
+    },
+    {
+      "case_id": "confirmation-recipient-mismatch",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 1,
+        "blocked_count": 0,
+        "pre_effect_blocked": false,
+        "reason_contains": [
+          "sr4_settlement_recipient_mismatch"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 1
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 1,
+        "blocked_count": 0,
+        "pre_effect_blocked": false,
+        "reason_codes": [
+          "sr4_settlement_recipient_mismatch"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 1
+      },
+      "operation": "confirmation_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR1",
+        "SR4"
+      ]
+    },
+    {
+      "case_id": "confirmation-nonce-mismatch",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 1,
+        "blocked_count": 0,
+        "pre_effect_blocked": false,
+        "reason_contains": [
+          "sr4_settlement_nonce_mismatch"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 1
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 1,
+        "blocked_count": 0,
+        "pre_effect_blocked": false,
+        "reason_codes": [
+          "sr4_settlement_nonce_mismatch"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 1
+      },
+      "operation": "confirmation_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR4",
+        "SR5"
+      ]
+    },
+    {
+      "case_id": "confirmation-unknown-field",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 1,
+        "blocked_count": 0,
+        "pre_effect_blocked": false,
+        "reason_contains": [
+          "sr4_settlement_confirmation_shape_invalid"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 1
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 1,
+        "blocked_count": 0,
+        "pre_effect_blocked": false,
+        "reason_codes": [
+          "sr4_settlement_confirmation_shape_invalid"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 1
+      },
+      "operation": "confirmation_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR4",
+        "SR8"
+      ]
+    },
+    {
+      "case_id": "confirmation-provider-error",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 1,
+        "blocked_count": 0,
+        "pre_effect_blocked": false,
+        "reason_contains": [
+          "sr4_confirmation_provider_error:RuntimeError"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 1
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 1,
+        "blocked_count": 0,
+        "pre_effect_blocked": false,
+        "reason_codes": [
+          "sr4_confirmation_provider_error:RuntimeError"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 0,
+        "released_count": 0,
+        "settlement_calls": 1
+      },
+      "operation": "confirmation_provider_error",
+      "passed": true,
+      "rule_ids": [
+        "SR4"
+      ]
+    },
+    {
+      "case_id": "permission-replay",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 1,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "authorization_replay"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 1,
+        "released_count": 1,
+        "settlement_calls": 1
+      },
+      "falsifier_axis": "replay",
+      "observed": {
+        "authorized_count": 1,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "authorization_replay",
+          "one_use_code_replay",
+          "replay_scope_reused"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 1,
+        "released_count": 1,
+        "settlement_calls": 1
+      },
+      "operation": "replay",
+      "passed": true,
+      "rule_ids": [
+        "SR5"
+      ]
+    },
+    {
+      "case_id": "permission-concurrent-double-use",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 1,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "authorization_replay"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 1,
+        "released_count": 1,
+        "settlement_calls": 1
+      },
+      "falsifier_axis": "replay",
+      "observed": {
+        "authorized_count": 1,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "authorization_replay",
+          "one_use_code_replay",
+          "replay_scope_reused"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 1,
+        "released_count": 1,
+        "settlement_calls": 1
+      },
+      "operation": "concurrent",
+      "passed": true,
+      "rule_ids": [
+        "SR5"
+      ]
+    },
+    {
+      "case_id": "payment-replay-distinct-commit-receipts",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 1,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "replay_scope_reused"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 1,
+        "released_count": 1,
+        "settlement_calls": 1
+      },
+      "falsifier_axis": "replay",
+      "observed": {
+        "authorized_count": 1,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "replay_scope_reused"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 1,
+        "released_count": 1,
+        "settlement_calls": 1
+      },
+      "operation": "distinct_commit_replay",
+      "passed": true,
+      "rule_ids": [
+        "SR5",
+        "SR7"
+      ]
+    },
+    {
+      "case_id": "payment-nonce-race-distinct-commit-receipts",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 1,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_contains": [
+          "replay_scope_reused"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 1,
+        "released_count": 1,
+        "settlement_calls": 1
+      },
+      "falsifier_axis": "replay",
+      "observed": {
+        "authorized_count": 1,
+        "blocked_count": 1,
+        "pre_effect_blocked": true,
+        "reason_codes": [
+          "replay_scope_reused"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 1,
+        "released_count": 1,
+        "settlement_calls": 1
+      },
+      "operation": "distinct_commit_concurrent",
+      "passed": true,
+      "rule_ids": [
+        "SR5",
+        "SR7"
+      ]
+    },
+    {
+      "case_id": "release-negative-acknowledgment",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 1,
+        "blocked_count": 0,
+        "pre_effect_blocked": false,
+        "reason_contains": [
+          "resource_release_not_confirmed"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 1,
+        "released_count": 0,
+        "settlement_calls": 1
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 1,
+        "blocked_count": 0,
+        "pre_effect_blocked": false,
+        "reason_codes": [
+          "resource_release_not_confirmed"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 1,
+        "released_count": 0,
+        "settlement_calls": 1
+      },
+      "operation": "release_result_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR4"
+      ]
+    },
+    {
+      "case_id": "release-target-mismatch",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 1,
+        "blocked_count": 0,
+        "pre_effect_blocked": false,
+        "reason_contains": [
+          "resource_release_target_mismatch"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 1,
+        "released_count": 0,
+        "settlement_calls": 1
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 1,
+        "blocked_count": 0,
+        "pre_effect_blocked": false,
+        "reason_codes": [
+          "resource_release_target_mismatch"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 1,
+        "released_count": 0,
+        "settlement_calls": 1
+      },
+      "operation": "release_result_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR4",
+        "SR8"
+      ]
+    },
+    {
+      "case_id": "release-transaction-mismatch",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 1,
+        "blocked_count": 0,
+        "pre_effect_blocked": false,
+        "reason_contains": [
+          "resource_release_transaction_hash_mismatch"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 1,
+        "released_count": 0,
+        "settlement_calls": 1
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 1,
+        "blocked_count": 0,
+        "pre_effect_blocked": false,
+        "reason_codes": [
+          "resource_release_transaction_hash_mismatch"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 1,
+        "released_count": 0,
+        "settlement_calls": 1
+      },
+      "operation": "release_result_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR4"
+      ]
+    },
+    {
+      "case_id": "release-profile-mismatch",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 1,
+        "blocked_count": 0,
+        "pre_effect_blocked": false,
+        "reason_contains": [
+          "resource_release_result_profile_invalid"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 1,
+        "released_count": 0,
+        "settlement_calls": 1
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 1,
+        "blocked_count": 0,
+        "pre_effect_blocked": false,
+        "reason_codes": [
+          "resource_release_result_profile_invalid"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 1,
+        "released_count": 0,
+        "settlement_calls": 1
+      },
+      "operation": "release_result_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR4",
+        "SR8"
+      ]
+    },
+    {
+      "case_id": "release-unknown-field",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 1,
+        "blocked_count": 0,
+        "pre_effect_blocked": false,
+        "reason_contains": [
+          "resource_release_result_shape_invalid"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 1,
+        "released_count": 0,
+        "settlement_calls": 1
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 1,
+        "blocked_count": 0,
+        "pre_effect_blocked": false,
+        "reason_codes": [
+          "resource_release_result_shape_invalid"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 1,
+        "released_count": 0,
+        "settlement_calls": 1
+      },
+      "operation": "release_result_mutation",
+      "passed": true,
+      "rule_ids": [
+        "SR4",
+        "SR8"
+      ]
+    },
+    {
+      "case_id": "release-provider-error",
+      "comparisons": {
+        "authorized_count": true,
+        "blocked_count": true,
+        "pre_effect_blocked": true,
+        "reason_contains": true,
+        "receipt_decision": true,
+        "release_calls": true,
+        "released_count": true,
+        "settlement_calls": true
+      },
+      "expected": {
+        "authorized_count": 1,
+        "blocked_count": 0,
+        "pre_effect_blocked": false,
+        "reason_contains": [
+          "resource_release_error:RuntimeError"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 1,
+        "released_count": 0,
+        "settlement_calls": 1
+      },
+      "falsifier_axis": null,
+      "observed": {
+        "authorized_count": 1,
+        "blocked_count": 0,
+        "pre_effect_blocked": false,
+        "reason_codes": [
+          "resource_release_error:RuntimeError"
+        ],
+        "receipt_decision": "COMMIT",
+        "release_calls": 1,
+        "released_count": 0,
+        "settlement_calls": 1
+      },
+      "operation": "release_provider_error",
+      "passed": true,
+      "rule_ids": [
+        "SR4"
+      ]
+    }
+  ],
+  "rules_covered": [
+    "SR1",
+    "SR2",
+    "SR3",
+    "SR4",
+    "SR5",
+    "SR6",
+    "SR7",
+    "SR8"
+  ],
+  "run_at": "2026-07-28T08:00:00Z",
+  "schema": "openline.x402-airlock.hostile-report.v1",
+  "settlement_callback_count": 20,
+  "source": "arXiv:2607.19545v1",
+  "suite": "x402-airlock-hostile-v1",
+  "valid": true
+}

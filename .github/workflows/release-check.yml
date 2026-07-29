@@ -69,9 +69,36 @@ jobs:
               exit 1
             fi
           done
+          python - <<'PY'
+          import json
+          import subprocess
+          from pathlib import Path
+
+          freeze_path = Path("benchmarks/x402_airlock/FREEZE.json")
+          freeze = json.loads(freeze_path.read_text(encoding="utf-8"))
+          for artifact in [freeze_path.as_posix(), *sorted(freeze["files"])]:
+              subprocess.run(
+                  ["git", "ls-files", "--error-unmatch", "--", artifact],
+                  check=True,
+              )
+              ignored = subprocess.run(
+                  ["git", "check-ignore", "--no-index", "--quiet", "--", artifact],
+                  check=False,
+              )
+              if ignored.returncode == 0:
+                  raise SystemExit(f"ignored frozen artifact: {artifact}")
+          PY
 
       - name: Verify frozen warning-time benchmark
         run: python scripts/verify_warning_time_benchmark.py
+
+      - name: Verify frozen x402 Transaction Airlock
+        shell: bash
+        run: |
+          set -euo pipefail
+          python benchmarks/x402_airlock/run_hostile_suite.py
+          git diff --exit-code -- benchmarks/x402_airlock/results/hostile_report.json
+          python scripts/verify_x402_airlock.py
 
       - name: Run complete release gate
         run: python scripts/release_check.py

@@ -1,9 +1,9 @@
-"""OpenLine Receipt Gate v0.5.0rc5.
+"""OpenLine Receipt Gate v0.5.0rc6.
 
 Proof-to-policy gate for risky agent actions.
 """
 
-__version__ = "0.5.0rc5"
+__version__ = "0.5.0rc6"
 
 from .gate import gate, ReceiptGate, GatePolicy, Decision
 from .receipts import verify_chain, load_receipts
@@ -24,6 +24,19 @@ from .verified_commit import (
     issue_one_use_code,
     run_verified_commit_demo,
     verify_verified_commit_output,
+)
+from .x402_airlock import (
+    X402_AIRLOCK_PROFILE,
+    X402_CONFIRMATION_PROFILE,
+    X402_POLICY_PROFILE,
+    X402_RELEASE_REQUEST_PROFILE,
+    X402_RELEASE_RESULT_PROFILE,
+    X402_SNAPSHOT_PROFILE,
+    X402AirlockError,
+    evaluate_x402_preflight,
+    execute_x402_once,
+    validate_x402_issue,
+    verification_context_hash,
 )
 
 __all__ = [
@@ -50,4 +63,15 @@ __all__ = [
     "issue_one_use_code",
     "run_verified_commit_demo",
     "verify_verified_commit_output",
+    "X402_AIRLOCK_PROFILE",
+    "X402_CONFIRMATION_PROFILE",
+    "X402_POLICY_PROFILE",
+    "X402_RELEASE_REQUEST_PROFILE",
+    "X402_RELEASE_RESULT_PROFILE",
+    "X402_SNAPSHOT_PROFILE",
+    "X402AirlockError",
+    "evaluate_x402_preflight",
+    "execute_x402_once",
+    "validate_x402_issue",
+    "verification_context_hash",
 ]

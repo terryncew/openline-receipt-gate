@@ -18,7 +18,7 @@ ROLLBACK_REQUEST
 
 A valid signature can still produce `UNDECIDABLE`. Signature validity is never treated as evidence sufficiency.
 
-## Warning Time benchmark (v0.5.0rc5)
+## Warning Time benchmark (v0.5.0rc6)
 
 An early-warning metric matters only when it creates a measurable window in
 which Receipt Gate can prevent a bad action. The corrected DSM / Receipt Gate
@@ -132,6 +132,49 @@ if not result["authorized"]:
 `check_and_consume()` is exposed for adapter internals, but separating it from
 the tool call creates a time-of-check/time-of-use boundary. Prefer
 `execute_once()`. See [`docs/VERIFIED_COMMIT.md`](docs/VERIFIED_COMMIT.md).
+
+## x402 Transaction Airlock (v0.5.0rc6)
+
+Settlement proof is evidence. It is not, by itself, permission for the receiver
+to execute or release a protected resource.
+
+The Transaction Airlock is a narrow profile inside Verified Commit. It binds
+the exact scheme, network, asset, amount, recipient, resource, execution
+template, run, evidence, receiver policy, expiry, and one-use code into the
+existing signed `COMMIT`. At use time it consumes that permission, obtains a
+fresh receiver-owned snapshot, and rechecks authorization authenticity, nonce,
+balance, settleability, and verification-context hashes immediately before the
+settlement callback. The shared receiver ledger also atomically reserves the
+payment's scheme/network/asset/payer/signature-model/nonce scope, so distinct
+valid COMMIT receipts cannot replay or race the same payment. Resource release
+requires a separate confirmation matching the submitted transaction hash and
+exact payment fields, followed by the receiver's positive acknowledgment of
+that exact target and transaction hash.
+
+The frozen hostile suite maps the eight rules from Wang et al.,
+[*When HTTP 402 Meets the Blockchain*](https://arxiv.org/abs/2607.19545), to 56
+synthetic cases:
+
+```text
+56 / 56 hostile cases passed
+SR1–SR8 covered
+network · asset · recipient · amount · expiry · replay ·
+verification/settlement divergence blocked at the declared boundary
+```
+
+Reproduce and independently verify it:
+
+```bash
+python benchmarks/x402_airlock/run_hostile_suite.py
+python scripts/verify_x402_airlock.py
+```
+
+The verifier uses only the Python standard library and imports neither the
+candidate package nor benchmark modules. This is not a live facilitator,
+wallet, or chain audit. Receiver snapshot and confirmation providers remain
+trusted deployment components, and routes that bypass the airlock remain
+outside the claim. See
+[`docs/X402_TRANSACTION_AIRLOCK.md`](docs/X402_TRANSACTION_AIRLOCK.md).
 
 ## Verified Model Swap (introduced in v0.5.0rc1)
 
@@ -461,6 +504,10 @@ This path continues to emit the v0.1.1 local hash chain. Use the proof-to-policy
   the same atomic consumption state. It does not constrain bypass paths.
 - One-use authorization is not a claim of globally exactly-once side effects.
   A crash after consumption fails closed; retry requires a new authorization.
+- The x402 Transaction Airlock is a synthetic exact-action adapter. It does not
+  authenticate live chain state, make a facilitator safe, or mediate routes
+  that bypass its receiver-owned snapshot, ledger, settlement, confirmation,
+  and release boundary.
 - Assay's frozen bundle is generated from its public OpenFeature fixture; the
   receiver policy, receiver evidence, and DSSE predicate are OLP-authored and
   are not represented as deployment captures.

@@ -1,197 +1,210 @@
 {
   "attempts": [
     {
-      "attempt_action_hash": "22f9e3d2a695c2f8004917ec3f1db1537c9591dd12579e83b6d4ba67fcd96645",
-      "attempt_id": "f428320b1894ba1b3c6654ce",
+      "attempt_action_hash": "e3d23dd753b91beae6d660de177328df8935fd32f9fb348938026bdeb67d74fa",
+      "attempt_id": "8704975ebcf4b78090f0849f",
       "attempt_label": "changed_tool",
-      "authorization_hash": "a83f2dc7ebc4e99feac2303157a32cc8af97840c24118892535b01b8cb4e2049",
-      "checked_at": "2026-07-27T06:11:03.555243Z",
-      "decision_payload_hash": "ad2976a7c55c4f63062db8990fc68634ad8e5090e8a03fa15171726784f86b7b",
+      "authorization_hash": "4c5187da43c1a9774b73e281cf3649a1cbfca2ad1b1b64076a4f369330276d29",
+      "checked_at": "2026-07-28T10:11:08.877550Z",
+      "decision_payload_hash": "ee5ab7fc5e43f2f6aa5f9e982e200824574e746b49b30495ec6c1b9ee477c17e",
       "execution_status": "not_started",
       "reason_codes": [
         "action_hash_mismatch",
         "tool_mismatch"
       ],
+      "replay_scope_hash": null,
       "result": "BLOCKED",
       "tool_result_hash": null
     },
     {
-      "attempt_action_hash": "849593d6e1cedffe578ca17a6745fb8cc0e4a8a643a6f3cedb98bdb488d6d6d7",
-      "attempt_id": "aac3f726bbb80324c31677dd",
+      "attempt_action_hash": "0a86d6279f24c79318f5aa6f1d1818a76e544d17cad4cdf0c0165d0270f471db",
+      "attempt_id": "ca0fd3c1d4f32c2e9d02ade8",
       "attempt_label": "wrong_target",
-      "authorization_hash": "a83f2dc7ebc4e99feac2303157a32cc8af97840c24118892535b01b8cb4e2049",
-      "checked_at": "2026-07-27T06:11:03.557252Z",
-      "decision_payload_hash": "ad2976a7c55c4f63062db8990fc68634ad8e5090e8a03fa15171726784f86b7b",
+      "authorization_hash": "4c5187da43c1a9774b73e281cf3649a1cbfca2ad1b1b64076a4f369330276d29",
+      "checked_at": "2026-07-28T10:11:08.879643Z",
+      "decision_payload_hash": "ee5ab7fc5e43f2f6aa5f9e982e200824574e746b49b30495ec6c1b9ee477c17e",
       "execution_status": "not_started",
       "reason_codes": [
         "action_hash_mismatch",
         "target_mismatch"
       ],
+      "replay_scope_hash": null,
       "result": "BLOCKED",
       "tool_result_hash": null
     },
     {
-      "attempt_action_hash": "7acca7bfee009d534c89bac81bb90bd48b55d066dd8ddfcca50c04ecaced9eec",
-      "attempt_id": "5c2ec41da847210b959e1ca1",
+      "attempt_action_hash": "8e0cae0a8c10851c4b467a42d4c2dfe218e7a6a9e48db729be1152c018bec4e6",
+      "attempt_id": "f9f0d3cabb704c5e3812ed2c",
       "attempt_label": "changed_settings",
-      "authorization_hash": "a83f2dc7ebc4e99feac2303157a32cc8af97840c24118892535b01b8cb4e2049",
-      "checked_at": "2026-07-27T06:11:03.558763Z",
-      "decision_payload_hash": "ad2976a7c55c4f63062db8990fc68634ad8e5090e8a03fa15171726784f86b7b",
+      "authorization_hash": "4c5187da43c1a9774b73e281cf3649a1cbfca2ad1b1b64076a4f369330276d29",
+      "checked_at": "2026-07-28T10:11:08.881231Z",
+      "decision_payload_hash": "ee5ab7fc5e43f2f6aa5f9e982e200824574e746b49b30495ec6c1b9ee477c17e",
       "execution_status": "not_started",
       "reason_codes": [
         "action_hash_mismatch",
         "settings_mismatch"
       ],
+      "replay_scope_hash": null,
       "result": "BLOCKED",
       "tool_result_hash": null
     },
     {
-      "attempt_action_hash": "a5b3bc674bdc033311c475c180be2633435ae855a8ee3978c867c8aeb5184100",
-      "attempt_id": "a93398f8dc8624bc9577998f",
+      "attempt_action_hash": "84f79c4516e2f7cdaa22ce81dc056aa236437a32a2778e471b86014312442134",
+      "attempt_id": "28e28d07f45f2416b88a89bd",
       "attempt_label": "changed_run",
-      "authorization_hash": "a83f2dc7ebc4e99feac2303157a32cc8af97840c24118892535b01b8cb4e2049",
-      "checked_at": "2026-07-27T06:11:03.560335Z",
-      "decision_payload_hash": "ad2976a7c55c4f63062db8990fc68634ad8e5090e8a03fa15171726784f86b7b",
+      "authorization_hash": "4c5187da43c1a9774b73e281cf3649a1cbfca2ad1b1b64076a4f369330276d29",
+      "checked_at": "2026-07-28T10:11:08.882685Z",
+      "decision_payload_hash": "ee5ab7fc5e43f2f6aa5f9e982e200824574e746b49b30495ec6c1b9ee477c17e",
       "execution_status": "not_started",
       "reason_codes": [
         "action_hash_mismatch",
         "run_mismatch"
       ],
+      "replay_scope_hash": null,
       "result": "BLOCKED",
       "tool_result_hash": null
     },
     {
-      "attempt_action_hash": "27ae53e243888900dbd03d636e2de66e301b073d1e998e7c7f26a80f2876ef4c",
-      "attempt_id": "7d21774b6745cb4f6ce45ebe",
+      "attempt_action_hash": "abb3e1943746a692d1a991e3a816fc20bfcc621bb346e8c4df463e2c93a2dce6",
+      "attempt_id": "30aca297944d9e658f02b8d7",
       "attempt_label": "changed_capsule",
-      "authorization_hash": "a83f2dc7ebc4e99feac2303157a32cc8af97840c24118892535b01b8cb4e2049",
-      "checked_at": "2026-07-27T06:11:03.561809Z",
-      "decision_payload_hash": "ad2976a7c55c4f63062db8990fc68634ad8e5090e8a03fa15171726784f86b7b",
+      "authorization_hash": "4c5187da43c1a9774b73e281cf3649a1cbfca2ad1b1b64076a4f369330276d29",
+      "checked_at": "2026-07-28T10:11:08.884082Z",
+      "decision_payload_hash": "ee5ab7fc5e43f2f6aa5f9e982e200824574e746b49b30495ec6c1b9ee477c17e",
       "execution_status": "not_started",
       "reason_codes": [
         "action_hash_mismatch",
         "capsule_mismatch"
       ],
+      "replay_scope_hash": null,
       "result": "BLOCKED",
       "tool_result_hash": null
     },
     {
-      "attempt_action_hash": "9743af5cc8b9579a017ab30f026073a0c30365732eaaf686d62aa5157fd99371",
-      "attempt_id": "86d3c3423a1b58564a298cdd",
+      "attempt_action_hash": "1bab457a8dc3c66432ec47e5e073f8e8f90255c5150cc959a497643fc1114ecd",
+      "attempt_id": "1a16a3c1342eae6b1672220f",
       "attempt_label": "changed_evidence",
-      "authorization_hash": "a83f2dc7ebc4e99feac2303157a32cc8af97840c24118892535b01b8cb4e2049",
-      "checked_at": "2026-07-27T06:11:03.563300Z",
-      "decision_payload_hash": "ad2976a7c55c4f63062db8990fc68634ad8e5090e8a03fa15171726784f86b7b",
+      "authorization_hash": "4c5187da43c1a9774b73e281cf3649a1cbfca2ad1b1b64076a4f369330276d29",
+      "checked_at": "2026-07-28T10:11:08.885485Z",
+      "decision_payload_hash": "ee5ab7fc5e43f2f6aa5f9e982e200824574e746b49b30495ec6c1b9ee477c17e",
       "execution_status": "not_started",
       "reason_codes": [
         "action_hash_mismatch",
         "evidence_mismatch"
       ],
+      "replay_scope_hash": null,
       "result": "BLOCKED",
       "tool_result_hash": null
     },
     {
-      "attempt_action_hash": "56a0d6123fc959130cd5283caa94d8bf320fdb26bb7cb811ba0b6457abe99358",
-      "attempt_id": "47002b486e6e0d62647b09fc",
+      "attempt_action_hash": "3b8b83cc5c7a6f018dccdd2e6eadadf451af9c66e2a16f83e0dbcc416dc73b6b",
+      "attempt_id": "2719b46bb7ca58b6f9ccb5aa",
       "attempt_label": "changed_policy",
-      "authorization_hash": "a83f2dc7ebc4e99feac2303157a32cc8af97840c24118892535b01b8cb4e2049",
-      "checked_at": "2026-07-27T06:11:03.564927Z",
-      "decision_payload_hash": "ad2976a7c55c4f63062db8990fc68634ad8e5090e8a03fa15171726784f86b7b",
+      "authorization_hash": "4c5187da43c1a9774b73e281cf3649a1cbfca2ad1b1b64076a4f369330276d29",
+      "checked_at": "2026-07-28T10:11:08.886899Z",
+      "decision_payload_hash": "ee5ab7fc5e43f2f6aa5f9e982e200824574e746b49b30495ec6c1b9ee477c17e",
       "execution_status": "not_started",
       "reason_codes": [
         "action_hash_mismatch",
         "policy_mismatch"
       ],
+      "replay_scope_hash": null,
       "result": "BLOCKED",
       "tool_result_hash": null
     },
     {
-      "attempt_action_hash": "e9a00d6ff8ed81a512ed20f034cfa7be1830e422356014d85ae8d42aab96822a",
-      "attempt_id": "d219ce11c05eee14e9275480",
+      "attempt_action_hash": "ee1796bc210ef329ba043277b0fa4392419eb9a7eeaaf67b462f343aaf02eb07",
+      "attempt_id": "732015280a080e95c0b60bdb",
       "attempt_label": "wrong_code",
-      "authorization_hash": "a83f2dc7ebc4e99feac2303157a32cc8af97840c24118892535b01b8cb4e2049",
-      "checked_at": "2026-07-27T06:11:03.566414Z",
-      "decision_payload_hash": "ad2976a7c55c4f63062db8990fc68634ad8e5090e8a03fa15171726784f86b7b",
+      "authorization_hash": "4c5187da43c1a9774b73e281cf3649a1cbfca2ad1b1b64076a4f369330276d29",
+      "checked_at": "2026-07-28T10:11:08.888647Z",
+      "decision_payload_hash": "ee5ab7fc5e43f2f6aa5f9e982e200824574e746b49b30495ec6c1b9ee477c17e",
       "execution_status": "not_started",
       "reason_codes": [
         "one_use_code_mismatch"
       ],
+      "replay_scope_hash": null,
       "result": "BLOCKED",
       "tool_result_hash": null
     },
     {
-      "attempt_action_hash": "e9a00d6ff8ed81a512ed20f034cfa7be1830e422356014d85ae8d42aab96822a",
-      "attempt_id": "a91be92fac446dc3f783140e",
+      "attempt_action_hash": "ee1796bc210ef329ba043277b0fa4392419eb9a7eeaaf67b462f343aaf02eb07",
+      "attempt_id": "2742a373547d66382cedc315",
       "attempt_label": "expired",
-      "authorization_hash": "a83f2dc7ebc4e99feac2303157a32cc8af97840c24118892535b01b8cb4e2049",
-      "checked_at": "2026-07-27T06:16:04.345824Z",
-      "decision_payload_hash": "ad2976a7c55c4f63062db8990fc68634ad8e5090e8a03fa15171726784f86b7b",
+      "authorization_hash": "4c5187da43c1a9774b73e281cf3649a1cbfca2ad1b1b64076a4f369330276d29",
+      "checked_at": "2026-07-28T10:16:09.678826Z",
+      "decision_payload_hash": "ee5ab7fc5e43f2f6aa5f9e982e200824574e746b49b30495ec6c1b9ee477c17e",
       "execution_status": "not_started",
       "reason_codes": [
         "authorization_expired"
       ],
+      "replay_scope_hash": null,
       "result": "BLOCKED",
       "tool_result_hash": null
     },
     {
-      "attempt_action_hash": "e9a00d6ff8ed81a512ed20f034cfa7be1830e422356014d85ae8d42aab96822a",
-      "attempt_id": "811a0a0e2c32f79d5814caa4",
-      "attempt_label": "simultaneous_use_2",
-      "authorization_hash": "a83f2dc7ebc4e99feac2303157a32cc8af97840c24118892535b01b8cb4e2049",
-      "checked_at": "2026-07-27T06:11:03.569991Z",
-      "decision_payload_hash": "ad2976a7c55c4f63062db8990fc68634ad8e5090e8a03fa15171726784f86b7b",
-      "execution_status": "completed",
-      "execution_updated_at": "2026-07-27T06:11:03.576219Z",
-      "reason_codes": [],
-      "result": "AUTHORIZED",
-      "tool_result_hash": "e1b5388e199154cd8b20fc4c20b6311d32de68fccefa15f5fd289fda6bad2225"
-    },
-    {
-      "attempt_action_hash": "e9a00d6ff8ed81a512ed20f034cfa7be1830e422356014d85ae8d42aab96822a",
-      "attempt_id": "d5eac731a6fa84cbc223d6be",
+      "attempt_action_hash": "ee1796bc210ef329ba043277b0fa4392419eb9a7eeaaf67b462f343aaf02eb07",
+      "attempt_id": "f36e638bf3d4bfe75c69a0d2",
       "attempt_label": "simultaneous_use_1",
-      "authorization_hash": "a83f2dc7ebc4e99feac2303157a32cc8af97840c24118892535b01b8cb4e2049",
-      "checked_at": "2026-07-27T06:11:03.570288Z",
-      "decision_payload_hash": "ad2976a7c55c4f63062db8990fc68634ad8e5090e8a03fa15171726784f86b7b",
+      "authorization_hash": "4c5187da43c1a9774b73e281cf3649a1cbfca2ad1b1b64076a4f369330276d29",
+      "checked_at": "2026-07-28T10:11:08.893469Z",
+      "decision_payload_hash": "ee5ab7fc5e43f2f6aa5f9e982e200824574e746b49b30495ec6c1b9ee477c17e",
+      "execution_status": "completed",
+      "execution_updated_at": "2026-07-28T10:11:08.899539Z",
+      "reason_codes": [],
+      "replay_scope_hash": null,
+      "result": "AUTHORIZED",
+      "tool_result_hash": "042bc5074512465a07fdbd46c6d4253806e57d05170a261555ddf0dff5e61818"
+    },
+    {
+      "attempt_action_hash": "ee1796bc210ef329ba043277b0fa4392419eb9a7eeaaf67b462f343aaf02eb07",
+      "attempt_id": "99b2b40dcb05f681d6c8c4b2",
+      "attempt_label": "simultaneous_use_2",
+      "authorization_hash": "4c5187da43c1a9774b73e281cf3649a1cbfca2ad1b1b64076a4f369330276d29",
+      "checked_at": "2026-07-28T10:11:08.893403Z",
+      "decision_payload_hash": "ee5ab7fc5e43f2f6aa5f9e982e200824574e746b49b30495ec6c1b9ee477c17e",
       "execution_status": "not_started",
       "reason_codes": [
         "authorization_replay",
         "one_use_code_replay"
       ],
+      "replay_scope_hash": null,
       "result": "BLOCKED",
       "tool_result_hash": null
     },
     {
-      "attempt_action_hash": "e9a00d6ff8ed81a512ed20f034cfa7be1830e422356014d85ae8d42aab96822a",
-      "attempt_id": "8cafdca4a7412bb7cfd2c031",
+      "attempt_action_hash": "ee1796bc210ef329ba043277b0fa4392419eb9a7eeaaf67b462f343aaf02eb07",
+      "attempt_id": "7398a6ae3324dfb4039fff6c",
       "attempt_label": "sequential_replay",
-      "authorization_hash": "a83f2dc7ebc4e99feac2303157a32cc8af97840c24118892535b01b8cb4e2049",
-      "checked_at": "2026-07-27T06:11:03.577413Z",
-      "decision_payload_hash": "ad2976a7c55c4f63062db8990fc68634ad8e5090e8a03fa15171726784f86b7b",
+      "authorization_hash": "4c5187da43c1a9774b73e281cf3649a1cbfca2ad1b1b64076a4f369330276d29",
+      "checked_at": "2026-07-28T10:11:08.900794Z",
+      "decision_payload_hash": "ee5ab7fc5e43f2f6aa5f9e982e200824574e746b49b30495ec6c1b9ee477c17e",
       "execution_status": "not_started",
       "reason_codes": [
         "authorization_replay",
         "one_use_code_replay"
       ],
+      "replay_scope_hash": null,
       "result": "BLOCKED",
       "tool_result_hash": null
     }
   ],
   "consumed_codes": {
-    "ee1c97ab496a55704e8b4f5e953368ab9e8291d8ade6b9046dce47baf6b58cd6": {
-      "attempt_id": "811a0a0e2c32f79d5814caa4",
-      "consumed_at": "2026-07-27T06:11:03.569991Z",
-      "decision_payload_hash": "ad2976a7c55c4f63062db8990fc68634ad8e5090e8a03fa15171726784f86b7b"
+    "f58031eb3c6bc5684b15b1e94d12b2d293c1cec50c8a63c5b3e66f74a61b67a7": {
+      "attempt_id": "f36e638bf3d4bfe75c69a0d2",
+      "consumed_at": "2026-07-28T10:11:08.893469Z",
+      "decision_payload_hash": "ee5ab7fc5e43f2f6aa5f9e982e200824574e746b49b30495ec6c1b9ee477c17e"
     }
   },
   "consumed_decisions": {
-    "ad2976a7c55c4f63062db8990fc68634ad8e5090e8a03fa15171726784f86b7b": {
-      "action_hash": "e9a00d6ff8ed81a512ed20f034cfa7be1830e422356014d85ae8d42aab96822a",
-      "attempt_id": "811a0a0e2c32f79d5814caa4",
-      "authorization_hash": "a83f2dc7ebc4e99feac2303157a32cc8af97840c24118892535b01b8cb4e2049",
-      "consumed_at": "2026-07-27T06:11:03.569991Z",
-      "one_use_code_hash": "ee1c97ab496a55704e8b4f5e953368ab9e8291d8ade6b9046dce47baf6b58cd6"
+    "ee5ab7fc5e43f2f6aa5f9e982e200824574e746b49b30495ec6c1b9ee477c17e": {
+      "action_hash": "ee1796bc210ef329ba043277b0fa4392419eb9a7eeaaf67b462f343aaf02eb07",
+      "attempt_id": "f36e638bf3d4bfe75c69a0d2",
+      "authorization_hash": "4c5187da43c1a9774b73e281cf3649a1cbfca2ad1b1b64076a4f369330276d29",
+      "consumed_at": "2026-07-28T10:11:08.893469Z",
+      "one_use_code_hash": "f58031eb3c6bc5684b15b1e94d12b2d293c1cec50c8a63c5b3e66f74a61b67a7"
     }
   },
+  "consumed_replay_scopes": {},
   "schema": "openline.proof_to_policy.commit-ledger.v1"
 }

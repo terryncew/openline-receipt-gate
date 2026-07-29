@@ -1,0 +1,54 @@
+{
+  "schema": "openline.x402-airlock.rules.v1",
+  "source": "arXiv:2607.19545v1",
+  "rules": [
+    {
+      "airlock_control": "Bind declared scheme, network, asset, amount, recipient, and resource requirements to the payment and the existing signed COMMIT authorization.",
+      "id": "SR1",
+      "phase": "verification",
+      "rule": "The payment proof must match every server-declared payment requirement."
+    },
+    {
+      "airlock_control": "Require the receiver's fresh snapshot to attest authorization authenticity and bind the authorization hash and allowed signature model.",
+      "id": "SR2",
+      "phase": "verification_and_execution",
+      "rule": "The payer authorization must be authentic under the intended signature model."
+    },
+    {
+      "airlock_control": "Reject not-yet-valid, expired, or insufficiently fresh payment authorization and independently enforce COMMIT expiry.",
+      "id": "SR3",
+      "phase": "verification_and_execution",
+      "rule": "Authorization must be live at the decision and execution boundary."
+    },
+    {
+      "airlock_control": "Withhold resource release until a separate confirmation matches the submitted transaction hash and exact payment fields, then require the resource callback to acknowledge that exact target and transaction hash.",
+      "id": "SR4",
+      "phase": "post_settlement",
+      "rule": "Success requires confirmed settlement, not facilitator approval alone."
+    },
+    {
+      "airlock_control": "Reject meaningless or non-settleable payments, stale or reused nonces, insufficient balance, replay, and concurrent double use; atomically reserve the payment nonce scope across distinct signed COMMIT receipts.",
+      "id": "SR5",
+      "phase": "verification_and_execution",
+      "rule": "Fail early on non-settleable payments and enforce freshness and idempotency."
+    },
+    {
+      "airlock_control": "Apply receiver-pinned fee, gas, and compute ceilings before permission is issued.",
+      "id": "SR6",
+      "phase": "verification",
+      "rule": "Sponsored execution must remain within explicit resource bounds."
+    },
+    {
+      "airlock_control": "Consume the one-use permission, obtain a fresh receiver snapshot, and compare verification, requirements, payment, and authorization bindings immediately before settlement.",
+      "id": "SR7",
+      "phase": "execution",
+      "rule": "Mutable settlement conditions must be revalidated at execution."
+    },
+    {
+      "airlock_control": "Allow only a closed, receiver-declared execution template and reject unknown fields.",
+      "id": "SR8",
+      "phase": "verification",
+      "rule": "Settlement semantics must be explicit, narrow, and unambiguous."
+    }
+  ]
+}

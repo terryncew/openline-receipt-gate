@@ -1,5 +1,33 @@
 # Changelog
 
+## 0.5.0rc6
+
+- Adds the x402 Transaction Airlock as a profile inside the existing Verified
+  Commit authorization; no repository, receipt type, disposition, or score was
+  added.
+- Binds the normalized payment requirements, payment authorization, execution
+  template, receiver policy, expiry, and one-use code into the signed
+  `COMMIT`.
+- Adds a receiver-owned fresh-state preflight immediately before settlement for
+  authorization authenticity, nonce, balance, settleability, and exact
+  verification-context hashes.
+- Atomically reserves a receiver-ledger replay scope over the payment's scheme,
+  network, asset, payer, signature model, and nonce, blocking sequential and
+  simultaneous reuse across distinct valid COMMIT receipts.
+- Requires separate settlement confirmation to match the submitted transaction
+  hash, network, asset, amount, recipient, and nonce before resource release,
+  followed by a closed positive release acknowledgment for the exact target and
+  transaction hash.
+- Freezes a 56-case synthetic hostile suite mapped to SR1–SR8 from
+  arXiv:2607.19545v1. All required network, asset, recipient, amount, expiry,
+  replay, and verification-settlement divergence cases fail at the declared
+  boundary.
+- Adds a standard-library independent verifier, source-closure hashes,
+  byte-exact reproduction test, report-tamper control, and CI/release-gate
+  enforcement.
+- Keeps the claim bounded to the disclosed adapter and trusted receiver
+  providers; no live facilitator, wallet, chain, or SDK is certified.
+
 ## 0.5.0rc5
 
 - Corrects the release source closure: the three frozen warning-time decision

@@ -341,6 +341,41 @@ class VerifiedCommitTests(unittest.TestCase):
         blocked = next(item for item in results if not item["authorized"])
         self.assertIn("authorization_replay", blocked["reason_codes"])
 
+    def test_distinct_permissions_can_share_an_atomic_replay_scope(
+        self,
+    ) -> None:
+        first_receipt, first_action, first_code, _ = self.issue(
+            "replay-scope-first"
+        )
+        second_receipt, second_action, second_code, _ = self.issue(
+            "replay-scope-second"
+        )
+        replay_scope = "ab" * 32
+        calls: list[str] = []
+        ledger = VerifiedCommitLedger(
+            self.root / "shared-replay-scope-ledger.json"
+        )
+        first = ledger.execute_once(
+            first_receipt,
+            first_action,
+            one_use_code=first_code,
+            trusted_gate_keys=[self.gate_public_key],
+            replay_scope_hash=replay_scope,
+            executor=lambda: calls.append("first"),
+        )
+        second = ledger.execute_once(
+            second_receipt,
+            second_action,
+            one_use_code=second_code,
+            trusted_gate_keys=[self.gate_public_key],
+            replay_scope_hash=replay_scope,
+            executor=lambda: calls.append("second"),
+        )
+        self.assertTrue(first["authorized"])
+        self.assertFalse(second["authorized"])
+        self.assertIn("replay_scope_reused", second["reason_codes"])
+        self.assertEqual(calls, ["first"])
+
     def test_thirty_two_processes_allow_exactly_one_execution(self) -> None:
         if "fork" not in mp.get_all_start_methods():
             self.skipTest("reference ledger process race requires POSIX fork")

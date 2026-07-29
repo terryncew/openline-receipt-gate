@@ -44,6 +44,15 @@
   has no `commit_authorization`;
 - callback invocation after a failed Verified Commit check in the reference
   `execute_once()` boundary.
+- x402 network, asset, recipient, amount, scheme, target, and settings mutation
+  after issuance of the exact Verified Commit authorization;
+- x402 authorization expiry, stale receiver snapshots, changed verification
+  bindings, used nonce, insufficient balance, or non-settleable state before
+  the settlement callback;
+- fee, gas, compute, instruction, account, or signer expansion outside the
+  receiver's closed x402 policy;
+- resource release on absent, unconfirmed, wrong-transaction, wrong-network,
+  wrong-asset, wrong-amount, wrong-recipient, or wrong-nonce confirmation.
 
 ## Outside this release
 
@@ -87,6 +96,13 @@
   completion. This interval fails closed and requires a newly authorized action;
 - confidentiality of the action identifiers, settings supplied to the local
   tool adapter, or a receiver code disclosed outside receiver custody.
+- correctness or freshness of a malicious receiver snapshot or confirmation
+  provider that returns internally consistent false data;
+- global atomicity between the final receiver snapshot and the chain's own
+  transaction execution;
+- safety of a live x402 facilitator or SDK merely because the synthetic
+  Transaction Airlock cases pass;
+- any settlement or resource route that bypasses the x402 airlock entry point.
 
 ## Trust-store rule
 

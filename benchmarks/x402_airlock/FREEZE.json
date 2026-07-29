@@ -1,0 +1,19 @@
+{
+  "schema": "openline.x402-airlock.freeze.v1",
+  "suite": "x402-airlock-hostile-v1",
+  "frozen_at": "2026-07-28T08:00:00Z",
+  "files": {
+    "benchmarks/x402_airlock/CASES.json": "f2b74a4892775aa6da6ae7a06511626eb305b10f46b809c4e61582b60222a672",
+    "benchmarks/x402_airlock/PROTOCOL.md": "39a55cf3e30a050bf31aa00ec53e12adbc48c14cdde89519400823c046d072a6",
+    "benchmarks/x402_airlock/RULES.json": "05fbabed5911b3b1fcc9868005a24a7b1b105fe37cc5ab26227636d1fcf5aa09",
+    "benchmarks/x402_airlock/SOURCE.json": "420c96e7d6a32d08aa78aa11e2c87650ddc67cf55fb8e52e5407ae72852341a1",
+    "benchmarks/x402_airlock/fixture.py": "2fc28307b61703cde70c30538710c3de9dac26282b618e29812323a533586ff8",
+    "benchmarks/x402_airlock/results/hostile_report.json": "8aef8a69cb27bfd6ea0d64a4edf138fecc29d8a3555a79991c7e43b971adf79e",
+    "benchmarks/x402_airlock/run_hostile_suite.py": "77f18f757ddd1f0b76e10f48f3fff0b084e6843478b99fad414bec4b4f70b2a7",
+    "olp_gate/verified_commit.py": "f1fa282622156d5b2ea3a3c77dd2becb80b1575ddccde1c0fcaa3aa5af219a22",
+    "olp_gate/x402_airlock.py": "cd26748f212a35a2b12ff2b2be648843ab4c71dfacc638aa24ff66c5e7463f6e",
+    "scripts/verify_x402_airlock.py": "27064d245a2e911dab6c458f264177350275f162afebf8d835ff5dbbcb747767",
+    "tests/test_x402_airlock.py": "cbaa3e2fabbdbfca6f1384ee56377a5dbaedfac6e3788aa243735e0996e4881f",
+    "tests/test_x402_freeze.py": "b3aef38b11bd81fa1cb11d3fc0d31050b28594d48dca157cac7667b5a54314ec"
+  }
+}

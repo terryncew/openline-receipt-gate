@@ -2,7 +2,7 @@
 
 ## Supported claims
 
-Receipt Gate v0.5.0rc5 demonstrates that signed action receipts and a pinned Assay
+Receipt Gate v0.5.0rc6 demonstrates that signed action receipts and a pinned Assay
 evidence bundle can be converted into deterministic, signed policy decisions
 while keeping integrity, provenance, coverage, the source action signal,
 freshness, evidence, and outcome checks separate.
@@ -17,7 +17,7 @@ Inside the bundled fixtures:
 
 The decision is independently recomputed from the signed assessment set and policy snapshot.
 
-The v0.5.0rc5 warning-time benchmark additionally demonstrates, inside one
+The v0.5.0rc6 warning-time benchmark additionally demonstrates, inside one
 seeded synthetic three-agent fixture, that:
 
 - the metric proxy receives observable trace state rather than a case or
@@ -81,6 +81,26 @@ boundary, that:
 
 This is receiver-side exactly-once authorization, not globally exactly-once
 execution. A crash after consumption fails closed and requires new permission.
+
+The x402 Transaction Airlock additionally demonstrates, inside one disclosed
+synthetic adapter and frozen hostile suite, that:
+
+- the paper's SR1–SR8 rule labels map to explicit receiver controls;
+- all 56 frozen cases meet their declared outcome;
+- mutated network, asset, recipient, amount, and expired permissions fail before
+  the settlement callback;
+- stale verification context, changed payment or requirement hashes, used
+  nonces, insufficient balance, and non-settleable state fail during the fresh
+  receiver preflight;
+- sequential replay, concurrent use, and two distinct signed COMMIT receipts
+  carrying the same payment nonce produce only one settlement callback against
+  the shared atomic ledger; and
+- missing or mismatched settlement confirmation never releases the protected
+  resource.
+
+The standalone verifier checks the frozen source closure and serialized result
+without importing Receipt Gate or benchmark modules. This does not authenticate
+live chain observations or reproduce the study against a real facilitator.
 
 ## Frozen Pipelock result
 
@@ -189,6 +209,14 @@ This release does not establish:
   retry after a callback or process failure;
 - secrecy of a low-entropy caller-chosen one-use code. The reference generator
   produces 256 random bits, and production custody belongs to the receiver.
+- safety, compliance, or correct implementation of any deployed x402
+  facilitator, wallet, chain, token, sponsor, or server SDK;
+- truth of a receiver-supplied x402 snapshot or confirmation merely because its
+  shape and bindings pass;
+- atomicity between an off-chain fresh-state read and a later on-chain
+  transaction beyond what the selected chain and settlement template enforce;
+- protection for payment or resource routes that bypass the Transaction
+  Airlock and shared one-use ledger.
 
 ## Honest public claim
 

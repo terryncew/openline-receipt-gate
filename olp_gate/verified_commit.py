@@ -44,6 +44,9 @@ from .crypto import (
 
 VERIFIED_COMMIT_PROFILE = "verified_commit/v1"
 COMMIT_LEDGER_SCHEMA = "openline.proof_to_policy.commit-ledger.v1"
+PREFLIGHT_REQUIRED_SETTINGS_PROFILES = frozenset(
+    {"x402_transaction_airlock/v1"}
+)
 
 COMMIT_REQUEST_KEYS = {
     "tool",
@@ -229,6 +232,53 @@ def _validated_policy(value: Any) -> tuple[dict[str, Any] | None, list[str]]:
     return policy, sorted(set(errors))
 
 
+def _settings_profile(value: Any) -> str | None:
+    if not isinstance(value, Mapping):
+        return None
+    profile = value.get("profile")
+    return profile if isinstance(profile, str) else None
+
+
+def _normalize_preflight_result(
+    value: Any,
+) -> tuple[dict[str, Any] | None, list[str]]:
+    if not isinstance(value, Mapping):
+        return None, ["receiver_preflight_result_invalid"]
+    result = dict(value)
+    if set(result) != {"allowed", "reason_codes", "evidence"}:
+        return None, ["receiver_preflight_result_shape_invalid"]
+    allowed = result.get("allowed")
+    reasons = result.get("reason_codes")
+    evidence = result.get("evidence")
+    errors: list[str] = []
+    if not isinstance(allowed, bool):
+        errors.append("receiver_preflight_allowed_invalid")
+    if (
+        not isinstance(reasons, list)
+        or not all(isinstance(item, str) and item for item in reasons)
+        or len(set(reasons)) != len(reasons)
+    ):
+        errors.append("receiver_preflight_reason_codes_invalid")
+    if not isinstance(evidence, Mapping):
+        errors.append("receiver_preflight_evidence_invalid")
+    if allowed is True and reasons:
+        errors.append("receiver_preflight_pass_has_reasons")
+    if allowed is False and not reasons:
+        errors.append("receiver_preflight_block_missing_reason")
+    try:
+        evidence_hash = sha256_hex(olp_canonical_json(dict(evidence)))
+    except (TypeError, UnsupportedCanonicalValue):
+        evidence_hash = ""
+        errors.append("receiver_preflight_evidence_canonicalization_unsupported")
+    if errors:
+        return None, sorted(set(errors))
+    return {
+        "allowed": allowed,
+        "reason_codes": sorted(reasons),
+        "evidence_hash": evidence_hash,
+    }, []
+
+
 def assess_verified_commit(
     request: Mapping[str, Any],
     *,
@@ -337,6 +387,24 @@ def assess_verified_commit(
         if expiry is not None and isinstance(policy.get("max_ttl_seconds"), int):
             if (expiry - now).total_seconds() > policy["max_ttl_seconds"]:
                 errors.append("verified_commit_ttl_exceeds_policy")
+
+    raw_x402_policy = policy_metadata.get("x402_airlock")
+    request_profile = _settings_profile(commit_request.get("settings"))
+    if (
+        raw_x402_policy is not None
+        or request_profile in PREFLIGHT_REQUIRED_SETTINGS_PROFILES
+    ):
+        # Local import keeps the generic Verified Commit module independent of
+        # the optional transaction profile while making policy bypass fail
+        # closed at receipt issuance.
+        from .x402_airlock import validate_x402_issue
+
+        x402_errors = validate_x402_issue(
+            commit_request.get("settings"),
+            raw_x402_policy,
+            now=now,
+        )
+        errors.extend(f"x402_airlock:{error}" for error in x402_errors)
 
     if errors:
         return Check(
@@ -583,6 +651,7 @@ class VerifiedCommitLedger:
             "schema": COMMIT_LEDGER_SCHEMA,
             "consumed_decisions": {},
             "consumed_codes": {},
+            "consumed_replay_scopes": {},
             "attempts": [],
         }
 
@@ -599,6 +668,15 @@ class VerifiedCommitLedger:
                     state = self._empty()
                 if not isinstance(state, dict) or state.get("schema") != COMMIT_LEDGER_SCHEMA:
                     raise VerifiedCommitError("commit_ledger_schema_invalid")
+                # v0.5.0rc6 adds an optional receiver-defined replay scope.
+                # Existing v1 ledgers remain readable; a receiver that needs
+                # this control must protect the ledger from local tampering,
+                # just as it must protect consumed decision/code state.
+                state.setdefault("consumed_replay_scopes", {})
+                if not isinstance(state["consumed_replay_scopes"], dict):
+                    raise VerifiedCommitError(
+                        "commit_ledger_replay_scopes_invalid"
+                    )
                 yield state
                 descriptor, temp_name = tempfile.mkstemp(
                     prefix=self.path.name + ".",
@@ -623,6 +701,7 @@ class VerifiedCommitLedger:
         *,
         one_use_code: str,
         trusted_gate_keys: Sequence[str],
+        replay_scope_hash: str | None = None,
         now: datetime | None = None,
         attempt_label: str | None = None,
     ) -> dict[str, Any]:
@@ -698,6 +777,14 @@ class VerifiedCommitLedger:
                 and expected_code_hash in state["consumed_codes"]
             ):
                 errors.append("one_use_code_replay")
+            if replay_scope_hash is not None:
+                if not _is_hash(replay_scope_hash):
+                    errors.append("replay_scope_hash_invalid")
+                elif (
+                    replay_scope_hash
+                    in state["consumed_replay_scopes"]
+                ):
+                    errors.append("replay_scope_reused")
 
             authorized = not errors
             attempt_id = secrets.token_hex(12)
@@ -708,6 +795,7 @@ class VerifiedCommitLedger:
                 "decision_payload_hash": decision_hash,
                 "authorization_hash": authorization.get("authorization_hash"),
                 "attempt_action_hash": attempted_hash,
+                "replay_scope_hash": replay_scope_hash,
                 "result": "AUTHORIZED" if authorized else "BLOCKED",
                 "reason_codes": sorted(set(errors)),
                 "execution_status": "permitted" if authorized else "not_started",
@@ -727,6 +815,17 @@ class VerifiedCommitLedger:
                     "consumed_at": _iso(check_time),
                     "attempt_id": attempt_id,
                 }
+                if replay_scope_hash is not None:
+                    state["consumed_replay_scopes"][
+                        replay_scope_hash
+                    ] = {
+                        "decision_payload_hash": decision_hash,
+                        "authorization_hash": authorization[
+                            "authorization_hash"
+                        ],
+                        "consumed_at": _iso(check_time),
+                        "attempt_id": attempt_id,
+                    }
             return {
                 "authorized": authorized,
                 "reason_codes": record["reason_codes"],
@@ -734,6 +833,7 @@ class VerifiedCommitLedger:
                 "decision_payload_hash": decision_hash,
                 "authorization_hash": authorization.get("authorization_hash"),
                 "action_hash": attempted_hash,
+                "replay_scope_hash": replay_scope_hash,
             }
 
     def _record_execution(
@@ -743,6 +843,8 @@ class VerifiedCommitLedger:
         status: str,
         tool_result_hash: str | None = None,
         error_type: str | None = None,
+        execution_reason_codes: Sequence[str] | None = None,
+        preflight_evidence_hash: str | None = None,
     ) -> None:
         with self._locked() as state:
             for attempt in state["attempts"]:
@@ -753,8 +855,60 @@ class VerifiedCommitLedger:
                     attempt["tool_result_hash"] = tool_result_hash
                     if error_type is not None:
                         attempt["execution_error_type"] = error_type
+                    if execution_reason_codes is not None:
+                        attempt["execution_reason_codes"] = sorted(
+                            set(execution_reason_codes)
+                        )
+                    if preflight_evidence_hash is not None:
+                        attempt["preflight_evidence_hash"] = (
+                            preflight_evidence_hash
+                        )
                     attempt["execution_updated_at"] = _iso(_utc_now())
                     return
+            raise VerifiedCommitError("commit_attempt_unknown")
+
+    def record_postcondition(
+        self,
+        attempt_id: str,
+        *,
+        status: str,
+        evidence: Mapping[str, Any],
+        reason_codes: Sequence[str] = (),
+    ) -> str:
+        """Record a receiver-owned postcondition without storing raw evidence."""
+
+        if not isinstance(status, str) or not status:
+            raise VerifiedCommitError("postcondition_status_invalid")
+        if (
+            not isinstance(reason_codes, Sequence)
+            or isinstance(reason_codes, (str, bytes))
+            or not all(
+                isinstance(reason, str) and reason for reason in reason_codes
+            )
+        ):
+            raise VerifiedCommitError("postcondition_reason_codes_invalid")
+        try:
+            evidence_hash = sha256_hex(
+                olp_canonical_json(dict(evidence))
+            )
+        except (TypeError, UnsupportedCanonicalValue) as exc:
+            raise VerifiedCommitError(
+                "postcondition_evidence_canonicalization_unsupported"
+            ) from exc
+        with self._locked() as state:
+            for attempt in state["attempts"]:
+                if attempt.get("attempt_id") == attempt_id:
+                    if attempt.get("result") != "AUTHORIZED":
+                        raise VerifiedCommitError(
+                            "blocked_attempt_has_no_postcondition"
+                        )
+                    attempt["postcondition_status"] = status
+                    attempt["postcondition_evidence_hash"] = evidence_hash
+                    attempt["postcondition_reason_codes"] = sorted(
+                        set(reason_codes)
+                    )
+                    attempt["postcondition_updated_at"] = _iso(_utc_now())
+                    return evidence_hash
             raise VerifiedCommitError("commit_attempt_unknown")
 
     def execute_once(
@@ -765,21 +919,85 @@ class VerifiedCommitLedger:
         one_use_code: str,
         trusted_gate_keys: Sequence[str],
         executor: Callable[[], T],
+        preflight: Callable[[], Mapping[str, Any]] | None = None,
+        replay_scope_hash: str | None = None,
         now: datetime | None = None,
         attempt_label: str | None = None,
     ) -> dict[str, Any]:
-        """Spend permission, then and only then invoke ``executor`` once."""
+        """Spend permission, run any required fresh check, then invoke once.
+
+        Permission is consumed before the receiver-owned preflight callback.
+        A failed or malformed preflight therefore blocks the effect and also
+        prevents reuse of the stale authorization.
+        """
 
         result = self.check_and_consume(
             receipt,
             action,
             one_use_code=one_use_code,
             trusted_gate_keys=trusted_gate_keys,
+            replay_scope_hash=replay_scope_hash,
             now=now,
             attempt_label=attempt_label,
         )
         if not result["authorized"]:
             return result
+        settings = action.get("settings")
+        profile = _settings_profile(settings)
+        preflight_required = (
+            profile in PREFLIGHT_REQUIRED_SETTINGS_PROFILES
+        )
+        if preflight is None and preflight_required:
+            normalized_preflight = None
+            preflight_errors = ["receiver_preflight_required"]
+        elif preflight is None:
+            normalized_preflight = None
+            preflight_errors = []
+        else:
+            try:
+                raw_preflight = preflight()
+            except BaseException as exc:
+                normalized_preflight = None
+                preflight_errors = [
+                    f"receiver_preflight_error:{type(exc).__name__}"
+                ]
+            else:
+                normalized_preflight, preflight_errors = (
+                    _normalize_preflight_result(raw_preflight)
+                )
+
+        if preflight is not None or preflight_required:
+            if normalized_preflight is None:
+                reasons = sorted(set(preflight_errors))
+                evidence_hash = None
+                allowed = False
+            else:
+                reasons = list(normalized_preflight["reason_codes"])
+                evidence_hash = str(
+                    normalized_preflight["evidence_hash"]
+                )
+                allowed = normalized_preflight["allowed"] is True
+            if not allowed:
+                self._record_execution(
+                    result["attempt_id"],
+                    status="preflight_blocked",
+                    execution_reason_codes=reasons,
+                    preflight_evidence_hash=evidence_hash,
+                )
+                return {
+                    **result,
+                    "authorized": False,
+                    "permission_consumed": True,
+                    "reason_codes": reasons,
+                    "preflight_allowed": False,
+                    "preflight_evidence_hash": evidence_hash,
+                    "execution_status": "preflight_blocked",
+                }
+            self._record_execution(
+                result["attempt_id"],
+                status="preflight_passed",
+                preflight_evidence_hash=evidence_hash,
+            )
         self._record_execution(result["attempt_id"], status="started")
         try:
             tool_result = executor()
@@ -803,6 +1021,10 @@ class VerifiedCommitLedger:
         )
         return {
             **result,
+            "permission_consumed": True,
+            "preflight_allowed": (
+                True if preflight is not None or preflight_required else None
+            ),
             "tool_result": tool_result,
             "tool_result_hash": result_hash,
             "execution_status": status,
