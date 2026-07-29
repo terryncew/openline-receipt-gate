@@ -133,6 +133,59 @@ if not result["authorized"]:
 the tool call creates a time-of-check/time-of-use boundary. Prefer
 `execute_once()`. See [`docs/VERIFIED_COMMIT.md`](docs/VERIFIED_COMMIT.md).
 
+## Verified Continuation (v0.5.0rc8)
+
+Normal handoffs move context. OLP determines what the receiving system may
+trust and do with it.
+
+The frozen first outside trial holds the receiver, repository checkout, task,
+tools, terminal tests, and tool-call budget constant. Only inherited state
+changes:
+
+```text
+producer self-summary
+no prior state
+Half-Life bounded capsule + receiver appraisal
+```
+
+Receipt Gate derives direct repeated-exploration, trace-error,
+terminal-defect, and budget counts from three recorded traces. It does not
+accept caller-supplied scores. The continuation claim passes only when the OLP
+lane stays within budget, is no worse than both baselines on repeated
+exploration and defects, and is strictly better than each baseline on at least
+one of those outcomes.
+
+The included traces are synthetic harness-conformance data. They deliberately
+produce a favorable direct-count pattern but remain `UNDECIDABLE` because no
+outside provider execution is established:
+
+```bash
+olp-gate evaluate-continuation \
+  benchmarks/verified_continuation \
+  --output results/verified_continuation_fixture
+python scripts/verify_verified_continuation.py
+```
+
+Authorization is a separate claim. The disclosed Git trial binds an existing
+Verified Commit authorization to one exact compare-and-swap update of
+`refs/heads/receiver-approved`. Wrong-branch, changed-commit, expired, replayed,
+and simultaneous duplicate writes must stop before ref mutation:
+
+```bash
+olp-gate demo-continuation-authorization \
+  --half-life-output "$OLP_HALF_LIFE_ROOT/examples/demo_output" \
+  --succession-policy-key "$OLP_HALF_LIFE_ROOT/policy/succession_policy_public_key.hex" \
+  --compaction-policy-key "$OLP_HALF_LIFE_ROOT/policy/compaction_policy_public_key.hex" \
+  --source-model fixture/producer-model \
+  --target-model fixture/receiving-model \
+  --output results/verified_continuation_authorization
+```
+
+DSM receives only a display projection after evaluation. Because these compact
+traces do not contain authoritative DSM snapshot state, κ, Φ*, and VKD remain
+`UNDECIDABLE`; DSM cannot grade either claim. See
+[`benchmarks/verified_continuation/PROTOCOL.md`](benchmarks/verified_continuation/PROTOCOL.md).
+
 ## x402 Transaction Airlock (v0.5.0rc6)
 
 Settlement proof is evidence. It is not, by itself, permission for the receiver

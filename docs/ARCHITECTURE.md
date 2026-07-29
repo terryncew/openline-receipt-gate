@@ -152,6 +152,28 @@ atomic consume occurs before callback invocation, so concurrent and sequential
 replay fail closed within that shared ledger. Global coordination, bypass-path
 mediation, and side-effect rollback remain deployment responsibilities.
 
+## Verified Continuation boundary
+
+Verified Continuation is a frozen experiment over existing Half-Life,
+Receipt Gate, Verified Commit, and DSM boundaries. It adds no receipt family,
+score, or disposition.
+
+```text
+three matched recorded lanes -> strict direct-count evaluator
+                              -> continuation claim
+
+Half-Life capsule -> Receipt Gate -> exact Verified Commit -> Git update-ref
+                                                          -> authorization claim
+
+both reports -> DSM display-only projection
+```
+
+The evaluator fixes receiver model, repository, task, tools, terminal tests,
+and budget. It derives repeated exploration and terminal defects rather than
+accepting them from the runner. Synthetic conformance data cannot earn the
+continuation claim. The Git trial separately proves the local pre-effect
+authorization boundary and cannot upgrade continuation quality.
+
 ## x402 Transaction Airlock boundary
 
 The x402 adapter is a settings and preflight profile inside Verified Commit,

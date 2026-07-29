@@ -1,0 +1,239 @@
+{
+  "claim_boundary": "This is an observation projection only. It does not infer scientific validity, provider execution, continuation quality, or permission.",
+  "claims": {
+    "authorization": {
+      "disposition": "NOT_EVALUATED",
+      "reason_codes": [
+        "authorization_is_evaluated_by_verified_commit"
+      ]
+    },
+    "continuation": {
+      "disposition": "UNDECIDABLE",
+      "external_evidence_sufficient": false,
+      "mechanism_rule_passed": true,
+      "noninferior_on_repeated_exploration_and_defects": true,
+      "olp_within_budget": true,
+      "reason_codes": [
+        "outside_provider_execution_not_established"
+      ],
+      "strictly_better_than_each_baseline": true
+    }
+  },
+  "coherence_dynamics": {
+    "kappa": {
+      "reason": "the frozen trace lacks the authoritative DSM snapshot state",
+      "status": "UNDECIDABLE"
+    },
+    "phi_star": {
+      "reason": "the frozen trace lacks the authoritative DSM snapshot state",
+      "status": "UNDECIDABLE"
+    },
+    "vkd": {
+      "reason": "the frozen trace lacks the authoritative DSM snapshot state",
+      "status": "UNDECIDABLE"
+    }
+  },
+  "controls": {
+    "binding_hash": "00b4edaaa6e1a0062b262e1894cad2841eb7f3066478a526f057d9aac91ed7f2",
+    "fixed_fields": [
+      "budget",
+      "producer_history_sha256",
+      "receiver_configuration_sha256",
+      "receiving_model",
+      "repository_checkout_sha256",
+      "task_sha256",
+      "terminal_test_manifest_sha256",
+      "tool_manifest_sha256"
+    ],
+    "matched": true
+  },
+  "direct_outcomes": {
+    "no_prior_state": {
+      "budget_exceeded": false,
+      "budget_max_tool_calls": 12,
+      "repeated_exploration": 4,
+      "terminal_defects": 1,
+      "tool_calls": 11,
+      "trace_errors": 1
+    },
+    "olp_capsule": {
+      "budget_exceeded": false,
+      "budget_max_tool_calls": 12,
+      "repeated_exploration": 0,
+      "terminal_defects": 0,
+      "tool_calls": 5,
+      "trace_errors": 0
+    },
+    "self_summary": {
+      "budget_exceeded": false,
+      "budget_max_tool_calls": 12,
+      "repeated_exploration": 3,
+      "terminal_defects": 1,
+      "tool_calls": 9,
+      "trace_errors": 1
+    }
+  },
+  "display_only": true,
+  "grading_authority": "Receipt Gate independently computed the direct counts; DSM must not grade or upgrade either claim",
+  "lanes": {
+    "no_prior_state": [
+      {
+        "errors": 0,
+        "repeated_exploration": 0,
+        "step": 1,
+        "tool_calls": 1
+      },
+      {
+        "errors": 0,
+        "repeated_exploration": 0,
+        "step": 2,
+        "tool_calls": 2
+      },
+      {
+        "errors": 0,
+        "repeated_exploration": 1,
+        "step": 3,
+        "tool_calls": 3
+      },
+      {
+        "errors": 0,
+        "repeated_exploration": 1,
+        "step": 4,
+        "tool_calls": 4
+      },
+      {
+        "errors": 0,
+        "repeated_exploration": 1,
+        "step": 5,
+        "tool_calls": 5
+      },
+      {
+        "errors": 0,
+        "repeated_exploration": 2,
+        "step": 6,
+        "tool_calls": 6
+      },
+      {
+        "errors": 0,
+        "repeated_exploration": 3,
+        "step": 7,
+        "tool_calls": 7
+      },
+      {
+        "errors": 0,
+        "repeated_exploration": 4,
+        "step": 8,
+        "tool_calls": 8
+      },
+      {
+        "errors": 0,
+        "repeated_exploration": 4,
+        "step": 9,
+        "tool_calls": 9
+      },
+      {
+        "errors": 1,
+        "repeated_exploration": 4,
+        "step": 10,
+        "tool_calls": 10
+      },
+      {
+        "errors": 1,
+        "repeated_exploration": 4,
+        "step": 11,
+        "tool_calls": 11
+      }
+    ],
+    "olp_capsule": [
+      {
+        "errors": 0,
+        "repeated_exploration": 0,
+        "step": 1,
+        "tool_calls": 1
+      },
+      {
+        "errors": 0,
+        "repeated_exploration": 0,
+        "step": 2,
+        "tool_calls": 2
+      },
+      {
+        "errors": 0,
+        "repeated_exploration": 0,
+        "step": 3,
+        "tool_calls": 3
+      },
+      {
+        "errors": 0,
+        "repeated_exploration": 0,
+        "step": 4,
+        "tool_calls": 4
+      },
+      {
+        "errors": 0,
+        "repeated_exploration": 0,
+        "step": 5,
+        "tool_calls": 5
+      }
+    ],
+    "self_summary": [
+      {
+        "errors": 0,
+        "repeated_exploration": 0,
+        "step": 1,
+        "tool_calls": 1
+      },
+      {
+        "errors": 0,
+        "repeated_exploration": 0,
+        "step": 2,
+        "tool_calls": 2
+      },
+      {
+        "errors": 0,
+        "repeated_exploration": 0,
+        "step": 3,
+        "tool_calls": 3
+      },
+      {
+        "errors": 0,
+        "repeated_exploration": 1,
+        "step": 4,
+        "tool_calls": 4
+      },
+      {
+        "errors": 0,
+        "repeated_exploration": 2,
+        "step": 5,
+        "tool_calls": 5
+      },
+      {
+        "errors": 0,
+        "repeated_exploration": 3,
+        "step": 6,
+        "tool_calls": 6
+      },
+      {
+        "errors": 0,
+        "repeated_exploration": 3,
+        "step": 7,
+        "tool_calls": 7
+      },
+      {
+        "errors": 1,
+        "repeated_exploration": 3,
+        "step": 8,
+        "tool_calls": 8
+      },
+      {
+        "errors": 1,
+        "repeated_exploration": 3,
+        "step": 9,
+        "tool_calls": 9
+      }
+    ]
+  },
+  "report_hash": "05598ac3ee5def52318538dd3982e8ef6c2aba65ceb4ec820a0cb9d4bb7518a7",
+  "schema": "openline.verified-continuation.dsm-projection.v1",
+  "trial_id": "verified-continuation-first-outside-trial"
+}

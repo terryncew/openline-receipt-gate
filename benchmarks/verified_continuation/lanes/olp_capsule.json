@@ -1,0 +1,66 @@
+{
+  "controls": {
+    "budget": {
+      "max_tool_calls": 12
+    },
+    "producer_history_sha256": "3d7bc7c0aa183400cc8a681d2f366597ca4b19118583bced0408199f4a66ff81",
+    "receiver_configuration_sha256": "7dad74598a02c5728a9570fa08d5296c97ebca75981a3991dbb6099b415cf6a7",
+    "receiving_model": "fixture/identical-receiving-model",
+    "repository_checkout_sha256": "ecebfd76aea884d926199d6c055d711dcc6e8a2703e634c11f12f0180535bbf8",
+    "task_sha256": "d31d1358d2e60126537f0bd99e4cc927095c0f1394d72eb1161cfa247289a41f",
+    "terminal_test_manifest_sha256": "5aeefa4a3fc2550a6b48cd1c4df30186a06b1007a0c9631f132189d76b09193e",
+    "tool_manifest_sha256": "4c880571983b9701d16791718bc2e54aebf820c793c52cde31b0b429eea491cf"
+  },
+  "evidence_class": "synthetic_conformance",
+  "inherited_state": {
+    "artifact_sha256": "e2631003c0cd4a20c54fde1476e1bac9e9215a563aa48a1d788683efc20082c2",
+    "kind": "half_life_bounded_capsule"
+  },
+  "lane_id": "olp_capsule",
+  "provider_execution_attested": false,
+  "run_id": "fixture-olp-capsule",
+  "schema": "openline.verified-continuation.lane-result.v1",
+  "terminal_tests": [
+    {
+      "status": "PASS",
+      "test_id": "terminal/regression"
+    },
+    {
+      "status": "PASS",
+      "test_id": "terminal/scope"
+    }
+  ],
+  "trace": [
+    {
+      "kind": "read",
+      "status": "ok",
+      "step": 1,
+      "target": "src/validator.py"
+    },
+    {
+      "kind": "read",
+      "status": "ok",
+      "step": 2,
+      "target": "tests/test_validator.py"
+    },
+    {
+      "kind": "edit",
+      "status": "ok",
+      "step": 3,
+      "target": "src/validator.py"
+    },
+    {
+      "kind": "test",
+      "status": "ok",
+      "step": 4,
+      "target": "terminal/regression"
+    },
+    {
+      "kind": "test",
+      "status": "ok",
+      "step": 5,
+      "target": "terminal/scope"
+    }
+  ],
+  "trial_id": "verified-continuation-first-outside-trial"
+}

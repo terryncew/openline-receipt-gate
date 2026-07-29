@@ -1,0 +1,93 @@
+{
+  "authorization": {
+    "action_hash": "132f28d71a1ce6f0c13b78148af8e6ba6d146b12c671fb6c51104ba1ff622f2a",
+    "authorization_hash": "94bf3901948a66a06a24f9bebebd0c65bc33e73ae0f1f462695df250de1647bb",
+    "decision_payload_hash": "4a392fd14c3ae030c33a532ad6062cadc091fd80726c2ac8f93293d19b8dc3a1",
+    "gate_public_key": "a7f6dfaf8f38b89ba8ce649b594f91e4d01fdc57f9c9493df43b5e50a9987367",
+    "raw_one_use_code_stored": false,
+    "settings_hash": "06a987a523db6eb1ef45a1a80303aff87cedfb087b9b9b8f29c4e129ea028804",
+    "target": "refs/heads/receiver-approved",
+    "tool": "git.update_ref"
+  },
+  "claim": "A receiver-authorized exact branch write executes once; changed, expired, and replayed writes stop before repository mutation.",
+  "claim_boundary": "This proves pre-effect receiver enforcement for the disclosed local Git ref and shared atomic ledger. It does not prove live provider execution, a tool that bypasses the checker, distributed exactly-once effects, or the separate continuation-quality claim.",
+  "execution": {
+    "authorized_attempts": 1,
+    "callback_labels": [
+      "simultaneous_use_2"
+    ],
+    "completed_attempts": 1
+  },
+  "model_swap": {
+    "archive_matches_oracle": true,
+    "capsule_matches_oracle": true,
+    "decision": "COMMIT",
+    "provider_execution_attested": false
+  },
+  "passed": true,
+  "pre_effect_probes": [
+    {
+      "authorized": false,
+      "blocked_before_mutation": true,
+      "expected_reason": "target_mismatch",
+      "label": "wrong_branch",
+      "observed_reasons": [
+        "action_hash_mismatch",
+        "target_mismatch"
+      ],
+      "ref_after": "43ddc6bff15ab8a98a7def1f04f248f445122c5d",
+      "ref_before": "43ddc6bff15ab8a98a7def1f04f248f445122c5d"
+    },
+    {
+      "authorized": false,
+      "blocked_before_mutation": true,
+      "expected_reason": "settings_mismatch",
+      "label": "mutated_target",
+      "observed_reasons": [
+        "action_hash_mismatch",
+        "settings_mismatch"
+      ],
+      "ref_after": "43ddc6bff15ab8a98a7def1f04f248f445122c5d",
+      "ref_before": "43ddc6bff15ab8a98a7def1f04f248f445122c5d"
+    },
+    {
+      "authorized": false,
+      "blocked_before_mutation": true,
+      "expected_reason": "authorization_expired",
+      "label": "expired",
+      "observed_reasons": [
+        "authorization_expired"
+      ],
+      "ref_after": "43ddc6bff15ab8a98a7def1f04f248f445122c5d",
+      "ref_before": "43ddc6bff15ab8a98a7def1f04f248f445122c5d"
+    }
+  ],
+  "replay": {
+    "authorized": false,
+    "blocked_before_mutation": true,
+    "reason_codes": [
+      "authorization_replay",
+      "one_use_code_replay"
+    ],
+    "ref_after": "f38b86aaed3a1f5254d2530a539b9c86ebe9330e",
+    "ref_before": "f38b86aaed3a1f5254d2530a539b9c86ebe9330e"
+  },
+  "report_hash": "9d5b9856710fa322fa2ae237db9dc3204e628e3406c0ad16f246f869463ce284",
+  "repository": {
+    "approved_commit": "f38b86aaed3a1f5254d2530a539b9c86ebe9330e",
+    "base_commit": "43ddc6bff15ab8a98a7def1f04f248f445122c5d",
+    "bundle": "authorized_repository.bundle",
+    "bundle_sha256": "b85bb3bcd4c7b5bd972dfd79ed069a4f167260346d2b389c7cfc90a22ddd0490",
+    "final_ref": "f38b86aaed3a1f5254d2530a539b9c86ebe9330e",
+    "initial_ref": "43ddc6bff15ab8a98a7def1f04f248f445122c5d",
+    "mutated_commit": "999c2c53a44277016c190e92304ef1dc68d4a759"
+  },
+  "schema": "openline.verified-continuation.branch-authorization.v1",
+  "simultaneous_use": {
+    "at_most_one_execution": true,
+    "attempts": 2,
+    "authorized": 1,
+    "blocked": 1
+  },
+  "trial_id": "verified-continuation-release"
+}

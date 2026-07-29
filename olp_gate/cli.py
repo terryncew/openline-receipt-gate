@@ -15,6 +15,11 @@ from .policy import PolicySpec
 from .receipts import verify_chain, summarize_badge, review_packet
 from .session import SessionLedger
 from .verified_commit import run_verified_commit_demo, verify_verified_commit_output
+from .verified_continuation import (
+    run_branch_authorization_trial,
+    verify_branch_authorization_trial,
+    write_continuation_outputs,
+)
 
 
 def print_json(obj: object) -> None:
@@ -133,6 +138,36 @@ def main(argv: list[str] | None = None) -> int:
     p_verify_commit.add_argument("--succession-policy-key", required=True)
     p_verify_commit.add_argument("--compaction-policy-key", required=True)
     p_verify_commit.add_argument("--gate-key", action="append", required=True)
+
+    p_evaluate_continuation = sub.add_parser(
+        "evaluate-continuation",
+        help=(
+            "Evaluate three matched recorded lanes; synthetic inputs remain "
+            "UNDECIDABLE."
+        ),
+    )
+    p_evaluate_continuation.add_argument("trial")
+    p_evaluate_continuation.add_argument("--output", required=True)
+
+    p_branch_trial = sub.add_parser(
+        "demo-continuation-authorization",
+        help="Prove one exact receiver-approved Git branch write.",
+    )
+    add_model_swap_inputs(p_branch_trial)
+
+    p_verify_branch_trial = sub.add_parser(
+        "verify-continuation-authorization",
+        help="Verify the signed branch permission, atomic ledger, and Git bundle.",
+    )
+    p_verify_branch_trial.add_argument("output")
+    p_verify_branch_trial.add_argument("--half-life-output", required=True)
+    p_verify_branch_trial.add_argument("--succession-policy-key", required=True)
+    p_verify_branch_trial.add_argument("--compaction-policy-key", required=True)
+    p_verify_branch_trial.add_argument(
+        "--gate-key",
+        action="append",
+        required=True,
+    )
 
     args = parser.parse_args(argv)
 
@@ -273,6 +308,41 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.cmd == "verify-verified-commit":
         result = verify_verified_commit_output(
+            args.output,
+            trusted_gate_keys=args.gate_key,
+            half_life_output=args.half_life_output,
+            succession_policy_public_key_path=args.succession_policy_key,
+            compaction_policy_public_key_path=args.compaction_policy_key,
+        )
+        print_json(result)
+        return 0 if result["valid"] else 2
+
+    if args.cmd == "evaluate-continuation":
+        result = write_continuation_outputs(args.trial, args.output)
+        print_json(result)
+        return 0 if result["valid"] else 2
+
+    if args.cmd == "demo-continuation-authorization":
+        source_key = Ed25519PrivateKey.from_private_bytes(bytes.fromhex("61" * 32))
+        grader_key = Ed25519PrivateKey.from_private_bytes(bytes.fromhex("62" * 32))
+        gate_key = Ed25519PrivateKey.from_private_bytes(bytes.fromhex("63" * 32))
+        result = run_branch_authorization_trial(
+            args.half_life_output,
+            args.output,
+            succession_policy_public_key_path=args.succession_policy_key,
+            compaction_policy_public_key_path=args.compaction_policy_key,
+            source_model=args.source_model,
+            target_model=args.target_model,
+            source_signing_key=source_key,
+            grader_signing_key=grader_key,
+            gate_signing_key=gate_key,
+            trial_id=args.trial_id,
+        )
+        print_json(result)
+        return 0 if result["passed"] else 2
+
+    if args.cmd == "verify-continuation-authorization":
+        result = verify_branch_authorization_trial(
             args.output,
             trusted_gate_keys=args.gate_key,
             half_life_output=args.half_life_output,

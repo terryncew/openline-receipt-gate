@@ -56,7 +56,7 @@
     "headline": "Change the model without losing the agent.",
     "subhead": "The capsule kept the receiver decisions the ordinary summary dropped."
   },
-  "generated_at": "2026-07-29T02:26:20.203528Z",
+  "generated_at": "2026-07-29T02:26:20.848572Z",
   "half_life_verification": {
     "bundle_chain_valid": true,
     "bundle_schema": "openline.half-life.receipt-bundle.v3",
@@ -416,9 +416,9 @@
   },
   "models": {
     "provider_execution_attested": false,
-    "source": "fixture/model-a",
+    "source": "fixture/producer-model",
     "source_adapter": "offline-deterministic-source-v1",
-    "target": "fixture/model-b",
+    "target": "fixture/receiving-model",
     "target_adapter": "offline-deterministic-target-v1"
   },
   "oracle": {
@@ -427,7 +427,7 @@
     "evaluator": "independent_reference_replay_v1"
   },
   "profile": "verified_model_swap/v1",
-  "proof_hash": "c3d367712415028dd66d323977b9cd61b6adde78cd68ba0d2f081cc3a9b06ca7",
+  "proof_hash": "ae0333344e38a55f286ececd5676597a4615e242c939bdebc6ae3af8ab32fc88",
   "receiver_controls": {
     "automatic_compaction_authorized": false,
     "automatic_retirement_authorized": false,
@@ -436,5 +436,5 @@
     "trusted_key_version": "receiver-compaction-key-v2"
   },
   "schema": "openline.verified-model-swap.proof-card.v1",
-  "trial_id": "verified-model-swap-demo"
+  "trial_id": "verified-continuation-release"
 }

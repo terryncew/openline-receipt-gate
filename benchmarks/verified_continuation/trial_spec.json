@@ -1,0 +1,37 @@
+{
+  "claim_boundary": "A passing continuation result is conditional on the disclosed trace artifacts and caller-declared provider execution. The frozen synthetic fixture only tests the harness and must remain UNDECIDABLE. Authorization is a separate Verified Commit result. DSM displays the trajectory but cannot grade or upgrade either claim.",
+  "claim_rules": {
+    "authorization": "Pass only if wrong-branch, changed-commit, expired, replayed, and simultaneous duplicate writes are blocked before repository mutation while one exact write succeeds.",
+    "continuation": "Pass only if the OLP lane is no worse than both baselines on repeated exploration and terminal defects, strictly better than each baseline on at least one of those direct outcomes, and within the identical tool-call budget."
+  },
+  "fixed_controls": [
+    "budget",
+    "producer_history_sha256",
+    "receiver_configuration_sha256",
+    "receiving_model",
+    "repository_checkout_sha256",
+    "task_sha256",
+    "terminal_test_manifest_sha256",
+    "tool_manifest_sha256"
+  ],
+  "lanes": [
+    "self_summary",
+    "no_prior_state",
+    "olp_capsule"
+  ],
+  "outcome_blinding": [
+    "completion_status",
+    "evaluation_report",
+    "final_tests",
+    "human_verdict"
+  ],
+  "protocol_version": 1,
+  "question": "Given the same receiving model, repository checkout, budget, tools, and terminal tests, does a receiver-appraised OLP capsule reduce repeated exploration or defects without exceeding budget?",
+  "schema": "openline.verified-continuation.trial-spec.v1",
+  "status": "FROZEN",
+  "terminal_test_ids": [
+    "terminal/regression",
+    "terminal/scope"
+  ],
+  "trial_id": "verified-continuation-first-outside-trial"
+}

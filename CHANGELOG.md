@@ -1,5 +1,39 @@
 # Changelog
 
+## 0.5.0rc8
+
+- Closes the external-lane validator boundary found by independent type/shape
+  fuzzing. Non-string JSON values for `evidence_class`, trace `kind`, trace
+  `status`, and terminal-test `status` now produce bounded
+  `VerifiedContinuationError` rejections instead of leaking raw unhashable-type
+  exceptions.
+- Rejects a missing or non-sequence lane collection with the domain error
+  `lane_results_not_sequence` before iteration.
+- Adds regression coverage across every non-string JSON type for all four enum
+  fields, plus `None`, text, bytes, and bytearray lane collections.
+- Leaves the frozen trial, synthetic results, exact-action authorization, and
+  claim boundary unchanged: authorization passes; real cross-model
+  continuation remains `UNDECIDABLE` until an outside reproduction.
+
+## 0.5.0rc7
+
+- Adds the frozen Verified Continuation three-lane trial inside Receipt Gate:
+  producer self-summary, no prior state, and a Half-Life bounded capsule.
+- Enforces identical receiver model, repository, task, tools, terminal tests,
+  and budget across lanes; unknown fields and discontinuous traces fail closed.
+- Computes only direct repeated-exploration, trace-error, terminal-defect, and
+  budget counts. The bundled synthetic fixture remains `UNDECIDABLE` by
+  construction and cannot be promoted into provider evidence.
+- Separates continuation quality from authorization. One claim cannot conceal
+  failure or missing evidence in the other.
+- Adds a real Git compare-and-swap Verified Commit trial. Wrong-branch,
+  changed-commit, expired, replayed, and simultaneous duplicate writes are
+  blocked before ref mutation; exactly one bound write executes.
+- Emits a display-only DSM trajectory projection. κ, Φ*, and VKD remain
+  `UNDECIDABLE` because the fixture lacks authoritative DSM snapshot state.
+- Adds a stdlib-only independent verifier and frozen source closure for the
+  continuation harness.
+
 ## 0.5.0rc6
 
 - Adds the x402 Transaction Airlock as a profile inside the existing Verified

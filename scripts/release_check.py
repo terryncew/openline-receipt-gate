@@ -22,10 +22,11 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
-VERSION = "0.5.0rc6"
+VERSION = "0.5.0rc8"
 PIPELOCK_INTEGRATION_TESTS = 9
 ASSAY_INTEGRATION_TESTS = 5
 MODEL_SWAP_INTEGRATION_TESTS = 8
+VERIFIED_CONTINUATION_INTEGRATION_TESTS = 2
 HALF_LIFE_VERSION = "0.2.0rc5"
 HALF_LIFE_COMMIT = "70121b53e86196d69b2c3457174b38ad32667b43"
 ASSAY_VERSION = "3.32.0"
@@ -57,6 +58,10 @@ CI_REQUIRED_SNIPPETS = (
     "benchmarks/warning_time/results/unflagged_contradiction/decision_receipts.jsonl",
     "benchmarks/x402_airlock/FREEZE.json",
     "benchmarks/x402_airlock/results/hostile_report.json",
+    "benchmarks/verified_continuation/FREEZE.json",
+    "benchmarks/verified_continuation/results/continuation_report.json",
+    "Verify frozen Verified Continuation harness",
+    "python scripts/verify_verified_continuation.py",
     "python scripts/release_check.py",
     "python scripts/verify_manifest.py",
     "python scripts/verify_warning_time_benchmark.py",
@@ -211,6 +216,8 @@ def write_manifest(
     proof_summary: dict[str, Any],
     model_swap_summary: dict[str, Any],
     verified_commit_summary: dict[str, Any],
+    verified_continuation_summary: dict[str, Any],
+    branch_authorization_summary: dict[str, Any],
     pipelock_summary: dict[str, Any],
     assay_summary: dict[str, Any],
     warning_time_summary: dict[str, Any],
@@ -266,6 +273,34 @@ def write_manifest(
                 "simultaneous_blocked"
             ),
             "replay_blocked": verified_commit_summary.get("replay_blocked"),
+        },
+        "verified_continuation": {
+            "harness_valid": verified_continuation_summary.get("valid", False),
+            "continuation_disposition": verified_continuation_summary.get(
+                "continuation_disposition"
+            ),
+            "mechanism_rule_passed": verified_continuation_summary.get(
+                "mechanism_rule_passed"
+            ),
+            "report_hash": verified_continuation_summary.get("report_hash"),
+            "authorization_passed": branch_authorization_summary.get(
+                "passed", False
+            ),
+            "authorization_report_hash": branch_authorization_summary.get(
+                "report_hash"
+            ),
+            "wrong_branch_blocked": branch_authorization_summary.get(
+                "wrong_branch_blocked"
+            ),
+            "mutated_target_blocked": branch_authorization_summary.get(
+                "mutated_target_blocked"
+            ),
+            "expired_blocked": branch_authorization_summary.get(
+                "expired_blocked"
+            ),
+            "replay_blocked": branch_authorization_summary.get(
+                "replay_blocked"
+            ),
         },
         "pipelock_head_to_head": {
             "passed": pipelock_summary.get("passed", False),
@@ -338,9 +373,17 @@ def main() -> int:
     proof_output = ROOT / "results" / "proof_to_policy_demo"
     model_swap_output = ROOT / "results" / "verified_model_swap_demo"
     verified_commit_output = ROOT / "results" / "verified_commit_demo"
+    verified_continuation_output = (
+        ROOT / "results" / "verified_continuation_fixture"
+    )
+    branch_authorization_output = (
+        ROOT / "results" / "verified_continuation_authorization"
+    )
     shutil.rmtree(proof_output, ignore_errors=True)
     shutil.rmtree(model_swap_output, ignore_errors=True)
     shutil.rmtree(verified_commit_output, ignore_errors=True)
+    shutil.rmtree(verified_continuation_output, ignore_errors=True)
+    shutil.rmtree(branch_authorization_output, ignore_errors=True)
     steps: list[dict[str, Any]] = []
     passed: list[bool] = []
     pipelock_info = pipelock_runtime()
@@ -464,6 +507,11 @@ def main() -> int:
         (0 if pipelock_info["supported"] else PIPELOCK_INTEGRATION_TESTS)
         + (0 if assay_info["supported"] else ASSAY_INTEGRATION_TESTS)
         + (0 if model_swap_info["supported"] else MODEL_SWAP_INTEGRATION_TESTS)
+        + (
+            0
+            if model_swap_info["supported"]
+            else VERIFIED_CONTINUATION_INTEGRATION_TESTS
+        )
     )
     unit_record["counts"] = unit_counts
     unit_record["optional_pipelock"] = pipelock_info
@@ -495,6 +543,7 @@ def main() -> int:
         == PIPELOCK_INTEGRATION_TESTS
         + ASSAY_INTEGRATION_TESTS
         + MODEL_SWAP_INTEGRATION_TESTS
+        + VERIFIED_CONTINUATION_INTEGRATION_TESTS
     )
     absent_record["passed"] = absent_okay
     steps.append(absent_record)
@@ -508,8 +557,50 @@ def main() -> int:
         steps.append(record)
         passed.append(okay)
 
+    continuation_command = [
+        sys.executable,
+        "-m",
+        "olp_gate.cli",
+        "evaluate-continuation",
+        "benchmarks/verified_continuation",
+        "--output",
+        str(verified_continuation_output),
+    ]
+    record, continuation_okay = execute(
+        "verified_continuation_synthetic_conformance",
+        continuation_command,
+    )
+    steps.append(record)
+    passed.append(continuation_okay)
+    verified_continuation_summary: dict[str, Any] = {}
+    continuation_report: dict[str, Any] = {}
+    continuation_projection: dict[str, Any] = {}
+    if continuation_okay:
+        try:
+            verified_continuation_summary = json.loads(record["stdout"])
+            continuation_report = json.loads(
+                (
+                    verified_continuation_output / "continuation_report.json"
+                ).read_text(encoding="utf-8")
+            )
+            continuation_projection = json.loads(
+                (
+                    verified_continuation_output / "dsm_projection.json"
+                ).read_text(encoding="utf-8")
+            )
+        except (OSError, json.JSONDecodeError, TypeError):
+            continuation_okay = False
+            passed.append(False)
+            steps.append(
+                {
+                    "name": "verified_continuation_summary_parse",
+                    "passed": False,
+                }
+            )
+
     model_swap_summary: dict[str, Any] = {}
     verified_commit_summary: dict[str, Any] = {}
+    branch_authorization_summary: dict[str, Any] = {}
     if model_swap_info["supported"]:
         half_life_root = Path(str(model_swap_info["fixture_root"]))
         model_swap_command = [
@@ -638,6 +729,84 @@ def main() -> int:
             steps.append(record)
             passed.append(node_commit_okay)
 
+        branch_authorization_command = [
+            sys.executable,
+            "-m",
+            "olp_gate.cli",
+            "demo-continuation-authorization",
+            "--half-life-output",
+            str(half_life_root / "examples" / "demo_output"),
+            "--succession-policy-key",
+            str(half_life_root / "policy" / "succession_policy_public_key.hex"),
+            "--compaction-policy-key",
+            str(half_life_root / "policy" / "compaction_policy_public_key.hex"),
+            "--source-model",
+            "fixture/producer-model",
+            "--target-model",
+            "fixture/receiving-model",
+            "--output",
+            str(branch_authorization_output),
+            "--trial-id",
+            "verified-continuation-release",
+        ]
+        record, branch_okay = execute(
+            "verified_continuation_exact_branch_authorization",
+            branch_authorization_command,
+        )
+        steps.append(record)
+        passed.append(branch_okay)
+        if branch_okay:
+            try:
+                branch_authorization_summary = json.loads(record["stdout"])
+            except (json.JSONDecodeError, TypeError):
+                branch_authorization_summary = {}
+                branch_okay = False
+                passed.append(False)
+                steps.append(
+                    {
+                        "name": "verified_continuation_authorization_parse",
+                        "passed": False,
+                    }
+                )
+        if branch_okay:
+            branch_verify_command = [
+                sys.executable,
+                "-m",
+                "olp_gate.cli",
+                "verify-continuation-authorization",
+                str(branch_authorization_output),
+                "--half-life-output",
+                str(half_life_root / "examples" / "demo_output"),
+                "--succession-policy-key",
+                str(half_life_root / "policy" / "succession_policy_public_key.hex"),
+                "--compaction-policy-key",
+                str(half_life_root / "policy" / "compaction_policy_public_key.hex"),
+                "--gate-key",
+                str(branch_authorization_summary.get("gate_public_key", "")),
+            ]
+            record, branch_okay = execute(
+                "verified_continuation_authorization_receiver_regrade",
+                branch_verify_command,
+            )
+            steps.append(record)
+            passed.append(branch_okay)
+            record, branch_node_okay = execute(
+                "verified_continuation_authorization_node_decision_verifier",
+                [
+                    "node",
+                    "verify-decision-node.mjs",
+                    str(
+                        branch_authorization_output
+                        / "gate"
+                        / "decision_receipts.jsonl"
+                    ),
+                    "--gate-key",
+                    str(branch_authorization_summary.get("gate_public_key", "")),
+                ],
+            )
+            steps.append(record)
+            passed.append(branch_node_okay)
+
     try:
         initial_summary = json.loads((proof_output / "demo_summary.json").read_text(encoding="utf-8"))
         fixture_gate_key = str(initial_summary["gate_public_key"])
@@ -667,6 +836,10 @@ def main() -> int:
         (
             "x402_transaction_airlock_independent_verifier",
             [sys.executable, "scripts/verify_x402_airlock.py"],
+        ),
+        (
+            "verified_continuation_independent_verifier",
+            [sys.executable, "scripts/verify_verified_continuation.py"],
         ),
         (
             "frozen_pipelock_benchmark_verifier",
@@ -782,7 +955,7 @@ def main() -> int:
         steps.append(record)
         passed.append(okay)
         if okay:
-            wheels = sorted(wheelhouse.glob("openline_receipt_gate-0.5.0rc6-*.whl"))
+            wheels = sorted(wheelhouse.glob(f"openline_receipt_gate-{VERSION}-*.whl"))
             if len(wheels) != 1:
                 okay = False
                 steps.append(
@@ -965,6 +1138,49 @@ def main() -> int:
             "replay_blocked"
         )
         is True,
+        "verified_continuation_harness_valid": (
+            verified_continuation_summary.get("valid") is True
+        ),
+        "verified_continuation_synthetic_stays_undecidable": (
+            verified_continuation_summary.get("continuation_disposition")
+            == "UNDECIDABLE"
+            and continuation_report.get("continuation_claim", {}).get(
+                "external_evidence_sufficient"
+            )
+            is False
+        ),
+        "verified_continuation_mechanism_rule_reproduces": (
+            verified_continuation_summary.get("mechanism_rule_passed") is True
+        ),
+        "verified_continuation_dsm_does_not_grade": (
+            continuation_projection.get("display_only") is True
+            and all(
+                continuation_projection.get("coherence_dynamics", {})
+                .get(metric, {})
+                .get("status")
+                == "UNDECIDABLE"
+                for metric in ("kappa", "phi_star", "vkd")
+            )
+        ),
+        "verified_continuation_authorization_passed": (
+            branch_authorization_summary.get("passed") is True
+        ),
+        "verified_continuation_wrong_branch_blocked": (
+            branch_authorization_summary.get("wrong_branch_blocked") is True
+        ),
+        "verified_continuation_mutated_target_blocked": (
+            branch_authorization_summary.get("mutated_target_blocked") is True
+        ),
+        "verified_continuation_expired_blocked": (
+            branch_authorization_summary.get("expired_blocked") is True
+        ),
+        "verified_continuation_replay_blocked": (
+            branch_authorization_summary.get("replay_blocked") is True
+        ),
+        "verified_continuation_simultaneous_exactly_once": (
+            branch_authorization_summary.get("simultaneous_authorized") == 1
+            and branch_authorization_summary.get("simultaneous_blocked") == 1
+        ),
     }
     release_assertions_okay = all(release_assertions.values())
     steps.append(
@@ -985,6 +1201,11 @@ def main() -> int:
         and unit_counts["skipped"]
         == (0 if assay_info["supported"] else ASSAY_INTEGRATION_TESTS)
         + (0 if model_swap_info["supported"] else MODEL_SWAP_INTEGRATION_TESTS)
+        + (
+            0
+            if model_swap_info["supported"]
+            else VERIFIED_CONTINUATION_INTEGRATION_TESTS
+        )
     )
     live_assay_tests_passed = bool(
         assay_info["supported"]
@@ -992,6 +1213,11 @@ def main() -> int:
         and unit_counts["skipped"]
         == (0 if pipelock_info["supported"] else PIPELOCK_INTEGRATION_TESTS)
         + (0 if model_swap_info["supported"] else MODEL_SWAP_INTEGRATION_TESTS)
+        + (
+            0
+            if model_swap_info["supported"]
+            else VERIFIED_CONTINUATION_INTEGRATION_TESTS
+        )
     )
     live_model_swap_tests_passed = bool(
         model_swap_info["supported"]
@@ -1026,10 +1252,31 @@ def main() -> int:
             "verified_commit_demo_executed": bool(verified_commit_summary),
             "verified_commit_demo_passed": verified_commit_summary.get("passed")
             is True,
+            "verified_continuation_authorization_executed": bool(
+                branch_authorization_summary
+            ),
+            "verified_continuation_authorization_passed": (
+                branch_authorization_summary.get("passed") is True
+            ),
             "dependency_absent_suite_passed": absent_okay,
             "integration_test_count": MODEL_SWAP_INTEGRATION_TESTS,
+            "verified_continuation_integration_test_count": (
+                VERIFIED_CONTINUATION_INTEGRATION_TESTS
+            ),
         },
     }
+    from olp_gate.verified_continuation import build_experiment_summary
+
+    experiment_summary = build_experiment_summary(
+        continuation_report,
+        branch_authorization_summary,
+    )
+    (
+        ROOT / "results" / "verified_continuation_summary.json"
+    ).write_text(
+        json.dumps(experiment_summary, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
     report = {
         "schema": "openline.release_run_report.v0.2",
         "repo": "openline-receipt-gate",
@@ -1078,12 +1325,19 @@ def main() -> int:
         },
         "verified_model_swap": model_swap_summary,
         "verified_commit": verified_commit_summary,
+        "verified_continuation": {
+            "summary": experiment_summary,
+            "harness": verified_continuation_summary,
+            "continuation_report": continuation_report,
+            "dsm_projection": continuation_projection,
+            "authorization": branch_authorization_summary,
+        },
         "proof_to_policy_demo": proof_summary,
         "warning_time_benchmark": warning_time_report,
         "x402_transaction_airlock": x402_airlock_report,
         "pipelock_head_to_head": pipelock_summary,
         "assay_head_to_head": assay_summary,
-        "claim_boundary": "A passing deterministic release gate does not prove production safety, issuer honesty, complete capture, live provider execution, universal model portability, legal ownership, witness independence, rollback execution, or globally exactly-once side effects. Verified Model Swap is exact only over the disclosed receiver decision projection and externally pinned Half-Life fixture. Verified Commit proves receiver-side one-use authorization only when the destination tool enters through the disclosed checker and shares its atomic ledger; a crash after consumption fails closed. The x402 Transaction Airlock result is a synthetic adapter test against frozen hostile cases, not an audit of a live facilitator, wallet, chain, or receiver data provider.",
+        "claim_boundary": "A passing deterministic release gate does not prove production safety, issuer honesty, complete capture, live provider execution, universal model portability, legal ownership, witness independence, rollback execution, or globally exactly-once side effects. Verified Model Swap is exact only over the disclosed receiver decision projection and externally pinned Half-Life fixture. Verified Commit proves receiver-side one-use authorization only when the destination tool enters through the disclosed checker and shares its atomic ledger; a crash after consumption fails closed. The Verified Continuation fixture proves harness conformance only and must remain UNDECIDABLE until matched outside provider runs are disclosed. Its exact-branch authorization result is separate and local. The x402 Transaction Airlock result is a synthetic adapter test against frozen hostile cases, not an audit of a live facilitator, wallet, chain, or receiver data provider.",
     }
     (ROOT / "RUN_REPORT.json").write_text(
         json.dumps(report, indent=2, sort_keys=True) + "\n",
@@ -1094,6 +1348,8 @@ def main() -> int:
         proof_summary=proof_summary,
         model_swap_summary=model_swap_summary,
         verified_commit_summary=verified_commit_summary,
+        verified_continuation_summary=verified_continuation_summary,
+        branch_authorization_summary=branch_authorization_summary,
         pipelock_summary={
             "passed": benchmark_report.get("passed", False),
             "strong_hypothesis_falsified": pipelock_summary.get(
@@ -1142,6 +1398,12 @@ def main() -> int:
         "failed_checks": failed_checks,
         "proof_to_policy_cases": proof_summary.get("decision_receipt_count", 0),
         "verified_commit_passed": verified_commit_summary.get("passed", False),
+        "verified_continuation_disposition": (
+            verified_continuation_summary.get("continuation_disposition")
+        ),
+        "verified_continuation_authorization_passed": (
+            branch_authorization_summary.get("passed", False)
+        ),
         "manifest": json.loads(manifest_check.stdout) if manifest_check.stdout else {"valid": False},
     }, indent=2, sort_keys=True))
     return 0 if release_passed and manifest_check.returncode == 0 else 2

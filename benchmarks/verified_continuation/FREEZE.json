@@ -1,0 +1,17 @@
+{
+  "claim_boundary": "This source closure freezes a synthetic harness-conformance fixture. It does not attest that a commercial model ran any lane and cannot earn the continuation claim.",
+  "files": {
+    "benchmarks/verified_continuation/PROTOCOL.md": "94c8f36decf40480ac3555ccc8f1cdbeeb37b84f09ad06e853ef5a0569381911",
+    "benchmarks/verified_continuation/lanes/no_prior_state.json": "31b53751fe8e4e5170a3467f096e96c6f895675f843c978cad56c32a579960cf",
+    "benchmarks/verified_continuation/lanes/olp_capsule.json": "ebe42a9c3bfbc789a8b21512d1eea1c07e42a29f3c0ad41eebee2dbcab9cb029",
+    "benchmarks/verified_continuation/lanes/self_summary.json": "d1b890934c29ec8db3500b9e577494ebeb111c1222134b48d8c45694dd06755a",
+    "benchmarks/verified_continuation/results/continuation_report.json": "bee47eaa2834cafcd73151ac1dfc36a572a881d633a01564705b1d9cf4adde27",
+    "benchmarks/verified_continuation/results/dsm_projection.json": "2a0c7f34491b10b07596cb47bb68983e19c745429312db9ea2e28f52fc8d902d",
+    "benchmarks/verified_continuation/trial_spec.json": "6aa76d1af535ef76dd155da4a14209cbf1cfa1791c084cba8e403dedc226c939",
+    "olp_gate/cli.py": "85ef0e5ae11cc53b6ceba12942c37c3f6baa4516c72fe83e858b06d3ba771451",
+    "olp_gate/verified_continuation.py": "df5887d4dfdaac5a514e7fba749cf13f2c6b595b0d3353744bf34d4bfa356e9d",
+    "scripts/verify_verified_continuation.py": "91091b02c478ecb2a1eb1027d65f7777f05704e573cdb3d23fdcfbf261535f38",
+    "tests/test_verified_continuation.py": "c8352e1525c22d07363a867d8358b58e932d5c1adfe6bbd05a15c934e5bd1199"
+  },
+  "schema": "openline.verified-continuation.freeze.v1"
+}

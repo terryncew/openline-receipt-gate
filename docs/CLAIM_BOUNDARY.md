@@ -2,7 +2,7 @@
 
 ## Supported claims
 
-Receipt Gate v0.5.0rc6 demonstrates that signed action receipts and a pinned Assay
+Receipt Gate v0.5.0rc8 demonstrates that signed action receipts and a pinned Assay
 evidence bundle can be converted into deterministic, signed policy decisions
 while keeping integrity, provenance, coverage, the source action signal,
 freshness, evidence, and outcome checks separate.
@@ -81,6 +81,23 @@ boundary, that:
 
 This is receiver-side exactly-once authorization, not globally exactly-once
 execution. A crash after consumption fails closed and requires new permission.
+
+The Verified Continuation experiment additionally demonstrates two separate
+facts:
+
+- its strict three-lane evaluator rejects unknown fields, mismatched receiver
+  controls, discontinuous traces, incomplete terminal tests, and caller-supplied
+  derived metrics;
+- its bundled synthetic fixture satisfies the direct continuation rule but
+  remains `UNDECIDABLE`, because harness conformance is not provider evidence;
+- its DSM projection is display-only and leaves κ, Φ*, and VKD
+  `UNDECIDABLE` when authoritative DSM snapshot state is absent; and
+- its existing Verified Commit boundary permits one exact Git ref
+  compare-and-swap while blocking wrong-branch, changed-commit, expired,
+  replayed, and simultaneous duplicate attempts before ref mutation.
+
+The exact-branch authorization result does not establish the separate
+continuation-quality claim. An outside matched reproduction remains required.
 
 The x402 Transaction Airlock additionally demonstrates, inside one disclosed
 synthetic adapter and frozen hostile suite, that:
@@ -217,6 +234,13 @@ This release does not establish:
   transaction beyond what the selected chain and settlement template enforce;
 - protection for payment or resource routes that bypass the Transaction
   Airlock and shared one-use ledger.
+- a claim that the bundled Verified Continuation traces came from a commercial
+  provider, or that their favorable direct counts establish cross-model
+  continuation;
+- a claim that a provider-execution boolean authenticates a provider identity;
+  outside reproducers must publish the raw traces and environmental hashes;
+- permission for DSM or a strong authorization result to upgrade an
+  `UNDECIDABLE` or failed continuation result.
 
 ## Honest public claim
 
