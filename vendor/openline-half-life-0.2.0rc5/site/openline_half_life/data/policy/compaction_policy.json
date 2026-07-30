@@ -1,0 +1,73 @@
+{
+  "archive": {
+    "destination": "cold_archive/receipts",
+    "hash_algorithm": "sha256",
+    "signed_manifest_required": true,
+    "source_receipt_deletion_authorized": false
+  },
+  "automatic_compaction_authorized": false,
+  "automatic_retirement_authorized": false,
+  "causal_admission": {
+    "allowed_relation_kinds": [
+      "causes",
+      "mechanism"
+    ],
+    "explicit_admission_required": true,
+    "fresh_evidence_required": true,
+    "repetition_or_correlation_is_not_causation": true
+  },
+  "claim_boundary": "Receiver-owned compaction policy. It declares memory and latency budgets, does not create a health score, does not infer causation, does not authorize automatic retirement, and cannot approve its own compaction.",
+  "decision_equivalence_required": true,
+  "keep": [
+    "admitted_mechanisms_and_evidence_pointers",
+    "checkpoint_and_source_chain_hashes",
+    "currently_supported_claims",
+    "live_constraints_and_commitments",
+    "policy_and_trusted_key_versions",
+    "rehydration_conditions",
+    "tombstones",
+    "unresolved_questions_and_contradictions"
+  ],
+  "merge": [
+    "exact_duplicates",
+    "repeated_observations_represented_by_admitted_state",
+    "settled_intermediate_steps_that_cannot_change_policy_decisions",
+    "superseded_versions"
+  ],
+  "payload_hash": "4354abb073b9e4ae859320c8b5a47a663515dcb7c3ca9493dcae6e64447c8235",
+  "policy_version": "0.2",
+  "receipt_gate_dispositions": [
+    "COMMIT",
+    "DENY",
+    "QUARANTINE"
+  ],
+  "receiver_approval_required": true,
+  "rehydration_conditions": [
+    "mechanism_weakened_or_overturned",
+    "constraint_changed",
+    "evidence_revoked",
+    "compaction_policy_changed",
+    "trusted_key_changed",
+    "unresolved_contradiction_changed",
+    "successor_decision_mismatch"
+  ],
+  "schema": "openline.half-life.compaction-policy.v1",
+  "self_approval_forbidden": true,
+  "signature": {
+    "algorithm": "Ed25519",
+    "public_key": "34b4d9043156cb6dcf0beb0a2949b7559c940d2bcb6dbe8c53a9b30278e3a746",
+    "value": "bb184ac51a39d24ca349e6d3e4d9e6a405b9ff4712f9a34d0f8ffbfc00e4ff09861b4a7c28b503a2a1026d242e62b7721bb0c2b6da8d4ad29eff7e334144f40e"
+  },
+  "trigger": {
+    "active_receipt_bytes_budget": 25000,
+    "replay_latency_micros_budget": 50000,
+    "rule": "propose_when_either_receiver_budget_is_crossed"
+  },
+  "trusted_key_version": "receiver-compaction-key-v2",
+  "trusted_receiver_approval_public_keys": [
+    "c6822637c7d310ec57627be00ba259d253749f4aaf644470cffbe53a35f73242"
+  ],
+  "trusted_source_receipt_signer_keys_b64": [
+    "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+  ]
+}

@@ -1,5 +1,121 @@
 # Changelog
 
+## 0.6.0rc5
+
+- Fails closed when a trusted, valid evidence bundle mixes exact-action support
+  with a second trusted receipt bound to a different action. The candidate gate
+  and independent verifier now agree on this previously uncovered input.
+- Adds the mixed-action-binding condition to the frozen consequence suite,
+  raising it to 13 cases and proving the protected-effect callback remains
+  untouched for that bundle.
+- Keeps unrelated *untrusted* evidence non-blocking, preserving the existing
+  false-positive control.
+- Adds installed-wheel coverage for the role-confusion command and exposes the
+  additive command in top-level CLI help.
+
+## 0.6.0rc4
+
+- Consolidates the self-contained Half-Life release gate from rc3 with the
+  Role-Confusion Consequence Gate; the feature no longer ships on a sibling
+  branch whose own complete gate is red.
+- Adds a frozen twelve-case post-compromise suite. The gate receives no prompt,
+  attack label, model reasoning, or detector score; it appraises exact-action
+  structure and receiver-pinned evidence provenance, freshness, and binding.
+- Exercises a real harmless callback in every frozen case. Five
+  authorization-valid hostile cases and all other blocked cases invoke it zero
+  times; the three committed controls invoke it exactly once.
+- Adds a matched exact-action pair, unrelated-untrusted-content control, and a
+  fresh trusted positive/negative conflict that must fail closed.
+- Rejects duplicate evidence IDs, unsigned nested signature extensions,
+  duplicate JSON keys, unsafe canonical integers, malformed matrix shapes, and
+  missing named controls without leaking raw validation exceptions.
+- Extends the independent verifier to validate frozen source closure and
+  recompute conflict handling, decisions, and effect expectations without
+  importing the candidate consequence-gate module.
+- Keeps the boundary explicit: this is a synthetic consequence test, not a live
+  role-confusion reproduction; production effects must compose appraisal with
+  Verified Commit's atomic ledger.
+
+## 0.6.0rc3
+
+- Makes the root-ready archive genuinely self-contained for its complete
+  deterministic release gate by bundling the exact Half-Life v0.2.0rc5
+  pure-Python wheel, frozen fixture, public policies, and upstream MIT license.
+- Adds a stdlib-only verifier that pins the wheel, fixture tree, policy tree,
+  license, source version, and source commit. Tampered wheel, fixture, policy,
+  or metadata inputs fail closed.
+- Uses the verified bundle only when no explicit `OLP_HALF_LIFE_ROOT` is
+  supplied. An invalid explicit dependency remains a release failure and
+  cannot silently trigger the fallback.
+- Extends CI to fetch the pinned Half-Life commit independently and compare its
+  package sources, fixture, policies, and license byte-for-byte with the
+  vendored bundle. Local hashes are not represented as independent provenance.
+- Adds five regression tests for offline activation, tamper rejection,
+  self-reference rejection, and explicit-root fail-closed behavior.
+
+## 0.6.0rc2
+
+- Separates capsule extraction from receiver reference replay. The capsule
+  builder now uses a reverse traversal in `core.py`; the receiver replay uses
+  its own forward traversal and validator in `reference_replay.py`. A forced
+  extractor omission therefore produces `EVIDENCE_MISSING` instead of
+  certifying itself.
+- Requires the receiver to pin the intended next action during
+  `handoff-inspect`. Omitting the pin through the Python API or supplying a
+  different action returns `UNDECIDABLE`.
+- Compares the complete semantic boundary—not only statement and evidence
+  IDs—including status, action scope, provenance event IDs, item identity,
+  support status, and missing/incompatible evidence.
+- Replaces one-token action overlap with a fail-closed scoped match and rejects
+  evidence whose declared action scope is incompatible with the receiver's
+  intended action.
+- Binds optional Git state to tracked diff bytes and the bytes or link targets
+  of untracked files, rather than hashing only the porcelain status shape.
+  Repository state is sampled on both sides of capsule construction and
+  inspection.
+- Rebuilds the restoration index independently from the original byte-matched
+  history before restoring anything. The v2 index covers all explicit semantic
+  state, including state left outside the bounded capsule, and rejects a
+  rewritten item-to-event mapping even if its local hash is recomputed.
+- Treats every oversized unparsed JSONL record as undecidable. A record can no
+  longer earn an exemption merely by carrying a known image-event marker in
+  its prefix. Duplicate canonical event IDs also fail closed.
+- Re-hashes history after parsing to detect concurrent source mutation, adds
+  structured CLI errors, and rejects ambiguous restore item collections.
+- Adds eleven focused Handoff Check regressions plus 435 adversarial capsule
+  mutations. The package suite now discovers 158 tests; all 134 available
+  tests pass and 24 optional external integrations skip when their pinned
+  fixtures are absent.
+
+## 0.6.0rc1
+
+- Adds **OpenLine Handoff Check**, a local continuation tool for Claude Code,
+  Codex rollout JSONL, and a generic explicit-state JSON/JSONL format.
+- Adds `olp-gate handoff-check`, `handoff-inspect`, and `handoff-restore`.
+- Canonicalizes vendor histories without promoting ordinary model prose into
+  trusted decisions. Only explicit OLP semantic markers or structured
+  `semantic` objects can become decision/evidence state.
+- Builds a bounded fresh-agent capsule, then separately replays the full
+  canonical history before returning `SAFE_TO_CONTINUE`, `DECISION_CHANGED`,
+  `EVIDENCE_MISSING`, or fail-closed `UNDECIDABLE`.
+- Binds the capsule to source-history SHA-256, next-action SHA-256, and optional
+  Git HEAD/worktree state. A capsule never certifies its own fidelity.
+- Emits `capsule.json`, `capsule.md`, `reference_replay.json`,
+  `archive_index.json`, `handoff_report.json`, `continuation_receipt.json`, and
+  a local shareable `proof-card.html`.
+- Adds optional Ed25519 signing for the continuation receipt; unsigned runs are
+  explicitly labeled `UNSIGNED_LOCAL_HASH_BOUND`.
+- Streams JSONL with a bounded per-record parser and fails closed on malformed
+  or unknown oversized records while recognizing known oversized Codex image
+  events as non-semantic telemetry.
+- Replays bounded operational state from source history as part of capsule
+  comparison, so a recomputed self-hash cannot make forged operational context
+  earn `SAFE_TO_CONTINUE`.
+- Adds 16 Handoff Check tests covering vendor adapters, stale-capsule decision
+  changes, missing evidence, parse failures, unsafe control characters, signed
+  receipts, restore binding, HTML escaping, CLI output, shape fuzzing, semantic
+  reference hardening, and operational-state tamper rejection.
+
 ## 0.5.0rc8
 
 - Closes the external-lane validator boundary found by independent type/shape

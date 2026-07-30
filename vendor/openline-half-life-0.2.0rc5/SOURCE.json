@@ -1,0 +1,31 @@
+{
+  "claim_boundary": "The vendored bundle makes the deterministic release gate runnable offline. Its local hashes do not independently prove upstream provenance; CI compares it with the separately fetched pinned commit.",
+  "fixture": {
+    "file_count": 79,
+    "path": "examples/demo_output",
+    "tree_sha256": "4b133231ea7cb9e2734decd5ce53441a7718937b81c183f2339e48b1a158a50f"
+  },
+  "license": {
+    "path": "LICENSE",
+    "sha256": "07674dfa9960dff5128d0cdcce58fee7543c26ff47e58e07ae6ac0254a0f58b1"
+  },
+  "policy": {
+    "file_count": 4,
+    "path": "policy",
+    "tree_sha256": "d63c35f1d17453b2c3da0da1ed32ac105b59b5f400922b801592699de843b2b3"
+  },
+  "project": "openline-half-life",
+  "repository": "https://github.com/terryncew/openline-half-life",
+  "schema": "openline.vendored-source.v1",
+  "source_commit": "70121b53e86196d69b2c3457174b38ad32667b43",
+  "site": {
+    "file_count": 40,
+    "path": "site",
+    "tree_sha256": "980e00cf6f6bd50556b1e9f754f268811cc2c468b1811f56dbcf95de2522559f"
+  },
+  "version": "0.2.0rc5",
+  "wheel": {
+    "path": "openline_half_life-0.2.0rc5-py3-none-any.whl",
+    "sha256": "02da94dc5f7896a733e883211d65dfd1292b1164d6317ca311294f1bc9c74d77"
+  }
+}

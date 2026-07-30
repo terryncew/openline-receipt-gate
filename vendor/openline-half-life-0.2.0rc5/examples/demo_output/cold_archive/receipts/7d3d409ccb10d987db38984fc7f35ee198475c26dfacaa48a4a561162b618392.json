@@ -1,0 +1,17 @@
+{
+  "index": 62,
+  "kind": "retirement_assessment",
+  "parent_hash": "9157664b2da31b870cd5f996df09784e0b215ebb6ed38764c2a2b22f6224ad59",
+  "payload": {
+    "assessment_hash": "029f70450bde4bf126fdc9072b2ddf95176e19c4b26324d4127cb428ed0f71a0",
+    "automatic_retirement_authorized": false,
+    "mark": "RETIRE",
+    "receiver_approval_required": true,
+    "retirement_turn": 61,
+    "run_id": "gradual-drift-demo"
+  },
+  "receipt_hash": "7d3d409ccb10d987db38984fc7f35ee198475c26dfacaa48a4a561162b618392",
+  "schema": "openline.endurance.receipt.v1",
+  "signature": "IfYedR3czzhFZx4KVjEMHfwKOXDR1SKHUSQZ4TIyoL3c9RjEN/vUr/4ue27lJReYx5wBJkWg6tNePd1OlfP/Bg==",
+  "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+}

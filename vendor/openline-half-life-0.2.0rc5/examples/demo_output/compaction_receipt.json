@@ -1,0 +1,236 @@
+{
+  "index": 66,
+  "kind": "causal_compaction",
+  "parent_hash": "249cc848f2ecb880be2acaab940a96fe326b7b32d3c59be153d49a3c8c4c90e3",
+  "payload": {
+    "allowed_because": [
+      "ACTIVE_RECEIPT_BUDGET_EXCEEDED",
+      "REPLAY_LATENCY_BUDGET_EXCEEDED",
+      "TRUSTED_POLICY_SIGNER_VERIFIED",
+      "SOURCE_CHAIN_VERIFIED",
+      "CHECKPOINT_VERIFIED_AND_BOUND",
+      "ARCHIVE_DESTINATION_VERIFIED",
+      "DECISION_EQUIVALENCE_PROVED",
+      "RECEIVER_APPROVED"
+    ],
+    "archive_manifest_receipt_hash": "249cc848f2ecb880be2acaab940a96fe326b7b32d3c59be153d49a3c8c4c90e3",
+    "archived": {
+      "destination": "cold_archive/receipts",
+      "receipt_count": 65,
+      "source_receipts_permanently_deleted": false
+    },
+    "artifact_hashes": {
+      "archive_manifest.json": "5688673a9678fa85ccb7fddb5d705009c8ccea7bc6b04f9af241678957ad2cda",
+      "calibrator_policy.json": "09485abdba590179e32664e3e913c744c7eb620030ad9c138c407eb983d292ec",
+      "causal_capsule.json": "66d06c5a4338f07b46308b66d2b79aee333fab8f9d9b4d071a269d72eb32235a",
+      "compaction_policy.json": "8eeb9adba81e32f019a335c855780fb05a511c78f75353a3ff1fc2aa56d2a16d",
+      "comparison.json": "621eed58cb77d02458499de6b751d142670cac4f9d8eedb984ddf5ef7060ac3f",
+      "decision_equivalence_report.json": "594ef6d21eb251ece77abf0d82865bff8053dd9bb2d0cd195979814d52860714",
+      "full_history_handoff.json": "09013b4d6a2ed54630e3e07eead171fe2aba54051f4de6ad4440a69af492c06f",
+      "receiver_approval.json": "c07a39f0d1fea716c4a6e2d31bcdff14742b6ce10c6911be2e31e18f7716be97",
+      "share_card.html": "a6235cdede338a0ad9720c4d3de23609707a0c1d102b57ac65b6abb62b5566f6",
+      "turn_assessments.json": "c77b42d8f9a60d6520b3f3edc17b365308714aacf13400cf43db97946c1cf9de",
+      "verified_residue_handoff.json": "93d56a4ef9b84e09f8ce43a06f77571619d6b43b42a54130c15cfd127cd35455"
+    },
+    "automatic_compaction_authorized": false,
+    "automatic_retirement_authorized": false,
+    "checkpoint_turn": 61,
+    "comparison_hash": "a0226c28f1eea485edfe5b80ed26080655446f5de3121f3f6596409b651c7295",
+    "comparison_passed": true,
+    "decision_equivalence_report_hash": "ac314849c9b845906a0829a8089cf9a668cb75122e7f2a411349f845dbede113",
+    "decision_log": [
+      {
+        "action": "keep",
+        "allowed_by": "CURRENTLY_SUPPORTED_WITH_FRESH_EVIDENCE",
+        "evidence_refs": [
+          "ev-api-v2"
+        ],
+        "item_id": "claim-api-refresh-61",
+        "item_type": "claim"
+      },
+      {
+        "action": "keep",
+        "allowed_by": "CURRENTLY_SUPPORTED_WITH_FRESH_EVIDENCE",
+        "evidence_refs": [
+          "ev-region-current"
+        ],
+        "item_id": "claim-region-refresh-61",
+        "item_type": "claim"
+      },
+      {
+        "action": "keep",
+        "allowed_by": "CURRENTLY_SUPPORTED_WITH_FRESH_EVIDENCE",
+        "evidence_refs": [
+          "ev-budget-current"
+        ],
+        "item_id": "claim-budget-refresh-61",
+        "item_type": "claim"
+      },
+      {
+        "action": "keep",
+        "allowed_by": "LATEST_ACTIVE_STATE_WITH_FRESH_EVIDENCE",
+        "evidence_refs": [
+          "ev-privacy"
+        ],
+        "item_id": "privacy-floor",
+        "item_type": "constraint"
+      },
+      {
+        "action": "keep",
+        "allowed_by": "LATEST_CONFIRMED_OUTCOME_WITH_FRESH_EVIDENCE",
+        "evidence_refs": [
+          "ev-migration"
+        ],
+        "item_id": "migration-complete",
+        "item_type": "commitment"
+      },
+      {
+        "action": "keep",
+        "allowed_by": "LATEST_CONFIRMED_OUTCOME_WITH_FRESH_EVIDENCE",
+        "evidence_refs": [
+          "ev-owner"
+        ],
+        "item_id": "owner-approved",
+        "item_type": "commitment"
+      },
+      {
+        "action": "keep",
+        "allowed_by": "LATEST_CONFIRMED_OUTCOME_WITH_FRESH_EVIDENCE",
+        "evidence_refs": [
+          "ev-tests"
+        ],
+        "item_id": "tests-complete",
+        "item_type": "commitment"
+      },
+      {
+        "action": "keep",
+        "allowed_by": "REPLAY_PREVENTION_REQUIRES_NEGATIVE_STATE_RETENTION",
+        "item_id": "claim-state:api_version:161078e42e8fef3ba4b9c984035baa2e431a50b31a18ac95614cc6820394af13:stale",
+        "item_type": "tombstone",
+        "status": "stale"
+      },
+      {
+        "action": "keep",
+        "allowed_by": "REPLAY_PREVENTION_REQUIRES_NEGATIVE_STATE_RETENTION",
+        "item_id": "claim-state:api_version:576506f61f53440f1edd95d28631a17e26f50d613eef2943a030220b66c5f5b3:superseded",
+        "item_type": "tombstone",
+        "status": "superseded"
+      },
+      {
+        "action": "keep",
+        "allowed_by": "REPLAY_PREVENTION_REQUIRES_NEGATIVE_STATE_RETENTION",
+        "item_id": "claim-state:deployment_region:004fcf79011fef996338b69cd50c4f23d1ef7b6de102ea45769cf47e2262d2a6:superseded",
+        "item_type": "tombstone",
+        "status": "superseded"
+      },
+      {
+        "action": "keep",
+        "allowed_by": "REPLAY_PREVENTION_REQUIRES_NEGATIVE_STATE_RETENTION",
+        "item_id": "claim-state:deployment_region:cda928f543728ab002e256582b42398982858743d11841a4fccbcd646c0baf80:rejected",
+        "item_type": "tombstone",
+        "status": "rejected"
+      },
+      {
+        "action": "keep",
+        "allowed_by": "REPLAY_PREVENTION_REQUIRES_NEGATIVE_STATE_RETENTION",
+        "item_id": "claim-state:max_batch_size:5ac95f46dcda9e6a85f4d281cd691aea7b00846d8f8612d198d396136e9c5140:rejected",
+        "item_type": "tombstone",
+        "status": "rejected"
+      },
+      {
+        "action": "keep",
+        "allowed_by": "REPLAY_PREVENTION_REQUIRES_NEGATIVE_STATE_RETENTION",
+        "item_id": "claim-state:max_batch_size:b9a9f15714a2a7af00637c2030926ce17919df2d9dc3b3531d582e7bbad7315c:superseded",
+        "item_type": "tombstone",
+        "status": "superseded"
+      },
+      {
+        "action": "keep",
+        "allowed_by": "REPLAY_PREVENTION_REQUIRES_NEGATIVE_STATE_RETENTION",
+        "item_id": "constraint:privacy-floor:superseded",
+        "item_type": "tombstone",
+        "status": "superseded"
+      },
+      {
+        "action": "merge",
+        "allowed_by": "RECEIVER_POLICY_LIMITS_MERGE_TO_DUPLICATE_OR_SUPERSEDED_DECISION_EQUIVALENT_STATE",
+        "item_id": "a04a1319600b4eb484657ee7fd5f8698bea887322db97ccc8aa6a0063d2945dc",
+        "item_type": "receipt_state",
+        "summary": {
+          "details_hash": "a04a1319600b4eb484657ee7fd5f8698bea887322db97ccc8aa6a0063d2945dc",
+          "repeated_observation_group_count": 6,
+          "settled_intermediate_count": 0,
+          "superseded_state_count": 13
+        }
+      },
+      {
+        "action": "archive",
+        "allowed_by": "HASH_ADDRESSED_SIGNED_MANIFEST_WITH_NO_SOURCE_DELETION",
+        "destination": "cold_archive/receipts",
+        "item_id": "099aad33663b35834cb81d5504a8ded4e3be81c2e998110b695b5b5ecefa3d58",
+        "item_type": "source_receipt_chain",
+        "receipt_count": 65
+      }
+    ],
+    "input_hashes": {
+      "exam_hash": "7759430251d70e2f36da4e7ac43582af08639bef967c0c7096b8364ba4c93aeb",
+      "trajectory_sha256": "59978a3618a37382c569479fc931a329b198aa2d3ac4518a1a800b69884dc276"
+    },
+    "kept": {
+      "admitted_mechanism_ids": [],
+      "commitment_ids": [
+        "migration-complete",
+        "owner-approved",
+        "tests-complete"
+      ],
+      "constraint_ids": [
+        "privacy-floor"
+      ],
+      "contradiction_ids": [],
+      "supported_claim_ids": [
+        "claim-api-refresh-61",
+        "claim-region-refresh-61",
+        "claim-budget-refresh-61"
+      ],
+      "tombstone_count": 7,
+      "unresolved_question_count": 1
+    },
+    "legitimate_task_completion_preserved": true,
+    "merged": {
+      "details_hash": "a04a1319600b4eb484657ee7fd5f8698bea887322db97ccc8aa6a0063d2945dc",
+      "repeated_observation_group_count": 6,
+      "settled_intermediate_count": 0,
+      "superseded_state_count": 13
+    },
+    "policy_hash": "4354abb073b9e4ae859320c8b5a47a663515dcb7c3ca9493dcae6e64447c8235",
+    "policy_public_key": "34b4d9043156cb6dcf0beb0a2949b7559c940d2bcb6dbe8c53a9b30278e3a746",
+    "policy_version": "0.2",
+    "receiver_approval_hash": "8999e14065457b67862395892f5aa93b261adf8ee1cf5a95bdd7974ad7041b7a",
+    "receiver_approval_public_key": "c6822637c7d310ec57627be00ba259d253749f4aaf644470cffbe53a35f73242",
+    "receiver_disposition": "APPROVE",
+    "rehydration_conditions": [
+      "mechanism_weakened_or_overturned",
+      "constraint_changed",
+      "evidence_revoked",
+      "compaction_policy_changed",
+      "trusted_key_changed",
+      "unresolved_contradiction_changed",
+      "successor_decision_mismatch"
+    ],
+    "resulting_capsule_hash": "d1e21127793cc9a5d80c1a669b44a10301f8ecae0d704916a47d217ae8dda599",
+    "run_id": "gradual-drift-demo",
+    "same_exam_verified": true,
+    "schema": "openline.half-life.causal-compaction.v2",
+    "share_card_sha256": "a6235cdede338a0ad9720c4d3de23609707a0c1d102b57ac65b6abb62b5566f6",
+    "source_chain_count": 65,
+    "source_chain_digest": "0e072017602025a6e6782ab34146295ebb691561400d1344bb71c9368da3d34e",
+    "source_chain_tail_hash": "099aad33663b35834cb81d5504a8ded4e3be81c2e998110b695b5b5ecefa3d58",
+    "trusted_key_version": "receiver-compaction-key-v2",
+    "trusted_source_receipt_signer_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg=",
+    "updated_verified_residue_packet_hash": "bed34206916e05ac141c4eb3e70c8aad54b0ab702142397d0c2142cdf474d066"
+  },
+  "receipt_hash": "013ab0caa0c5a7ae3d8ad0ec89f78aac34f6f5715a36adf05056ea68a200f970",
+  "schema": "openline.endurance.receipt.v1",
+  "signature": "GYsbozpyoHmx4uk0zWjOaCKwKXIzUbzm+RBknBJeUCCiWkgr4UbxLLjzi3V26/DOXm1p9KrwAS/KR5/rxMHcAQ==",
+  "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+}

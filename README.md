@@ -18,6 +18,97 @@ ROLLBACK_REQUEST
 
 A valid signature can still produce `UNDECIDABLE`. Signature validity is never treated as evidence sufficiency.
 
+## Role-Confusion Consequence Gate (v0.6.0rc5)
+
+The model can be fooled without the receiver being fooled.
+
+This release adds a frozen receiver-side hostile suite for the case where an
+authenticated agent has already adopted an untrusted instruction and requests a
+protected action it is structurally allowed to request. Receipt Gate does not
+classify the prompt or attempt to repair the model. It asks whether
+receiver-pinned, action-bound evidence still justifies the protected effect.
+
+```bash
+olp-gate role-confusion-suite \
+  --benchmark benchmarks/role_confusion_consequence \
+  --output benchmarks/role_confusion_consequence/results/hostile_report.json
+python scripts/verify_role_confusion_consequence.py
+```
+
+The frozen matrix contains 13 synthetic cases. The decisive matched pair uses
+the exact same action and authorization structure: untrusted webpage evidence
+returns `QUARANTINE`, while receiver-pinned signed evidence returns `COMMIT`.
+The suite also covers fake-user text inside tool output, forged reasoning,
+stale or stripped evidence, replay, action-binding mismatch, forged
+trusted-origin keys, conflicting fresh trusted evidence, a mixed trusted bundle
+containing both exact-action support and a receipt bound to a different action,
+and unrelated untrusted content that must not cause a false block. A valid
+trusted wrong-action receipt is treated as bundle incoherence and fails closed;
+untrusted unrelated evidence remains ignorable.
+
+Each case passes through a harmless receiver-side effect callback. Blocked
+cases must leave that callback untouched; the three committed controls invoke
+it exactly once. The independent verifier imports no consequence-gate code,
+recomputes every decision and effect expectation, verifies the frozen source
+closure, and checks the result report. Attack text, attack labels, model
+reasoning, and detector scores are absent from the appraisal input.
+
+**The model compromise is assumed, not reproduced. This demonstrates that
+unsupported evidence can be stopped before consequence even when exact-action
+authorization is otherwise valid.**
+
+This is a deterministic post-compromise mechanism test, not a live attack
+reproduction. The standalone callback is not an atomic replay ledger;
+production effects must compose appraisal with Verified Commit. See
+[`docs/ROLE_CONFUSION_CONSEQUENCE_GATE.md`](docs/ROLE_CONFUSION_CONSEQUENCE_GATE.md).
+
+## OpenLine Handoff Check (v0.6.0rc5)
+
+Change the agent without losing why the work was done.
+
+Handoff Check imports a local Claude Code transcript, Codex rollout JSONL, or
+a generic JSON/JSONL history; names the next important action; builds a bounded
+fresh-agent capsule; and then separately replays the full canonicalized history
+with a different traversal and validator to check whether the inherited state
+still matches. The capsule cannot approve itself.
+
+```bash
+olp-gate handoff-check ~/.claude/projects/.../session.jsonl \
+  --next "implement the authentication refactor" \
+  --repo . \
+  --output ./handoff
+```
+
+The public continuation result is one of:
+
+```text
+SAFE_TO_CONTINUE
+DECISION_CHANGED
+EVIDENCE_MISSING
+UNDECIDABLE
+```
+
+The tool never converts ordinary assistant prose into trusted rationale. A
+decision, evidence item, constraint, assumption, open question, rejected path,
+or artifact becomes semantic handoff state only when the history contains an
+explicit structured `semantic` object or an `OLP_*` marker. If the rationale is
+not explicitly supported, the result is `EVIDENCE_MISSING`; malformed or
+uninterpretable source material fails closed as `UNDECIDABLE`.
+
+A successful run writes `capsule.json` and `capsule.md` for the new agent, a separate
+`reference_replay.json`, a restore index, a machine-readable report,
+an optional signed continuation receipt, and a shareable local proof card.
+`handoff-inspect` can later compare the capsule against a changed history and
+report a stale inherited decision, but the receiver must provide `--next`
+again rather than trusting the capsule's action. `handoff-restore` rederives
+the full archive index and can recover explicit state left outside the capsule
+only when the original source-history hash still matches.
+
+The included example is a deterministic conformance fixture, not evidence that
+real Claude Code or Codex sessions preserve decisions better in practice. The
+product claim remains bounded to the supplied local history and explicit state.
+ See [`docs/HANDOFF_CHECK.md`](docs/HANDOFF_CHECK.md) for the adapter and marker contract.
+
 ## Warning Time benchmark (v0.5.0rc6)
 
 An early-warning metric matters only when it creates a measurable window in
@@ -291,15 +382,20 @@ node verify-decision-node.mjs results/proof_to_policy_demo/decision_receipts.jso
   --gate-key 17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce
 ```
 
-Without optional integrations, the core suite passes and reports twenty-two
-explicit skips: nine Pipelock tests, five Assay-binary tests, and eight Verified
-Model Swap tests. Install `requirements-pipelock.txt`, set `OLP_ASSAY_BIN` to the
-pinned Assay v3.32.0 executable, and install `requirements-model-swap.txt` with
-`OLP_HALF_LIFE_ROOT` set to run every integration test. Two Assay fail-closed
-boundary tests and the pure model-swap summary control always run. Because
-Verified Commit remains an inherited release-critical feature, so the complete release gate
-holds unless its pinned Half-Life runtime and fixture are present. The release
-report records discovered, executed, and skipped counts for both the current and
+Without optional integrations, the core suite passes and reports twenty-four
+explicit skips: nine Pipelock tests, five Assay-binary tests, eight Verified
+Model Swap tests, and two Verified Continuation integration tests. The
+root-ready source archive includes a hash-pinned, pure-Python Half-Life wheel
+and fixture used only by the complete deterministic release gate, so
+`python scripts/release_check.py` runs green without a network checkout or
+special environment variable. An explicitly supplied invalid
+`OLP_HALF_LIFE_ROOT` still fails closed; it never falls back silently.
+
+Local hashes establish bundle integrity, not independent upstream provenance.
+GitHub Actions separately fetches the exact Half-Life commit declared in
+`requirements-model-swap.txt` and byte-compares its source, fixture, policies,
+and license with the vendored release bundle. The release report records
+discovered, executed, and skipped counts for both the complete and
 dependency-absent modes.
 
 Expected outcomes:
@@ -323,10 +419,10 @@ python scripts/verify_manifest.py
 ```
 
 The checked-in GitHub Actions workflow runs this same complete gate with Python
-3.12, Node 24, and the exact Half-Life commit declared in
-`requirements-model-swap.txt`. It does not treat the dependency-absent skip
-suite as release evidence. It installs the exact build prerequisites declared
-in `pyproject.toml` before the no-build-isolation wheel check. Failed release
+3.12 and Node 24, compares the vendored dependency against the independently
+fetched Half-Life commit, and does not treat the dependency-absent skip suite
+as release evidence. It installs the exact build prerequisites declared in
+`pyproject.toml` before the no-build-isolation wheel check. Failed release
 checks are named in the JSON summary with bounded stdout/stderr tails.
 
 ## Proof-to-policy flow

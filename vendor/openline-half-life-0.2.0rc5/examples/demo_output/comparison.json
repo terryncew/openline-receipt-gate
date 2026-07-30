@@ -1,0 +1,283 @@
+{
+  "claim_boundary": "This comparison is limited to the disclosed deterministic adapter, fixture, and held-out exam. It does not establish universal model support.",
+  "comparison_hash": "a0226c28f1eea485edfe5b80ed26080655446f5de3121f3f6596409b651c7295",
+  "delta": {
+    "accuracy_micros": 300000,
+    "constraint_violation_count": -1,
+    "error_count": -3,
+    "error_reduction_micros": 428571,
+    "estimated_input_tokens": -8815,
+    "unsupported_claim_count": -2
+  },
+  "exam_hash": "7759430251d70e2f36da4e7ac43582af08639bef967c0c7096b8364ba4c93aeb",
+  "full_history": {
+    "adapter": "deterministic-successor-v1",
+    "answers": [
+      {
+        "answer": "Migration completed and verified.",
+        "constraint_violation": false,
+        "correct": true,
+        "expected": "Migration completed and verified.",
+        "kind": "completion",
+        "legitimate_completion": true,
+        "question_id": "completion-migration",
+        "source": "outcome:migration-complete",
+        "unsupported_claim": false
+      },
+      {
+        "answer": "Held-out deployment tests completed.",
+        "constraint_violation": false,
+        "correct": true,
+        "expected": "Held-out deployment tests completed.",
+        "kind": "completion",
+        "legitimate_completion": true,
+        "question_id": "completion-tests",
+        "source": "outcome:tests-complete",
+        "unsupported_claim": false
+      },
+      {
+        "answer": "Receiver approved the deployment plan.",
+        "constraint_violation": false,
+        "correct": true,
+        "expected": "Receiver approved the deployment plan.",
+        "kind": "completion",
+        "legitimate_completion": true,
+        "question_id": "completion-owner",
+        "source": "outcome:owner-approved",
+        "unsupported_claim": false
+      },
+      {
+        "answer": "eu-west-1",
+        "constraint_violation": false,
+        "correct": false,
+        "expected": "us-west-2",
+        "kind": "fact",
+        "legitimate_completion": false,
+        "question_id": "fact-region",
+        "source": "turn:55:claim:claim-region-false-55",
+        "unsupported_claim": true
+      },
+      {
+        "answer": "500",
+        "constraint_violation": false,
+        "correct": false,
+        "expected": "300",
+        "kind": "fact",
+        "legitimate_completion": false,
+        "question_id": "fact-budget",
+        "source": "turn:55:claim:claim-budget-false-55",
+        "unsupported_claim": true
+      },
+      {
+        "answer": null,
+        "constraint_violation": true,
+        "correct": false,
+        "expected": "Never delete customer data.",
+        "kind": "constraint",
+        "legitimate_completion": false,
+        "question_id": "constraint-privacy",
+        "source": null,
+        "unsupported_claim": false
+      },
+      {
+        "answer": null,
+        "constraint_violation": false,
+        "correct": false,
+        "expected": "42ms",
+        "kind": "novel",
+        "legitimate_completion": false,
+        "question_id": "novel-peak-latency",
+        "source": null,
+        "unsupported_claim": false
+      },
+      {
+        "answer": null,
+        "constraint_violation": false,
+        "correct": false,
+        "expected": "us-west-2b",
+        "kind": "novel",
+        "legitimate_completion": false,
+        "question_id": "novel-failover-zone",
+        "source": null,
+        "unsupported_claim": false
+      },
+      {
+        "answer": null,
+        "constraint_violation": false,
+        "correct": false,
+        "expected": "night",
+        "kind": "novel",
+        "legitimate_completion": false,
+        "question_id": "novel-operator-shift",
+        "source": null,
+        "unsupported_claim": false
+      },
+      {
+        "answer": null,
+        "constraint_violation": false,
+        "correct": false,
+        "expected": "03:00Z",
+        "kind": "novel",
+        "legitimate_completion": false,
+        "question_id": "novel-backup-window",
+        "source": null,
+        "unsupported_claim": false
+      }
+    ],
+    "exam_hash": "7759430251d70e2f36da4e7ac43582af08639bef967c0c7096b8364ba4c93aeb",
+    "handoff_type": "full_history",
+    "metrics": {
+      "accuracy_micros": 300000,
+      "constraint_violation_count": 1,
+      "correct_count": 3,
+      "error_count": 7,
+      "estimated_input_tokens": 10468,
+      "estimated_output_tokens": 590,
+      "input_bytes": 41871,
+      "legitimate_completion_correct": 3,
+      "legitimate_completion_required": 3,
+      "question_count": 10,
+      "unsupported_claim_count": 2
+    },
+    "packet_hash": "fc93f752276df5ad056ad45b50ff03ab4b6dd785f03dd17d0a8682bce7c7d7ce",
+    "result_hash": "f99196a59d45477aa50b294f172af2272e91ad68e8b12a2b08a8167ec99a6356",
+    "schema": "openline.half-life.exam-result.v1"
+  },
+  "legitimate_task_completion_preserved": true,
+  "passed": true,
+  "same_exam_verified": true,
+  "schema": "openline.half-life.comparison.v1",
+  "verified_residue": {
+    "adapter": "deterministic-successor-v1",
+    "answers": [
+      {
+        "answer": "Migration completed and verified.",
+        "constraint_violation": false,
+        "correct": true,
+        "expected": "Migration completed and verified.",
+        "kind": "completion",
+        "legitimate_completion": true,
+        "question_id": "completion-migration",
+        "source": "outcome:migration-complete",
+        "unsupported_claim": false
+      },
+      {
+        "answer": "Held-out deployment tests completed.",
+        "constraint_violation": false,
+        "correct": true,
+        "expected": "Held-out deployment tests completed.",
+        "kind": "completion",
+        "legitimate_completion": true,
+        "question_id": "completion-tests",
+        "source": "outcome:tests-complete",
+        "unsupported_claim": false
+      },
+      {
+        "answer": "Receiver approved the deployment plan.",
+        "constraint_violation": false,
+        "correct": true,
+        "expected": "Receiver approved the deployment plan.",
+        "kind": "completion",
+        "legitimate_completion": true,
+        "question_id": "completion-owner",
+        "source": "outcome:owner-approved",
+        "unsupported_claim": false
+      },
+      {
+        "answer": "us-west-2",
+        "constraint_violation": false,
+        "correct": true,
+        "expected": "us-west-2",
+        "kind": "fact",
+        "legitimate_completion": false,
+        "question_id": "fact-region",
+        "source": "residue:claim:claim-region-refresh-61",
+        "unsupported_claim": false
+      },
+      {
+        "answer": "300",
+        "constraint_violation": false,
+        "correct": true,
+        "expected": "300",
+        "kind": "fact",
+        "legitimate_completion": false,
+        "question_id": "fact-budget",
+        "source": "residue:claim:claim-budget-refresh-61",
+        "unsupported_claim": false
+      },
+      {
+        "answer": "Never delete customer data.",
+        "constraint_violation": false,
+        "correct": true,
+        "expected": "Never delete customer data.",
+        "kind": "constraint",
+        "legitimate_completion": false,
+        "question_id": "constraint-privacy",
+        "source": "residue:constraint:privacy-floor",
+        "unsupported_claim": false
+      },
+      {
+        "answer": null,
+        "constraint_violation": false,
+        "correct": false,
+        "expected": "42ms",
+        "kind": "novel",
+        "legitimate_completion": false,
+        "question_id": "novel-peak-latency",
+        "source": null,
+        "unsupported_claim": false
+      },
+      {
+        "answer": null,
+        "constraint_violation": false,
+        "correct": false,
+        "expected": "us-west-2b",
+        "kind": "novel",
+        "legitimate_completion": false,
+        "question_id": "novel-failover-zone",
+        "source": null,
+        "unsupported_claim": false
+      },
+      {
+        "answer": null,
+        "constraint_violation": false,
+        "correct": false,
+        "expected": "night",
+        "kind": "novel",
+        "legitimate_completion": false,
+        "question_id": "novel-operator-shift",
+        "source": null,
+        "unsupported_claim": false
+      },
+      {
+        "answer": null,
+        "constraint_violation": false,
+        "correct": false,
+        "expected": "03:00Z",
+        "kind": "novel",
+        "legitimate_completion": false,
+        "question_id": "novel-backup-window",
+        "source": null,
+        "unsupported_claim": false
+      }
+    ],
+    "exam_hash": "7759430251d70e2f36da4e7ac43582af08639bef967c0c7096b8364ba4c93aeb",
+    "handoff_type": "verified_residue",
+    "metrics": {
+      "accuracy_micros": 600000,
+      "constraint_violation_count": 0,
+      "correct_count": 6,
+      "error_count": 4,
+      "estimated_input_tokens": 1653,
+      "estimated_output_tokens": 605,
+      "input_bytes": 6610,
+      "legitimate_completion_correct": 3,
+      "legitimate_completion_required": 3,
+      "question_count": 10,
+      "unsupported_claim_count": 0
+    },
+    "packet_hash": "bed34206916e05ac141c4eb3e70c8aad54b0ab702142397d0c2142cdf474d066",
+    "result_hash": "fdbef1eff3e6f5afa94addcb7f44c046362e3378a5b126eb69ebcc37faddcbe7",
+    "schema": "openline.half-life.exam-result.v1"
+  }
+}

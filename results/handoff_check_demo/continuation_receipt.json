@@ -1,0 +1,40 @@
+{
+  "artifact_hashes": {
+    "archive_index.json": "29e0ce90f715e35760bcc644eb06b5731101b86ab17293239b7193ee31f78903",
+    "capsule.json": "8adb81823bd7a3f3a8554fb8e10bdac00b9910d7fd46e227cf5c11505c6aae82",
+    "capsule.md": "9eccfae72f05cd18a572407ad9842d7f1adcd67964dc3aafa53969056f58dd29",
+    "handoff_report.json": "695dfa2ffe240ca526b50ba1d8638f1f80bdd673a176241a20ba5e47e0f11499",
+    "proof-card.html": "f2d14c7d16f8ddb2261be175422bcce948aeec41e6f868ff6aa88cba528742d5",
+    "reference_replay.json": "a46f0af672518a8dfb412217ef0e3f9c420eb2909e364a6a75ae5c8658629669"
+  },
+  "blocker_count": 0,
+  "body_sha256": "f5dfc7bd9e12f81ee6e2ea4bc705e145a5da41432493c2c979ea7df7289eca58",
+  "capsule_sha256": "db94036737c5c6e283c51cd8dd0b35781c1217d3c1534f570cb349abbcc3a9c1",
+  "claim_boundary": "The receipt certifies deterministic comparison against the supplied local history only. It does not prove the history is complete, truthful, or sufficient for real-world task success.",
+  "decision_change_count": 0,
+  "disposition": "SAFE_TO_CONTINUE",
+  "evidence_missing_count": 0,
+  "metrics": {
+    "capsule_bytes": 2275,
+    "capsule_operational_items": 3,
+    "capsule_semantic_items": 3,
+    "context_excluded_basis_points": 0,
+    "repeated_operations_observed": 1,
+    "repeated_reads_or_searches_observed": 1,
+    "restorable_from_source_history": true,
+    "restorable_item_count": 3,
+    "source_bytes": 1398,
+    "source_events": 7
+  },
+  "next_action_sha256": "3ac63c39efc40325300a6d384c022f4d1bddee1ad35b362d0211cf6b3a1a881d",
+  "proof_mode": "UNSIGNED_LOCAL_HASH_BOUND",
+  "repo_state": {
+    "head": null,
+    "path": null,
+    "status": "NOT_BOUND",
+    "worktree_sha256": null
+  },
+  "schema": "openline.handoff.receipt.v2",
+  "source": "generic",
+  "source_history_sha256": "4889c7b2be46c34c58f440681e9e4e172f601786252ead38d42abee7a0cc3ea7"
+}

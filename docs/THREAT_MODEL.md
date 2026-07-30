@@ -36,6 +36,20 @@
 - proof-card mutation after the source receipt and outcome witness bind its
   exact bytes;
 - a DSM display projection attempting to replace the signed receiver decision.
+- a Handoff Check capsule changing the receiver-pinned next action, semantic
+  status, action scope, provenance event, evidence boundary, or operational
+  state and then recomputing only its local hash;
+- a capsule extractor omission being accepted by the same extraction path as
+  its own fidelity grade; receiver reference replay uses a separate traversal
+  and validator;
+- a restoration index returning a different source event after its item mapping
+  is rewritten, including a locally rehashed rewrite;
+- tracked or untracked Git worktree bytes changing while the porcelain status
+  shape stays the same, and repository mutation during capsule construction or
+  inspection;
+- duplicate canonical event IDs, concurrent history-file mutation, and
+  semantic content hidden inside an oversized record carrying a known telemetry
+  marker;
 - changed tool, target, settings, run, capsule, evidence, or receiver-policy
   bindings presented to the Verified Commit tool boundary;
 - expired, wrong-code, sequentially replayed, or concurrently replayed Verified
@@ -57,6 +71,9 @@
 ## Outside this release
 
 - a host administrator replacing the gate key, trust store, policy, ledger, and output together;
+- facts omitted before the exported history reaches a Handoff Check adapter,
+  or a truthful-looking explicit semantic marker supplied by an untrusted
+  producer; the receiver replay checks fidelity, not truth;
 - omission before any configured capture boundary observes the action;
 - collusion by every trusted witness;
 - false but correctly signed statements by a trusted source or outcome witness;

@@ -2,7 +2,7 @@
 
 ## Supported claims
 
-Receipt Gate v0.5.0rc8 demonstrates that signed action receipts and a pinned Assay
+Receipt Gate v0.6.0rc5 demonstrates that signed action receipts and a pinned Assay
 evidence bundle can be converted into deterministic, signed policy decisions
 while keeping integrity, provenance, coverage, the source action signal,
 freshness, evidence, and outcome checks separate.
@@ -176,6 +176,47 @@ Case 2 is not an Assay failure. Assay passed the two registered claims it was
 asked to assert; the missing artifact belonged to OLP's separate receiver-owned
 policy. Case 5 demonstrates an explicit OLP receiver byte pin, not unique
 cryptography—an Assay receiver can add an external byte pin as well.
+
+## OpenLine Handoff Check boundary
+
+The v0.6.0rc5 Handoff Check demonstrates a deterministic local mechanism, not
+a live-provider continuation advantage. It can parse disclosed Claude Code,
+Codex rollout, and generic JSON/JSONL shapes into bounded observable events;
+preserve explicit semantic state without upgrading ordinary prose into a
+trusted decision; bind a capsule to the supplied history hash, next action, and
+optional Git state; require the receiver to pin that next action again during
+inspection; and compare that capsule with a separate replay implementation over
+the same supplied history. Restoration rederives its full explicit-state index
+from the byte-matched source before returning any event.
+
+`SAFE_TO_CONTINUE` means the capsule matches the explicit decision/evidence
+state reconstructed from that supplied history. It does not mean the history is
+complete or truthful, the next action is correct, the repository is bug-free,
+or a real receiving agent will succeed. Hidden reasoning, omitted tool
+activity, provider state outside the export, and unsupported natural-language
+inference remain outside the claim.
+
+## Role-Confusion Consequence Gate boundary
+
+The v0.6.0rc5 Role-Confusion Consequence Gate demonstrates a deterministic
+post-compromise mechanism over thirteen synthetic fixtures. The receiver sees an
+exact action plus signed evidence; prompt text, attack labels, model reasoning,
+and detector output are not appraisal inputs. Six authorization-valid hostile
+cases leave a harmless protected-effect callback untouched. Three legitimate
+controls invoke it once. A matched pair holds the action constant while
+changing only whether receiver-pinned evidence supports it, and fresh trusted
+negative evidence vetoes simultaneous positive support. A valid trusted receipt
+bound to a different exact action also fails closed even when exact-action
+positive support is present.
+
+This does not show that a live model adopted a hostile instruction, reproduce a
+published role-confusion attack, or cure role perception. The callback proves
+the disclosed ordering boundary only; it is not an atomic replay ledger.
+Production execution must compose appraisal with Verified Commit.
+
+The model compromise is assumed, not reproduced. This demonstrates that
+unsupported evidence can be stopped before consequence even when exact-action
+authorization is otherwise valid.
 
 ## Unsupported claims
 

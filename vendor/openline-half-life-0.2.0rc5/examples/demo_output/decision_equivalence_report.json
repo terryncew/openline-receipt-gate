@@ -1,0 +1,16 @@
+{
+  "active_size_ratio_micros": 93451,
+  "automatic_retirement_authorized": false,
+  "causal_capsule_active_bytes": 7325,
+  "causal_capsule_decision_count": 16,
+  "causal_capsule_decision_hash": "7b6fa839ac9be86dc2be0d32157398548164db936f7f599bdc287325eb50571e",
+  "claim_boundary": "Decision equivalence is exact over the disclosed COMMIT, QUARANTINE, and DENY projection. It is not a similarity score.",
+  "full_history_decision_count": 16,
+  "full_history_decision_hash": "7b6fa839ac9be86dc2be0d32157398548164db936f7f599bdc287325eb50571e",
+  "full_history_evaluator": "independent_reference_replay_v1",
+  "mismatches": [],
+  "passed": true,
+  "report_hash": "ac314849c9b845906a0829a8089cf9a668cb75122e7f2a411349f845dbede113",
+  "schema": "openline.half-life.decision-equivalence.v1",
+  "source_chain_active_bytes": 78383
+}

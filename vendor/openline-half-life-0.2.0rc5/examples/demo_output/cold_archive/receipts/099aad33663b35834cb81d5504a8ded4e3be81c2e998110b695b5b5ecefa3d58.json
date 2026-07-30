@@ -1,0 +1,16 @@
+{
+  "index": 64,
+  "kind": "verified_residue_checkpoint",
+  "parent_hash": "c2a3b1c9a058a7254d8bffce2c1c12ed3234d9672f295fc7272399eddcd4be5d",
+  "payload": {
+    "automatic_retirement_authorized": false,
+    "packet_hash": "1513bee12461b71eb38fc4d88db6821e711009956f5c0d2f6f9d216197cb0ac8",
+    "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+    "retirement_turn": 61,
+    "run_id": "gradual-drift-demo"
+  },
+  "receipt_hash": "099aad33663b35834cb81d5504a8ded4e3be81c2e998110b695b5b5ecefa3d58",
+  "schema": "openline.endurance.receipt.v1",
+  "signature": "y7CttxgKZjvvK01DUm4BCmoC/Vni3mXFUrmbMLtkJA/fATR8EbhKSro5XXOnY+8DZUZ2jkdioS1quHGdcQuRBw==",
+  "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+}

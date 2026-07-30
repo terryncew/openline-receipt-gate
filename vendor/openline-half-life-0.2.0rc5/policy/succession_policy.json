@@ -1,0 +1,208 @@
+{
+  "automatic_retirement_authorized": false,
+  "calibration": {
+    "high_values": {
+      "delta_hol_micros": 577350,
+      "epsilon_micros": 500000,
+      "kappa_micros": 707107,
+      "phi_star_micros": 660697
+    },
+    "holdout_sample_count": 100,
+    "low_values": {
+      "delta_hol_micros": 0,
+      "epsilon_micros": 0,
+      "kappa_micros": 0,
+      "phi_star_micros": 990099
+    },
+    "submitted_sample_count": 500,
+    "train_sample_count": 400,
+    "type": "synthetic_mechanism_fixture"
+  },
+  "canonical_source": {
+    "commit": "6c6f740",
+    "fitter_functions": [
+      "_fit_threshold",
+      "_fit_critical_threshold",
+      "_fit_persistence_rule",
+      "_evaluate_rule"
+    ],
+    "repository": "https://github.com/terryncew/openline-endurance-gate",
+    "vendored_source_sha256": "0fd92bdfed08107a6826f03131fe6f076744deaad2785b4177c56f484cb35d12",
+    "version": "0.10.0"
+  },
+  "claim_boundary": "Synthetic mechanism policy only. It preserves separate COLE metrics, does not establish universal model support, and never authorizes automatic retirement.",
+  "cole_algorithm_id": "cole-portable-core-2.1-draft",
+  "critical_thresholds": {
+    "kappa_micros": {
+      "direction": "high",
+      "metric": "kappa_micros",
+      "selection": "maximum_train_sensitivity_subject_to_specificity_floor",
+      "specificity_floor_micros": 950000,
+      "threshold_micros": 707108,
+      "train": {
+        "accuracy_micros": 800000,
+        "balanced_accuracy_micros": 500000,
+        "confusion": {
+          "false_negative": 80,
+          "false_positive": 0,
+          "true_negative": 320,
+          "true_positive": 0
+        },
+        "precision_micros": null,
+        "sensitivity_micros": 0,
+        "specificity_micros": 1000000
+      }
+    },
+    "phi_star_micros": {
+      "direction": "low",
+      "metric": "phi_star_micros",
+      "selection": "maximum_train_sensitivity_subject_to_specificity_floor",
+      "specificity_floor_micros": 950000,
+      "threshold_micros": 0,
+      "train": {
+        "accuracy_micros": 800000,
+        "balanced_accuracy_micros": 500000,
+        "confusion": {
+          "false_negative": 80,
+          "false_positive": 0,
+          "true_negative": 320,
+          "true_positive": 0
+        },
+        "precision_micros": null,
+        "sensitivity_micros": 0,
+        "specificity_micros": 1000000
+      }
+    }
+  },
+  "evidence_sufficiency": {
+    "metric": "ucr_micros",
+    "required_value_micros": 0,
+    "role": "separate_evidence_gate_not_health_score"
+  },
+  "holdout_validation": {
+    "accuracy_micros": 1000000,
+    "balanced_accuracy_micros": 1000000,
+    "confusion": {
+      "false_negative": 0,
+      "false_positive": 0,
+      "true_negative": 80,
+      "true_positive": 20
+    },
+    "precision_micros": 1000000,
+    "sensitivity_micros": 1000000,
+    "specificity_micros": 1000000
+  },
+  "metric_directions": {
+    "delta_hol_micros": "high",
+    "epsilon_micros": "high",
+    "kappa_micros": "high",
+    "phi_star_micros": "low"
+  },
+  "mode": "calibrated_advisory",
+  "payload_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+  "persistence": {
+    "minimum_metric_breaches": 4,
+    "persistence_required": 2,
+    "persistence_window": 2,
+    "selection": "maximum_train_balanced_accuracy_then_specificity_then_sensitivity_then_metric_consensus_then_shortest_sufficient_window",
+    "train": {
+      "accuracy_micros": 1000000,
+      "balanced_accuracy_micros": 1000000,
+      "confusion": {
+        "false_negative": 0,
+        "false_positive": 0,
+        "true_negative": 320,
+        "true_positive": 80
+      },
+      "precision_micros": 1000000,
+      "sensitivity_micros": 1000000,
+      "specificity_micros": 1000000
+    }
+  },
+  "policy_version": "0.1",
+  "receiver_approval_required": true,
+  "schema": "openline.half-life.calibrator-policy.v1",
+  "signature": {
+    "algorithm": "Ed25519",
+    "public_key": "d810f13ea0d000c1c3a201cc568c1774b60f240a709f2f5220fec474254015af",
+    "value": "7a517b7ecb6f81e365f2eefca229b7332d2ba002fe9ad2ba267f28f9209416f7dc69aa45b30b9d9d5555c95be86882b5234f91cda8b87a795902b796cb3b2201"
+  },
+  "thresholds": {
+    "delta_hol_micros": {
+      "direction": "high",
+      "metric": "delta_hol_micros",
+      "selection": "maximum_train_balanced_accuracy_then_specificity_then_conservative_threshold",
+      "threshold_micros": 577350,
+      "train": {
+        "accuracy_micros": 600000,
+        "balanced_accuracy_micros": 750000,
+        "confusion": {
+          "false_negative": 0,
+          "false_positive": 160,
+          "true_negative": 160,
+          "true_positive": 80
+        },
+        "precision_micros": 333333,
+        "sensitivity_micros": 1000000,
+        "specificity_micros": 500000
+      }
+    },
+    "epsilon_micros": {
+      "direction": "high",
+      "metric": "epsilon_micros",
+      "selection": "maximum_train_balanced_accuracy_then_specificity_then_conservative_threshold",
+      "threshold_micros": 500000,
+      "train": {
+        "accuracy_micros": 600000,
+        "balanced_accuracy_micros": 750000,
+        "confusion": {
+          "false_negative": 0,
+          "false_positive": 160,
+          "true_negative": 160,
+          "true_positive": 80
+        },
+        "precision_micros": 333333,
+        "sensitivity_micros": 1000000,
+        "specificity_micros": 500000
+      }
+    },
+    "kappa_micros": {
+      "direction": "high",
+      "metric": "kappa_micros",
+      "selection": "maximum_train_balanced_accuracy_then_specificity_then_conservative_threshold",
+      "threshold_micros": 707107,
+      "train": {
+        "accuracy_micros": 600000,
+        "balanced_accuracy_micros": 750000,
+        "confusion": {
+          "false_negative": 0,
+          "false_positive": 160,
+          "true_negative": 160,
+          "true_positive": 80
+        },
+        "precision_micros": 333333,
+        "sensitivity_micros": 1000000,
+        "specificity_micros": 500000
+      }
+    },
+    "phi_star_micros": {
+      "direction": "low",
+      "metric": "phi_star_micros",
+      "selection": "maximum_train_balanced_accuracy_then_specificity_then_conservative_threshold",
+      "threshold_micros": 990099,
+      "train": {
+        "accuracy_micros": 600000,
+        "balanced_accuracy_micros": 750000,
+        "confusion": {
+          "false_negative": 0,
+          "false_positive": 160,
+          "true_negative": 160,
+          "true_positive": 80
+        },
+        "precision_micros": 333333,
+        "sensitivity_micros": 1000000,
+        "specificity_micros": 500000
+      }
+    }
+  }
+}

@@ -7,7 +7,7 @@
     "action": {
       "id": "verified-model-swap-demo",
       "risk_level": "high",
-      "timestamp": "2026-07-29T02:26:20.203528Z",
+      "timestamp": "2026-07-30T14:05:56.551631Z",
       "type": "verified_model_swap"
     },
     "chain": {
@@ -18,7 +18,7 @@
       "terminal": true
     },
     "outcome": {
-      "response_hash": "sha256:e83df78dbe72855d8057b75f9cf864248df5faabbc63594609b0d05b708a6a0b",
+      "response_hash": "sha256:8d0d6ca44500a1dd0b435e52e62da37071dbbff98a15fb59a0a4e439b2c26944",
       "reversible": true,
       "status": "success"
     },
@@ -28,16 +28,16 @@
     }
   },
   "id": "urn:receipt:verified-model-swap-demo",
-  "issuanceDate": "2026-07-29T02:26:20.203528Z",
+  "issuanceDate": "2026-07-30T14:05:56.551631Z",
   "issuer": {
     "id": "did:example:verified-model-swap-orchestrator",
     "session_id": "verified-model-swap-demo",
     "type": "AIAgent"
   },
   "proof": {
-    "created": "2026-07-29T02:26:20.203528Z",
+    "created": "2026-07-30T14:05:56.551631Z",
     "proofPurpose": "assertionMethod",
-    "proofValue": "umaXo22XezpttEFMhI65L-JYF-oIKjbW0bwCaTuAKvOjHVJfoOtLq9DrhhCBewPG4FHO7XBABs6dJ1y9GjGcZDQ",
+    "proofValue": "uy5lsyglQz_gWHcZTmCk2T-z9iTXOlcYSU1eu7eoBOUlb4gWPWch2bt6mAtQSNyUpFq4RDea_oABzjn14G713CQ",
     "type": "Ed25519Signature2020",
     "verificationMethod": "did:example:verified-model-swap-orchestrator#key-1"
   },

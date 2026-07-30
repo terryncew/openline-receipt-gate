@@ -1,0 +1,14 @@
+{
+  "index": 63,
+  "kind": "full_history_handoff",
+  "parent_hash": "7d3d409ccb10d987db38984fc7f35ee198475c26dfacaa48a4a561162b618392",
+  "payload": {
+    "artifact_sha256": "09013b4d6a2ed54630e3e07eead171fe2aba54051f4de6ad4440a69af492c06f",
+    "packet_hash": "fc93f752276df5ad056ad45b50ff03ab4b6dd785f03dd17d0a8682bce7c7d7ce",
+    "run_id": "gradual-drift-demo"
+  },
+  "receipt_hash": "c2a3b1c9a058a7254d8bffce2c1c12ed3234d9672f295fc7272399eddcd4be5d",
+  "schema": "openline.endurance.receipt.v1",
+  "signature": "YNn4uw2wuHQUyJtB+5WeEWIjcXNYjIoH8+9zG7lPJc4zYKGH2wekl5z5NSP0Eqef8twupLiidxumIakXFB0xAQ==",
+  "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+}

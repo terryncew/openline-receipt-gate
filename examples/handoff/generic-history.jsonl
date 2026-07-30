@@ -1,0 +1,7 @@
+{"event_id":"e1","timestamp":"2026-07-30T00:00:00Z","actor":"tool","type":"state","semantic":{"kind":"evidence","item_id":"E1","key":"E1","statement":"Authentication tests passed after server-side validation was restored.","status":"active","evidence_ids":[],"relevant_actions":["authentication refactor"]}}
+{"event_id":"e2","timestamp":"2026-07-30T00:01:00Z","actor":"assistant","type":"state","semantic":{"kind":"decision","item_id":"D1","key":"auth.validation.location","statement":"Keep authentication validation server-side.","status":"active","evidence_ids":["E1"],"relevant_actions":["authentication refactor"]}}
+{"event_id":"e3","timestamp":"2026-07-30T00:02:00Z","actor":"user","type":"state","semantic":{"kind":"constraint","item_id":"C1","key":"api.compatibility","statement":"Do not change the public authentication API.","status":"active","evidence_ids":[],"relevant_actions":[]}}
+{"event_id":"e4","timestamp":"2026-07-30T00:03:00Z","actor":"assistant","tool":"Read","input":{"file_path":"src/auth.py"}}
+{"event_id":"e5","timestamp":"2026-07-30T00:04:00Z","actor":"assistant","tool":"Read","input":{"file_path":"src/auth.py"}}
+{"event_id":"e6","timestamp":"2026-07-30T00:05:00Z","actor":"assistant","tool":"Edit","input":{"file_path":"src/auth.py"}}
+{"event_id":"e7","timestamp":"2026-07-30T00:06:00Z","actor":"assistant","tool":"Bash","input":{"command":"pytest tests/test_auth.py"}}

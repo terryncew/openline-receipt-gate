@@ -1,0 +1,43 @@
+{
+  "archive_index_sha256": "a8def8603da3ad2ae4666d60f962cd820107947ad2a420ba328627be7b8e0bc4",
+  "items": {
+    "C1": {
+      "event_ids": [
+        "e3"
+      ],
+      "key": "api.compatibility",
+      "kind": "constraint",
+      "latest_semantic_sha256": "96e1f75ffa2a6db3002f2e910521b3710ab527f6ce0a8304d3e9885a1ef00302"
+    },
+    "D1": {
+      "event_ids": [
+        "e2"
+      ],
+      "key": "auth.validation.location",
+      "kind": "decision",
+      "latest_semantic_sha256": "a0c978ce615292eeb9d0c9be21dcef7545e09dba5eac3e3ab47514394125cb76"
+    },
+    "E1": {
+      "event_ids": [
+        "e1"
+      ],
+      "key": "E1",
+      "kind": "evidence",
+      "latest_semantic_sha256": "1ae7b835d4b781c09d43eeae921dd2925f439502f165803f75ad296329ef68f1"
+    }
+  },
+  "operational_event_ids": [
+    "e5",
+    "e6",
+    "e7"
+  ],
+  "operational_stats": {
+    "repeated_operations": 1,
+    "repeated_reads_or_searches": 1,
+    "unique_operational_states": 3
+  },
+  "restorable_from_source_history": true,
+  "schema": "openline.handoff.archive-index.v2",
+  "semantic_errors": [],
+  "source_history_sha256": "4889c7b2be46c34c58f440681e9e4e172f601786252ead38d42abee7a0cc3ea7"
+}

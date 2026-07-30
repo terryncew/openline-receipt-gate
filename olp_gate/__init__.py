@@ -1,9 +1,9 @@
-"""OpenLine Receipt Gate v0.5.0rc8.
+"""OpenLine Receipt Gate v0.6.0rc5.
 
 Proof-to-policy gate for risky agent actions.
 """
 
-__version__ = "0.5.0rc8"
+__version__ = "0.6.0rc5"
 
 from .gate import gate, ReceiptGate, GatePolicy, Decision
 from .receipts import verify_chain, load_receipts
@@ -24,6 +24,22 @@ from .verified_commit import (
     issue_one_use_code,
     run_verified_commit_demo,
     verify_verified_commit_output,
+)
+
+from .handoff import (
+    HandoffAdapterError,
+    HandoffCheckError,
+    inspect_handoff,
+    load_history as load_handoff_history,
+    restore_items as restore_handoff_items,
+    write_handoff_outputs,
+)
+from .role_confusion import (
+    ConsequenceGateError,
+    appraise_consequence,
+    consequence_action_hash,
+    execute_appraised_consequence,
+    run_case_matrix,
 )
 from .x402_airlock import (
     X402_AIRLOCK_PROFILE,
@@ -63,6 +79,17 @@ __all__ = [
     "issue_one_use_code",
     "run_verified_commit_demo",
     "verify_verified_commit_output",
+    "HandoffAdapterError",
+    "HandoffCheckError",
+    "inspect_handoff",
+    "load_handoff_history",
+    "restore_handoff_items",
+    "write_handoff_outputs",
+    "ConsequenceGateError",
+    "appraise_consequence",
+    "consequence_action_hash",
+    "execute_appraised_consequence",
+    "run_case_matrix",
     "X402_AIRLOCK_PROFILE",
     "X402_CONFIRMATION_PROFILE",
     "X402_POLICY_PROFILE",

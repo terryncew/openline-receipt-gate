@@ -1,0 +1,39 @@
+{
+  "index": 22,
+  "kind": "trajectory_turn",
+  "parent_hash": "941279002499c928ae663f4ab1d175544c428f811abc6d1dfd812d24d7e064e9",
+  "payload": {
+    "run_id": "gradual-drift-demo",
+    "turn_hash": "c42cf6aeca9504c518b664c06207a9aaedaafe48b61f9947685fb5ab3ba57041",
+    "turn_number": 23,
+    "turn_record": {
+      "claims": [],
+      "constraints": [],
+      "cost": {
+        "input_tokens": 969,
+        "output_tokens": 263
+      },
+      "evidence": [],
+      "measurements": {
+        "delta_hol_micros": 0,
+        "epsilon_micros": 0,
+        "kappa_micros": 0,
+        "phi_star_micros": 995000,
+        "ucr_micros": 0
+      },
+      "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+      "outcomes": [],
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn.v1",
+      "summary": "Atlas checkpoint 23.",
+      "turn": 23,
+      "unresolved_questions": [
+        "What is the post-cutover latency under peak load?"
+      ]
+    }
+  },
+  "receipt_hash": "c4e6dc6b40170249b068c2bcedb04408804dde5dfd945589822cc6235bb2995b",
+  "schema": "openline.endurance.receipt.v1",
+  "signature": "g4i+3fzqRCN/XDFdaK/Y2A29wK+pEeHUaBozFGv6QpK6OqNX4Haa2QBaMD0kS/6/vhhOUHy+fW/3UrIpiuv3Cg==",
+  "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+}

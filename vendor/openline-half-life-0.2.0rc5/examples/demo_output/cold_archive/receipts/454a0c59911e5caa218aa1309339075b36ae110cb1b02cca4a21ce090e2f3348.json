@@ -1,0 +1,73 @@
+{
+  "index": 58,
+  "kind": "trajectory_turn",
+  "parent_hash": "86ce08f685540649b5c99e9286985b1a6d13c06b325b327c1a5813e6c6a54042",
+  "payload": {
+    "run_id": "gradual-drift-demo",
+    "turn_hash": "1e42fb440f4a113ee9dfde39516b2001aed67205d077376495f19ba79a974b1b",
+    "turn_number": 59,
+    "turn_record": {
+      "claims": [
+        {
+          "evidence_refs": [
+            "ev-region-current"
+          ],
+          "id": "claim-region-refresh-59",
+          "last_verified_turn": 59,
+          "material": true,
+          "slot": "deployment_region",
+          "support_status": "supported",
+          "value": "us-west-2"
+        },
+        {
+          "evidence_refs": [
+            "ev-budget-current"
+          ],
+          "id": "claim-budget-refresh-59",
+          "last_verified_turn": 59,
+          "material": true,
+          "slot": "max_batch_size",
+          "support_status": "supported",
+          "value": "300"
+        },
+        {
+          "evidence_refs": [
+            "ev-api-v2"
+          ],
+          "id": "claim-api-refresh-59",
+          "last_verified_turn": 59,
+          "material": true,
+          "slot": "api_version",
+          "support_status": "supported",
+          "value": "v2"
+        }
+      ],
+      "constraints": [],
+      "cost": {
+        "input_tokens": 1077,
+        "output_tokens": 299
+      },
+      "evidence": [],
+      "measurements": {
+        "delta_hol_micros": 0,
+        "epsilon_micros": 0,
+        "kappa_micros": 0,
+        "phi_star_micros": 995000,
+        "ucr_micros": 0
+      },
+      "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+      "outcomes": [],
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn.v1",
+      "summary": "Atlas checkpoint 59.",
+      "turn": 59,
+      "unresolved_questions": [
+        "What is the post-cutover latency under peak load?"
+      ]
+    }
+  },
+  "receipt_hash": "454a0c59911e5caa218aa1309339075b36ae110cb1b02cca4a21ce090e2f3348",
+  "schema": "openline.endurance.receipt.v1",
+  "signature": "oSynG8SEeDuxzZa5CsfUCLj3LBeqPKjsGHdQ1OJEqXTmty9hjWyQ45oHB7rJyqMkuvw4ekkF6NFwW+xBdELFCQ==",
+  "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+}

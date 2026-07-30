@@ -20,7 +20,7 @@
       "evidence": {
         "details": {
           "artifact_hashes": {
-            "model_swap_proof_card": "e83df78dbe72855d8057b75f9cf864248df5faabbc63594609b0d05b708a6a0b"
+            "model_swap_proof_card": "8d0d6ca44500a1dd0b435e52e62da37071dbbff98a15fb59a0a4e439b2c26944"
           },
           "bound_evidence_ids": [
             "model_swap_proof_card"
@@ -41,7 +41,7 @@
         "details": {
           "replay_guard": {
             "details": {
-              "challenge_issued_at": "2026-07-29T02:26:20.299445Z"
+              "challenge_issued_at": "2026-07-30T14:05:56.639716Z"
             },
             "reason_codes": [],
             "status": "pass"
@@ -65,7 +65,7 @@
       },
       "outcome": {
         "details": {
-          "evidence_hash": "e83df78dbe72855d8057b75f9cf864248df5faabbc63594609b0d05b708a6a0b",
+          "evidence_hash": "8d0d6ca44500a1dd0b435e52e62da37071dbbff98a15fb59a0a4e439b2c26944",
           "harmful": false,
           "independence": "receiver",
           "rollback_supported": true,
@@ -103,15 +103,15 @@
       "verified_commit": {
         "details": {
           "authorization": {
-            "action_hash": "2f0f5f8ab8783c176bd203a7ff4fb21a9a37ae24f302ce0382d77f84472dffdb",
-            "authorization_hash": "c45913669889169c91018bc4c50803535c8e2b5a68e797583239f36206145386",
+            "action_hash": "b3653e953756d09350d85f8b5977d3ccee9ceb3da0319b44a809d4191dbb8815",
+            "authorization_hash": "d7d111f4511b0bdb29750691f745bdb36ab4c703b3dc73f1c33b784172f05699",
             "capsule_hash": "8436eae8c2e158a44d06b66284d9b9b632df98c7572dc49b22467df0c4f49d1a",
             "evidence_hashes": [
-              "e83df78dbe72855d8057b75f9cf864248df5faabbc63594609b0d05b708a6a0b"
+              "8d0d6ca44500a1dd0b435e52e62da37071dbbff98a15fb59a0a4e439b2c26944"
             ],
-            "expires_at": "2026-07-29T02:31:20.203528Z",
-            "one_use_code_hash": "141ad5e0ba7d7e77efc565f29a6c0b7d222ca70874b1beb1c49e0670fce8651a",
-            "policy_hash": "15c1fe5637cda25e642a370103f855e78e5abb03405fbc2fe5ddb00a02bfefbf",
+            "expires_at": "2026-07-30T14:10:56.551631Z",
+            "one_use_code_hash": "d226fadc525262b92b804778218bdedb4ce2996e0d39e0fadb36d9c81c3df656",
+            "policy_hash": "d69095a6019d546525ce38007a39cba814c53f6e23c7a9d526fc19a165c05a6b",
             "profile": "verified_commit/v1",
             "run_id": "verified-model-swap-demo",
             "settings_hash": "e826d77ee2f77f0896af8e4a9f5cd917e1e9c0b0e490f89318cb63ce00790605",
@@ -128,8 +128,8 @@
       }
     },
     "binding": {
-      "challenge_nonce": "59863d84fb055592a158788b749a83c3",
-      "expected_source_hash": "67ceca901a1db9750cff77a7651fb0ad12a8e57829f4e55b0ca3d8ac51ec5af6",
+      "challenge_nonce": "45fea1c0c1350f47ca18795ff391c5ac",
+      "expected_source_hash": "74ce021c0a0b88634604bc40e78e267cb8b996b4ca1746be0506b2faafbea4ba",
       "parent_decision_hash": null,
       "run_id": "verified-model-swap-demo",
       "sequence": 1,
@@ -138,30 +138,30 @@
     "canonicalization_id": "olp-canonical-json-int-v1",
     "chain_accepted": true,
     "commit_authorization": {
-      "action_hash": "2f0f5f8ab8783c176bd203a7ff4fb21a9a37ae24f302ce0382d77f84472dffdb",
-      "authorization_hash": "c45913669889169c91018bc4c50803535c8e2b5a68e797583239f36206145386",
+      "action_hash": "b3653e953756d09350d85f8b5977d3ccee9ceb3da0319b44a809d4191dbb8815",
+      "authorization_hash": "d7d111f4511b0bdb29750691f745bdb36ab4c703b3dc73f1c33b784172f05699",
       "capsule_hash": "8436eae8c2e158a44d06b66284d9b9b632df98c7572dc49b22467df0c4f49d1a",
       "evidence_hashes": [
-        "e83df78dbe72855d8057b75f9cf864248df5faabbc63594609b0d05b708a6a0b"
+        "8d0d6ca44500a1dd0b435e52e62da37071dbbff98a15fb59a0a4e439b2c26944"
       ],
-      "expires_at": "2026-07-29T02:31:20.203528Z",
-      "one_use_code_hash": "141ad5e0ba7d7e77efc565f29a6c0b7d222ca70874b1beb1c49e0670fce8651a",
-      "policy_hash": "15c1fe5637cda25e642a370103f855e78e5abb03405fbc2fe5ddb00a02bfefbf",
+      "expires_at": "2026-07-30T14:10:56.551631Z",
+      "one_use_code_hash": "d226fadc525262b92b804778218bdedb4ce2996e0d39e0fadb36d9c81c3df656",
+      "policy_hash": "d69095a6019d546525ce38007a39cba814c53f6e23c7a9d526fc19a165c05a6b",
       "profile": "verified_commit/v1",
       "run_id": "verified-model-swap-demo",
       "settings_hash": "e826d77ee2f77f0896af8e4a9f5cd917e1e9c0b0e490f89318cb63ce00790605",
       "target": "artifact://approved_action.json",
       "tool": "filesystem.write"
     },
-    "created_at": "2026-07-29T02:26:20.302719Z",
+    "created_at": "2026-07-30T14:05:56.642272Z",
     "decision": "COMMIT",
     "issuer": {
       "id": "openline-public-verified-commit-demo-gate"
     },
     "kind": "proof_to_policy_decision_receipt",
-    "payload_hash": "6705b8f1347007490a4d53e3410603ca00116343c9b289b45885d0eb30b0827e",
+    "payload_hash": "271eaab9983a38e9496de9f5dc554954eb2d02d3239e76a78f96c40fccca386d",
     "policy": {
-      "hash": "15c1fe5637cda25e642a370103f855e78e5abb03405fbc2fe5ddb00a02bfefbf",
+      "hash": "d69095a6019d546525ce38007a39cba814c53f6e23c7a9d526fc19a165c05a6b",
       "id": "verified-model-swap.receiver-policy",
       "snapshot": {
         "deny_risk_levels": [],
@@ -205,7 +205,7 @@
           "verified_commit": {
             "capsule_hash": "8436eae8c2e158a44d06b66284d9b9b632df98c7572dc49b22467df0c4f49d1a",
             "evidence_hashes": [
-              "e83df78dbe72855d8057b75f9cf864248df5faabbc63594609b0d05b708a6a0b"
+              "8d0d6ca44500a1dd0b435e52e62da37071dbbff98a15fb59a0a4e439b2c26944"
             ],
             "max_ttl_seconds": 300,
             "required": true,
@@ -247,13 +247,13 @@
     "signature": {
       "algorithm": "Ed25519",
       "public_key": "f80cccdce4ae1c07ae208a2adf99a310ae4207e0306fa0236110b06827bbb8d0",
-      "value": "6a180a8ee1e82e7245cafc7335795ce591160a2b1dba5b3ece1db71fbfbba547700154c9e60b343a6b09d991354a84bea672c0f0f06651ded9255ddfd060f100"
+      "value": "169082f9561e7a660eaad0a2c34c3b85dc6f7cb1ecc3d21a96053e6ebb4126bfd759622ecc57ab5594680a6de444ee129ac545b2cfd275f731e084da3466d108"
     },
     "source": {
       "format": "agent_receipts",
-      "primary_hash": "67ceca901a1db9750cff77a7651fb0ad12a8e57829f4e55b0ca3d8ac51ec5af6",
+      "primary_hash": "74ce021c0a0b88634604bc40e78e267cb8b996b4ca1746be0506b2faafbea4ba",
       "receipt_hashes": [
-        "67ceca901a1db9750cff77a7651fb0ad12a8e57829f4e55b0ca3d8ac51ec5af6"
+        "74ce021c0a0b88634604bc40e78e267cb8b996b4ca1746be0506b2faafbea4ba"
       ],
       "source_key_ids": [
         "did:example:verified-model-swap-orchestrator#key-1"
@@ -264,8 +264,8 @@
   },
   "grading_authority": "receipt-gate-output; DSM must not recompute",
   "integrity": {
-    "decision_receipt_payload_hash": "6705b8f1347007490a4d53e3410603ca00116343c9b289b45885d0eb30b0827e",
-    "proof_card_file_sha256": "e83df78dbe72855d8057b75f9cf864248df5faabbc63594609b0d05b708a6a0b"
+    "decision_receipt_payload_hash": "271eaab9983a38e9496de9f5dc554954eb2d02d3239e76a78f96c40fccca386d",
+    "proof_card_file_sha256": "8d0d6ca44500a1dd0b435e52e62da37071dbbff98a15fb59a0a4e439b2c26944"
   },
   "proof_card": {
     "authority": {
@@ -325,7 +325,7 @@
       "headline": "Change the model without losing the agent.",
       "subhead": "The capsule kept the receiver decisions the ordinary summary dropped."
     },
-    "generated_at": "2026-07-29T02:26:20.203528Z",
+    "generated_at": "2026-07-30T14:05:56.551631Z",
     "half_life_verification": {
       "bundle_chain_valid": true,
       "bundle_schema": "openline.half-life.receipt-bundle.v3",
@@ -696,7 +696,7 @@
       "evaluator": "independent_reference_replay_v1"
     },
     "profile": "verified_model_swap/v1",
-    "proof_hash": "c3d367712415028dd66d323977b9cd61b6adde78cd68ba0d2f081cc3a9b06ca7",
+    "proof_hash": "908dc7619dcd67fa8023aca61074f17c2baab3df7f2c3bd48eb548fffd887389",
     "receiver_controls": {
       "automatic_compaction_authorized": false,
       "automatic_retirement_authorized": false,

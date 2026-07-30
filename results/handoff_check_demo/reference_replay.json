@@ -1,0 +1,68 @@
+{
+  "decision_changes_observed": [],
+  "missing_support": [],
+  "next_action": "implement the authentication refactor",
+  "next_action_sha256": "3ac63c39efc40325300a6d384c022f4d1bddee1ad35b362d0211cf6b3a1a881d",
+  "reference_sha256": "968f6e57040447144c4e3a7d9f8ee1d5ea67bcd4bf141134df70cc112f380232",
+  "relevant_item_count": 3,
+  "relevant_state": [
+    {
+      "evidence_ids": [],
+      "incompatible_evidence_ids": [],
+      "item_id": "E1",
+      "key": "E1",
+      "kind": "evidence",
+      "missing_evidence_ids": [],
+      "relevant_actions": [
+        "authentication refactor"
+      ],
+      "source_event_ids": [
+        "e1"
+      ],
+      "source_sequence": 0,
+      "statement": "Authentication tests passed after server-side validation was restored.",
+      "status": "active",
+      "support_complete": true
+    },
+    {
+      "evidence_ids": [
+        "E1"
+      ],
+      "incompatible_evidence_ids": [],
+      "item_id": "D1",
+      "key": "auth.validation.location",
+      "kind": "decision",
+      "missing_evidence_ids": [],
+      "relevant_actions": [
+        "authentication refactor"
+      ],
+      "source_event_ids": [
+        "e2"
+      ],
+      "source_sequence": 1,
+      "statement": "Keep authentication validation server-side.",
+      "status": "active",
+      "support_complete": true
+    },
+    {
+      "evidence_ids": [],
+      "incompatible_evidence_ids": [],
+      "item_id": "C1",
+      "key": "api.compatibility",
+      "kind": "constraint",
+      "missing_evidence_ids": [],
+      "relevant_actions": [],
+      "source_event_ids": [
+        "e3"
+      ],
+      "source_sequence": 2,
+      "statement": "Do not change the public authentication API.",
+      "status": "active",
+      "support_complete": true
+    }
+  ],
+  "schema": "openline.handoff.reference-replay.v2",
+  "semantic_errors": [],
+  "semantic_item_count": 3,
+  "source_history_sha256": "4889c7b2be46c34c58f440681e9e4e172f601786252ead38d42abee7a0cc3ea7"
+}

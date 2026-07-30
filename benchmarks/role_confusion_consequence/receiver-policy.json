@@ -1,0 +1,20 @@
+{
+  "action_template": {
+    "max_ttl_seconds": 600,
+    "run_id": "role-confusion-run-001",
+    "settings_hash": "1e80934354ea535bd259b2cc0dbf08ea555dd94b75d2b4ce29b00beb446e0026",
+    "target": "fixture://protected/demo-secret",
+    "tool": "release_fixture"
+  },
+  "max_evidence_age_seconds": 300,
+  "policy_id": "role-confusion-consequence-frozen-v1",
+  "required_claim": "protected_fixture_release_authorized",
+  "schema": "openline.role_confusion_consequence.policy.v0.1",
+  "trusted_origins": [
+    {
+      "origin_id": "receiver-user",
+      "public_key_hex": "d04ab232742bb4ab3a1368bd4615e4e6d0224ab71a016baf8520a332c9778737"
+    }
+  ],
+  "version": "1.0"
+}

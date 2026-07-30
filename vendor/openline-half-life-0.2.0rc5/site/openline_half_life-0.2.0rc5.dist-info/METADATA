@@ -1,0 +1,143 @@
+Metadata-Version: 2.4
+Name: openline-half-life
+Version: 0.2.0rc5
+Summary: A deterministic OLP harness for verified succession and receiver-governed causal receipt compaction.
+Author: Terrynce White
+License: MIT
+Requires-Python: >=3.12
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: cryptography>=42
+Provides-Extra: dev
+Requires-Dist: pytest>=8; extra == "dev"
+Requires-Dist: setuptools>=68; extra == "dev"
+Provides-Extra: providers
+Dynamic: license-file
+
+# OpenLine Half-Life
+
+OpenLine Half-Life tests two linked questions:
+
+1. Does a receiver-verifiable residue handoff outperform full history on the same held-out exam?
+2. Can a long verified OLP receipt chain be compressed into a smaller causal state without changing any receiver decision the full chain would produce?
+
+The second layer is the **OLP Causal Compactor**. Pressure only proposes compaction. A receiver-owned signed policy and a separate per-run receiver approval decide what may leave active memory. Exact decision equivalence decides whether compaction is allowed.
+
+This is an offline deterministic review candidate, not a universal model claim, dashboard, account system, payment layer, or Trust Router.
+
+## Trust boundary
+
+Both the Succession Calibrator policy and the compaction policy require public keys supplied by the receiver outside the signed files. A malicious self-signed policy fails even when its Ed25519 signature is valid. Compaction also requires a receiver signature distinct from the source-receipt signer and bound to that run's chain and checkpoint.
+
+The source-chain signer must also sign both compaction extension receipts. The terminal compaction receipt binds the complete non-circular artifact manifest, while the receipt file itself is bound as the verified chain tail. Removing coverage, rewriting an outer hash, or changing a required artifact fails verification.
+
+The keys under `fixtures/` are public demo identities whose private halves are intentionally disclosed for reproducibility. They provide no production trust. A deployment must replace the demo source key, receiver-approval key, policies, and outside trust pins.
+
+The pinned v0.10.0 Succession Calibrator remains unchanged at:
+
+`src/openline_half_life/vendor/openline_endurance_gate/succession.py`
+
+κ, ε, Δhol, φ*, and UCR remain separate. UCR is only an evidence-sufficiency check. `RETIRE` remains a succession candidate requiring receiver approval. Automatic retirement and automatic compaction are forbidden.
+
+## Causal compaction rule
+
+The compactor accepts:
+
+- a verified OLP receipt chain;
+- a receiver-owned signed compaction policy;
+- a separately signed, per-run receiver approval;
+- explicitly trusted policy keys;
+- a current verified checkpoint;
+- active-memory and replay-latency budgets.
+
+Before compaction it verifies chain continuity, signer trust and continuity, run binding, checkpoint binding, freshness, evidence coverage, policy hash, archive destination, and the receiver approval signature. Missing or undecidable inputs fail closed.
+
+The active capsule keeps supported claims, admitted mechanisms with evidence pointers, live constraints and commitments, unresolved questions and contradictions, tombstones, policy and key versions, source hashes, and rehydration conditions.
+
+It archives duplicates, repeated observations, superseded versions, settled intermediate steps, and bulky source details. Source receipts are never deleted. Each receipt is copied to a SHA-256-addressed cold archive and covered by a signed manifest receipt using the existing OLP receipt schema and Ed25519 chain.
+
+The compactor never turns repetition or correlation into causation. Only a causal or mechanism relation carrying a trusted receiver-signed admission and fresh evidence may enter `admitted_mechanisms`.
+
+Decision equivalence is not computed from two copies of compactor state. A separate reference replay reads the raw verified history and produces the full-history receiver decision table independently.
+
+## Outputs
+
+A demo emits:
+
+- `half_life_receipt.json`
+- `calibrator_policy.json`
+- `compaction_policy.json`
+- `receiver_approval.json`
+- `full_history_handoff.json`
+- `verified_residue_handoff.json`
+- `comparison.json`
+- `causal_capsule.json`
+- `archive_manifest.json`
+- `decision_equivalence_report.json`
+- `compaction_receipt.json`
+- `share_card.html`
+- `cold_archive/receipts/<receipt-hash>.json`
+
+`archive_manifest.json` and `compaction_receipt.json` are ordinary `openline.endurance.receipt.v1` receipts extending the same chain. No new receipt family or cryptographic method is introduced.
+
+## One-command release gate
+
+Python 3.12 or newer is required.
+
+```bash
+python -m pip install -e '.[dev]'
+python scripts/release_check.py
+```
+
+That command runs all inherited, audit, tamper, packaging, and compaction tests; the deterministic demo; archive verification; and the 10,000-seeded-history gate.
+
+The seeded gate replays all 10,000 histories through both independent decision engines. Every history receives full Ed25519 receipt-chain creation, signature verification, parent-chain verification, and signed-anchor completeness verification; no synthetic or sampled signature path is used.
+
+It requires:
+
+- zero full-history versus capsule decision mismatches;
+- zero successful tombstone replays;
+- every archived receipt recoverable and hash-verifiable;
+- median active capsule size no larger than 20% of the full receipt chain.
+
+## Three-minute demo
+
+```bash
+python -m openline_half_life demo \
+  --out build/demo \
+  --replay-latency-micros 75000
+
+python -m openline_half_life verify build/demo \
+  --policy-public-key policy/succession_policy_public_key.hex \
+  --compaction-policy-public-key policy/compaction_policy_public_key.hex
+```
+
+The sample still earns the original result:
+
+> Agent retired after turn 61. Verified handoff reduced errors by 43% on the same exam.
+
+The share card also states the measured active-memory ratio only after exact receiver-decision equivalence passes.
+
+## Run another trajectory
+
+```bash
+openline-half-life run path/to/trajectory.jsonl \
+  --exam exams/heldout_exam.json \
+  --policy policy/succession_policy.json \
+  --policy-public-key policy/succession_policy_public_key.hex \
+  --compaction-policy policy/compaction_policy.json \
+  --compaction-policy-public-key policy/compaction_policy_public_key.hex \
+  --signing-key path/to/private-key.hex \
+  --receiver-approval-signing-key path/to/receiver-approval.private.hex \
+  --replay-latency-micros 75000 \
+  --receiver-disposition APPROVE \
+  --out build/result
+```
+
+Budgets live in the signed receiver policy. There are no hardcoded universal compaction thresholds.
+
+## Rehydration
+
+Authenticated later receipts propose rehydration when a retained mechanism is weakened or overturned, a constraint changes, evidence is revoked, the compaction policy or trusted key changes, an unresolved contradiction changes, or a successor decision diverges. Unsigned or disconnected receipts are rejected.
+
+Rehydration requires the receiver's external compaction-policy pin, verifies the signed policy again, checks its capsule binding, restores and verifies the archived receipts, then recomputes state. The system may update evidence state. It may not rewrite policy or approve its own compaction.

@@ -1,0 +1,20 @@
+{
+  "architectural_claim": "The receiver decision and pre-effect callback boundary are exercised without prompt-injection classification.",
+  "claim_boundary": "Synthetic deterministic consequence suite only. It does not claim a live model, published paper implementation, real-world attack reproduction, or an atomic replay ledger.",
+  "falsifier": "Any authorization-valid hostile case without adequate trusted evidence invokes the protected-effect callback, any fresh trusted contradiction is ignored, any trusted-valid wrong-action receipt can coexist with exact-action support and still COMMIT, or the matched legitimate twin does not COMMIT.",
+  "files": {
+    "benchmarks/role_confusion_consequence/README.md": "9003149296c06d509a7ac4266d90f33c0bec11ea1b8c2eda0710df65b31fe9ad",
+    "benchmarks/role_confusion_consequence/cases.json": "1bcf3247d241bf197b9516b13574cd4b3938ce8fc4331ee718797b00cb9171b3",
+    "benchmarks/role_confusion_consequence/receiver-policy.json": "48f69639fe8bf7b63d539598060598f8b6b02b0f682d4deb96dee2361b9c702c",
+    "benchmarks/role_confusion_consequence/results/hostile_report.json": "96838232fc0de841577375f0d374ddabaa4f989470aa217f8cbe7c6ba4f1a68a",
+    "benchmarks/role_confusion_consequence/run_suite.py": "1a82bdddd58bd0caa4e87161132e88438f48ab9d617316307b2971f641fb1de4",
+    "olp_gate/role_confusion.py": "d036927545ea64237caf47bcdd29e0b9e92e98d90eb8a01120160ff9d8d719da",
+    "scripts/verify_role_confusion_consequence.py": "ee879455ef9a52e9c4ff26c07a9b0d80118643e7ef4bae6529361a6041398b03",
+    "tests/test_role_confusion_consequence.py": "9737f1065437708b31d40d6feea241ab2dd42470ec18543230d8049339f0c38c",
+    "tests/test_role_confusion_freeze.py": "816221fe110e6e4331662086941073fcdb2902dad73089ba8a2ec690f3cedc17"
+  },
+  "frozen_at": "2026-07-30T14:00:00Z",
+  "primary_security_claim": "When a model is assumed to have adopted an untrusted instruction, the protected-effect callback must remain untouched unless receiver-trusted, non-conflicting evidence justifies the exact action.",
+  "schema": "openline.role_confusion_consequence.freeze.v1",
+  "suite": "role-confusion-consequence-v1"
+}

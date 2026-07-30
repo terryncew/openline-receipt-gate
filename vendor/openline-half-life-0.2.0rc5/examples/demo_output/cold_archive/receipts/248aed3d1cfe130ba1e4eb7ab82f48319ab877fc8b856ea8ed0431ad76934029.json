@@ -1,0 +1,69 @@
+{
+  "index": 46,
+  "kind": "trajectory_turn",
+  "parent_hash": "861fe1f2f8542e9f8f71674770580dbd055a4ae583b25f75354002232cde29f2",
+  "payload": {
+    "run_id": "gradual-drift-demo",
+    "turn_hash": "9ca3ee17acbee7ed7af96d080b53b2136526db3842c556ba497588f450110dd8",
+    "turn_number": 47,
+    "turn_record": {
+      "claims": [
+        {
+          "evidence_refs": [],
+          "id": "claim-region-false-47",
+          "last_verified_turn": 47,
+          "material": true,
+          "slot": "deployment_region",
+          "support_status": "unsupported",
+          "value": "eu-west-1"
+        },
+        {
+          "evidence_refs": [],
+          "id": "claim-budget-false-47",
+          "last_verified_turn": 47,
+          "material": true,
+          "slot": "max_batch_size",
+          "support_status": "unsupported",
+          "value": "500"
+        },
+        {
+          "evidence_refs": [
+            "ev-api-v1-old"
+          ],
+          "id": "claim-api-stale-47",
+          "last_verified_turn": 5,
+          "material": true,
+          "slot": "api_version",
+          "support_status": "supported",
+          "value": "v1"
+        }
+      ],
+      "constraints": [],
+      "cost": {
+        "input_tokens": 1041,
+        "output_tokens": 287
+      },
+      "evidence": [],
+      "measurements": {
+        "delta_hol_micros": 0,
+        "epsilon_micros": 0,
+        "kappa_micros": 0,
+        "phi_star_micros": 995000,
+        "ucr_micros": 666667
+      },
+      "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+      "outcomes": [],
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn.v1",
+      "summary": "Atlas checkpoint 47.",
+      "turn": 47,
+      "unresolved_questions": [
+        "What is the post-cutover latency under peak load?"
+      ]
+    }
+  },
+  "receipt_hash": "248aed3d1cfe130ba1e4eb7ab82f48319ab877fc8b856ea8ed0431ad76934029",
+  "schema": "openline.endurance.receipt.v1",
+  "signature": "+Ud2pruhgGhc1Mtyk9ryrj9WIklTJVFB8XjuGnOPYYjjUPxs3TY6qIuDzIifk/jt99CBLu8RrCKOk79vbg5wDA==",
+  "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+}

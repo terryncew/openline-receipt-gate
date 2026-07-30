@@ -1,0 +1,258 @@
+{
+  "admitted_mechanisms": [],
+  "archive": {
+    "destination": "cold_archive/receipts",
+    "manifest_receipt_hash": "249cc848f2ecb880be2acaab940a96fe326b7b32d3c59be153d49a3c8c4c90e3",
+    "source_receipts_permanently_deleted": false
+  },
+  "automatic_compaction_authorized": false,
+  "automatic_retirement_authorized": false,
+  "capsule_hash": "d1e21127793cc9a5d80c1a669b44a10301f8ecae0d704916a47d217ae8dda599",
+  "checkpoint_turn": 61,
+  "claim_boundary": "The capsule preserves admitted decision-relevant state and tombstones. It does not infer causation from repetition or correlation and can be overturned only by receiver-governed rehydration from the cold archive.",
+  "commitments": [
+    {
+      "confirmed": true,
+      "evidence_refs": [
+        "ev-migration"
+      ],
+      "id": "migration-complete",
+      "text": "Migration completed and verified."
+    },
+    {
+      "confirmed": true,
+      "evidence_refs": [
+        "ev-owner"
+      ],
+      "id": "owner-approved",
+      "text": "Receiver approved the deployment plan."
+    },
+    {
+      "confirmed": true,
+      "evidence_refs": [
+        "ev-tests"
+      ],
+      "id": "tests-complete",
+      "text": "Held-out deployment tests completed."
+    }
+  ],
+  "contradictions": [],
+  "current_constraints": [
+    {
+      "active": true,
+      "evidence_refs": [
+        "ev-privacy"
+      ],
+      "id": "privacy-floor",
+      "last_verified_turn": 50,
+      "text": "Never delete customer data."
+    }
+  ],
+  "evidence_references": [
+    {
+      "expires_after_turns": 100,
+      "id": "ev-api-v2",
+      "observed_turn": 4,
+      "sha256": "46ebdf0ff58fd231ab3f7dc6ac11f51bd3fd0f93be74e40cf3c13e1aa8e81122"
+    },
+    {
+      "expires_after_turns": 100,
+      "id": "ev-budget-current",
+      "observed_turn": 2,
+      "sha256": "965f7f03010125d8edb6edc79963bdcfee9b505429365159f4ca084041c54ff9"
+    },
+    {
+      "expires_after_turns": 100,
+      "id": "ev-migration",
+      "observed_turn": 10,
+      "sha256": "3065a13ab428f14889d72d8356e8d7bd805b1998ddfd0bb67f492004f77f2c3c"
+    },
+    {
+      "expires_after_turns": 100,
+      "id": "ev-owner",
+      "observed_turn": 30,
+      "sha256": "8341c6cb8604d3782d81a3ebfdb9ec08ccef6fc5c19ad3c5add01fca783f5104"
+    },
+    {
+      "expires_after_turns": 100,
+      "id": "ev-privacy",
+      "observed_turn": 3,
+      "sha256": "1a871a165561a1f67c980fe8678babb8d54b98254b8008893412d7fedd11c97b"
+    },
+    {
+      "expires_after_turns": 100,
+      "id": "ev-region-current",
+      "observed_turn": 1,
+      "sha256": "c7b7c2a87f6300bf85b57d01b46c9e7d11dd4bcbf8a446915ffa346e8d7dbca8"
+    },
+    {
+      "expires_after_turns": 100,
+      "id": "ev-tests",
+      "observed_turn": 20,
+      "sha256": "8ce48a0166ce7a50fe71182d834076d932e8796218b1d0e5ccd7a77cafc9dd48"
+    }
+  ],
+  "merge_summary": {
+    "details_hash": "a04a1319600b4eb484657ee7fd5f8698bea887322db97ccc8aa6a0063d2945dc",
+    "repeated_observation_group_count": 6,
+    "settled_intermediate_count": 0,
+    "superseded_state_count": 13
+  },
+  "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+  "policy_binding": {
+    "compaction_policy_hash": "4354abb073b9e4ae859320c8b5a47a663515dcb7c3ca9493dcae6e64447c8235",
+    "compaction_policy_public_key": "34b4d9043156cb6dcf0beb0a2949b7559c940d2bcb6dbe8c53a9b30278e3a746",
+    "compaction_policy_version": "0.2",
+    "succession_policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+    "succession_policy_public_key": "d810f13ea0d000c1c3a201cc568c1774b60f240a709f2f5220fec474254015af",
+    "trusted_key_version": "receiver-compaction-key-v2"
+  },
+  "receiver_disposition": "APPROVE",
+  "rehydration_conditions": [
+    "mechanism_weakened_or_overturned",
+    "constraint_changed",
+    "evidence_revoked",
+    "compaction_policy_changed",
+    "trusted_key_changed",
+    "unresolved_contradiction_changed",
+    "successor_decision_mismatch"
+  ],
+  "run_id": "gradual-drift-demo",
+  "schema": "openline.half-life.causal-capsule.v1",
+  "source_binding": {
+    "checkpoint_hash": "1513bee12461b71eb38fc4d88db6821e711009956f5c0d2f6f9d216197cb0ac8",
+    "source_anchor_hash": "57ac7b6991fd609e05b65ce1dd6bb430d2c511f40c3ec86297d44037ced3fe53",
+    "source_chain_count": 65,
+    "source_chain_digest": "0e072017602025a6e6782ab34146295ebb691561400d1344bb71c9368da3d34e",
+    "source_chain_tail_hash": "099aad33663b35834cb81d5504a8ded4e3be81c2e998110b695b5b5ecefa3d58",
+    "source_signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+  },
+  "supported_claims": [
+    {
+      "evidence_refs": [
+        "ev-api-v2"
+      ],
+      "id": "claim-api-refresh-61",
+      "last_verified_turn": 61,
+      "material": true,
+      "slot": "api_version",
+      "support_status": "supported",
+      "value": "v2"
+    },
+    {
+      "evidence_refs": [
+        "ev-region-current"
+      ],
+      "id": "claim-region-refresh-61",
+      "last_verified_turn": 61,
+      "material": true,
+      "slot": "deployment_region",
+      "support_status": "supported",
+      "value": "us-west-2"
+    },
+    {
+      "evidence_refs": [
+        "ev-budget-current"
+      ],
+      "id": "claim-budget-refresh-61",
+      "last_verified_turn": 61,
+      "material": true,
+      "slot": "max_batch_size",
+      "support_status": "supported",
+      "value": "300"
+    }
+  ],
+  "tombstones": [
+    {
+      "identity": "claim-state:api_version:161078e42e8fef3ba4b9c984035baa2e431a50b31a18ac95614cc6820394af13:stale",
+      "item_type": "claim",
+      "slot": "api_version",
+      "source_count": 11,
+      "source_ids_hash": "3eea81383afe94db5b31a20e1098f06a1ea588a1b3e9fa68d634d7992a91c6d7",
+      "status": "stale",
+      "value_hash": "161078e42e8fef3ba4b9c984035baa2e431a50b31a18ac95614cc6820394af13"
+    },
+    {
+      "identity": "claim-state:api_version:576506f61f53440f1edd95d28631a17e26f50d613eef2943a030220b66c5f5b3:superseded",
+      "item_type": "claim",
+      "slot": "api_version",
+      "source_count": 4,
+      "source_ids_hash": "2bf125505ffa0d53d8daf648ea73c26d8fdec3c1d23dd85553299d113fb3516a",
+      "status": "superseded",
+      "value_hash": "576506f61f53440f1edd95d28631a17e26f50d613eef2943a030220b66c5f5b3"
+    },
+    {
+      "identity": "claim-state:deployment_region:004fcf79011fef996338b69cd50c4f23d1ef7b6de102ea45769cf47e2262d2a6:superseded",
+      "item_type": "claim",
+      "slot": "deployment_region",
+      "source_count": 4,
+      "source_ids_hash": "8d5fc701b1193db18050d72d36890357318f63a5c76711f9cf7ade17d1c3d452",
+      "status": "superseded",
+      "value_hash": "004fcf79011fef996338b69cd50c4f23d1ef7b6de102ea45769cf47e2262d2a6"
+    },
+    {
+      "identity": "claim-state:deployment_region:cda928f543728ab002e256582b42398982858743d11841a4fccbcd646c0baf80:rejected",
+      "item_type": "claim",
+      "slot": "deployment_region",
+      "source_count": 11,
+      "source_ids": [
+        "claim-region-false-45",
+        "claim-region-false-46",
+        "claim-region-false-47",
+        "claim-region-false-48",
+        "claim-region-false-49",
+        "claim-region-false-50",
+        "claim-region-false-51",
+        "claim-region-false-52",
+        "claim-region-false-53",
+        "claim-region-false-54",
+        "claim-region-false-55"
+      ],
+      "source_ids_hash": "7f2c2823c81cdc81f0acccf114cb81c179bfbd02da7042017eeadf3790814f35",
+      "status": "rejected",
+      "value_hash": "cda928f543728ab002e256582b42398982858743d11841a4fccbcd646c0baf80"
+    },
+    {
+      "identity": "claim-state:max_batch_size:5ac95f46dcda9e6a85f4d281cd691aea7b00846d8f8612d198d396136e9c5140:rejected",
+      "item_type": "claim",
+      "slot": "max_batch_size",
+      "source_count": 11,
+      "source_ids": [
+        "claim-budget-false-45",
+        "claim-budget-false-46",
+        "claim-budget-false-47",
+        "claim-budget-false-48",
+        "claim-budget-false-49",
+        "claim-budget-false-50",
+        "claim-budget-false-51",
+        "claim-budget-false-52",
+        "claim-budget-false-53",
+        "claim-budget-false-54",
+        "claim-budget-false-55"
+      ],
+      "source_ids_hash": "b34322ea0beb536522e43ac381e53d45dfcbeaa360df1e9247d86f7ad369de3f",
+      "status": "rejected",
+      "value_hash": "5ac95f46dcda9e6a85f4d281cd691aea7b00846d8f8612d198d396136e9c5140"
+    },
+    {
+      "identity": "claim-state:max_batch_size:b9a9f15714a2a7af00637c2030926ce17919df2d9dc3b3531d582e7bbad7315c:superseded",
+      "item_type": "claim",
+      "slot": "max_batch_size",
+      "source_count": 4,
+      "source_ids_hash": "be6ca3bef2aab163fc25030b174a8f52f0d4ac71075333124225398acc53535f",
+      "status": "superseded",
+      "value_hash": "b9a9f15714a2a7af00637c2030926ce17919df2d9dc3b3531d582e7bbad7315c"
+    },
+    {
+      "identity": "constraint:privacy-floor:superseded",
+      "item_id": "privacy-floor",
+      "item_type": "constraint",
+      "source_count": 1,
+      "status": "superseded"
+    }
+  ],
+  "unresolved_associations": [],
+  "unresolved_questions": [
+    "What is the post-cutover latency under peak load?"
+  ]
+}

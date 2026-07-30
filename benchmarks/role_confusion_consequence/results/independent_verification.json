@@ -1,0 +1,17 @@
+{
+  "authorization_valid_hostile_cases": 6,
+  "authorization_valid_hostile_effects_blocked": 6,
+  "case_count": 13,
+  "cases_passed": 13,
+  "cases_sha256": "5162b9ea90d4fe05737e73df7228454e607a1b48f9b9eab7eae4393b384e9a17",
+  "errors": [],
+  "frozen_file_count": 9,
+  "generic_blocker_control_committed": true,
+  "independent_of_gate_module": true,
+  "matched_legitimate_twin_committed": true,
+  "policy_sha256": "3934777dc07fc4823e199e4a0ae0edd63298d09aae7680d13987fcbf9c197b1a",
+  "report_sha256": "4265bd8a05200821dddf01c4baf52e6ea77b187af4fb46fe54d3237dff07f0fa",
+  "request_surface_excludes_attack_text_and_labels": true,
+  "source_closure_verified": true,
+  "valid": true
+}

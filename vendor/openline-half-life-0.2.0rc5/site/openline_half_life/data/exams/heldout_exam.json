@@ -1,0 +1,77 @@
+{
+  "schema": "openline.half-life.exam.v1",
+  "exam_id": "atlas-heldout-v1",
+  "claim_boundary": "Deterministic held-out fixture for comparing handoff conditions; not a universal model benchmark.",
+  "questions": [
+    {
+      "id": "completion-migration",
+      "kind": "completion",
+      "target": "migration-complete",
+      "expected": "Migration completed and verified.",
+      "legitimate_completion": true
+    },
+    {
+      "id": "completion-tests",
+      "kind": "completion",
+      "target": "tests-complete",
+      "expected": "Held-out deployment tests completed.",
+      "legitimate_completion": true
+    },
+    {
+      "id": "completion-owner",
+      "kind": "completion",
+      "target": "owner-approved",
+      "expected": "Receiver approved the deployment plan.",
+      "legitimate_completion": true
+    },
+    {
+      "id": "fact-region",
+      "kind": "fact",
+      "target": "deployment_region",
+      "expected": "us-west-2",
+      "legitimate_completion": false
+    },
+    {
+      "id": "fact-budget",
+      "kind": "fact",
+      "target": "max_batch_size",
+      "expected": "300",
+      "legitimate_completion": false
+    },
+    {
+      "id": "constraint-privacy",
+      "kind": "constraint",
+      "target": "privacy-floor",
+      "expected": "Never delete customer data.",
+      "legitimate_completion": false
+    },
+    {
+      "id": "novel-peak-latency",
+      "kind": "novel",
+      "target": "peak_latency",
+      "expected": "42ms",
+      "legitimate_completion": false
+    },
+    {
+      "id": "novel-failover-zone",
+      "kind": "novel",
+      "target": "failover_zone",
+      "expected": "us-west-2b",
+      "legitimate_completion": false
+    },
+    {
+      "id": "novel-operator-shift",
+      "kind": "novel",
+      "target": "operator_shift",
+      "expected": "night",
+      "legitimate_completion": false
+    },
+    {
+      "id": "novel-backup-window",
+      "kind": "novel",
+      "target": "backup_window",
+      "expected": "03:00Z",
+      "legitimate_completion": false
+    }
+  ]
+}

@@ -1,0 +1,4449 @@
+{
+  "assessments": [
+    {
+      "assessment_hash": "e313ba467a47b78e9dab43f1ddbb2ca9dbbc85c5dbe2b5dc033e1452d6238504",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 1
+    },
+    {
+      "assessment_hash": "b5378aad337fea0f938d2cc75b3b6a5c6dbbab20b70b87711a38defa390a2452",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 2
+    },
+    {
+      "assessment_hash": "57b0a2336c078efda0084fa3815ea68fbf69724a2cd6abec17c8287fa14695a1",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 3
+    },
+    {
+      "assessment_hash": "aa3e33d8f96145c89784849a1bdca4fe93a88e12fd7f59269653fcc69a2d0cd5",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 4
+    },
+    {
+      "assessment_hash": "ed2b5b0202db7414caef1e9aef727b36b29d5744c68e5eb405ab69c53e0632ad",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 5
+    },
+    {
+      "assessment_hash": "5ef8bd8568355efded345ed5b28efa9a8f4874a467dabeb5322078a660d25166",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 6
+    },
+    {
+      "assessment_hash": "08409c2c97d8f2353bb1e7b7a13d04a1bba100664c26fbd6b831fa81854b6d64",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 7
+    },
+    {
+      "assessment_hash": "ca61bff0b913d7b48b2839c79bb529b2273ef6ba84f4ac7821cabdd093959d0c",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 8
+    },
+    {
+      "assessment_hash": "70ccbd91159861d7690cfdac0d3840d23a402f77bda904d0297e7a22b262af3e",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 9
+    },
+    {
+      "assessment_hash": "a6d0bd5c12097fa22310db22ddd3a9089fe12331aa2b078f4e3f518de8f0e2e5",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 10
+    },
+    {
+      "assessment_hash": "9aa35b3ae1e2213e3ceb03860da8bebb77cf58dd239a9374663207414f1e0e60",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 11
+    },
+    {
+      "assessment_hash": "6d68c0ec5b1b37d4775a89fa87cda9683301be03431b9acf15d8a7007762f314",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 12
+    },
+    {
+      "assessment_hash": "40c6e0699f198e617c8f0b65c20e6c9ec3e28892a869dc7e93e8b60bd5d33091",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 13
+    },
+    {
+      "assessment_hash": "78c43118d401b4369cb36c6c218ac5b67f9ca01c8283fe3919bd6d76cf173949",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 14
+    },
+    {
+      "assessment_hash": "373d99d6c68452adfa2655d05ea8e918b9466b6b3bead1283605958993aedbb6",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 15
+    },
+    {
+      "assessment_hash": "813baec5113cd4764219a08b7f21b34cdfe08f037d0b6cffa59062fe6458568c",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 16
+    },
+    {
+      "assessment_hash": "3b809c3bc278fb51c0b1cbb3d3cde322d3c2f00998366f1a769bde28bcba3533",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 17
+    },
+    {
+      "assessment_hash": "b5f81848d39101a44209de7d93e6e99bd656bb47d1b551c74ac8bdc657274a8b",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 18
+    },
+    {
+      "assessment_hash": "345e161b653a845bd44e8c321ffc50e83f1655bc1a5346b2a9136d5d4f174e09",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 19
+    },
+    {
+      "assessment_hash": "de8662d16960fde49a5c90a3b69952f01f28fcb8658cd2204a9f15baf0fe9f5b",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 20
+    },
+    {
+      "assessment_hash": "7952c06121380fb98a73e46c099d9dc6cf1284c743d5e01d8e3f004b805f6bee",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 21
+    },
+    {
+      "assessment_hash": "81d6e974406a3092bc6e6e3eec49ba240610d9bb1563cbaa6b2f886073516a9e",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 22
+    },
+    {
+      "assessment_hash": "097b502193442fe479817854da0e8eff51444d0fe2674734eafa0eac43bc35f5",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 23
+    },
+    {
+      "assessment_hash": "e38b5173b5ed95fe1bf08157d7036484ebbb41ce6f46fd41891b4428d0864d73",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 24
+    },
+    {
+      "assessment_hash": "4887ac2114703bc1f09d5d56834ffdfa4d91bd979eb94534ed14ad3becda2de8",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 25
+    },
+    {
+      "assessment_hash": "a9e34e5c28d993a0f46e063fe04f098ee74be4472a23e91989f4863eee56204a",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 26
+    },
+    {
+      "assessment_hash": "d876b41675cae72207aaae3b4d454aab076e5980d4b78be1946eded74c377b99",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 27
+    },
+    {
+      "assessment_hash": "563c25f91f2f2936a9f64ebd9aeed171000cd3dc080d3110826d47713c7e1d44",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 28
+    },
+    {
+      "assessment_hash": "1162262ac580fcab219202d2c4b397b15e4a3d4e8c8424b0e5d0f1b1da122b60",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 29
+    },
+    {
+      "assessment_hash": "29b690130f6c3c509b113886269339607ed880758834a864eea7626aa7d8b1af",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 30
+    },
+    {
+      "assessment_hash": "b485cb731c7190aa9e69b03be150c88ee8539f4bb3a98fb4c8e3177f139e6ba0",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 31
+    },
+    {
+      "assessment_hash": "7fdcf8804658c5e035bb358e9a7bea331c4954d70407e3c28d2b8ab17f6e2217",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 32
+    },
+    {
+      "assessment_hash": "0cb4ca2f991eee0c1e0a24ca170cd3108e971e17c82b8fa51046f910e891e95e",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 33
+    },
+    {
+      "assessment_hash": "5407446f1177d8be700d2af7597a7366302fb66d9223de8776f046c52e370748",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 34
+    },
+    {
+      "assessment_hash": "1790d502ef509cff70cd6d87274e432ac1e81dda5c1e7ccaa5372afcf0ff403f",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 35
+    },
+    {
+      "assessment_hash": "b023dc21163e0655bd9d4436c878a480296459044e5850da48c51941358c07a3",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 36
+    },
+    {
+      "assessment_hash": "586bcde86f9d65a05e51efa0e09efdfb5b3c67dfc50a2235c163370b8edc5851",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 37
+    },
+    {
+      "assessment_hash": "b4472fc93f0cf41e51d28931ba9c9039d431ba51b2a85da5ba48299fc4163c45",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 38
+    },
+    {
+      "assessment_hash": "2f8a93a853848803c5bd071880a33994222fbf6a418a3ab7459c4b15e00f2737",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 39
+    },
+    {
+      "assessment_hash": "fa48c289c3a0d63253fcea9b0dfe27314e4f7116faa8dd79a4a62800599fffbf",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 40
+    },
+    {
+      "assessment_hash": "12f8505a4b3891b26b08b87463696109a81b4cc498db5d94b9bf1a51578193ba",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 41
+    },
+    {
+      "assessment_hash": "ce14b82d5d80d7fcf6d6cbad7300937c47ddef943600a448f1dae145f9866b91",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 42
+    },
+    {
+      "assessment_hash": "2d9b85c0aef9910ad1316ee48f97d6431937923ff8ff3b4b3762279d66611d60",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 43
+    },
+    {
+      "assessment_hash": "12b13d707cb3f2e15cfd5b7e4b4e4153d26030c577214376d1799769e43b4d2c",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 44
+    },
+    {
+      "assessment_hash": "dc39fef96bd0ec37d5e36fa4c091e07de580f17f0685d1b5a295e5479cf20d39",
+      "automatic_retirement_authorized": false,
+      "disposition": "insufficient_evidence",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [
+          "claim-api-stale-45"
+        ],
+        "support_complete": false,
+        "ucr_micros": 666667
+      },
+      "mark": "WATCH",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": true,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 666667
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "UNSUPPORTED_MATERIAL_PRESENT",
+        "STALE_MATERIAL_EVIDENCE"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 45
+    },
+    {
+      "assessment_hash": "5a4581be462d5c91a27ea82b4848bf2cde23563e4c9b980c5f50c06c9d36a8d2",
+      "automatic_retirement_authorized": false,
+      "disposition": "insufficient_evidence",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [
+          "claim-api-stale-46"
+        ],
+        "support_complete": false,
+        "ucr_micros": 666667
+      },
+      "mark": "WATCH",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": true,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 666667
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "UNSUPPORTED_MATERIAL_PRESENT",
+        "STALE_MATERIAL_EVIDENCE"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 46
+    },
+    {
+      "assessment_hash": "aee1d467d0474cdcd5632c96083df196700db9bc3b594368b4da82444750bde3",
+      "automatic_retirement_authorized": false,
+      "disposition": "insufficient_evidence",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [
+          "claim-api-stale-47"
+        ],
+        "support_complete": false,
+        "ucr_micros": 666667
+      },
+      "mark": "WATCH",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": true,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 666667
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "UNSUPPORTED_MATERIAL_PRESENT",
+        "STALE_MATERIAL_EVIDENCE"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 47
+    },
+    {
+      "assessment_hash": "53398af75c1cc602b4ed85c14b7ddae37ae9da47312a4de1a8b43f854fa96342",
+      "automatic_retirement_authorized": false,
+      "disposition": "insufficient_evidence",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [
+          "claim-api-stale-48"
+        ],
+        "support_complete": false,
+        "ucr_micros": 666667
+      },
+      "mark": "WATCH",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": true,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 666667
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "UNSUPPORTED_MATERIAL_PRESENT",
+        "STALE_MATERIAL_EVIDENCE"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 48
+    },
+    {
+      "assessment_hash": "37bbcd2e79fea5dcc6c3a8a195be45a779b1811b527e44208c9485665805c2f2",
+      "automatic_retirement_authorized": false,
+      "disposition": "insufficient_evidence",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [
+          "claim-api-stale-49"
+        ],
+        "support_complete": false,
+        "ucr_micros": 666667
+      },
+      "mark": "WATCH",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": true,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 666667
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "UNSUPPORTED_MATERIAL_PRESENT",
+        "STALE_MATERIAL_EVIDENCE"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 49
+    },
+    {
+      "assessment_hash": "d84e7dec48358476a9fbd41ede8c2c17462380d3bfda355e37d0007661a0758c",
+      "automatic_retirement_authorized": false,
+      "disposition": "insufficient_evidence",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [
+          "claim-api-stale-50"
+        ],
+        "support_complete": false,
+        "ucr_micros": 666667
+      },
+      "mark": "WATCH",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": true,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 666667
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "UNSUPPORTED_MATERIAL_PRESENT",
+        "STALE_MATERIAL_EVIDENCE"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 50
+    },
+    {
+      "assessment_hash": "9345dcb83c8b7d396dbac44ed0e8322ddeedf67ce8b35e9f184ea62ad16a0805",
+      "automatic_retirement_authorized": false,
+      "disposition": "insufficient_evidence",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [
+          "claim-api-stale-51"
+        ],
+        "support_complete": false,
+        "ucr_micros": 666667
+      },
+      "mark": "WATCH",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": true,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 666667
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "UNSUPPORTED_MATERIAL_PRESENT",
+        "STALE_MATERIAL_EVIDENCE"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 51
+    },
+    {
+      "assessment_hash": "765433244d15943524d67f087a18e9cd009c593126bc520280522b428cd3d64b",
+      "automatic_retirement_authorized": false,
+      "disposition": "insufficient_evidence",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [
+          "claim-api-stale-52"
+        ],
+        "support_complete": false,
+        "ucr_micros": 666667
+      },
+      "mark": "WATCH",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": true,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 666667
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "UNSUPPORTED_MATERIAL_PRESENT",
+        "STALE_MATERIAL_EVIDENCE"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 52
+    },
+    {
+      "assessment_hash": "44d51411e93116b80b18bee50b6dd650eac2b37d1d4abefdbf28a8c76af11108",
+      "automatic_retirement_authorized": false,
+      "disposition": "insufficient_evidence",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [
+          "claim-api-stale-53"
+        ],
+        "support_complete": false,
+        "ucr_micros": 666667
+      },
+      "mark": "WATCH",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": true,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 666667
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "UNSUPPORTED_MATERIAL_PRESENT",
+        "STALE_MATERIAL_EVIDENCE"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 53
+    },
+    {
+      "assessment_hash": "62a0cc0a8e13126028ef7c8fa9d7da5159dac84d78d735c149dcc4f6c3ff935c",
+      "automatic_retirement_authorized": false,
+      "disposition": "insufficient_evidence",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [
+          "claim-api-stale-54"
+        ],
+        "support_complete": false,
+        "ucr_micros": 666667
+      },
+      "mark": "WATCH",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": true,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 666667
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "UNSUPPORTED_MATERIAL_PRESENT",
+        "STALE_MATERIAL_EVIDENCE"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 54
+    },
+    {
+      "assessment_hash": "3ab23bb73c99b9ab21df47eab5cac10bf5de5e453000f9b6abd50e727cc5e2d7",
+      "automatic_retirement_authorized": false,
+      "disposition": "insufficient_evidence",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [
+          "claim-api-stale-55"
+        ],
+        "support_complete": false,
+        "ucr_micros": 666667
+      },
+      "mark": "WATCH",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": true,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 666667
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "UNSUPPORTED_MATERIAL_PRESENT",
+        "STALE_MATERIAL_EVIDENCE"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 55
+    },
+    {
+      "assessment_hash": "c43d570bb86891259272052c77d0a4a872134ebb01af3e8d8c78311aaa69be9e",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 56
+    },
+    {
+      "assessment_hash": "6645d4d659300d00fcd1988cd4bf0de969d1e27d391b7199ba846c7ff3346519",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 57
+    },
+    {
+      "assessment_hash": "45a7c6cbdc59ab6f5d3090fe61b6f38b0071f49096619a56f3e3bc6317b35bef",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 58
+    },
+    {
+      "assessment_hash": "422212a9d288df680081201a684ccfb3f3ee00bb92d3d8c1e961264d64e8c110",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 59
+    },
+    {
+      "assessment_hash": "bcbeb33d078933b3b7b37ea1bebb2d172201f3d57e2ed116142495b2411ab2bc",
+      "automatic_retirement_authorized": false,
+      "disposition": "prepare_handoff",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "WATCH",
+      "metric_breach_count": 4,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": true,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 650000
+        },
+        "epsilon_micros": {
+          "breached": true,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 700000
+        },
+        "kappa_micros": {
+          "breached": true,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 800000
+        },
+        "phi_star_micros": {
+          "breached": true,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 600000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 1,
+        "recent_checkpoint_signals": [
+          false,
+          true
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CHECKPOINT_SIGNAL_WITHOUT_REQUIRED_PERSISTENCE"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 60
+    },
+    {
+      "assessment_hash": "029f70450bde4bf126fdc9072b2ddf95176e19c4b26324d4127cb428ed0f71a0",
+      "automatic_retirement_authorized": false,
+      "disposition": "succession_candidate",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "RETIRE",
+      "metric_breach_count": 4,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": true,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 650000
+        },
+        "epsilon_micros": {
+          "breached": true,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 700000
+        },
+        "kappa_micros": {
+          "breached": true,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 800000
+        },
+        "phi_star_micros": {
+          "breached": true,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 600000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 2,
+        "recent_checkpoint_signals": [
+          true,
+          true
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 61
+    },
+    {
+      "assessment_hash": "af0717d61a136ead6c8c31a42dd7f8da0ff0aeb08d6ef8198edde40e89b7bd1f",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 1,
+        "recent_checkpoint_signals": [
+          true,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 62
+    },
+    {
+      "assessment_hash": "7a030a943819d1464e286b4fc445ee9eaa65c2fabd0d631adc8a1e0e28a1bfd1",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 63
+    },
+    {
+      "assessment_hash": "ced9a24f5902321b3932c7285e7a5ef6a9d942b4b6154586237dcd1c962f01ce",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 64
+    },
+    {
+      "assessment_hash": "b90345987d8ddd78245c4d926b97ae6d9d2567246d4098e36cdf77041cf25a3e",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 65
+    },
+    {
+      "assessment_hash": "417b0f8df94414042de714bf81c6e74af15a11543a24a4a224f15671d330e4bb",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 66
+    },
+    {
+      "assessment_hash": "d96ac23d0d860951dfe7828ec75aab0024b322ff3226140f9a2e1446514665da",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 67
+    },
+    {
+      "assessment_hash": "7ff393f8d785b43fdf84f3e88e2aa25429075c934766ed3f1bc2fb53562112c8",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 68
+    },
+    {
+      "assessment_hash": "62e56eb502aff8fdd1a8d773351fb0b933cb1bed47f149444d6518b862cbea1a",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 69
+    },
+    {
+      "assessment_hash": "5a4a97a05121d18ba45676710f1f9bfd6ff7ade20eb5c86dc52ad8b8411c4606",
+      "automatic_retirement_authorized": false,
+      "disposition": "continue_observation",
+      "evidence_sufficiency": {
+        "stale_material_claim_ids": [],
+        "support_complete": true,
+        "ucr_micros": 0
+      },
+      "mark": "KEEP",
+      "metric_breach_count": 0,
+      "metrics": {
+        "delta_hol_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 577350,
+          "value_micros": 0
+        },
+        "epsilon_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 500000,
+          "value_micros": 0
+        },
+        "kappa_micros": {
+          "breached": false,
+          "direction": "high",
+          "threshold_micros": 707107,
+          "value_micros": 0
+        },
+        "phi_star_micros": {
+          "breached": false,
+          "direction": "low",
+          "threshold_micros": 990099,
+          "value_micros": 995000
+        },
+        "ucr_micros": {
+          "breached": false,
+          "direction": "must_equal",
+          "role": "separate_evidence_gate_not_health_score",
+          "threshold_micros": 0,
+          "value_micros": 0
+        }
+      },
+      "minimum_metric_breaches": 4,
+      "persistence": {
+        "observed": 0,
+        "recent_checkpoint_signals": [
+          false,
+          false
+        ],
+        "required": 2,
+        "window": 2
+      },
+      "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+      "reason_codes": [
+        "CALIBRATED_PERSISTENCE_RULE_NOT_MET"
+      ],
+      "receiver_approval_required": true,
+      "run_id": "gradual-drift-demo",
+      "schema": "openline.half-life.turn-assessment.v1",
+      "turn": 70
+    }
+  ],
+  "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+  "policy_public_key": "d810f13ea0d000c1c3a201cc568c1774b60f240a709f2f5220fec474254015af",
+  "schema": "openline.half-life.turn-assessments.v1"
+}

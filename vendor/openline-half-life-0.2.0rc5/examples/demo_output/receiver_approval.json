@@ -1,0 +1,19 @@
+{
+  "archive_destination": "cold_archive/receipts",
+  "automatic_compaction_authorized": false,
+  "automatic_retirement_authorized": false,
+  "checkpoint_hash": "1513bee12461b71eb38fc4d88db6821e711009956f5c0d2f6f9d216197cb0ac8",
+  "compaction_policy_hash": "4354abb073b9e4ae859320c8b5a47a663515dcb7c3ca9493dcae6e64447c8235",
+  "disposition": "APPROVE",
+  "payload_hash": "8999e14065457b67862395892f5aa93b261adf8ee1cf5a95bdd7974ad7041b7a",
+  "run_id": "gradual-drift-demo",
+  "schema": "openline.half-life.receiver-compaction-approval.v1",
+  "signature": {
+    "algorithm": "Ed25519",
+    "public_key": "c6822637c7d310ec57627be00ba259d253749f4aaf644470cffbe53a35f73242",
+    "value": "3c015627d87ec591a436d3ecb314ed6d795f93d8b2d161c69bea5ca1d04c20d4e7ae4f4b9863e9dd0fa86060d932066f9273c7f6b7ba1e2b9c3eec038261460f"
+  },
+  "source_chain_count": 65,
+  "source_chain_digest": "0e072017602025a6e6782ab34146295ebb691561400d1344bb71c9368da3d34e",
+  "source_chain_tail_hash": "099aad33663b35834cb81d5504a8ded4e3be81c2e998110b695b5b5ecefa3d58"
+}

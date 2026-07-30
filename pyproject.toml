@@ -1,6 +1,6 @@
 [project]
 name = "openline-receipt-gate"
-version = "0.5.0rc8"
+version = "0.6.0rc5"
 description = "Proof-to-policy gate for signed AI action receipts."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -14,7 +14,7 @@ model-swap = [
 ]
 
 [project.scripts]
-olp-gate = "olp_gate.cli:main"
+olp-gate = "olp_gate.command:main"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -25,4 +25,7 @@ requires = ["setuptools==82.0.1", "wheel==0.47.0"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-packages = ["olp_gate"]
+packages = ["olp_gate", "olp_gate.handoff", "benchmarks", "benchmarks.role_confusion_consequence"]
+
+[tool.setuptools.package-data]
+"benchmarks.role_confusion_consequence" = ["*.json", "README.md"]

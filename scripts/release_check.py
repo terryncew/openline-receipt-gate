@@ -22,13 +22,24 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
-VERSION = "0.5.0rc8"
+VERSION = "0.6.0rc5"
 PIPELOCK_INTEGRATION_TESTS = 9
 ASSAY_INTEGRATION_TESTS = 5
 MODEL_SWAP_INTEGRATION_TESTS = 8
 VERIFIED_CONTINUATION_INTEGRATION_TESTS = 2
 HALF_LIFE_VERSION = "0.2.0rc5"
 HALF_LIFE_COMMIT = "70121b53e86196d69b2c3457174b38ad32667b43"
+VENDORED_HALF_LIFE_ROOT = (
+    ROOT / "vendor" / "openline-half-life-0.2.0rc5"
+)
+VENDORED_HALF_LIFE_WHEEL = (
+    VENDORED_HALF_LIFE_ROOT
+    / "openline_half_life-0.2.0rc5-py3-none-any.whl"
+)
+VENDORED_HALF_LIFE_SITE = VENDORED_HALF_LIFE_ROOT / "site"
+VENDORED_HALF_LIFE_VERIFIER = (
+    ROOT / "scripts" / "verify_vendored_half_life.py"
+)
 ASSAY_VERSION = "3.32.0"
 ASSAY_RELEASE_COMMIT = "04d3db10adbe191aa731d52a6c2b77dad8bc0ca7"
 ASSAY_ARCHIVE_SHA256 = "243f5e3935530cb1405dbb54fa57acc944de2800d28537d08dfc305b2a117775"
@@ -50,6 +61,9 @@ CI_REQUIRED_SNIPPETS = (
     "actions/setup-node@v6",
     HALF_LIFE_COMMIT,
     "OLP_HALF_LIFE_ROOT",
+    "OLP_HALF_LIFE_SOURCE_ROOT",
+    "Verify vendored Half-Life release fixture",
+    "python scripts/verify_vendored_half_life.py",
     'python -m pip install "setuptools==82.0.1" "wheel==0.47.0"',
     "python -m pip install --no-build-isolation .",
     "Verify frozen benchmark source closure",
@@ -67,6 +81,10 @@ CI_REQUIRED_SNIPPETS = (
     "python scripts/verify_warning_time_benchmark.py",
     "python benchmarks/x402_airlock/run_hostile_suite.py",
     "python scripts/verify_x402_airlock.py",
+    "benchmarks/role_confusion_consequence/FREEZE.json",
+    "benchmarks/role_confusion_consequence/results/hostile_report.json",
+    "python benchmarks/role_confusion_consequence/run_suite.py",
+    "python scripts/verify_role_confusion_consequence.py",
 )
 
 
@@ -155,8 +173,63 @@ def assay_runtime() -> dict[str, Any]:
     }
 
 
+def _vendored_half_life_verification() -> dict[str, Any]:
+    command = [sys.executable, str(VENDORED_HALF_LIFE_VERIFIER)]
+    source_root = os.environ.get("OLP_HALF_LIFE_SOURCE_ROOT")
+    if source_root:
+        command.extend(["--external-root", source_root])
+    completed = subprocess.run(
+        command,
+        cwd=ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    try:
+        result = json.loads(completed.stdout)
+    except (json.JSONDecodeError, TypeError):
+        result = {
+            "valid": False,
+            "errors": ["vendored_verifier_output_invalid"],
+        }
+    result["returncode"] = completed.returncode
+    if completed.stderr:
+        result["stderr"] = completed.stderr[-4000:]
+    result["valid"] = bool(
+        completed.returncode == 0 and result.get("valid") is True
+    )
+    return result
+
+
+def _activate_vendored_half_life() -> dict[str, Any]:
+    verification = _vendored_half_life_verification()
+    if verification.get("valid") is not True:
+        return verification
+    site_value = str(VENDORED_HALF_LIFE_SITE)
+    if site_value not in sys.path:
+        sys.path.insert(0, site_value)
+    current_pythonpath = os.environ.get("PYTHONPATH", "")
+    pythonpath_parts = [
+        value for value in current_pythonpath.split(os.pathsep) if value
+    ]
+    if site_value not in pythonpath_parts:
+        os.environ["PYTHONPATH"] = os.pathsep.join(
+            [site_value, *pythonpath_parts]
+        )
+    os.environ["OLP_HALF_LIFE_ROOT"] = str(VENDORED_HALF_LIFE_ROOT)
+    importlib.invalidate_caches()
+    return verification
+
+
 def model_swap_runtime() -> dict[str, Any]:
     root_value = os.environ.get("OLP_HALF_LIFE_ROOT")
+    source_mode = "external_environment"
+    bundle_verification: dict[str, Any] | None = None
+    if not root_value:
+        source_mode = "vendored_offline_fallback"
+        bundle_verification = _activate_vendored_half_life()
+        if bundle_verification.get("valid") is True:
+            root_value = str(VENDORED_HALF_LIFE_ROOT)
     root = Path(root_value).resolve() if root_value else None
     fixture_files = (
         root / "examples" / "demo_output" / "half_life_receipt.json",
@@ -175,9 +248,20 @@ def model_swap_runtime() -> dict[str, Any]:
         "version": version,
         "supported": available and version == HALF_LIFE_VERSION,
         "source_commit": HALF_LIFE_COMMIT,
+        "source_mode": source_mode,
         "fixture_root": str(root) if root is not None else None,
+        "vendored_bundle_verified": (
+            bundle_verification.get("valid")
+            if bundle_verification is not None
+            else None
+        ),
+        "vendored_bundle_errors": (
+            bundle_verification.get("errors", [])
+            if bundle_verification is not None
+            else []
+        ),
         "install_command": "pip install -r requirements-model-swap.txt",
-        "required_for_v0.5_release": True,
+        "required_for_v0.6_release": True,
     }
 
 
@@ -218,10 +302,12 @@ def write_manifest(
     verified_commit_summary: dict[str, Any],
     verified_continuation_summary: dict[str, Any],
     branch_authorization_summary: dict[str, Any],
+    handoff_summary: dict[str, Any],
     pipelock_summary: dict[str, Any],
     assay_summary: dict[str, Any],
     warning_time_summary: dict[str, Any],
     x402_airlock_summary: dict[str, Any],
+    role_confusion_summary: dict[str, Any],
     optional_integrations: dict[str, Any],
 ) -> None:
     entries = []
@@ -302,6 +388,14 @@ def write_manifest(
                 "replay_blocked"
             ),
         },
+        "handoff_check": {
+            "disposition": handoff_summary.get("disposition"),
+            "source": handoff_summary.get("source"),
+            "source_history_sha256": handoff_summary.get("source_history_sha256"),
+            "capsule_sha256": handoff_summary.get("capsule_sha256"),
+            "receipt_sha256": handoff_summary.get("receipt_sha256"),
+            "metrics": handoff_summary.get("metrics", {}),
+        },
         "pipelock_head_to_head": {
             "passed": pipelock_summary.get("passed", False),
             "strong_hypothesis_falsified": pipelock_summary.get(
@@ -353,6 +447,35 @@ def write_manifest(
                 "resource_release_confirmed_count"
             ),
         },
+        "role_confusion_consequence": {
+            "passed": role_confusion_summary.get("passed", False),
+            "case_count": role_confusion_summary.get("case_count"),
+            "cases_passed": role_confusion_summary.get("cases_passed"),
+            "authorization_valid_hostile_cases": role_confusion_summary.get(
+                "authorization_valid_hostile_cases"
+            ),
+            "authorization_valid_hostile_effects_blocked": role_confusion_summary.get(
+                "authorization_valid_hostile_effects_blocked"
+            ),
+            "protected_effect_callback_count": role_confusion_summary.get(
+                "protected_effect_callback_count"
+            ),
+            "blocked_rows_invoked_effect": role_confusion_summary.get(
+                "blocked_rows_invoked_effect"
+            ),
+            "matched_legitimate_twin_committed": role_confusion_summary.get(
+                "matched_legitimate_twin_committed"
+            ),
+            "unrelated_untrusted_addition_committed": role_confusion_summary.get(
+                "unrelated_untrusted_addition_committed"
+            ),
+            "injection_text_visible_to_gate": role_confusion_summary.get(
+                "injection_text_visible_to_gate"
+            ),
+            "attack_label_visible_to_gate": role_confusion_summary.get(
+                "attack_label_visible_to_gate"
+            ),
+        },
         "assay_head_to_head": {
             "passed": assay_summary.get("passed", False),
             "strong_signing_uniqueness_hypothesis_falsified": assay_summary.get(
@@ -379,16 +502,27 @@ def main() -> int:
     branch_authorization_output = (
         ROOT / "results" / "verified_continuation_authorization"
     )
+    handoff_output = ROOT / "results" / "handoff_check_demo"
     shutil.rmtree(proof_output, ignore_errors=True)
     shutil.rmtree(model_swap_output, ignore_errors=True)
     shutil.rmtree(verified_commit_output, ignore_errors=True)
     shutil.rmtree(verified_continuation_output, ignore_errors=True)
     shutil.rmtree(branch_authorization_output, ignore_errors=True)
+    shutil.rmtree(handoff_output, ignore_errors=True)
     steps: list[dict[str, Any]] = []
     passed: list[bool] = []
     pipelock_info = pipelock_runtime()
     assay_info = assay_runtime()
+    vendored_half_life_info = _vendored_half_life_verification()
     model_swap_info = model_swap_runtime()
+    steps.append(
+        {
+            "name": "vendored_half_life_release_bundle",
+            "passed": vendored_half_life_info.get("valid") is True,
+            **vendored_half_life_info,
+        }
+    )
+    passed.append(vendored_half_life_info.get("valid") is True)
     requirement_value = (ROOT / "requirements-pipelock.txt").read_text(
         encoding="utf-8"
     ).strip()
@@ -529,6 +663,14 @@ def main() -> int:
     absent_environment["OLP_TEST_DISABLE_PIPELOCK"] = "1"
     absent_environment["OLP_TEST_DISABLE_ASSAY"] = "1"
     absent_environment.pop("OLP_HALF_LIFE_ROOT", None)
+    absent_environment.pop("OLP_HALF_LIFE_SOURCE_ROOT", None)
+    absent_environment["PYTHONPATH"] = os.pathsep.join(
+        value
+        for value in absent_environment.get("PYTHONPATH", "").split(
+            os.pathsep
+        )
+        if value and value != str(VENDORED_HALF_LIFE_SITE)
+    )
     absent_record, absent_okay = execute(
         "unittest_without_optional_integrations",
         unit_command,
@@ -556,6 +698,69 @@ def main() -> int:
         record, okay = execute(name, command)
         steps.append(record)
         passed.append(okay)
+
+    handoff_summary: dict[str, Any] = {}
+    handoff_command = [
+        sys.executable,
+        "-m",
+        "olp_gate.command",
+        "handoff-check",
+        "examples/handoff/generic-history.jsonl",
+        "--next",
+        "implement the authentication refactor",
+        "--source",
+        "generic",
+        "--output",
+        str(handoff_output),
+    ]
+    record, handoff_okay = execute("handoff_check_demo", handoff_command)
+    steps.append(record)
+    passed.append(handoff_okay)
+    if handoff_okay:
+        try:
+            handoff_summary = json.loads(record["stdout"])
+        except (json.JSONDecodeError, TypeError):
+            handoff_okay = False
+            passed.append(False)
+            steps.append({"name": "handoff_check_demo_parse", "passed": False})
+
+    role_confusion_summary: dict[str, Any] = {}
+    role_suite_command = [
+        sys.executable,
+        "benchmarks/role_confusion_consequence/run_suite.py",
+    ]
+    record, role_suite_okay = execute(
+        "role_confusion_consequence_suite",
+        role_suite_command,
+    )
+    steps.append(record)
+    passed.append(role_suite_okay)
+    if role_suite_okay:
+        try:
+            role_confusion_summary = json.loads(
+                (
+                    ROOT
+                    / "benchmarks"
+                    / "role_confusion_consequence"
+                    / "results"
+                    / "hostile_report.json"
+                ).read_text(encoding="utf-8")
+            )
+        except (OSError, json.JSONDecodeError, TypeError):
+            role_suite_okay = False
+            passed.append(False)
+            steps.append(
+                {
+                    "name": "role_confusion_consequence_report_parse",
+                    "passed": False,
+                }
+            )
+    record, role_verify_okay = execute(
+        "role_confusion_consequence_independent_verifier",
+        [sys.executable, "scripts/verify_role_confusion_consequence.py"],
+    )
+    steps.append(record)
+    passed.append(role_verify_okay)
 
     continuation_command = [
         sys.executable,
@@ -1000,6 +1205,16 @@ def main() -> int:
             steps.append(record)
             passed.append(okay)
             if okay:
+                record, role_cli_okay = execute(
+                    "installed_role_confusion_cli_from_unrelated_cwd",
+                    [sys.executable, "-m", "olp_gate.command", "role-confusion-suite"],
+                    cwd=outside,
+                    env=environment,
+                )
+                steps.append(record)
+                passed.append(role_cli_okay)
+                okay = okay and role_cli_okay
+            if okay:
                 installed_summary = json.loads((installed_output / "demo_summary.json").read_text(encoding="utf-8"))
                 record, okay = execute(
                     "installed_output_node_verification",
@@ -1021,6 +1236,40 @@ def main() -> int:
         proof_summary = {}
     release_assertions = {
         "proof_summary_passed": proof_summary.get("passed") is True,
+        "handoff_check_demo_safe": (
+            handoff_summary.get("disposition") == "SAFE_TO_CONTINUE"
+            and handoff_summary.get("source") == "generic"
+            and bool(handoff_summary.get("capsule_sha256"))
+            and bool(handoff_summary.get("receipt_sha256"))
+        ),
+        "role_confusion_suite_passed": (
+            role_confusion_summary.get("passed") is True
+        ),
+        "role_confusion_all_13_cases_passed": (
+            role_confusion_summary.get("case_count") == 13
+            and role_confusion_summary.get("cases_passed") == 13
+        ),
+        "role_confusion_authorization_valid_hostile_effects_blocked": (
+            role_confusion_summary.get("authorization_valid_hostile_cases") == 6
+            and role_confusion_summary.get(
+                "authorization_valid_hostile_effects_blocked"
+            )
+            == 6
+        ),
+        "role_confusion_pre_effect_callback_boundary": (
+            role_confusion_summary.get("protected_effect_callback_count") == 3
+            and role_confusion_summary.get("blocked_rows_invoked_effect") is False
+        ),
+        "role_confusion_matched_legitimate_twin_committed": (
+            role_confusion_summary.get("matched_legitimate_twin_committed") is True
+        ),
+        "role_confusion_not_generic_blocker": (
+            role_confusion_summary.get("unrelated_untrusted_addition_committed") is True
+        ),
+        "role_confusion_detector_independent_input_surface": (
+            role_confusion_summary.get("injection_text_visible_to_gate") is False
+            and role_confusion_summary.get("attack_label_visible_to_gate") is False
+        ),
         "proof_case_count_is_five": proof_summary.get(
             "decision_receipt_count"
         )
@@ -1297,6 +1546,7 @@ def main() -> int:
             "without_optional_integrations": absent_counts,
         },
         "optional_integrations": optional_integrations,
+        "vendored_half_life_release_bundle": vendored_half_life_info,
         "published_interop_fixture": {
             "project": "Agent Receipts",
             "version": "0.5.0",
@@ -1323,6 +1573,8 @@ def main() -> int:
             "live_benchmark_executed": assay_live_benchmark_executed,
             "live_benchmark_passed": assay_live_benchmark_passed,
         },
+        "handoff_check": handoff_summary,
+        "role_confusion_consequence": role_confusion_summary,
         "verified_model_swap": model_swap_summary,
         "verified_commit": verified_commit_summary,
         "verified_continuation": {
@@ -1337,7 +1589,7 @@ def main() -> int:
         "x402_transaction_airlock": x402_airlock_report,
         "pipelock_head_to_head": pipelock_summary,
         "assay_head_to_head": assay_summary,
-        "claim_boundary": "A passing deterministic release gate does not prove production safety, issuer honesty, complete capture, live provider execution, universal model portability, legal ownership, witness independence, rollback execution, or globally exactly-once side effects. Verified Model Swap is exact only over the disclosed receiver decision projection and externally pinned Half-Life fixture. Verified Commit proves receiver-side one-use authorization only when the destination tool enters through the disclosed checker and shares its atomic ledger; a crash after consumption fails closed. The Verified Continuation fixture proves harness conformance only and must remain UNDECIDABLE until matched outside provider runs are disclosed. Its exact-branch authorization result is separate and local. The x402 Transaction Airlock result is a synthetic adapter test against frozen hostile cases, not an audit of a live facilitator, wallet, chain, or receiver data provider.",
+        "claim_boundary": "A passing deterministic release gate does not prove production safety, issuer honesty, complete capture, live provider execution, universal model portability, legal ownership, witness independence, rollback execution, or globally exactly-once side effects. The vendored Half-Life bundle makes the release gate runnable offline and is hash-checked locally; local hashes do not independently establish upstream provenance, so CI separately compares it byte-for-byte with the pinned upstream commit. Verified Model Swap is exact only over the disclosed receiver decision projection and pinned Half-Life fixture. Verified Commit proves receiver-side one-use authorization only when the destination tool enters through the disclosed checker and shares its atomic ledger; a crash after consumption fails closed. The Verified Continuation fixture proves harness conformance only and must remain UNDECIDABLE until matched outside provider runs are disclosed. Its exact-branch authorization result is separate and local. Handoff Check certifies fidelity only against explicit state in the supplied local history; it does not establish history completeness or real-agent success. The Role-Confusion Consequence Gate is a synthetic post-compromise mechanism test with a harmless callback; it does not establish that a live model or published attack was reproduced, and its standalone callback is not an atomic replay ledger. Production effects must compose appraisal with Verified Commit. The x402 Transaction Airlock result is a synthetic adapter test against frozen hostile cases, not an audit of a live facilitator, wallet, chain, or receiver data provider.",
     }
     (ROOT / "RUN_REPORT.json").write_text(
         json.dumps(report, indent=2, sort_keys=True) + "\n",
@@ -1350,6 +1602,7 @@ def main() -> int:
         verified_commit_summary=verified_commit_summary,
         verified_continuation_summary=verified_continuation_summary,
         branch_authorization_summary=branch_authorization_summary,
+        handoff_summary=handoff_summary,
         pipelock_summary={
             "passed": benchmark_report.get("passed", False),
             "strong_hypothesis_falsified": pipelock_summary.get(
@@ -1359,6 +1612,7 @@ def main() -> int:
         },
         warning_time_summary=warning_time_report,
         x402_airlock_summary=x402_airlock_report,
+        role_confusion_summary=role_confusion_summary,
         assay_summary={
             "passed": assay_benchmark_report.get("passed", False),
             "strong_signing_uniqueness_hypothesis_falsified": assay_summary.get(
@@ -1398,6 +1652,11 @@ def main() -> int:
         "failed_checks": failed_checks,
         "proof_to_policy_cases": proof_summary.get("decision_receipt_count", 0),
         "verified_commit_passed": verified_commit_summary.get("passed", False),
+        "handoff_check_disposition": handoff_summary.get("disposition"),
+        "role_confusion_consequence_passed": role_confusion_summary.get(
+            "passed",
+            False,
+        ),
         "verified_continuation_disposition": (
             verified_continuation_summary.get("continuation_disposition")
         ),

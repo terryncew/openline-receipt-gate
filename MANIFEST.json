@@ -21,12 +21,12 @@
     "strong_signing_uniqueness_hypothesis_falsified": true
   },
   "claim": "Signed source receipts can drive externally configured, independently verifiable policy decisions within declared inputs and trust assumptions.",
-  "created_at": "2026-07-29T02:26:29.426865Z",
+  "created_at": "2026-07-30T14:06:11.150060Z",
   "files": [
     {
-      "bytes": 4093,
+      "bytes": 4713,
       "path": ".github/workflows/release-check.yml",
-      "sha256": "554d0ec5ed91175e85bd8298ec0470490e1724d87bb358d4954f4284481284aa"
+      "sha256": "d4f130433152236722b8adbdecd7ff54967fe4e301b92a708a31625f27a67517"
     },
     {
       "bytes": 527,
@@ -34,14 +34,14 @@
       "sha256": "facf419e8bc2559cd54fcf75afe22b4862a2bf37e6bf54fc9df472b4f93a9555"
     },
     {
-      "bytes": 16557,
+      "bytes": 23429,
       "path": "CHANGELOG.md",
-      "sha256": "df33400f96267d57d6d049fa3b926719863fd46789185b417777f1318faeb871"
+      "sha256": "826d812c4b10c4a9d3fd76e4f50d830760fda35ac2531c777e96bc10f2613826"
     },
     {
-      "bytes": 3196,
+      "bytes": 5645,
       "path": "CLAIM_BOUNDARY.md",
-      "sha256": "b031fa12d33358be6569e7af6e5d8f524529924d01ef7b731fc4e15fb4fd0361"
+      "sha256": "a252102a4089cf19c9d4c1b9a8d021433df6bd0976608f998108025dce4d127d"
     },
     {
       "bytes": 985,
@@ -49,14 +49,14 @@
       "sha256": "83f1cec7cc6701c9a8004184b541dd1297a5c0aa618d22cfc9036686b4274cfb"
     },
     {
-      "bytes": 26086,
+      "bytes": 30836,
       "path": "README.md",
-      "sha256": "805318effe824745e06cb5a53b86827be86f1b064970b26dd610136bbc19fd4c"
+      "sha256": "877e11eecfb616b0768d03fd93774a51d7235b26e935d7ec23067722ae62d211"
     },
     {
-      "bytes": 238479,
+      "bytes": 284821,
       "path": "RUN_REPORT.json",
-      "sha256": "5a8c405406ca8796f935ae44646134b09bdd0ad0f657f216d26bfbc3b69332b2"
+      "sha256": "0faafbe1a8f0dfb00a9078f98f37e393c52625dc769a50eb20977df3ae052b6d"
     },
     {
       "bytes": 65,
@@ -429,6 +429,46 @@
       "sha256": "89885352cefe946c71b887939b1b4fe1d8a4f76b656672aa63bc55c899147ee8"
     },
     {
+      "bytes": 2136,
+      "path": "benchmarks/role_confusion_consequence/FREEZE.json",
+      "sha256": "52a3632583b9f73d6e200022a02dc57c8c16549a14256dbbb9f710e9b523f48f"
+    },
+    {
+      "bytes": 1650,
+      "path": "benchmarks/role_confusion_consequence/README.md",
+      "sha256": "9003149296c06d509a7ac4266d90f33c0bec11ea1b8c2eda0710df65b31fe9ad"
+    },
+    {
+      "bytes": 70,
+      "path": "benchmarks/role_confusion_consequence/__init__.py",
+      "sha256": "b59abd6a0d241bef0342b3bd83f806ac0d9623cab2833d3ba8ad0f1b01dd9c71"
+    },
+    {
+      "bytes": 25567,
+      "path": "benchmarks/role_confusion_consequence/cases.json",
+      "sha256": "1bcf3247d241bf197b9516b13574cd4b3938ce8fc4331ee718797b00cb9171b3"
+    },
+    {
+      "bytes": 667,
+      "path": "benchmarks/role_confusion_consequence/receiver-policy.json",
+      "sha256": "48f69639fe8bf7b63d539598060598f8b6b02b0f682d4deb96dee2361b9c702c"
+    },
+    {
+      "bytes": 37991,
+      "path": "benchmarks/role_confusion_consequence/results/hostile_report.json",
+      "sha256": "96838232fc0de841577375f0d374ddabaa4f989470aa217f8cbe7c6ba4f1a68a"
+    },
+    {
+      "bytes": 680,
+      "path": "benchmarks/role_confusion_consequence/results/independent_verification.json",
+      "sha256": "f89c40af68be3d42832b514dabc19561f6ce0807f07a220ce2afd937201abe6b"
+    },
+    {
+      "bytes": 755,
+      "path": "benchmarks/role_confusion_consequence/run_suite.py",
+      "sha256": "1a82bdddd58bd0caa4e87161132e88438f48ab9d617316307b2971f641fb1de4"
+    },
+    {
       "bytes": 1608,
       "path": "benchmarks/verified_continuation/FREEZE.json",
       "sha256": "93b13c5c92869b0070ef4a9c0349d519a4e3bb3293c5a9e09d18d05f68ed68c5"
@@ -769,9 +809,9 @@
       "sha256": "c1ede3e213ace4d2ab5843f80df5878207f0156636aa2809d4e3b736037597d6"
     },
     {
-      "bytes": 13578,
+      "bytes": 15967,
       "path": "docs/CLAIM_BOUNDARY.md",
-      "sha256": "21880be6aa8f5d85e023fcc18cbd0d1d7d74307f16f6f71ac829f22cda7f2038"
+      "sha256": "bfc412a8a25a44d3a9adf2ec33aa2565cbb8da5c8755d835319d70bd91f17d8f"
     },
     {
       "bytes": 8650,
@@ -779,14 +819,24 @@
       "sha256": "c447b659f3d67f130fd857250f36322296c24d5f1642a09a2522a90193771b69"
     },
     {
+      "bytes": 5176,
+      "path": "docs/HANDOFF_CHECK.md",
+      "sha256": "d26e1bd576f0b3527ae519975076a14ca87629aae47149b83a6bf688a5665f3b"
+    },
+    {
       "bytes": 4181,
       "path": "docs/RECEIPT_SCHEMA.md",
       "sha256": "2b7195a83fd1fa70de168f0f520a426208c28d29e6b90a39a0af9856dfc1d4fb"
     },
     {
-      "bytes": 7346,
+      "bytes": 3934,
+      "path": "docs/ROLE_CONFUSION_CONSEQUENCE_GATE.md",
+      "sha256": "b650120f00fc942028b5289d1093d7c7900dbb904da2a1494335b717a8546605"
+    },
+    {
+      "bytes": 8398,
       "path": "docs/THREAT_MODEL.md",
-      "sha256": "a42dc4f3b3050e21b357b2ce6b3b133eaec124b09b7d9fe19ec097e106d5725b"
+      "sha256": "757596ebe2e7cb1283747b7ec2c5745bbcd4e0c7b29ca6ac3692fa6bb3c74a29"
     },
     {
       "bytes": 3874,
@@ -802,6 +852,11 @@
       "bytes": 1725,
       "path": "examples/demo_all.py",
       "sha256": "80cc18792ddb90d2ad48e696344a8298f8914a8be0916d9159915bc6bcaa2f05"
+    },
+    {
+      "bytes": 1398,
+      "path": "examples/handoff/generic-history.jsonl",
+      "sha256": "4889c7b2be46c34c58f440681e9e4e172f601786252ead38d42abee7a0cc3ea7"
     },
     {
       "bytes": 202,
@@ -829,9 +884,9 @@
       "sha256": "ed1b001c193f55bd0ebbeb173d4da835dec0494af75f1e1d489248af9dcba2ae"
     },
     {
-      "bytes": 2067,
+      "bytes": 2752,
       "path": "olp_gate/__init__.py",
-      "sha256": "5998c054bd83ab80245a9425c347c60ead8122ba75585315567e7d743074f9ca"
+      "sha256": "128c0f49e4eb3b884ada82ad8c12f9c8d5644a57043c9ca4c10336eb4440cb3c"
     },
     {
       "bytes": 30740,
@@ -852,6 +907,11 @@
       "bytes": 14983,
       "path": "olp_gate/cli.py",
       "sha256": "85ef0e5ae11cc53b6ceba12942c37c3f6baa4516c72fe83e858b06d3ba771451"
+    },
+    {
+      "bytes": 7765,
+      "path": "olp_gate/command.py",
+      "sha256": "b69a4250864e89f8a42ca52c809f5ca189a7ff7de2d2fb05c2f1fda27e3b0cd0"
     },
     {
       "bytes": 12361,
@@ -879,6 +939,26 @@
       "sha256": "54159bd48c2eaa75a8f2f8ddd2532ca46d82f54d5dd24285b625f1979cd4472d"
     },
     {
+      "bytes": 536,
+      "path": "olp_gate/handoff/__init__.py",
+      "sha256": "e5d6e019471051dd55abd89b07cdf5c74706409d4f7968cada96d4bfe3f447f4"
+    },
+    {
+      "bytes": 27891,
+      "path": "olp_gate/handoff/adapters.py",
+      "sha256": "bc626f18b135d636a1d6a0f73e9a9cbc5ea6af7ac7584c71a12643691d6d3f74"
+    },
+    {
+      "bytes": 45446,
+      "path": "olp_gate/handoff/core.py",
+      "sha256": "944bb38fb4b08b285704c44a00751717efc42f1f179f43b43965f98c2831d433"
+    },
+    {
+      "bytes": 11880,
+      "path": "olp_gate/handoff/reference_replay.py",
+      "sha256": "a2de41165d65352cc4daca4d9280f7f8713a4b8f23bdd78d77ee2609772b9ea9"
+    },
+    {
       "bytes": 42664,
       "path": "olp_gate/model_swap.py",
       "sha256": "5d3536156ad10f6e105d4b1740c5900f2ad48ef6c6b0d8f75011db7f83a26ab9"
@@ -892,6 +972,11 @@
       "bytes": 8627,
       "path": "olp_gate/receipts.py",
       "sha256": "76c95a390d949f4ab46692abcc0362c5da9164cfc760c0905bd07686fd3afa2e"
+    },
+    {
+      "bytes": 26181,
+      "path": "olp_gate/role_confusion.py",
+      "sha256": "d036927545ea64237caf47bcdd29e0b9e92e98d90eb8a01120160ff9d8d719da"
     },
     {
       "bytes": 8917,
@@ -914,9 +999,9 @@
       "sha256": "cd26748f212a35a2b12ff2b2be648843ab4c71dfacc638aa24ff66c5e7463f6e"
     },
     {
-      "bytes": 718,
+      "bytes": 895,
       "path": "pyproject.toml",
-      "sha256": "3dce4aab8540617ceb204a2e96b84d3bc749fa05014da222785eab71e3d10e3e"
+      "sha256": "80aecdd6df8550bc6ba5fd4e03fea771a374f1ae4fafe96ee158a92e30f77d1a"
     },
     {
       "bytes": 118,
@@ -931,17 +1016,52 @@
     {
       "bytes": 15358,
       "path": "results/demo_all_summary.json",
-      "sha256": "07067e90cd4683fe4ea660a12fef2bab04e64add83462abb688d145695a68adb"
+      "sha256": "6eea012938bd80e5e95bffe478220d337bef7b0351381d9b39e83fd483615027"
+    },
+    {
+      "bytes": 1177,
+      "path": "results/handoff_check_demo/archive_index.json",
+      "sha256": "29e0ce90f715e35760bcc644eb06b5731101b86ab17293239b7193ee31f78903"
+    },
+    {
+      "bytes": 2942,
+      "path": "results/handoff_check_demo/capsule.json",
+      "sha256": "8adb81823bd7a3f3a8554fb8e10bdac00b9910d7fd46e227cf5c11505c6aae82"
+    },
+    {
+      "bytes": 962,
+      "path": "results/handoff_check_demo/capsule.md",
+      "sha256": "9eccfae72f05cd18a572407ad9842d7f1adcd67964dc3aafa53969056f58dd29"
+    },
+    {
+      "bytes": 1859,
+      "path": "results/handoff_check_demo/continuation_receipt.json",
+      "sha256": "23dc1af6e6d6cde40781048cc33821d9cbbf2523c569f6a1800d250306be22c9"
+    },
+    {
+      "bytes": 1084,
+      "path": "results/handoff_check_demo/handoff_report.json",
+      "sha256": "695dfa2ffe240ca526b50ba1d8638f1f80bdd673a176241a20ba5e47e0f11499"
+    },
+    {
+      "bytes": 1415,
+      "path": "results/handoff_check_demo/proof-card.html",
+      "sha256": "f2d14c7d16f8ddb2261be175422bcce948aeec41e6f868ff6aa88cba528742d5"
+    },
+    {
+      "bytes": 1959,
+      "path": "results/handoff_check_demo/reference_replay.json",
+      "sha256": "a46f0af672518a8dfb412217ef0e3f9c420eb2909e364a6a75ae5c8658629669"
     },
     {
       "bytes": 19677,
       "path": "results/proof_to_policy_demo/decision_receipts.jsonl",
-      "sha256": "452ba1ce38078eca754295e5b7d4abaf4e069dff2ed6c71ad588486c932ecf47"
+      "sha256": "56b4e9554e1bd8aea920555eabc1177a3a0b6cc6723e8b720289e70e3fa2b423"
     },
     {
       "bytes": 1653,
       "path": "results/proof_to_policy_demo/demo_summary.json",
-      "sha256": "83c8d4db5428a84413bc07cd2f21f607c0ed0b571c1154a123f1a71558ee0995"
+      "sha256": "3e66ae809f61931ecf0f476ef2095492a43d01b016163190acce1a048cffdf52"
     },
     {
       "bytes": 37,
@@ -956,22 +1076,22 @@
     {
       "bytes": 723,
       "path": "results/verified_commit_demo/approved_action.json",
-      "sha256": "b8b57ed3f89f5e8ca1825fa7f5aa9da26c064d866967923e0ac25d71b07cd402"
+      "sha256": "d6ccdf0eeaf00674c9c34d1e0bb54a02ae5af3b36c7a30cbb9b5748bd2153223"
     },
     {
       "bytes": 6708,
       "path": "results/verified_commit_demo/decision_receipts.jsonl",
-      "sha256": "9e2aabdc2159c5b954062a334d7ed15fbbc5dc98e7dac65b0fd05a8752e64831"
+      "sha256": "2fcc027a42b3fb2ba2c418ff02ddf5039438cb60946a9ea12e7c3a136b9a8761"
     },
     {
       "bytes": 2027,
       "path": "results/verified_commit_demo/gate_policy.json",
-      "sha256": "3da19f0dde24c644212d1baea5e9608d3de4b6b7bb8c63a9cc645208e57ee895"
+      "sha256": "a1fcc5b5f444b7f20b74920af25b8afd8e506c6b2e5229cd65026af9229a8688"
     },
     {
       "bytes": 4302,
       "path": "results/verified_commit_demo/gate_request.json",
-      "sha256": "49829ca711c18092aff9c4825744e9d057d41280234e4d403a3d1d9d777c767e"
+      "sha256": "452c7613eb14a6df99a5f7c4e60b27d68fdce0890df45333a8a1798ab6d15754"
     },
     {
       "bytes": 594,
@@ -981,32 +1101,32 @@
     {
       "bytes": 979,
       "path": "results/verified_commit_demo/outcome_receipt.json",
-      "sha256": "b169e8d3e69546dae14083fc23e6bcf8c01366427797e09348d67ae22375fb23"
+      "sha256": "aa0125e06aa6cf1484ff5d074e6da737bb387b475df5400f9dafc0e524056b9e"
     },
     {
       "bytes": 22223,
       "path": "results/verified_commit_demo/proof_card.json",
-      "sha256": "e83df78dbe72855d8057b75f9cf864248df5faabbc63594609b0d05b708a6a0b"
+      "sha256": "8d0d6ca44500a1dd0b435e52e62da37071dbbff98a15fb59a0a4e439b2c26944"
     },
     {
       "bytes": 1415,
       "path": "results/verified_commit_demo/source_receipt.json",
-      "sha256": "0198ffaed923fadc86186c5bcb406e2f1cde87bc317c27021224b4edfd9f185a"
+      "sha256": "464972e1484ac18e9e32855aff00eecebc4399d149673eab646145b865d04bb3"
     },
     {
       "bytes": 8936,
       "path": "results/verified_commit_demo/verified_commit_ledger.json",
-      "sha256": "f64bc7ddf5dacf939e715ea77f18835c689cb6c5b34046cb389ecd77a0d7fe71"
+      "sha256": "dfdf56da3e87d4a4693a3a2dd1abd09fed3d49b63c3a593d919d1d66bda792ce"
     },
     {
       "bytes": 3842,
       "path": "results/verified_commit_demo/verified_commit_summary.json",
-      "sha256": "05c1841f4f8a5ac735c911363abfa2bf36a8b125c8c1c6de78b15c2f2cb352fa"
+      "sha256": "ffaaf88e7224110be54e69c988fa1294db5bb2bc22774dfa285fc3602a1f28ac"
     },
     {
       "bytes": 33000,
       "path": "results/verified_commit_demo/verified_model_swap.latest.json",
-      "sha256": "d6cfd8dd10e94b00aece2a242f1ffa2dd79ad15265da7e3e7b443739dc020833"
+      "sha256": "bee91499a87c4825347ee4efebcd039364eaae9569b2e723efc07722b697ebdf"
     },
     {
       "bytes": 494,
@@ -1016,27 +1136,27 @@
     {
       "bytes": 3565,
       "path": "results/verified_continuation_authorization/branch_authorization_report.json",
-      "sha256": "9b86e67f643140cb0b6509acb10b5423420bbb26502c94dcf88a152a396eb717"
+      "sha256": "9aa8f0925c2da667a6edef2480848894dba5bde28e74103d4f37ac3c2a7016ca"
     },
     {
       "bytes": 4949,
       "path": "results/verified_continuation_authorization/branch_commit_ledger.json",
-      "sha256": "d42ec7f339b8336b689f65c9259fa18eabf615327276517c26be604f901cf3ff"
+      "sha256": "8a9e151a8ba728138a8c4945f14feb1b7401b7fd1e4e1906e57ae22d96a9c6f4"
     },
     {
       "bytes": 6732,
       "path": "results/verified_continuation_authorization/gate/decision_receipts.jsonl",
-      "sha256": "399b62ad7713fddaacb2bfb9beb1d9d7d88f935f2bf01d1f8527ac163ffb8d7d"
+      "sha256": "d51259a765ebb13d7abc1a02bc24f4609cebbf9faf42115c89de5d3bde5d3f16"
     },
     {
       "bytes": 2032,
       "path": "results/verified_continuation_authorization/gate/gate_policy.json",
-      "sha256": "3700333fd0f68390b2664ad94cb511028365755ab95082aebe612ed9cfc6ad2d"
+      "sha256": "633ca49fb4f2fea087eae613d8a23e901eaf646ce94dceb56b4a3eea2fad289c"
     },
     {
       "bytes": 4409,
       "path": "results/verified_continuation_authorization/gate/gate_request.json",
-      "sha256": "30a61b7cda77c79d99ec14d90e541f0b635033f09102c01b23b804eabbeb8a0b"
+      "sha256": "d093cfdd2b9209381f06754c7e8ad7f9fb32e8faf32dc74a9fd7a5814289b45b"
     },
     {
       "bytes": 594,
@@ -1046,22 +1166,22 @@
     {
       "bytes": 979,
       "path": "results/verified_continuation_authorization/gate/outcome_receipt.json",
-      "sha256": "d85afc2e027a21063e881489c525011e545eaac7b76a48b8af49fb3a0e5465b0"
+      "sha256": "d6bdb5b818ddab7ae48da12a961168ffe8622245d0159c01068f9d8f73a0c9f7"
     },
     {
       "bytes": 22243,
       "path": "results/verified_continuation_authorization/gate/proof_card.json",
-      "sha256": "496376fc66f20ac29bf12844e4a64e4d79df5c402ec403948433936b79a4609e"
+      "sha256": "662ea916e7cafe3304ebe97e9855984bd75aa567e8a053d1173a5a9d1302bbac"
     },
     {
       "bytes": 1435,
       "path": "results/verified_continuation_authorization/gate/source_receipt.json",
-      "sha256": "3e0738c3bbb31d03e1738413a764d5e15d9a9bf4d06c281fd3768d407304ff78"
+      "sha256": "151526cdd74d2db30c2e46f58bab76bd720bb76e8282f762dd367008adc29de1"
     },
     {
       "bytes": 33044,
       "path": "results/verified_continuation_authorization/gate/verified_model_swap.latest.json",
-      "sha256": "c77a0b099e0cf5d52350a496f27efd42a43cda12286357c2471941bcb05490cb"
+      "sha256": "2613ded71e99d2e05b58bf2c04489a69e2494e573cd63ab2e0198151022048a2"
     },
     {
       "bytes": 6648,
@@ -1076,12 +1196,12 @@
     {
       "bytes": 821,
       "path": "results/verified_continuation_summary.json",
-      "sha256": "0eb4f1f778e8f906fc38aece519382b9c2f575acca3f41641ea6451e3ca29b64"
+      "sha256": "137ddd299441b7731c9103df18909c4be0d81065f46dba12e04612d51bbcc401"
     },
     {
       "bytes": 4726,
       "path": "results/verified_model_swap_demo/decision_receipts.jsonl",
-      "sha256": "4c6e36e5e3ab8fa52d63c4b25b75ec4638a936078672d95ab199e15b841a4d54"
+      "sha256": "b8584b46b80ef7fb41596bb02e1a043733039a551653d09a502314354a8274fd"
     },
     {
       "bytes": 1521,
@@ -1091,7 +1211,7 @@
     {
       "bytes": 3566,
       "path": "results/verified_model_swap_demo/gate_request.json",
-      "sha256": "dd983bff6e510e0e057eead47965d64a00fa94e7de1b3adc60c96f668f184257"
+      "sha256": "b71d4b3b94f3bb3088bd14a05970a37c85f32ea38d69d8a29bb15b7a50d067d3"
     },
     {
       "bytes": 594,
@@ -1101,27 +1221,27 @@
     {
       "bytes": 979,
       "path": "results/verified_model_swap_demo/outcome_receipt.json",
-      "sha256": "d6ede6ad56c95ce376efd5b5481fa547b351ae97f05f68ab12ed18cccca67160"
+      "sha256": "daaab8b3e253bc18faf3ab41573de34abedfd2910c04a5f0c96eb08ddaa6aedb"
     },
     {
       "bytes": 22233,
       "path": "results/verified_model_swap_demo/proof_card.json",
-      "sha256": "522f08eec322320b96060ed7352d7c38b97fe9ae7fd2aeb721fe3b10d3a723bd"
+      "sha256": "ff2f9bbb5071f67f5ad5d145ccc8cb6cfdfc3123f311bac99a9aa6f920cd30e1"
     },
     {
       "bytes": 1415,
       "path": "results/verified_model_swap_demo/source_receipt.json",
-      "sha256": "e27ba8ac70125edb45b911b9e5fce968608b713e95e85a389b72d43ce8d26d11"
+      "sha256": "a1286421a48d56b58277ca8eb3cc62c04a76af73bdd49106b97d449a36c52bf2"
     },
     {
       "bytes": 30517,
       "path": "results/verified_model_swap_demo/verified_model_swap.latest.json",
-      "sha256": "28d02901f69ad4264eba3276ab58947a0f5eec8432b6ac984d66d38ba5ceddeb"
+      "sha256": "836b23cc9408b1be024ad3ea7675f70c004b79a00072d414b88ec3206a1e8ac1"
     },
     {
-      "bytes": 57825,
+      "bytes": 68842,
       "path": "scripts/release_check.py",
-      "sha256": "3f2005e54dfc08d5972e85decd80155227cdcd65cde2bbeb59e51cfd84255ad5"
+      "sha256": "14463013a762166d296b297462fb81a889da9b9ea50af93499483af274676a01"
     },
     {
       "bytes": 17789,
@@ -1137,6 +1257,16 @@
       "bytes": 9573,
       "path": "scripts/verify_pipelock_benchmark.py",
       "sha256": "5e5e7354ae2151843031faf3d6ec2caf8f9e8448741547df62ff898039affc8e"
+    },
+    {
+      "bytes": 22435,
+      "path": "scripts/verify_role_confusion_consequence.py",
+      "sha256": "ee879455ef9a52e9c4ff26c07a9b0d80118643e7ef4bae6529361a6041398b03"
+    },
+    {
+      "bytes": 10860,
+      "path": "scripts/verify_vendored_half_life.py",
+      "sha256": "b4aaa38771cd031059625e35b09d328dad14d52c9144fca906a47b912138a9f3"
     },
     {
       "bytes": 8052,
@@ -1174,6 +1304,11 @@
       "sha256": "728ddb901a337cc0a6b429c68785a14f7bd6c843d830dc31473501657181f8a8"
     },
     {
+      "bytes": 29868,
+      "path": "tests/test_handoff_check.py",
+      "sha256": "c0129acf34209cef20ff24e8f59c8a3b30555b87919b48610609fa757b68aee0"
+    },
+    {
       "bytes": 13710,
       "path": "tests/test_model_swap.py",
       "sha256": "779a6ade71407e685c310dfb6e46c15f87bb2ba33b04629d77c9bebaf6424adc"
@@ -1197,6 +1332,21 @@
       "bytes": 6040,
       "path": "tests/test_receipt_gate.py",
       "sha256": "992bcaafb4cbf04c725393eef4f5511fddbe432077ab98ba0cec80bc78421c24"
+    },
+    {
+      "bytes": 11856,
+      "path": "tests/test_role_confusion_consequence.py",
+      "sha256": "9737f1065437708b31d40d6feea241ab2dd42470ec18543230d8049339f0c38c"
+    },
+    {
+      "bytes": 2931,
+      "path": "tests/test_role_confusion_freeze.py",
+      "sha256": "816221fe110e6e4331662086941073fcdb2902dad73089ba8a2ec690f3cedc17"
+    },
+    {
+      "bytes": 4113,
+      "path": "tests/test_vendored_half_life.py",
+      "sha256": "d951d6a88c136a637d80b7e6e9070d0b4c8e7201140546d05e00bd43f8c66ce3"
     },
     {
       "bytes": 20122,
@@ -1224,11 +1374,665 @@
       "sha256": "b3aef38b11bd81fa1cb11d3fc0d31050b28594d48dca157cac7667b5a54314ec"
     },
     {
+      "bytes": 820,
+      "path": "vendor/README.md",
+      "sha256": "93122962ac6740f3c14c0108c0863bff63e0de1be926fa53ac62dab88f0f1620"
+    },
+    {
+      "bytes": 1071,
+      "path": "vendor/openline-half-life-0.2.0rc5/LICENSE",
+      "sha256": "07674dfa9960dff5128d0cdcce58fee7543c26ff47e58e07ae6ac0254a0f58b1"
+    },
+    {
+      "bytes": 1197,
+      "path": "vendor/openline-half-life-0.2.0rc5/SOURCE.json",
+      "sha256": "ab03c883120c432363f6ced66bc52954b7e0e731b4c825d309916f43f33b417d"
+    },
+    {
+      "bytes": 24996,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/archive_manifest.json",
+      "sha256": "5688673a9678fa85ccb7fddb5d705009c8ccea7bc6b04f9af241678957ad2cda"
+    },
+    {
+      "bytes": 6574,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/calibrator_policy.json",
+      "sha256": "09485abdba590179e32664e3e913c744c7eb620030ad9c138c407eb983d292ec"
+    },
+    {
+      "bytes": 9060,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/causal_capsule.json",
+      "sha256": "66d06c5a4338f07b46308b66d2b79aee333fab8f9d9b4d071a269d72eb32235a"
+    },
+    {
+      "bytes": 2175,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/0119a1ac2072a759660b6f3c0f779534f347d0da630dd426953f0466be08df2a.json",
+      "sha256": "37371337fc3819011a3109564e8280ac8a017b9c61d41a5b2d9153824f0a9415"
+    },
+    {
+      "bytes": 1342,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/06db7533a041a9967d84451296f931c87f51e9091ab912e637fb49dfa80b2b7f.json",
+      "sha256": "e4aa91307050a51338e75faa5bdf6f40faaf73e606c30461cee57ff58a97b975"
+    },
+    {
+      "bytes": 755,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/099aad33663b35834cb81d5504a8ded4e3be81c2e998110b695b5b5ecefa3d58.json",
+      "sha256": "fec9e0e47fe05cfa212882bfb2f9e492798d4d12f2f3147d6aaa027cdbca1236"
+    },
+    {
+      "bytes": 1552,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/0acf561ebc969262101bf5e24618b5fe14e060f6136a868f9c1a3610eeecd148.json",
+      "sha256": "1f237d982eaf13c45782f11799d0b004a816ffb81a0e7209c12ec510a117dc73"
+    },
+    {
+      "bytes": 1338,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/0e51f00ff97bd3e3000b45ccbed9905e5cd393781c37cf287a7fdc3f59750c86.json",
+      "sha256": "c353c72c8c11bd8e7db51328d28f24b412f037de97d79cfeb7c52fcc67e6ee51"
+    },
+    {
+      "bytes": 1342,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/0f294c92a0710fe6caf580e621c6b2e1e353749d08f230e68afbb995391f86f4.json",
+      "sha256": "c19e3865cdf98cca51bb8239475192e7f965977c3d3254109776a7abb45202ca"
+    },
+    {
+      "bytes": 1804,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/160fe40e8537c852f4fd0f051d5e321c0599b29b82aa71f2148d18651ed801ba.json",
+      "sha256": "b05f508d4d988b85426bb85b52fb3dd2ce04b1da135acb8e8e266a4576c34fcd"
+    },
+    {
+      "bytes": 1343,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/1b6849d1f34247cdb0a1f7d394ee50664d8be3ebee9a65b73e7c0950c1ecc6e9.json",
+      "sha256": "952a568642caeaf0345e20e9f8df467ae886c4328814306cc07708a7184f20cf"
+    },
+    {
+      "bytes": 2175,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/248aed3d1cfe130ba1e4eb7ab82f48319ab877fc8b856ea8ed0431ad76934029.json",
+      "sha256": "894a3b6f727a4ca994dba279c96fa46259068f33255020c33d7c8ef0c24f0b6b"
+    },
+    {
+      "bytes": 1343,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/27088c3fd0aad7641d21278cd94df4871a7651dc0a50824fd54b557c5cc60fce.json",
+      "sha256": "6cb9ab1c321f51f31b8e48d3ae002d80b00fafa320153c8112e728ec304348b0"
+    },
+    {
+      "bytes": 1343,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/2dd51e85b326cbf7cf3b8004a4f5862785e1feecab6757071554695041c85251.json",
+      "sha256": "12baeb383a0454742e48f50cfe6675add71a471af84ed6c0c097b9101f345661"
+    },
+    {
+      "bytes": 1342,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/30f182e2ec449bbb7d5e338d1c95557d11bfcefdbdb5ba692fe883ea6360496f.json",
+      "sha256": "f0547ddc9f382c132e041adc7d2f72d6cfa0633c9a9b6e395ccbe3d12416095a"
+    },
+    {
+      "bytes": 2175,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/33f772fcbf3877392fe147ac55ed3addce54170c6d206ed290d9dd2cbf8a729a.json",
+      "sha256": "4dc321ac0025241d13bc02ad19948d69d8c00490e410ffbeeed2ce6168d34d16"
+    },
+    {
+      "bytes": 2270,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/36e4b699024297831416a750a018f9c1d878f351ffe831c2c6219aac9221d553.json",
+      "sha256": "6789f02a3d602cbb6ebc03c0a9c5a787015bc16550c08967187001bb342cb470"
+    },
+    {
+      "bytes": 1338,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/3a4c262775acbfe14ee84f4968a0eccf07b8bf4ad3295d3e2013fcb14969fe2c.json",
+      "sha256": "60089ffaa1129b43927c7565b0c2a3687cc10617659d3300c0380ad8051f6e23"
+    },
+    {
+      "bytes": 1343,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/3d912cc60a276e43c69a1da360b98037bf48a4ed96fa94bba19228f4d8a4ad76.json",
+      "sha256": "d69479984b65b024dde69d91afa816247c93a32c4ca5572d25f337b78a17ae73"
+    },
+    {
+      "bytes": 1338,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/3e257e10f0076c53924aea8843a94c900c09850be6bc7a53732525804df17efb.json",
+      "sha256": "d726839a4a2e6d0cf8e477cd6d80632577c0b5b374f920691dd3ea82095c8cc2"
+    },
+    {
+      "bytes": 1765,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/41b789fae9473bb7959b3df4dc94e856e930927ba619e39c02ff6748d32acb81.json",
+      "sha256": "9c1439b1f28c05106f8ab52f464edc499f69d52f49e47758ef960d5715d6a33e"
+    },
+    {
+      "bytes": 2255,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/454a0c59911e5caa218aa1309339075b36ae110cb1b02cca4a21ce090e2f3348.json",
+      "sha256": "15c77cd28282fc741bbfaecc9e51da57df0420e6355c7aa4a0136aaf9765c902"
+    },
+    {
+      "bytes": 1343,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/49c1264facc8f1e5a1a8d1a9af18cb699d14189537e57b4a35feadb19f64e634.json",
+      "sha256": "a1b39ba81d90e88d2dc7ae4a10f548f7272829596a1b199c71174f1f13a84432"
+    },
+    {
+      "bytes": 1343,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/539cb7a46a62b28e41655e9f1a6acfd2674d5ccda3a64b876e14aeed0e4e0214.json",
+      "sha256": "1d35a8437b03c8389821a5615b63cbe51f1a14b78b9b740250d794678d25fae4"
+    },
+    {
+      "bytes": 1342,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/5811884e0e93a3598711e9a4d299b8e616c9a60829dcde0122d67e581e81e433.json",
+      "sha256": "6d87210169cb33b2f2bd637234ae432c305a147a9466fdb183e07041131d2b9f"
+    },
+    {
+      "bytes": 1343,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/58e6a4334c4e620ba2e3e1f075f49286bb0205df13b0b1e2d3f4def7c662580f.json",
+      "sha256": "7146e51d82065b4bf0301327ace979a68be8dbac128b6d6d38c5e95e3d3fc55c"
+    },
+    {
+      "bytes": 2255,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/58fb4d259fdb5c30eed4b0280975ac02c7ac5d22f65035f06990e0ddfa55ae38.json",
+      "sha256": "f43b19f20e478adbc8aef64a881695df34b8bb268805f5577356cdeae7309402"
+    },
+    {
+      "bytes": 1834,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/62ced5025545d2b03bad4cc2a59dadef4630c4344420dfe6feb00a918d2c5592.json",
+      "sha256": "7f8e0839e4e378ded13b2fff91e37379c3189fd76f91248e65259d459ee53707"
+    },
+    {
+      "bytes": 2175,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/69a7906936e7eaae359d14751df09dde6158e0df323d61d7eddddc513f2a6d5b.json",
+      "sha256": "f914a0bb74a9ac9ec24e2bda26b8c11005c1f0d53bd0223c85043bba625f9494"
+    },
+    {
+      "bytes": 1773,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/69fa06e804c84baabc3616b0bd59c6a2be176ed11b2e55e7975d2b25d25663ad.json",
+      "sha256": "6d71ff58e8d02e39ffc9215a43465cd4fd92c80b06bbcc54f4828e24301ee75a"
+    },
+    {
+      "bytes": 1342,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/6bd3dd14911d5c4eeff4b4828f0a3bd297b43472e7611447b3fee13fbf66251e.json",
+      "sha256": "4a89f6917af9dae4648244a0a5cadb2496516cd5c18cb0649897b8b78333790c"
+    },
+    {
+      "bytes": 1786,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/6fac24f4b676e870d3b97b27b879bddf257806194c2f918ea40efe90fa9d034b.json",
+      "sha256": "7d0229659d9d4b8747bcc85fe4d141bdd51d6bc2d03b79c3bea687209fc5bb70"
+    },
+    {
+      "bytes": 1342,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/71cbd8c18c21fbc92bf8180f45450f7234abd90cf74624551e44e9fbce26611f.json",
+      "sha256": "348bb498fb68c05280eb91809c7918a2ec6f23519f9a1e148eb0020efd0ad896"
+    },
+    {
+      "bytes": 1342,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/72ab60a388efe9605d401c6516aff6d3264b4231f634339e9e756019f68e1339.json",
+      "sha256": "abc5c4b806c55ec9aedbead038078b877c94894c16821b4a0ed5462135b43a26"
+    },
+    {
+      "bytes": 1343,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/7bee3ef7bd689c7dde3b30adf873bba10ea38e75a1cfdef7699c684fff1da4af.json",
+      "sha256": "8212180cca25688a8714539cf328d310a279e01ac06f6349b7132eb3d0e4f3a5"
+    },
+    {
+      "bytes": 728,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/7d3d409ccb10d987db38984fc7f35ee198475c26dfacaa48a4a561162b618392.json",
+      "sha256": "282db78a2fc98cc61a2d34332c36f8fe34342e3137aa7bd4cd8c01f5675cf194"
+    },
+    {
+      "bytes": 1343,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/7e021d9d7ce3a53a83e1f66ba52521161b4877f0491ee9d32db9d31aae270b7b.json",
+      "sha256": "3807de6b641a23b50a0cf2eb83ad7c514be2a778346f7b845db85c8b9a68d1d9"
+    },
+    {
+      "bytes": 2175,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/861fe1f2f8542e9f8f71674770580dbd055a4ae583b25f75354002232cde29f2.json",
+      "sha256": "1f1a7181bbb9fb83aa3b549dc1d0c54049f3cf0174dbef366e776e378b6e3be0"
+    },
+    {
+      "bytes": 1343,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/86ce08f685540649b5c99e9286985b1a6d13c06b325b327c1a5813e6c6a54042.json",
+      "sha256": "500a32e998e9f97d04467912ec048e2bfc09a65e8a3d62f793ce55a5ce5f954b"
+    },
+    {
+      "bytes": 2346,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/87b85efa750c55d68625d6f749929d683c910fba50e5cae1d245e3e0dc1dff7b.json",
+      "sha256": "9a3da35c0652bac386f9c71572a8e0ff33cb7899851c8b829087476a09cceec1"
+    },
+    {
+      "bytes": 1342,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/8b583b414375ff643467c2973479e6827f9768df473d3dbeb9ace57e7c2dde17.json",
+      "sha256": "a534732070719db868d6742672b23790dfcaf4f9b489d6f97f7dd69ad430e45a"
+    },
+    {
+      "bytes": 2175,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/8bc924da65b7705aa40a53846a423f69ee5a441d05e14943c4059f1ac5ff7f8b.json",
+      "sha256": "9dc39195a10168d098a2eee62c94f4dec17310a7f3676bb0cbd5946a34ac8938"
+    },
+    {
+      "bytes": 1338,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/8d26ec3d80a201aaafdc42ea07d0abc2573cf46e8167f46687f755b059645144.json",
+      "sha256": "ef48f65b71cbdc2e485b2b6804292abeb2da752affe5f0cecc1afaaa0bcf9d89"
+    },
+    {
+      "bytes": 713,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/9157664b2da31b870cd5f996df09784e0b215ebb6ed38764c2a2b22f6224ad59.json",
+      "sha256": "6a5c620eb62502a8e2eedefe2207f4e6e93bdfdfbe28ac99e9c885487577f290"
+    },
+    {
+      "bytes": 1342,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/941279002499c928ae663f4ab1d175544c428f811abc6d1dfd812d24d7e064e9.json",
+      "sha256": "af74372448f7ca2d9e5fc46dfd1dd5fb87d65240ec473df0c89a8b5b3ff00a30"
+    },
+    {
+      "bytes": 1342,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/9c2e6dab35add37e5db81a039dfd214b7457e8480a11c3682dae5eb58de52aef.json",
+      "sha256": "09a08d01d7f2f1de4f9bab1bceafc797d5ecf9ae8038940655705a8f784842da"
+    },
+    {
+      "bytes": 2175,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/9da96a7ca9d64f1c90ff3f994c35529a02379a4bbd944c484d4a188d0f44418a.json",
+      "sha256": "39dd9dbaa1e2896411e9a5448c48ccd0ef1d1fbe846b9dd07e7628dfe9747a4a"
+    },
+    {
+      "bytes": 1857,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/9f6ec0c339162ffe67e47cd09c27c9603742c9951a14b0923e64bbef6a972d70.json",
+      "sha256": "1719920c3d68289501087b7d7c8377038b5bc3595a27fc3ac1dfa1cd7bf884a9"
+    },
+    {
+      "bytes": 2175,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/a0a8dcfeb203183436f7e874a8da92876e05069eee8d38e6af1c3f596ab34bc0.json",
+      "sha256": "7a0d0ebb0c874ff6f80c737fe29504c2db4d8edba07b8bb29600ac808c434281"
+    },
+    {
+      "bytes": 1342,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/a0a9508187ee51bd5677f952e71689a8810cb4eaa0ca52c9a96023b462d23966.json",
+      "sha256": "a0ccf6511b3e5581046e4eb24176556e26825e782bbf8a0eb8d4875d36c8628b"
+    },
+    {
+      "bytes": 1342,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/a877be98d52c7d5a2d97cec5bc097dac25bac98b4ecf5020ef77927ea0121623.json",
+      "sha256": "4c41f190b80615d98fd13d09a40fc297b580cdd1263f5b9d6e079335e41c4a42"
+    },
+    {
+      "bytes": 1342,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/a932d0637c2cb080de45714a38f933378e0820030b30db747807a07c85bf1ee0.json",
+      "sha256": "e99716696305adf7371c5e48f0d5e410b0e6680792f315dd8de947291a4f3e9f"
+    },
+    {
+      "bytes": 1342,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/ad015a6e6115679dcef302dee737a9e0aa92e9a049a129e294b581f08082e083.json",
+      "sha256": "26548ecbc6114a502ccec140819a8eff2cd2fcdf271e2e29531766f25ec7a300"
+    },
+    {
+      "bytes": 2175,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/ad944616ce33a763c373e8ad53f2e4bed1ab31ea63d356dc665aef46b13f2092.json",
+      "sha256": "77c8443f385e06027be238b3c858fe8f089c869b5fa78bb6378abbfb131f7db7"
+    },
+    {
+      "bytes": 1343,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/b57fe4116b34b109bc1f3325ed1789e7eda0da260f0eae64095ee33369fd9642.json",
+      "sha256": "8cca15c81e9e20d65316803ca88545d6f459dcaff05514400612bf7bc399d369"
+    },
+    {
+      "bytes": 1343,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/bb17c8c0cd23058b60eb3c2075351ef175e3f294fce16e92e9c7f471da4a6197.json",
+      "sha256": "3cf88998774814535407a8fae1f5b0701431c487fce5a70cd13edd3aabb8c061"
+    },
+    {
+      "bytes": 679,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/c2a3b1c9a058a7254d8bffce2c1c12ed3234d9672f295fc7272399eddcd4be5d.json",
+      "sha256": "44386e503a7bc4eecd8f326fdf29b2f2039331a5c628a32b4741556746d53bdf"
+    },
+    {
+      "bytes": 1342,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/c4e6dc6b40170249b068c2bcedb04408804dde5dfd945589822cc6235bb2995b.json",
+      "sha256": "5a3db0ee1e7ae95e318c008650e6c54e9ca2c31fc040defafec9cad7c246a911"
+    },
+    {
+      "bytes": 2412,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/c6b83a1e01edecc120bd589c57b456516f8e909201eadbc1590cce4dce6a1ec2.json",
+      "sha256": "23e4151f39210113ee2ebd0bc74d080a70b9777541864ba4fe0390fa03654fa3"
+    },
+    {
+      "bytes": 1342,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/da72d88be7de0a78c672f5344127388eb61cb6f230ed982d32d4a58ce1fb5a2d.json",
+      "sha256": "1610704bfe42fb5021577b78811aefe9aae74fd6af02a728f1f57afc0ed7b3c5"
+    },
+    {
+      "bytes": 1342,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/dea473d9a4045176d118800270ccd765ede80c6505c661fcee8b681b4a9399f0.json",
+      "sha256": "e953af791d6b17c53992b3f4974f65ee400f26335a8f908ed5250d1ca304bee4"
+    },
+    {
+      "bytes": 1342,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/e4d5de39904c5678050c2ccb5a17d3c605b9ebe98a83bd9cffc23c46a3644dfd.json",
+      "sha256": "5b6cc28edefa107dd3506c1a2728438cc94bdcc6b84d549a46cf0d309783034c"
+    },
+    {
+      "bytes": 2175,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/e518e5bc18df1b8a55822a923a9a405910772675f0428e75875968a1e0245036.json",
+      "sha256": "df71c9ea9e4abf1fe7c0cb50b34b876894272e68102b89e1eb5b8079e210af61"
+    },
+    {
+      "bytes": 1342,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/ea9df5fc40cfa4d0582d978bd563cbe67964991da68c71ec3697ccd94e07fdb4.json",
+      "sha256": "873add49389475da7bbd6aa6a65816b6de49f2a003dd179ece00dadf1d8b9bae"
+    },
+    {
+      "bytes": 1343,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/eef8834a928b43697e83fc9be5eaa4d98aab4fa51c97b658d62ae86cf0d9b952.json",
+      "sha256": "58c6c31bab855d74a3cd7832058b4c6fd693ebc2a8ae3fe5c4392503d595eead"
+    },
+    {
+      "bytes": 1342,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/f674d2ed29b14d55a70d6197a8d6df12a8ce24844b397de847d23e11e80ea471.json",
+      "sha256": "8ea4ae3b3f590e63dba7ea1c94886d1aa6128a2350d71a1f2fe9a4486fc725ca"
+    },
+    {
+      "bytes": 1342,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/fb91869f56aec8d021e1a1d2ac8429fda73cd192450998660a8a9d0b5df0f800.json",
+      "sha256": "6e246799d3bdffb10c0d3435c5e5a85f8cb6765e6d82ad3bab7a16d0d3ccac90"
+    },
+    {
+      "bytes": 1767,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/receipts/fc7c82fe51e34a88a1f88be5de1aed30b836cd10e2f0bd1930c6fc7ec81c7c3b.json",
+      "sha256": "41121b9e4c18cf28826ece25212bc4e7e656cc0624c5cacd2dbc06aadabc4ff3"
+    },
+    {
+      "bytes": 512,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/cold_archive/source_anchor.json",
+      "sha256": "5650363b76bc4eafdec3dd2c0a6a5b9af7d08e70996fedf6ab9c3b3efe128647"
+    },
+    {
+      "bytes": 2601,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/compaction_policy.json",
+      "sha256": "8eeb9adba81e32f019a335c855780fb05a511c78f75353a3ff1fc2aa56d2a16d"
+    },
+    {
+      "bytes": 9702,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/compaction_receipt.json",
+      "sha256": "d7417f19dcaa34c8f0a95f90428007bcd94125c87e8e26e4f4e9a8a7cddaba11"
+    },
+    {
+      "bytes": 9236,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/comparison.json",
+      "sha256": "621eed58cb77d02458499de6b751d142670cac4f9d8eedb984ddf5ef7060ac3f"
+    },
+    {
+      "bytes": 826,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/decision_equivalence_report.json",
+      "sha256": "594ef6d21eb251ece77abf0d82865bff8053dd9bb2d0cd195979814d52860714"
+    },
+    {
+      "bytes": 61234,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/full_history_handoff.json",
+      "sha256": "09013b4d6a2ed54630e3e07eead171fe2aba54051f4de6ad4440a69af492c06f"
+    },
+    {
+      "bytes": 154805,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/half_life_receipt.json",
+      "sha256": "7cd5af2f6b45e4198123b60b4f3d1912a27f1c217847cddb200323135d97305a"
+    },
+    {
+      "bytes": 1037,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/receiver_approval.json",
+      "sha256": "c07a39f0d1fea716c4a6e2d31bcdff14742b6ce10c6911be2e31e18f7716be97"
+    },
+    {
+      "bytes": 2663,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/share_card.html",
+      "sha256": "a6235cdede338a0ad9720c4d3de23609707a0c1d102b57ac65b6abb62b5566f6"
+    },
+    {
+      "bytes": 130353,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/turn_assessments.json",
+      "sha256": "c77b42d8f9a60d6520b3f3edc17b365308714aacf13400cf43db97946c1cf9de"
+    },
+    {
+      "bytes": 8712,
+      "path": "vendor/openline-half-life-0.2.0rc5/examples/demo_output/verified_residue_handoff.json",
+      "sha256": "93d56a4ef9b84e09f8ce43a06f77571619d6b43b42a54130c15cfd127cd35455"
+    },
+    {
+      "bytes": 83210,
+      "path": "vendor/openline-half-life-0.2.0rc5/openline_half_life-0.2.0rc5-py3-none-any.whl",
+      "sha256": "02da94dc5f7896a733e883211d65dfd1292b1164d6317ca311294f1bc9c74d77"
+    },
+    {
+      "bytes": 2601,
+      "path": "vendor/openline-half-life-0.2.0rc5/policy/compaction_policy.json",
+      "sha256": "8eeb9adba81e32f019a335c855780fb05a511c78f75353a3ff1fc2aa56d2a16d"
+    },
+    {
+      "bytes": 65,
+      "path": "vendor/openline-half-life-0.2.0rc5/policy/compaction_policy_public_key.hex",
+      "sha256": "b70ac484595fd0ad035bd7c25ed4070b9f8382e1f978245174ea346c9c3acd2c"
+    },
+    {
+      "bytes": 6574,
+      "path": "vendor/openline-half-life-0.2.0rc5/policy/succession_policy.json",
+      "sha256": "09485abdba590179e32664e3e913c744c7eb620030ad9c138c407eb983d292ec"
+    },
+    {
+      "bytes": 65,
+      "path": "vendor/openline-half-life-0.2.0rc5/policy/succession_policy_public_key.hex",
+      "sha256": "bf506944e21e97a895954d14d53a37ac0722c70bb28825dac6ccd1becbc62620"
+    },
+    {
+      "bytes": 7305,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life-0.2.0rc5.dist-info/METADATA",
+      "sha256": "515626558a9b647dd34faff52302d2819f92b86af3326c3bd6f32155ddf971e7"
+    },
+    {
+      "bytes": 3951,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life-0.2.0rc5.dist-info/RECORD",
+      "sha256": "570b4d6579af1bb6846fcd46989670165bdaf09b70e369613009655ac3ae13cf"
+    },
+    {
+      "bytes": 91,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life-0.2.0rc5.dist-info/WHEEL",
+      "sha256": "69e6228a0d35958183cc1812f07c565ce837b95eb51bd8a33acba9fa4f68d6c9"
+    },
+    {
+      "bytes": 67,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life-0.2.0rc5.dist-info/entry_points.txt",
+      "sha256": "e0ed84c880afb3df7dd28503c1ab6d9e7f2a1582ff0a724461de978dd71117ef"
+    },
+    {
+      "bytes": 1071,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life-0.2.0rc5.dist-info/licenses/LICENSE",
+      "sha256": "07674dfa9960dff5128d0cdcce58fee7543c26ff47e58e07ae6ac0254a0f58b1"
+    },
+    {
+      "bytes": 19,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life-0.2.0rc5.dist-info/top_level.txt",
+      "sha256": "362557fb873abde8a0207538da8c45ea16da991c26dda158265f6f2951a458bd"
+    },
+    {
+      "bytes": 106,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/__init__.py",
+      "sha256": "50d5a0778b60609499d54144756758e58b0247803dafe5feaad6407cc6ab5d74"
+    },
+    {
+      "bytes": 48,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/__main__.py",
+      "sha256": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d"
+    },
+    {
+      "bytes": 179,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/adapters/__init__.py",
+      "sha256": "5903ba3230a05a0459e69c07bbb7c7df7a218f090b629f5b368975e8d9ac4c1c"
+    },
+    {
+      "bytes": 302,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/adapters/base.py",
+      "sha256": "6b70a92e6b8f00b95c0c2e353e4607ef91dcb2ab3648b3d0d6a944c29db29ad3"
+    },
+    {
+      "bytes": 6840,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/adapters/deterministic.py",
+      "sha256": "03c57e434474dd6e2c7347ab62092ce6fea67105e552a53e1f206fa7d7e3acd7"
+    },
+    {
+      "bytes": 4830,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/assessment.py",
+      "sha256": "cfffa22b7a3c914a6cf8b2a564d110560fbb2248b3f6895e082eb4000ed23dbf"
+    },
+    {
+      "bytes": 90912,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/causal_compactor.py",
+      "sha256": "52d2a25a946b178013ce89224f49ab67bbda628942c26f324faff97aeacd9a17"
+    },
+    {
+      "bytes": 5104,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/cli.py",
+      "sha256": "5192c3fc48882ffe5e590e0dc16bfcafdcc0a342b3b279a75d3c7a8bb075de2e"
+    },
+    {
+      "bytes": 2208,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/comparison.py",
+      "sha256": "52e22ee559371fcaa94c37b42096290dcfa841e2ffc198266713c32c2eb3c343"
+    },
+    {
+      "bytes": 2026,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/data/exams/heldout_exam.json",
+      "sha256": "7cbecd6a2314aa718fde6759268a3514db40101b2cc832c98c692d6aeaaa7a9e"
+    },
+    {
+      "bytes": 65,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/data/fixtures/demo_receiver_approval_key.hex",
+      "sha256": "5c3b6beb7af982b7c8b0d1af47b0e5eee3997c4339de13e86a56972d2b3b9d0d"
+    },
+    {
+      "bytes": 65,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/data/fixtures/demo_signing_key.hex",
+      "sha256": "e9f0b10b3a011ec6c6d06fbe1c3a45db8342f95fbdba8e488676e9291e99d099"
+    },
+    {
+      "bytes": 46098,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/data/fixtures/gradual_drift.jsonl",
+      "sha256": "59978a3618a37382c569479fc931a329b198aa2d3ac4518a1a800b69884dc276"
+    },
+    {
+      "bytes": 36077,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/data/fixtures/healthy.jsonl",
+      "sha256": "8447def531b3d3a630bc8025f26dc695c695311d301a8c00c32e8d9e0715dd13"
+    },
+    {
+      "bytes": 7291,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/data/fixtures/lost_constraint.jsonl",
+      "sha256": "0d743cf46fae2c8f3c9e3a60ed6f76ce34284f8f799fee93136f9338036c5141"
+    },
+    {
+      "bytes": 8186,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/data/fixtures/stale_evidence_replay.jsonl",
+      "sha256": "030720b045c7b3ae2d2113ada8a89629b4e971bda694f53e462781ac4ecd3c3f"
+    },
+    {
+      "bytes": 7330,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/data/fixtures/sudden_failure.jsonl",
+      "sha256": "9ea1f1ae899f6222b930db51672a2d3738412e573d3452a82c902800c3a044d8"
+    },
+    {
+      "bytes": 8515,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/data/fixtures/unsupported_repetition.jsonl",
+      "sha256": "0026503cbc54322d0840ccfe4967e1a75527221f351c86a20b447a8c6686768a"
+    },
+    {
+      "bytes": 2601,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/data/policy/compaction_policy.json",
+      "sha256": "8eeb9adba81e32f019a335c855780fb05a511c78f75353a3ff1fc2aa56d2a16d"
+    },
+    {
+      "bytes": 65,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/data/policy/compaction_policy_public_key.hex",
+      "sha256": "b70ac484595fd0ad035bd7c25ed4070b9f8382e1f978245174ea346c9c3acd2c"
+    },
+    {
+      "bytes": 6574,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/data/policy/succession_policy.json",
+      "sha256": "09485abdba590179e32664e3e913c744c7eb620030ad9c138c407eb983d292ec"
+    },
+    {
+      "bytes": 65,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/data/policy/succession_policy_public_key.hex",
+      "sha256": "bf506944e21e97a895954d14d53a37ac0722c70bb28825dac6ccd1becbc62620"
+    },
+    {
+      "bytes": 1814,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/evidence.py",
+      "sha256": "fad8bab94c3f8ad99c2853cdcb9cbf096ed50d78c84bf9f6bf60cf26a3334c1e"
+    },
+    {
+      "bytes": 1496,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/exam.py",
+      "sha256": "3d2778ced38dfe89a2ba5d5e5dfdfb4dd933faae4860d311599ec8abf6909416"
+    },
+    {
+      "bytes": 7041,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/handoff.py",
+      "sha256": "514a266dd27bd2e2ac334cafd3988a943e56ded19990c8135859dc9049e45792"
+    },
+    {
+      "bytes": 11265,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/pipeline.py",
+      "sha256": "b55cc468a8e6c3cbccac47d2b2bdcd2fa72e0a77bf0d2f890bcf97a2d08d4eb0"
+    },
+    {
+      "bytes": 8243,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/policy.py",
+      "sha256": "e15d227f25c4e62288c6493e96d385be0024a4e2a3fc604bb1a29212640819e8"
+    },
+    {
+      "bytes": 17647,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/receipts.py",
+      "sha256": "7f73540544fefbf9d9d8914ea1a1c4683f6bfd7388bf5e7b1ea7cf74a9858d62"
+    },
+    {
+      "bytes": 12952,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/reference_replay.py",
+      "sha256": "6079d09924531403f2fbc0090da900f5b1c7a23cf7bab879bb270cc96bb67411"
+    },
+    {
+      "bytes": 7569,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/schema.py",
+      "sha256": "ee71f52a72544f1a93db0c48c2c93ba9d208d21f6d638e0e844a931de5ee0a6a"
+    },
+    {
+      "bytes": 5214,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/share_card.py",
+      "sha256": "4bb555bf1c8fb4277d0cb102b92cfd579ca40ccbfeb2d530c9765a44c673555b"
+    },
+    {
+      "bytes": 2948,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/util.py",
+      "sha256": "4260180823bc3294478a2c843076454643c27f03d331576069dfd8cb1438ee00"
+    },
+    {
+      "bytes": 80,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/vendor/openline_endurance_gate/__init__.py",
+      "sha256": "247aee2eb973f486036d79631e45386e1c09e158b3bd5c58a53b99b11844fce0"
+    },
+    {
+      "bytes": 65099,
+      "path": "vendor/openline-half-life-0.2.0rc5/site/openline_half_life/vendor/openline_endurance_gate/succession.py",
+      "sha256": "0fd92bdfed08107a6826f03131fe6f076744deaad2785b4177c56f484cb35d12"
+    },
+    {
       "bytes": 21841,
       "path": "verify-decision-node.mjs",
       "sha256": "89354b17da6587d11fad1c2a47dc9d84b759c6bdb91888f1c58092d6e5e18ae3"
     }
   ],
+  "handoff_check": {
+    "capsule_sha256": "db94036737c5c6e283c51cd8dd0b35781c1217d3c1534f570cb349abbcc3a9c1",
+    "disposition": "SAFE_TO_CONTINUE",
+    "metrics": {
+      "capsule_bytes": 2275,
+      "capsule_operational_items": 3,
+      "capsule_semantic_items": 3,
+      "context_excluded_basis_points": 0,
+      "repeated_operations_observed": 1,
+      "repeated_reads_or_searches_observed": 1,
+      "restorable_from_source_history": true,
+      "restorable_item_count": 3,
+      "source_bytes": 1398,
+      "source_events": 7
+    },
+    "receipt_sha256": "23dc1af6e6d6cde40781048cc33821d9cbbf2523c569f6a1800d250306be22c9",
+    "source": "generic",
+    "source_history_sha256": "4889c7b2be46c34c58f440681e9e4e172f601786252ead38d42abee7a0cc3ea7"
+  },
   "optional_integrations": {
     "assay": {
       "available": false,
@@ -1261,14 +2065,17 @@
       "demo_executed": true,
       "demo_passed": true,
       "dependency_absent_suite_passed": true,
-      "fixture_root": "/workspace/scratch/f244fb2c8a90/deliverables/dependencies/half-life-src",
+      "fixture_root": "/mnt/data/receiptgate_rc4_fix/vendor/openline-half-life-0.2.0rc5",
       "install_command": "pip install -r requirements-model-swap.txt",
       "integration_test_count": 8,
       "live_integration_tests_executed": true,
       "live_integration_tests_passed": true,
-      "required_for_v0.5_release": true,
+      "required_for_v0.6_release": true,
       "source_commit": "70121b53e86196d69b2c3457174b38ad32667b43",
+      "source_mode": "vendored_offline_fallback",
       "supported": true,
+      "vendored_bundle_errors": [],
+      "vendored_bundle_verified": true,
       "verified_commit_demo_executed": true,
       "verified_commit_demo_passed": true,
       "verified_continuation_authorization_executed": true,
@@ -1339,10 +2146,23 @@
   },
   "release_status": "ready",
   "repo": "openline-receipt-gate",
+  "role_confusion_consequence": {
+    "attack_label_visible_to_gate": false,
+    "authorization_valid_hostile_cases": 6,
+    "authorization_valid_hostile_effects_blocked": 6,
+    "blocked_rows_invoked_effect": false,
+    "case_count": 13,
+    "cases_passed": 13,
+    "injection_text_visible_to_gate": false,
+    "matched_legitimate_twin_committed": true,
+    "passed": true,
+    "protected_effect_callback_count": 3,
+    "unrelated_untrusted_addition_committed": true
+  },
   "schema": "openline.release_manifest.v0.2",
   "verified_commit": {
-    "action_hash": "2f0f5f8ab8783c176bd203a7ff4fb21a9a37ae24f302ce0382d77f84472dffdb",
-    "authorization_hash": "c45913669889169c91018bc4c50803535c8e2b5a68e797583239f36206145386",
+    "action_hash": "b3653e953756d09350d85f8b5977d3ccee9ceb3da0319b44a809d4191dbb8815",
+    "authorization_hash": "d7d111f4511b0bdb29750691f745bdb36ab4c703b3dc73f1c33b784172f05699",
     "decision": "COMMIT",
     "mutations_blocked_before_execution": 9,
     "passed": true,
@@ -1352,7 +2172,7 @@
   },
   "verified_continuation": {
     "authorization_passed": true,
-    "authorization_report_hash": "9d5b9856710fa322fa2ae237db9dc3204e628e3406c0ad16f246f869463ce284",
+    "authorization_report_hash": "86153d3eb6542f8a64a09480f8996308b56ee78c063c16308bcd2e9c5d98d54b",
     "continuation_disposition": "UNDECIDABLE",
     "expired_blocked": true,
     "harness_valid": true,
@@ -1367,10 +2187,10 @@
     "capsule_matches_oracle": true,
     "decision": "COMMIT",
     "passed": true,
-    "proof_card_sha256": "522f08eec322320b96060ed7352d7c38b97fe9ae7fd2aeb721fe3b10d3a723bd",
+    "proof_card_sha256": "ff2f9bbb5071f67f5ad5d145ccc8cb6cfdfc3123f311bac99a9aa6f920cd30e1",
     "summary_lost_count": 7
   },
-  "version": "0.5.0rc8",
+  "version": "0.6.0rc5",
   "warning_time_benchmark": {
     "calibration_clean_runs": 40,
     "calibration_evidence_hash": "7c80e92c12c3782dbc7a2c923331131ed82cc224f25ba01c7351d3131fd66c50",

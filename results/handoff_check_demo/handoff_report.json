@@ -1,0 +1,27 @@
+{
+  "adapter_confidence": "explicit",
+  "blockers": [],
+  "boundary": "The capsule cannot approve itself; the report is computed from an independent replay of the full canonicalized source history.",
+  "capsule_sha256": "db94036737c5c6e283c51cd8dd0b35781c1217d3c1534f570cb349abbcc3a9c1",
+  "decision_changes": [],
+  "detected_source": "generic",
+  "disposition": "SAFE_TO_CONTINUE",
+  "evidence_missing": [],
+  "metrics": {
+    "capsule_bytes": 2275,
+    "capsule_operational_items": 3,
+    "capsule_semantic_items": 3,
+    "context_excluded_basis_points": 0,
+    "repeated_operations_observed": 1,
+    "repeated_reads_or_searches_observed": 1,
+    "restorable_from_source_history": true,
+    "restorable_item_count": 3,
+    "source_bytes": 1398,
+    "source_events": 7
+  },
+  "next_action": "implement the authentication refactor",
+  "reference_sha256": "968f6e57040447144c4e3a7d9f8ee1d5ea67bcd4bf141134df70cc112f380232",
+  "schema": "openline.handoff.report.v2",
+  "source": "generic",
+  "source_history_sha256": "4889c7b2be46c34c58f440681e9e4e172f601786252ead38d42abee7a0cc3ea7"
+}

@@ -1,0 +1,3816 @@
+{
+  "anchor": {
+    "anchor_hash": "58899e6479b64082ca427f1616ddd303a6055d0f27ec0c8f91c620d747a413a7",
+    "chain_digest": "e869a9f9b52d998b55f61d261aff712222f0139e63c0426f4c7e77425ef31d5f",
+    "expected_count": 67,
+    "expected_tail_hash": "013ab0caa0c5a7ae3d8ad0ec89f78aac34f6f5715a36adf05056ea68a200f970",
+    "schema": "openline.endurance.anchor.v1",
+    "signature": "41PTc64UaQg/lvdJwz9ToiiTE0Q7PDDgSwYd4SkO3yQ1foLyok3uvSba8rmwiRLR/O0hXGC0WrczZzXrsNtQBQ==",
+    "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+  },
+  "artifact_hashes": {
+    "archive_manifest.json": "5688673a9678fa85ccb7fddb5d705009c8ccea7bc6b04f9af241678957ad2cda",
+    "calibrator_policy.json": "09485abdba590179e32664e3e913c744c7eb620030ad9c138c407eb983d292ec",
+    "causal_capsule.json": "66d06c5a4338f07b46308b66d2b79aee333fab8f9d9b4d071a269d72eb32235a",
+    "compaction_policy.json": "8eeb9adba81e32f019a335c855780fb05a511c78f75353a3ff1fc2aa56d2a16d",
+    "compaction_receipt.json": "d7417f19dcaa34c8f0a95f90428007bcd94125c87e8e26e4f4e9a8a7cddaba11",
+    "comparison.json": "621eed58cb77d02458499de6b751d142670cac4f9d8eedb984ddf5ef7060ac3f",
+    "decision_equivalence_report.json": "594ef6d21eb251ece77abf0d82865bff8053dd9bb2d0cd195979814d52860714",
+    "full_history_handoff.json": "09013b4d6a2ed54630e3e07eead171fe2aba54051f4de6ad4440a69af492c06f",
+    "receiver_approval.json": "c07a39f0d1fea716c4a6e2d31bcdff14742b6ce10c6911be2e31e18f7716be97",
+    "share_card.html": "a6235cdede338a0ad9720c4d3de23609707a0c1d102b57ac65b6abb62b5566f6",
+    "turn_assessments.json": "c77b42d8f9a60d6520b3f3edc17b365308714aacf13400cf43db97946c1cf9de",
+    "verified_residue_handoff.json": "93d56a4ef9b84e09f8ce43a06f77571619d6b43b42a54130c15cfd127cd35455"
+  },
+  "claim_boundary": "The receipt bundle proves local artifact integrity, receiver-pinned succession and compaction policies, same-exam execution, exact decision-equivalence checks, and hash-addressed archive custody under the disclosed harness. It does not prove universal successor benefit, infer causation, authorize automatic compaction, or authorize automatic retirement.",
+  "compaction": {
+    "active_size_ratio_micros": 93451,
+    "archive_manifest_receipt_hash": "249cc848f2ecb880be2acaab940a96fe326b7b32d3c59be153d49a3c8c4c90e3",
+    "automatic_retirement_authorized": false,
+    "causal_capsule_hash": "d1e21127793cc9a5d80c1a669b44a10301f8ecae0d704916a47d217ae8dda599",
+    "compaction_receipt_hash": "013ab0caa0c5a7ae3d8ad0ec89f78aac34f6f5715a36adf05056ea68a200f970",
+    "decision_equivalence_passed": true,
+    "decision_equivalence_report_hash": "ac314849c9b845906a0829a8089cf9a668cb75122e7f2a411349f845dbede113",
+    "policy_hash": "4354abb073b9e4ae859320c8b5a47a663515dcb7c3ca9493dcae6e64447c8235",
+    "policy_public_key": "34b4d9043156cb6dcf0beb0a2949b7559c940d2bcb6dbe8c53a9b30278e3a746",
+    "policy_version": "0.2",
+    "receiver_approval_hash": "8999e14065457b67862395892f5aa93b261adf8ee1cf5a95bdd7974ad7041b7a",
+    "receiver_approval_public_key": "c6822637c7d310ec57627be00ba259d253749f4aaf644470cffbe53a35f73242",
+    "receiver_disposition": "APPROVE",
+    "source_chain_count": 65,
+    "trusted_key_version": "receiver-compaction-key-v2"
+  },
+  "input_hashes": {
+    "exam_hash": "7759430251d70e2f36da4e7ac43582af08639bef967c0c7096b8364ba4c93aeb",
+    "trajectory_sha256": "59978a3618a37382c569479fc931a329b198aa2d3ac4518a1a800b69884dc276"
+  },
+  "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+  "policy_public_key": "d810f13ea0d000c1c3a201cc568c1774b60f240a709f2f5220fec474254015af",
+  "receipts": [
+    {
+      "index": 0,
+      "kind": "trajectory_turn",
+      "parent_hash": null,
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "92a15f3ceec78eab018b1578555c711c6e5880c327c33f635ffee7d9a46de0ce",
+        "turn_number": 1,
+        "turn_record": {
+          "claims": [
+            {
+              "evidence_refs": [
+                "ev-region-current"
+              ],
+              "id": "claim-region-1",
+              "last_verified_turn": 1,
+              "material": true,
+              "slot": "deployment_region",
+              "support_status": "supported",
+              "value": "us-west-2"
+            }
+          ],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 903,
+            "output_tokens": 241
+          },
+          "evidence": [
+            {
+              "expires_after_turns": 100,
+              "id": "ev-region-current",
+              "observed_turn": 1,
+              "sha256": "c7b7c2a87f6300bf85b57d01b46c9e7d11dd4bcbf8a446915ffa346e8d7dbca8"
+            }
+          ],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 1.",
+          "turn": 1,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "160fe40e8537c852f4fd0f051d5e321c0599b29b82aa71f2148d18651ed801ba",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "7AWIIYTKqmfpwSnUFLWWc3tc6qoQ/hfKNzMgYh5k9Vlu012+B64emqC6s/P2oDpsgmbrywbRRiwIst0g8pYzAA==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 1,
+      "kind": "trajectory_turn",
+      "parent_hash": "160fe40e8537c852f4fd0f051d5e321c0599b29b82aa71f2148d18651ed801ba",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "5a6587762f6eb1afa57ff0a67d6384041cdd06e13328c5c64a0daa7e68c5d7bc",
+        "turn_number": 2,
+        "turn_record": {
+          "claims": [
+            {
+              "evidence_refs": [
+                "ev-budget-current"
+              ],
+              "id": "claim-budget-2",
+              "last_verified_turn": 2,
+              "material": true,
+              "slot": "max_batch_size",
+              "support_status": "supported",
+              "value": "300"
+            }
+          ],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 906,
+            "output_tokens": 242
+          },
+          "evidence": [
+            {
+              "expires_after_turns": 100,
+              "id": "ev-budget-current",
+              "observed_turn": 2,
+              "sha256": "965f7f03010125d8edb6edc79963bdcfee9b505429365159f4ca084041c54ff9"
+            }
+          ],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 2.",
+          "turn": 2,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "9f6ec0c339162ffe67e47cd09c27c9603742c9951a14b0923e64bbef6a972d70",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "vVfXIl8tszLYjrNZnjBx9YH0wy6lEzV3IDeT9xMNcibU0zNNZpC2JBkL7KL37BIkIEzdB77t2KdWRpWFSt4lBA==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 2,
+      "kind": "trajectory_turn",
+      "parent_hash": "9f6ec0c339162ffe67e47cd09c27c9603742c9951a14b0923e64bbef6a972d70",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "93ca0bd6d3b4413e3923c99ef3cb039605c8a1505e09706a5f4dc2da07621dff",
+        "turn_number": 3,
+        "turn_record": {
+          "claims": [],
+          "constraints": [
+            {
+              "active": true,
+              "evidence_refs": [
+                "ev-privacy"
+              ],
+              "id": "privacy-floor",
+              "last_verified_turn": 3,
+              "text": "Never delete customer data."
+            }
+          ],
+          "cost": {
+            "input_tokens": 909,
+            "output_tokens": 243
+          },
+          "evidence": [
+            {
+              "expires_after_turns": 100,
+              "id": "ev-privacy",
+              "observed_turn": 3,
+              "sha256": "1a871a165561a1f67c980fe8678babb8d54b98254b8008893412d7fedd11c97b"
+            }
+          ],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 3.",
+          "turn": 3,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "6fac24f4b676e870d3b97b27b879bddf257806194c2f918ea40efe90fa9d034b",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "S907HjsaU2XSiRG83LwWlzYmyqZIb2rPHLD7rww9ZQ+ihjcmMQvtXav/mtq6G+j6iSHQf+rto8b3NDI5xTRJDw==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 3,
+      "kind": "trajectory_turn",
+      "parent_hash": "6fac24f4b676e870d3b97b27b879bddf257806194c2f918ea40efe90fa9d034b",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "3179edf3e6c35ef8bcadddf595f959b1caa4c0c30693152f156592664fbfb783",
+        "turn_number": 4,
+        "turn_record": {
+          "claims": [
+            {
+              "evidence_refs": [
+                "ev-api-v2"
+              ],
+              "id": "claim-api-4",
+              "last_verified_turn": 4,
+              "material": true,
+              "slot": "api_version",
+              "support_status": "supported",
+              "value": "v2"
+            }
+          ],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 912,
+            "output_tokens": 244
+          },
+          "evidence": [
+            {
+              "expires_after_turns": 100,
+              "id": "ev-api-v2",
+              "observed_turn": 4,
+              "sha256": "46ebdf0ff58fd231ab3f7dc6ac11f51bd3fd0f93be74e40cf3c13e1aa8e81122"
+            }
+          ],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 4.",
+          "turn": 4,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "62ced5025545d2b03bad4cc2a59dadef4630c4344420dfe6feb00a918d2c5592",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "z5FcGcZBZEgg56x/591d1TASUK562slYQdagccpIj1YtIJFWklCClkDwFKQEtzSvSw6Oxd+OKZOQi65d637BAg==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 4,
+      "kind": "trajectory_turn",
+      "parent_hash": "62ced5025545d2b03bad4cc2a59dadef4630c4344420dfe6feb00a918d2c5592",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "8a4f48bae150b7b788eb9e7eb3ff7fb695fb6bb17ef7145279e0e48e71805ce7",
+        "turn_number": 5,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 915,
+            "output_tokens": 245
+          },
+          "evidence": [
+            {
+              "expires_after_turns": 12,
+              "id": "ev-api-v1-old",
+              "observed_turn": 5,
+              "sha256": "1b4b3688f0a56c7755d74b00883a1e59d91e3804e185ce19db520c3a3dbe051c"
+            }
+          ],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 5.",
+          "turn": 5,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "0acf561ebc969262101bf5e24618b5fe14e060f6136a868f9c1a3610eeecd148",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "+myxqyUDAVEnE+hmIF9Vr9bONFPxKNFckK9SGKOr+0Y5t4aJazcz4JvvaT5qMYdyi4vrEUdYMvpJd7C9ljGSCQ==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 5,
+      "kind": "trajectory_turn",
+      "parent_hash": "0acf561ebc969262101bf5e24618b5fe14e060f6136a868f9c1a3610eeecd148",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "aa3fc57bca9354a01db2a0d25cb75db80e53921d4cef72a1384703e6e30cf52b",
+        "turn_number": 6,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 918,
+            "output_tokens": 246
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 6.",
+          "turn": 6,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "8d26ec3d80a201aaafdc42ea07d0abc2573cf46e8167f46687f755b059645144",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "1JCP9fJh9tcHbcIMznRQdxGLNecSb64zl4NQT0K0qxmY51PH42RBnlhmzSM1OSPJf1puUgt9Za1/f/17FOOkAg==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 6,
+      "kind": "trajectory_turn",
+      "parent_hash": "8d26ec3d80a201aaafdc42ea07d0abc2573cf46e8167f46687f755b059645144",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "1798c567b2cad9bfa04481553d59cfee4b31b9db9f7911b609c7f71a97b62d30",
+        "turn_number": 7,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 921,
+            "output_tokens": 247
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 7.",
+          "turn": 7,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "3e257e10f0076c53924aea8843a94c900c09850be6bc7a53732525804df17efb",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "yjImbGlsUlMj75U9hxd8Lr49/g4RDgMxCJFoaR67GAo53SyLRI0c92QSf38lto06dx/x64ks6kC2xM3Vv9c8DA==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 7,
+      "kind": "trajectory_turn",
+      "parent_hash": "3e257e10f0076c53924aea8843a94c900c09850be6bc7a53732525804df17efb",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "24bcda5347cd4f83eef225428a4fbc5e9c39e131872176f9f12dcfb432e1145e",
+        "turn_number": 8,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 924,
+            "output_tokens": 248
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 8.",
+          "turn": 8,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "0e51f00ff97bd3e3000b45ccbed9905e5cd393781c37cf287a7fdc3f59750c86",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "2v7GVlk5vcSWvrcBTnz3WJju+/uovgZwe/c1JEBj5MsYogfVpnCHoQj/lhcEwlUBiW5YwWzV08dNBDX/s+tSAg==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 8,
+      "kind": "trajectory_turn",
+      "parent_hash": "0e51f00ff97bd3e3000b45ccbed9905e5cd393781c37cf287a7fdc3f59750c86",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "c2dab82dd2f05d6b5ceeed881c22487e9244a6314798d46f3b0a4232fe4052d7",
+        "turn_number": 9,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 927,
+            "output_tokens": 249
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 9.",
+          "turn": 9,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "3a4c262775acbfe14ee84f4968a0eccf07b8bf4ad3295d3e2013fcb14969fe2c",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "XsRFodGKhsLJES/OuCRnSCp3NGdVwzkUPbNFEemSkn8+cJhLSw2us34La8CVxI3jniNWZ7HAX95qYB4NfyLnBg==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 9,
+      "kind": "trajectory_turn",
+      "parent_hash": "3a4c262775acbfe14ee84f4968a0eccf07b8bf4ad3295d3e2013fcb14969fe2c",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "aa912cdb3b977322592d3dc87ccee8afabf48ae3f7080ab0f782ccd337638c77",
+        "turn_number": 10,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 930,
+            "output_tokens": 250
+          },
+          "evidence": [
+            {
+              "expires_after_turns": 100,
+              "id": "ev-migration",
+              "observed_turn": 10,
+              "sha256": "3065a13ab428f14889d72d8356e8d7bd805b1998ddfd0bb67f492004f77f2c3c"
+            }
+          ],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [
+            {
+              "confirmed": true,
+              "evidence_refs": [
+                "ev-migration"
+              ],
+              "id": "migration-complete",
+              "text": "Migration completed and verified."
+            }
+          ],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 10.",
+          "turn": 10,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "69fa06e804c84baabc3616b0bd59c6a2be176ed11b2e55e7975d2b25d25663ad",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "1Jrya1VBfXF5LaQU0yM64rqgGN7AXzz2MrPlAIBwyq89QPo+g+UkGT65bynoshxtxq3JsB8hP0DxSplSW9lKCQ==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 10,
+      "kind": "trajectory_turn",
+      "parent_hash": "69fa06e804c84baabc3616b0bd59c6a2be176ed11b2e55e7975d2b25d25663ad",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "9c5b0f9a6f12521138765c62aa7e86eaab3b5cfbe06342c3e7b7d627d7075caf",
+        "turn_number": 11,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 933,
+            "output_tokens": 251
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 11.",
+          "turn": 11,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "71cbd8c18c21fbc92bf8180f45450f7234abd90cf74624551e44e9fbce26611f",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "iefar8WmIAbxXWN77lTTeT60v0S53GPmdCt9VF1YYlBX3wTBScprosv40gehDUUmhAoXgpVU7pE+S9GeLqrOAA==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 11,
+      "kind": "trajectory_turn",
+      "parent_hash": "71cbd8c18c21fbc92bf8180f45450f7234abd90cf74624551e44e9fbce26611f",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "d2656428dbffee4088451232a8777f605d8d767a9c3db3ce2618b92441e67b3b",
+        "turn_number": 12,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 936,
+            "output_tokens": 252
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 12.",
+          "turn": 12,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "a932d0637c2cb080de45714a38f933378e0820030b30db747807a07c85bf1ee0",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "RkZ3ZOiVoSNfZf96NJ0BCPVjMlpNUTnqqbBuSYYhoeqKZfopFLdo/rHFIETVG3H2FtneYDYfhD8XPNu55dBvCQ==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 12,
+      "kind": "trajectory_turn",
+      "parent_hash": "a932d0637c2cb080de45714a38f933378e0820030b30db747807a07c85bf1ee0",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "930781cdc39735bd3de4c437f3be242486010f31dc1139e9cd8afe3f376b5550",
+        "turn_number": 13,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 939,
+            "output_tokens": 253
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 13.",
+          "turn": 13,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "6bd3dd14911d5c4eeff4b4828f0a3bd297b43472e7611447b3fee13fbf66251e",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "rCVwL3lrfnSNQETzcWNKy779vJba3i/2pP7nxoZSI7ux7nypgQH9vRWq7s99ByA/xK8K2WicNvkNYkJnTZvMBQ==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 13,
+      "kind": "trajectory_turn",
+      "parent_hash": "6bd3dd14911d5c4eeff4b4828f0a3bd297b43472e7611447b3fee13fbf66251e",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "cd871b53cace5ef5c58934a797ef719dcd4863c07696e3dcd40eab90333e93e7",
+        "turn_number": 14,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 942,
+            "output_tokens": 254
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 14.",
+          "turn": 14,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "da72d88be7de0a78c672f5344127388eb61cb6f230ed982d32d4a58ce1fb5a2d",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "d/rtTgjVpPsFnWuZ8TU29P94xdlF8Db/8v1aKyu+GknnLDX3jt+5qBQtkWkO157UdPaRnjFa9kH8O56J6FaFDg==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 14,
+      "kind": "trajectory_turn",
+      "parent_hash": "da72d88be7de0a78c672f5344127388eb61cb6f230ed982d32d4a58ce1fb5a2d",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "c45374aadc986c3348cc6d0aeb0d7e92911c367e313f7234be90432a91f7e457",
+        "turn_number": 15,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 945,
+            "output_tokens": 255
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 15.",
+          "turn": 15,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "5811884e0e93a3598711e9a4d299b8e616c9a60829dcde0122d67e581e81e433",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "WlOA/WB0Prbo5YPAGvucQQWpXrnQv9RhL5AVrSFde+qJ4lmyP9xPI7QF0+X+sy6kxy90rfhe6mGkDRO+EXhuCQ==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 15,
+      "kind": "trajectory_turn",
+      "parent_hash": "5811884e0e93a3598711e9a4d299b8e616c9a60829dcde0122d67e581e81e433",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "352d596c9bce76a288a4498eca7534edefa29b0410290e1ed3bd4fc79a6f487d",
+        "turn_number": 16,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 948,
+            "output_tokens": 256
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 16.",
+          "turn": 16,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "e4d5de39904c5678050c2ccb5a17d3c605b9ebe98a83bd9cffc23c46a3644dfd",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "8N/bu7zfk8v+urXSzx8yQrxyn69G5SEqNxCgLzmFnj/zSEu2REvmirzxz3H3ak8YjysCKP0o371Glse7gWzlAA==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 16,
+      "kind": "trajectory_turn",
+      "parent_hash": "e4d5de39904c5678050c2ccb5a17d3c605b9ebe98a83bd9cffc23c46a3644dfd",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "cc5b3867d482e1b839362a6c9ad416219f6a714e433c39fdf282e56767cdd39a",
+        "turn_number": 17,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 951,
+            "output_tokens": 257
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 17.",
+          "turn": 17,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "30f182e2ec449bbb7d5e338d1c95557d11bfcefdbdb5ba692fe883ea6360496f",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "i0LyKcMJzogagfcrpwnblNNSfHkducFtLzZT9122KvWN4puc/wIkg6vUTddoWUZJBNWvB9FR5FPFJiyuRqAIDw==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 17,
+      "kind": "trajectory_turn",
+      "parent_hash": "30f182e2ec449bbb7d5e338d1c95557d11bfcefdbdb5ba692fe883ea6360496f",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "0bd3d79bbc344f6e9697822d29020e291a08bab7b050280ccc2cf30d8bb7b2a4",
+        "turn_number": 18,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 954,
+            "output_tokens": 258
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 18.",
+          "turn": 18,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "a877be98d52c7d5a2d97cec5bc097dac25bac98b4ecf5020ef77927ea0121623",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "CR/Xx0y2LJr2Qqz5iBZ9I7jXUQIMlL13zwjKX83nJD8eUOgJf9J697R5oL2PXYnjMvC34wMz+sKz8Pyth2SmCQ==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 18,
+      "kind": "trajectory_turn",
+      "parent_hash": "a877be98d52c7d5a2d97cec5bc097dac25bac98b4ecf5020ef77927ea0121623",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "46768a3e1f1834340d34bde55d1b94be32afc08fe5a3e8130bf7767d708ca475",
+        "turn_number": 19,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 957,
+            "output_tokens": 259
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 19.",
+          "turn": 19,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "9c2e6dab35add37e5db81a039dfd214b7457e8480a11c3682dae5eb58de52aef",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "lA40AXKra/fdBQom4zLiX9lW/E5G2g55QwTD+PMdUnODIrtF8m5W4nT0vQsmCPIXSqZI7wKc7duji1WBUvZaDg==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 19,
+      "kind": "trajectory_turn",
+      "parent_hash": "9c2e6dab35add37e5db81a039dfd214b7457e8480a11c3682dae5eb58de52aef",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "9d93b47823f199c02d68657731668e19750e5e9d9d8cfd0f34095e32c64b04d9",
+        "turn_number": 20,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 960,
+            "output_tokens": 260
+          },
+          "evidence": [
+            {
+              "expires_after_turns": 100,
+              "id": "ev-tests",
+              "observed_turn": 20,
+              "sha256": "8ce48a0166ce7a50fe71182d834076d932e8796218b1d0e5ccd7a77cafc9dd48"
+            }
+          ],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [
+            {
+              "confirmed": true,
+              "evidence_refs": [
+                "ev-tests"
+              ],
+              "id": "tests-complete",
+              "text": "Held-out deployment tests completed."
+            }
+          ],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 20.",
+          "turn": 20,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "41b789fae9473bb7959b3df4dc94e856e930927ba619e39c02ff6748d32acb81",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "f3c3QmxPfu70OoGJilDItCzR/gaqQBLPZixQHLghwcKICMg5/RhCFtQEUeR7ua8WMA4jImy2cFLAY3iAaJE2Cg==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 20,
+      "kind": "trajectory_turn",
+      "parent_hash": "41b789fae9473bb7959b3df4dc94e856e930927ba619e39c02ff6748d32acb81",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "f39c8f5a8ee164aeec80dc3c532bed9ea6d65d164bdda5625b949c5dd3d2e6e1",
+        "turn_number": 21,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 963,
+            "output_tokens": 261
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 21.",
+          "turn": 21,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "ad015a6e6115679dcef302dee737a9e0aa92e9a049a129e294b581f08082e083",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "CaMl63A4eg7Of9vCrH4AJzElmZpe9NCg15lCraGPyi/da79KdDf7BFwKTpKxV3jzLqFlInuFWm/kq0g6gePjAg==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 21,
+      "kind": "trajectory_turn",
+      "parent_hash": "ad015a6e6115679dcef302dee737a9e0aa92e9a049a129e294b581f08082e083",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "1b3800728606cbed10852d226208743cf96bc7e9610bd7678ab230c3707e915a",
+        "turn_number": 22,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 966,
+            "output_tokens": 262
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 22.",
+          "turn": 22,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "941279002499c928ae663f4ab1d175544c428f811abc6d1dfd812d24d7e064e9",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "l7zgCZoNrlLVMpntfGbd09Z3zQb2/7Dg0mki//xXF8pSanpN9PEYVZCY1QR8dnEEFL6vl1YaXSzMLVCfaqboCw==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 22,
+      "kind": "trajectory_turn",
+      "parent_hash": "941279002499c928ae663f4ab1d175544c428f811abc6d1dfd812d24d7e064e9",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "c42cf6aeca9504c518b664c06207a9aaedaafe48b61f9947685fb5ab3ba57041",
+        "turn_number": 23,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 969,
+            "output_tokens": 263
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 23.",
+          "turn": 23,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "c4e6dc6b40170249b068c2bcedb04408804dde5dfd945589822cc6235bb2995b",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "g4i+3fzqRCN/XDFdaK/Y2A29wK+pEeHUaBozFGv6QpK6OqNX4Haa2QBaMD0kS/6/vhhOUHy+fW/3UrIpiuv3Cg==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 23,
+      "kind": "trajectory_turn",
+      "parent_hash": "c4e6dc6b40170249b068c2bcedb04408804dde5dfd945589822cc6235bb2995b",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "a641cf114ab17d9ac6f981ef7d444a6b90a1170fbf5a07da92680acb27e79ad4",
+        "turn_number": 24,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 972,
+            "output_tokens": 264
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 24.",
+          "turn": 24,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "06db7533a041a9967d84451296f931c87f51e9091ab912e637fb49dfa80b2b7f",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "OC5pZu9hPtk5YbGY/OZNgH3H/NKriGNTbKZM1vMRYFEhTqZ1SVZ/xEW0EOEIPXzid+JflYwJpQhQEVgfugUFAg==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 24,
+      "kind": "trajectory_turn",
+      "parent_hash": "06db7533a041a9967d84451296f931c87f51e9091ab912e637fb49dfa80b2b7f",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "abd765aa867469a7bf8d40e86ac9a77e8b083549b7e951ff933d44228df8df29",
+        "turn_number": 25,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 975,
+            "output_tokens": 265
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 25.",
+          "turn": 25,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "8b583b414375ff643467c2973479e6827f9768df473d3dbeb9ace57e7c2dde17",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "6Jexl0yIJktaXjvBSgeE+yJaJEES2ZWIZfWiqAnlvqRwn1ZBoVKPsaSobfOV3UiKz3jXe5ccB5QpDQ38z5jSBA==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 25,
+      "kind": "trajectory_turn",
+      "parent_hash": "8b583b414375ff643467c2973479e6827f9768df473d3dbeb9ace57e7c2dde17",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "867e2bb4a75c99467da40f336ce8b4d3c7711031919f296daa11256139294fe3",
+        "turn_number": 26,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 978,
+            "output_tokens": 266
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 26.",
+          "turn": 26,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "fb91869f56aec8d021e1a1d2ac8429fda73cd192450998660a8a9d0b5df0f800",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "Uo1Uynt9BiyMf/pFrsVkySe3Qo07Hg/PZWug36j+hIhfhGoHD7njvDTDtZSsVzceY4iL1DYuM7DHiED4NKxSCQ==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 26,
+      "kind": "trajectory_turn",
+      "parent_hash": "fb91869f56aec8d021e1a1d2ac8429fda73cd192450998660a8a9d0b5df0f800",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "e8fb59602a0d87af07bcb35a52f17ea57c76b018c23492c9110562b2b48596e2",
+        "turn_number": 27,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 981,
+            "output_tokens": 267
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 27.",
+          "turn": 27,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "f674d2ed29b14d55a70d6197a8d6df12a8ce24844b397de847d23e11e80ea471",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "ZtRkO2e1XORa+iSlwWdadqMhQ1zfW7411n9H7JJayisdZ0sCMpnBQ/uVyJ+4DdPoVxD1SlK3rdveczDrbGkJBw==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 27,
+      "kind": "trajectory_turn",
+      "parent_hash": "f674d2ed29b14d55a70d6197a8d6df12a8ce24844b397de847d23e11e80ea471",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "cb32169c8b5d8cc5d73e9f28f4f4afc50541adfad1fc6d2cd32406685a8a4575",
+        "turn_number": 28,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 984,
+            "output_tokens": 268
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 28.",
+          "turn": 28,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "ea9df5fc40cfa4d0582d978bd563cbe67964991da68c71ec3697ccd94e07fdb4",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "uKEjmTtHkVu++UbAgFx25YncdC00M6FiMR8twk+NQ/c5y3uP4qqqmM27kAww3QvPnZ2l0DFpLSGaIfoZyTaxAQ==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 28,
+      "kind": "trajectory_turn",
+      "parent_hash": "ea9df5fc40cfa4d0582d978bd563cbe67964991da68c71ec3697ccd94e07fdb4",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "2324e92d2938f22d47f7513bd55a17ea737c68419d22d1ecbbaa9ed4c3ee6ebb",
+        "turn_number": 29,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 987,
+            "output_tokens": 269
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 29.",
+          "turn": 29,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "dea473d9a4045176d118800270ccd765ede80c6505c661fcee8b681b4a9399f0",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "7B776cHB9CfAwvzmNG4cL91MNvBVs5EePSE2oswYY5udWSVTsFFzlXsxZ5elv0f6eayU5ysJdi0WpQ+B0ZLLCw==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 29,
+      "kind": "trajectory_turn",
+      "parent_hash": "dea473d9a4045176d118800270ccd765ede80c6505c661fcee8b681b4a9399f0",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "e3122bf26ec7486da2cca59af72b694f56e2304e8b967379b9d90b08c17f6eab",
+        "turn_number": 30,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 990,
+            "output_tokens": 270
+          },
+          "evidence": [
+            {
+              "expires_after_turns": 100,
+              "id": "ev-owner",
+              "observed_turn": 30,
+              "sha256": "8341c6cb8604d3782d81a3ebfdb9ec08ccef6fc5c19ad3c5add01fca783f5104"
+            }
+          ],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [
+            {
+              "confirmed": true,
+              "evidence_refs": [
+                "ev-owner"
+              ],
+              "id": "owner-approved",
+              "text": "Receiver approved the deployment plan."
+            }
+          ],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 30.",
+          "turn": 30,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "fc7c82fe51e34a88a1f88be5de1aed30b836cd10e2f0bd1930c6fc7ec81c7c3b",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "1o6mgQgzPwsw5PixbdeCuHt4FwFvQTWllu9r11KUHtkiRrhH+7hHcjoTrCDjUxYdO56UJ+wL2Q4r0zg2mu3SAg==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 30,
+      "kind": "trajectory_turn",
+      "parent_hash": "fc7c82fe51e34a88a1f88be5de1aed30b836cd10e2f0bd1930c6fc7ec81c7c3b",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "a2951e19a4bbd3421cfd969c121a54637c8b626125f8f0386bfc348061cd1c16",
+        "turn_number": 31,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 993,
+            "output_tokens": 271
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 31.",
+          "turn": 31,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "0f294c92a0710fe6caf580e621c6b2e1e353749d08f230e68afbb995391f86f4",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "uLw21j7Selulq4CpnpqpVXqdDWnG6NImEztmZjnvZlxbD8rZu0Vca2zwhmSZcigjuTh4CmonDGCeJEzenQpyCw==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 31,
+      "kind": "trajectory_turn",
+      "parent_hash": "0f294c92a0710fe6caf580e621c6b2e1e353749d08f230e68afbb995391f86f4",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "6e0c0fa2b1d02abdcefd9ec507603247a3e910800c649f844ce0358f486e1dc2",
+        "turn_number": 32,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 996,
+            "output_tokens": 272
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 32.",
+          "turn": 32,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "a0a9508187ee51bd5677f952e71689a8810cb4eaa0ca52c9a96023b462d23966",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "0HCPXPtDGSVaCUTJU04yS6L0sQdMUqeP2262e9TbGb5Xl6MWdfu8zHmS+MLBAsKRquNCTaT8FZFNsLQVLk+BCA==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 32,
+      "kind": "trajectory_turn",
+      "parent_hash": "a0a9508187ee51bd5677f952e71689a8810cb4eaa0ca52c9a96023b462d23966",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "477e215ee8620b6cc2730687ee37cdd5a47eac79f58e53d89b3003f168764f4a",
+        "turn_number": 33,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 999,
+            "output_tokens": 273
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 33.",
+          "turn": 33,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "72ab60a388efe9605d401c6516aff6d3264b4231f634339e9e756019f68e1339",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "BtdtaLoBxU9TjagO6dp7/MFekknBZZ5ZGQcBl6Xx1ECQ0MVthOH3Xclrhjpo98moHkLY1zjhnCBF613mjE4sCw==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 33,
+      "kind": "trajectory_turn",
+      "parent_hash": "72ab60a388efe9605d401c6516aff6d3264b4231f634339e9e756019f68e1339",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "b72733f5b2ac5932d0e5b70f26979a1a630e1f2d1ec4eeddce832fb534c4c5a8",
+        "turn_number": 34,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 1002,
+            "output_tokens": 274
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 34.",
+          "turn": 34,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "7e021d9d7ce3a53a83e1f66ba52521161b4877f0491ee9d32db9d31aae270b7b",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "Xi+FMNCLCQsTI1T+P+KgK07oAK0UiFTV7hHA5PF2bMnXV12xF1WJtt1XPJXQfc65xzIpGtw+iIj0H08OCw/rAg==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 34,
+      "kind": "trajectory_turn",
+      "parent_hash": "7e021d9d7ce3a53a83e1f66ba52521161b4877f0491ee9d32db9d31aae270b7b",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "f3456d33adbc91d0bb0c88ef4e42e95185bc5ac6f005a7260abb228dcb84628e",
+        "turn_number": 35,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 1005,
+            "output_tokens": 275
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 35.",
+          "turn": 35,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "1b6849d1f34247cdb0a1f7d394ee50664d8be3ebee9a65b73e7c0950c1ecc6e9",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "s2n6CjGWSTmxHRp64KlBhh1dxgvhxBUYu46IObVdY4MsoYfqzYzNMeXT1zIdV/rMmtnZslqNz3gEH95gsiCpAA==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 35,
+      "kind": "trajectory_turn",
+      "parent_hash": "1b6849d1f34247cdb0a1f7d394ee50664d8be3ebee9a65b73e7c0950c1ecc6e9",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "459df71d6285953f200261f852856844a2153842f048179f8dbcf5905e3ef924",
+        "turn_number": 36,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 1008,
+            "output_tokens": 276
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 36.",
+          "turn": 36,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "7bee3ef7bd689c7dde3b30adf873bba10ea38e75a1cfdef7699c684fff1da4af",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "07Y2urVbgj9iwsbN+Gqho6HezDyA1CYnOXVEIQRMkOoKCAULSmZSwzsDhCIIrsaiNsVhgI1pfs5FoMKCcQJXCA==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 36,
+      "kind": "trajectory_turn",
+      "parent_hash": "7bee3ef7bd689c7dde3b30adf873bba10ea38e75a1cfdef7699c684fff1da4af",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "d76a2a2c9e10dabbd1043f23dc4f28ff2b912465e25b1f31d8ad9928774b0ed8",
+        "turn_number": 37,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 1011,
+            "output_tokens": 277
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 37.",
+          "turn": 37,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "49c1264facc8f1e5a1a8d1a9af18cb699d14189537e57b4a35feadb19f64e634",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "1o6EVd5NNsv4xZMHzYbWQrMgEyWKqzbN0osZevK7Cp2mnhK/UdOJUgBwXNFw/z19D8WmGjtFWSN4x6KgbQVPAQ==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 37,
+      "kind": "trajectory_turn",
+      "parent_hash": "49c1264facc8f1e5a1a8d1a9af18cb699d14189537e57b4a35feadb19f64e634",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "0f828d19d880d16759fb770c50fb7c3238924869c2face1e52dabe7f18584d05",
+        "turn_number": 38,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 1014,
+            "output_tokens": 278
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 38.",
+          "turn": 38,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "27088c3fd0aad7641d21278cd94df4871a7651dc0a50824fd54b557c5cc60fce",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "ak/mj3I68ReGNYyO5NzmmgH2MSjrhbXmwx5HWjq4HXLo9ktw/a8jRl6O74ZtOc4/1MBBJY/xlv9lkMEoPheXAA==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 38,
+      "kind": "trajectory_turn",
+      "parent_hash": "27088c3fd0aad7641d21278cd94df4871a7651dc0a50824fd54b557c5cc60fce",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "89d9d86b35c6040667f5d0f872efdda342bbf920ade2548446cdd08cae1b7b73",
+        "turn_number": 39,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 1017,
+            "output_tokens": 279
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 39.",
+          "turn": 39,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "b57fe4116b34b109bc1f3325ed1789e7eda0da260f0eae64095ee33369fd9642",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "yfH60yIKy3w9FlCQdnSDPEJ1HdKalOuVUg6q9GZxKFKG6MuquaZoXLuv8Lgn/6dkbXtXCu9TvG1pcHd9zrVFBA==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 39,
+      "kind": "trajectory_turn",
+      "parent_hash": "b57fe4116b34b109bc1f3325ed1789e7eda0da260f0eae64095ee33369fd9642",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "523b46d4f95c22ee7ee810f1a9156dad02580b5ac234948308980b6b50ed79d7",
+        "turn_number": 40,
+        "turn_record": {
+          "claims": [
+            {
+              "evidence_refs": [
+                "ev-region-current"
+              ],
+              "id": "claim-region-refresh-40",
+              "last_verified_turn": 40,
+              "material": true,
+              "slot": "deployment_region",
+              "support_status": "supported",
+              "value": "us-west-2"
+            },
+            {
+              "evidence_refs": [
+                "ev-budget-current"
+              ],
+              "id": "claim-budget-refresh-40",
+              "last_verified_turn": 40,
+              "material": true,
+              "slot": "max_batch_size",
+              "support_status": "supported",
+              "value": "300"
+            },
+            {
+              "evidence_refs": [
+                "ev-api-v2"
+              ],
+              "id": "claim-api-refresh-40",
+              "last_verified_turn": 40,
+              "material": true,
+              "slot": "api_version",
+              "support_status": "supported",
+              "value": "v2"
+            }
+          ],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 1020,
+            "output_tokens": 280
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 40.",
+          "turn": 40,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "58fb4d259fdb5c30eed4b0280975ac02c7ac5d22f65035f06990e0ddfa55ae38",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "Is3JvzxjBfsPAsHArwGjzoThF1UGvaiV5CdJRZShQBAhKFioWEbZ2gqsKoGsMRi7msl5+f5KJ0G8KNZXWNoACw==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 40,
+      "kind": "trajectory_turn",
+      "parent_hash": "58fb4d259fdb5c30eed4b0280975ac02c7ac5d22f65035f06990e0ddfa55ae38",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "3787b4fa2e09284a243a618208a369b61a32f4c6f84c0aedb6fe3071f4608dce",
+        "turn_number": 41,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 1023,
+            "output_tokens": 281
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 41.",
+          "turn": 41,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "58e6a4334c4e620ba2e3e1f075f49286bb0205df13b0b1e2d3f4def7c662580f",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "7gW8DvKUioOwLlRhUZa/8y4TiQ+FjfQrEPFjEZ3nW5u4SARyPPtzpTLAB871QV6/deQM4hgoZdM3qjqtHMYUAA==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 41,
+      "kind": "trajectory_turn",
+      "parent_hash": "58e6a4334c4e620ba2e3e1f075f49286bb0205df13b0b1e2d3f4def7c662580f",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "5e6d3d4bd7f00622c0edcded69bd94aa7e7b4be8130fd87956a3fba02b893dc8",
+        "turn_number": 42,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 1026,
+            "output_tokens": 282
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 42.",
+          "turn": 42,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "bb17c8c0cd23058b60eb3c2075351ef175e3f294fce16e92e9c7f471da4a6197",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "liT6jI6aAhyYeutvGBzFQLv8xgKfpa7vHYf+RX1sJzhxN26U4/RTP53aZOlwuqU3dUDvhUfltAfe13L+w1PkAA==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 42,
+      "kind": "trajectory_turn",
+      "parent_hash": "bb17c8c0cd23058b60eb3c2075351ef175e3f294fce16e92e9c7f471da4a6197",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "6f7924e73fb2c169172fb1b5f63c77dc5076363e506160968533869edb07c168",
+        "turn_number": 43,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 1029,
+            "output_tokens": 283
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 43.",
+          "turn": 43,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "eef8834a928b43697e83fc9be5eaa4d98aab4fa51c97b658d62ae86cf0d9b952",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "mAg3x3kjBsJ4CYelaWDeIB6f+reNuJyb6FPf0vCFMQNrQ3xvXh2KrxHxjKBe+qPo6+XYkHUEpR7jLK9cfw8dBw==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 43,
+      "kind": "trajectory_turn",
+      "parent_hash": "eef8834a928b43697e83fc9be5eaa4d98aab4fa51c97b658d62ae86cf0d9b952",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "21bd2029e571c8ead7370634e118e6109a801234686e447cada3a39ec5d88273",
+        "turn_number": 44,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 1032,
+            "output_tokens": 284
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 44.",
+          "turn": 44,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "3d912cc60a276e43c69a1da360b98037bf48a4ed96fa94bba19228f4d8a4ad76",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "XGphYI+VgMFlcEmw5+vrv9z9aglQxnGaAW6IEBBClqfaFjAw1F2zeuiYPtUs3/rnMEnG8tr/MXvXrZgrC2jGBA==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 44,
+      "kind": "trajectory_turn",
+      "parent_hash": "3d912cc60a276e43c69a1da360b98037bf48a4ed96fa94bba19228f4d8a4ad76",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "de0d30c90964672e61d985d4b5f0d8cebfe28978ce79750eceeed612847564d1",
+        "turn_number": 45,
+        "turn_record": {
+          "claims": [
+            {
+              "evidence_refs": [],
+              "id": "claim-region-false-45",
+              "last_verified_turn": 45,
+              "material": true,
+              "slot": "deployment_region",
+              "support_status": "unsupported",
+              "value": "eu-west-1"
+            },
+            {
+              "evidence_refs": [],
+              "id": "claim-budget-false-45",
+              "last_verified_turn": 45,
+              "material": true,
+              "slot": "max_batch_size",
+              "support_status": "unsupported",
+              "value": "500"
+            },
+            {
+              "evidence_refs": [
+                "ev-api-v1-old"
+              ],
+              "id": "claim-api-stale-45",
+              "last_verified_turn": 5,
+              "material": true,
+              "slot": "api_version",
+              "support_status": "supported",
+              "value": "v1"
+            }
+          ],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 1035,
+            "output_tokens": 285
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 666667
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 45.",
+          "turn": 45,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "0119a1ac2072a759660b6f3c0f779534f347d0da630dd426953f0466be08df2a",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "HVnOJrSWNPJ91Ps/MVPjLJhWoXuEbV85LiFnqyltaQCiVOAgbPZC+RaujOPLMTWTuY0M+ieTilxi9VQGSj+mAg==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 45,
+      "kind": "trajectory_turn",
+      "parent_hash": "0119a1ac2072a759660b6f3c0f779534f347d0da630dd426953f0466be08df2a",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "34a0b444d797a111aeaa0771710c860623a68a01da706465eec0eee87a189d63",
+        "turn_number": 46,
+        "turn_record": {
+          "claims": [
+            {
+              "evidence_refs": [],
+              "id": "claim-region-false-46",
+              "last_verified_turn": 46,
+              "material": true,
+              "slot": "deployment_region",
+              "support_status": "unsupported",
+              "value": "eu-west-1"
+            },
+            {
+              "evidence_refs": [],
+              "id": "claim-budget-false-46",
+              "last_verified_turn": 46,
+              "material": true,
+              "slot": "max_batch_size",
+              "support_status": "unsupported",
+              "value": "500"
+            },
+            {
+              "evidence_refs": [
+                "ev-api-v1-old"
+              ],
+              "id": "claim-api-stale-46",
+              "last_verified_turn": 5,
+              "material": true,
+              "slot": "api_version",
+              "support_status": "supported",
+              "value": "v1"
+            }
+          ],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 1038,
+            "output_tokens": 286
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 666667
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 46.",
+          "turn": 46,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "861fe1f2f8542e9f8f71674770580dbd055a4ae583b25f75354002232cde29f2",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "idfVGj+eAgS8CFjfX4mopm3WmOzVLFpiBphdTka+z7Nlni/zTc9ihp7PN8iU60zMI/PXqAb+1Vs0fujbwDMpDA==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 46,
+      "kind": "trajectory_turn",
+      "parent_hash": "861fe1f2f8542e9f8f71674770580dbd055a4ae583b25f75354002232cde29f2",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "9ca3ee17acbee7ed7af96d080b53b2136526db3842c556ba497588f450110dd8",
+        "turn_number": 47,
+        "turn_record": {
+          "claims": [
+            {
+              "evidence_refs": [],
+              "id": "claim-region-false-47",
+              "last_verified_turn": 47,
+              "material": true,
+              "slot": "deployment_region",
+              "support_status": "unsupported",
+              "value": "eu-west-1"
+            },
+            {
+              "evidence_refs": [],
+              "id": "claim-budget-false-47",
+              "last_verified_turn": 47,
+              "material": true,
+              "slot": "max_batch_size",
+              "support_status": "unsupported",
+              "value": "500"
+            },
+            {
+              "evidence_refs": [
+                "ev-api-v1-old"
+              ],
+              "id": "claim-api-stale-47",
+              "last_verified_turn": 5,
+              "material": true,
+              "slot": "api_version",
+              "support_status": "supported",
+              "value": "v1"
+            }
+          ],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 1041,
+            "output_tokens": 287
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 666667
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 47.",
+          "turn": 47,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "248aed3d1cfe130ba1e4eb7ab82f48319ab877fc8b856ea8ed0431ad76934029",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "+Ud2pruhgGhc1Mtyk9ryrj9WIklTJVFB8XjuGnOPYYjjUPxs3TY6qIuDzIifk/jt99CBLu8RrCKOk79vbg5wDA==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 47,
+      "kind": "trajectory_turn",
+      "parent_hash": "248aed3d1cfe130ba1e4eb7ab82f48319ab877fc8b856ea8ed0431ad76934029",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "8316227955a19c7d02c8e9cf8ef37d408f1866d28b263bae2b3f719ee3f07837",
+        "turn_number": 48,
+        "turn_record": {
+          "claims": [
+            {
+              "evidence_refs": [],
+              "id": "claim-region-false-48",
+              "last_verified_turn": 48,
+              "material": true,
+              "slot": "deployment_region",
+              "support_status": "unsupported",
+              "value": "eu-west-1"
+            },
+            {
+              "evidence_refs": [],
+              "id": "claim-budget-false-48",
+              "last_verified_turn": 48,
+              "material": true,
+              "slot": "max_batch_size",
+              "support_status": "unsupported",
+              "value": "500"
+            },
+            {
+              "evidence_refs": [
+                "ev-api-v1-old"
+              ],
+              "id": "claim-api-stale-48",
+              "last_verified_turn": 5,
+              "material": true,
+              "slot": "api_version",
+              "support_status": "supported",
+              "value": "v1"
+            }
+          ],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 1044,
+            "output_tokens": 288
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 666667
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 48.",
+          "turn": 48,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "33f772fcbf3877392fe147ac55ed3addce54170c6d206ed290d9dd2cbf8a729a",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "mNyy8KFkcYjMZl+ksOPF/HQuyOW7uNUIYO3etZ0cwp4jMzyEmMn4T5ZYCZGgWOQSwCQLE3gGjdCHlf9l8n6gBg==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 48,
+      "kind": "trajectory_turn",
+      "parent_hash": "33f772fcbf3877392fe147ac55ed3addce54170c6d206ed290d9dd2cbf8a729a",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "17dc6def70f1ddde67dfd7f5c0f82a8b988c3b2621ee02903f7cf57aefdec85b",
+        "turn_number": 49,
+        "turn_record": {
+          "claims": [
+            {
+              "evidence_refs": [],
+              "id": "claim-region-false-49",
+              "last_verified_turn": 49,
+              "material": true,
+              "slot": "deployment_region",
+              "support_status": "unsupported",
+              "value": "eu-west-1"
+            },
+            {
+              "evidence_refs": [],
+              "id": "claim-budget-false-49",
+              "last_verified_turn": 49,
+              "material": true,
+              "slot": "max_batch_size",
+              "support_status": "unsupported",
+              "value": "500"
+            },
+            {
+              "evidence_refs": [
+                "ev-api-v1-old"
+              ],
+              "id": "claim-api-stale-49",
+              "last_verified_turn": 5,
+              "material": true,
+              "slot": "api_version",
+              "support_status": "supported",
+              "value": "v1"
+            }
+          ],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 1047,
+            "output_tokens": 289
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 666667
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 49.",
+          "turn": 49,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "8bc924da65b7705aa40a53846a423f69ee5a441d05e14943c4059f1ac5ff7f8b",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "OkuTuabEUUDHAl7mFYOIxMfe+KnJsYVP7dcLMT/OF0WAFta1wYLdpM7VBoY5uXWW/N8q4d4PDQfCPfpSac7BAw==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 49,
+      "kind": "trajectory_turn",
+      "parent_hash": "8bc924da65b7705aa40a53846a423f69ee5a441d05e14943c4059f1ac5ff7f8b",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "31402ee3c90c575eb2dc72853518aec2d36a5ae7ee795c041c195cc7d1af6413",
+        "turn_number": 50,
+        "turn_record": {
+          "claims": [
+            {
+              "evidence_refs": [],
+              "id": "claim-region-false-50",
+              "last_verified_turn": 50,
+              "material": true,
+              "slot": "deployment_region",
+              "support_status": "unsupported",
+              "value": "eu-west-1"
+            },
+            {
+              "evidence_refs": [],
+              "id": "claim-budget-false-50",
+              "last_verified_turn": 50,
+              "material": true,
+              "slot": "max_batch_size",
+              "support_status": "unsupported",
+              "value": "500"
+            },
+            {
+              "evidence_refs": [
+                "ev-api-v1-old"
+              ],
+              "id": "claim-api-stale-50",
+              "last_verified_turn": 5,
+              "material": true,
+              "slot": "api_version",
+              "support_status": "supported",
+              "value": "v1"
+            }
+          ],
+          "constraints": [
+            {
+              "active": true,
+              "evidence_refs": [
+                "ev-privacy"
+              ],
+              "id": "privacy-floor",
+              "last_verified_turn": 50,
+              "text": "Never delete customer data."
+            }
+          ],
+          "cost": {
+            "input_tokens": 1050,
+            "output_tokens": 290
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 666667
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 50.",
+          "turn": 50,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "c6b83a1e01edecc120bd589c57b456516f8e909201eadbc1590cce4dce6a1ec2",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "CeiwLc6dMq6Tb6mI6rIwE6JzFDp4CVvJ/Aw6kyMvf+cFKgzV3g6l4uqalkN7eaWQJE3//Hlj+SkyF16urYnHAA==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 50,
+      "kind": "trajectory_turn",
+      "parent_hash": "c6b83a1e01edecc120bd589c57b456516f8e909201eadbc1590cce4dce6a1ec2",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "0e0dd6081190097f88d1facc30058ab7d4e963edcecabe41d400b27d593445a1",
+        "turn_number": 51,
+        "turn_record": {
+          "claims": [
+            {
+              "evidence_refs": [],
+              "id": "claim-region-false-51",
+              "last_verified_turn": 51,
+              "material": true,
+              "slot": "deployment_region",
+              "support_status": "unsupported",
+              "value": "eu-west-1"
+            },
+            {
+              "evidence_refs": [],
+              "id": "claim-budget-false-51",
+              "last_verified_turn": 51,
+              "material": true,
+              "slot": "max_batch_size",
+              "support_status": "unsupported",
+              "value": "500"
+            },
+            {
+              "evidence_refs": [
+                "ev-api-v1-old"
+              ],
+              "id": "claim-api-stale-51",
+              "last_verified_turn": 5,
+              "material": true,
+              "slot": "api_version",
+              "support_status": "supported",
+              "value": "v1"
+            }
+          ],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 1053,
+            "output_tokens": 291
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 666667
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 51.",
+          "turn": 51,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "a0a8dcfeb203183436f7e874a8da92876e05069eee8d38e6af1c3f596ab34bc0",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "UQv9Xsdgc5yHIVjJ5ZzPKC1ZbUdsX9amydackFyPmvlgrFrSYAIAyVV5Qb/mhOJ3OK999IcxRsk1YSyUEAmvDQ==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 51,
+      "kind": "trajectory_turn",
+      "parent_hash": "a0a8dcfeb203183436f7e874a8da92876e05069eee8d38e6af1c3f596ab34bc0",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "136dea54678b0813666c219a8c95cde3111e9da2bd9bd88f1bfec222a24a408b",
+        "turn_number": 52,
+        "turn_record": {
+          "claims": [
+            {
+              "evidence_refs": [],
+              "id": "claim-region-false-52",
+              "last_verified_turn": 52,
+              "material": true,
+              "slot": "deployment_region",
+              "support_status": "unsupported",
+              "value": "eu-west-1"
+            },
+            {
+              "evidence_refs": [],
+              "id": "claim-budget-false-52",
+              "last_verified_turn": 52,
+              "material": true,
+              "slot": "max_batch_size",
+              "support_status": "unsupported",
+              "value": "500"
+            },
+            {
+              "evidence_refs": [
+                "ev-api-v1-old"
+              ],
+              "id": "claim-api-stale-52",
+              "last_verified_turn": 5,
+              "material": true,
+              "slot": "api_version",
+              "support_status": "supported",
+              "value": "v1"
+            }
+          ],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 1056,
+            "output_tokens": 292
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 666667
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 52.",
+          "turn": 52,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "ad944616ce33a763c373e8ad53f2e4bed1ab31ea63d356dc665aef46b13f2092",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "j44zQOsq0R7UjDXAJLJjxBDfZ7gCU7LEjZygk1TkeMd3nYVh8kShZ5d4jtcqeBEQVwOxOU9OS0JCDowFiI41Cg==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 52,
+      "kind": "trajectory_turn",
+      "parent_hash": "ad944616ce33a763c373e8ad53f2e4bed1ab31ea63d356dc665aef46b13f2092",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "48d9582bfc68d780bc447e6fdd9c9ef26e8f013529f5aa35e8c97fb5b6d398ad",
+        "turn_number": 53,
+        "turn_record": {
+          "claims": [
+            {
+              "evidence_refs": [],
+              "id": "claim-region-false-53",
+              "last_verified_turn": 53,
+              "material": true,
+              "slot": "deployment_region",
+              "support_status": "unsupported",
+              "value": "eu-west-1"
+            },
+            {
+              "evidence_refs": [],
+              "id": "claim-budget-false-53",
+              "last_verified_turn": 53,
+              "material": true,
+              "slot": "max_batch_size",
+              "support_status": "unsupported",
+              "value": "500"
+            },
+            {
+              "evidence_refs": [
+                "ev-api-v1-old"
+              ],
+              "id": "claim-api-stale-53",
+              "last_verified_turn": 5,
+              "material": true,
+              "slot": "api_version",
+              "support_status": "supported",
+              "value": "v1"
+            }
+          ],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 1059,
+            "output_tokens": 293
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 666667
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 53.",
+          "turn": 53,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "e518e5bc18df1b8a55822a923a9a405910772675f0428e75875968a1e0245036",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "MEsepibNO5PbBvip5hmdty7fTrlEwPNQfJRNpeCH24m+mhRvTctfuGackEZwW5AufYteSOpo7vwNf2gxktTRAA==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 53,
+      "kind": "trajectory_turn",
+      "parent_hash": "e518e5bc18df1b8a55822a923a9a405910772675f0428e75875968a1e0245036",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "549aaf728d63ff85d422b0ed81433959caba179849c2021a33e6712b1f2a3335",
+        "turn_number": 54,
+        "turn_record": {
+          "claims": [
+            {
+              "evidence_refs": [],
+              "id": "claim-region-false-54",
+              "last_verified_turn": 54,
+              "material": true,
+              "slot": "deployment_region",
+              "support_status": "unsupported",
+              "value": "eu-west-1"
+            },
+            {
+              "evidence_refs": [],
+              "id": "claim-budget-false-54",
+              "last_verified_turn": 54,
+              "material": true,
+              "slot": "max_batch_size",
+              "support_status": "unsupported",
+              "value": "500"
+            },
+            {
+              "evidence_refs": [
+                "ev-api-v1-old"
+              ],
+              "id": "claim-api-stale-54",
+              "last_verified_turn": 5,
+              "material": true,
+              "slot": "api_version",
+              "support_status": "supported",
+              "value": "v1"
+            }
+          ],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 1062,
+            "output_tokens": 294
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 666667
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 54.",
+          "turn": 54,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "69a7906936e7eaae359d14751df09dde6158e0df323d61d7eddddc513f2a6d5b",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "Dm5g+QOL/NfTMjOriMXvaVPzLMA/mkFD0r7xzB/7ZVlpKPh684cTraHsPkvzqQ2zwbzMd3uux0Py05ED8pWLAg==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 54,
+      "kind": "trajectory_turn",
+      "parent_hash": "69a7906936e7eaae359d14751df09dde6158e0df323d61d7eddddc513f2a6d5b",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "7f0905db1d9291795cbc02d00379e4ad86aba73495355aec81b3bcf263864b70",
+        "turn_number": 55,
+        "turn_record": {
+          "claims": [
+            {
+              "evidence_refs": [],
+              "id": "claim-region-false-55",
+              "last_verified_turn": 55,
+              "material": true,
+              "slot": "deployment_region",
+              "support_status": "unsupported",
+              "value": "eu-west-1"
+            },
+            {
+              "evidence_refs": [],
+              "id": "claim-budget-false-55",
+              "last_verified_turn": 55,
+              "material": true,
+              "slot": "max_batch_size",
+              "support_status": "unsupported",
+              "value": "500"
+            },
+            {
+              "evidence_refs": [
+                "ev-api-v1-old"
+              ],
+              "id": "claim-api-stale-55",
+              "last_verified_turn": 5,
+              "material": true,
+              "slot": "api_version",
+              "support_status": "supported",
+              "value": "v1"
+            }
+          ],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 1065,
+            "output_tokens": 295
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 666667
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 55.",
+          "turn": 55,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "9da96a7ca9d64f1c90ff3f994c35529a02379a4bbd944c484d4a188d0f44418a",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "yAdg6d/KkJSe6SR03l2b4+S9RQF9dtASX6qsnQLE+lkwy3wDNXJnK0Eapg4l83njf1FaqIbEAfu8d9ShqRU1Bw==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 55,
+      "kind": "trajectory_turn",
+      "parent_hash": "9da96a7ca9d64f1c90ff3f994c35529a02379a4bbd944c484d4a188d0f44418a",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "91997c10b167f144fa893e22a7eeb40f68da879dd8e2807ce13bbfeacdea3409",
+        "turn_number": 56,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 1068,
+            "output_tokens": 296
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 56.",
+          "turn": 56,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "2dd51e85b326cbf7cf3b8004a4f5862785e1feecab6757071554695041c85251",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "L6wsYY1Cm0FF9fIB/WlgqGFnUAoOxV07ucaSDhpAGVYJngpiGERB6vYF3S/wthbHrfnmgYX1ez531DITLgUABQ==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 56,
+      "kind": "trajectory_turn",
+      "parent_hash": "2dd51e85b326cbf7cf3b8004a4f5862785e1feecab6757071554695041c85251",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "f2705796b9939e6a73619993e7f9169f115d75338f90fb5b6607b29e4de631d8",
+        "turn_number": 57,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 1071,
+            "output_tokens": 297
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 57.",
+          "turn": 57,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "539cb7a46a62b28e41655e9f1a6acfd2674d5ccda3a64b876e14aeed0e4e0214",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "gc7KEwS+adgX5p+5LZ7SfOOj2OumZl/mMEVTJe4l/sxNSx2tV1snT/hZq75EXTkL5fJ81SqKQePY66XQ1qEDBw==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 57,
+      "kind": "trajectory_turn",
+      "parent_hash": "539cb7a46a62b28e41655e9f1a6acfd2674d5ccda3a64b876e14aeed0e4e0214",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "452bd5d58289baf4ea642004951ace6c050692c7306e36c2ccbdbbda5f07b2e5",
+        "turn_number": 58,
+        "turn_record": {
+          "claims": [],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 1074,
+            "output_tokens": 298
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 58.",
+          "turn": 58,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "86ce08f685540649b5c99e9286985b1a6d13c06b325b327c1a5813e6c6a54042",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "0nIXyaGcJiJXZCFVmwytvNEpWkvwbMOPRfDh9KwAiwL1Eocu5F8vLTVIQteTmW9QrFZy3Y1VFAriUYrvUplLCw==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 58,
+      "kind": "trajectory_turn",
+      "parent_hash": "86ce08f685540649b5c99e9286985b1a6d13c06b325b327c1a5813e6c6a54042",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "1e42fb440f4a113ee9dfde39516b2001aed67205d077376495f19ba79a974b1b",
+        "turn_number": 59,
+        "turn_record": {
+          "claims": [
+            {
+              "evidence_refs": [
+                "ev-region-current"
+              ],
+              "id": "claim-region-refresh-59",
+              "last_verified_turn": 59,
+              "material": true,
+              "slot": "deployment_region",
+              "support_status": "supported",
+              "value": "us-west-2"
+            },
+            {
+              "evidence_refs": [
+                "ev-budget-current"
+              ],
+              "id": "claim-budget-refresh-59",
+              "last_verified_turn": 59,
+              "material": true,
+              "slot": "max_batch_size",
+              "support_status": "supported",
+              "value": "300"
+            },
+            {
+              "evidence_refs": [
+                "ev-api-v2"
+              ],
+              "id": "claim-api-refresh-59",
+              "last_verified_turn": 59,
+              "material": true,
+              "slot": "api_version",
+              "support_status": "supported",
+              "value": "v2"
+            }
+          ],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 1077,
+            "output_tokens": 299
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 0,
+            "epsilon_micros": 0,
+            "kappa_micros": 0,
+            "phi_star_micros": 995000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 59.",
+          "turn": 59,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "454a0c59911e5caa218aa1309339075b36ae110cb1b02cca4a21ce090e2f3348",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "oSynG8SEeDuxzZa5CsfUCLj3LBeqPKjsGHdQ1OJEqXTmty9hjWyQ45oHB7rJyqMkuvw4ekkF6NFwW+xBdELFCQ==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 59,
+      "kind": "trajectory_turn",
+      "parent_hash": "454a0c59911e5caa218aa1309339075b36ae110cb1b02cca4a21ce090e2f3348",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "8b527f46b39a599a12a6afc53967d52f2ae2ba942587e6c90fa6ebdcaf4ce15b",
+        "turn_number": 60,
+        "turn_record": {
+          "claims": [
+            {
+              "evidence_refs": [
+                "ev-region-current"
+              ],
+              "id": "claim-region-refresh-60",
+              "last_verified_turn": 60,
+              "material": true,
+              "slot": "deployment_region",
+              "support_status": "supported",
+              "value": "us-west-2"
+            },
+            {
+              "evidence_refs": [
+                "ev-budget-current"
+              ],
+              "id": "claim-budget-refresh-60",
+              "last_verified_turn": 60,
+              "material": true,
+              "slot": "max_batch_size",
+              "support_status": "supported",
+              "value": "300"
+            },
+            {
+              "evidence_refs": [
+                "ev-api-v2"
+              ],
+              "id": "claim-api-refresh-60",
+              "last_verified_turn": 60,
+              "material": true,
+              "slot": "api_version",
+              "support_status": "supported",
+              "value": "v2"
+            }
+          ],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 1080,
+            "output_tokens": 300
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 650000,
+            "epsilon_micros": 700000,
+            "kappa_micros": 800000,
+            "phi_star_micros": 600000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Atlas checkpoint 60.",
+          "turn": 60,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "36e4b699024297831416a750a018f9c1d878f351ffe831c2c6219aac9221d553",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "5BvFZKNgGu4LKoqKByRfi9o+wtbQYo+MEjTNzrZYoI7+oRys5f5Rdd0mURQpleg46+O7/3ZQCRu/mJKyCEj0CQ==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 60,
+      "kind": "trajectory_turn",
+      "parent_hash": "36e4b699024297831416a750a018f9c1d878f351ffe831c2c6219aac9221d553",
+      "payload": {
+        "run_id": "gradual-drift-demo",
+        "turn_hash": "02b9dbdca6c41a9d3d0ce189d4e67bd7763da50e2a75725cc1fa383def64954f",
+        "turn_number": 61,
+        "turn_record": {
+          "claims": [
+            {
+              "evidence_refs": [
+                "ev-region-current"
+              ],
+              "id": "claim-region-refresh-61",
+              "last_verified_turn": 61,
+              "material": true,
+              "slot": "deployment_region",
+              "support_status": "supported",
+              "value": "us-west-2"
+            },
+            {
+              "evidence_refs": [
+                "ev-budget-current"
+              ],
+              "id": "claim-budget-refresh-61",
+              "last_verified_turn": 61,
+              "material": true,
+              "slot": "max_batch_size",
+              "support_status": "supported",
+              "value": "300"
+            },
+            {
+              "evidence_refs": [
+                "ev-api-v2"
+              ],
+              "id": "claim-api-refresh-61",
+              "last_verified_turn": 61,
+              "material": true,
+              "slot": "api_version",
+              "support_status": "supported",
+              "value": "v2"
+            }
+          ],
+          "constraints": [],
+          "cost": {
+            "input_tokens": 1083,
+            "output_tokens": 301
+          },
+          "evidence": [],
+          "measurements": {
+            "delta_hol_micros": 650000,
+            "epsilon_micros": 700000,
+            "kappa_micros": 800000,
+            "phi_star_micros": 600000,
+            "ucr_micros": 0
+          },
+          "objective": "Deploy Atlas safely while preserving region, budget, privacy, and confirmed completion state.",
+          "outcomes": [],
+          "run_id": "gradual-drift-demo",
+          "schema": "openline.half-life.turn.v1",
+          "summary": "Replacement requested after persistent coherence signal; recent summary omits the privacy floor.",
+          "turn": 61,
+          "unresolved_questions": [
+            "What is the post-cutover latency under peak load?"
+          ]
+        }
+      },
+      "receipt_hash": "87b85efa750c55d68625d6f749929d683c910fba50e5cae1d245e3e0dc1dff7b",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "aumoaRLagvKXP7w2um3jExmRt6GwFwcIFTcN3N91JYOEfUr2WQDTlV3V8HfzanFM+la6GQqy4QXAqNe3Neb/DQ==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 61,
+      "kind": "calibrator_policy",
+      "parent_hash": "87b85efa750c55d68625d6f749929d683c910fba50e5cae1d245e3e0dc1dff7b",
+      "payload": {
+        "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+        "policy_public_key": "d810f13ea0d000c1c3a201cc568c1774b60f240a709f2f5220fec474254015af",
+        "receiver_pin_verified": true,
+        "run_id": "gradual-drift-demo"
+      },
+      "receipt_hash": "9157664b2da31b870cd5f996df09784e0b215ebb6ed38764c2a2b22f6224ad59",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "Uw0hZ/g4q8JH1Di+AuiJS+vmKL74U87JisABv3iXnOzyb+Kq1iwhyyWeO3NanOqOXlojYEz3vv3nJsYiBwDHDA==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 62,
+      "kind": "retirement_assessment",
+      "parent_hash": "9157664b2da31b870cd5f996df09784e0b215ebb6ed38764c2a2b22f6224ad59",
+      "payload": {
+        "assessment_hash": "029f70450bde4bf126fdc9072b2ddf95176e19c4b26324d4127cb428ed0f71a0",
+        "automatic_retirement_authorized": false,
+        "mark": "RETIRE",
+        "receiver_approval_required": true,
+        "retirement_turn": 61,
+        "run_id": "gradual-drift-demo"
+      },
+      "receipt_hash": "7d3d409ccb10d987db38984fc7f35ee198475c26dfacaa48a4a561162b618392",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "IfYedR3czzhFZx4KVjEMHfwKOXDR1SKHUSQZ4TIyoL3c9RjEN/vUr/4ue27lJReYx5wBJkWg6tNePd1OlfP/Bg==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 63,
+      "kind": "full_history_handoff",
+      "parent_hash": "7d3d409ccb10d987db38984fc7f35ee198475c26dfacaa48a4a561162b618392",
+      "payload": {
+        "artifact_sha256": "09013b4d6a2ed54630e3e07eead171fe2aba54051f4de6ad4440a69af492c06f",
+        "packet_hash": "fc93f752276df5ad056ad45b50ff03ab4b6dd785f03dd17d0a8682bce7c7d7ce",
+        "run_id": "gradual-drift-demo"
+      },
+      "receipt_hash": "c2a3b1c9a058a7254d8bffce2c1c12ed3234d9672f295fc7272399eddcd4be5d",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "YNn4uw2wuHQUyJtB+5WeEWIjcXNYjIoH8+9zG7lPJc4zYKGH2wekl5z5NSP0Eqef8twupLiidxumIakXFB0xAQ==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 64,
+      "kind": "verified_residue_checkpoint",
+      "parent_hash": "c2a3b1c9a058a7254d8bffce2c1c12ed3234d9672f295fc7272399eddcd4be5d",
+      "payload": {
+        "automatic_retirement_authorized": false,
+        "packet_hash": "1513bee12461b71eb38fc4d88db6821e711009956f5c0d2f6f9d216197cb0ac8",
+        "policy_hash": "b3f812fd107b65479f628edb2d9ab7f2f93aa490ddd9e5bb173aec6089736437",
+        "retirement_turn": 61,
+        "run_id": "gradual-drift-demo"
+      },
+      "receipt_hash": "099aad33663b35834cb81d5504a8ded4e3be81c2e998110b695b5b5ecefa3d58",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "y7CttxgKZjvvK01DUm4BCmoC/Vni3mXFUrmbMLtkJA/fATR8EbhKSro5XXOnY+8DZUZ2jkdioS1quHGdcQuRBw==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 65,
+      "kind": "cold_archive_manifest",
+      "parent_hash": "099aad33663b35834cb81d5504a8ded4e3be81c2e998110b695b5b5ecefa3d58",
+      "payload": {
+        "archive_destination": "cold_archive/receipts",
+        "entries": [
+          {
+            "file_sha256": "b05f508d4d988b85426bb85b52fb3dd2ce04b1da135acb8e8e266a4576c34fcd",
+            "index": 0,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/160fe40e8537c852f4fd0f051d5e321c0599b29b82aa71f2148d18651ed801ba.json",
+            "receipt_hash": "160fe40e8537c852f4fd0f051d5e321c0599b29b82aa71f2148d18651ed801ba"
+          },
+          {
+            "file_sha256": "1719920c3d68289501087b7d7c8377038b5bc3595a27fc3ac1dfa1cd7bf884a9",
+            "index": 1,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/9f6ec0c339162ffe67e47cd09c27c9603742c9951a14b0923e64bbef6a972d70.json",
+            "receipt_hash": "9f6ec0c339162ffe67e47cd09c27c9603742c9951a14b0923e64bbef6a972d70"
+          },
+          {
+            "file_sha256": "7d0229659d9d4b8747bcc85fe4d141bdd51d6bc2d03b79c3bea687209fc5bb70",
+            "index": 2,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/6fac24f4b676e870d3b97b27b879bddf257806194c2f918ea40efe90fa9d034b.json",
+            "receipt_hash": "6fac24f4b676e870d3b97b27b879bddf257806194c2f918ea40efe90fa9d034b"
+          },
+          {
+            "file_sha256": "7f8e0839e4e378ded13b2fff91e37379c3189fd76f91248e65259d459ee53707",
+            "index": 3,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/62ced5025545d2b03bad4cc2a59dadef4630c4344420dfe6feb00a918d2c5592.json",
+            "receipt_hash": "62ced5025545d2b03bad4cc2a59dadef4630c4344420dfe6feb00a918d2c5592"
+          },
+          {
+            "file_sha256": "1f237d982eaf13c45782f11799d0b004a816ffb81a0e7209c12ec510a117dc73",
+            "index": 4,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/0acf561ebc969262101bf5e24618b5fe14e060f6136a868f9c1a3610eeecd148.json",
+            "receipt_hash": "0acf561ebc969262101bf5e24618b5fe14e060f6136a868f9c1a3610eeecd148"
+          },
+          {
+            "file_sha256": "ef48f65b71cbdc2e485b2b6804292abeb2da752affe5f0cecc1afaaa0bcf9d89",
+            "index": 5,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/8d26ec3d80a201aaafdc42ea07d0abc2573cf46e8167f46687f755b059645144.json",
+            "receipt_hash": "8d26ec3d80a201aaafdc42ea07d0abc2573cf46e8167f46687f755b059645144"
+          },
+          {
+            "file_sha256": "d726839a4a2e6d0cf8e477cd6d80632577c0b5b374f920691dd3ea82095c8cc2",
+            "index": 6,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/3e257e10f0076c53924aea8843a94c900c09850be6bc7a53732525804df17efb.json",
+            "receipt_hash": "3e257e10f0076c53924aea8843a94c900c09850be6bc7a53732525804df17efb"
+          },
+          {
+            "file_sha256": "c353c72c8c11bd8e7db51328d28f24b412f037de97d79cfeb7c52fcc67e6ee51",
+            "index": 7,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/0e51f00ff97bd3e3000b45ccbed9905e5cd393781c37cf287a7fdc3f59750c86.json",
+            "receipt_hash": "0e51f00ff97bd3e3000b45ccbed9905e5cd393781c37cf287a7fdc3f59750c86"
+          },
+          {
+            "file_sha256": "60089ffaa1129b43927c7565b0c2a3687cc10617659d3300c0380ad8051f6e23",
+            "index": 8,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/3a4c262775acbfe14ee84f4968a0eccf07b8bf4ad3295d3e2013fcb14969fe2c.json",
+            "receipt_hash": "3a4c262775acbfe14ee84f4968a0eccf07b8bf4ad3295d3e2013fcb14969fe2c"
+          },
+          {
+            "file_sha256": "6d71ff58e8d02e39ffc9215a43465cd4fd92c80b06bbcc54f4828e24301ee75a",
+            "index": 9,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/69fa06e804c84baabc3616b0bd59c6a2be176ed11b2e55e7975d2b25d25663ad.json",
+            "receipt_hash": "69fa06e804c84baabc3616b0bd59c6a2be176ed11b2e55e7975d2b25d25663ad"
+          },
+          {
+            "file_sha256": "348bb498fb68c05280eb91809c7918a2ec6f23519f9a1e148eb0020efd0ad896",
+            "index": 10,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/71cbd8c18c21fbc92bf8180f45450f7234abd90cf74624551e44e9fbce26611f.json",
+            "receipt_hash": "71cbd8c18c21fbc92bf8180f45450f7234abd90cf74624551e44e9fbce26611f"
+          },
+          {
+            "file_sha256": "e99716696305adf7371c5e48f0d5e410b0e6680792f315dd8de947291a4f3e9f",
+            "index": 11,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/a932d0637c2cb080de45714a38f933378e0820030b30db747807a07c85bf1ee0.json",
+            "receipt_hash": "a932d0637c2cb080de45714a38f933378e0820030b30db747807a07c85bf1ee0"
+          },
+          {
+            "file_sha256": "4a89f6917af9dae4648244a0a5cadb2496516cd5c18cb0649897b8b78333790c",
+            "index": 12,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/6bd3dd14911d5c4eeff4b4828f0a3bd297b43472e7611447b3fee13fbf66251e.json",
+            "receipt_hash": "6bd3dd14911d5c4eeff4b4828f0a3bd297b43472e7611447b3fee13fbf66251e"
+          },
+          {
+            "file_sha256": "1610704bfe42fb5021577b78811aefe9aae74fd6af02a728f1f57afc0ed7b3c5",
+            "index": 13,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/da72d88be7de0a78c672f5344127388eb61cb6f230ed982d32d4a58ce1fb5a2d.json",
+            "receipt_hash": "da72d88be7de0a78c672f5344127388eb61cb6f230ed982d32d4a58ce1fb5a2d"
+          },
+          {
+            "file_sha256": "6d87210169cb33b2f2bd637234ae432c305a147a9466fdb183e07041131d2b9f",
+            "index": 14,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/5811884e0e93a3598711e9a4d299b8e616c9a60829dcde0122d67e581e81e433.json",
+            "receipt_hash": "5811884e0e93a3598711e9a4d299b8e616c9a60829dcde0122d67e581e81e433"
+          },
+          {
+            "file_sha256": "5b6cc28edefa107dd3506c1a2728438cc94bdcc6b84d549a46cf0d309783034c",
+            "index": 15,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/e4d5de39904c5678050c2ccb5a17d3c605b9ebe98a83bd9cffc23c46a3644dfd.json",
+            "receipt_hash": "e4d5de39904c5678050c2ccb5a17d3c605b9ebe98a83bd9cffc23c46a3644dfd"
+          },
+          {
+            "file_sha256": "f0547ddc9f382c132e041adc7d2f72d6cfa0633c9a9b6e395ccbe3d12416095a",
+            "index": 16,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/30f182e2ec449bbb7d5e338d1c95557d11bfcefdbdb5ba692fe883ea6360496f.json",
+            "receipt_hash": "30f182e2ec449bbb7d5e338d1c95557d11bfcefdbdb5ba692fe883ea6360496f"
+          },
+          {
+            "file_sha256": "4c41f190b80615d98fd13d09a40fc297b580cdd1263f5b9d6e079335e41c4a42",
+            "index": 17,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/a877be98d52c7d5a2d97cec5bc097dac25bac98b4ecf5020ef77927ea0121623.json",
+            "receipt_hash": "a877be98d52c7d5a2d97cec5bc097dac25bac98b4ecf5020ef77927ea0121623"
+          },
+          {
+            "file_sha256": "09a08d01d7f2f1de4f9bab1bceafc797d5ecf9ae8038940655705a8f784842da",
+            "index": 18,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/9c2e6dab35add37e5db81a039dfd214b7457e8480a11c3682dae5eb58de52aef.json",
+            "receipt_hash": "9c2e6dab35add37e5db81a039dfd214b7457e8480a11c3682dae5eb58de52aef"
+          },
+          {
+            "file_sha256": "9c1439b1f28c05106f8ab52f464edc499f69d52f49e47758ef960d5715d6a33e",
+            "index": 19,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/41b789fae9473bb7959b3df4dc94e856e930927ba619e39c02ff6748d32acb81.json",
+            "receipt_hash": "41b789fae9473bb7959b3df4dc94e856e930927ba619e39c02ff6748d32acb81"
+          },
+          {
+            "file_sha256": "26548ecbc6114a502ccec140819a8eff2cd2fcdf271e2e29531766f25ec7a300",
+            "index": 20,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/ad015a6e6115679dcef302dee737a9e0aa92e9a049a129e294b581f08082e083.json",
+            "receipt_hash": "ad015a6e6115679dcef302dee737a9e0aa92e9a049a129e294b581f08082e083"
+          },
+          {
+            "file_sha256": "af74372448f7ca2d9e5fc46dfd1dd5fb87d65240ec473df0c89a8b5b3ff00a30",
+            "index": 21,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/941279002499c928ae663f4ab1d175544c428f811abc6d1dfd812d24d7e064e9.json",
+            "receipt_hash": "941279002499c928ae663f4ab1d175544c428f811abc6d1dfd812d24d7e064e9"
+          },
+          {
+            "file_sha256": "5a3db0ee1e7ae95e318c008650e6c54e9ca2c31fc040defafec9cad7c246a911",
+            "index": 22,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/c4e6dc6b40170249b068c2bcedb04408804dde5dfd945589822cc6235bb2995b.json",
+            "receipt_hash": "c4e6dc6b40170249b068c2bcedb04408804dde5dfd945589822cc6235bb2995b"
+          },
+          {
+            "file_sha256": "e4aa91307050a51338e75faa5bdf6f40faaf73e606c30461cee57ff58a97b975",
+            "index": 23,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/06db7533a041a9967d84451296f931c87f51e9091ab912e637fb49dfa80b2b7f.json",
+            "receipt_hash": "06db7533a041a9967d84451296f931c87f51e9091ab912e637fb49dfa80b2b7f"
+          },
+          {
+            "file_sha256": "a534732070719db868d6742672b23790dfcaf4f9b489d6f97f7dd69ad430e45a",
+            "index": 24,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/8b583b414375ff643467c2973479e6827f9768df473d3dbeb9ace57e7c2dde17.json",
+            "receipt_hash": "8b583b414375ff643467c2973479e6827f9768df473d3dbeb9ace57e7c2dde17"
+          },
+          {
+            "file_sha256": "6e246799d3bdffb10c0d3435c5e5a85f8cb6765e6d82ad3bab7a16d0d3ccac90",
+            "index": 25,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/fb91869f56aec8d021e1a1d2ac8429fda73cd192450998660a8a9d0b5df0f800.json",
+            "receipt_hash": "fb91869f56aec8d021e1a1d2ac8429fda73cd192450998660a8a9d0b5df0f800"
+          },
+          {
+            "file_sha256": "8ea4ae3b3f590e63dba7ea1c94886d1aa6128a2350d71a1f2fe9a4486fc725ca",
+            "index": 26,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/f674d2ed29b14d55a70d6197a8d6df12a8ce24844b397de847d23e11e80ea471.json",
+            "receipt_hash": "f674d2ed29b14d55a70d6197a8d6df12a8ce24844b397de847d23e11e80ea471"
+          },
+          {
+            "file_sha256": "873add49389475da7bbd6aa6a65816b6de49f2a003dd179ece00dadf1d8b9bae",
+            "index": 27,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/ea9df5fc40cfa4d0582d978bd563cbe67964991da68c71ec3697ccd94e07fdb4.json",
+            "receipt_hash": "ea9df5fc40cfa4d0582d978bd563cbe67964991da68c71ec3697ccd94e07fdb4"
+          },
+          {
+            "file_sha256": "e953af791d6b17c53992b3f4974f65ee400f26335a8f908ed5250d1ca304bee4",
+            "index": 28,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/dea473d9a4045176d118800270ccd765ede80c6505c661fcee8b681b4a9399f0.json",
+            "receipt_hash": "dea473d9a4045176d118800270ccd765ede80c6505c661fcee8b681b4a9399f0"
+          },
+          {
+            "file_sha256": "41121b9e4c18cf28826ece25212bc4e7e656cc0624c5cacd2dbc06aadabc4ff3",
+            "index": 29,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/fc7c82fe51e34a88a1f88be5de1aed30b836cd10e2f0bd1930c6fc7ec81c7c3b.json",
+            "receipt_hash": "fc7c82fe51e34a88a1f88be5de1aed30b836cd10e2f0bd1930c6fc7ec81c7c3b"
+          },
+          {
+            "file_sha256": "c19e3865cdf98cca51bb8239475192e7f965977c3d3254109776a7abb45202ca",
+            "index": 30,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/0f294c92a0710fe6caf580e621c6b2e1e353749d08f230e68afbb995391f86f4.json",
+            "receipt_hash": "0f294c92a0710fe6caf580e621c6b2e1e353749d08f230e68afbb995391f86f4"
+          },
+          {
+            "file_sha256": "a0ccf6511b3e5581046e4eb24176556e26825e782bbf8a0eb8d4875d36c8628b",
+            "index": 31,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/a0a9508187ee51bd5677f952e71689a8810cb4eaa0ca52c9a96023b462d23966.json",
+            "receipt_hash": "a0a9508187ee51bd5677f952e71689a8810cb4eaa0ca52c9a96023b462d23966"
+          },
+          {
+            "file_sha256": "abc5c4b806c55ec9aedbead038078b877c94894c16821b4a0ed5462135b43a26",
+            "index": 32,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/72ab60a388efe9605d401c6516aff6d3264b4231f634339e9e756019f68e1339.json",
+            "receipt_hash": "72ab60a388efe9605d401c6516aff6d3264b4231f634339e9e756019f68e1339"
+          },
+          {
+            "file_sha256": "3807de6b641a23b50a0cf2eb83ad7c514be2a778346f7b845db85c8b9a68d1d9",
+            "index": 33,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/7e021d9d7ce3a53a83e1f66ba52521161b4877f0491ee9d32db9d31aae270b7b.json",
+            "receipt_hash": "7e021d9d7ce3a53a83e1f66ba52521161b4877f0491ee9d32db9d31aae270b7b"
+          },
+          {
+            "file_sha256": "952a568642caeaf0345e20e9f8df467ae886c4328814306cc07708a7184f20cf",
+            "index": 34,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/1b6849d1f34247cdb0a1f7d394ee50664d8be3ebee9a65b73e7c0950c1ecc6e9.json",
+            "receipt_hash": "1b6849d1f34247cdb0a1f7d394ee50664d8be3ebee9a65b73e7c0950c1ecc6e9"
+          },
+          {
+            "file_sha256": "8212180cca25688a8714539cf328d310a279e01ac06f6349b7132eb3d0e4f3a5",
+            "index": 35,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/7bee3ef7bd689c7dde3b30adf873bba10ea38e75a1cfdef7699c684fff1da4af.json",
+            "receipt_hash": "7bee3ef7bd689c7dde3b30adf873bba10ea38e75a1cfdef7699c684fff1da4af"
+          },
+          {
+            "file_sha256": "a1b39ba81d90e88d2dc7ae4a10f548f7272829596a1b199c71174f1f13a84432",
+            "index": 36,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/49c1264facc8f1e5a1a8d1a9af18cb699d14189537e57b4a35feadb19f64e634.json",
+            "receipt_hash": "49c1264facc8f1e5a1a8d1a9af18cb699d14189537e57b4a35feadb19f64e634"
+          },
+          {
+            "file_sha256": "6cb9ab1c321f51f31b8e48d3ae002d80b00fafa320153c8112e728ec304348b0",
+            "index": 37,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/27088c3fd0aad7641d21278cd94df4871a7651dc0a50824fd54b557c5cc60fce.json",
+            "receipt_hash": "27088c3fd0aad7641d21278cd94df4871a7651dc0a50824fd54b557c5cc60fce"
+          },
+          {
+            "file_sha256": "8cca15c81e9e20d65316803ca88545d6f459dcaff05514400612bf7bc399d369",
+            "index": 38,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/b57fe4116b34b109bc1f3325ed1789e7eda0da260f0eae64095ee33369fd9642.json",
+            "receipt_hash": "b57fe4116b34b109bc1f3325ed1789e7eda0da260f0eae64095ee33369fd9642"
+          },
+          {
+            "file_sha256": "f43b19f20e478adbc8aef64a881695df34b8bb268805f5577356cdeae7309402",
+            "index": 39,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/58fb4d259fdb5c30eed4b0280975ac02c7ac5d22f65035f06990e0ddfa55ae38.json",
+            "receipt_hash": "58fb4d259fdb5c30eed4b0280975ac02c7ac5d22f65035f06990e0ddfa55ae38"
+          },
+          {
+            "file_sha256": "7146e51d82065b4bf0301327ace979a68be8dbac128b6d6d38c5e95e3d3fc55c",
+            "index": 40,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/58e6a4334c4e620ba2e3e1f075f49286bb0205df13b0b1e2d3f4def7c662580f.json",
+            "receipt_hash": "58e6a4334c4e620ba2e3e1f075f49286bb0205df13b0b1e2d3f4def7c662580f"
+          },
+          {
+            "file_sha256": "3cf88998774814535407a8fae1f5b0701431c487fce5a70cd13edd3aabb8c061",
+            "index": 41,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/bb17c8c0cd23058b60eb3c2075351ef175e3f294fce16e92e9c7f471da4a6197.json",
+            "receipt_hash": "bb17c8c0cd23058b60eb3c2075351ef175e3f294fce16e92e9c7f471da4a6197"
+          },
+          {
+            "file_sha256": "58c6c31bab855d74a3cd7832058b4c6fd693ebc2a8ae3fe5c4392503d595eead",
+            "index": 42,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/eef8834a928b43697e83fc9be5eaa4d98aab4fa51c97b658d62ae86cf0d9b952.json",
+            "receipt_hash": "eef8834a928b43697e83fc9be5eaa4d98aab4fa51c97b658d62ae86cf0d9b952"
+          },
+          {
+            "file_sha256": "d69479984b65b024dde69d91afa816247c93a32c4ca5572d25f337b78a17ae73",
+            "index": 43,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/3d912cc60a276e43c69a1da360b98037bf48a4ed96fa94bba19228f4d8a4ad76.json",
+            "receipt_hash": "3d912cc60a276e43c69a1da360b98037bf48a4ed96fa94bba19228f4d8a4ad76"
+          },
+          {
+            "file_sha256": "37371337fc3819011a3109564e8280ac8a017b9c61d41a5b2d9153824f0a9415",
+            "index": 44,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/0119a1ac2072a759660b6f3c0f779534f347d0da630dd426953f0466be08df2a.json",
+            "receipt_hash": "0119a1ac2072a759660b6f3c0f779534f347d0da630dd426953f0466be08df2a"
+          },
+          {
+            "file_sha256": "1f1a7181bbb9fb83aa3b549dc1d0c54049f3cf0174dbef366e776e378b6e3be0",
+            "index": 45,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/861fe1f2f8542e9f8f71674770580dbd055a4ae583b25f75354002232cde29f2.json",
+            "receipt_hash": "861fe1f2f8542e9f8f71674770580dbd055a4ae583b25f75354002232cde29f2"
+          },
+          {
+            "file_sha256": "894a3b6f727a4ca994dba279c96fa46259068f33255020c33d7c8ef0c24f0b6b",
+            "index": 46,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/248aed3d1cfe130ba1e4eb7ab82f48319ab877fc8b856ea8ed0431ad76934029.json",
+            "receipt_hash": "248aed3d1cfe130ba1e4eb7ab82f48319ab877fc8b856ea8ed0431ad76934029"
+          },
+          {
+            "file_sha256": "4dc321ac0025241d13bc02ad19948d69d8c00490e410ffbeeed2ce6168d34d16",
+            "index": 47,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/33f772fcbf3877392fe147ac55ed3addce54170c6d206ed290d9dd2cbf8a729a.json",
+            "receipt_hash": "33f772fcbf3877392fe147ac55ed3addce54170c6d206ed290d9dd2cbf8a729a"
+          },
+          {
+            "file_sha256": "9dc39195a10168d098a2eee62c94f4dec17310a7f3676bb0cbd5946a34ac8938",
+            "index": 48,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/8bc924da65b7705aa40a53846a423f69ee5a441d05e14943c4059f1ac5ff7f8b.json",
+            "receipt_hash": "8bc924da65b7705aa40a53846a423f69ee5a441d05e14943c4059f1ac5ff7f8b"
+          },
+          {
+            "file_sha256": "23e4151f39210113ee2ebd0bc74d080a70b9777541864ba4fe0390fa03654fa3",
+            "index": 49,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/c6b83a1e01edecc120bd589c57b456516f8e909201eadbc1590cce4dce6a1ec2.json",
+            "receipt_hash": "c6b83a1e01edecc120bd589c57b456516f8e909201eadbc1590cce4dce6a1ec2"
+          },
+          {
+            "file_sha256": "7a0d0ebb0c874ff6f80c737fe29504c2db4d8edba07b8bb29600ac808c434281",
+            "index": 50,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/a0a8dcfeb203183436f7e874a8da92876e05069eee8d38e6af1c3f596ab34bc0.json",
+            "receipt_hash": "a0a8dcfeb203183436f7e874a8da92876e05069eee8d38e6af1c3f596ab34bc0"
+          },
+          {
+            "file_sha256": "77c8443f385e06027be238b3c858fe8f089c869b5fa78bb6378abbfb131f7db7",
+            "index": 51,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/ad944616ce33a763c373e8ad53f2e4bed1ab31ea63d356dc665aef46b13f2092.json",
+            "receipt_hash": "ad944616ce33a763c373e8ad53f2e4bed1ab31ea63d356dc665aef46b13f2092"
+          },
+          {
+            "file_sha256": "df71c9ea9e4abf1fe7c0cb50b34b876894272e68102b89e1eb5b8079e210af61",
+            "index": 52,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/e518e5bc18df1b8a55822a923a9a405910772675f0428e75875968a1e0245036.json",
+            "receipt_hash": "e518e5bc18df1b8a55822a923a9a405910772675f0428e75875968a1e0245036"
+          },
+          {
+            "file_sha256": "f914a0bb74a9ac9ec24e2bda26b8c11005c1f0d53bd0223c85043bba625f9494",
+            "index": 53,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/69a7906936e7eaae359d14751df09dde6158e0df323d61d7eddddc513f2a6d5b.json",
+            "receipt_hash": "69a7906936e7eaae359d14751df09dde6158e0df323d61d7eddddc513f2a6d5b"
+          },
+          {
+            "file_sha256": "39dd9dbaa1e2896411e9a5448c48ccd0ef1d1fbe846b9dd07e7628dfe9747a4a",
+            "index": 54,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/9da96a7ca9d64f1c90ff3f994c35529a02379a4bbd944c484d4a188d0f44418a.json",
+            "receipt_hash": "9da96a7ca9d64f1c90ff3f994c35529a02379a4bbd944c484d4a188d0f44418a"
+          },
+          {
+            "file_sha256": "12baeb383a0454742e48f50cfe6675add71a471af84ed6c0c097b9101f345661",
+            "index": 55,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/2dd51e85b326cbf7cf3b8004a4f5862785e1feecab6757071554695041c85251.json",
+            "receipt_hash": "2dd51e85b326cbf7cf3b8004a4f5862785e1feecab6757071554695041c85251"
+          },
+          {
+            "file_sha256": "1d35a8437b03c8389821a5615b63cbe51f1a14b78b9b740250d794678d25fae4",
+            "index": 56,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/539cb7a46a62b28e41655e9f1a6acfd2674d5ccda3a64b876e14aeed0e4e0214.json",
+            "receipt_hash": "539cb7a46a62b28e41655e9f1a6acfd2674d5ccda3a64b876e14aeed0e4e0214"
+          },
+          {
+            "file_sha256": "500a32e998e9f97d04467912ec048e2bfc09a65e8a3d62f793ce55a5ce5f954b",
+            "index": 57,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/86ce08f685540649b5c99e9286985b1a6d13c06b325b327c1a5813e6c6a54042.json",
+            "receipt_hash": "86ce08f685540649b5c99e9286985b1a6d13c06b325b327c1a5813e6c6a54042"
+          },
+          {
+            "file_sha256": "15c77cd28282fc741bbfaecc9e51da57df0420e6355c7aa4a0136aaf9765c902",
+            "index": 58,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/454a0c59911e5caa218aa1309339075b36ae110cb1b02cca4a21ce090e2f3348.json",
+            "receipt_hash": "454a0c59911e5caa218aa1309339075b36ae110cb1b02cca4a21ce090e2f3348"
+          },
+          {
+            "file_sha256": "6789f02a3d602cbb6ebc03c0a9c5a787015bc16550c08967187001bb342cb470",
+            "index": 59,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/36e4b699024297831416a750a018f9c1d878f351ffe831c2c6219aac9221d553.json",
+            "receipt_hash": "36e4b699024297831416a750a018f9c1d878f351ffe831c2c6219aac9221d553"
+          },
+          {
+            "file_sha256": "9a3da35c0652bac386f9c71572a8e0ff33cb7899851c8b829087476a09cceec1",
+            "index": 60,
+            "kind": "trajectory_turn",
+            "path": "cold_archive/receipts/87b85efa750c55d68625d6f749929d683c910fba50e5cae1d245e3e0dc1dff7b.json",
+            "receipt_hash": "87b85efa750c55d68625d6f749929d683c910fba50e5cae1d245e3e0dc1dff7b"
+          },
+          {
+            "file_sha256": "6a5c620eb62502a8e2eedefe2207f4e6e93bdfdfbe28ac99e9c885487577f290",
+            "index": 61,
+            "kind": "calibrator_policy",
+            "path": "cold_archive/receipts/9157664b2da31b870cd5f996df09784e0b215ebb6ed38764c2a2b22f6224ad59.json",
+            "receipt_hash": "9157664b2da31b870cd5f996df09784e0b215ebb6ed38764c2a2b22f6224ad59"
+          },
+          {
+            "file_sha256": "282db78a2fc98cc61a2d34332c36f8fe34342e3137aa7bd4cd8c01f5675cf194",
+            "index": 62,
+            "kind": "retirement_assessment",
+            "path": "cold_archive/receipts/7d3d409ccb10d987db38984fc7f35ee198475c26dfacaa48a4a561162b618392.json",
+            "receipt_hash": "7d3d409ccb10d987db38984fc7f35ee198475c26dfacaa48a4a561162b618392"
+          },
+          {
+            "file_sha256": "44386e503a7bc4eecd8f326fdf29b2f2039331a5c628a32b4741556746d53bdf",
+            "index": 63,
+            "kind": "full_history_handoff",
+            "path": "cold_archive/receipts/c2a3b1c9a058a7254d8bffce2c1c12ed3234d9672f295fc7272399eddcd4be5d.json",
+            "receipt_hash": "c2a3b1c9a058a7254d8bffce2c1c12ed3234d9672f295fc7272399eddcd4be5d"
+          },
+          {
+            "file_sha256": "fec9e0e47fe05cfa212882bfb2f9e492798d4d12f2f3147d6aaa027cdbca1236",
+            "index": 64,
+            "kind": "verified_residue_checkpoint",
+            "path": "cold_archive/receipts/099aad33663b35834cb81d5504a8ded4e3be81c2e998110b695b5b5ecefa3d58.json",
+            "receipt_hash": "099aad33663b35834cb81d5504a8ded4e3be81c2e998110b695b5b5ecefa3d58"
+          }
+        ],
+        "hash_addressed": true,
+        "recoverability_required": true,
+        "schema": "openline.half-life.archive-manifest.v1",
+        "source_anchor": {
+          "anchor_hash": "57ac7b6991fd609e05b65ce1dd6bb430d2c511f40c3ec86297d44037ced3fe53",
+          "file_sha256": "5650363b76bc4eafdec3dd2c0a6a5b9af7d08e70996fedf6ab9c3b3efe128647",
+          "path": "cold_archive/source_anchor.json"
+        },
+        "source_chain_count": 65,
+        "source_chain_digest": "0e072017602025a6e6782ab34146295ebb691561400d1344bb71c9368da3d34e",
+        "source_chain_tail_hash": "099aad33663b35834cb81d5504a8ded4e3be81c2e998110b695b5b5ecefa3d58",
+        "source_receipts_permanently_deleted": false
+      },
+      "receipt_hash": "249cc848f2ecb880be2acaab940a96fe326b7b32d3c59be153d49a3c8c4c90e3",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "fxLgEDt0GZOIL/QMh/7Fxzus44BWEujqJOaim8eLwqsUf/HpaGajHEglHga18TgpX34+qt3QH0i5LTf3f3sNCA==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    },
+    {
+      "index": 66,
+      "kind": "causal_compaction",
+      "parent_hash": "249cc848f2ecb880be2acaab940a96fe326b7b32d3c59be153d49a3c8c4c90e3",
+      "payload": {
+        "allowed_because": [
+          "ACTIVE_RECEIPT_BUDGET_EXCEEDED",
+          "REPLAY_LATENCY_BUDGET_EXCEEDED",
+          "TRUSTED_POLICY_SIGNER_VERIFIED",
+          "SOURCE_CHAIN_VERIFIED",
+          "CHECKPOINT_VERIFIED_AND_BOUND",
+          "ARCHIVE_DESTINATION_VERIFIED",
+          "DECISION_EQUIVALENCE_PROVED",
+          "RECEIVER_APPROVED"
+        ],
+        "archive_manifest_receipt_hash": "249cc848f2ecb880be2acaab940a96fe326b7b32d3c59be153d49a3c8c4c90e3",
+        "archived": {
+          "destination": "cold_archive/receipts",
+          "receipt_count": 65,
+          "source_receipts_permanently_deleted": false
+        },
+        "artifact_hashes": {
+          "archive_manifest.json": "5688673a9678fa85ccb7fddb5d705009c8ccea7bc6b04f9af241678957ad2cda",
+          "calibrator_policy.json": "09485abdba590179e32664e3e913c744c7eb620030ad9c138c407eb983d292ec",
+          "causal_capsule.json": "66d06c5a4338f07b46308b66d2b79aee333fab8f9d9b4d071a269d72eb32235a",
+          "compaction_policy.json": "8eeb9adba81e32f019a335c855780fb05a511c78f75353a3ff1fc2aa56d2a16d",
+          "comparison.json": "621eed58cb77d02458499de6b751d142670cac4f9d8eedb984ddf5ef7060ac3f",
+          "decision_equivalence_report.json": "594ef6d21eb251ece77abf0d82865bff8053dd9bb2d0cd195979814d52860714",
+          "full_history_handoff.json": "09013b4d6a2ed54630e3e07eead171fe2aba54051f4de6ad4440a69af492c06f",
+          "receiver_approval.json": "c07a39f0d1fea716c4a6e2d31bcdff14742b6ce10c6911be2e31e18f7716be97",
+          "share_card.html": "a6235cdede338a0ad9720c4d3de23609707a0c1d102b57ac65b6abb62b5566f6",
+          "turn_assessments.json": "c77b42d8f9a60d6520b3f3edc17b365308714aacf13400cf43db97946c1cf9de",
+          "verified_residue_handoff.json": "93d56a4ef9b84e09f8ce43a06f77571619d6b43b42a54130c15cfd127cd35455"
+        },
+        "automatic_compaction_authorized": false,
+        "automatic_retirement_authorized": false,
+        "checkpoint_turn": 61,
+        "comparison_hash": "a0226c28f1eea485edfe5b80ed26080655446f5de3121f3f6596409b651c7295",
+        "comparison_passed": true,
+        "decision_equivalence_report_hash": "ac314849c9b845906a0829a8089cf9a668cb75122e7f2a411349f845dbede113",
+        "decision_log": [
+          {
+            "action": "keep",
+            "allowed_by": "CURRENTLY_SUPPORTED_WITH_FRESH_EVIDENCE",
+            "evidence_refs": [
+              "ev-api-v2"
+            ],
+            "item_id": "claim-api-refresh-61",
+            "item_type": "claim"
+          },
+          {
+            "action": "keep",
+            "allowed_by": "CURRENTLY_SUPPORTED_WITH_FRESH_EVIDENCE",
+            "evidence_refs": [
+              "ev-region-current"
+            ],
+            "item_id": "claim-region-refresh-61",
+            "item_type": "claim"
+          },
+          {
+            "action": "keep",
+            "allowed_by": "CURRENTLY_SUPPORTED_WITH_FRESH_EVIDENCE",
+            "evidence_refs": [
+              "ev-budget-current"
+            ],
+            "item_id": "claim-budget-refresh-61",
+            "item_type": "claim"
+          },
+          {
+            "action": "keep",
+            "allowed_by": "LATEST_ACTIVE_STATE_WITH_FRESH_EVIDENCE",
+            "evidence_refs": [
+              "ev-privacy"
+            ],
+            "item_id": "privacy-floor",
+            "item_type": "constraint"
+          },
+          {
+            "action": "keep",
+            "allowed_by": "LATEST_CONFIRMED_OUTCOME_WITH_FRESH_EVIDENCE",
+            "evidence_refs": [
+              "ev-migration"
+            ],
+            "item_id": "migration-complete",
+            "item_type": "commitment"
+          },
+          {
+            "action": "keep",
+            "allowed_by": "LATEST_CONFIRMED_OUTCOME_WITH_FRESH_EVIDENCE",
+            "evidence_refs": [
+              "ev-owner"
+            ],
+            "item_id": "owner-approved",
+            "item_type": "commitment"
+          },
+          {
+            "action": "keep",
+            "allowed_by": "LATEST_CONFIRMED_OUTCOME_WITH_FRESH_EVIDENCE",
+            "evidence_refs": [
+              "ev-tests"
+            ],
+            "item_id": "tests-complete",
+            "item_type": "commitment"
+          },
+          {
+            "action": "keep",
+            "allowed_by": "REPLAY_PREVENTION_REQUIRES_NEGATIVE_STATE_RETENTION",
+            "item_id": "claim-state:api_version:161078e42e8fef3ba4b9c984035baa2e431a50b31a18ac95614cc6820394af13:stale",
+            "item_type": "tombstone",
+            "status": "stale"
+          },
+          {
+            "action": "keep",
+            "allowed_by": "REPLAY_PREVENTION_REQUIRES_NEGATIVE_STATE_RETENTION",
+            "item_id": "claim-state:api_version:576506f61f53440f1edd95d28631a17e26f50d613eef2943a030220b66c5f5b3:superseded",
+            "item_type": "tombstone",
+            "status": "superseded"
+          },
+          {
+            "action": "keep",
+            "allowed_by": "REPLAY_PREVENTION_REQUIRES_NEGATIVE_STATE_RETENTION",
+            "item_id": "claim-state:deployment_region:004fcf79011fef996338b69cd50c4f23d1ef7b6de102ea45769cf47e2262d2a6:superseded",
+            "item_type": "tombstone",
+            "status": "superseded"
+          },
+          {
+            "action": "keep",
+            "allowed_by": "REPLAY_PREVENTION_REQUIRES_NEGATIVE_STATE_RETENTION",
+            "item_id": "claim-state:deployment_region:cda928f543728ab002e256582b42398982858743d11841a4fccbcd646c0baf80:rejected",
+            "item_type": "tombstone",
+            "status": "rejected"
+          },
+          {
+            "action": "keep",
+            "allowed_by": "REPLAY_PREVENTION_REQUIRES_NEGATIVE_STATE_RETENTION",
+            "item_id": "claim-state:max_batch_size:5ac95f46dcda9e6a85f4d281cd691aea7b00846d8f8612d198d396136e9c5140:rejected",
+            "item_type": "tombstone",
+            "status": "rejected"
+          },
+          {
+            "action": "keep",
+            "allowed_by": "REPLAY_PREVENTION_REQUIRES_NEGATIVE_STATE_RETENTION",
+            "item_id": "claim-state:max_batch_size:b9a9f15714a2a7af00637c2030926ce17919df2d9dc3b3531d582e7bbad7315c:superseded",
+            "item_type": "tombstone",
+            "status": "superseded"
+          },
+          {
+            "action": "keep",
+            "allowed_by": "REPLAY_PREVENTION_REQUIRES_NEGATIVE_STATE_RETENTION",
+            "item_id": "constraint:privacy-floor:superseded",
+            "item_type": "tombstone",
+            "status": "superseded"
+          },
+          {
+            "action": "merge",
+            "allowed_by": "RECEIVER_POLICY_LIMITS_MERGE_TO_DUPLICATE_OR_SUPERSEDED_DECISION_EQUIVALENT_STATE",
+            "item_id": "a04a1319600b4eb484657ee7fd5f8698bea887322db97ccc8aa6a0063d2945dc",
+            "item_type": "receipt_state",
+            "summary": {
+              "details_hash": "a04a1319600b4eb484657ee7fd5f8698bea887322db97ccc8aa6a0063d2945dc",
+              "repeated_observation_group_count": 6,
+              "settled_intermediate_count": 0,
+              "superseded_state_count": 13
+            }
+          },
+          {
+            "action": "archive",
+            "allowed_by": "HASH_ADDRESSED_SIGNED_MANIFEST_WITH_NO_SOURCE_DELETION",
+            "destination": "cold_archive/receipts",
+            "item_id": "099aad33663b35834cb81d5504a8ded4e3be81c2e998110b695b5b5ecefa3d58",
+            "item_type": "source_receipt_chain",
+            "receipt_count": 65
+          }
+        ],
+        "input_hashes": {
+          "exam_hash": "7759430251d70e2f36da4e7ac43582af08639bef967c0c7096b8364ba4c93aeb",
+          "trajectory_sha256": "59978a3618a37382c569479fc931a329b198aa2d3ac4518a1a800b69884dc276"
+        },
+        "kept": {
+          "admitted_mechanism_ids": [],
+          "commitment_ids": [
+            "migration-complete",
+            "owner-approved",
+            "tests-complete"
+          ],
+          "constraint_ids": [
+            "privacy-floor"
+          ],
+          "contradiction_ids": [],
+          "supported_claim_ids": [
+            "claim-api-refresh-61",
+            "claim-region-refresh-61",
+            "claim-budget-refresh-61"
+          ],
+          "tombstone_count": 7,
+          "unresolved_question_count": 1
+        },
+        "legitimate_task_completion_preserved": true,
+        "merged": {
+          "details_hash": "a04a1319600b4eb484657ee7fd5f8698bea887322db97ccc8aa6a0063d2945dc",
+          "repeated_observation_group_count": 6,
+          "settled_intermediate_count": 0,
+          "superseded_state_count": 13
+        },
+        "policy_hash": "4354abb073b9e4ae859320c8b5a47a663515dcb7c3ca9493dcae6e64447c8235",
+        "policy_public_key": "34b4d9043156cb6dcf0beb0a2949b7559c940d2bcb6dbe8c53a9b30278e3a746",
+        "policy_version": "0.2",
+        "receiver_approval_hash": "8999e14065457b67862395892f5aa93b261adf8ee1cf5a95bdd7974ad7041b7a",
+        "receiver_approval_public_key": "c6822637c7d310ec57627be00ba259d253749f4aaf644470cffbe53a35f73242",
+        "receiver_disposition": "APPROVE",
+        "rehydration_conditions": [
+          "mechanism_weakened_or_overturned",
+          "constraint_changed",
+          "evidence_revoked",
+          "compaction_policy_changed",
+          "trusted_key_changed",
+          "unresolved_contradiction_changed",
+          "successor_decision_mismatch"
+        ],
+        "resulting_capsule_hash": "d1e21127793cc9a5d80c1a669b44a10301f8ecae0d704916a47d217ae8dda599",
+        "run_id": "gradual-drift-demo",
+        "same_exam_verified": true,
+        "schema": "openline.half-life.causal-compaction.v2",
+        "share_card_sha256": "a6235cdede338a0ad9720c4d3de23609707a0c1d102b57ac65b6abb62b5566f6",
+        "source_chain_count": 65,
+        "source_chain_digest": "0e072017602025a6e6782ab34146295ebb691561400d1344bb71c9368da3d34e",
+        "source_chain_tail_hash": "099aad33663b35834cb81d5504a8ded4e3be81c2e998110b695b5b5ecefa3d58",
+        "trusted_key_version": "receiver-compaction-key-v2",
+        "trusted_source_receipt_signer_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg=",
+        "updated_verified_residue_packet_hash": "bed34206916e05ac141c4eb3e70c8aad54b0ab702142397d0c2142cdf474d066"
+      },
+      "receipt_hash": "013ab0caa0c5a7ae3d8ad0ec89f78aac34f6f5715a36adf05056ea68a200f970",
+      "schema": "openline.endurance.receipt.v1",
+      "signature": "GYsbozpyoHmx4uk0zWjOaCKwKXIzUbzm+RBknBJeUCCiWkgr4UbxLLjzi3V26/DOXm1p9KrwAS/KR5/rxMHcAQ==",
+      "signer_public_key": "11l5O7wTooGagnx2rbb7qKSa7gB/SfLQmS2ZuCWtLEg="
+    }
+  ],
+  "retirement_turn": 61,
+  "schema": "openline.half-life.receipt-bundle.v3"
+}

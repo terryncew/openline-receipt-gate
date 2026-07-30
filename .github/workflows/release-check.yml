@@ -50,6 +50,10 @@ jobs:
           test "$(git -C "$half_life_root" rev-parse HEAD)" = "$HALF_LIFE_COMMIT"
           python -m pip install "$half_life_root"
           printf 'OLP_HALF_LIFE_ROOT=%s\n' "$half_life_root" >> "$GITHUB_ENV"
+          printf 'OLP_HALF_LIFE_SOURCE_ROOT=%s\n' "$half_life_root" >> "$GITHUB_ENV"
+
+      - name: Verify vendored Half-Life release fixture
+        run: python scripts/verify_vendored_half_life.py
 
       - name: Compile Python sources
         run: python -m compileall -q olp_gate benchmarks examples scripts tests
@@ -78,6 +82,7 @@ jobs:
           for freeze_name in (
               "benchmarks/x402_airlock/FREEZE.json",
               "benchmarks/verified_continuation/FREEZE.json",
+              "benchmarks/role_confusion_consequence/FREEZE.json",
           ):
               freeze_path = Path(freeze_name)
               freeze = json.loads(freeze_path.read_text(encoding="utf-8"))
@@ -104,6 +109,14 @@ jobs:
           python benchmarks/x402_airlock/run_hostile_suite.py
           git diff --exit-code -- benchmarks/x402_airlock/results/hostile_report.json
           python scripts/verify_x402_airlock.py
+
+      - name: Verify frozen Role-Confusion Consequence Gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python benchmarks/role_confusion_consequence/run_suite.py
+          git diff --exit-code -- benchmarks/role_confusion_consequence/results/hostile_report.json
+          python scripts/verify_role_confusion_consequence.py
 
       - name: Verify frozen Verified Continuation harness
         run: python scripts/verify_verified_continuation.py

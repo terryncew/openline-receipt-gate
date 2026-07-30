@@ -1,0 +1,2 @@
+[console_scripts]
+openline-half-life = openline_half_life.cli:main
