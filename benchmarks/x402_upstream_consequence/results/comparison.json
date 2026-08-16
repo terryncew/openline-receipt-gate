@@ -1,0 +1,57 @@
+{
+  "artifacts": {
+    "benchmarks/x402_upstream_consequence/results/effects/airlock-success.log": "00cf85b6aace26939f4d3f70a7c5ca1ffc67de51dddc09161f5413a69472b833",
+    "benchmarks/x402_upstream_consequence/results/effects/native-failed-settlement.log": "fe5e3e1bc57d57aa87547108cbf9f902418f858e124c06b993d077b57d18d669",
+    "benchmarks/x402_upstream_consequence/results/effects/native-success.log": "4fc732c3d73eff8011abc91b2aba8d1afd498ae35a5f4e3abc9369fd97a7c231"
+  },
+  "checks": {
+    "airlock_failure_attempts_settlement": true,
+    "airlock_failure_withholds_release": true,
+    "airlock_legitimate_control": true,
+    "native_failure_leaves_effect": true,
+    "native_failure_returns_error": true,
+    "native_success_control": true,
+    "upstream_handler_precedes_settlement": true
+  },
+  "claim": "At the pinned official Python MCP wrapper commit, a tool effect can precede a failed settlement; the disclosed Receipt Gate composition withholds protected release until matching settlement confirmation.",
+  "claim_boundary": "Pinned Python MCP wrapper and local deterministic consequence only; not every x402 SDK, a live-chain exploit, or production certification.",
+  "expected_absent_artifact": "benchmarks/x402_upstream_consequence/results/effects/airlock-failed-settlement.log",
+  "observations": {
+    "airlock_settlement_failure": {
+      "protected_effect_exists": false,
+      "protected_release_calls": 0,
+      "settlement_calls": 1,
+      "settlement_error": "facilitator unavailable"
+    },
+    "airlock_success_control": {
+      "authorized": true,
+      "protected_effect_count": 1,
+      "protected_release_calls": 1,
+      "resource_released": true,
+      "settlement_calls": 1,
+      "settlement_confirmed": true
+    },
+    "native_settlement_failure": {
+      "durable_tool_effect_count": 1,
+      "returned_error": true,
+      "settlement_calls": 1,
+      "verification_calls": 1
+    },
+    "native_success_control": {
+      "durable_tool_effect_count": 1,
+      "returned_error": false,
+      "settlement_calls": 1,
+      "verification_calls": 1
+    }
+  },
+  "passed": true,
+  "schema": "openline.x402_upstream_consequence_comparison.v1",
+  "upstream": {
+    "commit": "167a828e8319aa7b403f4f4312489e9cffadff10",
+    "handler_call_line": 221,
+    "handler_precedes_settlement": true,
+    "settlement_call_line": 267,
+    "source_path": "python/x402/mcp/server_async.py",
+    "source_sha256": "49354704d6a59e2d075fa21e258693632b26074097784edef76d3f9b8b4fd36c"
+  }
+}

@@ -1,9 +1,9 @@
-"""OpenLine Receipt Gate v0.6.0rc5.
+"""OpenLine Receipt Gate v0.6.0rc6.
 
 Proof-to-policy gate for risky agent actions.
 """
 
-__version__ = "0.6.0rc5"
+__version__ = "0.6.0rc6"
 
 from .gate import gate, ReceiptGate, GatePolicy, Decision
 from .receipts import verify_chain, load_receipts

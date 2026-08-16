@@ -1,0 +1,9 @@
+{
+  "claim_boundary": "This pin identifies the exact official Python MCP wrapper source executed by the comparison. It does not characterize every x402 SDK, transport, or later commit.",
+  "commit": "167a828e8319aa7b403f4f4312489e9cffadff10",
+  "commit_date": "2026-08-14T10:19:13-04:00",
+  "repository": "https://github.com/x402-foundation/x402.git",
+  "source_path": "python/x402/mcp/server_async.py",
+  "source_sha256": "49354704d6a59e2d075fa21e258693632b26074097784edef76d3f9b8b4fd36c"
+}
+

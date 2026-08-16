@@ -18,7 +18,37 @@ ROLLBACK_REQUEST
 
 A valid signature can still produce `UNDECIDABLE`. Signature validity is never treated as evidence sufficiency.
 
-## Role-Confusion Consequence Gate (v0.6.0rc5)
+## Pinned upstream x402 consequence reproduction (v0.6.0rc6)
+
+This release adds one comparative result against current, official upstream
+code rather than another self-authored hostile fixture.
+
+At x402 commit `167a828e8319aa7b403f4f4312489e9cffadff10`, the official
+asynchronous Python MCP wrapper verifies payment, executes the tool handler,
+and only then attempts settlement. The checked-in reproduction uses an actual
+durable file effect: when settlement raises, the wrapper returns an error but
+the handler's effect has already occurred once.
+
+The matched Receipt Gate composition attempts the same failing settlement but
+does not invoke the protected resource-release callback. A legitimate
+settlement plus matching confirmation releases the resource exactly once.
+
+```bash
+python benchmarks/x402_upstream_consequence/run_comparison.py \
+  --upstream-root /path/to/x402-at-167a828e
+python scripts/verify_x402_upstream_consequence.py \
+  --upstream-root /path/to/x402-at-167a828e
+```
+
+The runner refuses a different upstream commit or different source bytes. The
+independent verifier imports no Receipt Gate modules and checks the upstream
+call order, recorded observations, and durable effect bytes. This earns a
+narrow consequence-order claim for the pinned Python MCP wrapper. It is not a
+live-chain exploit, a claim about every x402 SDK, or production certification.
+See
+[`benchmarks/x402_upstream_consequence/PROTOCOL.md`](benchmarks/x402_upstream_consequence/PROTOCOL.md).
+
+## Role-Confusion Consequence Gate (v0.6.0rc6)
 
 The model can be fooled without the receiver being fooled.
 
@@ -62,7 +92,7 @@ reproduction. The standalone callback is not an atomic replay ledger;
 production effects must compose appraisal with Verified Commit. See
 [`docs/ROLE_CONFUSION_CONSEQUENCE_GATE.md`](docs/ROLE_CONFUSION_CONSEQUENCE_GATE.md).
 
-## OpenLine Handoff Check (v0.6.0rc5)
+## OpenLine Handoff Check (v0.6.0rc6)
 
 Change the agent without losing why the work was done.
 

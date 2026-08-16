@@ -2,7 +2,7 @@
 
 ## Supported claims
 
-Receipt Gate v0.6.0rc5 demonstrates that signed action receipts and a pinned Assay
+Receipt Gate v0.6.0rc6 demonstrates that signed action receipts and a pinned Assay
 evidence bundle can be converted into deterministic, signed policy decisions
 while keeping integrity, provenance, coverage, the source action signal,
 freshness, evidence, and outcome checks separate.
@@ -119,6 +119,17 @@ The standalone verifier checks the frozen source closure and serialized result
 without importing Receipt Gate or benchmark modules. This does not authenticate
 live chain observations or reproduce the study against a real facilitator.
 
+The pinned upstream x402 consequence comparison covers one exact external
+surface beyond that synthetic suite. It executes the official asynchronous
+Python MCP wrapper at commit
+`167a828e8319aa7b403f4f4312489e9cffadff10`. When verification succeeds
+and settlement later raises, a durable tool effect has already occurred once
+before the wrapper returns its settlement error. The matched Receipt Gate
+composition attempts settlement but invokes the protected release callback
+zero times; its confirmed legitimate control releases once. This is a
+behavioral ordering result for those pinned source bytes, not a live-chain
+exploit or a claim about every x402 implementation.
+
 ## Frozen Pipelock result
 
 The five-case preregistered run at the pinned source commits found:
@@ -179,7 +190,7 @@ cryptography—an Assay receiver can add an external byte pin as well.
 
 ## OpenLine Handoff Check boundary
 
-The v0.6.0rc5 Handoff Check demonstrates a deterministic local mechanism, not
+The v0.6.0rc6 Handoff Check demonstrates a deterministic local mechanism, not
 a live-provider continuation advantage. It can parse disclosed Claude Code,
 Codex rollout, and generic JSON/JSONL shapes into bounded observable events;
 preserve explicit semantic state without upgrading ordinary prose into a
@@ -198,7 +209,7 @@ inference remain outside the claim.
 
 ## Role-Confusion Consequence Gate boundary
 
-The v0.6.0rc5 Role-Confusion Consequence Gate demonstrates a deterministic
+The v0.6.0rc6 Role-Confusion Consequence Gate demonstrates a deterministic
 post-compromise mechanism over thirteen synthetic fixtures. The receiver sees an
 exact action plus signed evidence; prompt text, attack labels, model reasoning,
 and detector output are not appraisal inputs. Six authorization-valid hostile

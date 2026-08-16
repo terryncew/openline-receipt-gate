@@ -14,6 +14,7 @@ jobs:
     timeout-minutes: 15
     env:
       HALF_LIFE_COMMIT: 70121b53e86196d69b2c3457174b38ad32667b43
+      X402_UPSTREAM_COMMIT: 167a828e8319aa7b403f4f4312489e9cffadff10
 
     steps:
       - name: Check out Receipt Gate
@@ -55,6 +56,19 @@ jobs:
       - name: Verify vendored Half-Life release fixture
         run: python scripts/verify_vendored_half_life.py
 
+      - name: Install pinned official x402 source fixture
+        shell: bash
+        run: |
+          set -euo pipefail
+          x402_root="$RUNNER_TEMP/x402-upstream"
+          git init "$x402_root"
+          git -C "$x402_root" remote add origin https://github.com/x402-foundation/x402.git
+          git -C "$x402_root" fetch --depth=1 origin "$X402_UPSTREAM_COMMIT"
+          git -C "$x402_root" checkout --detach FETCH_HEAD
+          test "$(git -C "$x402_root" rev-parse HEAD)" = "$X402_UPSTREAM_COMMIT"
+          python -m pip install "$x402_root/python/x402"
+          printf 'OLP_X402_UPSTREAM_ROOT=%s\n' "$x402_root" >> "$GITHUB_ENV"
+
       - name: Compile Python sources
         run: python -m compileall -q olp_gate benchmarks examples scripts tests
 
@@ -66,7 +80,12 @@ jobs:
             benchmarks/warning_time/results/control/decision_receipts.jsonl \
             benchmarks/warning_time/results/dropped_counterevidence/decision_receipts.jsonl \
             benchmarks/warning_time/results/unflagged_contradiction/decision_receipts.jsonl \
-            benchmarks/verified_continuation/results/continuation_report.json
+            benchmarks/verified_continuation/results/continuation_report.json \
+            benchmarks/x402_upstream_consequence/SOURCE.json \
+            benchmarks/x402_upstream_consequence/results/comparison.json \
+            benchmarks/x402_upstream_consequence/results/effects/native-failed-settlement.log \
+            benchmarks/x402_upstream_consequence/results/effects/native-success.log \
+            benchmarks/x402_upstream_consequence/results/effects/airlock-success.log
           do
             git ls-files --error-unmatch -- "$artifact" >/dev/null
             if git check-ignore --no-index --quiet -- "$artifact"; then
@@ -109,6 +128,16 @@ jobs:
           python benchmarks/x402_airlock/run_hostile_suite.py
           git diff --exit-code -- benchmarks/x402_airlock/results/hostile_report.json
           python scripts/verify_x402_airlock.py
+
+      - name: Reproduce pinned upstream x402 consequence order
+        shell: bash
+        run: |
+          set -euo pipefail
+          python benchmarks/x402_upstream_consequence/run_comparison.py \
+            --upstream-root "$OLP_X402_UPSTREAM_ROOT"
+          git diff --exit-code -- benchmarks/x402_upstream_consequence/results
+          python scripts/verify_x402_upstream_consequence.py \
+            --upstream-root "$OLP_X402_UPSTREAM_ROOT"
 
       - name: Verify frozen Role-Confusion Consequence Gate
         shell: bash

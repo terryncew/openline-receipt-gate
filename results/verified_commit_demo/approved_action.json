@@ -1,12 +1,12 @@
 {
-  "authorization_hash": "d7d111f4511b0bdb29750691f745bdb36ab4c703b3dc73f1c33b784172f05699",
+  "authorization_hash": "d8a7558c46fc99ea2b3947141f39732608ee9067c18b42a36a41e00fe21ee0c4",
   "capsule_hash": "8436eae8c2e158a44d06b66284d9b9b632df98c7572dc49b22467df0c4f49d1a",
-  "decision_payload_hash": "271eaab9983a38e9496de9f5dc554954eb2d02d3239e76a78f96c40fccca386d",
+  "decision_payload_hash": "ceb7874de86605f61f798c9bab3d620044a12cac1f6c1adc78dad265c1966abc",
   "evidence_hashes": [
-    "8d0d6ca44500a1dd0b435e52e62da37071dbbff98a15fb59a0a4e439b2c26944"
+    "5daa2ccd201735ad09395729586b857904dfe079a4b0963eafb0db4658c61701"
   ],
   "format": "openline.verified-commit.executed-action.v1",
-  "policy_hash": "d69095a6019d546525ce38007a39cba814c53f6e23c7a9d526fc19a165c05a6b",
+  "policy_hash": "41a5f11acc90575194846a95a445579b08ac9f0c94c37088c66cb636cd98bf62",
   "run_id": "verified-model-swap-demo",
   "settings_hash": "e826d77ee2f77f0896af8e4a9f5cd917e1e9c0b0e490f89318cb63ce00790605",
   "target": "artifact://approved_action.json",

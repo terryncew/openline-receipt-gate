@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.6.0rc6
+
+- Adds a behavioral comparison against the official x402 repository pinned at
+  commit `167a828e8319aa7b403f4f4312489e9cffadff10` and source SHA-256
+  `49354704d6a59e2d075fa21e258693632b26074097784edef76d3f9b8b4fd36c`.
+- Reproduces the official asynchronous Python MCP wrapper executing a durable
+  tool effect before settlement and then returning an error when settlement
+  fails. This is a real upstream code path, not a simulated native baseline.
+- Runs a matched Receipt Gate failure in which settlement is attempted but the
+  protected release callback remains untouched, plus legitimate native and
+  airlock controls that each execute exactly once.
+- Adds a standard-library independent verifier that rechecks the pinned Git
+  commit, source bytes, AST call order, observations, and durable effect files
+  without importing Receipt Gate code.
+- Keeps the claim narrow: the finding covers the pinned Python MCP wrapper and
+  disclosed local effect, not every x402 implementation, a live-chain exploit,
+  or production safety.
+
 ## 0.6.0rc5
 
 - Fails closed when a trusted, valid evidence bundle mixes exact-action support

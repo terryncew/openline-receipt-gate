@@ -1,16 +1,16 @@
 {
   "authorization": {
-    "action_hash": "b3653e953756d09350d85f8b5977d3ccee9ceb3da0319b44a809d4191dbb8815",
-    "authorization_hash": "d7d111f4511b0bdb29750691f745bdb36ab4c703b3dc73f1c33b784172f05699",
-    "decision_payload_hash": "271eaab9983a38e9496de9f5dc554954eb2d02d3239e76a78f96c40fccca386d",
-    "expires_at": "2026-07-30T14:10:56.551631Z",
+    "action_hash": "85024ab9adf25e23d108df9d4219f684fa39aad7d956093d15f517befeed010b",
+    "authorization_hash": "d8a7558c46fc99ea2b3947141f39732608ee9067c18b42a36a41e00fe21ee0c4",
+    "decision_payload_hash": "ceb7874de86605f61f798c9bab3d620044a12cac1f6c1adc78dad265c1966abc",
+    "expires_at": "2026-08-16T08:43:02.653007Z",
     "raw_one_use_code_stored": false
   },
   "claim": "Proof travels; permission belongs to the receiver.",
   "claim_boundary": "This proves receiver-side exactly-once authorization for the disclosed action and local atomic ledger. It does not prove live vendor-model execution, global coordination across independent ledgers, successful rollback, or safety of a tool that bypasses this checker.",
   "execution": {
     "approved_action_file": "approved_action.json",
-    "approved_action_file_sha256": "d6ccdf0eeaf00674c9c34d1e0bb54a02ae5af3b36c7a30cbb9b5748bd2153223",
+    "approved_action_file_sha256": "7f28386398d8083c3445fd1ad24ec7432ff36f9aa7b9a1e60716fe49740926a9",
     "authorized_attempts": 1,
     "completed_attempts": 1,
     "forbidden_executor_calls": []

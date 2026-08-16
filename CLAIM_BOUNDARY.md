@@ -1,6 +1,6 @@
 # Claim Boundary
 
-## Supported by v0.6.0rc5
+## Supported by v0.6.0rc6
 
 Receipt Gate retains its receiver-owned `COMMIT`, `QUARANTINE`, and `DENY` appraisal and Verified Commit controls. The repaired warning-time fixture derives κ, Δ_hol, and VKD proxy values only from observable current and previous state. Forty clean calibration runs are separated from sixty held-out runs; the same twenty held-out seeds are paired across control, dropped-counterevidence, and contradiction conditions. The signed calibration profile is freshness-checked and bound to a private external-custody record created before held-out evaluation. The offline verifier pins the exact external witness key and anchor payload; it does not let an anchor choose its own trust root.
 
@@ -65,3 +65,13 @@ The v0.5.0rc3 calibration result is rejected. Its metric function received the g
 This repository does not establish real-world predictive usefulness, universal COLE thresholds, a true or universal ontology, causal explanation, production safety, automatic model retirement, or permission for the calibration profile itself to issue receiver decisions. It also does not establish the safety of any x402 facilitator, authenticate live chain state, guarantee cross-host atomicity, or constrain a settlement path that bypasses the Transaction Airlock. The Verified Continuation fixture is not a commercial-provider run and does not establish improved cross-model continuation; that claim requires a matched outside reproduction. Handoff Check likewise does not infer trustworthy rationale from ordinary prose or prove that a provider export captures every state that affected the agent. The private custody record proves bounded storage order for this build; it is not a public transparency log or production identity.
 
 The next scientific gate is a preregistered, label-blind benchmark on chronological external traces, followed by a cold independent rerun. Until that passes, the external predictive claim remains **HOLD**.
+
+The pinned upstream x402 consequence comparison executes the official
+asynchronous Python MCP wrapper at commit
+`167a828e8319aa7b403f4f4312489e9cffadff10`. With successful payment
+verification and a settlement exception, the wrapped tool's durable effect
+occurs once before the wrapper returns an error. Under the disclosed Receipt
+Gate composition, the same settlement exception produces zero protected
+resource releases; a confirmed legitimate settlement releases once. This is a
+bounded ordering result for that exact Python source, not a live-chain exploit
+or a claim about every x402 implementation.

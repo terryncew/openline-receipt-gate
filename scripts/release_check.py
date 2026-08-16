@@ -22,7 +22,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
-VERSION = "0.6.0rc5"
+VERSION = "0.6.0rc6"
 PIPELOCK_INTEGRATION_TESTS = 9
 ASSAY_INTEGRATION_TESTS = 5
 MODEL_SWAP_INTEGRATION_TESTS = 8
@@ -60,6 +60,8 @@ CI_REQUIRED_SNIPPETS = (
     "actions/setup-python@v6",
     "actions/setup-node@v6",
     HALF_LIFE_COMMIT,
+    "167a828e8319aa7b403f4f4312489e9cffadff10",
+    "OLP_X402_UPSTREAM_ROOT",
     "OLP_HALF_LIFE_ROOT",
     "OLP_HALF_LIFE_SOURCE_ROOT",
     "Verify vendored Half-Life release fixture",
@@ -81,6 +83,9 @@ CI_REQUIRED_SNIPPETS = (
     "python scripts/verify_warning_time_benchmark.py",
     "python benchmarks/x402_airlock/run_hostile_suite.py",
     "python scripts/verify_x402_airlock.py",
+    "benchmarks/x402_upstream_consequence/results/comparison.json",
+    "python benchmarks/x402_upstream_consequence/run_comparison.py",
+    "python scripts/verify_x402_upstream_consequence.py",
     "benchmarks/role_confusion_consequence/FREEZE.json",
     "benchmarks/role_confusion_consequence/results/hostile_report.json",
     "python benchmarks/role_confusion_consequence/run_suite.py",
@@ -307,6 +312,7 @@ def write_manifest(
     assay_summary: dict[str, Any],
     warning_time_summary: dict[str, Any],
     x402_airlock_summary: dict[str, Any],
+    x402_upstream_summary: dict[str, Any],
     role_confusion_summary: dict[str, Any],
     optional_integrations: dict[str, Any],
 ) -> None:
@@ -446,6 +452,13 @@ def write_manifest(
             "resource_release_confirmed_count": x402_airlock_summary.get(
                 "resource_release_confirmed_count"
             ),
+        },
+        "x402_upstream_consequence": {
+            "passed": x402_upstream_summary.get("passed", False),
+            "claim": x402_upstream_summary.get("claim"),
+            "claim_boundary": x402_upstream_summary.get("claim_boundary"),
+            "upstream": x402_upstream_summary.get("upstream", {}),
+            "observations": x402_upstream_summary.get("observations", {}),
         },
         "role_confusion_consequence": {
             "passed": role_confusion_summary.get("passed", False),
@@ -625,6 +638,18 @@ def main() -> int:
         )
     except (OSError, json.JSONDecodeError, KeyError, TypeError):
         x402_airlock_report = {}
+    try:
+        x402_upstream_report = json.loads(
+            (
+                ROOT
+                / "benchmarks"
+                / "x402_upstream_consequence"
+                / "results"
+                / "comparison.json"
+            ).read_text(encoding="utf-8")
+        )
+    except (OSError, json.JSONDecodeError, KeyError, TypeError):
+        x402_upstream_report = {}
 
     unit_command = [
         sys.executable,
@@ -1344,6 +1369,39 @@ def main() -> int:
                 "verification_settlement_divergence": True,
             }
         ),
+        "x402_upstream_consequence_passed": (
+            x402_upstream_report.get("passed") is True
+        ),
+        "x402_upstream_native_failure_left_effect": (
+            x402_upstream_report.get("observations", {})
+            .get("native_settlement_failure", {})
+            .get("durable_tool_effect_count")
+            == 1
+            and x402_upstream_report.get("observations", {})
+            .get("native_settlement_failure", {})
+            .get("returned_error")
+            is True
+        ),
+        "x402_upstream_airlock_failure_withheld_release": (
+            x402_upstream_report.get("observations", {})
+            .get("airlock_settlement_failure", {})
+            .get("protected_release_calls")
+            == 0
+            and x402_upstream_report.get("observations", {})
+            .get("airlock_settlement_failure", {})
+            .get("protected_effect_exists")
+            is False
+        ),
+        "x402_upstream_airlock_legitimate_control_released": (
+            x402_upstream_report.get("observations", {})
+            .get("airlock_success_control", {})
+            .get("protected_release_calls")
+            == 1
+            and x402_upstream_report.get("observations", {})
+            .get("airlock_success_control", {})
+            .get("resource_released")
+            is True
+        ),
         "pipelock_benchmark_passed": benchmark_report.get("passed") is True,
         "pipelock_strong_hypothesis_falsified": pipelock_summary.get(
             "flagship_finding", {}
@@ -1587,9 +1645,10 @@ def main() -> int:
         "proof_to_policy_demo": proof_summary,
         "warning_time_benchmark": warning_time_report,
         "x402_transaction_airlock": x402_airlock_report,
+        "x402_upstream_consequence": x402_upstream_report,
         "pipelock_head_to_head": pipelock_summary,
         "assay_head_to_head": assay_summary,
-        "claim_boundary": "A passing deterministic release gate does not prove production safety, issuer honesty, complete capture, live provider execution, universal model portability, legal ownership, witness independence, rollback execution, or globally exactly-once side effects. The vendored Half-Life bundle makes the release gate runnable offline and is hash-checked locally; local hashes do not independently establish upstream provenance, so CI separately compares it byte-for-byte with the pinned upstream commit. Verified Model Swap is exact only over the disclosed receiver decision projection and pinned Half-Life fixture. Verified Commit proves receiver-side one-use authorization only when the destination tool enters through the disclosed checker and shares its atomic ledger; a crash after consumption fails closed. The Verified Continuation fixture proves harness conformance only and must remain UNDECIDABLE until matched outside provider runs are disclosed. Its exact-branch authorization result is separate and local. Handoff Check certifies fidelity only against explicit state in the supplied local history; it does not establish history completeness or real-agent success. The Role-Confusion Consequence Gate is a synthetic post-compromise mechanism test with a harmless callback; it does not establish that a live model or published attack was reproduced, and its standalone callback is not an atomic replay ledger. Production effects must compose appraisal with Verified Commit. The x402 Transaction Airlock result is a synthetic adapter test against frozen hostile cases, not an audit of a live facilitator, wallet, chain, or receiver data provider.",
+        "claim_boundary": "A passing deterministic release gate does not prove production safety, issuer honesty, complete capture, live provider execution, universal model portability, legal ownership, witness independence, rollback execution, or globally exactly-once side effects. The vendored Half-Life bundle makes the release gate runnable offline and is hash-checked locally; local hashes do not independently establish upstream provenance, so CI separately compares it byte-for-byte with the pinned upstream commit. Verified Model Swap is exact only over the disclosed receiver decision projection and pinned Half-Life fixture. Verified Commit proves receiver-side one-use authorization only when the destination tool enters through the disclosed checker and shares its atomic ledger; a crash after consumption fails closed. The Verified Continuation fixture proves harness conformance only and must remain UNDECIDABLE until matched outside provider runs are disclosed. Its exact-branch authorization result is separate and local. Handoff Check certifies fidelity only against explicit state in the supplied local history; it does not establish history completeness or real-agent success. The Role-Confusion Consequence Gate is a synthetic post-compromise mechanism test with a harmless callback; it does not establish that a live model or published attack was reproduced, and its standalone callback is not an atomic replay ledger. Production effects must compose appraisal with Verified Commit. The x402 Transaction Airlock hostile matrix is synthetic. Separately, the pinned official Python MCP wrapper comparison reproduces one real source-order consequence: a tool effect occurs before failed settlement, while the disclosed airlock withholds protected release. That result is limited to the exact pinned source and local effect; it is not a live-chain exploit or a claim about every x402 SDK.",
     }
     (ROOT / "RUN_REPORT.json").write_text(
         json.dumps(report, indent=2, sort_keys=True) + "\n",
@@ -1612,6 +1671,7 @@ def main() -> int:
         },
         warning_time_summary=warning_time_report,
         x402_airlock_summary=x402_airlock_report,
+        x402_upstream_summary=x402_upstream_report,
         role_confusion_summary=role_confusion_summary,
         assay_summary={
             "passed": assay_benchmark_report.get("passed", False),

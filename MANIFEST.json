@@ -21,12 +21,12 @@
     "strong_signing_uniqueness_hypothesis_falsified": true
   },
   "claim": "Signed source receipts can drive externally configured, independently verifiable policy decisions within declared inputs and trust assumptions.",
-  "created_at": "2026-07-30T14:06:11.150060Z",
+  "created_at": "2026-08-16T08:38:10.448610Z",
   "files": [
     {
-      "bytes": 4713,
+      "bytes": 6286,
       "path": ".github/workflows/release-check.yml",
-      "sha256": "d4f130433152236722b8adbdecd7ff54967fe4e301b92a708a31625f27a67517"
+      "sha256": "9f57678d35ea634cf5e60ae0616a6012f038e039ff7e3173fc2cccc7653b6614"
     },
     {
       "bytes": 527,
@@ -34,14 +34,14 @@
       "sha256": "facf419e8bc2559cd54fcf75afe22b4862a2bf37e6bf54fc9df472b4f93a9555"
     },
     {
-      "bytes": 23429,
+      "bytes": 24474,
       "path": "CHANGELOG.md",
-      "sha256": "826d812c4b10c4a9d3fd76e4f50d830760fda35ac2531c777e96bc10f2613826"
+      "sha256": "4fa4a51f40c9b50d0e027fa004eedefbb67c45a95dac66f04b7f1539ad5e54b7"
     },
     {
-      "bytes": 5645,
+      "bytes": 6251,
       "path": "CLAIM_BOUNDARY.md",
-      "sha256": "a252102a4089cf19c9d4c1b9a8d021433df6bd0976608f998108025dce4d127d"
+      "sha256": "24511603c49cb3daea7b8a7c27effbf098b7209f734bc96299bf88a489b49fa3"
     },
     {
       "bytes": 985,
@@ -49,14 +49,14 @@
       "sha256": "83f1cec7cc6701c9a8004184b541dd1297a5c0aa618d22cfc9036686b4274cfb"
     },
     {
-      "bytes": 30836,
+      "bytes": 32321,
       "path": "README.md",
-      "sha256": "877e11eecfb616b0768d03fd93774a51d7235b26e935d7ec23067722ae62d211"
+      "sha256": "b9d9399c62fc2f8428250f2b501f9dc4d481df49dd9067b68e6b0725bff58ecc"
     },
     {
-      "bytes": 284821,
+      "bytes": 291552,
       "path": "RUN_REPORT.json",
-      "sha256": "0faafbe1a8f0dfb00a9078f98f37e393c52625dc769a50eb20977df3ae052b6d"
+      "sha256": "ebbc696147ad5d3d74cd0e53f3cf988b9be0470559ff303c8e6d058a4d9086cc"
     },
     {
       "bytes": 65,
@@ -804,14 +804,59 @@
       "sha256": "77f18f757ddd1f0b76e10f48f3fff0b084e6843478b99fad414bec4b4f70b2a7"
     },
     {
+      "bytes": 3399,
+      "path": "benchmarks/x402_upstream_consequence/PROTOCOL.md",
+      "sha256": "b0bbd0e6dfaac75afa8e05c7134c2ccedf2239f4c66cd1fe58ff358714854efc"
+    },
+    {
+      "bytes": 2009,
+      "path": "benchmarks/x402_upstream_consequence/REPORT.md",
+      "sha256": "53c9362be55af31f67a7db9cc4cee9cd82a6aa0274b6c31bfae63ee008bc9179"
+    },
+    {
+      "bytes": 493,
+      "path": "benchmarks/x402_upstream_consequence/SOURCE.json",
+      "sha256": "9d3e42cc55dd2c234c40ebc7013a11b15c35f9b07645911b4c357cc9b384c35e"
+    },
+    {
+      "bytes": 58,
+      "path": "benchmarks/x402_upstream_consequence/__init__.py",
+      "sha256": "32b23dae33ca48ea98644c317adbddcb2126b91558318bd151adabf93f604bce"
+    },
+    {
+      "bytes": 2497,
+      "path": "benchmarks/x402_upstream_consequence/results/comparison.json",
+      "sha256": "6fb41e1b46dd71a136fc7f8a2db32d66b6509fc0e4235d5ed614b1a893651835"
+    },
+    {
+      "bytes": 43,
+      "path": "benchmarks/x402_upstream_consequence/results/effects/airlock-success.log",
+      "sha256": "00cf85b6aace26939f4d3f70a7c5ca1ffc67de51dddc09161f5413a69472b833"
+    },
+    {
+      "bytes": 44,
+      "path": "benchmarks/x402_upstream_consequence/results/effects/native-failed-settlement.log",
+      "sha256": "fe5e3e1bc57d57aa87547108cbf9f902418f858e124c06b993d077b57d18d669"
+    },
+    {
+      "bytes": 48,
+      "path": "benchmarks/x402_upstream_consequence/results/effects/native-success.log",
+      "sha256": "4fc732c3d73eff8011abc91b2aba8d1afd498ae35a5f4e3abc9369fd97a7c231"
+    },
+    {
+      "bytes": 14426,
+      "path": "benchmarks/x402_upstream_consequence/run_comparison.py",
+      "sha256": "4b522a4349353d095cf1323a1eed71d7fe64bc545c7e03a80da5179f0daf79aa"
+    },
+    {
       "bytes": 7944,
       "path": "docs/ARCHITECTURE.md",
       "sha256": "c1ede3e213ace4d2ab5843f80df5878207f0156636aa2809d4e3b736037597d6"
     },
     {
-      "bytes": 15967,
+      "bytes": 16640,
       "path": "docs/CLAIM_BOUNDARY.md",
-      "sha256": "bfc412a8a25a44d3a9adf2ec33aa2565cbb8da5c8755d835319d70bd91f17d8f"
+      "sha256": "ca1cfae83ba20583e3b7144564b87bdd2f7be32e0e8b06757873e643466cd7bc"
     },
     {
       "bytes": 8650,
@@ -821,7 +866,7 @@
     {
       "bytes": 5176,
       "path": "docs/HANDOFF_CHECK.md",
-      "sha256": "d26e1bd576f0b3527ae519975076a14ca87629aae47149b83a6bf688a5665f3b"
+      "sha256": "3b42843c80d5729b67153dcb27b824e7517bf03f2faa1a1b08b015a370c37c37"
     },
     {
       "bytes": 4181,
@@ -886,7 +931,7 @@
     {
       "bytes": 2752,
       "path": "olp_gate/__init__.py",
-      "sha256": "128c0f49e4eb3b884ada82ad8c12f9c8d5644a57043c9ca4c10336eb4440cb3c"
+      "sha256": "5d171408e23d0e329569c8d08bc8c09cea6847c1cb5efc2c609bbf56933fee1e"
     },
     {
       "bytes": 30740,
@@ -1001,7 +1046,7 @@
     {
       "bytes": 895,
       "path": "pyproject.toml",
-      "sha256": "80aecdd6df8550bc6ba5fd4e03fea771a374f1ae4fafe96ee158a92e30f77d1a"
+      "sha256": "b037bb83e92d4af6acb07e32a7aab610fbff0e48d03ad88f810c9a641cb971bd"
     },
     {
       "bytes": 118,
@@ -1016,7 +1061,7 @@
     {
       "bytes": 15358,
       "path": "results/demo_all_summary.json",
-      "sha256": "6eea012938bd80e5e95bffe478220d337bef7b0351381d9b39e83fd483615027"
+      "sha256": "3513b2fb8cfc0ffcb8858a5f2e60b43da8c3055124e3b7c7d66d8caf054c3a23"
     },
     {
       "bytes": 1177,
@@ -1056,12 +1101,12 @@
     {
       "bytes": 19677,
       "path": "results/proof_to_policy_demo/decision_receipts.jsonl",
-      "sha256": "56b4e9554e1bd8aea920555eabc1177a3a0b6cc6723e8b720289e70e3fa2b423"
+      "sha256": "f9c9fa3f2e98edd051f333b18fa040d1712ea4efb1956fe28af7687faf2c417e"
     },
     {
       "bytes": 1653,
       "path": "results/proof_to_policy_demo/demo_summary.json",
-      "sha256": "3e66ae809f61931ecf0f476ef2095492a43d01b016163190acce1a048cffdf52"
+      "sha256": "a00b67a96bd10ee7a8ade34a310cf971f708a043765f6c5b2702b8d0b258b302"
     },
     {
       "bytes": 37,
@@ -1076,22 +1121,22 @@
     {
       "bytes": 723,
       "path": "results/verified_commit_demo/approved_action.json",
-      "sha256": "d6ccdf0eeaf00674c9c34d1e0bb54a02ae5af3b36c7a30cbb9b5748bd2153223"
+      "sha256": "7f28386398d8083c3445fd1ad24ec7432ff36f9aa7b9a1e60716fe49740926a9"
     },
     {
       "bytes": 6708,
       "path": "results/verified_commit_demo/decision_receipts.jsonl",
-      "sha256": "2fcc027a42b3fb2ba2c418ff02ddf5039438cb60946a9ea12e7c3a136b9a8761"
+      "sha256": "5edc6b1eaa3a47320f0ac64fc921bf0f07ad31700952713a3623b9c706742900"
     },
     {
       "bytes": 2027,
       "path": "results/verified_commit_demo/gate_policy.json",
-      "sha256": "a1fcc5b5f444b7f20b74920af25b8afd8e506c6b2e5229cd65026af9229a8688"
+      "sha256": "bcfb0768f11b0689c257fdf783ace71d2c6f2526e752d1218a90a67b880c0c43"
     },
     {
       "bytes": 4302,
       "path": "results/verified_commit_demo/gate_request.json",
-      "sha256": "452c7613eb14a6df99a5f7c4e60b27d68fdce0890df45333a8a1798ab6d15754"
+      "sha256": "aae4f75892b5d8d0cdc8d7ff8332dfe9b050f276fcbefaa63b1b36758a371dbf"
     },
     {
       "bytes": 594,
@@ -1101,32 +1146,32 @@
     {
       "bytes": 979,
       "path": "results/verified_commit_demo/outcome_receipt.json",
-      "sha256": "aa0125e06aa6cf1484ff5d074e6da737bb387b475df5400f9dafc0e524056b9e"
+      "sha256": "7fd112beb6d3ed2fd002eaf95a6be6d1dc301fd56c312da4646869b6991d948b"
     },
     {
       "bytes": 22223,
       "path": "results/verified_commit_demo/proof_card.json",
-      "sha256": "8d0d6ca44500a1dd0b435e52e62da37071dbbff98a15fb59a0a4e439b2c26944"
+      "sha256": "5daa2ccd201735ad09395729586b857904dfe079a4b0963eafb0db4658c61701"
     },
     {
       "bytes": 1415,
       "path": "results/verified_commit_demo/source_receipt.json",
-      "sha256": "464972e1484ac18e9e32855aff00eecebc4399d149673eab646145b865d04bb3"
+      "sha256": "7754263501ec9c4bf686b3dc03658b7c37bb05dc80a30c5cf0c631113cc78651"
     },
     {
       "bytes": 8936,
       "path": "results/verified_commit_demo/verified_commit_ledger.json",
-      "sha256": "dfdf56da3e87d4a4693a3a2dd1abd09fed3d49b63c3a593d919d1d66bda792ce"
+      "sha256": "75ee0040b06776f01fdf637ee05f85628f7c1403d3b2770a5ace791dabc098a4"
     },
     {
       "bytes": 3842,
       "path": "results/verified_commit_demo/verified_commit_summary.json",
-      "sha256": "ffaaf88e7224110be54e69c988fa1294db5bb2bc22774dfa285fc3602a1f28ac"
+      "sha256": "e5d1de8fb1a70797c3f5f76f5013f275d2e1c6c4867b6ff128385707dc70035f"
     },
     {
       "bytes": 33000,
       "path": "results/verified_commit_demo/verified_model_swap.latest.json",
-      "sha256": "bee91499a87c4825347ee4efebcd039364eaae9569b2e723efc07722b697ebdf"
+      "sha256": "da42774881c759ddb5b6f1c5fe19e56fe0ed86abf1a707b4e0f1699c9b748b2c"
     },
     {
       "bytes": 494,
@@ -1136,27 +1181,27 @@
     {
       "bytes": 3565,
       "path": "results/verified_continuation_authorization/branch_authorization_report.json",
-      "sha256": "9aa8f0925c2da667a6edef2480848894dba5bde28e74103d4f37ac3c2a7016ca"
+      "sha256": "d12d0657d9c489bec2dc51aae35b639613bece4d58d3895e8b3d454c7f709683"
     },
     {
       "bytes": 4949,
       "path": "results/verified_continuation_authorization/branch_commit_ledger.json",
-      "sha256": "8a9e151a8ba728138a8c4945f14feb1b7401b7fd1e4e1906e57ae22d96a9c6f4"
+      "sha256": "52acfe7b854720c2c9b1f505ed59bd03e9650e8b004623576d1188a984cce3fc"
     },
     {
       "bytes": 6732,
       "path": "results/verified_continuation_authorization/gate/decision_receipts.jsonl",
-      "sha256": "d51259a765ebb13d7abc1a02bc24f4609cebbf9faf42115c89de5d3bde5d3f16"
+      "sha256": "82a9dc7d47a28aa39800431303e4b982be086266373b814c8cb686163e67f271"
     },
     {
       "bytes": 2032,
       "path": "results/verified_continuation_authorization/gate/gate_policy.json",
-      "sha256": "633ca49fb4f2fea087eae613d8a23e901eaf646ce94dceb56b4a3eea2fad289c"
+      "sha256": "d7aa7f4f50728411ec6fc255ad763c0a1a2a9d1a80a0ad0aafa985a2655925e2"
     },
     {
       "bytes": 4409,
       "path": "results/verified_continuation_authorization/gate/gate_request.json",
-      "sha256": "d093cfdd2b9209381f06754c7e8ad7f9fb32e8faf32dc74a9fd7a5814289b45b"
+      "sha256": "3cf9a9e48e02961851c6ad970e508ce8928af2cc17c570957e3ccf028bb9f8d2"
     },
     {
       "bytes": 594,
@@ -1166,22 +1211,22 @@
     {
       "bytes": 979,
       "path": "results/verified_continuation_authorization/gate/outcome_receipt.json",
-      "sha256": "d6bdb5b818ddab7ae48da12a961168ffe8622245d0159c01068f9d8f73a0c9f7"
+      "sha256": "6bd70ca9236a1f06f833ded63588a3810ee9a17d27370c7a06f73a69e3c6eae0"
     },
     {
       "bytes": 22243,
       "path": "results/verified_continuation_authorization/gate/proof_card.json",
-      "sha256": "662ea916e7cafe3304ebe97e9855984bd75aa567e8a053d1173a5a9d1302bbac"
+      "sha256": "06d9db13514d181ad2697c30cd6485cd4c03193059ae9e3a794266e8204280d0"
     },
     {
       "bytes": 1435,
       "path": "results/verified_continuation_authorization/gate/source_receipt.json",
-      "sha256": "151526cdd74d2db30c2e46f58bab76bd720bb76e8282f762dd367008adc29de1"
+      "sha256": "a1c76eb40d74d6bf0b5e3f084249d7eaeece5b6d3ab010a45afdd3457588b766"
     },
     {
       "bytes": 33044,
       "path": "results/verified_continuation_authorization/gate/verified_model_swap.latest.json",
-      "sha256": "2613ded71e99d2e05b58bf2c04489a69e2494e573cd63ab2e0198151022048a2"
+      "sha256": "129b5e5158f67ba32d3acae7272db5c9689e6583966577313bc3a98e045baa0f"
     },
     {
       "bytes": 6648,
@@ -1196,12 +1241,12 @@
     {
       "bytes": 821,
       "path": "results/verified_continuation_summary.json",
-      "sha256": "137ddd299441b7731c9103df18909c4be0d81065f46dba12e04612d51bbcc401"
+      "sha256": "9686bcb1f8ee5ddc3c76086dad4bf8f0c11a269a127df7c2a5a8ef6c9859ead3"
     },
     {
       "bytes": 4726,
       "path": "results/verified_model_swap_demo/decision_receipts.jsonl",
-      "sha256": "b8584b46b80ef7fb41596bb02e1a043733039a551653d09a502314354a8274fd"
+      "sha256": "fb3715d6d2aa37fda9c99edcd41117e0d0a92cb6b47650853eede7f3c2fbe223"
     },
     {
       "bytes": 1521,
@@ -1211,7 +1256,7 @@
     {
       "bytes": 3566,
       "path": "results/verified_model_swap_demo/gate_request.json",
-      "sha256": "b71d4b3b94f3bb3088bd14a05970a37c85f32ea38d69d8a29bb15b7a50d067d3"
+      "sha256": "92b352d02453fd50c9fc690e42065f86fb39a7ddab7b475a72bf93d064dfdda6"
     },
     {
       "bytes": 594,
@@ -1221,27 +1266,27 @@
     {
       "bytes": 979,
       "path": "results/verified_model_swap_demo/outcome_receipt.json",
-      "sha256": "daaab8b3e253bc18faf3ab41573de34abedfd2910c04a5f0c96eb08ddaa6aedb"
+      "sha256": "9e6da62f7183797049f41a94138f2df43f3dc3877394fa630539f2c64b712721"
     },
     {
       "bytes": 22233,
       "path": "results/verified_model_swap_demo/proof_card.json",
-      "sha256": "ff2f9bbb5071f67f5ad5d145ccc8cb6cfdfc3123f311bac99a9aa6f920cd30e1"
+      "sha256": "6b654712f78c0e468df38eaa52d23c41fe29517b818ba03622e2b30fa1493332"
     },
     {
       "bytes": 1415,
       "path": "results/verified_model_swap_demo/source_receipt.json",
-      "sha256": "a1286421a48d56b58277ca8eb3cc62c04a76af73bdd49106b97d449a36c52bf2"
+      "sha256": "5ea298a1124266e1758bec83d463ebc892e861373d20d3d9bf051ce1c219f842"
     },
     {
       "bytes": 30517,
       "path": "results/verified_model_swap_demo/verified_model_swap.latest.json",
-      "sha256": "836b23cc9408b1be024ad3ea7675f70c004b79a00072d414b88ec3206a1e8ac1"
+      "sha256": "8c6ac6e09d73371db53c9067df0de69881cdd579acd0d0ed685f1b83551d1c9b"
     },
     {
-      "bytes": 68842,
+      "bytes": 71605,
       "path": "scripts/release_check.py",
-      "sha256": "14463013a762166d296b297462fb81a889da9b9ea50af93499483af274676a01"
+      "sha256": "daf86177499d091007c27da6e962bb7cee4502b44482d26c31b9b0ba13c1005c"
     },
     {
       "bytes": 17789,
@@ -1282,6 +1327,11 @@
       "bytes": 15992,
       "path": "scripts/verify_x402_airlock.py",
       "sha256": "27064d245a2e911dab6c458f264177350275f162afebf8d835ff5dbbcb747767"
+    },
+    {
+      "bytes": 7108,
+      "path": "scripts/verify_x402_upstream_consequence.py",
+      "sha256": "7713508c147bf1ae997f2b8e1ca2851e4d825f062786df629d9a71fd8ec35d6d"
     },
     {
       "bytes": 1781,
@@ -1372,6 +1422,11 @@
       "bytes": 6046,
       "path": "tests/test_x402_freeze.py",
       "sha256": "b3aef38b11bd81fa1cb11d3fc0d31050b28594d48dca157cac7667b5a54314ec"
+    },
+    {
+      "bytes": 1978,
+      "path": "tests/test_x402_upstream_consequence.py",
+      "sha256": "81b3a32e2ea355d957f2e72b30f24236646ac5a990d14b260cd33fb538b05cf0"
     },
     {
       "bytes": 820,
@@ -2065,7 +2120,7 @@
       "demo_executed": true,
       "demo_passed": true,
       "dependency_absent_suite_passed": true,
-      "fixture_root": "/mnt/data/receiptgate_rc4_fix/vendor/openline-half-life-0.2.0rc5",
+      "fixture_root": "/workspace/scratch/779324f513f5/work/openline-receipt-gate-undeniable-test/vendor/openline-half-life-0.2.0rc5",
       "install_command": "pip install -r requirements-model-swap.txt",
       "integration_test_count": 8,
       "live_integration_tests_executed": true,
@@ -2161,8 +2216,8 @@
   },
   "schema": "openline.release_manifest.v0.2",
   "verified_commit": {
-    "action_hash": "b3653e953756d09350d85f8b5977d3ccee9ceb3da0319b44a809d4191dbb8815",
-    "authorization_hash": "d7d111f4511b0bdb29750691f745bdb36ab4c703b3dc73f1c33b784172f05699",
+    "action_hash": "85024ab9adf25e23d108df9d4219f684fa39aad7d956093d15f517befeed010b",
+    "authorization_hash": "d8a7558c46fc99ea2b3947141f39732608ee9067c18b42a36a41e00fe21ee0c4",
     "decision": "COMMIT",
     "mutations_blocked_before_execution": 9,
     "passed": true,
@@ -2172,7 +2227,7 @@
   },
   "verified_continuation": {
     "authorization_passed": true,
-    "authorization_report_hash": "86153d3eb6542f8a64a09480f8996308b56ee78c063c16308bcd2e9c5d98d54b",
+    "authorization_report_hash": "97feaba5023bb0bcaeb2c588fb2d33ff1f38dc91c15f2f815acd25cead24d59c",
     "continuation_disposition": "UNDECIDABLE",
     "expired_blocked": true,
     "harness_valid": true,
@@ -2187,10 +2242,10 @@
     "capsule_matches_oracle": true,
     "decision": "COMMIT",
     "passed": true,
-    "proof_card_sha256": "ff2f9bbb5071f67f5ad5d145ccc8cb6cfdfc3123f311bac99a9aa6f920cd30e1",
+    "proof_card_sha256": "6b654712f78c0e468df38eaa52d23c41fe29517b818ba03622e2b30fa1493332",
     "summary_lost_count": 7
   },
-  "version": "0.6.0rc5",
+  "version": "0.6.0rc6",
   "warning_time_benchmark": {
     "calibration_clean_runs": 40,
     "calibration_evidence_hash": "7c80e92c12c3782dbc7a2c923331131ed82cc224f25ba01c7351d3131fd66c50",
@@ -2259,5 +2314,46 @@
     "settlement_callback_count": 20,
     "source": "arXiv:2607.19545v1",
     "valid": true
+  },
+  "x402_upstream_consequence": {
+    "claim": "At the pinned official Python MCP wrapper commit, a tool effect can precede a failed settlement; the disclosed Receipt Gate composition withholds protected release until matching settlement confirmation.",
+    "claim_boundary": "Pinned Python MCP wrapper and local deterministic consequence only; not every x402 SDK, a live-chain exploit, or production certification.",
+    "observations": {
+      "airlock_settlement_failure": {
+        "protected_effect_exists": false,
+        "protected_release_calls": 0,
+        "settlement_calls": 1,
+        "settlement_error": "facilitator unavailable"
+      },
+      "airlock_success_control": {
+        "authorized": true,
+        "protected_effect_count": 1,
+        "protected_release_calls": 1,
+        "resource_released": true,
+        "settlement_calls": 1,
+        "settlement_confirmed": true
+      },
+      "native_settlement_failure": {
+        "durable_tool_effect_count": 1,
+        "returned_error": true,
+        "settlement_calls": 1,
+        "verification_calls": 1
+      },
+      "native_success_control": {
+        "durable_tool_effect_count": 1,
+        "returned_error": false,
+        "settlement_calls": 1,
+        "verification_calls": 1
+      }
+    },
+    "passed": true,
+    "upstream": {
+      "commit": "167a828e8319aa7b403f4f4312489e9cffadff10",
+      "handler_call_line": 221,
+      "handler_precedes_settlement": true,
+      "settlement_call_line": 267,
+      "source_path": "python/x402/mcp/server_async.py",
+      "source_sha256": "49354704d6a59e2d075fa21e258693632b26074097784edef76d3f9b8b4fd36c"
+    }
   }
 }

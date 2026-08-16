@@ -23,7 +23,7 @@ olp-gate handoff-check path/to/history.jsonl \
   --output ./handoff
 ```
 
-Supported adapters in v0.6.0rc5:
+Supported adapters in v0.6.0rc6:
 
 - `claude-code` — local Claude Code JSONL transcripts with message content
   blocks, tool calls, and tool results;
