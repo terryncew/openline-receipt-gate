@@ -1,0 +1,42 @@
+name: IAC-004 Hostile Unaware Runtime Race
+
+on:
+  pull_request:
+    paths:
+      - "benchmarks/inherited-authority-containment-004/**"
+      - ".github/workflows/iac-004.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  iac004:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Frozen unit tests
+        working-directory: benchmarks/inherited-authority-containment-004
+        run: python -m unittest discover -s tests -v
+      - name: Run hostile concurrent race
+        working-directory: benchmarks/inherited-authority-containment-004
+        run: python scripts/run_race.py
+      - name: Independent verification
+        working-directory: benchmarks/inherited-authority-containment-004
+        run: python scripts/verify_result.py
+      - uses: actions/upload-artifact@v6
+        with:
+          name: iac004-race-evidence
+          path: |
+            benchmarks/inherited-authority-containment-004/FREEZE.json
+            benchmarks/inherited-authority-containment-004/runtime_unaware.py
+            benchmarks/inherited-authority-containment-004/atomic_receiver.py
+            benchmarks/inherited-authority-containment-004/result.json
+            benchmarks/inherited-authority-containment-004/race_events.json
+          if-no-files-found: error
