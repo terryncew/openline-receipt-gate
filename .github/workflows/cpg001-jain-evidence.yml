@@ -1,4 +1,4 @@
-name: cpg001-jain-real-evidence
+name: cpg001-jain-real-evidence-r2
 
 on:
   workflow_dispatch:
@@ -14,6 +14,9 @@ on:
 
 permissions:
   contents: read
+
+env:
+  CPG_EXECUTION_ID: CPG-001-JAIN-EVIDENCE-02
 
 jobs:
   jain-real-evidence:
@@ -31,7 +34,7 @@ jobs:
         run: |
           rm -rf /tmp/cpg001-jain-sources /tmp/cpg001-jain-run
           mkdir -p /tmp/cpg001-jain-sources /tmp/cpg001-jain-run/preflight
-      - name: Acquire exact publisher or NCBI archival supplements
+      - name: Acquire exact publisher or PMC International archival supplements
         run: |
           python benchmarks/candidate_promotion/fetch_jain_sources.py \
             --out-dir /tmp/cpg001-jain-sources \
@@ -65,7 +68,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v6
         with:
-          name: cpg001-jain-evidence-${{ github.run_id }}
+          name: cpg001-jain-evidence-r2-${{ github.run_id }}
           path: /tmp/cpg001-jain-run
           if-no-files-found: warn
           retention-days: 90

@@ -1,14 +1,21 @@
-# CPG-001 Jain real-evidence workflow
+# CPG-001 Jain source-acquisition R2 workflow
 
-Build base observed: `main@146058b371bb2316f20843f88cdfeeb996690af2`.
+Build base observed: `main@a75d16fa31f33a208fd2bf3cd1a2746a83356c87`.
+
+The first real-evidence execution is preserved as `BLOCKED_SOURCE_ACQUISITION`; it produced no scientific verdict. This patch changes only the source transport authority by adding the official Europe PMC supplementaryFiles endpoint for PMCID PMC5293111. It does not change thresholds, folds, baseline weights, assay normalization, label-unseal order, or verdict rules.
 
 1. In Working Copy, open `openline-receipt-gate`, switch to `main`, and pull.
-2. Create branch `feat/cpg-001-jain-evidence-run`.
-3. Overlay this ZIP at repository root. It adds the canonical-source acquisition/unseal runner and one dedicated post-merge evidence workflow; it does not vendor Jain XLSX files.
-4. Commit: `test(cpg): automate Jain real-evidence replay`.
-5. Push the branch.
-6. Open PR titled `CPG-001: automate Jain real-evidence replay` against `main`.
-7. Merge only after the ordinary `candidate-promotion-001` and `release-check` workflows are green.
-8. After merge, `.github/workflows/cpg001-jain-evidence.yml` runs automatically on `main`. Do not alter thresholds, folds, weights, or source fallbacks in response to its result.
+2. Create branch `fix/cpg-001-jain-source-acquisition-r2`.
+3. Overlay this ZIP at repository root.
+4. Commit: `fix(cpg): add Europe PMC archival acquisition`.
+5. Push and open PR: `CPG-001: add Europe PMC archival source acquisition`.
+6. Merge only after `candidate-promotion-001` and `release-check` are green.
+7. After merge, `cpg001-jain-real-evidence-r2` triggers automatically on `main`.
+8. Do not edit the experiment after the R2 run starts. Read the uploaded `cpg001-jain-evidence-r2-*` artifact as the frozen outcome.
 
-The real-evidence workflow treats scientific negative verdicts as valid completed outcomes. CI becomes red only for acquisition/binding/preflight/execution failure. Raw publisher workbooks are deleted before the evidence artifact is uploaded.
+Scientific boundary:
+- Europe PMC is used only through the official `/{PMCID}/supplementaryFiles` API documented by Europe PMC.
+- The archive must contain all three exact publisher-named XLSX files.
+- Each XLSX is container-validated and SHA-256 bound before any worksheet cells are opened.
+- Third-party processed mirrors remain forbidden.
+- R1 remains immutable blocked-acquisition evidence; R2 has execution id `CPG-001-JAIN-EVIDENCE-02`.

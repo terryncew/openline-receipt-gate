@@ -1,14 +1,28 @@
 {
-  "schema": "openline.cpg001.jain_source_urls.v0.1",
+  "schema": "openline.cpg001.jain_source_urls.v0.2",
   "dataset_id": "JAIN_2017",
   "doi": "10.1073/pnas.1616408114",
-  "policy": "Only publisher or NCBI archival copies of the exact three published XLSX supplements are eligible. Processed CSVs, Hugging Face derivatives, GitHub mirrors, and reformatted workbooks are not confirmatory source artifacts unless a future prospective manifest proves byte identity to a bound canonical artifact.",
+  "policy": "Only publisher or official PMC International archival copies of the exact three published XLSX supplements are eligible. Europe PMC is accepted only through its official supplementaryFiles API for PMCID PMC5293111. Processed CSVs, Hugging Face derivatives, GitHub mirrors, and reformatted workbooks remain prohibited.",
   "allowed_hosts": [
     "www.pnas.org",
     "pnas.org",
     "pmc.ncbi.nlm.nih.gov",
     "pubmed.ncbi.nlm.nih.gov",
-    "www.ncbi.nlm.nih.gov"
+    "www.ncbi.nlm.nih.gov",
+    "www.ebi.ac.uk"
+  ],
+  "archive_sources": [
+    {
+      "provider": "Europe PMC",
+      "authority": "PMC International archival mirror",
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC5293111/supplementaryFiles",
+      "format": "zip",
+      "required_members": [
+        "pnas.1616408114.sd01.xlsx",
+        "pnas.1616408114.sd02.xlsx",
+        "pnas.1616408114.sd03.xlsx"
+      ]
+    }
   ],
   "artifacts": {
     "pnas.1616408114.sd01.xlsx": [
