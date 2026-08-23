@@ -6,14 +6,18 @@ Most receipts make the past verifiable. Receipt Gate makes verified history usab
 
 OpenLine can sit directly at a Python function boundary. The model may propose the call; the receiver-owned guard decides whether that exact call has enough authority to execute. The function body is never called on a blocked decision.
 
-From a clean checkout:
+From a clean checkout, use a virtual environment so the demo does not collide with system Python packages:
 
 ```bash
 git clone https://github.com/terryncew/openline-receipt-gate.git
 cd openline-receipt-gate
+python -m venv .venv
+source .venv/bin/activate
 python -m pip install -e .
 python examples/langgraph_refund_guard/demo.py
 ```
+
+On Windows PowerShell, activate the environment with `.venv\\Scripts\\Activate.ps1`.
 
 The reference refund demo should show:
 
