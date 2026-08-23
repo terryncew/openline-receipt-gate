@@ -1,0 +1,39 @@
+name: IAC-001 Inherited Authority Containment
+
+on:
+  pull_request:
+    paths:
+      - "benchmarks/inherited-authority-containment-001/**"
+      - ".github/workflows/iac-001.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  iac001:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Unit tests
+        working-directory: benchmarks/inherited-authority-containment-001
+        run: python -m unittest discover -s tests -v
+      - name: Run controlled-ground-truth benchmark
+        working-directory: benchmarks/inherited-authority-containment-001
+        run: python scripts/run_benchmark.py
+      - name: Verify result independently
+        working-directory: benchmarks/inherited-authority-containment-001
+        run: python scripts/verify_result.py
+      - uses: actions/upload-artifact@v6
+        with:
+          name: iac001-evidence
+          path: |
+            benchmarks/inherited-authority-containment-001/preregistration.json
+            benchmarks/inherited-authority-containment-001/ground_truth_cases.json
+            benchmarks/inherited-authority-containment-001/result.json
+          if-no-files-found: error

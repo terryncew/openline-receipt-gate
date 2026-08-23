@@ -1,0 +1,20 @@
+{
+  "schema": "openline.receipt_gate.iac001.preregistration.v1",
+  "experiment_id": "IAC-001",
+  "seed": 260822,
+  "graphs": 128,
+  "nodes_per_graph": 40,
+  "edge_drop_probability": 0.18,
+  "policies": ["NODE_ONLY", "GLOBAL_REACHABLE", "TIME_WINDOW", "OLP_SELECTIVE"],
+  "weights": {"missed_taint": 8.0, "false_quarantine": 2.0, "false_revoke": 2.0},
+  "pass_bar": {
+    "taint_recall_min": 0.95,
+    "retain_precision_min": 0.95,
+    "missed_taint_rate_max": 0.05,
+    "false_quarantine_improvement_vs_global_min": 0.20,
+    "must_beat_all_baselines_on_weighted_harm": true
+  },
+  "maximum_verdict": "CONTROLLED_GROUND_TRUTH_SELECTIVE_CONTAINMENT",
+  "failure_verdict": "SELECTIVE_CONTAINMENT_NOT_EARNED",
+  "policy_authority": "NONE"
+}
