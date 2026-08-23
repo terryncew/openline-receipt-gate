@@ -31,14 +31,16 @@ jobs:
       - run: python -m pip install --no-build-isolation .
       - name: Verify mirror harness locally before network use
         run: pytest -q tests/test_candidate_promotion_jain_mirror.py
-      - name: Acquire pinned public transcription from GitHub
+      - name: Acquire pinned public transcription as Git object
         shell: bash
         run: |
           set -euo pipefail
-          url="https://raw.githubusercontent.com/HPuntu/hogroast-teaching/${MIRROR_COMMIT}/jain_data.csv"
-          curl --fail --silent --show-error --location --retry 3 --retry-all-errors \
-            --connect-timeout 15 --max-time 60 \
-            "$url" -o /tmp/jain_data.csv
+          mirror_root="$RUNNER_TEMP/hogroast-teaching"
+          git init "$mirror_root"
+          git -C "$mirror_root" remote add origin https://github.com/HPuntu/hogroast-teaching.git
+          git -C "$mirror_root" fetch --depth=1 origin "$MIRROR_COMMIT"
+          test "$(git -C "$mirror_root" rev-parse FETCH_HEAD)" = "$MIRROR_COMMIT"
+          git -C "$mirror_root" show "$MIRROR_COMMIT:jain_data.csv" > /tmp/jain_data.csv
           test "$(wc -c < /tmp/jain_data.csv | tr -d ' ')" = "$MIRROR_BYTES"
           test "$(git hash-object /tmp/jain_data.csv)" = "$MIRROR_BLOB"
           sha256sum /tmp/jain_data.csv
