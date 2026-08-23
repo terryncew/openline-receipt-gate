@@ -25,6 +25,12 @@ from .verified_commit import (
     run_verified_commit_demo,
     verify_verified_commit_output,
 )
+from .authority_compiler import (
+    AUTHORITY_COMPILER_SETTINGS_PROFILE,
+    AuthorityCompiler,
+    AuthorityCompilerError,
+    validate_compiler_result,
+)
 
 from .handoff import (
     HandoffAdapterError,
@@ -79,6 +85,10 @@ __all__ = [
     "issue_one_use_code",
     "run_verified_commit_demo",
     "verify_verified_commit_output",
+    "AUTHORITY_COMPILER_SETTINGS_PROFILE",
+    "AuthorityCompiler",
+    "AuthorityCompilerError",
+    "validate_compiler_result",
     "HandoffAdapterError",
     "HandoffCheckError",
     "inspect_handoff",

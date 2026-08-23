@@ -1,0 +1,20 @@
+{
+  "schema": "openline.authority_compiler.provenance.v1",
+  "base_main": "0cb6544889f19268528e26a84c4bfaa843352d30",
+  "production_abstraction": "receipt-native authority compiler",
+  "inputs": [
+    "untrusted optimizer proposal",
+    "receiver-owned mandate",
+    "receiver-owned effect-semantics resolver",
+    "receiver-owned current-state resolver",
+    "receiver-owned evidence resolver",
+    "receiver-owned DPL permission policy"
+  ],
+  "output": "non-executable authority_compiler/v1 settings for existing Verified Commit",
+  "execution_authority": "VERIFIED_COMMIT_ONLY",
+  "dpl_001": "frozen architecture/enforcement result",
+  "dpl_002": "CAPABILITY_PARITY",
+  "dpl_003": "DO_NOT_RUN",
+  "claim_boundary": "OpenLine is not claimed to introduce a new authorization primitive. It orchestrates receiver-owned evidence and policy into auditable, tightly scoped capability issuance and exact single-use execution.",
+  "temporal_closure": "authority_compiler/v1 requires receiver-owned execution preflight; permission is consumed before preflight and the side effect is blocked if mandate, state, evidence, or obligation standing changed"
+}

@@ -1,16 +1,25 @@
 {
-  "schema": "openline.build_receipt.v1",
-  "build": "DPL-002 End-to-End Authority Acquisition Falsifier",
-  "base_main": "PR #21 merged before build",
-  "baseline": "receiver-issued caveated bearer capability with exact-effect hash, state binding, expiry, one-use replay protection, and third-party discharge-style evidence",
+  "base_main": "0cb6544889f19268528e26a84c4bfaa843352d30",
+  "build": "Authority Compiler production abstraction",
+  "claim": "OpenLine compiles untrusted optimizer proposals plus receiver-owned mandate, state, policy, and verified evidence into non-executable settings for existing Verified Commit authorization.",
+  "dpl_002_disposition": "CAPABILITY_PARITY",
+  "dpl_003": "DO_NOT_RUN",
+  "execution_authority": "VERIFIED_COMMIT_ONLY",
   "local_validation": {
-    "permission_and_control_tests": "11/11 PASS",
-    "permission_stage_comparison": "10/10 parity",
-    "capability_post_authorization_mutation": "BLOCKED",
-    "capability_replay": "BLOCKED",
-    "compileall": "PASS",
-    "workflow_yaml": "PASS"
+    "authority_compiler_tests": "12/12 PASS against DPL-001 authority_link implementation",
+    "full_repository_ci": "PENDING_PR",
+    "python_compile": "PASS",
+    "workflow_yaml_parse": "PASS"
   },
-  "strong_falsifier_status": "permission-stage triggered; final result intentionally waits for actual repository Verified Commit integration in CI",
-  "claim_boundary": "Do not claim a distinct authorization primitive if the final CI result is CAPABILITY_PARITY."
+  "new_authorization_primitive_claimed": false,
+  "production_safety": [
+    "optimizer cannot supply mandate or receiver resolvers at compile time",
+    "mandate is checked before evidence resolution",
+    "permission requirements remain receiver-owned",
+    "authorization lifetime is clamped to mandate and selected-evidence standing",
+    "compiler result has no execution authority",
+    "AuthorityCompiler.execute_once always installs receiver-owned fresh preflight before side effect",
+    "existing Verified Commit retains exact-action, one-use, and replay enforcement"
+  ],
+  "schema": "openline.build_receipt.v1"
 }

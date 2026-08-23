@@ -1,0 +1,22 @@
+{
+  "schema": "openline.authority_compiler.smoke-result.v1",
+  "scope": "local shadow integration against the DPL-001 authority_link implementation; full repository CI remains authoritative",
+  "tests": 12,
+  "passed": 12,
+  "failed": 0,
+  "checks": [
+    "clean proposal -> COMMIT_ELIGIBLE with zero execution authority",
+    "mandate payment ceiling -> DENY before evidence resolution",
+    "unmandated producer -> DENY",
+    "missing evidence -> QUARANTINE",
+    "self-issued evidence -> DENY",
+    "state drift -> DENY",
+    "model/advisory swap preserves permission decision for identical effect",
+    "authorization lifetime clamps to evidence standing",
+    "expired compiler window -> execution preflight block",
+    "post-compile state drift -> execution preflight block",
+    "compiler-result mutation -> fail closed",
+    "production execute_once path always installs receiver-owned preflight"
+  ],
+  "full_repository_ci": "PENDING_PR"
+}

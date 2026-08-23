@@ -1,0 +1,47 @@
+name: authority-compiler
+
+on:
+  pull_request:
+    paths:
+      - 'olp_gate/authority_compiler.py'
+      - 'tests/test_authority_compiler.py'
+      - 'docs/AUTHORITY_COMPILER.md'
+      - 'benchmarks/authority_compiler/**'
+      - '.github/workflows/authority-compiler.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'olp_gate/authority_compiler.py'
+      - 'tests/test_authority_compiler.py'
+      - 'docs/AUTHORITY_COMPILER.md'
+      - 'benchmarks/authority_compiler/**'
+      - '.github/workflows/authority-compiler.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  authority-compiler:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - run: python -m pip install -U pip
+      - run: python -m pip install "setuptools==82.0.1" "wheel==0.47.0"
+      - run: python -m pip install --no-build-isolation .
+      - name: Authority Compiler unit and hostile boundary tests
+        run: python -m unittest tests.test_authority_compiler -v
+      - name: DPL boundary remains frozen under capability parity
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          provenance=json.loads(Path('benchmarks/authority_compiler/PROVENANCE.json').read_text())
+          assert provenance['dpl_002'] == 'CAPABILITY_PARITY'
+          assert provenance['dpl_003'] == 'DO_NOT_RUN'
+          assert provenance['execution_authority'] == 'VERIFIED_COMMIT_ONLY'
+          print('authority-compiler provenance boundary: PASS')
+          PY
