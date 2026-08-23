@@ -1,0 +1,8 @@
+{
+  "design_lock_sha256": "91fe336a96322aacd3f2e32823acfe7cea105121ee4389685383e628fdae75f2",
+  "errors": [],
+  "preregistration_sha256": "eff4e24dd9a4e72ed13906effa5a2a6177d46eee826731cecf32f2dcb7aee23f",
+  "schema": "openline.cpg001.jain_design_verification.v0.1",
+  "thresholds_sha256": "29e69e92a53df0c0223eee93872c3284f01cb9685a114052aa8adadff9d84f47",
+  "valid": true
+}

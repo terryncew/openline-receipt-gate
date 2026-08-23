@@ -1,26 +1,56 @@
 {
-  "schema": "openline.cpg001.preregistration.v0.1",
+  "schema": "openline.cpg001.preregistration.v0.2",
   "experiment_id": "CPG-001",
-  "selection_budgets": [0.10, 0.25, 0.50],
-  "selection_budget_rule": "K = ceil(N * fraction)",
-  "control_ranker": "Equal-weight mean signed threshold margin over available thresholded assays. Missing values contribute neutral margin 0. Same rank score is used to order treatment survivors.",
+  "confirmatory_dataset": "JAIN_2017",
+  "primary_budget": 0.25,
+  "selection_budgets": [
+    0.1,
+    0.25,
+    0.5
+  ],
+  "selection_budget_rule": "K = ceil(N_complete_case * fraction)",
+  "claim_scope": "Developability-only compensation on Jain 2017. Affinity/potency is absent and explicitly out of scope.",
+  "control_ranker": "Equal-weight mean of direction-aligned z-scores over the gated assays in each fold. z_ij=d_j*(x_ij-mean_j)/sample_sd_j; d_j=+1 when larger is favorable and -1 when smaller is favorable. Statistics use the complete-case assay matrix only, before status labels are read. Ties break by candidate_id ascending.",
+  "cohort_rule": "Complete case across all 10 Table-1 thresholded assays. No imputation. Fab_Tm and transient_HEK_titer excluded from confirmatory scoring and gating.",
   "jain_evaluation": {
     "design": "four-fold leave-one-published-property-group-out",
     "folds": [
-      {"heldout_group":"group_1_cross_or_self_interaction"},
-      {"heldout_group":"group_2_hydrophobicity_or_colloidal"},
-      {"heldout_group":"group_3_polyspecificity"},
-      {"heldout_group":"group_4_accelerated_stability"}
+      {
+        "heldout_group": "group_1_cross_or_self_interaction"
+      },
+      {
+        "heldout_group": "group_2_hydrophobicity_or_colloidal"
+      },
+      {
+        "heldout_group": "group_3_polyspecificity"
+      },
+      {
+        "heldout_group": "group_4_accelerated_stability"
+      }
     ],
-    "rule": "The held-out group is excluded from Receipt Gate eligibility in that fold and used only for orthogonal survivor evaluation. Published Jain group assignments and thresholds are frozen; no outcome-driven reassignment."
+    "rule": "The held-out group is excluded from both ranking and Receipt Gate eligibility in that fold and used only for orthogonal survivor evaluation. Published Jain group assignments and thresholds are frozen; no outcome-driven reassignment."
   },
-  "metrics": [
-    "masked_declared_liabilities_promoted_in_gate_dimensions",
-    "top_k_fill_rate",
-    "eligible_candidate_yield",
-    "heldout_group_flag_rate",
-    "approved_status_enrichment_descriptive_only"
+  "correlation_rule": "Publish pairwise Spearman assay correlations with |rho|>=0.70 before status labels are read. Correlation is descriptive and cannot modify the frozen policy. Headline liabilities are candidate-level property-group flags so correlated assays are not counted as independent wins.",
+  "primary_metrics": [
+    "gated_property_group_liability_rate_control",
+    "gated_property_group_liability_rate_treatment",
+    "top_k_fill_rate_treatment",
+    "heldout_property_group_flag_rate_control",
+    "heldout_property_group_flag_rate_treatment",
+    "complete_case_coverage_fraction"
   ],
-  "decision_rule": "No single scalar declares CPG-001 a win. A useful result requires fewer masked declared liabilities plus non-collapsed selection yield and no material deterioration across held-out group flag rates. Report all budgets and all four folds.",
-  "authority_control": "A threshold-constrained ranker using identical numeric vetoes may be reported as a selection-parity control. If it matches Receipt Gate on clean historical rows, the unique OpenLine claim narrows to independent evidence validation, immutable receiver authority, and portable receipts—not superior antibody scoring."
+  "secondary_metrics": [
+    "per_assay_flag_rates",
+    "eligible_candidate_yield",
+    "publication_era_approved_status_selection_descriptive_only"
+  ],
+  "primary_success_criteria": {
+    "masked_liability_reduction": "treatment rate <= control rate - 0.10 in >=3/4 folds at 25% budget",
+    "yield": "treatment top_k_fill_rate >=0.80 in >=3/4 folds and pooled >=0.80 at 25% budget",
+    "heldout_quality": "treatment heldout flag rate <= control +0.05 in >=3/4 folds and pooled treatment <= pooled control at 25% budget",
+    "coverage": "complete_case_coverage_fraction >=0.70; otherwise downgrade to INCONCLUSIVE_COVERAGE"
+  },
+  "decision_rule": "SUPPORTED_WITHIN_SCOPE only if every primary criterion passes. If masked liabilities fall but yield or held-out quality fails, verdict is FRICTION_ONLY. If the frozen composite baseline does not expose the preregistered compensation signal, verdict is NO_COMPENSATION_SIGNAL. Secondary budgets cannot rescue the primary verdict.",
+  "authority_control": "A threshold-constrained ranker using identical vetoes and identical score must match Receipt Gate selection on clean historical rows. Expected parity narrows the unique OpenLine claim to receiver-owned authority and evidence/receipt enforcement, not superior scoring.",
+  "zero_variance_rule": "A gated assay with sample SD 0 contributes z=0 to every composite score but remains subject to its frozen hard veto."
 }
