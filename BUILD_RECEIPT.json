@@ -1,25 +1,18 @@
 {
-  "base_main": "0cb6544889f19268528e26a84c4bfaa843352d30",
-  "build": "Authority Compiler production abstraction",
-  "claim": "OpenLine compiles untrusted optimizer proposals plus receiver-owned mandate, state, policy, and verified evidence into non-executable settings for existing Verified Commit authorization.",
-  "dpl_002_disposition": "CAPABILITY_PARITY",
-  "dpl_003": "DO_NOT_RUN",
-  "execution_authority": "VERIFIED_COMMIT_ONLY",
+  "architecture_changed": false,
+  "base_main": "760f87a7d11f2df68ba4347ec2994f419d131487",
+  "build": "Drop-in Guarded Tool Adapter",
+  "execution_boundary": "Existing Authority Compiler -> Proof-to-Policy -> Verified Commit only",
+  "framework_target": "LangGraph reference integration; plain-Python decorator core",
   "local_validation": {
-    "authority_compiler_tests": "12/12 PASS against DPL-001 authority_link implementation",
-    "full_repository_ci": "PENDING_PR",
+    "authority_compiler_regression_tests": "12/12 PASS",
     "python_compile": "PASS",
-    "workflow_yaml_parse": "PASS"
+    "real_verified_commit_runtime": "CI REQUIRED",
+    "tool_adapter_shadow_tests": "9/9 PASS",
+    "workflow_yaml": "PASS",
+    "zip_integrity": "PASS"
   },
   "new_authorization_primitive_claimed": false,
-  "production_safety": [
-    "optimizer cannot supply mandate or receiver resolvers at compile time",
-    "mandate is checked before evidence resolution",
-    "permission requirements remain receiver-owned",
-    "authorization lifetime is clamped to mandate and selected-evidence standing",
-    "compiler result has no execution authority",
-    "AuthorityCompiler.execute_once always installs receiver-owned fresh preflight before side effect",
-    "existing Verified Commit retains exact-action, one-use, and replay enforcement"
-  ],
-  "schema": "openline.build_receipt.v1"
+  "schema": "openline.build_receipt.v1",
+  "ttfv_target": "under 10 minutes; target only, not measured human timing"
 }

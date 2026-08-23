@@ -1,38 +1,33 @@
-# Normal workflow — Authority Compiler
+# Working Copy handoff — guarded-tool adapter
 
 Repository: `terryncew/openline-receipt-gate`
 
-Base: `main@0cb6544889f19268528e26a84c4bfaa843352d30`
+Base: `main@760f87a7d11f2df68ba4347ec2994f419d131487`
+
+Overlay this ZIP at repository root. Do not put the enclosing ZIP folder inside the repository.
 
 ## Branch
 
 ```text
-feat/authority-compiler
+feat/tool-adapter
 ```
 
 ## Commit
 
 ```text
-feat(gate): add receipt-native authority compiler
+feat(gate): add drop-in guarded-tool adapter
 ```
 
 ## PR title
 
 ```text
-Authority Compiler: unify proposal, mandate, evidence, and Verified Commit
+Guard consequential tools with the Authority Compiler
 ```
 
 ## Merge
 
 ```text
-feat/authority-compiler → main
+feat/tool-adapter → main
 ```
 
-Overlay this ZIP at repository root. Do not place the enclosing folder inside
-the repository.
-
-Require the normal `release-check`, existing DPL workflows, and the new
-`authority-compiler` workflow to be green before merge.
-
-DPL-001 and DPL-002 remain frozen. Do not create DPL-003. DPL-002's surviving
-disposition is `CAPABILITY_PARITY`.
+Merge only after both the normal `release-check` and new `tool-adapter` workflow are green.
