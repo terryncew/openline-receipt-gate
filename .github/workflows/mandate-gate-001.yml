@@ -1,0 +1,37 @@
+name: Mandate Gate 001
+
+on:
+  pull_request:
+    paths:
+      - "olp_gate/mandate.py"
+      - "benchmarks/mandate-gate-001/**"
+      - ".github/workflows/mandate-gate-001.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  mandate-gate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Unit tests
+        working-directory: benchmarks/mandate-gate-001
+        run: python -m unittest discover -s tests -v
+      - name: Run hostile mandate assay
+        working-directory: benchmarks/mandate-gate-001
+        run: python scripts/run_assay.py
+      - uses: actions/upload-artifact@v6
+        with:
+          name: mandate-gate-001-evidence
+          path: |
+            benchmarks/mandate-gate-001/FIT_AUDIT.json
+            benchmarks/mandate-gate-001/alice_mandate.json
+            benchmarks/mandate-gate-001/result.json
+          if-no-files-found: error
