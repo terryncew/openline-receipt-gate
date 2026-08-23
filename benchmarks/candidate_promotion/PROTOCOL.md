@@ -76,3 +76,17 @@ Freeze publication-era status/approval labels from the exact bound `sd01` artifa
 7. Emit the result and falsifier/verdict receipt.
 
 GDPa1 remains untouched until this replay is finished.
+
+## Assay-only source preflight
+The design lock is already frozen. The next executable boundary is source identity plus assay-only normalization. Raw publisher XLSX files live in the gitignored `benchmarks/candidate_promotion/jain_sources/` directory and are never vendored by the benchmark package.
+
+`bind_jain_sources.py` may hash bytes and validate XLSX container structure for SD01/SD02/SD03, but it may not open worksheet cell values. `preflight_jain_assays.py` may then open **only SD03** to resolve `candidate_id` plus the 10 Table-1 thresholded assays. Column matching is declarative and fail-closed: missing, duplicated, or ambiguous mappings stop the preflight.
+
+The preflight seals four outputs under `benchmarks/candidate_promotion/results/jain_preflight/`:
+
+- `JAIN_2017_SOURCE_MANIFEST.json` — exact byte lengths, SHA-256 values, deterministic source-set hash, and label-seal state.
+- `JAIN_2017_ASSAY_ONLY.normalized.json` — 137 SD03 candidate identifiers and assay values with `stage_2017=null` and `approved_2017=null`.
+- `JAIN_2017_CORRELATION_AUDIT.json` — the frozen `|rho| >= 0.70` descriptive audit over the complete-case assay cohort.
+- `JAIN_2017_ASSAY_PREFLIGHT_RECEIPT.json` — hashes, row/coverage counts, label-firewall state, and the sole `ready_for_label_unseal` authorization.
+
+`ready_for_label_unseal` requires the bound three-file source set, valid XLSX containers, unambiguous resolution of every frozen assay column, and exactly 137 observed SD03 candidate rows. Coverage below 70% is reported but does not authorize post-lock changes; it remains a prospective `INCONCLUSIVE_COVERAGE` condition for the final replay.

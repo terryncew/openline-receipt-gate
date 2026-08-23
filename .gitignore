@@ -21,3 +21,6 @@ decision_receipts.jsonl
 !results/verified_model_swap_demo/decision_receipts.jsonl
 !results/verified_commit_demo/decision_receipts.jsonl
 !benchmarks/warning_time/results/*/decision_receipts.jsonl
+
+# CPG-001 Jain publisher supplements are local evidence inputs, never vendored.
+benchmarks/candidate_promotion/jain_sources/

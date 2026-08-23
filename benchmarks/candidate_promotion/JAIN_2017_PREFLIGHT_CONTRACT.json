@@ -1,0 +1,31 @@
+{
+  "schema": "openline.cpg001.jain_preflight_contract.v0.1",
+  "experiment_id": "CPG-001",
+  "source_stage": "assay_only_before_status_label_unseal",
+  "required_source_files": [
+    "pnas.1616408114.sd01.xlsx",
+    "pnas.1616408114.sd02.xlsx",
+    "pnas.1616408114.sd03.xlsx"
+  ],
+  "raw_source_policy": "The three publisher supplements are local inputs and are not committed to this repository.",
+  "label_seal": {
+    "sd01": "hash and XLSX-container validation only; worksheet cells MUST NOT be opened during assay preflight",
+    "sd02": "hash and XLSX-container validation only during assay preflight",
+    "sd03": "worksheet values may be opened for assay normalization, complete-case coverage, and correlation audit"
+  },
+  "preflight_outputs": [
+    "JAIN_2017_SOURCE_MANIFEST.json",
+    "JAIN_2017_ASSAY_ONLY.normalized.json",
+    "JAIN_2017_CORRELATION_AUDIT.json",
+    "JAIN_2017_ASSAY_PREFLIGHT_RECEIPT.json"
+  ],
+  "unseal_condition": "Exact source set bound; all three XLSX containers valid; SD03 resolves candidate_id plus all 10 frozen thresholded assays without ambiguity; observed SD03 candidate count is 137. Complete-case coverage is reported but does not authorize threshold/policy changes.",
+  "prohibited_before_unseal": [
+    "reading sd01 worksheet cells",
+    "approval/phase-conditioned filtering",
+    "threshold changes",
+    "fold changes",
+    "baseline weight changes",
+    "imputation of missing thresholded assays"
+  ]
+}
