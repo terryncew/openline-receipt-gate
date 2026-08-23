@@ -2,13 +2,18 @@
   "base_commit": "8fdc354b524f7351096d67264989d5659d7c655f",
   "base_repo": "terryncew/openline-receipt-gate",
   "branch": "feat/cpg-001-candidate-promotion",
+  "ci_fix": {
+    "fix": "install pinned build prerequisites and openline-receipt-gate with --no-build-isolation before running CPG-001 tests",
+    "reason": "candidate-promotion-001 initially installed pytest but not the project, so cryptography>=42 was absent during test collection",
+    "scope": "CI wiring only; no candidate-promotion policy or benchmark logic changed"
+  },
   "commit_message": "feat(gate): add CPG-001 candidate promotion profile",
   "experiment_id": "CPG-001",
   "files": [
     {
-      "bytes": 1025,
+      "bytes": 1155,
       "path": ".github/workflows/candidate-promotion-001.yml",
-      "sha256": "6ea53a3525e06383d63b603516a6c4844f2f55cd65db5d7b86810cf2e2ecb753"
+      "sha256": "884b8ee2f3a11bea78de2008bc9a5739dfbd62f8dd32763d13fe5285d3fbfb7a"
     },
     {
       "bytes": 900,
