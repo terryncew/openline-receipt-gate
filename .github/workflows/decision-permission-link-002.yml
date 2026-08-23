@@ -1,0 +1,62 @@
+name: decision-permission-link-002
+
+on:
+  pull_request:
+    paths:
+      - 'benchmarks/decision_permission_link_002/**'
+      - 'tests/test_decision_permission_link_002.py'
+      - 'tests/test_dpl002_verified_commit_integration.py'
+      - '.github/workflows/decision-permission-link-002.yml'
+      - 'olp_gate/authority_link.py'
+      - 'olp_gate/verified_commit.py'
+  push:
+    branches: [main]
+    paths:
+      - 'benchmarks/decision_permission_link_002/**'
+      - 'tests/test_decision_permission_link_002.py'
+      - 'tests/test_dpl002_verified_commit_integration.py'
+      - '.github/workflows/decision-permission-link-002.yml'
+      - 'olp_gate/authority_link.py'
+      - 'olp_gate/verified_commit.py'
+
+permissions:
+  contents: read
+
+jobs:
+  dpl002:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - run: python -m pip install -U pip
+      - run: python -m pip install "setuptools==82.0.1" "wheel==0.47.0"
+      - run: python -m pip install --no-build-isolation .
+      - name: DPL versus strong capability control
+        run: python -m unittest tests.test_decision_permission_link_002 -v
+      - name: Actual DPL to Verified Commit execution integration
+        run: python -m unittest tests.test_dpl002_verified_commit_integration -v
+      - name: Seal Verified Commit integration success
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          path=Path('benchmarks/decision_permission_link_002/results/verified_commit_integration.json')
+          path.parent.mkdir(parents=True, exist_ok=True)
+          path.write_text(json.dumps({
+              'passed': True,
+              'status': 'PASS',
+              'tests': ['executes_once_and_replay_fails','post_authorization_payload_mutation_fails'],
+              'boundary': 'existing olp_gate.verified_commit.VerifiedCommitLedger'
+          }, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+          PY
+      - name: Run DPL-002 falsifier
+        run: python benchmarks/decision_permission_link_002/run_suite.py
+      - name: Publish comparison artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: dpl002-comparison-${{ github.run_id }}
+          path: benchmarks/decision_permission_link_002/results/comparison.json
+          retention-days: 90

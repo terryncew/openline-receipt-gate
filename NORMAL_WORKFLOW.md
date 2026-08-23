@@ -1,33 +1,29 @@
-# Normal workflow — DPL-001 Decision-Permission Link
+# DPL-002 — Working Copy workflow
 
-Base: `main@db14b2a7abd9e2c3bde2651e75975cc232f3084d`
+Repository: `terryncew/openline-receipt-gate`
 
 ## Branch
 
 ```text
-feat/decision-permission-link
+test/dpl-002-settlement-falsifier
 ```
 
 ## Commit
 
 ```text
-feat(gate): add decision-permission link
+test(gate): add DPL capability falsifier
 ```
 
 ## PR title
 
 ```text
-DPL-001: add decision-permission link
+DPL-002: test authority acquisition against strong capability control
 ```
 
 ## Merge
 
 ```text
-feat/decision-permission-link → main
+test/dpl-002-settlement-falsifier → main
 ```
 
-Overlay this ZIP at the repository root. Do not put the enclosing ZIP folder
-inside the repository.
-
-Before merge, require both the normal `release-check` and the new
-`decision-permission-link` workflow to be green.
+Overlay this ZIP at repository root. Do not create a new repo. Require `decision-permission-link-002` and the normal release checks to be green before merge.
