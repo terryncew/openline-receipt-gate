@@ -1,21 +1,22 @@
-# CPG-001 Jain source-acquisition R2 workflow
+# CPG-001 Jain source-acquisition R3 workflow
 
-Build base observed: `main@a75d16fa31f33a208fd2bf3cd1a2746a83356c87`.
+Build base observed: `main@357bcab6cd56faa84948ee56805aa551ed820799`.
 
-The first real-evidence execution is preserved as `BLOCKED_SOURCE_ACQUISITION`; it produced no scientific verdict. This patch changes only the source transport authority by adding the official Europe PMC supplementaryFiles endpoint for PMCID PMC5293111. It does not change thresholds, folds, baseline weights, assay normalization, label-unseal order, or verdict rules.
+R1 and R2 remain preserved as `BLOCKED_SOURCE_ACQUISITION`; neither produced a scientific verdict. R3 changes source transport authority only. It adds the official EMBL-EBI BioStudies accession `S-EPMC5293111`, whose S-EPMC collection is populated from Europe PMC supplementary data. The frozen CPG-001 design is unchanged.
 
 1. In Working Copy, open `openline-receipt-gate`, switch to `main`, and pull.
-2. Create branch `fix/cpg-001-jain-source-acquisition-r2`.
+2. Create branch `fix/cpg-001-jain-source-acquisition-r3`.
 3. Overlay this ZIP at repository root.
-4. Commit: `fix(cpg): add Europe PMC archival acquisition`.
-5. Push and open PR: `CPG-001: add Europe PMC archival source acquisition`.
+4. Commit: `fix(cpg): acquire Jain supplements from BioStudies`.
+5. Push and open PR: `CPG-001: acquire Jain supplements from BioStudies`.
 6. Merge only after `candidate-promotion-001` and `release-check` are green.
-7. After merge, `cpg001-jain-real-evidence-r2` triggers automatically on `main`.
-8. Do not edit the experiment after the R2 run starts. Read the uploaded `cpg001-jain-evidence-r2-*` artifact as the frozen outcome.
+7. After merge, `cpg001-jain-real-evidence-r3` triggers automatically on `main`.
+8. Do not alter the experiment after R3 starts. Read the uploaded `cpg001-jain-evidence-r3-*` artifact as the frozen outcome.
 
 Scientific boundary:
-- Europe PMC is used only through the official `/{PMCID}/supplementaryFiles` API documented by Europe PMC.
-- The archive must contain all three exact publisher-named XLSX files.
-- Each XLSX is container-validated and SHA-256 bound before any worksheet cells are opened.
+- BioStudies is accepted only through accession `S-EPMC5293111` and its `/info` API.
+- The resolved file host must be `ftp.ebi.ac.uk`, with storage mode `fire` or `nfs`, under the exact S-EPMC accession path.
+- All three exact publisher-named XLSX files must be present and XLSX-container-valid.
+- Each file is SHA-256 bound before worksheet cells are opened.
 - Third-party processed mirrors remain forbidden.
-- R1 remains immutable blocked-acquisition evidence; R2 has execution id `CPG-001-JAIN-EVIDENCE-02`.
+- No thresholds, weights, folds, budgets, label-unseal rules, or verdict rules changed.

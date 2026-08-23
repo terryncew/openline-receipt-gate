@@ -1,16 +1,24 @@
 {
-  "schema": "openline.cpg001.jain_evidence_run_contract.v0.2",
+  "schema": "openline.cpg001.jain_evidence_run_contract.v0.3",
   "experiment_id": "CPG-001",
-  "execution_id": "CPG-001-JAIN-EVIDENCE-02",
-  "prior_execution": {
-    "execution_id": "CPG-001-JAIN-EVIDENCE-01",
-    "status": "BLOCKED_SOURCE_ACQUISITION",
-    "scientific_verdict": null,
-    "note": "The first post-merge execution stopped before assay preflight because the frozen direct publisher/NCBI URLs were blocked in GitHub Actions."
-  },
+  "execution_id": "CPG-001-JAIN-EVIDENCE-03",
+  "prior_executions": [
+    {
+      "execution_id": "CPG-001-JAIN-EVIDENCE-01",
+      "status": "BLOCKED_SOURCE_ACQUISITION",
+      "scientific_verdict": null,
+      "note": "Direct publisher/NCBI transport did not produce the required source set in GitHub Actions."
+    },
+    {
+      "execution_id": "CPG-001-JAIN-EVIDENCE-02",
+      "status": "BLOCKED_SOURCE_ACQUISITION",
+      "scientific_verdict": null,
+      "note": "Europe PMC supplementaryFiles plus the frozen direct fallbacks still did not produce the required source set in GitHub Actions."
+    }
+  ],
   "trigger": "post-merge on main or explicit workflow_dispatch only",
-  "source_rule": "Acquire exact published SD01/SD02/SD03 XLSX bytes only from the frozen publisher, NCBI PMC, or official Europe PMC supplementaryFiles allowlist. Europe PMC is treated as a PMC International archival source, not a processed mirror. Never substitute a third-party processed mirror after acquisition failure.",
-  "source_change_scope": "Execution 02 changes acquisition transport authority only. Thresholds, folds, baseline weights, assay normalization, label firewall, and scientific verdict rules are unchanged.",
+  "source_rule": "Acquire exact published SD01/SD02/SD03 XLSX bytes only from the frozen publisher or official archival sources. Execution 03 prefers EMBL-EBI BioStudies accession S-EPMC5293111, whose S-EPMC collection is populated by supplementary data imported from Europe PMC. Europe PMC supplementaryFiles and frozen publisher/NCBI direct paths remain failovers. Never substitute a third-party processed mirror.",
+  "source_change_scope": "Execution 03 changes acquisition transport authority only. Thresholds, folds, baseline weights, assay normalization, label firewall, selection budgets, primary endpoints, and scientific verdict rules are unchanged.",
   "stage_order": [
     "ACQUIRE_OPAQUE_SOURCE_BYTES",
     "ASSAY_ONLY_PREFLIGHT_SD03",
@@ -35,5 +43,5 @@
     "confirmatory_execution_failure": "BLOCKED_CONFIRMATORY_EXECUTION"
   },
   "raw_xlsx_commit_policy": "never commit raw publisher or archival XLSX files",
-  "result_mutation_policy": "A completed result is immutable evidence for its execution. Any later code, source, threshold, or policy change requires another prospective execution identifier."
+  "result_mutation_policy": "A completed result is immutable evidence for its execution. Any later code, source, threshold, policy, or outcome-rule change requires another prospective execution identifier."
 }
