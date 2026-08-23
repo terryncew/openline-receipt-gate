@@ -1,0 +1,39 @@
+name: Mandate Gate 002 Consequence Boundary
+
+on:
+  pull_request:
+    paths:
+      - "olp_gate/mandate_gate.py"
+      - "benchmarks/mandate-gate-002/**"
+      - ".github/workflows/mandate-gate-002.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  mandate-gate-002:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Install package
+        run: python -m pip install -e .
+      - name: Unit tests
+        run: python -m unittest discover -s benchmarks/mandate-gate-002/tests -v
+      - name: Run full consequence demo
+        run: python benchmarks/mandate-gate-002/scripts/run_demo.py
+      - uses: actions/upload-artifact@v6
+        with:
+          name: mandate-gate-002-evidence
+          path: |
+            benchmarks/mandate-gate-002/FREEZE.json
+            benchmarks/mandate-gate-002/alice_mandate.json
+            benchmarks/mandate-gate-002/result.json
+            benchmarks/mandate-gate-002/pressure_results.json
+          if-no-files-found: error
