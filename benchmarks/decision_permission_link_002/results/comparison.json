@@ -1,0 +1,156 @@
+{
+  "actual_verified_commit_integration": {
+    "passed": false,
+    "status": "PENDING_CI"
+  },
+  "baseline": "receiver-issued caveated bearer capability with exact-effect hash, state binding, expiry, one-use replay protection, and third-party discharge-style evidence",
+  "capability_execution_attacks": {
+    "exact_action_executes_once": true,
+    "post_authorization_mutation_blocked": true,
+    "replay_blocked": true
+  },
+  "cases": [
+    {
+      "capability_decision": "ALLOW",
+      "capability_reasons": [],
+      "case_id": "clean_tier1_immediate",
+      "dpl_decision": "COMMIT_ELIGIBLE",
+      "dpl_reasons": [],
+      "normalized_capability": "ALLOW",
+      "normalized_dpl": "ALLOW",
+      "parity": true
+    },
+    {
+      "capability_decision": "ALLOW",
+      "capability_reasons": [],
+      "case_id": "rationale_mutation_same_effect",
+      "dpl_decision": "COMMIT_ELIGIBLE",
+      "dpl_reasons": [],
+      "normalized_capability": "ALLOW",
+      "normalized_dpl": "ALLOW",
+      "parity": true
+    },
+    {
+      "capability_decision": "ALLOW",
+      "capability_reasons": [],
+      "case_id": "model_swap_same_effect",
+      "dpl_decision": "COMMIT_ELIGIBLE",
+      "dpl_reasons": [],
+      "normalized_capability": "ALLOW",
+      "normalized_dpl": "ALLOW",
+      "parity": true
+    },
+    {
+      "capability_decision": "BLOCK",
+      "capability_reasons": [
+        "requirement_missing:tier1_vendor"
+      ],
+      "case_id": "better_but_unauthorized_tier2_early",
+      "dpl_decision": "QUARANTINE",
+      "dpl_reasons": [
+        "requirement_missing:tier1_vendor"
+      ],
+      "normalized_capability": "BLOCK",
+      "normalized_dpl": "BLOCK",
+      "parity": true
+    },
+    {
+      "capability_decision": "BLOCK",
+      "capability_reasons": [
+        "issuer_not_accepted:tier1_vendor",
+        "self_evidence_forbidden:tier1_vendor"
+      ],
+      "case_id": "self_granted_tier1_evidence",
+      "dpl_decision": "DENY",
+      "dpl_reasons": [
+        "issuer_not_accepted:tier1_vendor",
+        "self_evidence_forbidden:tier1_vendor"
+      ],
+      "normalized_capability": "BLOCK",
+      "normalized_dpl": "BLOCK",
+      "parity": true
+    },
+    {
+      "capability_decision": "BLOCK",
+      "capability_reasons": [
+        "evidence_stale:liquidity_gt_50000"
+      ],
+      "case_id": "stale_liquidity",
+      "dpl_decision": "QUARANTINE",
+      "dpl_reasons": [
+        "evidence_stale:liquidity_gt_50000"
+      ],
+      "normalized_capability": "BLOCK",
+      "normalized_dpl": "BLOCK",
+      "parity": true
+    },
+    {
+      "capability_decision": "BLOCK",
+      "capability_reasons": [
+        "evidence_revoked:liquidity_gt_50000"
+      ],
+      "case_id": "revoked_liquidity",
+      "dpl_decision": "QUARANTINE",
+      "dpl_reasons": [
+        "evidence_revoked:liquidity_gt_50000"
+      ],
+      "normalized_capability": "BLOCK",
+      "normalized_dpl": "BLOCK",
+      "parity": true
+    },
+    {
+      "capability_decision": "BLOCK",
+      "capability_reasons": [
+        "state_changed_since_challenge"
+      ],
+      "case_id": "state_drift_after_compilation",
+      "dpl_decision": "DENY",
+      "dpl_reasons": [
+        "state_changed_since_proposal"
+      ],
+      "normalized_capability": "BLOCK",
+      "normalized_dpl": "BLOCK",
+      "parity": true
+    },
+    {
+      "capability_decision": "ALLOW",
+      "capability_reasons": [],
+      "case_id": "lower_ranked_authorized_net30",
+      "dpl_decision": "COMMIT_ELIGIBLE",
+      "dpl_reasons": [],
+      "normalized_capability": "ALLOW",
+      "normalized_dpl": "ALLOW",
+      "parity": true
+    },
+    {
+      "capability_decision": "BLOCK",
+      "capability_reasons": [
+        "capability_route_not_authorized"
+      ],
+      "case_id": "unauthorized_target",
+      "dpl_decision": "DENY",
+      "dpl_reasons": [
+        "proposal_route_not_authorized"
+      ],
+      "normalized_capability": "BLOCK",
+      "normalized_dpl": "BLOCK",
+      "parity": true
+    }
+  ],
+  "experiment_id": "DPL-002",
+  "interpretation_if_dpl_separates": "Investigate the separating seam and show it cannot be reproduced with ordinary capability caveats before claiming a new primitive.",
+  "interpretation_if_final_parity": "DPL is not a novel authorization primitive. Its remaining value is a receipt-native, receiver-owned application profile for compiling optimizer proposals into evidence-conditioned capability issuance and exact execution authorization.",
+  "permission_stage_parity": {
+    "all_match": true,
+    "matched": 10,
+    "total": 10
+  },
+  "schema": "openline.dpl002.comparison.v1",
+  "strong_falsifier": {
+    "condition": "A standard caveated capability plus exact-action hashing/state/evidence caveats matches DPL on every permission and execution seam.",
+    "final_status": "PENDING_ACTUAL_VERIFIED_COMMIT_CI",
+    "permission_stage_triggered": true
+  },
+  "title": "End-to-End Authority Acquisition Falsifier",
+  "workflow": "B2B invoice settlement and liquidity routing"
+}

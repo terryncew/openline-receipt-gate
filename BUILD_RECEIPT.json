@@ -1,14 +1,16 @@
 {
-  "base_main": "db14b2a7abd9e2c3bde2651e75975cc232f3084d",
-  "build": "DPL-001 Decision-Permission Link",
-  "execution_boundary": "COMMIT_ELIGIBLE is non-executable; existing Verified Commit remains required.",
-  "hostile_report_passed": true,
+  "schema": "openline.build_receipt.v1",
+  "build": "DPL-002 End-to-End Authority Acquisition Falsifier",
+  "base_main": "PR #21 merged before build",
+  "baseline": "receiver-issued caveated bearer capability with exact-effect hash, state binding, expiry, one-use replay protection, and third-party discharge-style evidence",
   "local_validation": {
+    "permission_and_control_tests": "11/11 PASS",
+    "permission_stage_comparison": "10/10 parity",
+    "capability_post_authorization_mutation": "BLOCKED",
+    "capability_replay": "BLOCKED",
     "compileall": "PASS",
-    "hostile_cases": "8/8 PASS",
-    "unit_tests": "16/16 PASS",
     "workflow_yaml": "PASS"
   },
-  "schema": "openline.build_receipt.v1",
-  "scientific_claim_boundary": "Architecture/enforcement test only; does not establish superior decision quality."
+  "strong_falsifier_status": "permission-stage triggered; final result intentionally waits for actual repository Verified Commit integration in CI",
+  "claim_boundary": "Do not claim a distinct authorization primitive if the final CI result is CAPABILITY_PARITY."
 }

@@ -1,0 +1,43 @@
+{
+  "schema": "openline.dpl002.freeze.v1",
+  "experiment_id": "DPL-002",
+  "title": "End-to-End Authority Acquisition Falsifier",
+  "workflow": "B2B invoice settlement and liquidity routing",
+  "claim_under_test": "DPL provides a distinct authorization primitive beyond standard capability-based authorization plus exact-action hashing.",
+  "strong_falsifier": "If a receiver-issued caveated bearer capability with exact-effect hashing, state binding, expiry, one-use replay protection, and third-party discharge-style evidence reproduces DPL across the same seam attacks, no distinct authorization-primitive claim survives.",
+  "baseline_is_deliberately_strong": true,
+  "baseline": {
+    "name": "caveated capability control",
+    "properties": [
+      "bearer capability rather than caller-role authorization",
+      "receiver-issued",
+      "exact effect hash",
+      "current-state binding",
+      "expiry",
+      "one-use replay protection",
+      "accepted third-party evidence issuers",
+      "evidence freshness and revocation caveats",
+      "independent evidence caveat"
+    ]
+  },
+  "primary_cases": [
+    "clean_tier1_immediate",
+    "rationale_mutation_same_effect",
+    "model_swap_same_effect",
+    "better_but_unauthorized_tier2_early",
+    "self_granted_tier1_evidence",
+    "stale_liquidity",
+    "revoked_liquidity",
+    "state_drift_after_compilation",
+    "lower_ranked_authorized_net30",
+    "unauthorized_target",
+    "post_authorization_payload_mutation",
+    "replay"
+  ],
+  "result_labels": [
+    "DPL_DISTINCT_SEAM_FOUND",
+    "CAPABILITY_PARITY",
+    "IMPLEMENTATION_MISMATCH"
+  ],
+  "policy_mutation_after_results": false
+}
