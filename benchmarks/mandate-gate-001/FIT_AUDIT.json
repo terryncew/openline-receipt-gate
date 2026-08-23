@@ -1,0 +1,26 @@
+{
+  "design_decision": "Add a narrow principal_mandate profile that compiles only conforming effects into existing Verified Commit settings. Do not create a new receipt family.",
+  "existing_verified_commit_covers": [
+    "exact tool",
+    "exact target",
+    "exact settings hash",
+    "run binding",
+    "evidence hashes",
+    "policy hash",
+    "expiry",
+    "one-use authorization",
+    "atomic receiver-side consumption"
+  ],
+  "finding": "PARTIAL_FIT_NEW_PROFILE_EARNED",
+  "legal_boundary": "The profile encodes principal instructions. It does not create fiduciary duty.",
+  "not_cleanly_expressed_as_reusable_mandate": [
+    "purpose-scoped action classes",
+    "disclosure allowlist and denylist",
+    "settlement ceiling across multiple candidate actions",
+    "payment ceiling across multiple candidate actions",
+    "delegation ceiling"
+  ],
+  "policy_authority": "NONE",
+  "schema": "openline.mandate_gate.fit_audit.v1",
+  "target": "openline-receipt-gate main"
+}
