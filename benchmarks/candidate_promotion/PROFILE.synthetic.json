@@ -1,0 +1,48 @@
+{
+  "effective_at": "2026-08-23T00:00:00Z",
+  "missing_evidence": "QUARANTINE",
+  "policy_id": "candidate_promotion.cpg001.synthetic",
+  "rules": [
+    {
+      "acceptable_evidence_classes": [
+        "INDEPENDENT_ASSAY"
+      ],
+      "acceptable_methods": [
+        "HIC-v1"
+      ],
+      "assay_type": "HIC",
+      "max_age_days": 3650,
+      "operator": "<=",
+      "threshold": 10.0,
+      "units": "min"
+    },
+    {
+      "acceptable_evidence_classes": [
+        "INDEPENDENT_ASSAY"
+      ],
+      "acceptable_methods": [
+        "SEC-v1"
+      ],
+      "assay_type": "AGGREGATION",
+      "max_age_days": 3650,
+      "operator": "<=",
+      "threshold": 5.0,
+      "units": "%"
+    },
+    {
+      "acceptable_evidence_classes": [
+        "INDEPENDENT_ASSAY"
+      ],
+      "acceptable_methods": [
+        "TITER-v1"
+      ],
+      "assay_type": "EXPRESSION",
+      "max_age_days": 3650,
+      "operator": ">=",
+      "threshold": 50.0,
+      "units": "mg/L"
+    }
+  ],
+  "target": "demo-target",
+  "version": "1.0.0"
+}

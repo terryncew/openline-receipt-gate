@@ -1,0 +1,28 @@
+{
+  "schema": "openline.cpg001.thresholds.v0.1",
+  "source": "Jain et al. 2017 PNAS Table 1",
+  "doi": "10.1073/pnas.1616408114",
+  "derivation": "Worst-10-percent thresholds derived by the authors from the 48 approved antibodies; central reported threshold values are frozen here without retuning.",
+  "groups": {
+    "group_1_cross_or_self_interaction": [
+      {"assay_type":"PSR","operator":"<=","threshold":0.27,"units":"unitless"},
+      {"assay_type":"AC_SINS","operator":"<=","threshold":11.8,"units":"nm"},
+      {"assay_type":"CSI_BLI","operator":"<=","threshold":0.01,"units":"BLI_response"},
+      {"assay_type":"CIC","operator":"<=","threshold":10.1,"units":"min"}
+    ],
+    "group_2_hydrophobicity_or_colloidal": [
+      {"assay_type":"HIC","operator":"<=","threshold":11.7,"units":"min"},
+      {"assay_type":"SMAC","operator":"<=","threshold":12.8,"units":"min"},
+      {"assay_type":"SGAC_SINS","operator":">=","threshold":370.0,"units":"mM"}
+    ],
+    "group_3_polyspecificity": [
+      {"assay_type":"BVP","operator":"<=","threshold":4.3,"units":"fold_over_background"},
+      {"assay_type":"ELISA","operator":"<=","threshold":1.9,"units":"fold_over_background"}
+    ],
+    "group_4_accelerated_stability": [
+      {"assay_type":"AS","operator":"<=","threshold":0.08,"units":"monomer_pct_loss_per_day"}
+    ]
+  },
+  "excluded_from_original_flag_analysis": ["Fab_Tm", "transient_HEK_titer"],
+  "note": "These are historical warning thresholds, not proven causal or clinically dispositive cutoffs. CPG-001 calls threshold exceedance a declared liability only."
+}
