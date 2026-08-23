@@ -1,0 +1,41 @@
+{
+  "schema": "openline.cpg001.jain_sd03_column_rules.v0.1",
+  "source": "Jain et al. 2017 PNAS supplementary dataset SD03",
+  "matching": "Case/punctuation/diacritic-insensitive. Longest matching alias wins. Ambiguity or a missing required column fails closed.",
+  "candidate_id": {
+    "canonical": "candidate_id",
+    "aliases": ["Name", "Antibody Name"]
+  },
+  "assays": {
+    "PSR": {
+      "aliases": ["Polyspecificity Reagent", "PSR"]
+    },
+    "AC_SINS": {
+      "aliases": ["Affinity-Capture Self-Interaction Nanoparticle Spectroscopy", "Affinity Capture Self Interaction Nanoparticle Spectroscopy", "AC-SINS"]
+    },
+    "CSI_BLI": {
+      "aliases": ["Clone Self-Interaction by Bio-Layer Interferometry", "Clone Self Interaction Bio Layer Interferometry", "CSI-BLI"]
+    },
+    "CIC": {
+      "aliases": ["Cross-Interaction Chromatography", "Cross Interaction Chromatography", "CIC"]
+    },
+    "HIC": {
+      "aliases": ["Hydrophobic Interaction Chromatography", "HIC"]
+    },
+    "SMAC": {
+      "aliases": ["Stand-up Monolayer Adsorption Chromatography", "Stand up Monolayer Adsorption Chromatography", "SMAC"]
+    },
+    "SGAC_SINS": {
+      "aliases": ["Salt-Gradient Affinity-Capture Self-Interaction Nanoparticle Spectroscopy", "Salt Gradient Affinity Capture Self Interaction Nanoparticle Spectroscopy", "Salt-Gradient AC-SINS", "Salt Gradient AC-SINS", "SGAC-SINS"]
+    },
+    "BVP": {
+      "aliases": ["Baculovirus Particle", "BVP"]
+    },
+    "ELISA": {
+      "aliases": ["Enzyme-Linked Immunosorbent Assay", "Enzyme Linked Immunosorbent Assay", "ELISA"]
+    },
+    "AS": {
+      "aliases": ["Accelerated Stability", "AS SEC Slope", "SEC Slope"]
+    }
+  }
+}
