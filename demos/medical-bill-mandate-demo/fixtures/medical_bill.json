@@ -1,0 +1,14 @@
+{
+  "billed_cents": 184200,
+  "disputed_item": "duplicate facility charge",
+  "document_classes_available": [
+    "billing-record",
+    "eob",
+    "psychiatric-note",
+    "unrelated-medical-record"
+  ],
+  "insurance_allowed_cents": 97200,
+  "invoice_id": "INV-DEMO-1042",
+  "patient_responsibility_cents": 84500,
+  "provider": "Example Regional Medical Center"
+}
