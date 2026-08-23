@@ -159,3 +159,20 @@ def test_preflight_refuses_unseal_readiness_on_wrong_row_count(tmp_path: Path):
     bundle = run_preflight(source)
     assert bundle["preflight_receipt"]["ready_for_label_unseal"] is False
     assert bundle["preflight_receipt"]["observed_candidate_count_ok"] is False
+
+
+def test_sd03_normalization_ignores_text_footnote_with_no_assay_values(tmp_path: Path):
+    source = make_sources(tmp_path, count=3)
+    # Canonical Jain SD03 contains a textual footnote in the candidate-name
+    # column after the data table. A non-data row with no numeric assay values
+    # must not become a candidate.
+    path = source / "pnas.1616408114.sd03.xlsx"
+    rows: list[list[object]] = [sd03_headers()]
+    for i in range(1, 4):
+        base = i / 100.0
+        rows.append([f"mAb-{i:03d}", base, base * 2, base * 3, base * 4, base, base * 5, 500 - i, base * 6, base * 7, base * 0.01])
+    rows.append(["aArbitrarily long RT of 25 min to indicate no elution"] + [None] * 10)
+    write_xlsx(path, rows, "biophysical")
+    parsed = normalize_sd03_assays(path)
+    assert parsed["candidate_count"] == 3
+    assert [row["candidate_id"] for row in parsed["candidates"]] == ["mAb-001", "mAb-002", "mAb-003"]

@@ -1,0 +1,11 @@
+{
+  "schema": "openline.cpg001.parser_correction.v0.1",
+  "experiment_id": "CPG-001",
+  "reason": "Canonical SD03 includes a textual footnote in the candidate-name column after the 137 antibody rows: 'aArbitrarily long RT of 25 min to indicate no elution'. The prior generic parser treated any non-empty column-A cell as a candidate, producing 138 rows.",
+  "correction": "Ignore rows for which every resolved assay value is null/non-numeric.",
+  "outcome_dependency": false,
+  "policy_or_threshold_mutation": false,
+  "cohort_identity_source": "Bound canonical SD01 and SD03 exact candidate-set equality after assay-only parsing",
+  "before_observed_candidate_count": 138,
+  "after_observed_candidate_count": 137
+}
