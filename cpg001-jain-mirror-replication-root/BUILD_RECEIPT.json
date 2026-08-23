@@ -1,0 +1,46 @@
+{
+  "base_commit": "1755a0c84004ab6121328c79899289117c2c3988",
+  "base_repo": "terryncew/openline-receipt-gate",
+  "branch": "test/cpg-001-jain-mirror-replication",
+  "canonical_runs_r1_r4": "BLOCKED_SOURCE_ACQUISITION",
+  "commit_message": "test(cpg): add pinned Jain mirror replication",
+  "execution_id": "CPG-001-JAIN-MIRROR-01",
+  "experiment_id": "CPG-001",
+  "files": [
+    {
+      "bytes": 3324,
+      "path": ".github/workflows/cpg001-jain-mirror-replication.yml",
+      "sha256": "0712cc209bc69c646285697987e203104331bcb93d894e6e6a1ce6741bdcea37"
+    },
+    {
+      "bytes": 1546,
+      "path": "NORMAL_WORKFLOW.md",
+      "sha256": "cd42bdd9034a8857f4c9d72b51002cc3416bc8f4b23c20afc251dc6e7fc03001"
+    },
+    {
+      "bytes": 2153,
+      "path": "benchmarks/candidate_promotion/JAIN_2017_MIRROR_REPLICATION_CONTRACT.json",
+      "sha256": "66fd2d26410352b58d51c44261556f59d1a84c655e2801b6cc252f6c865fa5d5"
+    },
+    {
+      "bytes": 6616,
+      "path": "benchmarks/candidate_promotion/run_jain_mirror_replication.py",
+      "sha256": "d7b22731c86201adad3811e3554ffdc85e884f0a296fe61784364c1e038eecf5"
+    },
+    {
+      "bytes": 3245,
+      "path": "tests/test_candidate_promotion_jain_mirror.py",
+      "sha256": "8002f08fe78a7add961794659d2d93a345ac584f24ee712b745651109e6e394e"
+    }
+  ],
+  "mirror_source": {
+    "bytes": 42777,
+    "commit": "4ad3ec59ff1f6ddb886ca0cf2a9d47b1ba0f136a",
+    "git_blob_sha1": "15235ba7afc16cd9564c34078fbc1670e7383d09",
+    "path": "jain_data.csv",
+    "repo": "HPuntu/hogroast-teaching"
+  },
+  "pr_title": "CPG-001: add pinned Jain mirror replication",
+  "purpose": "exit canonical transport loop without mutating frozen science",
+  "schema": "openline.cpg001.handoff.v0.7"
+}
