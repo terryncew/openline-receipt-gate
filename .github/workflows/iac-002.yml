@@ -1,0 +1,39 @@
+name: IAC-002 Machine-Speed Authority Containment
+
+on:
+  pull_request:
+    paths:
+      - "benchmarks/inherited-authority-containment-002/**"
+      - ".github/workflows/iac-002.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  iac002:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Unit tests
+        working-directory: benchmarks/inherited-authority-containment-002
+        run: python -m unittest discover -s tests -v
+      - name: Run controlled machine-speed containment benchmark
+        working-directory: benchmarks/inherited-authority-containment-002
+        run: python scripts/run_benchmark.py
+      - name: Verify result independently
+        working-directory: benchmarks/inherited-authority-containment-002
+        run: python scripts/verify_result.py
+      - uses: actions/upload-artifact@v6
+        with:
+          name: iac002-evidence
+          path: |
+            benchmarks/inherited-authority-containment-002/preregistration.json
+            benchmarks/inherited-authority-containment-002/ground_truth_trials.json
+            benchmarks/inherited-authority-containment-002/result.json
+          if-no-files-found: error
