@@ -49,19 +49,19 @@ def effect(effect_id, *, model="model-a", disclosures=None,
 class Fixture:
     def __init__(self, root):
         self.root=Path(root)
-        self.source_key=Ed25519PrivateKey.from_private_bytes(bytes.fromhex("81"*32))
-        self.witness_key=Ed25519PrivateKey.from_private_bytes(bytes.fromhex("82"*32))
-        self.gate_key=Ed25519PrivateKey.from_private_bytes(bytes.fromhex("83"*32))
-        self.source_method="did:example:medical-bill-demo#key-1"
+        self.source_key=Ed25519PrivateKey.from_private_bytes(bytes.fromhex("71"*32))
+        self.witness_key=Ed25519PrivateKey.from_private_bytes(bytes.fromhex("72"*32))
+        self.gate_key=Ed25519PrivateKey.from_private_bytes(bytes.fromhex("73"*32))
+        self.source_method="did:example:mandate-source#key-1"
         self.store=TrustStore.from_mapping({
             "keys":{
                 self.source_method:{
                     "public_key":public_key_hex(self.source_key),
-                    "roles":["source"],"independence":"operator","controller":"demo-source"
+                    "roles":["source"],"independence":"operator","controller":"mandate-source"
                 },
                 public_key_hex(self.witness_key):{
                     "public_key":public_key_hex(self.witness_key),
-                    "roles":["outcome"],"independence":"receiver","controller":"demo-receiver"
+                    "roles":["outcome"],"independence":"receiver","controller":"mandate-receiver"
                 }
             }
         })
@@ -73,7 +73,7 @@ class Fixture:
     def issue(self, case, e):
         settings=compile_verified_commit_settings(MANDATE,e,now=NOW)
         artifact=self.root/f"{case}.json"
-        artifact.write_text('{"approved":true}\n',encoding="utf-8")
+        artifact.write_text('{"approved":true,"status":"complete"}\n',encoding="utf-8")
         ah=sha256_hex(artifact.read_bytes())
         run_id=f"demo-{case}"
         source=_agent_receipt(
@@ -100,7 +100,7 @@ class Fixture:
             "evidence_hashes":[ah],
         }
         policy=PolicySpec.from_mapping({
-            "policy_id":"medical-bill-demo-policy","version":"1",
+            "policy_id":"mandate-gate.receiver-policy","version":"1",
             "require_declared_coverage":True,"require_outcome_witness":True,
             "required_evidence_ids":["result"],
             "evidence_assertions":[
@@ -118,7 +118,7 @@ class Fixture:
         })
         # Keep the demo's already-proven authorized case code unchanged, but
         # give every other fixture a separate deterministic code family.
-        code=("aa" if case=="allowed" else "cd")*32
+        code=("ab" if case=="authorized" else "cd")*32
         req={
             "schema":"openline.proof_to_policy.request.v0.2",
             "request_id":f"request-{case}","action_type":"tool_call",
@@ -183,7 +183,7 @@ def main():
         })
 
         allowed=effect("allowed",disclosures=["billing-record","eob"])
-        receipt,action,code=fx.issue("allowed",allowed)
+        receipt,action,code=fx.issue("authorized",allowed)
         ledger=VerifiedCommitLedger(Path(td)/"allowed-ledger.json")
         effects={"n":0}
         lock=threading.Lock()
@@ -243,6 +243,25 @@ def main():
         # avoiding a demo-only shared-object scheduling artifact.
         race=effect("race",disclosures=["billing-record"])
         r_receipt,r_action,r_code=fx.issue("race",race)
+
+        race_receipt_ready = (
+            r_receipt.get("decision") == "COMMIT"
+            and isinstance(r_receipt.get("commit_authorization"), dict)
+        )
+        if not race_receipt_ready:
+            race_issue_diagnostic = {
+                "decision": r_receipt.get("decision"),
+                "verdict": r_receipt.get("verdict"),
+                "reason_codes": r_receipt.get("reason_codes", []),
+                "verified_commit_assessment": (
+                    r_receipt.get("assessments", {}).get("verified_commit", {})
+                    if isinstance(r_receipt.get("assessments"), dict)
+                    else {}
+                ),
+            }
+            print_line("RACE ISSUE", json.dumps(race_issue_diagnostic, sort_keys=True))
+            raise RuntimeError("race_authorization_not_issued")
+
         race_ledger_path=Path(td)/"race-ledger.json"
         r_count={"n":0}
         r_lock=threading.Lock()
