@@ -1,0 +1,21 @@
+{
+  "schema": "openline.cpg001.jain_manual_acquisition_attestation.v0.1",
+  "doi": "10.1073/pnas.1616408114",
+  "retrieval_mode": "manual_browser",
+  "retrieved_at": "REPLACE_WITH_UTC_TIMESTAMP",
+  "retrieval_note": "Downloaded manually from the publisher/PMC supplementary-file interface because automated GitHub-hosted acquisition was blocked.",
+  "artifacts": [
+    {
+      "filename": "pnas.1616408114.sd01.xlsx",
+      "source_url": "REPLACE_WITH_EXACT_HTTPS_SOURCE_URL"
+    },
+    {
+      "filename": "pnas.1616408114.sd02.xlsx",
+      "source_url": "REPLACE_WITH_EXACT_HTTPS_SOURCE_URL"
+    },
+    {
+      "filename": "pnas.1616408114.sd03.xlsx",
+      "source_url": "REPLACE_WITH_EXACT_HTTPS_SOURCE_URL"
+    }
+  ]
+}

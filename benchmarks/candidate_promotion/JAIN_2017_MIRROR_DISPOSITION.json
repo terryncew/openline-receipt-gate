@@ -1,0 +1,19 @@
+{
+  "schema": "openline.cpg001.jain_mirror_disposition.v0.1",
+  "experiment_id": "CPG-001",
+  "execution_id": "CPG-001-JAIN-MIRROR-01",
+  "source": {
+    "repository": "HPuntu/hogroast-teaching",
+    "commit": "4ad3ec59ff1f6ddb886ca0cf2a9d47b1ba0f136a",
+    "path": "jain_data.csv",
+    "git_blob_sha1": "15235ba7afc16cd9564c34078fbc1670e7383d09",
+    "bytes": 42777
+  },
+  "expected_candidate_count": 137,
+  "observed_candidate_count": 143,
+  "disposition": "SOURCE_COHORT_MISMATCH",
+  "scientific_verdict": null,
+  "projection_to_137_performed": false,
+  "reason": "The exact pinned third-party transcription contains 143 candidate rows. No independently frozen canonical 137-name manifest was available before outcome execution, so the mirror is not repaired or subset post hoc.",
+  "next_authorized_source_path": "manual canonical publisher-source binding only"
+}
