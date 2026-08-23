@@ -1,0 +1,34 @@
+{
+  "detection_lag_max": 8,
+  "detection_lag_min": 4,
+  "edge_drop_probability": 0.16,
+  "experiment_id": "IAC-002",
+  "failure_verdict": "MACHINE_SPEED_CONTAINMENT_NOT_EARNED",
+  "maximum_verdict": "CONTROLLED_MACHINE_SPEED_AUTHORITY_CONTAINMENT",
+  "nodes_per_trial": 24,
+  "pass_bar": {
+    "median_containment_lag_max": 1.0,
+    "must_beat_all_baselines_on_weighted_score": true,
+    "residual_tainted_acceptance_max": 0.03,
+    "unauthorized_action_rate_max": 0.03,
+    "useful_work_advantage_vs_global_min": 0.3,
+    "useful_work_preservation_min": 0.7
+  },
+  "policies": [
+    "NODE_ONLY",
+    "GLOBAL_KILL",
+    "TIME_WINDOW",
+    "OLP_SELECTIVE"
+  ],
+  "policy_authority": "NONE",
+  "post_detection_steps": 12,
+  "schema": "openline.receipt_gate.iac002.preregistration.v1",
+  "seed": 260823,
+  "trials": 256,
+  "weights": {
+    "clean_block_rate": 2.0,
+    "containment_lag_norm": 1.0,
+    "residual_tainted_acceptance": 6.0,
+    "unauthorized_action_rate": 8.0
+  }
+}
