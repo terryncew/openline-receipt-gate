@@ -2,6 +2,56 @@
 
 Most receipts make the past verifiable. Receipt Gate makes verified history usable by the next decision.
 
+## Protect one consequential function in five minutes
+
+OpenLine can sit directly at a Python function boundary. The model may propose the call; the receiver-owned guard decides whether that exact call has enough authority to execute. The function body is never called on a blocked decision.
+
+From a clean checkout:
+
+```bash
+git clone https://github.com/terryncew/openline-receipt-gate.git
+cd openline-receipt-gate
+python -m pip install -e .
+python examples/langgraph_refund_guard/demo.py
+```
+
+The reference refund demo should show:
+
+```text
+$25 refund                         → executes
+$500 without manager approval     → QUARANTINE
+$500 after manager approval       → executes
+$1,000.01 even with approval      → DENY
+```
+
+The integration surface is an ordinary decorator:
+
+```python
+from olp_gate import authorize, payment_semantics
+
+@authorize(
+    policy="refund_policy.json",
+    tool="process_refund",
+    target="refund://process",
+    semantics=payment_semantics("amount_cents"),
+    state_source=current_state,
+    evidence_sources={"refund_authority": refund_authority},
+)
+def process_refund(amount_cents: int, customer_id: str):
+    return payment_api.refund(amount_cents, customer_id)
+```
+
+For LangGraph, place its `@tool` decorator outside `@authorize`, so every tool invocation still crosses the OpenLine boundary before the consequential function body. See the complete [five-minute refund example](examples/langgraph_refund_guard/README.md).
+
+The demo writes receiver-side records to:
+
+```text
+examples/langgraph_refund_guard/.openline-demo/decision_receipts.jsonl
+examples/langgraph_refund_guard/.openline-demo/compiler_results.jsonl
+```
+
+The sub-10-minute integration goal is a product target until an outside developer completes the cold-start trial.
+
 It accepts signed OLP Wire Canon receipts, Agent Receipts v0.1–v0.5,
 Pipelock ActionReceipt v1, Assay Evidence Contract v1 bundles, and the older
 local Receipt Gate chain. It checks integrity, provenance, declared coverage,
