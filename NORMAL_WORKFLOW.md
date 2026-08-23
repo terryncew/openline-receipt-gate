@@ -1,22 +1,21 @@
-# CPG-001 Jain source-acquisition R3 workflow
+# CPG-001 Jain source-acquisition R4 workflow
 
-Build base observed: `main@357bcab6cd56faa84948ee56805aa551ed820799`.
+Build base observed: `main@f27e9683ea22499f672989ce2eaf7aaeee864e9c`.
 
-R1 and R2 remain preserved as `BLOCKED_SOURCE_ACQUISITION`; neither produced a scientific verdict. R3 changes source transport authority only. It adds the official EMBL-EBI BioStudies accession `S-EPMC5293111`, whose S-EPMC collection is populated from Europe PMC supplementary data. The frozen CPG-001 design is unchanged.
+R1, R2, and R3 are preserved as `BLOCKED_SOURCE_ACQUISITION`; none reached assay preflight and none produced a scientific verdict. R4 changes source transport only. It does not change thresholds, folds, baseline weights, assay normalization, label-unseal order, selection budgets, endpoints, or verdict rules.
 
 1. In Working Copy, open `openline-receipt-gate`, switch to `main`, and pull.
-2. Create branch `fix/cpg-001-jain-source-acquisition-r3`.
+2. Create branch `fix/cpg-001-jain-source-acquisition-r4`.
 3. Overlay this ZIP at repository root.
-4. Commit: `fix(cpg): acquire Jain supplements from BioStudies`.
-5. Push and open PR: `CPG-001: acquire Jain supplements from BioStudies`.
+4. Commit: `fix(cpg): use BioStudies public file transport`.
+5. Push and open PR: `CPG-001: use BioStudies public file transport`.
 6. Merge only after `candidate-promotion-001` and `release-check` are green.
-7. After merge, `cpg001-jain-real-evidence-r3` triggers automatically on `main`.
-8. Do not alter the experiment after R3 starts. Read the uploaded `cpg001-jain-evidence-r3-*` artifact as the frozen outcome.
+7. After merge, `cpg001-jain-real-evidence-r4` triggers automatically on `main`.
+8. Do not alter the frozen experiment after R4 begins. Read the uploaded `cpg001-jain-evidence-r4-*` artifact as the execution record.
 
 Scientific boundary:
-- BioStudies is accepted only through accession `S-EPMC5293111` and its `/info` API.
-- The resolved file host must be `ftp.ebi.ac.uk`, with storage mode `fire` or `nfs`, under the exact S-EPMC accession path.
-- All three exact publisher-named XLSX files must be present and XLSX-container-valid.
-- Each file is SHA-256 bound before worksheet cells are opened.
+- R4 uses only EMBL-EBI BioStudies public-file/static-storage routes frozen before execution, plus the already-frozen official fallbacks.
+- The exact three publisher-named XLSX files are required and XLSX-container validated before any worksheet cells are opened.
+- A public-file transport family must yield the complete triplet before any files are persisted; partial families are discarded.
 - Third-party processed mirrors remain forbidden.
-- No thresholds, weights, folds, budgets, label-unseal rules, or verdict rules changed.
+- R4 execution id: `CPG-001-JAIN-EVIDENCE-04`.
