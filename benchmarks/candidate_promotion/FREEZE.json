@@ -1,0 +1,34 @@
+{
+  "experiment_id": "CPG-001",
+  "title": "Candidate Promotion Gate — Compensatory Ranking Pressure Test",
+  "claim_boundary": "Tests whether receiver-owned non-compensable promotion policy reduces promotion of predeclared evidence-backed developability liabilities while preserving useful candidate yield and held-out assay quality. It does not predict clinical success.",
+  "architecture_variable": "promotion_authority",
+  "arms": {
+    "control": "same composite rank score; top-K selected without Receipt Gate",
+    "treatment": "same composite rank score; only COMMIT candidates remain eligible; ranker orders COMMIT survivors"
+  },
+  "authority": {
+    "generator_ranker": "ADVISORY_ONLY",
+    "assay_evidence": "SUPPLIES_STANDING",
+    "candidate_promotion_policy": "RECEIVER_OWNED",
+    "receipt_gate": "SOLE_PROMOTION_DECIDER"
+  },
+  "invariants": [
+    "no compensation across declared veto dimensions",
+    "UNKNOWN or missing or stale required evidence -> QUARANTINE",
+    "threshold failure -> DENY",
+    "identity mismatch, revoked evidence, unacceptable method, or ambiguous duplicate receipt -> DENY",
+    "policy is frozen before outcome inspection",
+    "policy updates are prospective; old decisions are never rewritten",
+    "same rank score and same candidate pool are used in both arms",
+    "held-out evaluation dimensions are excluded from gate decisions"
+  ],
+  "primary_metrics": [
+    "masked_declared_liabilities_promoted",
+    "top_k_fill_rate",
+    "eligible_candidate_yield",
+    "heldout_assay_pass_rate"
+  ],
+  "falsifier": "If the gate reduces declared violations only by collapsing useful yield, or materially worsens preregistered held-out assay quality at comparable selection budget, the added authority layer has not earned a useful-selection claim.",
+  "frozen_at": "2026-08-23T16:38:00Z"
+}

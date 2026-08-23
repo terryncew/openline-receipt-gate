@@ -1,0 +1,26 @@
+{
+  "schema": "openline.cpg001.preregistration.v0.1",
+  "experiment_id": "CPG-001",
+  "selection_budgets": [0.10, 0.25, 0.50],
+  "selection_budget_rule": "K = ceil(N * fraction)",
+  "control_ranker": "Equal-weight mean signed threshold margin over available thresholded assays. Missing values contribute neutral margin 0. Same rank score is used to order treatment survivors.",
+  "jain_evaluation": {
+    "design": "four-fold leave-one-published-property-group-out",
+    "folds": [
+      {"heldout_group":"group_1_cross_or_self_interaction"},
+      {"heldout_group":"group_2_hydrophobicity_or_colloidal"},
+      {"heldout_group":"group_3_polyspecificity"},
+      {"heldout_group":"group_4_accelerated_stability"}
+    ],
+    "rule": "The held-out group is excluded from Receipt Gate eligibility in that fold and used only for orthogonal survivor evaluation. Published Jain group assignments and thresholds are frozen; no outcome-driven reassignment."
+  },
+  "metrics": [
+    "masked_declared_liabilities_promoted_in_gate_dimensions",
+    "top_k_fill_rate",
+    "eligible_candidate_yield",
+    "heldout_group_flag_rate",
+    "approved_status_enrichment_descriptive_only"
+  ],
+  "decision_rule": "No single scalar declares CPG-001 a win. A useful result requires fewer masked declared liabilities plus non-collapsed selection yield and no material deterioration across held-out group flag rates. Report all budgets and all four folds.",
+  "authority_control": "A threshold-constrained ranker using identical numeric vetoes may be reported as a selection-parity control. If it matches Receipt Gate on clean historical rows, the unique OpenLine claim narrows to independent evidence validation, immutable receiver authority, and portable receipts—not superior antibody scoring."
+}

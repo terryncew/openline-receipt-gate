@@ -1,0 +1,96 @@
+{
+  "base_commit": "8fdc354b524f7351096d67264989d5659d7c655f",
+  "base_repo": "terryncew/openline-receipt-gate",
+  "branch": "feat/cpg-001-candidate-promotion",
+  "ci_fix": {
+    "fix": "install pinned build prerequisites and openline-receipt-gate with --no-build-isolation before running CPG-001 tests",
+    "reason": "candidate-promotion-001 initially installed pytest but not the project, so cryptography>=42 was absent during test collection",
+    "scope": "CI wiring only; no candidate-promotion policy or benchmark logic changed"
+  },
+  "commit_message": "feat(gate): add CPG-001 candidate promotion profile",
+  "experiment_id": "CPG-001",
+  "files": [
+    {
+      "bytes": 1155,
+      "path": ".github/workflows/candidate-promotion-001.yml",
+      "sha256": "884b8ee2f3a11bea78de2008bc9a5739dfbd62f8dd32763d13fe5285d3fbfb7a"
+    },
+    {
+      "bytes": 900,
+      "path": "NORMAL_WORKFLOW.md",
+      "sha256": "137b4f0e5d64ec360eaed994181b1e0f5ecf2d0c9999114e7feca567ef38efad"
+    },
+    {
+      "bytes": 1719,
+      "path": "benchmarks/candidate_promotion/DATASETS.json",
+      "sha256": "9b0afd3d35e23a9fc4d9ba28ad4e612ea02539ba33ed48534adb55492706f5b4"
+    },
+    {
+      "bytes": 1835,
+      "path": "benchmarks/candidate_promotion/FREEZE.json",
+      "sha256": "d1d77bb00c5501f40714e5b14f76fc7ab2d78beb2fd16bab7dced2838b44c8d9"
+    },
+    {
+      "bytes": 1582,
+      "path": "benchmarks/candidate_promotion/JAIN_2017_THRESHOLDS.json",
+      "sha256": "74e9f8a41c3fa3598c9639c4abac21d0f709c439fe3f0b1db4dd499c56080413"
+    },
+    {
+      "bytes": 1778,
+      "path": "benchmarks/candidate_promotion/PREREGISTRATION.json",
+      "sha256": "2907272710f4289abac7e7de166d05f6cc537a74c26915d019e28bd2becc558e"
+    },
+    {
+      "bytes": 1027,
+      "path": "benchmarks/candidate_promotion/PROFILE.synthetic.json",
+      "sha256": "363cabd1fbbced7f9de4cd857b25f8caa39f60510a13326cbc196391663b797e"
+    },
+    {
+      "bytes": 3112,
+      "path": "benchmarks/candidate_promotion/PROTOCOL.md",
+      "sha256": "7fadd74bc8e3f5d2917a5eb9b01a858b810b52d16e63b20af898f57e0c608ff6"
+    },
+    {
+      "bytes": 864,
+      "path": "benchmarks/candidate_promotion/README.md",
+      "sha256": "c8db75c1e8c9bf8ee9d4a3cf1a0c8123b93853ceb103a0af04cd21b12da4e645"
+    },
+    {
+      "bytes": 2896,
+      "path": "benchmarks/candidate_promotion/RUN_REPORT.synthetic.json",
+      "sha256": "e1661315eaa04754f61baf44206995d6f74cddc34c7a1d136038ce3427f8bf91"
+    },
+    {
+      "bytes": 1425,
+      "path": "benchmarks/candidate_promotion/bind_artifact.py",
+      "sha256": "5dca616939954de69dc59785affbcd261b8839057cbf998a8793aebf6741cafe"
+    },
+    {
+      "bytes": 11154,
+      "path": "benchmarks/candidate_promotion/fixtures/synthetic.json",
+      "sha256": "74a73e22db9cc83fd20f56e311f259985f68de0e26fba793c8aff09b94281e91"
+    },
+    {
+      "bytes": 3157,
+      "path": "benchmarks/candidate_promotion/run_replay.py",
+      "sha256": "64fb009729320ffc6b6b5914ec113b700bc996b95a1c674c28253cfb88729c27"
+    },
+    {
+      "bytes": 13577,
+      "path": "olp_gate/candidate_promotion.py",
+      "sha256": "4148f81177845292421084b5b348f8a76ba326fce4264734cb44dea43a331acd"
+    },
+    {
+      "bytes": 5277,
+      "path": "tests/test_candidate_promotion.py",
+      "sha256": "fabd1902b941c5e3d960d1ec31b4d33fa2d2b76b04439a6d06cc80137bccfad7"
+    }
+  ],
+  "github_write_status": "BLOCKED_403_INTEGRATION_PERMISSION",
+  "local_validation": {
+    "candidate_policy_tests": "16/16 PASS",
+    "compileall": "PASS",
+    "synthetic_acceptance": "PASS"
+  },
+  "schema": "openline.cpg001.handoff.v0.1"
+}

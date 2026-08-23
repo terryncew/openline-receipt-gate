@@ -1,0 +1,83 @@
+{
+  "candidate_count": 5,
+  "control": {
+    "heldout_assay_pass_rate": 0.6666666666666666,
+    "masked_declared_liabilities_promoted": 1,
+    "selected": [
+      "seductive-hic",
+      "good-a",
+      "unknown"
+    ],
+    "top_k_fill_rate": 1.0
+  },
+  "decisions": {
+    "good-a": {
+      "candidate_id": "good-a",
+      "decision": "COMMIT",
+      "evidence_sha256": "3bd924076d0896b9a6a5a4b5afe2f75699f1beb8abeed0cf0af5d7e20ecb15ae",
+      "flags": [],
+      "policy_id": "candidate_promotion.cpg001.synthetic",
+      "policy_sha256": "f8002bda37af9df4b46384d3469dad43fc8a90d31b657dd3142cab0fe79be380",
+      "policy_version": "1.0.0",
+      "schema": "openline.candidate_promotion.v0.1"
+    },
+    "good-b": {
+      "candidate_id": "good-b",
+      "decision": "COMMIT",
+      "evidence_sha256": "1e550d0054638bfc2d76163e56a5d1675dd766397b1e51bbe2ac1c512ab16cd0",
+      "flags": [],
+      "policy_id": "candidate_promotion.cpg001.synthetic",
+      "policy_sha256": "f8002bda37af9df4b46384d3469dad43fc8a90d31b657dd3142cab0fe79be380",
+      "policy_version": "1.0.0",
+      "schema": "openline.candidate_promotion.v0.1"
+    },
+    "good-c": {
+      "candidate_id": "good-c",
+      "decision": "COMMIT",
+      "evidence_sha256": "00cee4916673fe3d9efe1b08dd6f94c65cd4020d22c1b7e65555711b6eed1f33",
+      "flags": [],
+      "policy_id": "candidate_promotion.cpg001.synthetic",
+      "policy_sha256": "f8002bda37af9df4b46384d3469dad43fc8a90d31b657dd3142cab0fe79be380",
+      "policy_version": "1.0.0",
+      "schema": "openline.candidate_promotion.v0.1"
+    },
+    "seductive-hic": {
+      "candidate_id": "seductive-hic",
+      "decision": "DENY",
+      "evidence_sha256": "00a7ec32e216c4628afaf1d185940b95e95020cddc6dc42e3c3dcef8605e2e35",
+      "flags": [
+        "threshold_fail:HIC"
+      ],
+      "policy_id": "candidate_promotion.cpg001.synthetic",
+      "policy_sha256": "f8002bda37af9df4b46384d3469dad43fc8a90d31b657dd3142cab0fe79be380",
+      "policy_version": "1.0.0",
+      "schema": "openline.candidate_promotion.v0.1"
+    },
+    "unknown": {
+      "candidate_id": "unknown",
+      "decision": "QUARANTINE",
+      "evidence_sha256": "a69ce28e91e8b7d7bf5ce8045aba3f0a0ef078e41c0f62e8e386f35aae22751d",
+      "flags": [
+        "unknown:AGGREGATION"
+      ],
+      "policy_id": "candidate_promotion.cpg001.synthetic",
+      "policy_sha256": "f8002bda37af9df4b46384d3469dad43fc8a90d31b657dd3142cab0fe79be380",
+      "policy_version": "1.0.0",
+      "schema": "openline.candidate_promotion.v0.1"
+    }
+  },
+  "policy_sha256": "f8002bda37af9df4b46384d3469dad43fc8a90d31b657dd3142cab0fe79be380",
+  "schema": "openline.cpg001.run.v0.1",
+  "top_k": 3,
+  "treatment": {
+    "eligible_candidate_yield": 0.6,
+    "heldout_assay_pass_rate": 1.0,
+    "masked_declared_liabilities_promoted": 0,
+    "selected": [
+      "good-a",
+      "good-b",
+      "good-c"
+    ],
+    "top_k_fill_rate": 1.0
+  }
+}

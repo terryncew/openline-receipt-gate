@@ -1,0 +1,29 @@
+{
+  "GDPa1": {
+    "artifact_status": "GATED_NOT_VENDORED",
+    "binding_rule": "Do not assume 242 or 246. Bind the exact accepted artifact version, row set and SHA-256 after authorized access; then freeze before running CPG-001 replication.",
+    "current_card_rows": 242,
+    "current_main_csv": "GDPa1_v1.2_20250814.csv",
+    "evidence_limitations": [
+      "Access is gated; no file hash or row set may be asserted until authorized access materializes the exact artifact.",
+      "Use the dataset versioning sheet/full datasheet where available; do not infer 242 versus 246 from prose."
+    ],
+    "production_batch_statement_rows": 246,
+    "role": "replication dataset",
+    "source": "Ginkgo Datapoints GDPa1",
+    "source_url": "https://huggingface.co/datasets/ginkgo-datapoints/GDPa1"
+  },
+  "JAIN_2017": {
+    "artifact_status": "SOURCE_CONFIRMED_DATA_NOT_VENDORED",
+    "binding_rule": "Real replay MUST record the exact supplementary artifact filename and SHA-256 before any threshold tuning or outcome inspection.",
+    "evidence_limitations": [
+      "Published supplementary data can bind antibody row, sequence and matched-IgG1 study context after exact artifact hashing.",
+      "The public historical dataset does not provide native OpenLine per-assay receipt IDs or complete per-candidate wet-lab batch/run provenance. Historical replay therefore tests promotion-policy behavior, not native receipt provenance."
+    ],
+    "expected_assays": 12,
+    "expected_candidates": 137,
+    "role": "primary historical replay",
+    "source": "Jain et al., Biophysical properties of the clinical-stage antibody landscape, PNAS 2017",
+    "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5293111/"
+  }
+}
