@@ -1,60 +1,60 @@
 {
-  "base_commit": "357bcab6cd56faa84948ee56805aa551ed820799",
+  "base_commit": "f27e9683ea22499f672989ce2eaf7aaeee864e9c",
   "base_repo": "terryncew/openline-receipt-gate",
-  "branch": "fix/cpg-001-jain-source-acquisition-r3",
-  "commit_message": "fix(cpg): acquire Jain supplements from BioStudies",
-  "execution_id": "CPG-001-JAIN-EVIDENCE-03",
+  "branch": "fix/cpg-001-jain-source-acquisition-r4",
+  "commit_message": "fix(cpg): use BioStudies public file transport",
+  "execution_id": "CPG-001-JAIN-EVIDENCE-04",
   "experiment_id": "CPG-001",
   "files": [
     {
-      "bytes": 1704,
+      "bytes": 1758,
       "path": ".github/workflows/candidate-promotion-001.yml",
-      "sha256": "d8456d68adae684cac73d36085b37cadee9b3d57e6b2118df1306db54b7a12c8"
+      "sha256": "9f3807648f89423de5c19617134c987e756015e8d59d08d0199f5266e53697f8"
     },
     {
-      "bytes": 3226,
+      "bytes": 3238,
       "path": ".github/workflows/cpg001-jain-evidence.yml",
-      "sha256": "98e683876a20ba7c337a6f3b3c40d2703b85966f7bc0810e7eb0e8e8551f2741"
+      "sha256": "a5ae397f11ef11802d33a0400904d1b71e9cd258cc89d7ba4cdf55b6f5dac805"
     },
     {
-      "bytes": 1563,
+      "bytes": 1542,
       "path": "NORMAL_WORKFLOW.md",
-      "sha256": "782bd2b8a7922e7156526dd30f831c9c427125ecdf4a31d61d456457b739069b"
+      "sha256": "b2167cec10dac96e944c3a7bae73dd00f032cb490d41f242a9b60aed8f2982cc"
     },
     {
-      "bytes": 2666,
+      "bytes": 2995,
       "path": "benchmarks/candidate_promotion/JAIN_2017_EVIDENCE_RUN_CONTRACT.json",
-      "sha256": "5d6d4a20f0b60ae306ec5a938fa230ffa0d41680389b19d4ed97d082a13da6a7"
+      "sha256": "3359dbce241a379f03fcce4c0897de4ae6240ae5e7815bf9a72b948ce7d72e24"
     },
     {
-      "bytes": 2862,
+      "bytes": 3404,
       "path": "benchmarks/candidate_promotion/JAIN_2017_SOURCE_URLS.json",
-      "sha256": "6a355c30ba2389c61d9a72619026009c8c6a3089710c6da180811ac35211c247"
+      "sha256": "c720855874cc1cc2749f78024b12359220fd691e14b99e4fdd509ded25ae1376"
     },
     {
-      "bytes": 22327,
+      "bytes": 26631,
       "path": "benchmarks/candidate_promotion/fetch_jain_sources.py",
-      "sha256": "86548cf4057d089793212b59e80dcca632a31f5bd4fb45eb955fb9f8dea5d796"
+      "sha256": "354dafb2e9f5c4a6949e3a93b517f0d6ef253ebcb48fdcc4b989e726d9eea4ac"
     },
     {
       "bytes": 1709,
       "path": "benchmarks/candidate_promotion/summarize_jain_evidence_run.py",
-      "sha256": "f5d478a4519e62067e5a86ffff5561949d13c1987541e2be37aae3018fa6ada8"
+      "sha256": "17959b43afb5a66f19d1a218c314dfdd722b0c4f413a6aff610a094dc99e3c5c"
     },
     {
-      "bytes": 7794,
-      "path": "tests/test_candidate_promotion_jain_acquisition_r3.py",
-      "sha256": "dac7b2c6a837bbb215174757d068cb62af8786688bbc9f3a1afd05ce14cf00b1"
+      "bytes": 7859,
+      "path": "tests/test_candidate_promotion_jain_acquisition_r4.py",
+      "sha256": "086c5b9c014aeae10d845551e66bcfaa253325344ffe8e54640d93f0bab7fa82"
     }
   ],
   "local_validation": {
-    "live_biostudies_download": "NOT_EXECUTED_LOCALLY; GitHub Actions is network proof",
+    "candidate_design_preflight_acquisition_r2_r3_r4_tests": "56/56 PASS",
+    "json_parse": "PASS",
+    "live_external_download": "NOT_EXECUTED_LOCALLY; post-merge GitHub Actions is the network proof",
     "python_compile": "PASS",
-    "r2_compatibility_probe": "PASS",
-    "r3_biostudies_unit_tests": "5/5 PASS",
     "workflow_yaml_parse": "PASS"
   },
-  "pr_title": "CPG-001: acquire Jain supplements from BioStudies",
+  "pr_title": "CPG-001: use BioStudies public file transport",
   "prior_executions": [
     {
       "execution_id": "CPG-001-JAIN-EVIDENCE-01",
@@ -65,9 +65,15 @@
       "execution_id": "CPG-001-JAIN-EVIDENCE-02",
       "scientific_verdict": null,
       "status": "BLOCKED_SOURCE_ACQUISITION"
+    },
+    {
+      "execution_id": "CPG-001-JAIN-EVIDENCE-03",
+      "scientific_verdict": null,
+      "status": "BLOCKED_SOURCE_ACQUISITION"
     }
   ],
-  "schema": "openline.cpg001.handoff.v0.6",
-  "scope": "source-acquisition transport hotfix only; frozen scientific design unchanged",
-  "source_authority_added": "EMBL-EBI BioStudies accession S-EPMC5293111 (S-EPMC Europe PMC supplementary-data import)"
+  "schema": "openline.cpg001.handoff.v0.7",
+  "scientific_design_changed": false,
+  "scope": "source-acquisition transport only; no scientific design mutation",
+  "transport_change": "Prefer BioStudies documented public-file/static-storage routes for S-EPMC5293111 before the frozen R3 /info, Europe PMC, and publisher/NCBI fallbacks."
 }

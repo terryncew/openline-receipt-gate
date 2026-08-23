@@ -19,7 +19,7 @@ HERE = Path(__file__).resolve().parent
 
 from jain_xlsx import JainXlsxError, validate_xlsx_container
 
-USER_AGENT = "OpenLine-CPG-001/0.3 (+https://github.com/terryncew/openline-receipt-gate)"
+USER_AGENT = "OpenLine-CPG-001/0.4 (+https://github.com/terryncew/openline-receipt-gate)"
 MAX_BYTES = 5_000_000
 MAX_ARCHIVE_BYTES = 20_000_000
 MAX_JSON_BYTES = 1_000_000
@@ -59,7 +59,7 @@ def load_source_spec(path: str | Path | None = None) -> dict[str, Any]:
 
 def validate_source_spec(spec: Mapping[str, Any]) -> None:
     required = set(REQUIRED_FILES)
-    if spec.get("schema") != "openline.cpg001.jain_source_urls.v0.3":
+    if spec.get("schema") != "openline.cpg001.jain_source_urls.v0.4":
         raise ValueError("unsupported_source_url_schema")
     if spec.get("doi") != "10.1073/pnas.1616408114":
         raise ValueError("source_doi_mismatch")
@@ -82,6 +82,21 @@ def validate_source_spec(spec: Mapping[str, Any]) -> None:
         raise ValueError("biostudies_file_host_mismatch")
     if set(biostudies.get("required_files", [])) != required:
         raise ValueError("biostudies_required_files_mismatch")
+    public_bases = biostudies.get("public_file_bases")
+    expected_public_bases = {
+        "https://www.ebi.ac.uk/biostudies/files/S-EPMC5293111",
+        "https://www.ebi.ac.uk/biostudies/files/S-EPMC5293111/Files",
+        "https://ftp.ebi.ac.uk/biostudies/fire/S-EPMC/111/S-EPMC5293111/Files",
+        "https://ftp.ebi.ac.uk/biostudies/nfs/S-EPMC/111/S-EPMC5293111/Files",
+        "https://ftp.ebi.ac.uk/biostudies/fire/S-EPMC/S-EPMCxxx111/S-EPMC5293111/Files",
+        "https://ftp.ebi.ac.uk/biostudies/nfs/S-EPMC/S-EPMCxxx111/S-EPMC5293111/Files",
+    }
+    if not isinstance(public_bases, list) or set(str(v).rstrip("/") for v in public_bases) != expected_public_bases:
+        raise ValueError("biostudies_public_file_bases_changed")
+    for base in public_bases:
+        parsed = urllib.parse.urlparse(str(base))
+        if parsed.scheme != "https" or parsed.hostname not in TRUSTED_HOSTS:
+            raise ValueError(f"biostudies_public_base_not_allowed:{base}")
 
     archives = spec.get("archive_sources")
     if not isinstance(archives, list) or len(archives) != 1:
@@ -287,6 +302,69 @@ def _biostudies_https_base(info: Mapping[str, Any], accession: str) -> tuple[str
     return "https://ftp.ebi.ac.uk" + path, rel_path
 
 
+def _acquire_biostudies_public_files(
+    target: Path,
+    source_spec: Mapping[str, Any],
+    allowed_hosts: set[str],
+    *,
+    downloader: Callable[..., tuple[bytes, dict[str, Any]]],
+    timeout: float,
+    attempts: list[dict[str, Any]],
+) -> list[dict[str, Any]] | None:
+    spec = source_spec["biostudies_source"]
+    accession = str(spec["accession"])
+    for raw_base in spec["public_file_bases"]:
+        base = str(raw_base).rstrip("/")
+        staged: list[tuple[str, bytes, dict[str, Any], str]] = []
+        family_attempts: list[dict[str, Any]] = []
+        family_ok = True
+        for filename in REQUIRED_FILES:
+            url = base + "/" + urllib.parse.quote(filename, safe="")
+            attempt: dict[str, Any] = {
+                "mode": "BIOSTUDIES_PUBLIC_FILE",
+                "accession": accession,
+                "filename": filename,
+                "base_url": base,
+                "url": url,
+            }
+            try:
+                data, meta = _call_downloader(downloader, url, allowed_hosts, timeout, MAX_BYTES)
+                _validate_downloaded_xlsx(filename, data, target)
+                attempt.update({
+                    "status": "ACCEPTED",
+                    "resolved_url": str(meta.get("resolved_url", url)),
+                })
+                staged.append((filename, data, meta, url))
+            except (OSError, ValueError, urllib.error.URLError, urllib.error.HTTPError, socket.timeout) as exc:
+                attempt.update({"status": "REJECTED", "reason": f"{type(exc).__name__}:{exc}"})
+                family_ok = False
+            family_attempts.append(attempt)
+            if not family_ok:
+                break
+        attempts.extend(family_attempts)
+        if not family_ok or len(staged) != len(REQUIRED_FILES):
+            continue
+        artifacts: list[dict[str, Any]] = []
+        for filename, data, meta, url in staged:
+            destination = target / filename
+            destination.write_bytes(data)
+            artifacts.append({
+                "filename": filename,
+                "bytes": len(data),
+                "sha256": sha256_bytes(data),
+                "source_url": url,
+                "resolved_url": str(meta.get("resolved_url", url)),
+                "archive_member": None,
+                "source_authority": "EMBL_EBI_BIOSTUDIES_PUBLIC_FILE",
+                "biostudies_accession": accession,
+                "content_type": str(meta.get("content_type", "")),
+                "http_status": int(meta.get("http_status", 200)),
+                "xlsx_container_valid": True,
+            })
+        return artifacts
+    return None
+
+
 def _acquire_biostudies(
     target: Path,
     source_spec: Mapping[str, Any],
@@ -383,6 +461,20 @@ def acquire_sources(
     attempts: list[dict[str, Any]] = []
 
     if prefer_biostudies:
+        # Execution 04 adds the documented public-file/static transport family.
+        # Older execution IDs retain their original acquisition semantics so their
+        # frozen regression tests remain a faithful record of those runs.
+        if execution_id == "CPG-001-JAIN-EVIDENCE-04":
+            artifacts = _acquire_biostudies_public_files(
+                target,
+                source_spec,
+                allowed_hosts,
+                downloader=downloader,
+                timeout=timeout,
+                attempts=attempts,
+            )
+            if artifacts is not None:
+                return _success_receipt(source_spec, artifacts, attempts, execution_id)
         artifacts = _acquire_biostudies(
             target,
             source_spec,
@@ -473,7 +565,7 @@ def acquire_sources(
             for artifact in artifacts:
                 (target / artifact["filename"]).unlink(missing_ok=True)
             return {
-                "schema": "openline.cpg001.jain_acquisition_receipt.v0.3",
+                "schema": "openline.cpg001.jain_acquisition_receipt.v0.4",
                 "experiment_id": "CPG-001",
                 "execution_id": execution_id,
                 "dataset_id": "JAIN_2017",
@@ -512,7 +604,7 @@ def _success_receipt(
         })
     stable = {"dataset_id": "JAIN_2017", "doi": source_spec["doi"], "artifacts": stable_artifacts}
     return {
-        "schema": "openline.cpg001.jain_acquisition_receipt.v0.3",
+        "schema": "openline.cpg001.jain_acquisition_receipt.v0.4",
         "experiment_id": "CPG-001",
         "execution_id": execution_id,
         "status": "ACQUIRED_CANONICAL_OR_ARCHIVAL_SOURCE_SET",
@@ -536,7 +628,7 @@ def main() -> int:
     parser.add_argument("--timeout", type=float, default=30.0)
     parser.add_argument("--prefer-biostudies", action="store_true")
     args = parser.parse_args()
-    execution_id = os.environ.get("CPG_EXECUTION_ID", "CPG-001-JAIN-EVIDENCE-03")
+    execution_id = os.environ.get("CPG_EXECUTION_ID", "CPG-001-JAIN-EVIDENCE-04")
     receipt = acquire_sources(
         args.out_dir,
         timeout=args.timeout,

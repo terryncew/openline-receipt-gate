@@ -1,8 +1,8 @@
 {
-  "schema": "openline.cpg001.jain_source_urls.v0.3",
+  "schema": "openline.cpg001.jain_source_urls.v0.4",
   "dataset_id": "JAIN_2017",
   "doi": "10.1073/pnas.1616408114",
-  "policy": "Only publisher or official archival copies of the exact three published XLSX supplements are eligible. Preferred R3 transport is EMBL-EBI BioStudies accession S-EPMC5293111, an S-EPMC record created from Europe PMC supplementary data. Europe PMC supplementaryFiles and the frozen publisher/NCBI direct paths remain failover transports. Processed CSVs, Hugging Face derivatives, GitHub mirrors, and reformatted workbooks remain prohibited.",
+  "policy": "Only publisher or official archival copies of the exact three published XLSX supplements are eligible. Execution 04 prefers EMBL-EBI BioStudies public file delivery for accession S-EPMC5293111, using only BioStudies-documented accession/file and static storage routes. The R3 BioStudies info route, Europe PMC supplementaryFiles, and frozen publisher/NCBI direct paths remain failovers. Processed CSVs, Hugging Face derivatives, GitHub mirrors, and reformatted workbooks remain prohibited.",
   "allowed_hosts": [
     "www.pnas.org",
     "pnas.org",
@@ -22,6 +22,14 @@
       "pnas.1616408114.sd01.xlsx",
       "pnas.1616408114.sd02.xlsx",
       "pnas.1616408114.sd03.xlsx"
+    ],
+    "public_file_bases": [
+      "https://www.ebi.ac.uk/biostudies/files/S-EPMC5293111",
+      "https://www.ebi.ac.uk/biostudies/files/S-EPMC5293111/Files",
+      "https://ftp.ebi.ac.uk/biostudies/fire/S-EPMC/111/S-EPMC5293111/Files",
+      "https://ftp.ebi.ac.uk/biostudies/nfs/S-EPMC/111/S-EPMC5293111/Files",
+      "https://ftp.ebi.ac.uk/biostudies/fire/S-EPMC/S-EPMCxxx111/S-EPMC5293111/Files",
+      "https://ftp.ebi.ac.uk/biostudies/nfs/S-EPMC/S-EPMCxxx111/S-EPMC5293111/Files"
     ]
   },
   "archive_sources": [
