@@ -1,0 +1,106 @@
+{
+  "advisory_score_used_as_permission_evidence": false,
+  "cases": [
+    {
+      "case_id": "optimizer_a_clean",
+      "decision": "COMMIT_ELIGIBLE",
+      "effect_hash": "b55ccd05b53b8b0a30fa23ae8ff624fbe9340e28b6bc19a9bb7f574429511e99",
+      "obligation_hash": "57acb79de6d45cb8445aa3f3c646619aa45ed2824814810ca5865661cfc7da98",
+      "proposal_hash": "253965722658b0794dd65a9b05341b63376ab0078f653b5bcdb12634a25cb6c6",
+      "reason_codes": [],
+      "verified_commit_settings_emitted": true
+    },
+    {
+      "case_id": "optimizer_b_clean",
+      "decision": "COMMIT_ELIGIBLE",
+      "effect_hash": "b55ccd05b53b8b0a30fa23ae8ff624fbe9340e28b6bc19a9bb7f574429511e99",
+      "obligation_hash": "8a279127c197ebe2f193a250d2f41a04eeb8c7500c055981150d36f73466b757",
+      "proposal_hash": "6c36510efe2f9b074f504bfeebd16d61e0d882770f789ad8ad4895664c331ef9",
+      "reason_codes": [],
+      "verified_commit_settings_emitted": true
+    },
+    {
+      "case_id": "missing_risk_evidence",
+      "decision": "QUARANTINE",
+      "effect_hash": "b55ccd05b53b8b0a30fa23ae8ff624fbe9340e28b6bc19a9bb7f574429511e99",
+      "obligation_hash": "57acb79de6d45cb8445aa3f3c646619aa45ed2824814810ca5865661cfc7da98",
+      "proposal_hash": "253965722658b0794dd65a9b05341b63376ab0078f653b5bcdb12634a25cb6c6",
+      "reason_codes": [
+        "requirement_missing:risk_check"
+      ],
+      "verified_commit_settings_emitted": false
+    },
+    {
+      "case_id": "wrong_subject_substitution",
+      "decision": "DENY",
+      "effect_hash": "b55ccd05b53b8b0a30fa23ae8ff624fbe9340e28b6bc19a9bb7f574429511e99",
+      "obligation_hash": "57acb79de6d45cb8445aa3f3c646619aa45ed2824814810ca5865661cfc7da98",
+      "proposal_hash": "253965722658b0794dd65a9b05341b63376ab0078f653b5bcdb12634a25cb6c6",
+      "reason_codes": [
+        "subject_mismatch:risk_check"
+      ],
+      "verified_commit_settings_emitted": false
+    },
+    {
+      "case_id": "self_authorization_attempt",
+      "decision": "DENY",
+      "effect_hash": "b55ccd05b53b8b0a30fa23ae8ff624fbe9340e28b6bc19a9bb7f574429511e99",
+      "obligation_hash": "e00ef7ac0085ab32079c2692e3d857f51204f638c23bd1312c434883bdf6525b",
+      "proposal_hash": "253965722658b0794dd65a9b05341b63376ab0078f653b5bcdb12634a25cb6c6",
+      "reason_codes": [
+        "self_evidence_forbidden:risk_check"
+      ],
+      "verified_commit_settings_emitted": false
+    },
+    {
+      "case_id": "stale_evidence",
+      "decision": "QUARANTINE",
+      "effect_hash": "b55ccd05b53b8b0a30fa23ae8ff624fbe9340e28b6bc19a9bb7f574429511e99",
+      "obligation_hash": "57acb79de6d45cb8445aa3f3c646619aa45ed2824814810ca5865661cfc7da98",
+      "proposal_hash": "253965722658b0794dd65a9b05341b63376ab0078f653b5bcdb12634a25cb6c6",
+      "reason_codes": [
+        "evidence_stale:risk_check"
+      ],
+      "verified_commit_settings_emitted": false
+    },
+    {
+      "case_id": "state_drift",
+      "decision": "DENY",
+      "effect_hash": "b55ccd05b53b8b0a30fa23ae8ff624fbe9340e28b6bc19a9bb7f574429511e99",
+      "obligation_hash": "57acb79de6d45cb8445aa3f3c646619aa45ed2824814810ca5865661cfc7da98",
+      "proposal_hash": "253965722658b0794dd65a9b05341b63376ab0078f653b5bcdb12634a25cb6c6",
+      "reason_codes": [
+        "state_changed_since_proposal"
+      ],
+      "verified_commit_settings_emitted": false
+    },
+    {
+      "case_id": "unrouted_high_score",
+      "decision": "DENY",
+      "effect_hash": "d3644e18cd7e715451a26d0b9b82e29673456a9cb31891272240cf6fc20bac1c",
+      "obligation_hash": null,
+      "proposal_hash": "c2194c1c2822d9fb2ff9b06573761e661912a519965377f97037879043945e6d",
+      "reason_codes": [
+        "proposal_route_not_authorized"
+      ],
+      "verified_commit_settings_emitted": false
+    }
+  ],
+  "claim": "Decision quality does not grant permission; exact receiver-owned proof obligations bridge proposals to execution eligibility.",
+  "execution_authority": "NONE; Verified Commit required after COMMIT_ELIGIBLE",
+  "expected_decisions": {
+    "missing_risk_evidence": "QUARANTINE",
+    "optimizer_a_clean": "COMMIT_ELIGIBLE",
+    "optimizer_b_clean": "COMMIT_ELIGIBLE",
+    "self_authorization_attempt": "DENY",
+    "stale_evidence": "QUARANTINE",
+    "state_drift": "DENY",
+    "unrouted_high_score": "DENY",
+    "wrong_subject_substitution": "DENY"
+  },
+  "experiment_id": "DPL-001",
+  "mismatches": [],
+  "optimizer_swap_permission_invariant": true,
+  "passed": true,
+  "schema": "openline.dpl001.hostile_report.v1"
+}

@@ -1,15 +1,14 @@
 {
-  "schema": "openline.build_receipt.v0.1",
-  "build": "CPG-001 Canonical Source Bind",
-  "base": "d8fc8824ca8d032afb7340bff54c7d79840ae971",
-  "network_source_acquisition": false,
-  "mirror_projection_authorized": false,
-  "mirror_disposition": "SOURCE_COHORT_MISMATCH",
-  "scientific_design_changed": false,
+  "base_main": "db14b2a7abd9e2c3bde2651e75975cc232f3084d",
+  "build": "DPL-001 Decision-Permission Link",
+  "execution_boundary": "COMMIT_ELIGIBLE is non-executable; existing Verified Commit remains required.",
+  "hostile_report_passed": true,
   "local_validation": {
-    "pytest_tests": 6,
-    "compileall": true,
-    "workflow_yaml_parse": true,
-    "zip_integrity": true
-  }
+    "compileall": "PASS",
+    "hostile_cases": "8/8 PASS",
+    "unit_tests": "16/16 PASS",
+    "workflow_yaml": "PASS"
+  },
+  "schema": "openline.build_receipt.v1",
+  "scientific_claim_boundary": "Architecture/enforcement test only; does not establish superior decision quality."
 }
