@@ -1,0 +1,12 @@
+{
+  "assay_only_sha256": "d5b2b8e037f18a29eae678bca0fa8e69334f886c1e0ac0da387f42cec1ecf69f",
+  "canonical_cohort_sha256": "4648e4b09ba64748d3c300e9942ed5c5ea8fe0daa362c98ab0f8289f456a59d0",
+  "confirmatory_report_sha256": "31c6eb0d8529a53eebdd70978d4f1db1837bc46b4d26ccc919af94c6e30bf551",
+  "network_access_performed_by_runner": false,
+  "normalized_sha256": "5b9fbc45c8d51b74c14cf459d2701e82091553e06a47067e25fff27d6b256fbc",
+  "policy_or_threshold_mutation": false,
+  "raw_workbooks_committed_to_repo": false,
+  "schema": "openline.cpg001.jain_canonical_transformation_receipt.v0.1",
+  "source_attestation_sha256": "7367563a492406f46320a3ea60a3503ef512ba7eeb2cffb054980464c1beae13",
+  "source_set_sha256": "249302c9ce4f87db3862563b0f3a9b4af85dae59e2971406eada36a3060e1a16"
+}

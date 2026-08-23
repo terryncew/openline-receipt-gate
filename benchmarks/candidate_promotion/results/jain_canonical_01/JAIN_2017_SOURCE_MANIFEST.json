@@ -1,0 +1,43 @@
+{
+  "artifacts": [
+    {
+      "bytes": 16292,
+      "filename": "pnas.1616408114.sd01.xlsx",
+      "label_access_stage": "sealed_until_after_assay_preflight",
+      "role": "publication-era antibody metadata and clinical status labels",
+      "sha256": "7ae53f9151c4be89b75cc43a7cc1de885aeb6e0a88206e140e396dea7741338c",
+      "worksheet_part_count": 1,
+      "xlsx_container_valid": true
+    },
+    {
+      "bytes": 26709,
+      "filename": "pnas.1616408114.sd02.xlsx",
+      "label_access_stage": "not_applicable",
+      "role": "published antibody sequence supplement",
+      "sha256": "aa0b4734ebf4cb5674564ee0659aa95792602259c8493a4cdf1e92ba0a5c2c6f",
+      "worksheet_part_count": 1,
+      "xlsx_container_valid": true
+    },
+    {
+      "bytes": 31008,
+      "filename": "pnas.1616408114.sd03.xlsx",
+      "label_access_stage": "assay_preflight_allowed",
+      "role": "published biophysical measurement matrix",
+      "sha256": "8538513ca1ffc1408372aebb4eb79a2c6699f5352674fa98135cde82ad483a78",
+      "worksheet_part_count": 1,
+      "xlsx_container_valid": true
+    }
+  ],
+  "authority_note": "These source hashes establish historical dataset identity only. They do not manufacture per-assay wet-lab batch/run provenance that Jain 2017 did not publish.",
+  "complete": true,
+  "dataset_id": "JAIN_2017",
+  "doi": "10.1073/pnas.1616408114",
+  "label_seal": {
+    "note": "Source binding hashes bytes and validates XLSX containers only; it does not inspect worksheet cell values.",
+    "sd01_cells_opened": false,
+    "sd02_cells_opened": false,
+    "sd03_cells_opened": false
+  },
+  "schema": "openline.cpg001.jain_source_manifest.v0.2",
+  "source_set_sha256": "249302c9ce4f87db3862563b0f3a9b4af85dae59e2971406eada36a3060e1a16"
+}

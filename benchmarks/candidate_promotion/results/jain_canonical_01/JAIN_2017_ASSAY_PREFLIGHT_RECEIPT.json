@@ -1,0 +1,37 @@
+{
+  "assay_only_sha256": "d5b2b8e037f18a29eae678bca0fa8e69334f886c1e0ac0da387f42cec1ecf69f",
+  "complete_case_candidate_count": 137,
+  "complete_case_coverage_fraction": 1.0,
+  "coverage_ge_0_70": true,
+  "design_lock_sha256": "91fe336a96322aacd3f2e32823acfe7cea105121ee4389685383e628fdae75f2",
+  "excluded_for_missing_thresholded_assay": [],
+  "expected_published_candidate_count": 137,
+  "experiment_id": "CPG-001",
+  "high_correlation_pair_count": 4,
+  "label_seal": {
+    "approval_or_phase_labels_available_to_preflight": false,
+    "sd01_cells_opened": false,
+    "sd02_cells_opened": false,
+    "sd03_cells_opened": true
+  },
+  "next_step": "Load publication-era status labels from the already-bound SD01 only after this receipt and assay-only artifact are sealed.",
+  "observed_candidate_count_ok": true,
+  "observed_sd03_candidate_count": 137,
+  "policy_mutation_allowed": false,
+  "ready_for_label_unseal": true,
+  "resolved_assay_columns": [
+    "AC_SINS",
+    "AS",
+    "BVP",
+    "CIC",
+    "CSI_BLI",
+    "ELISA",
+    "HIC",
+    "PSR",
+    "SGAC_SINS",
+    "SMAC"
+  ],
+  "schema": "openline.cpg001.jain_assay_preflight_receipt.v0.1",
+  "source_set_sha256": "249302c9ce4f87db3862563b0f3a9b4af85dae59e2971406eada36a3060e1a16",
+  "thresholds_sha256": "29e69e92a53df0c0223eee93872c3284f01cb9685a114052aa8adadff9d84f47"
+}

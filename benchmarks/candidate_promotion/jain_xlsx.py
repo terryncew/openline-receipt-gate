@@ -262,6 +262,11 @@ def normalize_sd03_assays(path: str | Path, rules: Mapping[str, Any] | None = No
             index = mapping[assay]
             raw_value = row[index] if index < len(row) else None
             assays[assay] = _number(raw_value)
+        # Ignore spreadsheet footnotes/non-data rows that have text in the
+        # candidate-name column but no numeric value in any resolved assay column.
+        # This is a structural parser rule independent of CPG outcomes.
+        if all(value is None for value in assays.values()):
+            continue
         candidates.append({
             "candidate_id": candidate_id,
             "stage_2017": None,

@@ -1,0 +1,28 @@
+{
+  "artifacts": [
+    {
+      "bytes": 16292,
+      "filename": "pnas.1616408114.sd01.xlsx",
+      "sha256": "7ae53f9151c4be89b75cc43a7cc1de885aeb6e0a88206e140e396dea7741338c",
+      "source_url": "https://www.pnas.org/doi/suppl/10.1073/pnas.1616408114/suppl_file/pnas.1616408114.sd01.xlsx"
+    },
+    {
+      "bytes": 26709,
+      "filename": "pnas.1616408114.sd02.xlsx",
+      "sha256": "aa0b4734ebf4cb5674564ee0659aa95792602259c8493a4cdf1e92ba0a5c2c6f",
+      "source_url": "https://www.pnas.org/doi/suppl/10.1073/pnas.1616408114/suppl_file/pnas.1616408114.sd02.xlsx"
+    },
+    {
+      "bytes": 31008,
+      "filename": "pnas.1616408114.sd03.xlsx",
+      "sha256": "8538513ca1ffc1408372aebb4eb79a2c6699f5352674fa98135cde82ad483a78",
+      "source_url": "https://www.pnas.org/doi/suppl/10.1073/pnas.1616408114/suppl_file/pnas.1616408114.sd03.xlsx"
+    }
+  ],
+  "attestation_sha256": "7367563a492406f46320a3ea60a3503ef512ba7eeb2cffb054980464c1beae13",
+  "doi": "10.1073/pnas.1616408114",
+  "retrieval_mode": "manual_browser",
+  "retrieval_note": "Exact publisher-named XLSX files were manually obtained through the PMC article supplementary-material interface after automated acquisition was blocked. source_url records the canonical publisher supplement URL for each supplied artifact.",
+  "retrieved_at": "2026-08-23T19:32:54Z",
+  "schema": "openline.cpg001.jain_manual_acquisition_attestation.v0.1"
+}

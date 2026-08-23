@@ -1,0 +1,29 @@
+{
+  "candidate_count": 137,
+  "high_correlation_pairs": [
+    {
+      "left": "BVP",
+      "right": "ELISA",
+      "spearman_rho": 0.8587899952285178
+    },
+    {
+      "left": "HIC",
+      "right": "SMAC",
+      "spearman_rho": 0.855705383223834
+    },
+    {
+      "left": "AC_SINS",
+      "right": "CIC",
+      "spearman_rho": 0.7879036607744788
+    },
+    {
+      "left": "AC_SINS",
+      "right": "CSI_BLI",
+      "spearman_rho": 0.7733847074229309
+    }
+  ],
+  "policy_mutation_allowed": false,
+  "schema": "openline.cpg001.jain_correlation_audit.v0.1",
+  "statistical_independence_assumed": false,
+  "threshold_abs_rho": 0.7
+}
