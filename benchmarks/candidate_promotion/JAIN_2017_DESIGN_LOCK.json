@@ -1,0 +1,89 @@
+{
+  "schema": "openline.cpg001.jain_design_lock.v0.2",
+  "experiment_id": "CPG-001",
+  "dataset": "JAIN_2017",
+  "claim": "On the Jain 2017 developability panel, receiver-owned non-compensable promotion can reduce candidates selected despite at least one predeclared developability liability without collapsing selection yield or materially worsening assay quality on an entire held-out property group.",
+  "out_of_scope": [
+    "affinity or potency comparison",
+    "clinical-success prediction",
+    "causal claims that any Jain threshold is clinically dispositive",
+    "native per-assay receipt provenance for the 2017 historical measurements"
+  ],
+  "affinity_boundary": "Jain 2017 has no cross-candidate comparable affinity or potency variable. CPG-001 therefore tests compensation only among measured developability properties. Clinical-stage inclusion is context, not an affinity measurement or substitute label.",
+  "threshold_source": "Jain et al. 2017 PNAS Table 1 worst-10-percent warning thresholds derived from the 48 approved antibodies; values are frozen in JAIN_2017_THRESHOLDS.json and may not be tuned from replay outcomes.",
+  "analysis_cohort": {
+    "rule": "Complete-case cohort over all 10 Table-1 thresholded assays before any outcome/status label is used. Fab_Tm and transient_HEK_titer remain outside the original flag analysis and outside the confirmatory ranking/gate.",
+    "missingness": "No imputation. Candidates missing any of the 10 thresholded assays are excluded from the confirmatory cohort and counted in coverage attrition. Historical missingness is not used as a Receipt Gate UNKNOWN test.",
+    "minimum_coverage_fraction_for_unqualified_claim": 0.7
+  },
+  "folds": [
+    "group_1_cross_or_self_interaction",
+    "group_2_hydrophobicity_or_colloidal",
+    "group_3_polyspecificity",
+    "group_4_accelerated_stability"
+  ],
+  "selection_budgets": [
+    0.1,
+    0.25,
+    0.5
+  ],
+  "primary_budget": 0.25,
+  "top_k_rule": "K = ceil(N_complete_case * budget)",
+  "baseline": {
+    "name": "equal_weight_direction_aligned_zscore",
+    "formula": "For each gated assay j, z_ij = d_j * (x_ij - mean_j) / sample_sd_j, where d_j=+1 when larger values are favorable and d_j=-1 when smaller values are favorable. Candidate score S_i is the arithmetic mean of z_ij across gated assays in that fold.",
+    "statistics_scope": "mean_j and sample_sd_j are calculated once from the complete-case assay matrix without reading approval/phase labels.",
+    "weights": "equal weight per gated assay",
+    "ties": "candidate_id ascending",
+    "missing_values": "not permitted in confirmatory cohort",
+    "control": "rank every complete-case candidate by S_i and take top K",
+    "treatment": "apply all non-held-out hard vetoes first; rank only gate-eligible survivors by the identical S_i and take up to K",
+    "zero_variance_rule": "If a gated assay has sample_sd_j=0 in the complete-case cohort, its z contribution is 0 for every candidate; the hard threshold veto still applies. This rule cannot be changed after data binding."
+  },
+  "heldout_evaluation": {
+    "rule": "One entire published Jain property group is excluded from both the composite score and Gate eligibility for that fold. It is used only after selection to score orthogonal held-out liabilities.",
+    "candidate_flag": "heldout_group_flag = true if candidate fails one or more published thresholds in the held-out group",
+    "headline_unit": "candidate-level property-group flag, not number of correlated assay failures"
+  },
+  "correlation_audit": {
+    "statistical_independence_assumed": false,
+    "procedure": "Before status labels are read, compute pairwise Spearman correlations across the 10 thresholded assays on the complete-case matrix and publish every pair with |rho| >= 0.70.",
+    "effect_on_policy": "descriptive only; correlations may not change thresholds, group definitions, folds, weights, or success criteria after this lock",
+    "interpretation": "Receipt/evidence independence and statistical independence are different concepts. CPG-001 does not claim the assay axes are statistically independent."
+  },
+  "outcome_labels": {
+    "source": "sd01 publication-era clinical status",
+    "freeze_rule": "Use only the status/approval label present in the exact bound Jain supplementary artifact. Do not update candidates using later approvals or failures.",
+    "role": "secondary descriptive analysis only because the Table-1 thresholds were themselves derived from the 48 approved antibodies",
+    "reported_metrics": [
+      "approved_2017_count_in_control",
+      "approved_2017_count_in_treatment",
+      "approved_2017_selection_rate_control",
+      "approved_2017_selection_rate_treatment"
+    ]
+  },
+  "primary_success_criteria": {
+    "masked_liability_reduction": "At the 25% budget, treatment candidate-level gated-property-group liability rate must be at least 0.10 lower than control in at least 3 of 4 folds. Treatment must contain zero gated threshold failures; that zero is an implementation invariant, not by itself evidence of value.",
+    "yield": "At the 25% budget, treatment top-K fill rate must be >= 0.80 in at least 3 of 4 folds and pooled fill rate across folds must be >= 0.80.",
+    "heldout_quality": "At the 25% budget, treatment held-out property-group flag rate may exceed control by no more than 0.05 in at least 3 of 4 folds, and the pooled treatment held-out flag rate must be <= the pooled control rate.",
+    "coverage": "If complete-case coverage is below 0.70 of the 137 published candidates, any otherwise positive verdict is downgraded to INCONCLUSIVE_COVERAGE.",
+    "secondary_budgets": "10% and 50% results are always reported but cannot rescue a failed 25% primary verdict."
+  },
+  "verdicts": {
+    "SUPPORTED_WITHIN_SCOPE": "all primary criteria pass and coverage threshold passes",
+    "FRICTION_ONLY": "masked liabilities fall but yield or held-out quality criterion fails",
+    "NO_COMPENSATION_SIGNAL": "the frozen composite control does not expose the preregistered >=0.10 masked-liability reduction in at least 3 folds",
+    "INCONCLUSIVE_COVERAGE": "complete-case coverage below 0.70",
+    "IMPLEMENTATION_MISMATCH": "a threshold-constrained parity control using the identical vetoes and score does not match Gate selection on clean historical rows"
+  },
+  "authority_parity_control": "On clean historical rows, a conventional constrained ranker that applies the identical hard vetoes and then the identical composite score must select the same candidates as Receipt Gate. Expected parity narrows OpenLine's unique claim to receiver-owned authority, evidence validation, version/freshness/revocation/identity checks, and portable decision proof rather than a superior antibody scoring algorithm.",
+  "execution_order": [
+    "bind and SHA-256 sd01, sd02, sd03",
+    "normalize the assay matrix without reading status labels",
+    "verify complete-case cohort and produce correlation audit",
+    "seal normalized assay artifact and design-lock hashes",
+    "load frozen publication-era status labels",
+    "run four folds at all three budgets with no tuning",
+    "emit result plus falsifier/verdict receipt"
+  ]
+}

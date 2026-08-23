@@ -1,0 +1,34 @@
+{
+  "schema": "openline.cpg001.jain_normalized_schema.v0.1",
+  "required_top_level": [
+    "schema",
+    "source_artifacts",
+    "design_lock_sha256",
+    "thresholds_sha256",
+    "candidates"
+  ],
+  "candidate_shape": {
+    "candidate_id": "string; publication identifier/INN",
+    "stage_2017": "publication-era status copied from the bound sd01 artifact; may be null only before label-unseal stage",
+    "approved_2017": "boolean copied from publication-era sd01; may be null only before label-unseal stage",
+    "assays": {
+      "PSR": "finite number",
+      "AC_SINS": "finite number",
+      "CSI_BLI": "finite number",
+      "CIC": "finite number",
+      "HIC": "finite number",
+      "SMAC": "finite number",
+      "SGAC_SINS": "finite number",
+      "BVP": "finite number",
+      "ELISA": "finite number",
+      "AS": "finite number"
+    }
+  },
+  "source_binding": "Each source_artifacts entry must contain exact filename, bytes, sha256, and role. Normalized output must be hashed before status labels are unsealed for confirmatory analysis.",
+  "prohibited": [
+    "later approval/status updates",
+    "affinity or potency columns presented as Jain measurements",
+    "imputation of missing thresholded assays",
+    "post-run threshold or weight changes"
+  ]
+}

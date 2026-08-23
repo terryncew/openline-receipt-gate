@@ -1,34 +1,47 @@
 {
   "experiment_id": "CPG-001",
   "title": "Candidate Promotion Gate — Compensatory Ranking Pressure Test",
-  "claim_boundary": "Tests whether receiver-owned non-compensable promotion policy reduces promotion of predeclared evidence-backed developability liabilities while preserving useful candidate yield and held-out assay quality. It does not predict clinical success.",
+  "claim_boundary": "Jain 2017 confirmatory replay tests compensation only among predeclared developability properties. Affinity/potency is absent and out of scope. The experiment asks whether receiver-owned non-compensable promotion reduces masked developability liabilities while preserving preregistered yield and held-out property-group quality; it does not predict clinical success.",
   "architecture_variable": "promotion_authority",
   "arms": {
-    "control": "same composite rank score; top-K selected without Receipt Gate",
-    "treatment": "same composite rank score; only COMMIT candidates remain eligible; ranker orders COMMIT survivors"
+    "control": "frozen equal-weight direction-aligned z-score composite over gated assays; top K selected without hard veto",
+    "treatment": "same frozen composite score; only candidates passing every gated threshold remain eligible; ranker orders survivors",
+    "authority_parity_control": "same numeric vetoes plus same score in a conventional constrained ranker; must match treatment on clean historical rows"
   },
   "authority": {
     "generator_ranker": "ADVISORY_ONLY",
     "assay_evidence": "SUPPLIES_STANDING",
     "candidate_promotion_policy": "RECEIVER_OWNED",
-    "receipt_gate": "SOLE_PROMOTION_DECIDER"
+    "receipt_gate": "SOLE_NATIVE_PROMOTION_DECIDER"
   },
   "invariants": [
+    "affinity/potency excluded from Jain CPG-001 claim",
     "no compensation across declared veto dimensions",
-    "UNKNOWN or missing or stale required evidence -> QUARANTINE",
+    "UNKNOWN or missing or stale required native evidence -> QUARANTINE",
     "threshold failure -> DENY",
     "identity mismatch, revoked evidence, unacceptable method, or ambiguous duplicate receipt -> DENY",
-    "policy is frozen before outcome inspection",
+    "policy, score formula, normalization, tie-breaker, success criteria, and folds are frozen before confirmatory outcomes",
     "policy updates are prospective; old decisions are never rewritten",
-    "same rank score and same candidate pool are used in both arms",
-    "held-out evaluation dimensions are excluded from gate decisions"
+    "same composite score and same complete-case candidate pool are used in both arms",
+    "held-out property group is excluded from both ranking and gate decisions",
+    "statistical assay independence is not assumed",
+    "publication-era status labels are secondary/descriptive only"
   ],
+  "primary_budget": 0.25,
   "primary_metrics": [
-    "masked_declared_liabilities_promoted",
+    "gated_property_group_liability_rate",
     "top_k_fill_rate",
-    "eligible_candidate_yield",
-    "heldout_assay_pass_rate"
+    "heldout_property_group_flag_rate",
+    "complete_case_coverage_fraction"
   ],
-  "falsifier": "If the gate reduces declared violations only by collapsing useful yield, or materially worsens preregistered held-out assay quality at comparable selection budget, the added authority layer has not earned a useful-selection claim.",
-  "frozen_at": "2026-08-23T16:38:00Z"
+  "success_bars": {
+    "liability_reduction": ">=0.10 absolute in >=3/4 folds",
+    "fill_rate": ">=0.80 in >=3/4 folds and pooled",
+    "heldout_noninferiority": "treatment <= control +0.05 in >=3/4 folds and pooled treatment <= pooled control",
+    "coverage": ">=0.70 of published N=137"
+  },
+  "falsifier": "If the frozen composite does not exhibit the preregistered compensation signal, or if hard-veto selection achieves that reduction only by collapsing yield or materially degrading an entire held-out property group, CPG-001 does not earn a useful-selection claim.",
+  "design_lock_file": "benchmarks/candidate_promotion/JAIN_2017_DESIGN_LOCK.json",
+  "source_requirements_file": "benchmarks/candidate_promotion/JAIN_2017_SOURCE_REQUIREMENTS.json",
+  "frozen_at": "2026-08-23T17:10:00Z"
 }

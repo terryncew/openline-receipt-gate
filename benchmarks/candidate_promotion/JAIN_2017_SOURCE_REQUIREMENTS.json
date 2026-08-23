@@ -1,0 +1,24 @@
+{
+  "schema": "openline.cpg001.jain_source_requirements.v0.1",
+  "doi": "10.1073/pnas.1616408114",
+  "publisher": "Proceedings of the National Academy of Sciences",
+  "required_artifacts": [
+    {
+      "filename": "pnas.1616408114.sd01.xlsx",
+      "role": "publication-era antibody metadata and clinical status labels",
+      "label_access_stage": "sealed_until_after_assay_preflight"
+    },
+    {
+      "filename": "pnas.1616408114.sd02.xlsx",
+      "role": "published antibody sequence supplement",
+      "label_access_stage": "not_applicable"
+    },
+    {
+      "filename": "pnas.1616408114.sd03.xlsx",
+      "role": "published biophysical measurement matrix",
+      "label_access_stage": "assay_preflight_allowed"
+    }
+  ],
+  "binding_rule": "All three exact files must be SHA-256 bound in one source manifest before normalization. The confirmatory runner must reference the resulting manifest hashes. Replacement files require a new source manifest and a new prospective run; prior results are not rewritten.",
+  "provenance_boundary": "These source hashes establish historical dataset identity only. They do not manufacture per-assay wet-lab batch/run provenance that Jain 2017 did not publish."
+}
