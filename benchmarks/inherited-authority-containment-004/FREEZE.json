@@ -1,0 +1,41 @@
+{
+  "arms": [
+    "NO_PROPAGATION",
+    "GLOBAL_KILL",
+    "STALE_PRECHECK",
+    "ATOMIC_RECEIVER_GATE"
+  ],
+  "design": "hostile_concurrent_race",
+  "experiment_id": "IAC-004",
+  "failure_standing": "UNWARE_RUNTIME_RACE_CONTAINMENT_NOT_EARNED",
+  "maximum_standing": "UNWARE_RUNTIME_RACE_CONTAINMENT",
+  "pass_bar": {
+    "clean_commit_rate_min": 0.95,
+    "must_beat_stale_precheck_escape_rate": true,
+    "must_show_global_kill_clean_loss": true,
+    "must_show_no_propagation_escape": true,
+    "post_detection_tainted_escape_rate_max": 0.0,
+    "post_detection_unknown_escape_rate_max": 0.0
+  },
+  "policy_authority": "NONE",
+  "race": {
+    "detection_delay_ms_max": 6.0,
+    "detection_delay_ms_min": 1.0,
+    "dispatch_before_detection": true,
+    "post_precheck_delay_ms_max": 5.0,
+    "post_precheck_delay_ms_min": 1.0,
+    "pre_effect_delay_ms_max": 8.0,
+    "pre_effect_delay_ms_min": 0.0
+  },
+  "runtime": {
+    "name": "python-asyncio",
+    "python": "3.12",
+    "scheduler_openline_awareness": false
+  },
+  "schema": "openline.receipt_gate.iac004.freeze.v2",
+  "seed": 26082304,
+  "tainted_fraction": 0.5,
+  "tasks_per_trial": 16,
+  "trials": 256,
+  "unknown_fraction": 0.125
+}
