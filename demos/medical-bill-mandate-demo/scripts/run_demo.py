@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import tempfile
 import threading
+from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -115,7 +116,9 @@ class Fixture:
                 }
             }
         })
-        code=("aa" if case=="allowed" else "bb")*32
+        # Keep the demo's already-proven authorized case code unchanged, but
+        # give every other fixture a separate deterministic code family.
+        code=("aa" if case=="allowed" else "cd")*32
         req={
             "schema":"openline.proof_to_policy.request.v0.2",
             "request_id":f"request-{case}","action_type":"tool_call",
@@ -149,13 +152,11 @@ def main():
     with tempfile.TemporaryDirectory(prefix="medical-bill-mandate-demo-") as td:
         fx=Fixture(td)
 
-        # Same producer proposal for control and guarded path.
         psych=effect(
             "psych-disclosure",
             disclosures=["billing-record","psychiatric-note"],
         )
 
-        # UNGUARDED CONTROL: same proposed effect is allowed to hit effect sink.
         unguarded_effects=[]
         def unguarded_send(e):
             unguarded_effects.append(e)
@@ -167,7 +168,6 @@ def main():
             "result":"SENT",
         })
 
-        # GUARDED: mandate rejects before any authorization can be compiled.
         guarded_assessment=assess_effect(MANDATE,psych,now=NOW)
         guarded_sent=False
         try:
@@ -182,14 +182,14 @@ def main():
             "reason_codes":guarded_assessment["reason_codes"],
         })
 
-        # Authorized path through actual Verified Commit consequence boundary.
         allowed=effect("allowed",disclosures=["billing-record","eob"])
         receipt,action,code=fx.issue("allowed",allowed)
         ledger=VerifiedCommitLedger(Path(td)/"allowed-ledger.json")
         effects={"n":0}
         lock=threading.Lock()
         def send():
-            with lock: effects["n"]+=1
+            with lock:
+                effects["n"]+=1
             return {"sent":True}
         first=execute_mandated_once(
             ledger,receipt,action,mandate=MANDATE,one_use_code=code,
@@ -202,7 +202,6 @@ def main():
             "effect_count":effects["n"],
         })
 
-        # Sequential replay.
         replay=execute_mandated_once(
             ledger,receipt,action,mandate=MANDATE,one_use_code=code,
             trusted_gate_keys=[fx.gate_public],executor=send,now=NOW,
@@ -215,7 +214,6 @@ def main():
             "effect_count":effects["n"],
         })
 
-        # Settlement ceiling.
         over=effect("settlement",action_type="accept_settlement",value_cents=50001)
         over_a=assess_effect(MANDATE,over,now=NOW)
         transcript.append({
@@ -224,7 +222,6 @@ def main():
             "reason_codes":over_a["reason_codes"],
         })
 
-        # Model swap is a separate check.
         model_rows={}
         for model in ("model-a","model-b"):
             ok=assess_effect(
@@ -240,33 +237,53 @@ def main():
             "models":model_rows,
         })
 
-        # Concurrent replay with a fresh exact authorization.
+        # Race repair:
+        # use independent ledger objects pointed at the same receiver-owned
+        # ledger file. This preserves one shared atomic replay scope while
+        # avoiding a demo-only shared-object scheduling artifact.
         race=effect("race",disclosures=["billing-record"])
         r_receipt,r_action,r_code=fx.issue("race",race)
-        r_ledger=VerifiedCommitLedger(Path(td)/"race-ledger.json")
+        race_ledger_path=Path(td)/"race-ledger.json"
         r_count={"n":0}
         r_lock=threading.Lock()
         barrier=threading.Barrier(16)
+
         def worker(i):
             barrier.wait()
             def do_send():
-                with r_lock: r_count["n"]+=1
+                with r_lock:
+                    r_count["n"]+=1
                 return {"sent":True,"worker":i}
             return execute_mandated_once(
-                r_ledger,r_receipt,r_action,mandate=MANDATE,
-                one_use_code=r_code,trusted_gate_keys=[fx.gate_public],
-                executor=do_send,now=NOW,attempt_label=f"race-{i}"
+                VerifiedCommitLedger(race_ledger_path),
+                r_receipt,
+                r_action,
+                mandate=MANDATE,
+                one_use_code=r_code,
+                trusted_gate_keys=[fx.gate_public],
+                executor=do_send,
+                now=NOW,
+                attempt_label=f"race-{i}",
             )
+
         with ThreadPoolExecutor(max_workers=16) as pool:
             rows=list(pool.map(worker,range(16)))
+
         auth=sum(1 for r in rows if r["authorized"])
+        blocked_reasons=Counter(
+            reason
+            for row in rows if not row["authorized"]
+            for reason in row.get("reason_codes",[])
+        )
         transcript.append({
             "scene":"concurrent_replay",
-            "attempts":16,"authorized":auth,"blocked":16-auth,
+            "attempts":16,
+            "authorized":auth,
+            "blocked":16-auth,
             "effect_count":r_count["n"],
+            "blocked_reason_counts":dict(sorted(blocked_reasons.items())),
         })
 
-        # Ordinary QA pressure batch. Same downstream rule, varied upstream text.
         pressure_results=[]
         for model in ("model-a","model-b"):
             for i,text in enumerate(PRESSURE):
@@ -313,6 +330,11 @@ def main():
                 "concurrent_replay_exactly_once":auth==1 and r_count["n"]==1,
                 "pressure_qa_all_held":held==len(pressure_results),
             },
+            "race_diagnostics":{
+                "authorized":auth,
+                "effects":r_count["n"],
+                "blocked_reason_counts":dict(sorted(blocked_reasons.items())),
+            },
             "claim_boundary":{
                 "creates_fiduciary_duty":False,
                 "real_llm_prompt_injection_test":False,
@@ -322,8 +344,12 @@ def main():
         }
         receipt_out["passed"]=all(receipt_out["checks"].values())
 
-        (ROOT/"demo_receipt.json").write_text(json.dumps(receipt_out,indent=2,sort_keys=True)+"\n")
-        (ROOT/"pressure_qa.json").write_text(json.dumps(qa,indent=2,sort_keys=True)+"\n")
+        (ROOT/"demo_receipt.json").write_text(
+            json.dumps(receipt_out,indent=2,sort_keys=True)+"\n"
+        )
+        (ROOT/"pressure_qa.json").write_text(
+            json.dumps(qa,indent=2,sort_keys=True)+"\n"
+        )
 
         print("\nMEDICAL BILL MANDATE DEMO\n")
         print_line("NO GATE", "psychiatric record proposal -> SENT")
@@ -333,6 +359,8 @@ def main():
         print_line("MODEL SWAP", "authority unchanged")
         print_line("REPLAY", "spent authorization -> BLOCKED")
         print_line("RACE", f"16 attempts -> {auth} effect")
+        if auth != 1:
+            print_line("RACE REASONS", json.dumps(dict(sorted(blocked_reasons.items()))))
         print_line("PRESSURE QA", f"{held}/{len(pressure_results)} hostile proposals held")
         print("\nPASS" if receipt_out["passed"] else "\nFAIL")
         return 0 if receipt_out["passed"] else 2
