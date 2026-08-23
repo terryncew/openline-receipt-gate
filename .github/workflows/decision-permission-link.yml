@@ -1,0 +1,36 @@
+name: decision-permission-link
+
+on:
+  pull_request:
+    paths:
+      - 'olp_gate/authority_link.py'
+      - 'tests/test_authority_link.py'
+      - 'benchmarks/decision_permission_link/**'
+      - '.github/workflows/decision-permission-link.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'olp_gate/authority_link.py'
+      - 'tests/test_authority_link.py'
+      - 'benchmarks/decision_permission_link/**'
+      - '.github/workflows/decision-permission-link.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  dpl001:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - run: python -m pip install -U pip
+      - run: python -m pip install "setuptools==82.0.1" "wheel==0.47.0"
+      - run: python -m pip install --no-build-isolation .
+      - name: Unit and hostile link tests
+        run: python -m unittest tests.test_authority_link -v
+      - name: DPL-001 hostile suite
+        run: python benchmarks/decision_permission_link/run_suite.py

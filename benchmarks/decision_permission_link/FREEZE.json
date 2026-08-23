@@ -1,0 +1,26 @@
+{
+  "schema": "openline.dpl001.freeze.v1",
+  "experiment_id": "DPL-001",
+  "title": "Decision-Permission Link",
+  "claim": "Better decision-making and legitimate permission are separate problems; the bridge is a receiver-owned proof obligation bound to the exact proposed effect, current state, policy, and independently verified evidence.",
+  "invariants": [
+    "optimizer advisory output cannot satisfy a permission requirement",
+    "permission policy is receiver-owned",
+    "requirements bind to the exact effect hash",
+    "state drift invalidates the old proposal",
+    "policy drift invalidates the old obligation",
+    "missing or refreshable evidence quarantines",
+    "substitution, self-authorization, and unauthorized routes deny",
+    "COMMIT_ELIGIBLE is not execution authority",
+    "Verified Commit remains the single-use exact-action effect boundary"
+  ],
+  "falsifiers": [
+    "changing only optimizer score/rationale changes permission under an unchanged effect and evidence set",
+    "a proposal can satisfy its own independent evidence requirement",
+    "mutating action settings after obligation compilation preserves eligibility",
+    "state or policy drift preserves the old eligibility",
+    "COMMIT_ELIGIBLE can execute without Verified Commit"
+  ],
+  "policy_authority": "RECEIVER",
+  "execution_authority": "VERIFIED_COMMIT_ONLY"
+}
