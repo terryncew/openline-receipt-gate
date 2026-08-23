@@ -1,8 +1,16 @@
 {
-  "schema": "openline.cpg001.jain_evidence_run_contract.v0.1",
+  "schema": "openline.cpg001.jain_evidence_run_contract.v0.2",
   "experiment_id": "CPG-001",
+  "execution_id": "CPG-001-JAIN-EVIDENCE-02",
+  "prior_execution": {
+    "execution_id": "CPG-001-JAIN-EVIDENCE-01",
+    "status": "BLOCKED_SOURCE_ACQUISITION",
+    "scientific_verdict": null,
+    "note": "The first post-merge execution stopped before assay preflight because the frozen direct publisher/NCBI URLs were blocked in GitHub Actions."
+  },
   "trigger": "post-merge on main or explicit workflow_dispatch only",
-  "source_rule": "Acquire exact published SD01/SD02/SD03 XLSX artifacts only from the frozen publisher/NCBI allowlist. Never substitute a processed mirror after acquisition failure.",
+  "source_rule": "Acquire exact published SD01/SD02/SD03 XLSX bytes only from the frozen publisher, NCBI PMC, or official Europe PMC supplementaryFiles allowlist. Europe PMC is treated as a PMC International archival source, not a processed mirror. Never substitute a third-party processed mirror after acquisition failure.",
+  "source_change_scope": "Execution 02 changes acquisition transport authority only. Thresholds, folds, baseline weights, assay normalization, label firewall, and scientific verdict rules are unchanged.",
   "stage_order": [
     "ACQUIRE_OPAQUE_SOURCE_BYTES",
     "ASSAY_ONLY_PREFLIGHT_SD03",
@@ -26,6 +34,6 @@
     "label_unseal_binding_failure": "BLOCKED_LABEL_UNSEAL",
     "confirmatory_execution_failure": "BLOCKED_CONFIRMATORY_EXECUTION"
   },
-  "raw_xlsx_commit_policy": "never commit raw publisher XLSX files",
-  "result_mutation_policy": "A completed result is immutable evidence for this run. Any code, source, threshold, or policy change requires a new prospective run identifier; never rewrite the prior verdict."
+  "raw_xlsx_commit_policy": "never commit raw publisher or archival XLSX files",
+  "result_mutation_policy": "A completed result is immutable evidence for its execution. Any later code, source, threshold, or policy change requires another prospective execution identifier."
 }
