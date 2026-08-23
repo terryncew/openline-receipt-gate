@@ -1,0 +1,33 @@
+{
+  "schema": "openline.cpg001.jain_source_urls.v0.1",
+  "dataset_id": "JAIN_2017",
+  "doi": "10.1073/pnas.1616408114",
+  "policy": "Only publisher or NCBI archival copies of the exact three published XLSX supplements are eligible. Processed CSVs, Hugging Face derivatives, GitHub mirrors, and reformatted workbooks are not confirmatory source artifacts unless a future prospective manifest proves byte identity to a bound canonical artifact.",
+  "allowed_hosts": [
+    "www.pnas.org",
+    "pnas.org",
+    "pmc.ncbi.nlm.nih.gov",
+    "pubmed.ncbi.nlm.nih.gov",
+    "www.ncbi.nlm.nih.gov"
+  ],
+  "artifacts": {
+    "pnas.1616408114.sd01.xlsx": [
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC5293111/bin/pnas.1616408114.sd01.xlsx",
+      "https://pmc.ncbi.nlm.nih.gov/articles/instance/5293111/bin/pnas.1616408114.sd01.xlsx",
+      "https://pubmed.ncbi.nlm.nih.gov/articles/instance/5293111/bin/pnas.1616408114.sd01.xlsx",
+      "https://www.pnas.org/doi/suppl/10.1073/pnas.1616408114/suppl_file/pnas.1616408114.sd01.xlsx"
+    ],
+    "pnas.1616408114.sd02.xlsx": [
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC5293111/bin/pnas.1616408114.sd02.xlsx",
+      "https://pmc.ncbi.nlm.nih.gov/articles/instance/5293111/bin/pnas.1616408114.sd02.xlsx",
+      "https://pubmed.ncbi.nlm.nih.gov/articles/instance/5293111/bin/pnas.1616408114.sd02.xlsx",
+      "https://www.pnas.org/doi/suppl/10.1073/pnas.1616408114/suppl_file/pnas.1616408114.sd02.xlsx"
+    ],
+    "pnas.1616408114.sd03.xlsx": [
+      "https://pmc.ncbi.nlm.nih.gov/articles/PMC5293111/bin/pnas.1616408114.sd03.xlsx",
+      "https://pmc.ncbi.nlm.nih.gov/articles/instance/5293111/bin/pnas.1616408114.sd03.xlsx",
+      "https://pubmed.ncbi.nlm.nih.gov/articles/instance/5293111/bin/pnas.1616408114.sd03.xlsx",
+      "https://www.pnas.org/doi/suppl/10.1073/pnas.1616408114/suppl_file/pnas.1616408114.sd03.xlsx"
+    ]
+  }
+}

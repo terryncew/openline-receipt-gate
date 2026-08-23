@@ -1,91 +1,72 @@
 {
-  "authority_boundary": "All three source XLSX files may be container-validated and SHA-256 bound. Before assay preflight is sealed, worksheet cells may be opened only from sd03; sd01 publication-era clinical labels remain unopened and cannot influence cohort, thresholds, folds, weights, correlations, or readiness.",
-  "base_commit": "cb1167f62a02b857f9dd9bedf0f19c89ac30657e",
+  "base_commit": "146058b371bb2316f20843f88cdfeeb996690af2",
   "base_repo": "terryncew/openline-receipt-gate",
-  "branch": "feat/cpg-001-jain-preflight",
-  "commit_message": "test(cpg): add Jain source binding and assay preflight",
+  "branch": "feat/cpg-001-jain-evidence-run",
+  "commit_message": "test(cpg): automate Jain real-evidence replay",
   "experiment_id": "CPG-001",
   "files": [
     {
-      "bytes": 653,
-      "path": ".gitignore",
-      "sha256": "1be827d9acf67ce155d9361d2bf8f6f040e9e1eeb764ccbc5125d3c933b19f6e"
-    },
-    {
-      "bytes": 1545,
+      "bytes": 1596,
       "path": ".github/workflows/candidate-promotion-001.yml",
-      "sha256": "9258aa12f99a881b5317f080cd4485cf0ad69bc3e304230923327553bccef517"
+      "sha256": "6926e90e49c494873afd9210107ff6248674fb4d38fe65c0370fcb42bc1c3ae7"
     },
     {
-      "bytes": 1035,
+      "bytes": 3125,
+      "path": ".github/workflows/cpg001-jain-evidence.yml",
+      "sha256": "af2c97321c8d18526662c98134268c061a6ddff62786e65e2732f583bf93b558"
+    },
+    {
+      "bytes": 1101,
       "path": "NORMAL_WORKFLOW.md",
-      "sha256": "958c309cb274b9837d96f5bc47faf546edb3251de00569aeaf696a2bee78f845"
+      "sha256": "cc268760f33e7d24717c418257254d6628c73a912c494f12fdb09a030b105eb1"
     },
     {
-      "bytes": 1457,
-      "path": "benchmarks/candidate_promotion/JAIN_2017_PREFLIGHT_CONTRACT.json",
-      "sha256": "7e4a8d46349fd1f83a30922df6dae3c61a140b4764c4f984ad1a7cd0e3560977"
+      "bytes": 1771,
+      "path": "benchmarks/candidate_promotion/JAIN_2017_EVIDENCE_RUN.md",
+      "sha256": "7ad72a243bffda24c587f791f6702eed991fbbd960b9c317547aa44f32960de5"
     },
     {
-      "bytes": 1682,
-      "path": "benchmarks/candidate_promotion/JAIN_2017_SD03_COLUMN_RULES.json",
-      "sha256": "4a108b3c5dc263e2b0612b98e58e6d800f1a4124ce2aa682289c994a54b00711"
+      "bytes": 1566,
+      "path": "benchmarks/candidate_promotion/JAIN_2017_EVIDENCE_RUN_CONTRACT.json",
+      "sha256": "22b1699b63a3a9d311c485db928751d38687c7348e2c931f1e174045905f9b78"
     },
     {
-      "bytes": 8088,
-      "path": "benchmarks/candidate_promotion/PROTOCOL.md",
-      "sha256": "54f06c8ab0904893237a97b135f50632d28a4f7a20d3e91815e8b3dca318381b"
+      "bytes": 1878,
+      "path": "benchmarks/candidate_promotion/JAIN_2017_SOURCE_URLS.json",
+      "sha256": "ce6362510a67926cac2db126e21db98ed5185b13a153574ca067359d135e089e"
     },
     {
-      "bytes": 2440,
-      "path": "benchmarks/candidate_promotion/README.md",
-      "sha256": "972a98fff454a20d86c0305cf837368eafda5ca8ca3946f35519ef7881c302fa"
+      "bytes": 8601,
+      "path": "benchmarks/candidate_promotion/fetch_jain_sources.py",
+      "sha256": "04455f8a609ad6df015833c07052a6bcc0a43211cb72b8946e9a8ac08fdbb0e7"
     },
     {
-      "bytes": 2904,
-      "path": "benchmarks/candidate_promotion/bind_jain_sources.py",
-      "sha256": "debf61147e08f933590947733a5bc8942e671874ac70aaa0a6bd5fc744e25bb2"
+      "bytes": 1611,
+      "path": "benchmarks/candidate_promotion/summarize_jain_evidence_run.py",
+      "sha256": "bf8e1e3c98f30433e485f2eaa33637f25666f46374f1ed336feb0c60de01e02c"
     },
     {
-      "bytes": 11048,
-      "path": "benchmarks/candidate_promotion/jain_xlsx.py",
-      "sha256": "06a4d2c05b3b7bdec5997a5c35eeb8ff75d2c411e914aef2877b596c180f5beb"
+      "bytes": 5719,
+      "path": "benchmarks/candidate_promotion/unseal_jain_labels.py",
+      "sha256": "ea8db7b0a18a96603cb78b227e8f452a186acb4e812dffcafdac47efcc98c369"
     },
     {
-      "bytes": 4907,
-      "path": "benchmarks/candidate_promotion/preflight_jain_assays.py",
-      "sha256": "e333ac0fd3dba220705fd44965ca8e6837d440a2e367f07d8ef432ac072f07dd"
-    },
-    {
-      "bytes": 1579,
-      "path": "benchmarks/candidate_promotion/verify_jain_preflight_contract.py",
-      "sha256": "524e0fea7ff356cd39d568816edb6047faa0c192894ecac03643edf0b722fcba"
-    },
-    {
-      "bytes": 7631,
-      "path": "tests/test_candidate_promotion_jain_preflight.py",
-      "sha256": "1e4d57108c683aff86b73c30e8e794269d4e700166453bb494ab75c3df48843b"
+      "bytes": 9553,
+      "path": "tests/test_candidate_promotion_jain_acquisition.py",
+      "sha256": "39ceb7e5ce7a90071437635f83c1b98a2246c32c779ce356f19a015502def6a6"
     }
   ],
-  "label_status": "SEALED_UNTIL_ASSAY_PREFLIGHT",
   "local_validation": {
-    "candidate_plus_design_plus_preflight_tests": "37/37 PASS",
+    "candidate_design_preflight_acquisition_tests": "43/43 PASS",
     "compileall": "PASS",
     "design_lock_verification": "PASS",
     "preflight_contract_verification": "PASS",
-    "synthetic_137_row_cli_preflight": "PASS",
-    "synthetic_cpg_acceptance": "PASS"
+    "synthetic_137_row_full_staged_run": "FRICTION_ONLY (execution path verified)",
+    "workflow_yaml_parse": "PASS"
   },
-  "outputs_when_real_sources_are_materialized": [
-    "JAIN_2017_SOURCE_MANIFEST.json",
-    "JAIN_2017_ASSAY_ONLY.normalized.json",
-    "JAIN_2017_CORRELATION_AUDIT.json",
-    "JAIN_2017_ASSAY_PREFLIGHT_RECEIPT.json"
-  ],
-  "pr_title": "CPG-001: add Jain source binding and assay preflight",
-  "raw_publisher_files_in_package": false,
-  "result_claim": "NONE_PRECONFIRMATORY",
-  "schema": "openline.cpg001.handoff.v0.3",
-  "source_data_status": "NOT_VENDORED_NOT_BOUND",
-  "stage": "JAIN_2017_ASSAY_PREFLIGHT_TOOLING"
+  "post_merge_behavior": "real evidence workflow automatically runs on main and uploads JSON evidence artifacts",
+  "pr_title": "CPG-001: automate Jain real-evidence replay",
+  "schema": "openline.cpg001.handoff.v0.4",
+  "source_authority": "PNAS publisher or NCBI archive only; no processed-mirror fallback",
+  "stage": "JAIN_2017_REAL_EVIDENCE_EXECUTION"
 }
