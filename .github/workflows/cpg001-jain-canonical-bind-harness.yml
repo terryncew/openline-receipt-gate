@@ -1,0 +1,50 @@
+name: cpg001-jain-canonical-bind-harness
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/cpg001-jain-canonical-bind-harness.yml'
+      - 'benchmarks/candidate_promotion/run_jain_canonical_bind.py'
+      - 'benchmarks/candidate_promotion/JAIN_2017_CANONICAL_BIND_CONTRACT.json'
+      - 'benchmarks/candidate_promotion/JAIN_2017_MANUAL_ACQUISITION_TEMPLATE.json'
+      - 'benchmarks/candidate_promotion/JAIN_2017_MIRROR_DISPOSITION.json'
+      - 'tests/test_candidate_promotion_jain_canonical_bind.py'
+  pull_request:
+    paths:
+      - '.github/workflows/cpg001-jain-canonical-bind-harness.yml'
+      - 'benchmarks/candidate_promotion/run_jain_canonical_bind.py'
+      - 'benchmarks/candidate_promotion/JAIN_2017_CANONICAL_BIND_CONTRACT.json'
+      - 'benchmarks/candidate_promotion/JAIN_2017_MANUAL_ACQUISITION_TEMPLATE.json'
+      - 'benchmarks/candidate_promotion/JAIN_2017_MIRROR_DISPOSITION.json'
+      - 'tests/test_candidate_promotion_jain_canonical_bind.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  canonical-bind-harness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - run: python -m pip install "setuptools==82.0.1" "wheel==0.47.0" pytest
+      - run: python -m pip install --no-build-isolation .
+      - name: Verify canonical bind harness
+        run: pytest -q tests/test_candidate_promotion_jain_canonical_bind.py
+      - name: Verify canonical bind contract is network-free
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          c=json.loads(Path('benchmarks/candidate_promotion/JAIN_2017_CANONICAL_BIND_CONTRACT.json').read_text())
+          assert c['source_acquisition']['network_code_in_runner'] is False
+          assert c['source_acquisition']['automated_downloader_fallbacks'] is False
+          assert c['source_acquisition']['third_party_mirror_allowed'] is False
+          assert c['identity_rule']['expected_candidate_count'] == 137
+          print('canonical-bind contract OK')
+          PY

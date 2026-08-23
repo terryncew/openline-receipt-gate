@@ -1,0 +1,43 @@
+{
+  "schema": "openline.cpg001.jain_canonical_bind_contract.v0.1",
+  "experiment_id": "CPG-001",
+  "dataset_id": "JAIN_2017",
+  "doi": "10.1073/pnas.1616408114",
+  "purpose": "Replace failed automated source acquisition and the 143-row mirror mismatch with a one-time local binding of manually acquired canonical publisher supplements.",
+  "required_filenames": [
+    "pnas.1616408114.sd01.xlsx",
+    "pnas.1616408114.sd02.xlsx",
+    "pnas.1616408114.sd03.xlsx"
+  ],
+  "source_acquisition": {
+    "mode": "manual_browser",
+    "network_code_in_runner": false,
+    "automated_downloader_fallbacks": false,
+    "third_party_mirror_allowed": false,
+    "raw_workbooks_committed_by_default": false,
+    "required_attestation_schema": "openline.cpg001.jain_manual_acquisition_attestation.v0.1"
+  },
+  "identity_rule": {
+    "expected_candidate_count": 137,
+    "sd03_must_have_exactly_137_candidates_before_label_unseal": true,
+    "sd01_and_sd03_candidate_sets_must_match_exactly": true,
+    "identity_manifest_created_only_from_exact_bound_canonical_set": true,
+    "on_mismatch": "SOURCE_COHORT_MISMATCH"
+  },
+  "label_firewall": {
+    "sd03_assays_preflighted_and_sealed_before_sd01_status_unseal": true,
+    "sd02_cells_required_for_primary_analysis": false,
+    "sd02_is_hashed_and_container_validated": true
+  },
+  "frozen_science": {
+    "design_lock": "JAIN_2017_DESIGN_LOCK.json",
+    "thresholds": "JAIN_2017_THRESHOLDS.json",
+    "policy_mutation_allowed": false,
+    "threshold_mutation_allowed": false,
+    "baseline_mutation_allowed": false,
+    "fold_mutation_allowed": false,
+    "budget_mutation_allowed": false
+  },
+  "completed_evidence_tier": "CANONICAL_SOURCE_BOUND_CONFIRMATORY",
+  "raw_source_redistribution_boundary": "The runner hashes and validates local publisher artifacts but does not require or perform publication of the raw workbooks."
+}

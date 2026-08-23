@@ -1,79 +1,15 @@
 {
-  "base_commit": "f27e9683ea22499f672989ce2eaf7aaeee864e9c",
-  "base_repo": "terryncew/openline-receipt-gate",
-  "branch": "fix/cpg-001-jain-source-acquisition-r4",
-  "commit_message": "fix(cpg): use BioStudies public file transport",
-  "execution_id": "CPG-001-JAIN-EVIDENCE-04",
-  "experiment_id": "CPG-001",
-  "files": [
-    {
-      "bytes": 1758,
-      "path": ".github/workflows/candidate-promotion-001.yml",
-      "sha256": "9f3807648f89423de5c19617134c987e756015e8d59d08d0199f5266e53697f8"
-    },
-    {
-      "bytes": 3238,
-      "path": ".github/workflows/cpg001-jain-evidence.yml",
-      "sha256": "a5ae397f11ef11802d33a0400904d1b71e9cd258cc89d7ba4cdf55b6f5dac805"
-    },
-    {
-      "bytes": 1542,
-      "path": "NORMAL_WORKFLOW.md",
-      "sha256": "b2167cec10dac96e944c3a7bae73dd00f032cb490d41f242a9b60aed8f2982cc"
-    },
-    {
-      "bytes": 2995,
-      "path": "benchmarks/candidate_promotion/JAIN_2017_EVIDENCE_RUN_CONTRACT.json",
-      "sha256": "3359dbce241a379f03fcce4c0897de4ae6240ae5e7815bf9a72b948ce7d72e24"
-    },
-    {
-      "bytes": 3404,
-      "path": "benchmarks/candidate_promotion/JAIN_2017_SOURCE_URLS.json",
-      "sha256": "c720855874cc1cc2749f78024b12359220fd691e14b99e4fdd509ded25ae1376"
-    },
-    {
-      "bytes": 26631,
-      "path": "benchmarks/candidate_promotion/fetch_jain_sources.py",
-      "sha256": "354dafb2e9f5c4a6949e3a93b517f0d6ef253ebcb48fdcc4b989e726d9eea4ac"
-    },
-    {
-      "bytes": 1709,
-      "path": "benchmarks/candidate_promotion/summarize_jain_evidence_run.py",
-      "sha256": "17959b43afb5a66f19d1a218c314dfdd722b0c4f413a6aff610a094dc99e3c5c"
-    },
-    {
-      "bytes": 7859,
-      "path": "tests/test_candidate_promotion_jain_acquisition_r4.py",
-      "sha256": "086c5b9c014aeae10d845551e66bcfaa253325344ffe8e54640d93f0bab7fa82"
-    }
-  ],
-  "local_validation": {
-    "candidate_design_preflight_acquisition_r2_r3_r4_tests": "56/56 PASS",
-    "json_parse": "PASS",
-    "live_external_download": "NOT_EXECUTED_LOCALLY; post-merge GitHub Actions is the network proof",
-    "python_compile": "PASS",
-    "workflow_yaml_parse": "PASS"
-  },
-  "pr_title": "CPG-001: use BioStudies public file transport",
-  "prior_executions": [
-    {
-      "execution_id": "CPG-001-JAIN-EVIDENCE-01",
-      "scientific_verdict": null,
-      "status": "BLOCKED_SOURCE_ACQUISITION"
-    },
-    {
-      "execution_id": "CPG-001-JAIN-EVIDENCE-02",
-      "scientific_verdict": null,
-      "status": "BLOCKED_SOURCE_ACQUISITION"
-    },
-    {
-      "execution_id": "CPG-001-JAIN-EVIDENCE-03",
-      "scientific_verdict": null,
-      "status": "BLOCKED_SOURCE_ACQUISITION"
-    }
-  ],
-  "schema": "openline.cpg001.handoff.v0.7",
+  "schema": "openline.build_receipt.v0.1",
+  "build": "CPG-001 Canonical Source Bind",
+  "base": "d8fc8824ca8d032afb7340bff54c7d79840ae971",
+  "network_source_acquisition": false,
+  "mirror_projection_authorized": false,
+  "mirror_disposition": "SOURCE_COHORT_MISMATCH",
   "scientific_design_changed": false,
-  "scope": "source-acquisition transport only; no scientific design mutation",
-  "transport_change": "Prefer BioStudies documented public-file/static-storage routes for S-EPMC5293111 before the frozen R3 /info, Europe PMC, and publisher/NCBI fallbacks."
+  "local_validation": {
+    "pytest_tests": 6,
+    "compileall": true,
+    "workflow_yaml_parse": true,
+    "zip_integrity": true
+  }
 }

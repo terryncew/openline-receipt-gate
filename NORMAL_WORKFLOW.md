@@ -1,21 +1,38 @@
-# CPG-001 Jain source-acquisition R4 workflow
+# CPG-001 Canonical Source Bind — Normal Workflow
 
-Build base observed: `main@f27e9683ea22499f672989ce2eaf7aaeee864e9c`.
+Base observed before build: `main@d8fc8824ca8d032afb7340bff54c7d79840ae971`
 
-R1, R2, and R3 are preserved as `BLOCKED_SOURCE_ACQUISITION`; none reached assay preflight and none produced a scientific verdict. R4 changes source transport only. It does not change thresholds, folds, baseline weights, assay normalization, label-unseal order, selection budgets, endpoints, or verdict rules.
+## Working Copy
 
-1. In Working Copy, open `openline-receipt-gate`, switch to `main`, and pull.
-2. Create branch `fix/cpg-001-jain-source-acquisition-r4`.
-3. Overlay this ZIP at repository root.
-4. Commit: `fix(cpg): use BioStudies public file transport`.
-5. Push and open PR: `CPG-001: use BioStudies public file transport`.
-6. Merge only after `candidate-promotion-001` and `release-check` are green.
-7. After merge, `cpg001-jain-real-evidence-r4` triggers automatically on `main`.
-8. Do not alter the frozen experiment after R4 begins. Read the uploaded `cpg001-jain-evidence-r4-*` artifact as the execution record.
+1. Switch `openline-receipt-gate` to `main` and pull.
+2. Create branch `test/cpg-001-jain-canonical-bind`.
+3. Overlay the ZIP at repository root. The first paths must be `.github/`, `benchmarks/`, `tests/`, and `NORMAL_WORKFLOW.md`.
+4. Commit with `test(cpg): add canonical Jain source bind`.
+5. Push and open a PR to `main` titled `CPG-001: add canonical Jain source bind`.
+6. Merge only after `release-check`, `candidate-promotion-001`, and `cpg001-jain-canonical-bind-harness` are green.
 
-Scientific boundary:
-- R4 uses only EMBL-EBI BioStudies public-file/static-storage routes frozen before execution, plus the already-frozen official fallbacks.
-- The exact three publisher-named XLSX files are required and XLSX-container validated before any worksheet cells are opened.
-- A public-file transport family must yield the complete triplet before any files are persisted; partial families are discarded.
-- Third-party processed mirrors remain forbidden.
-- R4 execution id: `CPG-001-JAIN-EVIDENCE-04`.
+## What this merge does
+
+- Retires automatic R1-R4 publisher-source acquisition from push-triggered CI.
+- Retires the 143-row mirror from push-triggered CI and freezes it as `SOURCE_COHORT_MISMATCH` with no scientific verdict.
+- Adds a network-free canonical runner for one-time manually acquired SD01/SD02/SD03 workbooks.
+- Does **not** change the frozen CPG thresholds, baseline, folds, budgets, or verdict criteria.
+
+## After merge
+
+Acquire the exact three XLSX files through a normal browser session and keep them outside the public repo by default:
+
+- `pnas.1616408114.sd01.xlsx`
+- `pnas.1616408114.sd02.xlsx`
+- `pnas.1616408114.sd03.xlsx`
+
+Fill `JAIN_2017_MANUAL_ACQUISITION_TEMPLATE.json` with the exact HTTPS source URLs and retrieval timestamp. Then run:
+
+```bash
+python benchmarks/candidate_promotion/run_jain_canonical_bind.py \
+  --source-dir /path/to/jain-source \
+  --attestation /path/to/JAIN_2017_MANUAL_ACQUISITION.json \
+  --out-dir /tmp/cpg001-jain-canonical
+```
+
+A scientific negative is a valid completed experiment. A source/cohort mismatch exits blocked with no scientific verdict.
