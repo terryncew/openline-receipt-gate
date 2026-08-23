@@ -1,0 +1,31 @@
+{
+  "schema": "openline.cpg001.jain_evidence_run_contract.v0.1",
+  "experiment_id": "CPG-001",
+  "trigger": "post-merge on main or explicit workflow_dispatch only",
+  "source_rule": "Acquire exact published SD01/SD02/SD03 XLSX artifacts only from the frozen publisher/NCBI allowlist. Never substitute a processed mirror after acquisition failure.",
+  "stage_order": [
+    "ACQUIRE_OPAQUE_SOURCE_BYTES",
+    "ASSAY_ONLY_PREFLIGHT_SD03",
+    "SEAL_PREFLIGHT_ARTIFACTS",
+    "UNSEAL_SD01_PUBLICATION_STATUS",
+    "RUN_FROZEN_CONFIRMATORY_REPLAY",
+    "PUBLISH_NON_MUTATING_RESULT_ARTIFACT"
+  ],
+  "label_firewall": "SD01 worksheet cells may not be opened until the persisted assay-preflight receipt is reloaded and its assay_only_sha256 is verified against the persisted assay-only artifact.",
+  "scientific_verdict_is_not_ci_verdict": true,
+  "valid_scientific_verdicts": [
+    "SUPPORTED_WITHIN_SCOPE",
+    "FRICTION_ONLY",
+    "NO_COMPENSATION_SIGNAL",
+    "INCONCLUSIVE_COVERAGE",
+    "IMPLEMENTATION_MISMATCH"
+  ],
+  "failure_semantics": {
+    "source_acquisition_failure": "BLOCKED_SOURCE_ACQUISITION",
+    "preflight_failure": "BLOCKED_PREFLIGHT",
+    "label_unseal_binding_failure": "BLOCKED_LABEL_UNSEAL",
+    "confirmatory_execution_failure": "BLOCKED_CONFIRMATORY_EXECUTION"
+  },
+  "raw_xlsx_commit_policy": "never commit raw publisher XLSX files",
+  "result_mutation_policy": "A completed result is immutable evidence for this run. Any code, source, threshold, or policy change requires a new prospective run identifier; never rewrite the prior verdict."
+}

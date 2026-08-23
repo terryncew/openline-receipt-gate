@@ -1,0 +1,71 @@
+name: cpg001-jain-real-evidence
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/cpg001-jain-evidence.yml'
+      - 'benchmarks/candidate_promotion/JAIN_2017_SOURCE_URLS.json'
+      - 'benchmarks/candidate_promotion/JAIN_2017_EVIDENCE_RUN_CONTRACT.json'
+      - 'benchmarks/candidate_promotion/fetch_jain_sources.py'
+      - 'benchmarks/candidate_promotion/unseal_jain_labels.py'
+      - 'benchmarks/candidate_promotion/summarize_jain_evidence_run.py'
+
+permissions:
+  contents: read
+
+jobs:
+  jain-real-evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - run: python -m pip install -U pip
+      - run: python -m pip install "setuptools==82.0.1" "wheel==0.47.0"
+      - run: python -m pip install --no-build-isolation .
+      - name: Prepare isolated run directories
+        run: |
+          rm -rf /tmp/cpg001-jain-sources /tmp/cpg001-jain-run
+          mkdir -p /tmp/cpg001-jain-sources /tmp/cpg001-jain-run/preflight
+      - name: Acquire exact publisher or NCBI archival supplements
+        run: |
+          python benchmarks/candidate_promotion/fetch_jain_sources.py \
+            --out-dir /tmp/cpg001-jain-sources \
+            --receipt /tmp/cpg001-jain-run/JAIN_2017_ACQUISITION_RECEIPT.json
+      - name: Seal assay-only preflight
+        run: |
+          python benchmarks/candidate_promotion/preflight_jain_assays.py \
+            /tmp/cpg001-jain-sources \
+            --out-dir /tmp/cpg001-jain-run/preflight
+      - name: Unseal publication-era SD01 labels only after persisted preflight verification
+        run: |
+          python benchmarks/candidate_promotion/unseal_jain_labels.py \
+            --source-dir /tmp/cpg001-jain-sources \
+            --preflight-dir /tmp/cpg001-jain-run/preflight \
+            --out /tmp/cpg001-jain-run/JAIN_2017_CONFIRMATORY.normalized.json
+      - name: Run frozen four-fold confirmatory replay
+        run: |
+          python benchmarks/candidate_promotion/run_jain_confirmatory.py \
+            --data /tmp/cpg001-jain-run/JAIN_2017_CONFIRMATORY.normalized.json \
+            --out /tmp/cpg001-jain-run/JAIN_2017_CONFIRMATORY_REPORT.json
+      - name: Emit experiment summary without turning a negative result into CI failure
+        run: |
+          python benchmarks/candidate_promotion/summarize_jain_evidence_run.py \
+            --report /tmp/cpg001-jain-run/JAIN_2017_CONFIRMATORY_REPORT.json \
+            --out /tmp/cpg001-jain-run/JAIN_2017_EVIDENCE_RUN_SUMMARY.json
+          cat /tmp/cpg001-jain-run/JAIN_2017_EVIDENCE_RUN_SUMMARY.json >> "$GITHUB_STEP_SUMMARY"
+      - name: Remove raw workbooks before artifact publication
+        if: always()
+        run: rm -rf /tmp/cpg001-jain-sources
+      - name: Upload CPG-001 evidence bundle
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: cpg001-jain-evidence-${{ github.run_id }}
+          path: /tmp/cpg001-jain-run
+          if-no-files-found: warn
+          retention-days: 90
