@@ -1,0 +1,30 @@
+{
+  "agent_id": "medical-bill-agent",
+  "allowed_action_types": [
+    "inspect",
+    "draft",
+    "send",
+    "accept_settlement"
+  ],
+  "allowed_disclosure_classes": [
+    "billing-record",
+    "eob"
+  ],
+  "allowed_targets": [
+    "hospital-billing-office",
+    "insurer-appeals"
+  ],
+  "delegation_allowed": false,
+  "expires_at": "2026-09-30T23:59:59Z",
+  "forbidden_disclosure_classes": [
+    "psychiatric-note",
+    "unrelated-medical-record"
+  ],
+  "mandate_id": "alice-medical-bill-demo",
+  "max_payment_cents": 0,
+  "max_settlement_cents": 50000,
+  "principal_id": "alice",
+  "profile": "principal_mandate/v1",
+  "purpose": "dispute-medical-bill",
+  "version": "1"
+}
