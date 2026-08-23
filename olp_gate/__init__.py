@@ -32,6 +32,17 @@ from .authority_compiler import (
     validate_compiler_result,
 )
 
+from .tool_adapter import (
+    AuthorizationBlocked,
+    AuthorizedValue,
+    EvidenceAssertion,
+    LocalAuthorityRuntime,
+    ToolAdapterError,
+    ToolCallContext,
+    authorize,
+    payment_semantics,
+)
+
 from .handoff import (
     HandoffAdapterError,
     HandoffCheckError,
@@ -89,6 +100,14 @@ __all__ = [
     "AuthorityCompiler",
     "AuthorityCompilerError",
     "validate_compiler_result",
+    "AuthorizationBlocked",
+    "AuthorizedValue",
+    "EvidenceAssertion",
+    "LocalAuthorityRuntime",
+    "ToolAdapterError",
+    "ToolCallContext",
+    "authorize",
+    "payment_semantics",
     "HandoffAdapterError",
     "HandoffCheckError",
     "inspect_handoff",
