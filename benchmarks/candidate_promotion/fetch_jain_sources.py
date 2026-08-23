@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import io
 import json
+import os
 import socket
 import ssl
 import urllib.error
@@ -18,15 +19,18 @@ HERE = Path(__file__).resolve().parent
 
 from jain_xlsx import JainXlsxError, validate_xlsx_container
 
-USER_AGENT = "OpenLine-CPG-001/0.2 (+https://github.com/terryncew/openline-receipt-gate)"
+USER_AGENT = "OpenLine-CPG-001/0.3 (+https://github.com/terryncew/openline-receipt-gate)"
 MAX_BYTES = 5_000_000
 MAX_ARCHIVE_BYTES = 20_000_000
+MAX_JSON_BYTES = 1_000_000
 REQUIRED_FILES = (
     "pnas.1616408114.sd01.xlsx",
     "pnas.1616408114.sd02.xlsx",
     "pnas.1616408114.sd03.xlsx",
 )
 EUROPE_PMC_ARCHIVE_URL = "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC5293111/supplementaryFiles"
+BIOSTUDIES_ACCESSION = "S-EPMC5293111"
+BIOSTUDIES_INFO_URL = "https://www.ebi.ac.uk/biostudies/api/v1/studies/S-EPMC5293111/info"
 TRUSTED_HOSTS = {
     "www.pnas.org",
     "pnas.org",
@@ -34,6 +38,7 @@ TRUSTED_HOSTS = {
     "pubmed.ncbi.nlm.nih.gov",
     "www.ncbi.nlm.nih.gov",
     "www.ebi.ac.uk",
+    "ftp.ebi.ac.uk",
 }
 
 
@@ -54,13 +59,29 @@ def load_source_spec(path: str | Path | None = None) -> dict[str, Any]:
 
 def validate_source_spec(spec: Mapping[str, Any]) -> None:
     required = set(REQUIRED_FILES)
-    if spec.get("schema") != "openline.cpg001.jain_source_urls.v0.2":
+    if spec.get("schema") != "openline.cpg001.jain_source_urls.v0.3":
         raise ValueError("unsupported_source_url_schema")
     if spec.get("doi") != "10.1073/pnas.1616408114":
         raise ValueError("source_doi_mismatch")
     hosts = spec.get("allowed_hosts")
     if not isinstance(hosts, list) or set(str(value) for value in hosts) != TRUSTED_HOSTS:
         raise ValueError("allowed_hosts_changed")
+
+    biostudies = spec.get("biostudies_source")
+    if not isinstance(biostudies, Mapping):
+        raise ValueError("biostudies_source_missing")
+    if biostudies.get("provider") != "EMBL-EBI BioStudies":
+        raise ValueError("biostudies_provider_mismatch")
+    if biostudies.get("authority") != "S-EPMC Europe PMC supplementary-data import":
+        raise ValueError("biostudies_authority_mismatch")
+    if biostudies.get("accession") != BIOSTUDIES_ACCESSION:
+        raise ValueError("biostudies_accession_mismatch")
+    if biostudies.get("info_url") != BIOSTUDIES_INFO_URL:
+        raise ValueError("biostudies_info_url_mismatch")
+    if biostudies.get("file_host") != "ftp.ebi.ac.uk":
+        raise ValueError("biostudies_file_host_mismatch")
+    if set(biostudies.get("required_files", [])) != required:
+        raise ValueError("biostudies_required_files_mismatch")
 
     archives = spec.get("archive_sources")
     if not isinstance(archives, list) or len(archives) != 1:
@@ -74,9 +95,6 @@ def validate_source_spec(spec: Mapping[str, Any]) -> None:
         raise ValueError("archive_endpoint_mismatch")
     if set(archive.get("required_members", [])) != required:
         raise ValueError("archive_required_members_mismatch")
-    parsed_archive = urllib.parse.urlparse(EUROPE_PMC_ARCHIVE_URL)
-    if parsed_archive.scheme != "https" or parsed_archive.hostname not in TRUSTED_HOSTS:
-        raise ValueError("archive_url_not_allowed")
 
     artifacts = spec.get("artifacts")
     if not isinstance(artifacts, Mapping) or set(artifacts) != required:
@@ -104,17 +122,54 @@ class AllowlistedRedirectHandler(urllib.request.HTTPRedirectHandler):
         return super().redirect_request(req, fp, code, msg, headers, newurl)
 
 
+def _opener(allowed_hosts: set[str]) -> urllib.request.OpenerDirector:
+    return urllib.request.build_opener(
+        AllowlistedRedirectHandler(allowed_hosts),
+        urllib.request.HTTPSHandler(context=ssl.create_default_context()),
+    )
+
+
+def download_json_url(
+    url: str,
+    allowed_hosts: set[str],
+    timeout: float = 30.0,
+    max_bytes: int = MAX_JSON_BYTES,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    request = urllib.request.Request(
+        url,
+        headers={"User-Agent": USER_AGENT, "Accept": "application/json,*/*;q=0.1"},
+    )
+    with _opener(allowed_hosts).open(request, timeout=timeout) as response:
+        resolved_url = response.geturl()
+        final_host = urllib.parse.urlparse(resolved_url).hostname
+        if final_host not in allowed_hosts:
+            raise ValueError(f"resolved_host_not_allowed:{final_host}")
+        content_type = str(response.headers.get("Content-Type", "")).lower()
+        if "text/html" in content_type:
+            raise ValueError("html_response_rejected")
+        data = response.read(max_bytes + 1)
+        if len(data) > max_bytes:
+            raise ValueError("json_source_too_large")
+        try:
+            value = json.loads(data.decode("utf-8"))
+        except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+            raise ValueError("json_response_invalid") from exc
+        if not isinstance(value, dict):
+            raise ValueError("json_response_not_object")
+        return value, {
+            "requested_url": url,
+            "resolved_url": resolved_url,
+            "content_type": content_type,
+            "http_status": int(getattr(response, "status", 200)),
+        }
+
+
 def download_url(
     url: str,
     allowed_hosts: set[str],
     timeout: float = 30.0,
     max_bytes: int = MAX_ARCHIVE_BYTES,
 ) -> tuple[bytes, dict[str, Any]]:
-    context = ssl.create_default_context()
-    opener = urllib.request.build_opener(
-        AllowlistedRedirectHandler(allowed_hosts),
-        urllib.request.HTTPSHandler(context=context),
-    )
     request = urllib.request.Request(
         url,
         headers={
@@ -125,7 +180,7 @@ def download_url(
             ),
         },
     )
-    with opener.open(request, timeout=timeout) as response:
+    with _opener(allowed_hosts).open(request, timeout=timeout) as response:
         resolved_url = response.geturl()
         final_host = urllib.parse.urlparse(resolved_url).hostname
         if final_host not in allowed_hosts:
@@ -196,9 +251,118 @@ def _call_downloader(
     try:
         return downloader(url, allowed_hosts, timeout, max_bytes)
     except TypeError:
-        # Backward-compatible hook for frozen unit-test downloaders using the old
-        # three-argument signature. Production uses download_url above.
         return downloader(url, allowed_hosts, timeout)
+
+
+def _call_json_downloader(
+    downloader: Callable[..., tuple[dict[str, Any], dict[str, Any]]],
+    url: str,
+    allowed_hosts: set[str],
+    timeout: float,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    try:
+        return downloader(url, allowed_hosts, timeout, MAX_JSON_BYTES)
+    except TypeError:
+        return downloader(url, allowed_hosts, timeout)
+
+
+def _biostudies_https_base(info: Mapping[str, Any], accession: str) -> tuple[str, str]:
+    rel_path = str(info.get("relPath", "")).strip().strip("/")
+    ftp_link = str(info.get("ftpLink", "")).strip()
+    if not rel_path or not rel_path.endswith("/" + accession) and rel_path != accession:
+        raise ValueError("biostudies_relpath_invalid")
+    if not rel_path.startswith("S-EPMC/"):
+        raise ValueError("biostudies_relpath_collection_mismatch")
+    if not ftp_link:
+        raise ValueError("biostudies_ftplink_missing")
+    parsed = urllib.parse.urlparse(ftp_link)
+    if parsed.hostname != "ftp.ebi.ac.uk":
+        raise ValueError("biostudies_ftplink_host_mismatch")
+    path = parsed.path.rstrip("/")
+    expected_tail = "/" + rel_path
+    if not path.endswith(expected_tail):
+        raise ValueError("biostudies_ftplink_relpath_mismatch")
+    if not path.startswith("/biostudies/fire/") and not path.startswith("/biostudies/nfs/"):
+        raise ValueError("biostudies_storage_mode_invalid")
+    return "https://ftp.ebi.ac.uk" + path, rel_path
+
+
+def _acquire_biostudies(
+    target: Path,
+    source_spec: Mapping[str, Any],
+    allowed_hosts: set[str],
+    *,
+    downloader: Callable[..., tuple[bytes, dict[str, Any]]],
+    json_downloader: Callable[..., tuple[dict[str, Any], dict[str, Any]]],
+    timeout: float,
+    attempts: list[dict[str, Any]],
+) -> list[dict[str, Any]] | None:
+    spec = source_spec["biostudies_source"]
+    accession = str(spec["accession"])
+    info_url = str(spec["info_url"])
+    info_attempt: dict[str, Any] = {
+        "mode": "BIOSTUDIES_INFO",
+        "provider": str(spec["provider"]),
+        "authority": str(spec["authority"]),
+        "accession": accession,
+        "url": info_url,
+    }
+    try:
+        info, meta = _call_json_downloader(json_downloader, info_url, allowed_hosts, timeout)
+        base_url, rel_path = _biostudies_https_base(info, accession)
+        info_attempt.update({
+            "status": "ACCEPTED",
+            "resolved_url": str(meta.get("resolved_url", info_url)),
+            "rel_path": rel_path,
+        })
+        attempts.append(info_attempt)
+    except (OSError, ValueError, urllib.error.URLError, urllib.error.HTTPError, socket.timeout, KeyError) as exc:
+        info_attempt.update({"status": "REJECTED", "reason": f"{type(exc).__name__}:{exc}"})
+        attempts.append(info_attempt)
+        return None
+
+    artifacts: list[dict[str, Any]] = []
+    created: list[Path] = []
+    try:
+        for filename in REQUIRED_FILES:
+            url = base_url + "/Files/" + urllib.parse.quote(filename, safe="")
+            attempt: dict[str, Any] = {
+                "mode": "BIOSTUDIES_FILE",
+                "accession": accession,
+                "filename": filename,
+                "url": url,
+            }
+            try:
+                data, meta = _call_downloader(downloader, url, allowed_hosts, timeout, MAX_BYTES)
+                _validate_downloaded_xlsx(filename, data, target)
+                destination = target / filename
+                destination.write_bytes(data)
+                created.append(destination)
+                artifact = {
+                    "filename": filename,
+                    "bytes": len(data),
+                    "sha256": sha256_bytes(data),
+                    "source_url": url,
+                    "resolved_url": str(meta.get("resolved_url", url)),
+                    "archive_member": None,
+                    "source_authority": "EMBL_EBI_BIOSTUDIES_S_EPMC_IMPORT",
+                    "biostudies_accession": accession,
+                    "content_type": str(meta.get("content_type", "")),
+                    "http_status": int(meta.get("http_status", 200)),
+                    "xlsx_container_valid": True,
+                }
+                artifacts.append(artifact)
+                attempt.update({"status": "ACCEPTED", "resolved_url": artifact["resolved_url"]})
+                attempts.append(attempt)
+            except (OSError, ValueError, urllib.error.URLError, urllib.error.HTTPError, socket.timeout) as exc:
+                attempt.update({"status": "REJECTED", "reason": f"{type(exc).__name__}:{exc}"})
+                attempts.append(attempt)
+                raise
+    except (OSError, ValueError, urllib.error.URLError, urllib.error.HTTPError, socket.timeout):
+        for path in created:
+            path.unlink(missing_ok=True)
+        return None
+    return artifacts
 
 
 def acquire_sources(
@@ -206,7 +370,10 @@ def acquire_sources(
     *,
     spec: Mapping[str, Any] | None = None,
     downloader: Callable[..., tuple[bytes, dict[str, Any]]] = download_url,
+    json_downloader: Callable[..., tuple[dict[str, Any], dict[str, Any]]] = download_json_url,
     timeout: float = 30.0,
+    prefer_biostudies: bool = False,
+    execution_id: str = "CPG-001-JAIN-EVIDENCE-02",
 ) -> dict[str, Any]:
     source_spec = dict(spec or load_source_spec())
     validate_source_spec(source_spec)
@@ -215,9 +382,19 @@ def acquire_sources(
     target.mkdir(parents=True, exist_ok=True)
     attempts: list[dict[str, Any]] = []
 
-    # Preferred path: one official Europe PMC archival ZIP carrying the exact
-    # publisher-named XLSX members. This is an official PMC International source,
-    # not a transformed dataset.
+    if prefer_biostudies:
+        artifacts = _acquire_biostudies(
+            target,
+            source_spec,
+            allowed_hosts,
+            downloader=downloader,
+            json_downloader=json_downloader,
+            timeout=timeout,
+            attempts=attempts,
+        )
+        if artifacts is not None:
+            return _success_receipt(source_spec, artifacts, attempts, execution_id)
+
     for archive_spec in source_spec["archive_sources"]:
         url = str(archive_spec["url"])
         attempt: dict[str, Any] = {
@@ -229,7 +406,7 @@ def acquire_sources(
         try:
             data, meta = _call_downloader(downloader, url, allowed_hosts, timeout, MAX_ARCHIVE_BYTES)
             members = _extract_required_archive_members(data, target)
-            artifacts: list[dict[str, Any]] = []
+            artifacts = []
             for filename in REQUIRED_FILES:
                 payload = members[filename]
                 (target / filename).write_bytes(payload)
@@ -251,7 +428,7 @@ def acquire_sources(
                 "required_member_count": len(REQUIRED_FILES),
             })
             attempts.append(attempt)
-            return _success_receipt(source_spec, artifacts, attempts)
+            return _success_receipt(source_spec, artifacts, attempts, execution_id)
         except (
             OSError,
             ValueError,
@@ -264,9 +441,7 @@ def acquire_sources(
             attempt.update({"status": "REJECTED", "reason": f"{type(exc).__name__}:{exc}"})
             attempts.append(attempt)
 
-    # Frozen direct publisher/NCBI paths remain as failover. They are still
-    # validated as opaque XLSX containers and hashed before any cells are opened.
-    artifacts: list[dict[str, Any]] = []
+    artifacts = []
     for filename, urls in source_spec["artifacts"].items():
         accepted = None
         for url in urls:
@@ -291,22 +466,16 @@ def acquire_sources(
                 attempt.update({"status": "ACCEPTED", "resolved_url": accepted["resolved_url"]})
                 attempts.append(attempt)
                 break
-            except (
-                OSError,
-                ValueError,
-                urllib.error.URLError,
-                urllib.error.HTTPError,
-                socket.timeout,
-            ) as exc:
+            except (OSError, ValueError, urllib.error.URLError, urllib.error.HTTPError, socket.timeout) as exc:
                 attempt.update({"status": "REJECTED", "reason": f"{type(exc).__name__}:{exc}"})
                 attempts.append(attempt)
         if accepted is None:
             for artifact in artifacts:
                 (target / artifact["filename"]).unlink(missing_ok=True)
             return {
-                "schema": "openline.cpg001.jain_acquisition_receipt.v0.2",
+                "schema": "openline.cpg001.jain_acquisition_receipt.v0.3",
                 "experiment_id": "CPG-001",
-                "execution_id": "CPG-001-JAIN-EVIDENCE-02",
+                "execution_id": execution_id,
                 "dataset_id": "JAIN_2017",
                 "status": "BLOCKED_SOURCE_ACQUISITION",
                 "created_at": _now(),
@@ -317,37 +486,35 @@ def acquire_sources(
             }
         artifacts.append(accepted)
 
-    return _success_receipt(source_spec, artifacts, attempts)
+    return _success_receipt(source_spec, artifacts, attempts, execution_id)
 
 
 def _success_receipt(
     source_spec: Mapping[str, Any],
     artifacts: list[dict[str, Any]],
     attempts: list[dict[str, Any]],
+    execution_id: str,
 ) -> dict[str, Any]:
-    stable = {
-        "dataset_id": "JAIN_2017",
-        "doi": source_spec["doi"],
-        "artifacts": [
-            {
-                k: item[k]
-                for k in (
-                    "filename",
-                    "bytes",
-                    "sha256",
-                    "source_url",
-                    "resolved_url",
-                    "archive_member",
-                    "source_authority",
-                )
-            }
-            for item in artifacts
-        ],
-    }
+    stable_artifacts = []
+    for item in artifacts:
+        stable_artifacts.append({
+            key: item.get(key)
+            for key in (
+                "filename",
+                "bytes",
+                "sha256",
+                "source_url",
+                "resolved_url",
+                "archive_member",
+                "source_authority",
+                "biostudies_accession",
+            )
+        })
+    stable = {"dataset_id": "JAIN_2017", "doi": source_spec["doi"], "artifacts": stable_artifacts}
     return {
-        "schema": "openline.cpg001.jain_acquisition_receipt.v0.2",
+        "schema": "openline.cpg001.jain_acquisition_receipt.v0.3",
         "experiment_id": "CPG-001",
-        "execution_id": "CPG-001-JAIN-EVIDENCE-02",
+        "execution_id": execution_id,
         "status": "ACQUIRED_CANONICAL_OR_ARCHIVAL_SOURCE_SET",
         "created_at": _now(),
         "source_policy": source_spec["policy"],
@@ -362,13 +529,20 @@ def _success_receipt(
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Acquire exact Jain 2017 XLSX supplements from frozen publisher/PMC archival sources only."
+        description="Acquire exact Jain 2017 XLSX supplements from frozen publisher/official archival sources only."
     )
     parser.add_argument("--out-dir", type=Path, required=True)
     parser.add_argument("--receipt", type=Path, required=True)
     parser.add_argument("--timeout", type=float, default=30.0)
+    parser.add_argument("--prefer-biostudies", action="store_true")
     args = parser.parse_args()
-    receipt = acquire_sources(args.out_dir, timeout=args.timeout)
+    execution_id = os.environ.get("CPG_EXECUTION_ID", "CPG-001-JAIN-EVIDENCE-03")
+    receipt = acquire_sources(
+        args.out_dir,
+        timeout=args.timeout,
+        prefer_biostudies=args.prefer_biostudies,
+        execution_id=execution_id,
+    )
     args.receipt.parent.mkdir(parents=True, exist_ok=True)
     args.receipt.write_text(json.dumps(receipt, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps(receipt, indent=2, sort_keys=True))

@@ -14,9 +14,9 @@ def main() -> int:
     report = json.loads(args.report.read_text(encoding="utf-8"))
     verdict = report["primary_verdict"]
     summary = {
-        "schema": "openline.cpg001.jain_evidence_run_summary.v0.2",
+        "schema": "openline.cpg001.jain_evidence_run_summary.v0.3",
         "experiment_id": "CPG-001",
-        "execution_id": os.environ.get("CPG_EXECUTION_ID", "CPG-001-JAIN-EVIDENCE-02"),
+        "execution_id": os.environ.get("CPG_EXECUTION_ID", "CPG-001-JAIN-EVIDENCE-03"),
         "execution_status": "COMPLETE",
         "scientific_verdict": verdict["verdict"],
         "scientific_verdict_is_ci_verdict": False,
