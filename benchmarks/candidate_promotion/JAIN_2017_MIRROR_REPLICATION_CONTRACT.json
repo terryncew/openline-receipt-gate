@@ -1,0 +1,35 @@
+{
+  "schema": "openline.cpg001.jain_mirror_replication_contract.v0.1",
+  "experiment_id": "CPG-001",
+  "execution_id": "CPG-001-JAIN-MIRROR-01",
+  "purpose": "Break the source-acquisition deadlock by running the already-frozen primary Jain developability analysis on a pinned public transcription while preserving the canonical publisher-artifact run as blocked.",
+  "evidence_tier": "NONCONFIRMATORY_PINNED_MIRROR_REPLICATION",
+  "canonical_confirmatory_status": "BLOCKED_SOURCE_ACQUISITION_R1_R4",
+  "claim_boundary": "A mirror replication may expose whether the frozen selection result is likely worth pursuing. It cannot upgrade CPG-001 to a canonical confirmatory result and cannot establish publisher-byte provenance.",
+  "source": {
+    "repository": "HPuntu/hogroast-teaching",
+    "commit": "4ad3ec59ff1f6ddb886ca0cf2a9d47b1ba0f136a",
+    "path": "jain_data.csv",
+    "git_blob_sha1": "15235ba7afc16cd9564c34078fbc1670e7383d09",
+    "bytes": 42777,
+    "reported_origin": "Jain et al. 2017 PNAS supplementary biophysical dataset"
+  },
+  "publication": {
+    "doi": "10.1073/pnas.1616408114",
+    "published_candidate_count": 137
+  },
+  "frozen_science": {
+    "design_lock": "benchmarks/candidate_promotion/JAIN_2017_DESIGN_LOCK.json",
+    "thresholds": "benchmarks/candidate_promotion/JAIN_2017_THRESHOLDS.json",
+    "policy_mutation_allowed": false,
+    "primary_budget": 0.25,
+    "primary_verdict_rules_changed": false
+  },
+  "status_labels": {
+    "available": false,
+    "role_in_primary_verdict": "none",
+    "effect": "approved-2017 descriptive metrics remain null; the preregistered primary verdict uses assay measurements only"
+  },
+  "success_semantics": "Workflow success means the pinned mirror was byte-bound by Git blob identity, parsed as 137 candidates, and the frozen analysis completed. A negative scientific verdict is still a successful execution.",
+  "next_use": "If this replication is negative, stop spending effort on canonical acquisition for CPG-001. If it is positive, obtain the exact publisher artifacts once through a human-browser or archival deposit and use them only to confirm the already-observed result."
+}
