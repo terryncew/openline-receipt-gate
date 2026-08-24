@@ -1,18 +1,34 @@
 import importlib.util
-import math
-import unittest
 import sys
+import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MODULE = ROOT / "benchmarks/trial_selector/jain_selector.py"
-spec = importlib.util.spec_from_file_location("jain_selector", MODULE)
-js = importlib.util.module_from_spec(spec)
-sys.modules[spec.name] = js
-assert spec.loader is not None
-spec.loader.exec_module(js)
+
+# The Jain selector is a frozen scientific benchmark with intentionally optional
+# NumPy/scikit-learn dependencies. The repository release gate also runs the
+# complete unittest suite in a core-only environment, so discovery must remain
+# valid when those scientific packages are absent. The dedicated Jain workflow
+# installs the frozen dependencies and executes these tests normally.
+HAS_JAIN_DEPS = (
+    importlib.util.find_spec("numpy") is not None
+    and importlib.util.find_spec("sklearn") is not None
+)
+
+js = None
+if HAS_JAIN_DEPS:
+    spec = importlib.util.spec_from_file_location("jain_selector", MODULE)
+    js = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = js
+    assert spec.loader is not None
+    spec.loader.exec_module(js)
 
 
+@unittest.skipUnless(
+    HAS_JAIN_DEPS,
+    "requires optional Jain selector scientific dependencies",
+)
 class JainTrialSelectorTests(unittest.TestCase):
     def synthetic(self):
         # Ten assays are required by the frozen interface. Values are deliberately simple.
