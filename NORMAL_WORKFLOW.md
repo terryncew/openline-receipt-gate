@@ -1,33 +1,21 @@
-# Working Copy handoff — guarded-tool adapter
+# Normal Workflow — Jain trial selector discovery freeze
 
-Repository: `terryncew/openline-receipt-gate`
-
-Base: `main@760f87a7d11f2df68ba4347ec2994f419d131487`
-
-Overlay this ZIP at repository root. Do not put the enclosing ZIP folder inside the repository.
+Overlay this ZIP at repository root. Do not modify or reopen CPG-001; this is a separate benchmark.
 
 ## Branch
 
-```text
-feat/tool-adapter
-```
+`feat/jain-trial-selector-freeze`
 
 ## Commit
 
-```text
-feat(gate): add drop-in guarded-tool adapter
-```
+`feat(bench): freeze Jain sequential assay selector`
 
 ## PR title
 
-```text
-Guard consequential tools with the Authority Compiler
-```
+`Freeze Jain sequential assay selector`
 
 ## Merge
 
-```text
-feat/tool-adapter → main
-```
+`feat/jain-trial-selector-freeze → main`
 
-Merge only after both the normal `release-check` and new `tool-adapter` workflow are green.
+The committed discovery result is retrospective and hypothesis-generating only. Do not tune the selector on Jain after merge. The next scientific step is an independently sourced antibody panel with frozen assay mapping/thresholds and a preregistered information-gain control.

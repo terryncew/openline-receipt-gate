@@ -1,0 +1,42 @@
+name: Jain trial selector freeze
+
+on:
+  push:
+    paths:
+      - 'benchmarks/trial_selector/**'
+      - 'tests/test_jain_trial_selector.py'
+      - '.github/workflows/jain-trial-selector-freeze.yml'
+  pull_request:
+    paths:
+      - 'benchmarks/trial_selector/**'
+      - 'tests/test_jain_trial_selector.py'
+      - '.github/workflows/jain-trial-selector-freeze.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install scikit-learn==1.8.0
+      - run: python -m unittest tests.test_jain_trial_selector -v
+      - run: python benchmarks/trial_selector/verify_freeze_package.py
+      - name: Freeze sanity
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('benchmarks/trial_selector/JAIN_SELECTOR_FREEZE.json')
+          d=json.loads(p.read_text())
+          assert d['status']=='FROZEN_AFTER_EXPLORATORY_DISCOVERY_BEFORE_EXTERNAL_PANEL'
+          assert d['selector']['model']['C']==1.0
+          assert d['selector']['model']['solver']=='liblinear'
+          assert d['external_confirmation_rule']['selector_code_frozen'] is True
+          print('FREEZE_OK')
+          PY
