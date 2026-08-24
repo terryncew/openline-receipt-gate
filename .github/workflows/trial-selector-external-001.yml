@@ -1,0 +1,113 @@
+name: Trial selector external 001
+
+on:
+  push:
+    branches: [main, 'feat/trial-selector-external-*']
+    paths:
+      - 'benchmarks/trial_selector/**'
+      - 'benchmarks/candidate_promotion/gdpa1_002/SOURCE.json'
+      - 'benchmarks/candidate_promotion/gdpa1_002/promotion-policy.json'
+      - 'benchmarks/candidate_promotion/results/jain_canonical_01/JAIN_2017_CANONICAL_COHORT.json'
+      - 'tests/test_trial_selector_external_001.py'
+      - '.github/workflows/trial-selector-external-001.yml'
+  pull_request:
+    paths:
+      - 'benchmarks/trial_selector/**'
+      - 'benchmarks/candidate_promotion/gdpa1_002/SOURCE.json'
+      - 'benchmarks/candidate_promotion/gdpa1_002/promotion-policy.json'
+      - 'benchmarks/candidate_promotion/results/jain_canonical_01/JAIN_2017_CANONICAL_COHORT.json'
+      - 'tests/test_trial_selector_external_001.py'
+      - '.github/workflows/trial-selector-external-001.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install scikit-learn==1.8.0
+      - name: Verify original Jain discovery freeze remains intact
+        run: python benchmarks/trial_selector/verify_freeze_package.py
+      - name: Verify external freeze
+        run: python benchmarks/trial_selector/external_001/verify_freeze.py
+      - name: Run external contract tests
+        run: python -m unittest tests.test_trial_selector_external_001 -v
+
+  external-confirmation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GDP_REPO: https://github.com/ginkgobioworks/abdev-benchmark.git
+      GDP_COMMIT: cc6d3b69afc92695445695345399d9c91b0d14a4
+      GDP_PATH: data/GDPa1_v1.2_20250814.csv
+      GDP_BLOB: 923c38b1a7b7d2421bd4c6fa7461febc797c446c
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install scikit-learn==1.8.0
+
+      - name: Verify both frozen packages
+        run: |
+          python benchmarks/trial_selector/verify_freeze_package.py
+          python benchmarks/trial_selector/external_001/verify_freeze.py
+
+      - name: Fetch exact official GDPa1 source
+        shell: bash
+        run: |
+          set -euo pipefail
+          upstream="$RUNNER_TEMP/abdev-benchmark"
+          git init "$upstream"
+          git -C "$upstream" remote add origin "$GDP_REPO"
+          git -C "$upstream" fetch --depth=1 origin "$GDP_COMMIT"
+          git -C "$upstream" checkout --detach FETCH_HEAD
+          test "$(git -C "$upstream" rev-parse HEAD)" = "$GDP_COMMIT"
+          test "$(git -C "$upstream" rev-parse "HEAD:$GDP_PATH")" = "$GDP_BLOB"
+          test "$(git -C "$upstream" cat-file -s "HEAD:$GDP_PATH")" = "862134"
+          printf 'GDP_ROOT=%s\n' "$upstream" >> "$GITHUB_ENV"
+
+      - name: Run frozen external selector
+        shell: bash
+        run: |
+          set -euo pipefail
+          out="$RUNNER_TEMP/trial-selector-external-001"
+          mkdir -p "$out"
+          python benchmarks/trial_selector/external_001/run_external.py \
+            --csv "$GDP_ROOT/$GDP_PATH" \
+            --out-dir "$out"
+
+      - name: Independent full replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          python benchmarks/trial_selector/external_001/verify_external_result.py \
+            --csv "$GDP_ROOT/$GDP_PATH" \
+            --result-dir "$RUNNER_TEMP/trial-selector-external-001" \
+            --output "$RUNNER_TEMP/trial-selector-external-001/independent-verification.json"
+
+      - name: Publish scientific disposition
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo '## TRIAL-SELECTOR-EXTERNAL-001' >> "$GITHUB_STEP_SUMMARY"
+          echo '```json' >> "$GITHUB_STEP_SUMMARY"
+          cat "$RUNNER_TEMP/trial-selector-external-001/verdict.json" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: trial-selector-external-001
+          path: |
+            ${{ runner.temp }}/trial-selector-external-001/source-receipt.json
+            ${{ runner.temp }}/trial-selector-external-001/external-result.json
+            ${{ runner.temp }}/trial-selector-external-001/verdict.json
+            ${{ runner.temp }}/trial-selector-external-001/independent-verification.json

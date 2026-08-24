@@ -1,0 +1,39 @@
+{
+  "base_main_sha": "947ee818cf715c94314ff5e77f4b20710a6cad20",
+  "experiment_id": "TRIAL-SELECTOR-EXTERNAL-001",
+  "frozen_file_sha256": {
+    "benchmarks/trial_selector/external_001/CONFIG.json": "751b772cfa15274f0dbe9faac3d2bc185e2ec69169fd0b4b15cdf79cd6be3131",
+    "benchmarks/trial_selector/external_001/PROTOCOL.md": "f216a3f171ab53bf938e0a63089ea06e6177bb9203dbdffcd55fbaf2a6a506c4",
+    "benchmarks/trial_selector/external_001/README.md": "dda29731b03e1211fb39de38dfc44910dda1ccf816218a0c317ba3e5045464f7",
+    "benchmarks/trial_selector/external_001/external_selector.py": "b05a2e088d1d09eaee52a33f015fd3187dba41512d3497c1548bd04b61d961ad",
+    "benchmarks/trial_selector/external_001/run_external.py": "c0456e54dc158c71716f351bcc064a36e06a3beb36a4719a8f42ad6fc0f03f5f",
+    "benchmarks/trial_selector/external_001/verify_external_result.py": "8b2fb70318f9c9ce0183a3774fed4f020b6b583de4a23235fac2968c9203f9e5"
+  },
+  "full_external_selector_score_seen_at_freeze": false,
+  "known_pre_freeze_source_facts": [
+    "GDPa1 public schema and sample rows were inspected for adapter construction.",
+    "CPG-002 reported 246 source rows and 158 complete cases across the broader eight-assay panel before overlap exclusion.",
+    "No TRIAL-SELECTOR-EXTERNAL-001 selector score was run before this freeze."
+  ],
+  "mutation_after_freeze": {
+    "assay_mapping": "FORBIDDEN",
+    "baselines": "FORBIDDEN",
+    "cost_definition": "FORBIDDEN",
+    "information_gain_rule": "FORBIDDEN",
+    "missingness_rule": "FORBIDDEN",
+    "overlap_rule": "FORBIDDEN",
+    "selector": "FORBIDDEN",
+    "thresholds": "FORBIDDEN",
+    "verdict_gate": "FORBIDDEN"
+  },
+  "policy_authority": "NONE",
+  "referenced_frozen_inputs": {
+    "cpg002_policy_sha256": "cd4aad233f45936743965c4127bb125b924187d0e1be112b863c5ec0c21b1ceb",
+    "cpg002_source_contract_sha256": "ec92594e09c141f3692857d5c7d36f287d84d1875f4edbe924f0e1ddf1731f4e",
+    "jain_candidate_ids_sha256": "a67946700a7b4a98cb46c3bd1ba205a708c04544e55591540b5d8bfe084a633f",
+    "jain_discovery_metrics_sha256": "12b9b8eb8c8bd801e2cc93159821b207cb5078a31cb3b1abc46277c4e2efa471",
+    "jain_selector_sha256": "4f959c4bec0de3ccd9b640aa367159bf8785c1e4bfbb94290e0da2cc10ddb44d"
+  },
+  "schema": "openline.trial_selector.external001.freeze.v1",
+  "status": "EXTERNAL_CONFIRMATION_READY_UNRUN"
+}
