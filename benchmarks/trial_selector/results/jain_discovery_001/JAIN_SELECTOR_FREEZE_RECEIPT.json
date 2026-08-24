@@ -1,0 +1,16 @@
+{
+  "candidate_ids_sha256": "a67946700a7b4a98cb46c3bd1ba205a708c04544e55591540b5d8bfe084a633f",
+  "claim_boundary": "Jain retrospective discovery only; external generalization unearned.",
+  "discovery_result_sha256": "540ff289b3920c55e707e4fb5000f32d89c5ad8bf38f48cab69945cecd06f79b",
+  "experiment_id": "TRIAL-SELECTOR-JAIN-DISCOVERY-001",
+  "freeze_sha256": "9ce9bf3b99f26574cfe76421930fcd78077442b18361d1d080b8ac7462274804",
+  "independent_verifier_sha256": "990fb80bf521ba56b1fae636fea8fb3a5fd66c0851e30068a26f4c3d0dced706",
+  "metrics_sha256": "12b9b8eb8c8bd801e2cc93159821b207cb5078a31cb3b1abc46277c4e2efa471",
+  "package_verifier_sha256": "7fcc5e69bcb635d415ff8de968b11f16aaff7f39eb199d58b77fd776c385fa64",
+  "runner_sha256": "faac320cc139a41bd3f3f69fd847ab06c224640a2e9bbf9604e382fdfcaf232a",
+  "schema": "openline.trial_selector.freeze_receipt.v1",
+  "selector_code_sha256": "4f959c4bec0de3ccd9b640aa367159bf8785c1e4bfbb94290e0da2cc10ddb44d",
+  "source_sd03_sha256": "8538513ca1ffc1408372aebb4eb79a2c6699f5352674fa98135cde82ad483a78",
+  "status": "FROZEN_DISCOVERY_RESULT_VERIFIED",
+  "verification": "local exact-source rerun PASS; independent verifier PASS"
+}

@@ -1,0 +1,98 @@
+{
+  "schema": "openline.trial_selector.jain_freeze.v1",
+  "experiment_id": "TRIAL-SELECTOR-JAIN-DISCOVERY-001",
+  "status": "FROZEN_AFTER_EXPLORATORY_DISCOVERY_BEFORE_EXTERNAL_PANEL",
+  "purpose": "Test whether sequential conditional-risk assay ordering can expose a predeclared developability liability using fewer assays than strong static and threshold-only baselines.",
+  "claim_boundary": {
+    "allowed": "On the Jain 2017 complete 10-assay panel, a frozen continuous-value conditional-risk selector shows a retrospective leave-one-antibody-out efficiency and false-reassurance advantage. This is hypothesis-generating only until an independent antibody panel is evaluated.",
+    "forbidden": [
+      "clinical success prediction",
+      "claim that a Jain threshold is clinically dispositive",
+      "claim of dollar-cost savings because Jain does not provide assay costs",
+      "claim of external generalization",
+      "retuning model form, features, regularization, thresholds, tie breaks, or baselines on Jain after this freeze"
+    ]
+  },
+  "source_binding": {
+    "dataset": "Jain et al. 2017 PNAS supplementary biophysical matrix",
+    "doi": "10.1073/pnas.1616408114",
+    "sd03_sha256": "8538513ca1ffc1408372aebb4eb79a2c6699f5352674fa98135cde82ad483a78",
+    "canonical_candidate_count": 137,
+    "canonical_candidate_ids_sha256": "a67946700a7b4a98cb46c3bd1ba205a708c04544e55591540b5d8bfe084a633f",
+    "column_rules_source": "benchmarks/candidate_promotion/JAIN_2017_SD03_COLUMN_RULES.json",
+    "threshold_source": "benchmarks/candidate_promotion/JAIN_2017_THRESHOLDS.json",
+    "thresholds_canonical_sha256": "29e69e92a53df0c0223eee93872c3284f01cb9685a114052aa8adadff9d84f47",
+    "thresholds_file_sha256": "74e9f8a41c3fa3598c9639c4abac21d0f709c439fe3f0b1db4dd499c56080413"
+  },
+  "assays": [
+    "AC_SINS",
+    "AS",
+    "BVP",
+    "CIC",
+    "CSI_BLI",
+    "ELISA",
+    "HIC",
+    "PSR",
+    "SGAC_SINS",
+    "SMAC"
+  ],
+  "liability_definition": "A declared liability is a crossing of the already-frozen Jain 2017 Table-1 warning threshold for that assay. It is not a clinical-failure label.",
+  "cost_definition": "Each assay costs one unit because the Jain source does not contain assay-specific dollar or time costs.",
+  "evaluation": {
+    "split": "leave_one_antibody_out",
+    "holdout_rule": "For each of the 137 antibodies, all prevalence, coverage, scaling statistics, and logistic model fits exclude the held-out antibody.",
+    "efficiency_primary": "mean number of assays spent before the first declared liability, calculated only among antibodies that have at least one declared liability in the full 10-assay panel",
+    "safety_primary": "false reassurance after budget b: among antibodies with no liability revealed by the selector in the first b assays, the fraction that actually contains at least one declared liability in an unrevealed assay",
+    "reported_budgets": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "no_liability_candidate_cost": 10
+  },
+  "selector": {
+    "name": "continuous_value_conditional_risk",
+    "first_step": "Choose the remaining assay with highest leave-one-out training liability prevalence.",
+    "later_steps": "For every remaining assay, fit a separate regularized logistic model predicting that assay's liability from the continuous values of all assays already observed for the held-out antibody; choose the assay with highest predicted liability probability.",
+    "stop_rule": "Stop efficiency counting at the first revealed liability. If none is found, all 10 assays are spent.",
+    "features": "Raw continuous values of previously observed assays; StandardScaler is fitted on the 136 training antibodies at every step before logistic fitting.",
+    "model": {
+      "library": "scikit-learn",
+      "version_frozen_for_discovery_reproduction": "1.8.0",
+      "estimator": "LogisticRegression",
+      "penalty": "l2",
+      "C": 1.0,
+      "solver": "liblinear",
+      "fit_intercept": true,
+      "class_weight": null,
+      "max_iter": 1000,
+      "random_state": 0
+    },
+    "tie_break": "assay name ascending"
+  },
+  "baselines": {
+    "fixed_prevalence": "For each holdout, order assays by liability prevalence in the other 136 antibodies, descending; assay name ascending breaks ties.",
+    "greedy_fixed_coverage": "For each holdout, build one fixed order by repeatedly choosing the assay that newly covers the most training antibodies not already covered by an earlier assay; assay name ascending breaks ties.",
+    "uniform_random_expected": "Analytic expected first-liability position under a uniformly random assay permutation; no Monte Carlo seed or luck is used.",
+    "binary_dynamic": "Same sequential LogisticRegression and scaling/tie rules as the selector, but previously observed assay inputs are encoded only as threshold-clean/threshold-liability 0/1 values rather than continuous measurements."
+  },
+  "external_confirmation_rule": {
+    "selector_code_frozen": true,
+    "jain_retuning_forbidden": true,
+    "required_panel_properties": [
+      "independent antibody measurements with at least three overlapping or prospectively mapped developability assays",
+      "thresholds frozen before selector scoring on that panel",
+      "enough complete or protocol-admissible candidates to contain both liability-positive and liability-negative cases"
+    ],
+    "required_controls": [
+      "fixed_prevalence",
+      "greedy_fixed_coverage",
+      "uniform_random_expected",
+      "binary_dynamic",
+      "a separately preregistered standard information-gain or expected-information-gain baseline"
+    ],
+    "interpretation": "If the frozen continuous selector does not retain an efficiency advantage without worsening false reassurance against the strongest admissible control, the cross-panel allocation claim is not supported."
+  }
+}
