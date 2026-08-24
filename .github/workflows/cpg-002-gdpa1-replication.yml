@@ -1,0 +1,97 @@
+name: CPG-002 GDPa1 Replication
+
+on:
+  push:
+    branches: [main, 'feat/cpg-*']
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install test dependency
+        run: python -m pip install pytest
+      - name: Verify CPG-002 freeze
+        run: python benchmarks/candidate_promotion/gdpa1_002/verify_freeze.py
+      - name: Run CPG-002 hostile and contract tests
+        run: python -m pytest -q tests/test_candidate_promotion_gdpa1_002.py
+
+  external-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GDP_REPO: https://github.com/ginkgobioworks/abdev-benchmark.git
+      GDP_COMMIT: cc6d3b69afc92695445695345399d9c91b0d14a4
+      GDP_PATH: data/GDPa1_v1.2_20250814.csv
+      GDP_BLOB: 923c38b1a7b7d2421bd4c6fa7461febc797c446c
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Verify CPG-002 freeze
+        run: python benchmarks/candidate_promotion/gdpa1_002/verify_freeze.py
+
+      - name: Fetch exact official GDPa1 source
+        shell: bash
+        run: |
+          set -euo pipefail
+          upstream="$RUNNER_TEMP/abdev-benchmark"
+          git init "$upstream"
+          git -C "$upstream" remote add origin "$GDP_REPO"
+          git -C "$upstream" fetch --depth=1 origin "$GDP_COMMIT"
+          git -C "$upstream" checkout --detach FETCH_HEAD
+          test "$(git -C "$upstream" rev-parse HEAD)" = "$GDP_COMMIT"
+          test "$(git -C "$upstream" rev-parse "HEAD:$GDP_PATH")" = "$GDP_BLOB"
+          test "$(git -C "$upstream" cat-file -s "HEAD:$GDP_PATH")" = "862134"
+          printf 'GDP_ROOT=%s\n' "$upstream" >> "$GITHUB_ENV"
+
+      - name: Run frozen external replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          out="$RUNNER_TEMP/cpg002"
+          mkdir -p "$out"
+          python benchmarks/candidate_promotion/gdpa1_002/run_replay.py \
+            --csv "$GDP_ROOT/$GDP_PATH" \
+            --out-dir "$out"
+
+      - name: Independent stdlib-only replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -I benchmarks/candidate_promotion/gdpa1_002/verify_result.py \
+            --csv "$GDP_ROOT/$GDP_PATH" \
+            --result-dir "$RUNNER_TEMP/cpg002" \
+            --output "$RUNNER_TEMP/cpg002/independent-verification.json"
+
+      - name: Publish scientific verdict
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo '## CPG-002 GDPa1 Replication' >> "$GITHUB_STEP_SUMMARY"
+          echo '```json' >> "$GITHUB_STEP_SUMMARY"
+          cat "$RUNNER_TEMP/cpg002/verdict.json" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cpg-002-gdpa1-replication
+          path: |
+            ${{ runner.temp }}/cpg002/source-receipt.json
+            ${{ runner.temp }}/cpg002/score.json
+            ${{ runner.temp }}/cpg002/verdict.json
+            ${{ runner.temp }}/cpg002/independent-verification.json
