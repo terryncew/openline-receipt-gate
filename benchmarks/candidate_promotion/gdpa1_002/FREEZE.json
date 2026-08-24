@@ -1,0 +1,26 @@
+{
+  "adapter_construction_disclosure": "GDPa1 schema and a small number of source rows were inspected to construct the adapter. No full CPG-002 benchmark score was run and no source value was used to tune thresholds, weights, groups, budgets, or success criteria.",
+  "experiment_id": "CPG-002",
+  "frozen_file_sha256": {
+    "benchmarks/candidate_promotion/gdpa1_002/PROTOCOL.md": "5bb42fa7793b3362e9e3d8eef2c3b3228f365ca3c405d168f1f2ddb57fe6c796",
+    "benchmarks/candidate_promotion/gdpa1_002/README.md": "b51fb69c13bf09058172833b1beee035ad5283904948d05575cc01597ab56b16",
+    "benchmarks/candidate_promotion/gdpa1_002/SOURCE.json": "ec92594e09c141f3692857d5c7d36f287d84d1875f4edbe924f0e1ddf1731f4e",
+    "benchmarks/candidate_promotion/gdpa1_002/gdpa1_replay.py": "3801550c4779e1c18646e39fbedbcec756365283efa9f7cad2d1a3a19ca042a0",
+    "benchmarks/candidate_promotion/gdpa1_002/promotion-policy.json": "cd4aad233f45936743965c4127bb125b924187d0e1be112b863c5ec0c21b1ceb",
+    "benchmarks/candidate_promotion/gdpa1_002/run_replay.py": "9a06c05b9cecefcd973cd336c3fb17bedf89212a84a3aa4805ae877116d43996",
+    "benchmarks/candidate_promotion/gdpa1_002/verify_result.py": "9eb1ad8f2e9dc7ab537cd95b375a0c167153c8263a6b9999d0a5f072d0722802"
+  },
+  "full_external_benchmark_execution_seen_at_freeze": false,
+  "negative_result_is_valid": true,
+  "parent_experiment": {
+    "canonical_confirmatory_report_sha256": "31c6eb0d8529a53eebdd70978d4f1db1837bc46b4d26ccc919af94c6e30bf551",
+    "canonical_execution_id": "CPG-001-JAIN-CANONICAL-01",
+    "canonical_result": "NO_COMPENSATION_SIGNAL",
+    "experiment_id": "CPG-001"
+  },
+  "policy_authority": "NONE",
+  "policy_or_threshold_mutation_after_freeze": "FORBIDDEN",
+  "schema": "openline.cpg002.freeze.v0.1",
+  "status": "EXTERNAL_REPLICATION_READY_UNRUN",
+  "stop_if_no_compensation_signal": true
+}

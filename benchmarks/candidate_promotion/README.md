@@ -1,30 +1,50 @@
-# Candidate Promotion Gate — CPG-001
+# Candidate Promotion Gate
 
-This benchmark adds a candidate-promotion policy profile to Receipt Gate without creating a new subsystem.
+This benchmark family asks when measured evidence earns a candidate the right to advance.
 
-The synthetic fixture is an architecture self-test, not the scientific result. It pressure-tests non-compensation, missing/UNKNOWN evidence, stale/revoked evidence, exact candidate identity binding, evidence-class independence, and policy timing.
+## CPG-001 — Jain 2017 — complete and frozen
 
-The Jain 2017 design lock is merged. The next stage is an **assay-only source preflight**: bind all three exact PNAS supplements, open SD03 only, resolve the 10 frozen assay columns, seal the complete-case cohort and correlation audit, and keep SD01 publication-era status labels unopened until that artifact is hashed.
+CPG-001 compared a frozen equal-weight composite ranker with receiver-owned hard-veto promotion over the canonical 137-antibody Jain 2017 panel.
 
-Key commands:
+Canonical receipt:
 
-```bash
-python benchmarks/candidate_promotion/verify_jain_design_lock.py
-python benchmarks/candidate_promotion/verify_jain_preflight_contract.py
-pytest -q tests/test_candidate_promotion.py tests/test_candidate_promotion_jain_design.py tests/test_candidate_promotion_jain_preflight.py
-python benchmarks/candidate_promotion/run_replay.py
-```
+`results/jain_canonical_01/JAIN_2017_CANONICAL_RUN_RECEIPT.json`
 
-Place the three exact PNAS supplements in the local, gitignored `benchmarks/candidate_promotion/jain_sources/` directory, then run the assay-only preflight:
+Scientific signal:
 
-```bash
-python benchmarks/candidate_promotion/preflight_jain_assays.py \
-  benchmarks/candidate_promotion/jain_sources \
-  --out-dir benchmarks/candidate_promotion/results/jain_preflight
-```
+`NO_COMPENSATION_SIGNAL`
 
-Required filenames are pinned in `JAIN_2017_SOURCE_REQUIREMENTS.json`. The source binder hashes and validates all three XLSX containers without opening worksheet cells. The preflight then opens **SD03 only**. SD01 and SD02 cells remain sealed. The command emits a deterministic source-set hash, an assay-only normalized artifact, the preregistered Spearman correlation audit, and a preflight receipt. It returns nonzero if SD03 does not contain exactly the published 137 candidate rows.
+The composite control did not promote the masked declared-liability pattern required by the preregistered success rule. Yield, held-out quality, coverage, and authority parity passed, but the compensation hypothesis did not.
 
-Do not run the confirmatory replay until `JAIN_2017_ASSAY_PREFLIGHT_RECEIPT.json` says `ready_for_label_unseal: true`, and the assay-only artifact plus design/threshold hashes are sealed. The subsequent label-unseal stage must read status only from the already-bound SD01 and may not change cohort, thresholds, folds, or weights.
+CPG-001 remains frozen. Its thresholds, score, folds, budgets, and success rule must not be retuned.
 
-CPG-001 Jain scope is developability only. Affinity/potency is absent from Jain 2017 and cannot be inferred from clinical-stage inclusion. GDPa1 remains untouched until the Jain replay is complete.
+## CPG-002 — Ginkgo GDPa1 — external replication ready
+
+`gdpa1_002/` carries a frozen replication on the versioned public GDPa1 source.
+
+It preserves the CPG-001 baseline family and numerical success bars while applying the central Ginkgo 2025 warning thresholds to eight primary developability readouts. Clinical-stage/approval labels are excluded from the primary analysis.
+
+Installation status:
+
+`EXTERNAL_REPLICATION_READY_UNRUN`
+
+The first full score is produced in CI from the exact pinned upstream Git commit/blob. The dataset is not vendored.
+
+A negative result is allowed. If CPG-002 also returns `NO_COMPENSATION_SIGNAL`, this historical "hard gate exposes compensation hidden by this composite" line stops rather than changing the ranking or thresholds.
+
+## Native Receipt Gate semantics
+
+Candidate-promotion architecture remains broader than this historical replay:
+
+- threshold failure: `DENY`
+- missing/UNKNOWN/stale mandatory evidence: `QUARANTINE`
+- identity/integrity/revocation failure: fail closed
+- complete current passing evidence: `COMMIT`
+
+Historical datasets cannot manufacture batch-, run-, verifier-, or freshness receipts that were never published.
+
+## Separate experiment: sequential assay selection
+
+`../trial_selector/` asks a different question: whether scarce assays can be ordered dynamically to expose a predeclared liability with fewer measurements.
+
+The Jain panel is its discovery set. It does not rescue CPG-001 and does not establish a candidate-promotion advantage.

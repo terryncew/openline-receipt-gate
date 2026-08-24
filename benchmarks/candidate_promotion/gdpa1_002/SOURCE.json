@@ -1,0 +1,31 @@
+{
+  "byte_length": 862134,
+  "clinical_label_columns_forbidden_in_primary_analysis": [
+    "highest_clinical_trial_asof_feb2025",
+    "est_status_asof_feb2025"
+  ],
+  "experiment_id": "CPG-002",
+  "external_data_vendored": false,
+  "external_repository": "ginkgobioworks/abdev-benchmark",
+  "git_blob_sha1": "923c38b1a7b7d2421bd4c6fa7461febc797c446c",
+  "license_boundary": "The upstream repository is MIT for software but explicitly notes that data may be subject to separate originating-source terms. CPG-002 fetches the pinned source in CI and does not vendor the dataset.",
+  "required_columns": [
+    "antibody_id",
+    "Tm1",
+    "Tm2",
+    "HIC",
+    "SMAC",
+    "AC-SINS_pH6.0",
+    "AC-SINS_pH7.4",
+    "PR_CHO",
+    "PR_Ova"
+  ],
+  "schema": "openline.cpg002.gdpa1_source.v0.1",
+  "source_commit": "cc6d3b69afc92695445695345399d9c91b0d14a4",
+  "source_documentation": {
+    "dataset_repository": "https://github.com/ginkgobioworks/abdev-benchmark",
+    "threshold_paper_doi": "10.1080/19420862.2025.2593055",
+    "threshold_paper_title": "A high-throughput platform for biophysical antibody developability assessment to enable AI/ML model training"
+  },
+  "source_path": "data/GDPa1_v1.2_20250814.csv"
+}

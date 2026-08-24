@@ -1,0 +1,130 @@
+{
+  "budgets": [
+    0.1,
+    0.25,
+    0.5
+  ],
+  "excluded_from_primary_policy": {
+    "HAC": "Published Ginkgo 2025 threshold is based on only 31 approved antibodies, materially smaller threshold support than the primary panel. Excluded before full benchmark execution; it cannot be added after results.",
+    "Purity": "No Ginkgo 2025 warning threshold is published in Table 2.",
+    "SEC %Monomer": "No Ginkgo 2025 warning threshold is published in Table 2.",
+    "Titer": "No Ginkgo 2025 warning threshold is published in Table 2.",
+    "Tonset": "No Ginkgo 2025 warning threshold is published in Table 2."
+  },
+  "experiment_id": "CPG-002",
+  "folds": "leave_one_property_group_out",
+  "groups": {
+    "hydrophobic_or_colloidal": [
+      {
+        "assay": "HIC",
+        "favorable_direction": "LOWER",
+        "threshold": 3.18,
+        "units": "min",
+        "warning_direction": "UPPER"
+      },
+      {
+        "assay": "SMAC",
+        "favorable_direction": "LOWER",
+        "threshold": 3.15,
+        "units": "min",
+        "warning_direction": "UPPER"
+      }
+    ],
+    "polyreactivity": [
+      {
+        "assay": "PR_CHO",
+        "favorable_direction": "LOWER",
+        "threshold": 0.38,
+        "units": "unitless",
+        "warning_direction": "UPPER"
+      },
+      {
+        "assay": "PR_Ova",
+        "favorable_direction": "LOWER",
+        "threshold": 0.3,
+        "units": "unitless",
+        "warning_direction": "UPPER"
+      }
+    ],
+    "self_association": [
+      {
+        "assay": "AC-SINS_pH6.0",
+        "favorable_direction": "LOWER",
+        "threshold": 3.3,
+        "units": "nm",
+        "warning_direction": "UPPER"
+      },
+      {
+        "assay": "AC-SINS_pH7.4",
+        "favorable_direction": "LOWER",
+        "threshold": 17.51,
+        "units": "nm",
+        "warning_direction": "UPPER"
+      }
+    ],
+    "thermal_stability": [
+      {
+        "assay": "Tm1",
+        "favorable_direction": "HIGHER",
+        "threshold": 68.09,
+        "units": "degC",
+        "warning_direction": "LOWER"
+      },
+      {
+        "assay": "Tm2",
+        "favorable_direction": "HIGHER",
+        "threshold": 77.71,
+        "units": "degC",
+        "warning_direction": "LOWER"
+      }
+    ]
+  },
+  "non_claims": [
+    "clinical success prediction",
+    "clinical failure prediction",
+    "superior antibody scoring algorithm",
+    "prospective generalization",
+    "universal antibody developability threshold validity",
+    "independent wet-lab receipt provenance"
+  ],
+  "policy_authority": "NONE",
+  "policy_role": "receiver_owned_historical_replay_policy",
+  "policy_source": {
+    "paper_doi": "10.1080/19420862.2025.2593055",
+    "rule": "central value of published Ginkgo 2025 warning threshold",
+    "table": "Table 2"
+  },
+  "primary_budget": 0.25,
+  "primary_success_criteria": {
+    "authority_parity_required_all_primary_folds": true,
+    "maximum_heldout_degradation_fraction": 0.05,
+    "minimum_complete_case_coverage_fraction": 0.7,
+    "minimum_fold_fill_fraction": 0.8,
+    "minimum_folds_with_10pp_gated_liability_reduction": 3,
+    "minimum_folds_with_80pct_fill": 3,
+    "minimum_folds_with_heldout_within_5pp": 3,
+    "minimum_gated_liability_reduction_fraction": 0.1,
+    "minimum_pooled_fill_fraction": 0.8,
+    "pooled_treatment_heldout_must_not_exceed_control": true
+  },
+  "ranking": {
+    "direction": {
+      "HIGHER": 1,
+      "LOWER": -1
+    },
+    "family": "equal_weight_direction_aligned_z_score",
+    "formula": "z_ij = d_j * (x_ij - mean_j) / sample_sd_j; score_i = arithmetic mean of z_ij over gated assays",
+    "missing_value_rule": "complete-case only; no imputation",
+    "tie_breaker": "antibody_id ascending",
+    "zero_variance_contribution": 0.0
+  },
+  "schema": "openline.cpg002.promotion_policy.v0.1",
+  "threshold_semantics": "Equality passes. LOWER means values below the threshold are warning liabilities. UPPER means values above the threshold are warning liabilities.",
+  "verdict_order": [
+    "INCONCLUSIVE_COVERAGE",
+    "INVALID_AUTHORITY_PARITY",
+    "NO_COMPENSATION_SIGNAL",
+    "FRICTION_ONLY",
+    "SUPPORTED_REPLICATION_WITHIN_SCOPE"
+  ]
+}
