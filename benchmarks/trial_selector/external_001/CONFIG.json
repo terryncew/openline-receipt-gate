@@ -1,0 +1,129 @@
+{
+  "assay_mapping": {
+    "assay_order": [
+      "AC-SINS_pH6.0",
+      "AC-SINS_pH7.4",
+      "HIC",
+      "PR_CHO",
+      "PR_Ova",
+      "SMAC",
+      "Tm1",
+      "Tm2"
+    ],
+    "mapping_rule": "identity mapping to GDPa1 column names; no learned or post-score mapping",
+    "required_assay_count": 8
+  },
+  "baselines": {
+    "binary_dynamic": "frozen Jain comparator",
+    "expected_information_gain": {
+      "definition": "using the same continuous conditional liability probabilities as the frozen selector, choose the remaining assay with maximum H_b(p); observing the assay resolves that binary liability variable, so H_b(p) is its one-step expected information gain",
+      "no_future_rollout": true,
+      "tie_break": "assay name ascending",
+      "type": "myopic conditional Bernoulli entropy"
+    },
+    "fixed_prevalence": "frozen Jain comparator",
+    "greedy_fixed_coverage": "frozen Jain comparator",
+    "uniform_random_expected": "frozen Jain analytic comparator"
+  },
+  "claim_boundary": {
+    "forbidden": [
+      "clinical success prediction",
+      "clinical failure prediction",
+      "dollar-cost savings",
+      "elapsed-time savings",
+      "universal antibody developability claim",
+      "claim that warning thresholds are clinically dispositive",
+      "claim that the selector chooses which real wet-lab assay should be run without domain-specific assay cost and operational constraints"
+    ],
+    "if_signal": "On this exact non-Jain-overlap GDPa1 complete-case cohort, the frozen continuous conditional-risk selector exposed predeclared developability warning-threshold crossings with fewer assay units than every preregistered comparator without higher budget-3 false reassurance than the strongest efficiency baseline."
+  },
+  "cost": {
+    "definition": "one observed assay equals one cost unit",
+    "dollars_claimed": false,
+    "elapsed_time_claimed": false
+  },
+  "discovery_parent": {
+    "experiment_id": "TRIAL-SELECTOR-JAIN-DISCOVERY-001",
+    "frozen_discovery_metrics_sha256": "12b9b8eb8c8bd801e2cc93159821b207cb5078a31cb3b1abc46277c4e2efa471",
+    "frozen_selector_path": "benchmarks/trial_selector/jain_selector.py",
+    "frozen_selector_sha256": "4f959c4bec0de3ccd9b640aa367159bf8785c1e4bfbb94290e0da2cc10ddb44d",
+    "jain_candidate_ids_sha256": "a67946700a7b4a98cb46c3bd1ba205a708c04544e55591540b5d8bfe084a633f",
+    "jain_cohort_path": "benchmarks/candidate_promotion/results/jain_canonical_01/JAIN_2017_CANONICAL_COHORT.json"
+  },
+  "experiment_id": "TRIAL-SELECTOR-EXTERNAL-001",
+  "external_policy": {
+    "policy_path": "benchmarks/candidate_promotion/gdpa1_002/promotion-policy.json",
+    "policy_sha256": "cd4aad233f45936743965c4127bb125b924187d0e1be112b863c5ec0c21b1ceb",
+    "source": "central Ginkgo 2025 warning thresholds already frozen for CPG-002",
+    "threshold_mutation_allowed": false
+  },
+  "external_source": {
+    "byte_length": 862134,
+    "commit": "cc6d3b69afc92695445695345399d9c91b0d14a4",
+    "dataset_vendored": false,
+    "git_blob_sha1": "923c38b1a7b7d2421bd4c6fa7461febc797c446c",
+    "path": "data/GDPa1_v1.2_20250814.csv",
+    "repository": "ginkgobioworks/abdev-benchmark",
+    "source_contract_path": "benchmarks/candidate_promotion/gdpa1_002/SOURCE.json",
+    "source_contract_sha256": "ec92594e09c141f3692857d5c7d36f287d84d1875f4edbe924f0e1ddf1731f4e"
+  },
+  "missingness": {
+    "imputation": false,
+    "minimum_liability_negative_count": 10,
+    "minimum_liability_positive_count": 10,
+    "minimum_primary_candidate_count": 40,
+    "primary_rule": "complete-case across all eight frozen external assays after Jain-overlap exclusion"
+  },
+  "overlap_exclusion": {
+    "alias_inference": false,
+    "external_identity_column": "antibody_name",
+    "jain_identity_basis": "candidate_ids from frozen canonical Jain cohort",
+    "match_rule": "exact normalized equality only",
+    "normalization": "strip then Unicode casefold",
+    "primary_analysis_excludes_matches": true
+  },
+  "policy_authority": "NONE",
+  "primary_evaluation": {
+    "baseline_champion_rule": "lowest mean assays to first liability; ties by lower budget-3 false reassurance; then baseline name ascending",
+    "bootstrap": {
+      "champion_fixed_before_bootstrap": true,
+      "interval": "percentile 95%",
+      "replicates": 5000,
+      "sampling_unit": "liability-positive primary candidate",
+      "seed": 20260824
+    },
+    "efficiency_metric": "mean assays to first declared liability among liability-positive primary candidates",
+    "safety_budget": 3,
+    "safety_metric": "false reassurance fraction after three assays",
+    "signal_requires": [
+      "selector mean assays to first liability is strictly lower than every admissible baseline",
+      "paired bootstrap 95% lower bound for champion_minus_selector mean cost is greater than zero",
+      "selector budget-3 false reassurance is no greater than the efficiency champion baseline"
+    ]
+  },
+  "schema": "openline.trial_selector.external001.config.v1",
+  "selector": {
+    "model": {
+      "C": 1.0,
+      "class_weight": null,
+      "estimator": "LogisticRegression",
+      "fit_intercept": true,
+      "library": "scikit-learn",
+      "max_iter": 1000,
+      "penalty": "l2",
+      "random_state": 0,
+      "scaler": "StandardScaler",
+      "solver": "liblinear",
+      "version": "1.8.0"
+    },
+    "retuning_allowed": false,
+    "reuse": "execute the exact frozen Jain selector implementation with only the prospectively frozen external ASSAY_ORDER and threshold objects substituted",
+    "tie_break": "assay name ascending"
+  },
+  "status": "EXTERNAL_CONFIRMATION_READY_UNRUN",
+  "verdicts": [
+    "INCONCLUSIVE_EXTERNAL_COHORT",
+    "EXTERNAL_GENERALIZATION_NOT_SUPPORTED",
+    "EXTERNAL_ALLOCATION_SIGNAL"
+  ]
+}
