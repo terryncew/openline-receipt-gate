@@ -42,10 +42,11 @@ jobs:
             benchmarks/foreign_standing_001/run_suite.py \
             tests/test_foreign_standing_001.py
 
-      - name: Run FOREIGN-STANDING-001
-        run: |
-          python -m unittest tests.test_foreign_standing_001 -v
-          python -m benchmarks.foreign_standing_001.run_suite | tee foreign-standing-001-report.json
+      - name: Run and freeze FOREIGN-STANDING-001 report
+        run: python -m benchmarks.foreign_standing_001.run_suite | tee foreign-standing-001-report.json
+
+      - name: Verify FOREIGN-STANDING-001 contract
+        run: python -m unittest tests.test_foreign_standing_001 -v
 
       - name: Upload frozen report
         if: always()
