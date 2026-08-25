@@ -369,7 +369,6 @@ def standing_requirement_source(
                 issuer_id=evidence_issuer_id,
                 expires_in_seconds=1,
                 verified=False,
-                issued_at=now,
             )
 
         expires_at = _parse_time(str(assessment["expires_at"]))
@@ -381,7 +380,6 @@ def standing_requirement_source(
             expires_in_seconds=ttl,
             revoked=assessment["standing"] != "ACTIVE",
             verified=True,
-            issued_at=now,
         )
 
     return provide

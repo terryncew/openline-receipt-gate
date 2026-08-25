@@ -239,7 +239,6 @@ class SeamHarness:
             payload={"approval_receipt_hash": support_receipt_hash(receipt)},
             issuer_id="message_authority",
             expires_in_seconds=60,
-            issued_at=datetime.now(timezone.utc),
         )
 
     def _projection_for_call(self, call):
