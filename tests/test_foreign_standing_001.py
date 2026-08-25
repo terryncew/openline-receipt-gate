@@ -23,18 +23,29 @@ class ForeignStanding001Tests(unittest.TestCase):
         self.assertEqual(report["verdict"], "FOREIGN_GOVERNANCE_PROTOCOL_INDEPENDENCE")
         self.assertEqual(report["policy_authority"], "NONE")
 
-        # Assert the report's actual frozen schema. The detailed swap receipts
-        # live in normalization / same_openline_graph / same_receipt_gate; the
-        # source_swap_falsifier block carries the aggregate falsifier verdict.
+        # Assert the report's actual frozen schema. Protocol-independent graph
+        # outcomes live under same_openline_graph; runtime blocking lives under
+        # same_receipt_gate. Do not invent a synthetic outcomes projection here.
         self.assertTrue(report["normalization"]["byte_identical_common_support"])
         self.assertTrue(report["normalization"]["source_discriminator_absent"])
         self.assertTrue(report["same_openline_graph"]["same_result"])
         self.assertTrue(report["same_receipt_gate"]["same_result"])
         self.assertTrue(report["source_swap_falsifier"]["passed"])
 
-        self.assertEqual(report["outcomes"]["affected_finalized_decision"], "REOPEN")
-        self.assertEqual(report["outcomes"]["independently_supported_decision"], "RETAIN")
-        self.assertEqual(report["outcomes"]["next_dependent_action"], "BLOCK")
+        for source in ("acs", "airep"):
+            self.assertEqual(
+                report["same_openline_graph"][source]["affected_finalized_decision"],
+                "REOPEN",
+            )
+            self.assertEqual(
+                report["same_openline_graph"][source]["independently_supported_decision"],
+                "RETAIN",
+            )
+            self.assertTrue(report["same_receipt_gate"][source]["after"]["blocked"])
+            self.assertEqual(
+                report["same_receipt_gate"][source]["after"]["effect_delta"],
+                0,
+            )
 
 
 if __name__ == "__main__":
