@@ -1,0 +1,56 @@
+name: FOREIGN-STANDING-001
+
+on:
+  pull_request:
+    paths:
+      - "olp_gate/foreign_evidence.py"
+      - "benchmarks/foreign_standing_001/**"
+      - "tests/test_foreign_standing_001.py"
+      - "docs/FOREIGN_STANDING_001.md"
+      - ".github/workflows/foreign-standing-001.yml"
+  push:
+    branches: [main]
+    paths:
+      - "olp_gate/foreign_evidence.py"
+      - "benchmarks/foreign_standing_001/**"
+      - "tests/test_foreign_standing_001.py"
+      - "docs/FOREIGN_STANDING_001.md"
+      - ".github/workflows/foreign-standing-001.yml"
+
+jobs:
+  foreign-standing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Receipt Gate
+        run: python -m pip install -e .
+
+      - name: Install frozen Claim Graph
+        run: python -m pip install "git+https://github.com/terryncew/openline-claim-graph.git@15b405580a5f8fe261dcca38cbcb11f169e671d0"
+
+      - name: Compile interop surface
+        run: |
+          python -m py_compile \
+            olp_gate/foreign_evidence.py \
+            benchmarks/foreign_standing_001/run_suite.py \
+            tests/test_foreign_standing_001.py
+
+      - name: Run FOREIGN-STANDING-001
+        run: |
+          python -m unittest tests.test_foreign_standing_001 -v
+          python -m benchmarks.foreign_standing_001.run_suite | tee foreign-standing-001-report.json
+
+      - name: Upload frozen report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: foreign-standing-001-report
+          path: foreign-standing-001-report.json
+          if-no-files-found: error
