@@ -1,8 +1,8 @@
 """Top-level CLI router.
 
 The v0.5 frozen continuation experiment pins :mod:`olp_gate.cli` byte-for-byte.
-New v0.6 Handoff Check commands therefore live in this additive router, which
-delegates every pre-existing command to the frozen CLI unchanged.
+New v0.6 commands therefore live in this additive router, which delegates every
+pre-existing command to the frozen CLI unchanged.
 """
 
 from __future__ import annotations
@@ -10,8 +10,8 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from pathlib import Path
 from importlib import resources
+from pathlib import Path
 
 from . import cli as legacy_cli
 from .crypto import load_private_key, strict_json_load, strict_json_loads
@@ -22,10 +22,12 @@ from .handoff import (
     restore_items,
     write_handoff_outputs,
 )
+from .protect import main as protect_main
 
 
 HANDOFF_COMMANDS = {"handoff-check", "handoff-inspect", "handoff-restore"}
 ROLE_CONFUSION_COMMANDS = {"role-confusion-suite"}
+PROTECT_COMMANDS = {"protect"}
 
 
 def _print_json(value: object) -> None:
@@ -207,12 +209,15 @@ def main(argv: list[str] | None = None) -> int:
         except SystemExit as exc:
             print(
                 "\nAdditional commands:\n"
+                "  protect               Create a guarded starter from plain application rules.\n"
                 "  handoff-check         Build and verify a bounded continuation capsule.\n"
                 "  handoff-inspect       Compare a capsule with current full history.\n"
                 "  handoff-restore       Restore canonical source events for handoff items.\n"
                 "  role-confusion-suite  Run the receiver-side consequence suite."
             )
             return int(exc.code or 0)
+    if args and args[0] in PROTECT_COMMANDS:
+        return protect_main(args[1:])
     if args and args[0] in HANDOFF_COMMANDS:
         return _handoff_main(args)
     if args and args[0] in ROLE_CONFUSION_COMMANDS:
