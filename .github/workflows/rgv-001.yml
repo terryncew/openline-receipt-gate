@@ -1,0 +1,65 @@
+name: RGV-001 Reality Gate
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "benchmarks/candidate_promotion/experiments/rgv_001/**"
+      - ".github/workflows/rgv-001.yml"
+      - "docs/RGV_001.md"
+
+jobs:
+  reality-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install benchmark dependencies
+        run: python -m pip install "numpy>=2,<3" "pandas>=2,<3" "scikit-learn>=1.5,<2" "openpyxl>=3.1,<4" "huggingface_hub>=0.27,<2"
+
+      - name: Compile and synthetic contract check
+        run: |
+          python -m py_compile benchmarks/candidate_promotion/experiments/rgv_001/run_suite.py
+          python -m benchmarks.candidate_promotion.experiments.rgv_001.run_suite --self-test
+
+      - name: Fetch frozen Ginkgo benchmark source
+        run: |
+          git clone https://github.com/ginkgobioworks/abdev-benchmark.git external/ginkgo-abdev
+          git -C external/ginkgo-abdev checkout cc6d3b69afc92695445695345399d9c91b0d14a4
+          test "$(git -C external/ginkgo-abdev rev-parse HEAD)" = "cc6d3b69afc92695445695345399d9c91b0d14a4"
+
+      - name: Fetch released GDPa3 holdout
+        run: |
+          python - <<'PY'
+          from huggingface_hub import snapshot_download
+          p = snapshot_download(
+              repo_id="ginkgo-datapoints/GDPa3",
+              repo_type="dataset",
+              local_dir="external/GDPa3",
+          )
+          print(p)
+          PY
+
+      - name: Run frozen external veto test
+        run: |
+          python -m benchmarks.candidate_promotion.experiments.rgv_001.run_suite             --gdpa1 external/ginkgo-abdev/data/GDPa1_v1.2_20250814.csv             --heldout-sequences external/ginkgo-abdev/data/heldout-set-sequences.csv             --gdpa3 external/GDPa3             --tap-train external/ginkgo-abdev/data/features/processed_features/GDPa1/TAP.csv             --tap-test external/ginkgo-abdev/data/features/processed_features/heldout_test/TAP.csv             --output rgv-001-report.json
+
+      - name: Verify frozen report contract
+        if: always()
+        run: |
+          test -f rgv-001-report.json
+          python -m benchmarks.candidate_promotion.experiments.rgv_001.verify_report rgv-001-report.json
+
+      - name: Upload RGV-001 report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rgv-001-report
+          path: rgv-001-report.json
+          if-no-files-found: error
