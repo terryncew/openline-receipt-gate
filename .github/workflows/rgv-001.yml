@@ -34,21 +34,66 @@ jobs:
           git -C external/ginkgo-abdev checkout cc6d3b69afc92695445695345399d9c91b0d14a4
           test "$(git -C external/ginkgo-abdev rev-parse HEAD)" = "cc6d3b69afc92695445695345399d9c91b0d14a4"
 
-      - name: Fetch released GDPa3 holdout
+      - name: Resolve GDPa3 holdout availability
+        id: gdpa3
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
           python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
           from huggingface_hub import snapshot_download
-          p = snapshot_download(
-              repo_id="ginkgo-datapoints/GDPa3",
-              repo_type="dataset",
-              local_dir="external/GDPa3",
-          )
-          print(p)
+
+          out = Path(os.environ["GITHUB_OUTPUT"])
+          try:
+              p = snapshot_download(
+                  repo_id="ginkgo-datapoints/GDPa3",
+                  repo_type="dataset",
+                  local_dir="external/GDPa3",
+                  token=os.environ.get("HF_TOKEN") or None,
+              )
+          except Exception as exc:
+              report = {
+                  "schema": "openline.rgv_001.report.v1",
+                  "experiment": "RGV-001",
+                  "verdict": "INCONCLUSIVE_EXTERNAL_COVERAGE",
+                  "passed": False,
+                  "policy_authority": "NONE",
+                  "coverage_error": (
+                      "GDPa3 external truth was not accessible to this runner. "
+                      "No biological verdict was produced. "
+                      f"source_error={type(exc).__name__}: {exc}"
+                  ),
+                  "claim_boundary": (
+                      "Infrastructure/coverage disposition only. "
+                      "The frozen viability-veto hypothesis remains untested on GDPa3."
+                  ),
+              }
+              Path("rgv-001-report.json").write_text(
+                  json.dumps(report, indent=2, sort_keys=True) + "\n",
+                  encoding="utf-8",
+              )
+              with out.open("a", encoding="utf-8") as f:
+                  f.write("available=false\n")
+              print(json.dumps(report, indent=2, sort_keys=True))
+          else:
+              with out.open("a", encoding="utf-8") as f:
+                  f.write("available=true\n")
+              print(p)
           PY
 
       - name: Run frozen external veto test
+        if: steps.gdpa3.outputs.available == 'true'
         run: |
-          python -m benchmarks.candidate_promotion.experiments.rgv_001.run_suite             --gdpa1 external/ginkgo-abdev/data/GDPa1_v1.2_20250814.csv             --heldout-sequences external/ginkgo-abdev/data/heldout-set-sequences.csv             --gdpa3 external/GDPa3             --tap-train external/ginkgo-abdev/data/features/processed_features/GDPa1/TAP.csv             --tap-test external/ginkgo-abdev/data/features/processed_features/heldout_test/TAP.csv             --output rgv-001-report.json
+          python -m benchmarks.candidate_promotion.experiments.rgv_001.run_suite \
+            --gdpa1 external/ginkgo-abdev/data/GDPa1_v1.2_20250814.csv \
+            --heldout-sequences external/ginkgo-abdev/data/heldout-set-sequences.csv \
+            --gdpa3 external/GDPa3 \
+            --tap-train external/ginkgo-abdev/data/features/processed_features/GDPa1/TAP.csv \
+            --tap-test external/ginkgo-abdev/data/features/processed_features/heldout_test/TAP.csv \
+            --output rgv-001-report.json
 
       - name: Verify frozen report contract
         if: always()
