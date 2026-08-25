@@ -1,0 +1,96 @@
+{
+  "schema": "openline.rgv_001.freeze.v1",
+  "experiment": "RGV-001",
+  "title": "Reality Gate: Held-Out Viability Veto",
+  "frozen_at": "2026-08-25T23:30:00Z",
+  "policy_authority": "NONE",
+  "question": "When continuous ranking is weak, can sequence-derived models still conservatively veto candidates likely to violate a joint developability viability region, thereby saving experiments while retaining experimentally clean antibodies?",
+  "prior_work_boundary": {
+    "CPG-001": "NO_COMPENSATION_SIGNAL",
+    "CPG-002": "INCONCLUSIVE_COVERAGE; composite and hard-veto arms both had 0.0 declared gated-liability rate across four GDPa1 folds.",
+    "trial_selector": "Small external sample and wide uncertainty; does not establish a useful selector.",
+    "new_mechanism_under_test": "Continuous per-assay prediction with training-only one-sided residual bounds over a joint viability region. This is not another composite-vs-hard-threshold rerun."
+  },
+  "data": {
+    "train": {
+      "name": "GDPa1",
+      "expected_rows_min": 240,
+      "source_repo": "ginkgobioworks/abdev-benchmark",
+      "source_commit": "cc6d3b69afc92695445695345399d9c91b0d14a4",
+      "file": "data/GDPa1_v1.2_20250814.csv",
+      "fold_column": "hierarchical_cluster_IgG_isotype_stratified_fold"
+    },
+    "test": {
+      "name": "GDPa3",
+      "expected_rows": 80,
+      "role": "untouched external holdout; no parameter selection on GDPa3 labels",
+      "huggingface_repo": "ginkgo-datapoints/GDPa3"
+    }
+  },
+  "primary_viability_region": {
+    "HIC": {
+      "bad_if": ">",
+      "threshold": 3.18
+    },
+    "PR_CHO": {
+      "bad_if": ">",
+      "threshold": 0.38
+    },
+    "AC-SINS_pH7.4": {
+      "bad_if": ">",
+      "threshold": 17.51
+    }
+  },
+  "secondary_only": {
+    "Tm2": {
+      "bad_if": "<",
+      "threshold": 77.71
+    }
+  },
+  "excluded_primary": {
+    "Titer": "Excluded from primary endpoint because production-condition dependence makes it less suitable for the frozen viability claim."
+  },
+  "arms": [
+    "random_veto_matched_to_RGV_rejection_count",
+    "simple_sequence_descriptor_veto",
+    "ginkgo_TAP_feature_linear_veto",
+    "RGV_sequence_kmer_confidence_veto"
+  ],
+  "operating_point": {
+    "selection_data": "GDPa1 out-of-fold predictions only",
+    "minimum_training_clean_retention": 0.95,
+    "residual_quantile_grid": [
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      0.95,
+      0.975
+    ],
+    "no_test_tuning": true
+  },
+  "primary_bar": {
+    "external_clean_retention_min": 0.95,
+    "external_experiments_avoided_min": 0.5,
+    "margin_over_best_nonrandom_baseline_experiments_avoided": 0.1,
+    "minimum_external_evaluable_rows": 60,
+    "minimum_external_clean_rows": 20
+  },
+  "robustness": {
+    "threshold_stress_fraction": 0.05,
+    "description": "Predeclared \u00b15% threshold stress test. This is a robustness probe, not a claim about published assay uncertainty.",
+    "strong_signal_requires_primary_direction_to_survive": true
+  },
+  "dispositions": {
+    "VETO": "High-confidence predicted violation; do not spend the next experiment under this gate.",
+    "UNKNOWN": "No high-confidence veto; candidate remains eligible for experiment.",
+    "PASS": "Forbidden. Surviving the gate does not certify a good antibody."
+  },
+  "verdicts": {
+    "pass": "HELDOUT_VIABILITY_VETO_SIGNAL",
+    "fail": "NO_HELDOUT_VIABILITY_VETO_SIGNAL",
+    "coverage": "INCONCLUSIVE_EXTERNAL_COVERAGE"
+  },
+  "kill_condition": "If RGV cannot preserve >=95% of experimentally clean GDPa3 antibodies, avoid >=50% of experiments, and exceed the best nonrandom baseline by >=10 percentage points in experiment avoidance while preserving the same clean-retention floor, close the learned-veto hypothesis. Do not rescue it by changing thresholds or redefining cleanliness after seeing GDPa3."
+}

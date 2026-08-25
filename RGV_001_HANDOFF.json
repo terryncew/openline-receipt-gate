@@ -1,0 +1,19 @@
+{
+  "experiment": "RGV-001",
+  "repo": "terryncew/openline-receipt-gate",
+  "base": "main@9f7a68594183d49d278107db8a2d90e51f352546",
+  "branch": "feat/rgv-001",
+  "commit": "test(gate): add held-out reality veto benchmark",
+  "pr_title": "test(gate): add held-out reality veto benchmark",
+  "files": [
+    ".github/workflows/rgv-001.yml",
+    "benchmarks/candidate_promotion/experiments/rgv_001/__init__.py",
+    "benchmarks/candidate_promotion/experiments/rgv_001/FREEZE.json",
+    "benchmarks/candidate_promotion/experiments/rgv_001/QUESTION.md",
+    "benchmarks/candidate_promotion/experiments/rgv_001/README.md",
+    "benchmarks/candidate_promotion/experiments/rgv_001/run_suite.py",
+    "benchmarks/candidate_promotion/experiments/rgv_001/verify_report.py",
+    "docs/RGV_001.md"
+  ],
+  "note": "Primary GDPa3 execution occurs only in GitHub CI; no local biological verdict was manufactured."
+}
