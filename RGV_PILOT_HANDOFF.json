@@ -1,0 +1,19 @@
+{
+  "experiment": "RGV-PILOT",
+  "repo": "terryncew/openline-receipt-gate",
+  "base": "main@9f79255268cc99b6a28f745a4a288360cd472e73",
+  "branch": "feat/rgv-pilot",
+  "commit": "test(gate): add source-derived reality veto pilot",
+  "pr_title": "test(gate): add source-derived reality veto pilot",
+  "policy_authority": "NONE",
+  "scientific_change": "Replace erroneous hard-coded P34 cohort assumption with a source-derived GDPa1 cohort before any biological pilot verdict was produced.",
+  "canonical_output": "rgv-pilot-report.md",
+  "files": [
+    ".github/workflows/rgv-pilot.yml",
+    "benchmarks/candidate_promotion/experiments/rgv_pilot/__init__.py",
+    "benchmarks/candidate_promotion/experiments/rgv_pilot/FREEZE.json",
+    "benchmarks/candidate_promotion/experiments/rgv_pilot/run_suite.py",
+    "benchmarks/candidate_promotion/experiments/rgv_pilot/verify_report.py",
+    "docs/RGV_PILOT.md"
+  ]
+}

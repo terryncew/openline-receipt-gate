@@ -1,0 +1,101 @@
+{
+  "schema": "openline.rgv_pilot.freeze.v1",
+  "experiment": "RGV-PILOT",
+  "title": "Reality Gate \u2014 Source-Derived GDPa1 Viability Veto Pilot",
+  "policy_authority": "NONE",
+  "evidence_grade": "EXPLORATORY_INTERNAL_PILOT",
+  "source": {
+    "repository": "ginkgobioworks/abdev-benchmark",
+    "commit": "cc6d3b69afc92695445695345399d9c91b0d14a4",
+    "path": "data/GDPa1_v1.2_20250814.csv",
+    "git_blob": "923c38b1a7b7d2421bd4c6fa7461febc797c446c",
+    "expected_source_rows": 246
+  },
+  "cohort_rule": {
+    "description": "Derive N from pinned GDPa1 bytes at execution time. Include every unique antibody with non-empty VH/VL sequences and finite HIC, PR_CHO, and AC-SINS_pH7.4 measurements.",
+    "required_identity": [
+      "antibody_id"
+    ],
+    "required_sequences": [
+      "vh_protein_sequence",
+      "vl_protein_sequence"
+    ],
+    "required_truth_assays": [
+      "HIC",
+      "PR_CHO",
+      "AC-SINS_pH7.4"
+    ],
+    "jain_overlap_exclusion": false,
+    "hard_coded_candidate_count": "FORBIDDEN",
+    "missing_value_imputation_for_truth": "FORBIDDEN",
+    "candidate_membership_may_be_changed_after_observing_results": false
+  },
+  "primary_viability_region": {
+    "HIC": {
+      "bad_if": ">",
+      "threshold": 3.18
+    },
+    "PR_CHO": {
+      "bad_if": ">",
+      "threshold": 0.38
+    },
+    "AC-SINS_pH7.4": {
+      "bad_if": ">",
+      "threshold": 17.51
+    }
+  },
+  "evaluation": {
+    "outer_split": "GDPa1 hierarchical_cluster_IgG_isotype_stratified_fold",
+    "inner_split": "remaining source folds only; each remaining source fold held out once",
+    "held_out_outer_fold_may_affect_model_selection": false,
+    "ridge_alphas": [
+      0.1,
+      1.0,
+      10.0,
+      100.0
+    ],
+    "residual_quantile_grid": [
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      0.95,
+      0.975
+    ],
+    "inner_clean_retention_floor": 0.9
+  },
+  "arms": [
+    "matched_random_veto",
+    "simple_sequence_descriptor_veto",
+    "ginkgo_TAP_feature_linear_veto",
+    "RGV_sequence_kmer_confidence_veto"
+  ],
+  "dispositions": {
+    "VETO": "Out-of-fold high-confidence predicted violation of at least one primary viability boundary.",
+    "UNKNOWN": "No high-confidence veto; candidate remains eligible for experiment.",
+    "PASS": "FORBIDDEN"
+  },
+  "pilot_bar": {
+    "clean_retention_min": 0.9,
+    "experiments_avoided_min": 0.2,
+    "matched_random_enrichment_one_sided_p_max": 0.1,
+    "minimum_evaluable_candidates": 30,
+    "minimum_clean_candidates": 10,
+    "minimum_bad_candidates": 5,
+    "must_not_be_pareto_dominated_by_nonrandom_baseline_at_clean_retention_floor": true
+  },
+  "prior_work": {
+    "CPG-001": "NO_COMPENSATION_SIGNAL",
+    "CPG-002": "INCONCLUSIVE_COVERAGE; no compensation separation established on GDPa1.",
+    "RGV-001": "Frozen independent GDPa3 external test; currently INCONCLUSIVE_EXTERNAL_COVERAGE because external truth was not accessible to CI.",
+    "RGV-P34": "Superseded as a scientific pilot before execution because it incorrectly hard-coded a remembered cohort count of 34 against a different historical constructor. Its coverage failure is not a biological result."
+  },
+  "verdicts": {
+    "signal": "PILOT_VETO_SIGNAL",
+    "null": "NO_PILOT_VETO_SIGNAL",
+    "coverage": "INCONCLUSIVE_PILOT_COVERAGE"
+  },
+  "kill_condition": "If the source-derived pilot returns NO_PILOT_VETO_SIGNAL, close the learned selector/veto line. Do not rescue it by changing cohort eligibility, viability thresholds, feature family, retention floor, avoidance floor, or enrichment bar after observing the result.",
+  "claim_boundary_if_signal": "Exploratory within-GDPa1 evidence only: sequence-derived confidence vetoes enriched for experimentally defined developability failures while preserving the frozen clean-retention floor. This is not external validation, clinical prediction, or a generative-design claim."
+}
