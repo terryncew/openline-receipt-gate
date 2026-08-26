@@ -1,0 +1,20 @@
+{
+  "experiment": "RGV-P34",
+  "repo": "terryncew/openline-receipt-gate",
+  "base": "main@830cfae64b67df0d1b84197389393c0794e7e538",
+  "branch": "feat/rgv-p34",
+  "commit": "test(gate): add 34-candidate reality veto pilot",
+  "pr_title": "test(gate): add 34-candidate reality veto pilot",
+  "policy_authority": "NONE",
+  "files": [
+    ".github/workflows/rgv-p34.yml",
+    "benchmarks/candidate_promotion/experiments/rgv_p34/__init__.py",
+    "benchmarks/candidate_promotion/experiments/rgv_p34/FREEZE.json",
+    "benchmarks/candidate_promotion/experiments/rgv_p34/QUESTION.md",
+    "benchmarks/candidate_promotion/experiments/rgv_p34/README.md",
+    "benchmarks/candidate_promotion/experiments/rgv_p34/run_suite.py",
+    "benchmarks/candidate_promotion/experiments/rgv_p34/verify_report.py",
+    "docs/RGV_P34.md"
+  ],
+  "note": "No biological result was run locally. GitHub CI binds the exact historical P34 cohort and produces the first pilot verdict."
+}

@@ -1,0 +1,105 @@
+{
+  "schema": "openline.rgv_p34.freeze.v1",
+  "experiment": "RGV-P34",
+  "title": "Reality Gate 34-Candidate Exploratory Veto Pilot",
+  "policy_authority": "NONE",
+  "evidence_grade": "EXPLORATORY_INTERNAL_PILOT",
+  "question": "Within the exact 34-candidate non-Jain-overlap complete-case GDPa1 cohort that made TRIAL-SELECTOR-EXTERNAL-001 inconclusive, can strictly nested sequence-derived prediction identify a high-confidence developability-failure tail while preserving most experimentally clean candidates?",
+  "prior_work_boundary": {
+    "CPG-001": "NO_COMPENSATION_SIGNAL",
+    "CPG-002": "INCONCLUSIVE_COVERAGE; composite and hard-veto arms both had 0.0 declared gated-liability rate across four GDPa1 folds.",
+    "TRIAL-SELECTOR-EXTERNAL-001": "INCONCLUSIVE_EXTERNAL_COHORT because the predeclared >=40-candidate complete-case non-Jain-overlap bar was not met; observed usable cohort is expected to be 34.",
+    "RGV-001": "Frozen external validation target on independent GDPa3; currently INCONCLUSIVE_EXTERNAL_COVERAGE because external truth is unavailable to CI.",
+    "new_question": "This pilot tests toxic-tail vetoing inside the exact historical 34-candidate cohort; it is not external validation and cannot upgrade RGV-001."
+  },
+  "cohort_binding": {
+    "constructor": "benchmarks.trial_selector.external_001.external_selector.load_primary_candidates",
+    "config": "benchmarks/trial_selector/external_001/CONFIG.json",
+    "source_contract": "benchmarks/candidate_promotion/gdpa1_002/SOURCE.json",
+    "policy": "benchmarks/candidate_promotion/gdpa1_002/promotion-policy.json",
+    "jain_cohort": "benchmarks/candidate_promotion/results/jain_canonical_01/JAIN_2017_CANONICAL_COHORT.json",
+    "expected_candidate_count": 34,
+    "membership_assays": [
+      "AC-SINS_pH6.0",
+      "AC-SINS_pH7.4",
+      "HIC",
+      "PR_CHO",
+      "PR_Ova",
+      "SMAC",
+      "Tm1",
+      "Tm2"
+    ],
+    "overlap_rule": "exact normalized antibody-name equality against frozen Jain canonical candidate_ids",
+    "missingness_rule": "complete case across all eight frozen Trial Selector external assays after Jain overlap exclusion",
+    "no_manual_member_changes": true
+  },
+  "primary_viability_region": {
+    "HIC": {
+      "bad_if": ">",
+      "threshold": 3.18
+    },
+    "PR_CHO": {
+      "bad_if": ">",
+      "threshold": 0.38
+    },
+    "AC-SINS_pH7.4": {
+      "bad_if": ">",
+      "threshold": 17.51
+    }
+  },
+  "dispositions": {
+    "VETO": "Nested out-of-fold high-confidence predicted violation.",
+    "UNKNOWN": "No high-confidence veto. Candidate remains worth measuring.",
+    "PASS": "FORBIDDEN"
+  },
+  "arms": [
+    "random_veto_matched_to_RGV_rejection_count",
+    "simple_sequence_descriptor_veto",
+    "ginkgo_TAP_feature_linear_veto",
+    "RGV_sequence_kmer_confidence_veto"
+  ],
+  "nesting": {
+    "outer": "leave-one-antibody-out over the exact P34 cohort",
+    "inner": "leave-one-antibody-out within each outer training set",
+    "model_selection": "Ridge alpha selected independently per assay from [0.1,1,10,100] by inner OOF MSE",
+    "confidence_selection": "single residual quantile selected only from the outer-training inner-OOF predictions",
+    "residual_quantile_grid": [
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      0.95,
+      0.975
+    ],
+    "inner_clean_retention_floor": 0.9,
+    "held_out_candidate_may_affect_its_own_model_or_gate": false
+  },
+  "pilot_bar": {
+    "clean_retention_min": 0.9,
+    "experiments_avoided_min": 0.2,
+    "matched_random_enrichment_one_sided_p_max": 0.1,
+    "minimum_evaluable_candidates": 30,
+    "minimum_clean_candidates": 10,
+    "minimum_bad_candidates": 5,
+    "must_not_be_pareto_dominated_by_nonrandom_baseline_at_clean_retention_floor": true
+  },
+  "verdicts": {
+    "signal": "PILOT_VETO_SIGNAL",
+    "null": "NO_PILOT_VETO_SIGNAL",
+    "coverage": "INCONCLUSIVE_PILOT_COVERAGE"
+  },
+  "claim_boundary": {
+    "if_signal": "On this exact 34-candidate GDPa1-derived exploratory cohort, a strictly nested sequence-only confidence veto showed toxic-tail enrichment while retaining at least 90% of experimentally clean candidates. This is pilot evidence only and requires independent validation.",
+    "forbidden": [
+      "external validation",
+      "clinical success prediction",
+      "clinical failure prediction",
+      "50 percent experiment savings claim",
+      "wet-lab deployment recommendation",
+      "generative antibody design claim",
+      "retuning RGV-001 from this pilot"
+    ]
+  },
+  "kill_condition": "If the verdict is NO_PILOT_VETO_SIGNAL, close the learned selector/veto line. Do not rescue it by changing the cohort, viability thresholds, retention floor, feature family, or significance bar after observing this result. RGV-001 may remain frozen only as a pre-existing external falsifier if genuinely independent truth later becomes available."
+}
