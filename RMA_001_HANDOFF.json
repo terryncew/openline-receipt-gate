@@ -1,49 +1,50 @@
 {
-  "archive": {
-    "json": "archive/RMA-001/rma-001-report.json",
-    "json_sha256": "8070850ad20b3fed349b16e9fad14d63a9b73472afcfc2cb5d1cda3b59aa236d",
-    "markdown": "archive/RMA-001/rma-001-report.md",
-    "markdown_sha256": "dbb5a06d5049b02d6a547f382b4ec9817200b2490c9e74e6b1cb2242fea7550a"
+  "schema": "openline.rma_001.handoff.v2",
+  "experiment": "RMA-001",
+  "repo": "terryncew/openline-receipt-gate",
+  "status": "COMPLETED",
+  "frozen_build": {
+    "base": "main@9c3abadcafe764c9ce435ee5b8cecf58070b09a8",
+    "branch": "feat/rma-001",
+    "commit": "test(gate): add held-out measurement allocation benchmark"
   },
   "canonical_run": {
-    "artifact_digest": "sha256:aa9434dfa90069d870859b72108f3018aa57e6540e0711b8961187fb13374fba",
-    "artifact_id": 9593241938,
-    "head_sha": "c2e997b15478e431c514ede7fe5b8049404dfa2c",
-    "run_id": 32931125863,
-    "workflow": "RMA-001 Measurement Allocation"
-  },
-  "experiment": "RMA-001",
-  "note": "RMA-001 is complete. The frozen result is NO_MEASUREMENT_ROUTING_SIGNAL. The three-assay routing hypothesis is closed on this substrate; do not rescue it by changing thresholds, source cohort, fold assignment, savings bars, or cost weights after observing the result.",
-  "origin": {
-    "branch": "feat/rma-001",
-    "commit": "56419a27a81b2d5ca0a7113503fa4c3a76963853",
-    "pr": 43
-  },
-  "policy_authority": "NONE",
-  "repo": "terryncew/openline-receipt-gate",
-  "result_summary": {
-    "bad_n": 54,
-    "clean_n": 143,
-    "cohort_n": 197,
-    "final_disposition_concordance": {
-      "best_static": 1.0,
-      "history_adaptive": 1.0,
-      "sequence_adaptive": 1.0
-    },
-    "measurement_counts": {
-      "best_static": 518,
-      "exhaustive": 591,
-      "history_adaptive": 518,
-      "oracle": 483,
-      "sequence_adaptive": 514
-    },
-    "sequence_vs_best_static_relative_savings": {
-      "ci_high": 0.03724422171103078,
-      "ci_low": -0.020561132264143682,
-      "point": 0.007722007722007722
+    "head": "main@c2e997b15478e431c514ede7fe5b8049404dfa2c",
+    "workflow_run_id": 32931125863,
+    "workflow_url": "https://github.com/terryncew/openline-receipt-gate/actions/runs/32931125863",
+    "artifact": {
+      "id": 9593241938,
+      "name": "rma-001-report",
+      "digest": "sha256:aa9434dfa90069d870859b72108f3018aa57e6540e0711b8961187fb13374fba",
+      "expires_at": "2026-11-24T04:40:53Z"
     }
   },
-  "status": "COMPLETE_FROZEN",
-  "stop_rule": "If NO_MEASUREMENT_ROUTING_SIGNAL, close the three-assay routing hypothesis on this substrate. Do not rescue it by changing thresholds, source cohort, fold assignment, savings bars, or cost weights after observing the result.",
-  "verdict": "NO_MEASUREMENT_ROUTING_SIGNAL"
+  "verdict": "NO_MEASUREMENT_ROUTING_SIGNAL",
+  "evidence_grade": "EXPLORATORY_HELD_OUT_SIMULATION",
+  "policy_authority": "NONE",
+  "cohort": {
+    "source_rows": 246,
+    "evaluable": 197,
+    "clean": 143,
+    "bad": 54
+  },
+  "measurement_counts": {
+    "exhaustive": 591,
+    "best_static": 518,
+    "history_adaptive": 518,
+    "sequence_adaptive": 514,
+    "oracle": 483
+  },
+  "preserved_outputs": {
+    "markdown": {
+      "path": "benchmarks/candidate_promotion/experiments/rma_001/results/rma-001-report.md",
+      "sha256": "dbb5a06d5049b02d6a547f382b4ec9817200b2490c9e74e6b1cb2242fea7550a"
+    },
+    "json": {
+      "path": "benchmarks/candidate_promotion/experiments/rma_001/results/rma-001-report.json",
+      "sha256": "8070850ad20b3fed349b16e9fad14d63a9b73472afcfc2cb5d1cda3b59aa236d"
+    }
+  },
+  "preservation_note": "The committed outputs were deterministically reproduced with the frozen runner, pinned GDPa1 commit and pinned source blob after the canonical run. Their verdict and reported metrics match the canonical Actions summary. The original artifact digest and run remain recorded above.",
+  "stop_rule": "Close the three-assay routing hypothesis on this substrate. Do not rescue it by changing thresholds, source cohort, fold assignment, savings bars, or cost weights after observing the result."
 }

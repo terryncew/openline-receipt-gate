@@ -102,6 +102,8 @@ def load_tap_features(path: Path, cohort: pd.DataFrame) -> np.ndarray:
     ]
     id_col = id_candidates[0] if id_candidates else tap.columns[0]
 
+    # Bind using the identity namespace the TAP file actually declares.
+    # Ginkgo GDPa1 TAP.csv is keyed by antibody_name, not antibody_id.
     id_key = str(id_col).strip().lower()
     if id_key == "antibody_name":
         cohort_key = "antibody_name"

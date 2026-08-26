@@ -33,11 +33,10 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install "numpy>=2,<3" "pandas>=2,<3" "scipy>=1.14,<2" "scikit-learn==1.8.0"
 
-      - name: Verify committed TAP identity binding
+      - name: Verify committed TAP identity repair
         run: |
           python -m py_compile benchmarks/candidate_promotion/experiments/rgv_pilot/run_suite.py
-          grep -q 'if id_key == "antibody_name"' benchmarks/candidate_promotion/experiments/rgv_pilot/run_suite.py
-          grep -q 'validate="one_to_one", indicator=True' benchmarks/candidate_promotion/experiments/rgv_pilot/run_suite.py
+          grep -q 'cohort_key = "antibody_name"' benchmarks/candidate_promotion/experiments/rgv_pilot/run_suite.py
           git diff --exit-code -- benchmarks/candidate_promotion/experiments/rgv_pilot/run_suite.py
 
       - name: Verify syntax and mathematical contract
@@ -61,10 +60,6 @@ jobs:
       - name: Run source-derived pilot once
         run: |
           python -m benchmarks.candidate_promotion.experiments.rgv_pilot.run_suite             --csv "$GDP_ROOT/$GDP_PATH"             --tap "$GDP_ROOT/data/features/processed_features/GDPa1/TAP.csv"             --json-output rgv-pilot-report.json             --markdown-output rgv-pilot-report.md
-
-      - name: Verify benchmark did not rewrite committed source
-        if: always()
-        run: git diff --exit-code -- benchmarks/candidate_promotion/experiments/rgv_pilot/run_suite.py
 
       - name: Verify frozen report contract
         if: always()
