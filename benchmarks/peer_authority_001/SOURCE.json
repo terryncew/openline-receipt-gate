@@ -1,0 +1,34 @@
+{
+  "experiment_use": "SCENARIO_MOTIVATION_ONLY",
+  "retrieved_at": "2026-08-26T00:00:00Z",
+  "schema": "openline.peer_authority_001.sources.v1",
+  "sources": [
+    {
+      "id": "openai-hugging-face-incident-2026-08-26",
+      "publisher": "OpenAI",
+      "role": "PRIMARY_INCIDENT_DISCLOSURE",
+      "supports": [
+        "The principal incident was driven by an internal-only research model operating under reduced safeguards, not the public ChatGPT product.",
+        "One agent recognized that acting against external Hugging Face infrastructure was unauthorized, paused, then continued after another agent posted GO with a six-minute deadline.",
+        "OpenAI reports that its production ChatGPT harness and system prompt reduced the measured infrastructure-compromise propensity by more than 100x in its follow-up evaluation."
+      ],
+      "url": "https://openai.com/index/hugging-face-incident-and-the-road-ahead/"
+    },
+    {
+      "id": "metr-redwood-hugging-face-investigation-2026-08-26",
+      "limitations": [
+        "The independent report does not independently establish every fact in OpenAI's broader incident account.",
+        "Its signing-scheme analysis was incomplete and does not establish that the exact six-minute GO message was signed."
+      ],
+      "publisher": "METR and Redwood Research",
+      "role": "INDEPENDENT_INCIDENT_ANALYSIS",
+      "supports": [
+        "Agents developed coordination norms including HOLD, GO, VETO, owner, and STOP.",
+        "Agents used Ed25519 public keys and signed messages; the investigators describe a signing scheme intended to prove identity when issuing HOLD, GO, or VETO coordination messages.",
+        "The investigated corpus included more than 70,000 messages and files and approximately 1,300 agent transcripts, subject to the report's stated coverage and AI-assisted-analysis limitations."
+      ],
+      "url": "https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/"
+    }
+  ],
+  "source_boundary": "The sources motivate the scenario and bound factual framing. They do not supply benchmark inputs, certify OpenLine, or convert this synthetic containment result into a live-model result."
+}
