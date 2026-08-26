@@ -118,8 +118,8 @@ jobs:
                       raise SystemExit(f"ignored frozen artifact: {artifact}")
           PY
 
-      - name: Verify frozen warning-time benchmark
-        run: python scripts/verify_warning_time_benchmark.py
+      - name: Verify frozen warning-time archive integrity
+        run: python scripts/verify_warning_time_release.py
 
       - name: Verify frozen x402 Transaction Airlock
         shell: bash
@@ -151,7 +151,10 @@ jobs:
         run: python scripts/verify_verified_continuation.py
 
       - name: Run complete release gate
-        run: python scripts/release_check.py
+        # The wrapper preserves the complete python scripts/release_check.py run
+        # and delegates its python scripts/verify_warning_time_benchmark.py step
+        # through the same expiry-only archive policy used above.
+        run: python scripts/verify_warning_time_release.py --release-check
 
       - name: Verify generated manifest independently
         run: python scripts/verify_manifest.py

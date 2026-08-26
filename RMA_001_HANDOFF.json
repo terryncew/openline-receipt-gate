@@ -1,0 +1,12 @@
+{
+  "experiment": "RMA-001",
+  "repo": "terryncew/openline-receipt-gate",
+  "base": "main@9c3abadcafe764c9ce435ee5b8cecf58070b09a8",
+  "branch": "feat/rma-001",
+  "commit": "test(gate): add held-out measurement allocation benchmark",
+  "pr_title": "test(gate): add held-out measurement allocation benchmark",
+  "merge": "feat/rma-001 \u2192 main",
+  "policy_authority": "NONE",
+  "canonical_output": "rma-001-report.md",
+  "note": "No result is precomputed locally. CI/manual workflow produces the first verdict from pinned GDPa1."
+}

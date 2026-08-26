@@ -1,0 +1,81 @@
+name: RMA-001 Measurement Allocation
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "benchmarks/candidate_promotion/experiments/rma_001/**"
+      - ".github/workflows/rma-001.yml"
+      - "docs/RMA_001.md"
+
+permissions:
+  contents: read
+
+jobs:
+  measurement-allocation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GDP_REPO: https://github.com/ginkgobioworks/abdev-benchmark.git
+      GDP_COMMIT: cc6d3b69afc92695445695345399d9c91b0d14a4
+      GDP_PATH: data/GDPa1_v1.2_20250814.csv
+      GDP_BLOB: 923c38b1a7b7d2421bd4c6fa7461febc797c446c
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install "numpy>=2,<3" "pandas>=2,<3" "scikit-learn==1.8.0"
+
+      - name: Verify syntax and authority boundary
+        run: |
+          python -m py_compile benchmarks/candidate_promotion/experiments/rma_001/run_suite.py
+          python -m benchmarks.candidate_promotion.experiments.rma_001.run_suite --self-test
+
+      - name: Fetch pinned GDPa1 source
+        shell: bash
+        run: |
+          set -euo pipefail
+          upstream="$RUNNER_TEMP/abdev-benchmark"
+          git init "$upstream"
+          git -C "$upstream" remote add origin "$GDP_REPO"
+          git -C "$upstream" fetch --depth=1 origin "$GDP_COMMIT"
+          git -C "$upstream" checkout --detach FETCH_HEAD
+          test "$(git -C "$upstream" rev-parse HEAD)" = "$GDP_COMMIT"
+          test "$(git -C "$upstream" rev-parse "HEAD:$GDP_PATH")" = "$GDP_BLOB"
+          printf 'GDP_ROOT=%s\n' "$upstream" >> "$GITHUB_ENV"
+
+      - name: Run frozen held-out routing benchmark
+        run: |
+          python -m benchmarks.candidate_promotion.experiments.rma_001.run_suite \
+            --csv "$GDP_ROOT/$GDP_PATH" \
+            --json-output rma-001-report.json \
+            --markdown-output rma-001-report.md
+
+      - name: Verify report independently
+        run: |
+          python -m benchmarks.candidate_promotion.experiments.rma_001.run_suite \
+            --verify rma-001-report.json
+
+      - name: Put canonical report on Actions summary
+        if: always()
+        run: |
+          if test -f rma-001-report.md; then
+            cat rma-001-report.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload canonical report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rma-001-report
+          path: |
+            rma-001-report.md
+            rma-001-report.json
+          if-no-files-found: error

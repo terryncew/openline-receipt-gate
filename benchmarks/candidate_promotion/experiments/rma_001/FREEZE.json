@@ -1,0 +1,106 @@
+{
+  "schema": "openline.rma_001.freeze.v1",
+  "experiment": "RMA-001",
+  "title": "Reality Measurement Allocation \u2014 Held-Out Sequential Assay Routing",
+  "policy_authority": "NONE",
+  "evidence_grade": "EXPLORATORY_HELD_OUT_SIMULATION",
+  "question": "When sequence-derived prediction is not reliable enough to veto candidates directly, can it still reduce scarce wet-lab measurements by routing each candidate to the most informative failure assay first while preserving exact final dispositions?",
+  "source": {
+    "repository": "ginkgobioworks/abdev-benchmark",
+    "commit": "cc6d3b69afc92695445695345399d9c91b0d14a4",
+    "path": "data/GDPa1_v1.2_20250814.csv",
+    "git_blob": "923c38b1a7b7d2421bd4c6fa7461febc797c446c",
+    "expected_source_rows": 246
+  },
+  "cohort_rule": {
+    "required_identity": [
+      "antibody_id"
+    ],
+    "required_sequences": [
+      "vh_protein_sequence",
+      "vl_protein_sequence"
+    ],
+    "required_truth_assays": [
+      "HIC",
+      "PR_CHO",
+      "AC-SINS_pH7.4"
+    ],
+    "required_outer_fold": "hierarchical_cluster_IgG_isotype_stratified_fold",
+    "hard_coded_candidate_count": "FORBIDDEN",
+    "truth_imputation": "FORBIDDEN"
+  },
+  "truth": {
+    "HIC": {
+      "bad_if": ">",
+      "threshold": 3.18
+    },
+    "PR_CHO": {
+      "bad_if": ">",
+      "threshold": 0.38
+    },
+    "AC-SINS_pH7.4": {
+      "bad_if": ">",
+      "threshold": 17.51
+    }
+  },
+  "cost_model": {
+    "primary": "unit_cost_per_assay_reveal",
+    "reason": "No frozen source-backed monetary or time cost schedule is available.",
+    "dollar_savings_claim": "FORBIDDEN"
+  },
+  "policies": {
+    "exhaustive": "Reveal all three assays for every candidate.",
+    "best_static": "Choose the best of all 6 fixed assay orders using outer-training truth only; on held-out candidates stop at first observed failure.",
+    "history_adaptive": "At each state choose the remaining assay with highest smoothed outer-training conditional failure rate given the already observed PASS subset.",
+    "sequence_adaptive": "At each state choose the remaining assay with highest held-out predicted failure probability from sequence descriptors plus already observed clean assay values. Models are trained only on outer-training candidates that could reach that state.",
+    "oracle": "For failing candidates reveal one known-failing assay; for clean candidates reveal all three. Unattainable upper bound."
+  },
+  "authority_boundary": {
+    "routing_model_may": "choose next assay",
+    "routing_model_may_not": [
+      "declare VETO",
+      "declare RETAIN",
+      "replace an assay result"
+    ],
+    "VETO": "requires an actually revealed assay value beyond its frozen failure threshold",
+    "RETAIN": "requires all three actually revealed assay values within frozen thresholds",
+    "final_disposition_concordance_required": 1.0
+  },
+  "outer_evaluation": {
+    "split": "hierarchical_cluster_IgG_isotype_stratified_fold",
+    "held_out_fold_may_influence_policy": false,
+    "sequence_model": "LogisticRegression(C=1.0, L2, max_iter=5000) on fixed sequence descriptors plus observed-pass assay values",
+    "fallback": "Laplace-smoothed conditional failure frequency when a conditional sequence model lacks both classes"
+  },
+  "bootstrap": {
+    "paired_candidate_bootstrap_draws": 10000,
+    "seed": 20260826,
+    "confidence": 0.95
+  },
+  "signal_bars": {
+    "sequence_vs_best_static_relative_savings_min": 0.1,
+    "sequence_vs_history_relative_savings_min": 0.05,
+    "paired_bootstrap_lower_bound_must_exceed_zero": true
+  },
+  "verdicts": {
+    "sequence": "SEQUENCE_ADAPTIVE_ROUTING_SIGNAL",
+    "history": "HISTORY_ONLY_ROUTING_SIGNAL",
+    "null": "NO_MEASUREMENT_ROUTING_SIGNAL",
+    "coverage": "INCONCLUSIVE_MEASUREMENT_COVERAGE"
+  },
+  "prior_result": {
+    "RGV-PILOT": "NO_PILOT_VETO_SIGNAL on 197 evaluable GDPa1 antibodies (143 clean / 54 bad). Direct learned veto authority is therefore closed under its frozen stop rule."
+  },
+  "claim_boundary": {
+    "sequence": "Held-out simulation evidence that sequence-conditioned routing reduced assay reveals relative to the best fixed order while all final VETO/RETAIN decisions remained measurement-backed.",
+    "history": "Held-out simulation evidence that adaptive routing helped, but sequence information did not earn a material routing increment over simple conditional assay-history statistics.",
+    "forbidden": [
+      "clinical success prediction",
+      "candidate quality ranking",
+      "sequence-only veto authority",
+      "real-dollar laboratory savings without a source-backed assay cost schedule",
+      "external validation beyond GDPa1"
+    ]
+  },
+  "stop_rule": "If NO_MEASUREMENT_ROUTING_SIGNAL, close the three-assay routing hypothesis on this substrate. Do not rescue it by changing thresholds, source cohort, fold assignment, savings bars, or cost weights after observing the result."
+}
