@@ -6,6 +6,7 @@ on:
     paths:
       - "benchmarks/candidate_promotion/experiments/rgv_pilot/**"
       - ".github/workflows/rgv-pilot.yml"
+      - "apply_tap_fix.py"
       - "docs/RGV_PILOT.md"
 
 permissions:
@@ -33,9 +34,18 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install "numpy>=2,<3" "pandas>=2,<3" "scipy>=1.14,<2" "scikit-learn==1.8.0"
 
+      - name: Apply committed TAP identity repair
+        run: |
+          python apply_tap_fix.py
+          python -m py_compile benchmarks/candidate_promotion/experiments/rgv_pilot/run_suite.py
+          grep -q 'cohort_key = "antibody_name"' benchmarks/candidate_promotion/experiments/rgv_pilot/run_suite.py
+          if git diff --quiet -- benchmarks/candidate_promotion/experiments/rgv_pilot/run_suite.py; then
+            echo "TAP repair produced no code change" >&2
+            exit 1
+          fi
+
       - name: Verify syntax and mathematical contract
         run: |
-          python -m py_compile benchmarks/candidate_promotion/experiments/rgv_pilot/run_suite.py
           python -m py_compile benchmarks/candidate_promotion/experiments/rgv_pilot/verify_report.py
           python -m benchmarks.candidate_promotion.experiments.rgv_pilot.run_suite --self-test
 
@@ -54,11 +64,7 @@ jobs:
 
       - name: Run source-derived pilot once
         run: |
-          python -m benchmarks.candidate_promotion.experiments.rgv_pilot.run_suite \
-            --csv "$GDP_ROOT/$GDP_PATH" \
-            --tap "$GDP_ROOT/data/features/processed_features/GDPa1/TAP.csv" \
-            --json-output rgv-pilot-report.json \
-            --markdown-output rgv-pilot-report.md
+          python -m benchmarks.candidate_promotion.experiments.rgv_pilot.run_suite             --csv "$GDP_ROOT/$GDP_PATH"             --tap "$GDP_ROOT/data/features/processed_features/GDPa1/TAP.csv"             --json-output rgv-pilot-report.json             --markdown-output rgv-pilot-report.md
 
       - name: Verify frozen report contract
         if: always()
