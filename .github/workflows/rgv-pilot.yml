@@ -64,11 +64,7 @@ jobs:
 
       - name: Run source-derived pilot once
         run: |
-          python -m benchmarks.candidate_promotion.experiments.rgv_pilot.run_suite \
-            --csv "$GDP_ROOT/$GDP_PATH" \
-            --tap "$GDP_ROOT/data/features/processed_features/GDPa1/TAP.csv" \
-            --json-output rgv-pilot-report.json \
-            --markdown-output rgv-pilot-report.md
+          python -m benchmarks.candidate_promotion.experiments.rgv_pilot.run_suite             --csv "$GDP_ROOT/$GDP_PATH"             --tap "$GDP_ROOT/data/features/processed_features/GDPa1/TAP.csv"             --json-output rgv-pilot-report.json             --markdown-output rgv-pilot-report.md
 
       - name: Verify frozen report contract
         if: always()
