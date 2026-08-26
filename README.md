@@ -1,37 +1,105 @@
 # OpenLine Receipt Gate
 
-Most receipts make the past verifiable. Receipt Gate makes verified history usable by the next decision.
+**Let the agent propose. Make the receiver decide.**
 
-## Protect one consequential function in five minutes
+OpenLine Receipt Gate is a Python safety boundary for consequential AI actions:
+refunds, payments, deployments, file changes, data access, or any other tool call
+that should require more than the model saying it is a good idea.
 
-OpenLine can sit directly at a Python function boundary. The model may propose the call; the receiver-owned guard decides whether that exact call has enough authority to execute. The function body is never called on a blocked decision.
+Before the protected function runs, the gate checks the exact call against:
 
-From a clean checkout, use a virtual environment so the demo does not collide with system Python packages:
+- a receiver-owned mandate and permission policy;
+- current receiver-owned state;
+- fresh evidence from receiver-controlled providers;
+- trusted receipt keys and source history; and
+- local replay and one-use state.
 
-```bash
+If the evidence is sufficient, the call executes. If evidence is missing, the
+call is quarantined. If a hard rule or integrity check fails, the call is
+denied. The model cannot approve itself by writing a persuasive explanation.
+
+> A receipt records what happened. A receiver-owned gate decides whether the
+> next thing may happen.
+
+## Status
+
+| Item | Current state |
+|---|---|
+| Package | openline-receipt-gate |
+| Version | 0.6.0rc6 |
+| Python | 3.10 or newer |
+| License | MIT |
+| Maturity | Release candidate and reference implementation |
+
+This repository is not a hosted authorization service or a production
+certification. A production deployment must own its keys, policies, evidence
+providers, replay state, and every route to the protected effect.
+
+## Five-minute demo
+
+From a clean checkout:
+
+~~~bash
 git clone https://github.com/terryncew/openline-receipt-gate.git
 cd openline-receipt-gate
 python -m venv .venv
 source .venv/bin/activate
 python -m pip install -e .
 python examples/langgraph_refund_guard/demo.py
-```
+~~~
 
-On Windows PowerShell, activate the environment with `.venv\\Scripts\\Activate.ps1`.
+On Windows PowerShell:
 
-The reference refund demo should show:
+~~~powershell
+.venv\Scripts\Activate.ps1
+~~~
 
-```text
-$25 refund                         → executes
-$500 without manager approval     → QUARANTINE
-$500 after manager approval       → executes
-$1,000.01 even with approval      → DENY
-```
+The demo protects a refund function:
 
-The integration surface is an ordinary decorator:
+| Proposed action | Result |
+|---|---|
+| Refund $25 under standing authority | Executes |
+| Refund $500 without manager approval | QUARANTINE |
+| Refund $500 after manager approval | Executes |
+| Refund $1,000.01 despite approval | DENY |
 
-```python
-from olp_gate import authorize, payment_semantics
+The blocked calls never enter the refund function. The complete example and its
+policy are in
+[examples/langgraph_refund_guard](examples/langgraph_refund_guard/README.md).
+
+## Choose the integration you need
+
+| If you need to... | Start here |
+|---|---|
+| Protect a Python or LangGraph tool in the same process | @authorize |
+| Turn existing receipts into a signed receiver decision | olp-gate decide |
+| Carry one exact permission to another service or process | VerifiedCommitLedger |
+| Check whether explicit decision state survived an agent handoff | Handoff Check |
+
+## Guard a Python function
+
+~~~python
+from olp_gate import AuthorizationBlocked, authorize, payment_semantics
+
+
+def current_state(call):
+    customer_id = call.arguments["customer_id"]
+    return {
+        "customer_id": customer_id,
+        "customer_version": customer_versions[customer_id],
+        "manager_approved": customer_id in manager_approved,
+    }
+
+
+def refund_authority(call):
+    amount = call.arguments["amount_cents"]
+    customer_id = call.arguments["customer_id"]
+    if amount <= 5_000:
+        return {"basis": "standing_under_50_rule"}
+    if customer_id in manager_approved:
+        return {"basis": "manager_approval"}
+    return None
+
 
 @authorize(
     policy="refund_policy.json",
@@ -43,254 +111,121 @@ from olp_gate import authorize, payment_semantics
 )
 def process_refund(amount_cents: int, customer_id: str):
     return payment_api.refund(amount_cents, customer_id)
-```
 
-For LangGraph, place its `@tool` decorator outside `@authorize`, so every tool invocation still crosses the OpenLine boundary before the consequential function body. See the complete [five-minute refund example](examples/langgraph_refund_guard/README.md).
 
-The demo writes receiver-side records to:
+try:
+    process_refund(amount_cents=50_000, customer_id="C-1042")
+except AuthorizationBlocked as blocked:
+    print(blocked.decision, blocked.reason_codes)
+~~~
 
-```text
-examples/langgraph_refund_guard/.openline-demo/decision_receipts.jsonl
-examples/langgraph_refund_guard/.openline-demo/compiler_results.jsonl
-```
+The important boundary is ownership:
 
-The sub-10-minute integration goal is a product target until an outside developer completes the cold-start trial.
+- The agent supplies the proposed tool arguments.
+- The receiver supplies the policy, current-state callback, evidence callbacks,
+  trusted keys, and replay state.
+- Model output must never be wired into state_source or evidence_sources as
+  trusted data.
+- Arguments are frozen before evaluation. The executed call is rebuilt from
+  those frozen values rather than caller-owned mutable objects.
 
-It accepts signed OLP Wire Canon receipts, Agent Receipts v0.1–v0.5,
-Pipelock ActionReceipt v1, Assay Evidence Contract v1 bundles, and the older
-local Receipt Gate chain. It checks integrity, provenance, declared coverage,
-the source system's action signal, freshness, evidence, and an independent
-outcome separately. The result is a signed policy decision:
+For LangGraph, keep its decorator outside OpenLine's:
 
-```text
-COMMIT
-QUARANTINE
-DENY
-NO_BADGE
-ROLLBACK_REQUEST
-```
+~~~python
+@tool
+@authorize(...)
+def consequential_tool(...):
+    ...
+~~~
 
-A valid signature can still produce `UNDECIDABLE`. Signature validity is never treated as evidence sufficiency.
+No LangGraph dependency is required by the gate itself. See
+[docs/TOOL_ADAPTER.md](docs/TOOL_ADAPTER.md) for the adapter contract.
 
-## Pinned upstream x402 consequence reproduction (v0.6.0rc6)
+## Policy model
 
-This release adds one comparative result against current, official upstream
-code rather than another self-authored hostile fixture.
+The guarded-tool policy has two parts:
 
-At x402 commit `167a828e8319aa7b403f4f4312489e9cffadff10`, the official
-asynchronous Python MCP wrapper verifies payment, executes the tool handler,
-and only then attempts settlement. The checked-in reproduction uses an actual
-durable file effect: when settlement raises, the wrapper returns an error but
-the handler's effect has already occurred once.
+| Part | Purpose |
+|---|---|
+| Mandate | Hard limits: agent, purpose, allowed action types, targets, amounts, delegation, and expiry |
+| Permission policy | Evidence required for a particular tool and target, accepted issuers, freshness, and what to do when evidence is unavailable |
 
-The matched Receipt Gate composition attempts the same failing settlement but
-does not invoke the protected resource-release callback. A legitimate
-settlement plus matching confirmation releases the resource exactly once.
+The request cannot add a trusted key, replace the receiver's policy, choose an
+executable verifier, or broaden its own mandate. Start with the working
+[refund_policy.json](examples/langgraph_refund_guard/refund_policy.json).
 
-```bash
-python benchmarks/x402_upstream_consequence/run_comparison.py \
-  --upstream-root /path/to/x402-at-167a828e
-python scripts/verify_x402_upstream_consequence.py \
-  --upstream-root /path/to/x402-at-167a828e
-```
+## Decisions
 
-The runner refuses a different upstream commit or different source bytes. The
-independent verifier imports no Receipt Gate modules and checks the upstream
-call order, recorded observations, and durable effect bytes. This earns a
-narrow consequence-order claim for the pinned Python MCP wrapper. It is not a
-live-chain exploit, a claim about every x402 SDK, or production certification.
-See
-[`benchmarks/x402_upstream_consequence/PROTOCOL.md`](benchmarks/x402_upstream_consequence/PROTOCOL.md).
+For protected function calls, the normal outcomes are:
 
-## Role-Confusion Consequence Gate (v0.6.0rc6)
+| Decision | Meaning | Function runs? |
+|---|---|---:|
+| COMMIT | Required checks passed and the exact action was authorized | Yes |
+| QUARANTINE | Required evidence is missing or the result is undecidable | No |
+| DENY | A hard rule, integrity check, or trusted evidence check failed | No |
 
-The model can be fooled without the receiver being fooled.
+Two additional dispositions are used by specialized evaluation profiles:
 
-This release adds a frozen receiver-side hostile suite for the case where an
-authenticated agent has already adopted an untrusted instruction and requests a
-protected action it is structurally allowed to request. Receipt Gate does not
-classify the prompt or attempt to repair the model. It asks whether
-receiver-pinned, action-bound evidence still justifies the protected effect.
+- NO_BADGE: an evaluation claim lacks enough support.
+- ROLLBACK_REQUEST: a signed request asks a declared external actuator to
+  reverse an effect. It does not perform the rollback itself.
 
-```bash
-olp-gate role-confusion-suite \
-  --benchmark benchmarks/role_confusion_consequence \
-  --output benchmarks/role_confusion_consequence/results/hostile_report.json
-python scripts/verify_role_confusion_consequence.py
-```
+A valid signature proves who signed the bytes. It does not prove that the
+evidence was sufficient. Signature validity alone can still produce
+QUARANTINE.
 
-The frozen matrix contains 13 synthetic cases. The decisive matched pair uses
-the exact same action and authorization structure: untrusted webpage evidence
-returns `QUARANTINE`, while receiver-pinned signed evidence returns `COMMIT`.
-The suite also covers fake-user text inside tool output, forged reasoning,
-stale or stripped evidence, replay, action-binding mismatch, forged
-trusted-origin keys, conflicting fresh trusted evidence, a mixed trusted bundle
-containing both exact-action support and a receipt bound to a different action,
-and unrelated untrusted content that must not cause a false block. A valid
-trusted wrong-action receipt is treated as bundle incoherence and fails closed;
-untrusted unrelated evidence remains ignorable.
+## Command-line flow
 
-Each case passes through a harmless receiver-side effect callback. Blocked
-cases must leave that callback untouched; the three committed controls invoke
-it exactly once. The independent verifier imports no consequence-gate code,
-recomputes every decision and effect expectation, verifies the frozen source
-closure, and checks the result report. Attack text, attack labels, model
-reasoning, and detector scores are absent from the appraisal input.
+Create a receiver signing key:
 
-**The model compromise is assumed, not reproduced. This demonstrates that
-unsupported evidence can be stopped before consequence even when exact-action
-authorization is otherwise valid.**
+~~~bash
+olp-gate keygen .secrets/gate.key
+~~~
 
-This is a deterministic post-compromise mechanism test, not a live attack
-reproduction. The standalone callback is not an atomic replay ledger;
-production effects must compose appraisal with Verified Commit. See
-[`docs/ROLE_CONFUSION_CONSEQUENCE_GATE.md`](docs/ROLE_CONFUSION_CONSEQUENCE_GATE.md).
+Issue a short-lived challenge bound to the expected source receipt:
 
-## OpenLine Handoff Check (v0.6.0rc6)
+~~~bash
+olp-gate challenge state/sessions.json \
+  --run-id run-123 \
+  --session-id session-123 \
+  --source-hash <source-receipt-sha256> \
+  --ttl 300
+~~~
 
-Change the agent without losing why the work was done.
+Evaluate a request using receiver-controlled policy and trust files:
 
-Handoff Check imports a local Claude Code transcript, Codex rollout JSONL, or
-a generic JSON/JSONL history; names the next important action; builds a bounded
-fresh-agent capsule; and then separately replays the full canonicalized history
-with a different traversal and validator to check whether the inherited state
-still matches. The capsule cannot approve itself.
+~~~bash
+olp-gate decide request.json \
+  --policy policy.json \
+  --trust trust.json \
+  --key .secrets/gate.key \
+  --issuer procurement-gate \
+  --ledger state/sessions.json \
+  --out receipts/decision_receipts.jsonl
+~~~
 
-```bash
-olp-gate handoff-check ~/.claude/projects/.../session.jsonl \
-  --next "implement the authentication refactor" \
-  --repo . \
-  --output ./handoff
-```
+Verify the signed result independently:
 
-The public continuation result is one of:
+~~~bash
+olp-gate verify-decision receipts/decision_receipts.jsonl \
+  --gate-key "$TRUSTED_GATE_PUBLIC_KEY"
 
-```text
-SAFE_TO_CONTINUE
-DECISION_CHANGED
-EVIDENCE_MISSING
-UNDECIDABLE
-```
+node verify-decision-node.mjs receipts/decision_receipts.jsonl \
+  --gate-key "$TRUSTED_GATE_PUBLIC_KEY"
+~~~
 
-The tool never converts ordinary assistant prose into trusted rationale. A
-decision, evidence item, constraint, assumption, open question, rejected path,
-or artifact becomes semantic handoff state only when the history contains an
-explicit structured `semantic` object or an `OLP_*` marker. If the rationale is
-not explicitly supported, the result is `EVIDENCE_MISSING`; malformed or
-uninterpretable source material fails closed as `UNDECIDABLE`.
+The trusted public key must come from receiver configuration, not from the
+receipt being checked. Repeat --gate-key only for an explicit key-rotation
+window.
 
-A successful run writes `capsule.json` and `capsule.md` for the new agent, a separate
-`reference_replay.json`, a restore index, a machine-readable report,
-an optional signed continuation receipt, and a shareable local proof card.
-`handoff-inspect` can later compare the capsule against a changed history and
-report a stale inherited decision, but the receiver must provide `--next`
-again rather than trusting the capsule's action. `handoff-restore` rederives
-the full archive index and can recover explicit state left outside the capsule
-only when the original source-history hash still matches.
+## Portable one-use permission
 
-The included example is a deterministic conformance fixture, not evidence that
-real Claude Code or Codex sessions preserve decisions better in practice. The
-product claim remains bounded to the supplied local history and explicit state.
- See [`docs/HANDOFF_CHECK.md`](docs/HANDOFF_CHECK.md) for the adapter and marker contract.
+A signed COMMIT is evidence of a decision. It becomes portable tool permission
+only when it also contains an exact Verified Commit authorization. That
+authorization binds the tool, target, settings hash, run, evidence, policy,
+expiry, and a receiver-held one-use code.
 
-## Warning Time benchmark (v0.5.0rc6)
-
-An early-warning metric matters only when it creates a measurable window in
-which Receipt Gate can prevent a bad action. The corrected DSM / Receipt Gate
-benchmark freezes a **signed Calibration Profile** before held-out evaluation.
-The profile binds the graph, prompts, observable-state metric source, clean
-calibration evidence, thresholds, paired seed design, private custody anchor,
-and the limited actions those thresholds may govern.
-
-```text
-warning_time_steps = bad_action_step - first_warning_step
-gate_lead_time_steps = bad_action_step - gate_intervention_step
-```
-
-The metric function receives only seed, step, current observable state, and
-previous observable state. It does not receive the case label, corruption type,
-injection step, or expected result. A label-swap probe confirms that warnings
-follow the state mutation rather than the displayed label. The same 20 held-out
-seeds are reused across all three conditions so the seed cannot identify the
-case.
-
-The disclosed experiment uses 40 clean calibration runs and 60 held-out runs.
-One hundred total runs is this fixture's starting design, not a universal
-requirement. The held-out result is:
-
-```text
-clean controls               0 / 20 false alarms · 20 COMMIT
-dropped counter-evidence     0 / 20 missed · reference warning +5 · 20 QUARANTINE
-unflagged contradiction      0 / 20 missed · reference warning +5 · 20 DENY
-Receipt Gate lead            +3 steps in both reference corruptions
-```
-
-Reproduce it:
-
-```bash
-python -m benchmarks.warning_time.run_benchmark \
-  --output benchmarks/warning_time/results
-python scripts/verify_warning_time_benchmark.py
-```
-
-The standalone verifier imports no warning-time benchmark modules and
-independently recomputes the observable features, metric values, clean-only
-thresholds, held-out trajectories, signatures, decisions, warning times, and
-hashes. It also pins the exact external-anchor witness key and payload hash, so
-an attacker-selected signer cannot certify substituted custody metadata. The
-frozen publication's referenced private Library object must still be checked
-outside the offline verifier. This proves bounded custody order for the
-disclosed artifact, not a public transparency timestamp or production
-authority.
-
-The signed profile may emit a warning or require Receipt Gate reappraisal. It
-may not issue COMMIT, QUARANTINE, or DENY, authorize execution, or retire a
-model. Successful held-out separation establishes predictive usefulness for
-the named synthetic stack and failures only; it does not prove the κ, Δ_hol,
-or VKD ontology is true. See
-[`benchmarks/warning_time/README.md`](benchmarks/warning_time/README.md).
-
-## Verified Commit
-
-Proof travels; permission belongs to the receiver.
-
-Verified Commit keeps the existing `COMMIT` disposition and the existing
-`proof_to_policy_decision_receipt`. When a receiver chooses to authorize a
-consequential tool call, the signed receipt additionally binds the exact:
-
-```text
-tool · target · settings hash · run · capsule · evidence · policy · expiry · one-use code hash
-```
-
-The destination tool checks that signed authorization against its own trusted
-gate key and atomically consumes it before calling the tool. Changed settings,
-wrong targets, expiry, replay, and concurrent double use fail before execution.
-An ordinary `COMMIT` without `commit_authorization` remains valid evidence, but
-it grants no portable tool permission.
-
-Run the disclosed Model A → Model B → one approved write proof:
-
-```bash
-pip install -r requirements-model-swap.txt
-export OLP_HALF_LIFE_ROOT=../openline-half-life
-
-olp-gate demo-verified-commit \
-  --half-life-output "$OLP_HALF_LIFE_ROOT/examples/demo_output" \
-  --succession-policy-key "$OLP_HALF_LIFE_ROOT/policy/succession_policy_public_key.hex" \
-  --compaction-policy-key "$OLP_HALF_LIFE_ROOT/policy/compaction_policy_public_key.hex" \
-  --source-model fixture/model-a \
-  --target-model fixture/model-b \
-  --output results/verified_commit_demo
-```
-
-The demo tries nine mutations, two simultaneous uses, and a sequential replay.
-The release suite additionally races 32 receiver processes against one
-authorization and requires exactly one tool invocation.
-It records every receiver-side result and independently regrades the model-swap
-proof. For a real tool adapter, keep the check and side effect in one entry
-point:
-
-```python
+~~~python
 from olp_gate import VerifiedCommitLedger
 
 result = VerifiedCommitLedger("state/commit-ledger.json").execute_once(
@@ -300,457 +235,133 @@ result = VerifiedCommitLedger("state/commit-ledger.json").execute_once(
     trusted_gate_keys=[receiver_gate_public_key],
     executor=lambda: destination_tool(**exact_action["settings"]),
 )
+
 if not result["authorized"]:
     raise PermissionError(result["reason_codes"])
-```
+~~~
 
-`check_and_consume()` is exposed for adapter internals, but separating it from
-the tool call creates a time-of-check/time-of-use boundary. Prefer
-`execute_once()`. See [`docs/VERIFIED_COMMIT.md`](docs/VERIFIED_COMMIT.md).
+Keep the check and the side effect inside one entry point. Calling
+check_and_consume() separately creates a gap between approval and execution.
+See [docs/VERIFIED_COMMIT.md](docs/VERIFIED_COMMIT.md).
 
-## Verified Continuation (v0.5.0rc8)
+## Supported evidence inputs
 
-Normal handoffs move context. OLP determines what the receiving system may
-trust and do with it.
+| Input | What Receipt Gate checks | Extra dependency |
+|---|---|---|
+| OLP Wire Canon 0.1 | Payload hash, Ed25519 signature, receipt kind, and amendment continuity | None |
+| Agent Receipts v0.1-v0.5 | Signature, profile, chain, issuer continuity, sequence, parents, and terminal marker | None |
+| Pipelock ActionReceipt v1 | Official verifier result plus receiver policy; an upstream allow is evidence, never automatic permission | Pinned pipelock-verify source |
+| Assay Evidence Contract v1 | Official bundle and Trust Basis result plus receiver policy | Assay v3.32.0 CLI |
+| Legacy Receipt Gate v0.1.1 | Local hash-chain continuity | None |
 
-The frozen first outside trial holds the receiver, repository checkout, task,
-tools, terminal tests, and tool-call budget constant. Only inherited state
-changes:
+Adapters preserve the source system's result. They do not silently upgrade a
+failed source claim, and compatibility does not grant OpenLine the source
+system's enforcement powers. Details:
+[docs/COMPATIBILITY.md](docs/COMPATIBILITY.md).
 
-```text
-producer self-summary
-no prior state
-Half-Life bounded capsule + receiver appraisal
-```
+## Optional modules
 
-Receipt Gate derives direct repeated-exploration, trace-error,
-terminal-defect, and budget counts from three recorded traces. It does not
-accept caller-supplied scores. The continuation claim passes only when the OLP
-lane stays within budget, is no worse than both baselines on repeated
-exploration and defects, and is strictly better than each baseline on at least
-one of those outcomes.
+| Module | Use it for | Boundary |
+|---|---|---|
+| [Handoff Check](docs/HANDOFF_CHECK.md) | Rebuild explicit decision state from Claude Code, Codex, or generic JSON/JSONL history | Ordinary assistant prose is not promoted to trusted rationale |
+| [Verified Commit](docs/VERIFIED_COMMIT.md) | Bind one signed decision to one exact destination call | Local exactly-once authorization, not globally exactly-once side effects |
+| [x402 Transaction Airlock](docs/X402_TRANSACTION_AIRLOCK.md) | Recheck exact payment state before settlement and release | Reference profile; receiver owns snapshot, settlement, confirmation, and release callbacks |
+| [Role-Confusion Consequence Gate](docs/ROLE_CONFUSION_CONSEQUENCE_GATE.md) | Block an unsupported effect even after an agent adopts an untrusted instruction | Does not classify or repair the prompt |
+| Verified Model Swap and Continuation | Test whether decision-relevant state survives a model or agent handoff | Current public runs are deterministic fixtures, not live-provider proof |
 
-The included traces are synthetic harness-conformance data. They deliberately
-produce a favorable direct-count pattern but remain `UNDECIDABLE` because no
-outside provider execution is established:
+## Security boundaries
 
-```bash
-olp-gate evaluate-continuation \
-  benchmarks/verified_continuation \
-  --output results/verified_continuation_fixture
-python scripts/verify_verified_continuation.py
-```
+Receipt Gate is useful only where it actually controls the effect:
 
-Authorization is a separate claim. The disclosed Git trial binds an existing
-Verified Commit authorization to one exact compare-and-swap update of
-`refs/heads/receiver-approved`. Wrong-branch, changed-commit, expired, replayed,
-and simultaneous duplicate writes must stop before ref mutation:
+- Every consequential route must pass through the gate. A bypass remains a
+  bypass.
+- The receiver must control policy files, trust configuration, signing keys,
+  evidence providers, and replay storage.
+- The default local runtime is for reference use. A production service should
+  use appropriate protected key custody and shared atomic state.
+- Local one-use consumption prevents replay inside that ledger. It does not
+  guarantee globally exactly-once side effects across external systems.
+- A crash after authorization consumption fails closed and requires a new
+  authorization.
+- Raw evidence is verified locally but excluded from the portable decision
+  receipt. The receipt carries hashes, assessments, policy identity, bindings,
+  reason codes, and the decision.
+- A terminal receipt proves that the declared chain has an ending marker. It
+  cannot prove that every real-world event was recorded.
 
-```bash
-olp-gate demo-continuation-authorization \
-  --half-life-output "$OLP_HALF_LIFE_ROOT/examples/demo_output" \
-  --succession-policy-key "$OLP_HALF_LIFE_ROOT/policy/succession_policy_public_key.hex" \
-  --compaction-policy-key "$OLP_HALF_LIFE_ROOT/policy/compaction_policy_public_key.hex" \
-  --source-model fixture/producer-model \
-  --target-model fixture/receiving-model \
-  --output results/verified_continuation_authorization
-```
+Read [docs/THREAT_MODEL.md](docs/THREAT_MODEL.md) and
+[docs/CLAIM_BOUNDARY.md](docs/CLAIM_BOUNDARY.md) before making production
+claims.
 
-DSM receives only a display projection after evaluation. Because these compact
-traces do not contain authoritative DSM snapshot state, κ, Φ*, and VKD remain
-`UNDECIDABLE`; DSM cannot grade either claim. See
-[`benchmarks/verified_continuation/PROTOCOL.md`](benchmarks/verified_continuation/PROTOCOL.md).
+## Test the repository
 
-## x402 Transaction Airlock (v0.5.0rc6)
+Run the unit and adversarial tests:
 
-Settlement proof is evidence. It is not, by itself, permission for the receiver
-to execute or release a protected resource.
-
-The Transaction Airlock is a narrow profile inside Verified Commit. It binds
-the exact scheme, network, asset, amount, recipient, resource, execution
-template, run, evidence, receiver policy, expiry, and one-use code into the
-existing signed `COMMIT`. At use time it consumes that permission, obtains a
-fresh receiver-owned snapshot, and rechecks authorization authenticity, nonce,
-balance, settleability, and verification-context hashes immediately before the
-settlement callback. The shared receiver ledger also atomically reserves the
-payment's scheme/network/asset/payer/signature-model/nonce scope, so distinct
-valid COMMIT receipts cannot replay or race the same payment. Resource release
-requires a separate confirmation matching the submitted transaction hash and
-exact payment fields, followed by the receiver's positive acknowledgment of
-that exact target and transaction hash.
-
-The frozen hostile suite maps the eight rules from Wang et al.,
-[*When HTTP 402 Meets the Blockchain*](https://arxiv.org/abs/2607.19545), to 56
-synthetic cases:
-
-```text
-56 / 56 hostile cases passed
-SR1–SR8 covered
-network · asset · recipient · amount · expiry · replay ·
-verification/settlement divergence blocked at the declared boundary
-```
-
-Reproduce and independently verify it:
-
-```bash
-python benchmarks/x402_airlock/run_hostile_suite.py
-python scripts/verify_x402_airlock.py
-```
-
-The verifier uses only the Python standard library and imports neither the
-candidate package nor benchmark modules. This is not a live facilitator,
-wallet, or chain audit. Receiver snapshot and confirmation providers remain
-trusted deployment components, and routes that bypass the airlock remain
-outside the claim. See
-[`docs/X402_TRANSACTION_AIRLOCK.md`](docs/X402_TRANSACTION_AIRLOCK.md).
-
-## Verified Model Swap (introduced in v0.5.0rc1)
-
-Verified Model Swap asks one bounded question: can a different model receive the
-agent's decision-relevant state without changing what the receiver would allow?
-
-It grades three lanes against an independent replay of the raw verified history:
-
-```text
-uninterrupted full history     -> receiver oracle
-ordinary active-state summary -> measured omissions
-Half-Life causal capsule      -> exact COMMIT / QUARANTINE / DENY comparison
-```
-
-The candidate adapter, Half-Life compactor, and DSM display cannot grade the
-trial. Receipt Gate authenticates Half-Life's policies, chain, archive, and
-decision-equivalence output; independently replays the raw history; restores the
-cold archive; then binds the proof card as evidence in the existing
-`proof_to_policy_decision_receipt`. No score, receipt family, disposition, or
-automatic retirement rule is added.
-
-Install the pinned integration and run the disclosed offline fixture:
-
-```bash
-pip install -r requirements-model-swap.txt
-export OLP_HALF_LIFE_ROOT=../openline-half-life
-
-olp-gate demo-model-swap \
-  --half-life-output "$OLP_HALF_LIFE_ROOT/examples/demo_output" \
-  --succession-policy-key "$OLP_HALF_LIFE_ROOT/policy/succession_policy_public_key.hex" \
-  --compaction-policy-key "$OLP_HALF_LIFE_ROOT/policy/compaction_policy_public_key.hex" \
-  --source-model fixture/source-model \
-  --target-model fixture/target-model \
-  --output results/verified_model_swap_demo
-```
-
-Verify it from the receiver side with the externally retained gate public key:
-
-```bash
-olp-gate verify-model-swap results/verified_model_swap_demo \
-  --half-life-output "$OLP_HALF_LIFE_ROOT/examples/demo_output" \
-  --succession-policy-key "$OLP_HALF_LIFE_ROOT/policy/succession_policy_public_key.hex" \
-  --compaction-policy-key "$OLP_HALF_LIFE_ROOT/policy/compaction_policy_public_key.hex" \
-  --gate-key <receiver-gate-public-key>
-```
-
-For a production run, use `olp-gate model-swap` with three distinct mode-0600
-keys: source/orchestrator, independent grader, and receiver gate. Model and
-adapter identifiers remain caller declarations until a provider adapter emits
-separately verifiable execution evidence. The built-in demo proves the offline
-protocol boundary, not a live commercial-provider swap. Separate keys establish
-key separation only; the receiver must still establish controller independence,
-custody, and trust roles outside this bundle.
-
-## Run the discriminating test
-
-```bash
+~~~bash
 python -m unittest discover -s tests -v
-python -m olp_gate.cli demo-proof-to-policy --output results/proof_to_policy_demo
-node verify-decision-node.mjs results/proof_to_policy_demo/decision_receipts.jsonl \
-  --gate-key 17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce
-```
+~~~
 
-Without optional integrations, the core suite passes and reports twenty-four
-explicit skips: nine Pipelock tests, five Assay-binary tests, eight Verified
-Model Swap tests, and two Verified Continuation integration tests. The
-root-ready source archive includes a hash-pinned, pure-Python Half-Life wheel
-and fixture used only by the complete deterministic release gate, so
-`python scripts/release_check.py` runs green without a network checkout or
-special environment variable. An explicitly supplied invalid
-`OLP_HALF_LIFE_ROOT` still fails closed; it never falls back silently.
+Run the complete release gate with the archived warning-time policy:
 
-Local hashes establish bundle integrity, not independent upstream provenance.
-GitHub Actions separately fetches the exact Half-Life commit declared in
-`requirements-model-swap.txt` and byte-compares its source, fixture, policies,
-and license with the vendored release bundle. The release report records
-discovered, executed, and skipped counts for both the complete and
-dependency-absent modes.
-
-Expected outcomes:
-
-```text
-valid signature + missing evidence       → UNDECIDABLE / QUARANTINE
-bound evidence + orthogonal outcome      → VERIFIED / COMMIT
-exact replay                             → REJECTED / DENY
-unsupported benchmark score              → UNDECIDABLE / NO_BADGE
-trusted harmful mutation + rollback path → REJECTED / ROLLBACK_REQUEST
-```
-
-The Python and independent Node verifiers both recompute the policy decision from the signed assessment set and policy snapshot. Rewriting a verdict and resealing it produces `decision_recompute_mismatch`.
-
-Run the complete release gate, including hostile tamper controls and an offline
-install of the built wheel into an empty target from an unrelated directory:
-
-```bash
-python scripts/release_check.py
+~~~bash
+python scripts/verify_warning_time_release.py --release-check
 python scripts/verify_manifest.py
-```
+~~~
 
-The checked-in GitHub Actions workflow runs this same complete gate with Python
-3.12 and Node 24, compares the vendored dependency against the independently
-fetched Half-Life commit, and does not treat the dependency-absent skip suite
-as release evidence. It installs the exact build prerequisites declared in
-`pyproject.toml` before the no-build-isolation wheel check. Failed release
-checks are named in the JSON summary with bounded stdout/stderr tails.
+The full gate generates demonstration outputs. Run it in a disposable clean
+checkout if you do not want those files in your working tree.
 
-## Proof-to-policy flow
+The warning-time calibration profile is historically intact but expired. The
+wrapper accepts only that single archival condition. Any additional verifier
+error still fails closed.
 
-```text
-source receipt
-    ↓
-integrity ─ provenance ─ coverage ─ freshness
-    ↓
-source-bound evidence + policy predicates
-    ↓
-orthogonal outcome witness, when required
-    ↓
-VERIFIED / REJECTED / UNDECIDABLE
-    ↓
-COMMIT / QUARANTINE / DENY / NO_BADGE / ROLLBACK_REQUEST
-    ↓
-signed, parent-linked decision receipt
-    ↓ (only when exact permission is present)
-receiver-side atomic consume → destination tool
-```
+## Evidence and limits
 
-Raw evidence is read for verification and excluded from the decision receipt.
-The receipt contains artifact hashes, policy identity, reason codes,
-assessments, binding fields, and the decision. Verified Commit additionally
-stores exact non-secret identifiers plus hashes of settings and the receiver-held
-one-use code; neither raw settings nor the raw code is stored in the signed
-receipt.
+The repository includes reproducible mechanism tests. They support narrow
+claims; they are not product certifications.
 
-## Supported inputs
+| Test | Question | Current result |
+|---|---|---|
+| [Payment settlement ordering](benchmarks/x402_upstream_consequence/PROTOCOL.md) | Can a protected effect occur before a later settlement failure? | Yes, in the pinned official Python MCP wrapper; the matched airlock withheld release |
+| [Post-compromise action gate](docs/ROLE_CONFUSION_CONSEQUENCE_GATE.md) | Can receiver-owned evidence stop an unsupported effect after model compromise? | 13 frozen cases met their expected receiver-side outcomes |
+| [Early-warning benchmark](benchmarks/warning_time/README.md) | Did a synthetic trace metric create an intervention window? | Historical result preserved; calibration expired and has no live authority |
+| [One-use execution](docs/VERIFIED_COMMIT.md) | Can one decision authorize one exact local execution? | Mutation, expiry, replay, and concurrent double use were blocked in the disclosed suite |
+| [Measurement routing](docs/RMA_001.md) | Can prediction choose the next assay without replacing physical measurement? | No promotable signal; sequence routing saved 0.8% versus the best fixed order, below the frozen bar |
 
-### OLP Wire Canon 0.1
+## Project map
 
-The gate independently verifies the payload hash, Ed25519 signature, strict receipt-kind profile, and amendment continuity. Wire Canon 0.1 remains `self`/`provisional`; a continuous chain therefore earns partial declared coverage rather than proof that every real event was captured.
+| Path | Purpose |
+|---|---|
+| olp_gate/tool_adapter.py | @authorize function boundary |
+| olp_gate/gateway.py | Receipt appraisal and signed decision creation |
+| olp_gate/verified_commit.py | Exact one-use authorization and local atomic consumption |
+| olp_gate/adapters.py | External receipt-format adapters |
+| examples/ | Small runnable integrations |
+| docs/ | Architecture, threat model, schemas, and module contracts |
+| benchmarks/ | Frozen tests, protocols, and result artifacts |
+| scripts/ | Independent verifiers and release checks |
 
-### Agent Receipts v0.1–v0.5
+## Legacy API
 
-The gate verifies the embedded Ed25519 proof, declared profile, chain ID, issuer continuity, sequence, previous-receipt hashes, and terminal marker. Verification keys come from an external trust store or a resolvable Ed25519 `did:key`. Trust still requires an explicit trust-store role; key resolution alone does not make an issuer trusted.
+The original context-manager API still emits an unsigned local hash chain:
 
-The bundled verifier supports the integer-only RFC 8785 subset used by current Agent Receipt protocol fields. A receipt containing floating-point values returns `canonicalization_unsupported`, not a false bad-signature verdict.
-
-The interoperability test includes Agent Receipts' published v0.5 runtime vector at upstream commit `df6833a39743e17127d5ad4b10cdc8f6734d8e03` and independently matches its expected signature and receipt hash.
-
-### Pipelock ActionReceipt v1
-
-The adapter delegates signature, profile, and chain verification to the official
-`pipelock-verify` 0.2.x source release for ActionReceipt v1. It pins the signer through the external OLP
-trust store and keeps Pipelock's action verdict separate from OLP's receiver
-disposition. An `allow` is advisory evidence, never an automatic `COMMIT`; a
-verified `block` fails the required `source_signal` assessment and can never be
-laundered into a commit.
-
-EvidenceReceipt v2 is detected but deliberately unsupported in this phase. It
-returns an explicit `canonicalization_unsupported`/phase-boundary result instead
-of a false bad-signature diagnosis.
-
-Install the exact verifier used by the frozen benchmark:
-
-```bash
-pip install -r requirements-pipelock.txt
-```
-
-If the official verifier is absent or outside the supported range, the
-adapter returns `pipelock_verifier_unavailable` or a version-unsupported result.
-It never falls back to locally reimplemented cryptography.
-
-PyPI currently exposes v0.1.1. It is deliberately unsupported here: it verifies
-the simplest public fixture but fails newer signed v1 fixtures whose action
-records use fields added after its canonical field set. The pinned source
-install avoids misreporting those receipts as bad signatures. When PipeLab
-publishes v0.2.0, this can become a normal versioned package extra.
-
-The frozen five-case benchmark is in [`benchmarks/pipelock`](benchmarks/pipelock/PROTOCOL.md).
-It uses pinned public Pipelock fixtures and reports the result that actually
-occurred: native Pipelock and OLP met all frozen expectations, while Pipelock
-AARP also flagged the unsupported downstream claim. That falsifies the strongest
-proposed wedge. The narrower observed difference is that OLP additionally read
-the receiver-required artifact and emitted a signed `COMMIT` or `QUARANTINE`.
-
-The Pipelock vendor subsequently reproduced the five native classifications and
-the three applicable AARP classifications directly with Pipelock's own
-verifiers. Their review confirmed the boundary description and found one public
-reproduction blocker: v0.3.0 referred to an intermediate freeze commit that was
-never pushed. v0.3.1 preserves that identifier and adds a byte-identical frozen
-protocol snapshot, allowing a clean clone to verify the original hash without
-silently substituting a later commit. The vendor review is recorded as boundary
-confirmation, not neutral third-party reproduction.
-
-For a fresh reproduction that leaves the sealed report untouched, use the same
-pinned source checkouts and write to a new subdirectory:
-
-```bash
-python -m benchmarks.pipelock.run_head_to_head \
-  --pipelock-verify-source ../sources/pipelock-verify-python \
-  --pipelock-source ../sources/pipelock \
-  --output benchmarks/pipelock/results/reproduction/RUN_REPORT.json \
-  --report benchmarks/pipelock/results/reproduction/REPORT.md \
-  --decision-log benchmarks/pipelock/results/reproduction/decision_receipts.jsonl
-```
-
-### Assay Evidence Contract / Trust Basis v3.32.0
-
-The Assay adapter preserves the incoming `.tar.gz` archive by SHA-256 and
-delegates bundle verification, manifest interpretation, Trust Basis generation,
-and exact-level claim assertions to Assay's official CLI. OLP does not
-reimplement Assay's tar, JCS, event-hash, or bundle-root logic. A failed Assay
-assertion becomes a failed OLP `source_signal` and cannot be repaired or
-laundered by receiver evidence.
-
-The integration is pinned to Assay release `v3.32.0`, source commit
-`04d3db10adbe191aa731d52a6c2b77dad8bc0ca7`, using the official Linux x86-64
-archive with SHA-256
-`243f5e3935530cb1405dbb54fa57acc944de2800d28537d08dfc305b2a117775`.
-The benchmark runner proves that the executed binary is byte-identical to the
-binary inside that archive. Set its path with `OLP_ASSAY_BIN` or pass
-`--assay-bin` to `olp-gate decide`.
-
-The frozen five-case track is in
-[`benchmarks/assay`](benchmarks/assay/PROTOCOL.md). It found:
-
-- Assay native verification met 5/5 frozen expectations;
-- Assay Trust Basis assertions met 5/5, including correctly rejecting an
-  absent registered claim;
-- OLP met 5/5 receiver-policy expectations and never upgraded the failed Assay
-  claim;
-- the identical Assay-valid source bundle led OLP to signed `COMMIT` when the
-  receiver-required artifact existed and signed `QUARANTINE` when it did not;
-  and
-- Assay successfully signed a caller-supplied receiver-style predicate using
-  its DSSE/in-toto attestation command.
-
-That last control falsifies the broad claim that only OLP can sign what a
-receiver may do next. The narrower observed difference is that OLP exposes a
-standardized post-ingest contract: receiver policy snapshot and hash, separate
-assessment axes, three verdicts, five dispositions, replay binding, and
-independent semantic recomputation. The benchmark does not claim Assay cannot
-implement that contract, and it does not give OLP Assay's inline MCP or kernel
-enforcement.
-
-Run the frozen track without changing its sealed result:
-
-```bash
-python benchmarks/assay/run_head_to_head.py \
-  --assay-bin "$OLP_ASSAY_BIN" \
-  --assay-archive "$OLP_ASSAY_ARCHIVE" \
-  --output benchmarks/assay/results/reproduction/RUN_REPORT.json \
-  --report benchmarks/assay/results/reproduction/REPORT.md \
-  --results-dir benchmarks/assay/results/reproduction/artifacts
-```
-
-### Legacy Receipt Gate v0.1.1
-
-The original context-manager API and local JSONL hash chain still work. Legacy records can prove local continuity, but they remain unsigned and therefore cannot earn trusted provenance under the new gate.
-
-## CLI
-
-Create a gate key:
-
-```bash
-olp-gate keygen .secrets/gate.key
-```
-
-The command creates a mode-`0600` Ed25519 key and refuses to overwrite an existing file.
-
-Issue a one-time challenge bound to the expected source receipt:
-
-```bash
-olp-gate challenge state/sessions.json \
-  --run-id run-123 \
-  --session-id session-123 \
-  --source-hash 0123456789abcdef... \
-  --ttl 300
-```
-
-Evaluate a request with policy and trust configuration kept outside the request:
-
-```bash
-olp-gate decide request.json \
-  --policy policy.json \
-  --trust trust.json \
-  --key .secrets/gate.key \
-  --issuer procurement-gate \
-  --ledger state/sessions.json \
-  --assay-bin "$OLP_ASSAY_BIN" \
-  --out receipts/decision_receipts.jsonl
-```
-
-Verify the output independently:
-
-```bash
-olp-gate verify-decision receipts/decision_receipts.jsonl \
-  --gate-key "$TRUSTED_GATE_PUBLIC_KEY"
-node verify-decision-node.mjs receipts/decision_receipts.jsonl \
-  --gate-key "$TRUSTED_GATE_PUBLIC_KEY"
-```
-
-The trusted gate key must come from receiver-controlled configuration, not from the receipt being checked. Multiple `--gate-key` arguments support an explicit rotation window.
-
-## Legacy one-line wrapper
-
-```python
+~~~python
 from olp_gate import gate
 
 with gate(
     action_type="tool_call",
     claim="Search customer records",
     evidence_required=True,
-) as g:
+) as receipt:
     result = search_customer_records(query)
-    g.commit(result, evidence={"query_hash": "sha256:..."})
-```
+    receipt.commit(result, evidence={"query_hash": "sha256:..."})
+~~~
 
-This path continues to emit the v0.1.1 local hash chain. Use the proof-to-policy API for signed decisions and external inputs.
+Use @authorize or the proof-to-policy CLI for signed decisions and external
+evidence. The legacy wrapper remains for backward compatibility.
 
-## Boundaries
+## License
 
-- `ROLLBACK_REQUEST` is a signed request to a declared actuator. It does not undo an action by itself.
-- A terminal receipt proves the declared receipt chain has an ending marker. It does not prove an actor emitted every consequential event.
-- A matching evidence hash proves artifact correspondence. Policy predicates and independent outcomes determine whether the artifact is sufficient for the declared decision.
-- The local session ledger prevents replay within its custody boundary. A host with full write access can replace the ledger and gate key; external anchoring remains a separate deployment requirement.
-- Agent Receipts compatibility does not claim generic W3C VC ecosystem conformance.
-- Pipelock compatibility does not give OLP Pipelock's inline mediation boundary.
-- The benchmark's AARP companions are OLP-authored conformance inputs, not receipts captured from a deployed Pipelock instance.
-- Assay compatibility does not give OLP Assay's pre-call MCP policy gate,
-  signed mandate semantics, or kernel enforcement.
-- Verified Commit is enforced only at a destination tool that enters through
-  `VerifiedCommitLedger` (or an equivalent receiver implementation) and shares
-  the same atomic consumption state. It does not constrain bypass paths.
-- One-use authorization is not a claim of globally exactly-once side effects.
-  A crash after consumption fails closed; retry requires a new authorization.
-- The x402 Transaction Airlock is a synthetic exact-action adapter. It does not
-  authenticate live chain state, make a facilitator safe, or mediate routes
-  that bypass its receiver-owned snapshot, ledger, settlement, confirmation,
-  and release boundary.
-- Assay's frozen bundle is generated from its public OpenFeature fixture; the
-  receiver policy, receiver evidence, and DSSE predicate are OLP-authored and
-  are not represented as deployment captures.
-
-Read [`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.md), [`docs/COMPATIBILITY.md`](docs/COMPATIBILITY.md), and [`docs/CLAIM_BOUNDARY.md`](docs/CLAIM_BOUNDARY.md) before making production claims.
-
-The five-case demo uses fixed, publicly disclosed fixture keys so its output is reproducible. Those keys have no production authority.
-
-## Public line
+[MIT](LICENSE)
 
 Proof travels. Permission belongs to the receiver.
-
-Small receipts. Big accountability.
