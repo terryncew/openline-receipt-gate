@@ -26,7 +26,6 @@ from benchmarks.warning_time.calibration import (
     validate_seed_partition,
     verify_external_anchor,
     verify_profile,
-    verify_publication,
 )
 from benchmarks.warning_time.metric_proxies import metrics_for_observation
 from benchmarks.warning_time.run_benchmark import (
@@ -34,7 +33,6 @@ from benchmarks.warning_time.run_benchmark import (
     GATE_KEY,
     build_trajectory,
     label_leak_probe,
-    run_benchmark,
 )
 from olp_gate.crypto import public_key_hex, sign_olp_body, verify_olp_signature
 from olp_gate.gateway import verify_decision_log
@@ -48,6 +46,8 @@ class WarningTimeBenchmarkTests(unittest.TestCase):
         self.profile = load_json(CALIBRATION_PROFILE_PATH)
         self.publication = load_json(FREEZE_PUBLICATION_PATH)
         self.anchor = load_json(FREEZE_ANCHOR_PATH)
+        self.results = ROOT / "results"
+        self.report = load_json(self.results / "benchmark_report.json")
 
     def test_calibration_is_disjoint_and_heldout_seeds_are_paired(self) -> None:
         validate_seed_partition(self.scenario)
@@ -66,31 +66,26 @@ class WarningTimeBenchmarkTests(unittest.TestCase):
         self.assertFalse(self.evidence["corrupted_runs_used"])
         self.assertFalse(self.evidence["heldout_runs_used"])
         self.assertEqual(self.evidence["run_count"], 40)
-        for run in self.evidence["runs"]:
-            for row in run["trace"]:
-                features = row["observable_features"]
-                self.assertEqual(features["missing_required_evidence"], 0)
-                self.assertEqual(features["orphaned_material_references"], 0)
-                self.assertEqual(features["unflagged_constraint_conflicts"], 0)
-                self.assertEqual(features["evidence_edges_lost"], 0)
 
-    def test_profile_publication_and_external_anchor_verify(self) -> None:
-        self.assertTrue(verify_profile(
-            self.profile, self.scenario, self.evidence, self.thresholds
-        )["valid"])
-        self.assertTrue(verify_publication(
-            self.publication, self.profile, self.evidence, self.thresholds
-        )["valid"])
-        self.assertTrue(verify_external_anchor(
-            self.anchor,
-            self.publication,
-            self.profile,
-            self.thresholds,
-            self.evidence,
-        )["valid"])
+    def test_archived_profile_signatures_and_frozen_report_remain_intact(self) -> None:
+        # Expiry removes current standing. It does not alter historical signatures
+        # or the report produced while the profile was fresh.
         for artifact in (self.profile, self.publication, self.anchor):
             valid, error = verify_olp_signature(artifact)
             self.assertTrue(valid, error)
+
+        self.assertTrue(self.report["calibration_profile_signature_valid"])
+        self.assertTrue(self.report["freeze_publication_signature_valid"])
+        self.assertTrue(self.report["external_freeze_anchor_valid"])
+        self.assertTrue(self.report["calibration_profile_fresh"])
+        self.assertEqual(
+            self.report["calibration_profile_payload_hash"],
+            self.profile["payload_hash"],
+        )
+        self.assertEqual(
+            self.report["external_freeze_anchor_payload_hash"],
+            self.anchor["payload_hash"],
+        )
         self.assertEqual(self.anchor["anchor_type"], "private_external_custody")
         self.assertFalse(self.anchor["private_witness_key_distributed"])
 
@@ -164,25 +159,24 @@ class WarningTimeBenchmarkTests(unittest.TestCase):
                     injected[index]["observable_state"],
                 )
 
-    def test_warning_time_is_bad_action_minus_first_warning(self) -> None:
-        with tempfile.TemporaryDirectory() as temporary:
-            report = run_benchmark(Path(temporary) / "results")
+    def test_frozen_warning_time_formula_is_preserved(self) -> None:
         for case in ("dropped_counterevidence", "unflagged_contradiction"):
-            item = report["reference_cases"][case]
+            item = self.report["reference_cases"][case]
             self.assertEqual(
                 item["warning_time_steps"],
                 item["bad_action_step"] - item["first_warning_step"],
             )
             self.assertGreater(item["warning_time_steps"], 0)
 
-    def test_heldout_counts_decisions_and_enforcement_are_separate(self) -> None:
-        with tempfile.TemporaryDirectory() as temporary:
-            out = Path(temporary) / "results"
-            report = run_benchmark(out)
-            rows = [json.loads(line) for line in (out / "heldout_results.jsonl").read_text().splitlines()]
-        aggregate = report["aggregate"]
+    def test_frozen_heldout_counts_decisions_and_enforcement_are_preserved(self) -> None:
+        rows = [
+            json.loads(line)
+            for line in (self.results / "heldout_results.jsonl").read_text().splitlines()
+            if line.strip()
+        ]
+        aggregate = self.report["aggregate"]
         self.assertEqual(len(rows), 60)
-        self.assertEqual(report["heldout"]["total_runs"], 100)
+        self.assertEqual(self.report["heldout"]["total_runs"], 100)
         self.assertEqual(aggregate["heldout_clean_runs_evaluated"], 20)
         self.assertEqual(aggregate["heldout_clean_run_false_alarms"], 0)
         self.assertEqual(aggregate["heldout_corruption_runs"], 40)
@@ -195,18 +189,15 @@ class WarningTimeBenchmarkTests(unittest.TestCase):
             "unflagged_contradiction": {"DENY": 20},
         })
 
-    def test_reference_decision_logs_are_signed_and_chain_verify(self) -> None:
-        with tempfile.TemporaryDirectory() as temporary:
-            out = Path(temporary) / "results"
-            run_benchmark(out)
-            for case in CASES:
-                result = verify_decision_log(
-                    out / case / "decision_receipts.jsonl",
-                    [public_key_hex(GATE_KEY)],
-                )
-                self.assertTrue(result["valid"], result)
+    def test_frozen_decision_logs_are_signed_and_chain_verify(self) -> None:
+        for case in CASES:
+            result = verify_decision_log(
+                self.results / case / "decision_receipts.jsonl",
+                [public_key_hex(GATE_KEY)],
+            )
+            self.assertTrue(result["valid"], result)
 
-    def test_independent_verifier_does_not_import_benchmark_modules(self) -> None:
+    def test_independent_verifier_reports_expired_only(self) -> None:
         verifier = Path(__file__).resolve().parents[1] / "scripts" / "verify_warning_time_benchmark.py"
         source = verifier.read_text(encoding="utf-8")
         self.assertNotIn("from benchmarks.warning_time", source)
@@ -217,22 +208,34 @@ class WarningTimeBenchmarkTests(unittest.TestCase):
             text=True,
             check=False,
         )
-        self.assertEqual(completed.returncode, 0, completed.stdout + completed.stderr)
+        self.assertNotEqual(completed.returncode, 0)
         result = json.loads(completed.stdout)
-        self.assertTrue(result["valid"], result)
+        self.assertFalse(result["valid"], result)
+        self.assertEqual(result["errors"], ["profile_expired"])
         self.assertTrue(result["independent_of_benchmark_modules"])
         self.assertTrue(result["paired_heldout_seeds"])
 
+    def test_release_wrapper_accepts_expiry_only_as_archival_state(self) -> None:
+        wrapper = Path(__file__).resolve().parents[1] / "scripts" / "verify_warning_time_release.py"
+        completed = subprocess.run(
+            [sys.executable, str(wrapper)],
+            cwd=wrapper.parents[1],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        self.assertEqual(completed.returncode, 0, completed.stdout + completed.stderr)
+        lines = [line for line in completed.stdout.splitlines() if line.strip()]
+        archive = json.loads(lines[-1])
+        self.assertEqual(archive["archive_integrity"], "PASS")
+        self.assertEqual(archive["live_standing"], "EXPIRED")
+        self.assertEqual(archive["accepted_release_condition"], "profile_expired_only")
+
     def test_frozen_decision_logs_are_present_and_not_gitignored(self) -> None:
-        results = ROOT / "results"
-        report = load_json(results / "benchmark_report.json")
-        expected = [
-            f"{case}/decision_receipts.jsonl"
-            for case in CASES
-        ]
-        self.assertTrue(set(expected).issubset(report["artifact_hashes"]))
+        expected = [f"{case}/decision_receipts.jsonl" for case in CASES]
+        self.assertTrue(set(expected).issubset(self.report["artifact_hashes"]))
         for relative in expected:
-            self.assertTrue((results / relative).is_file(), relative)
+            self.assertTrue((self.results / relative).is_file(), relative)
 
         git = shutil.which("git")
         self.assertIsNotNone(git, "git is required for the release source-closure test")

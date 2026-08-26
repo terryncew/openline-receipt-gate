@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""Release-gate wrapper for the frozen warning-time benchmark.
+"""Release-gate wrapper for an expired frozen warning-time profile.
 
-An expired calibration profile has correctly lost standing for live use.
-That expiry alone is an expected archival state, not repository corruption.
-
-Any other verifier error still fails closed.
+The historical artifact may remain intact after its live standing expires.
+Only the sole error `profile_expired` is accepted as an archival state.
+Any other error still fails closed.
 """
 from __future__ import annotations
 
@@ -31,28 +30,18 @@ valid = payload.get("valid")
 if proc.returncode == 0 and valid is True and errors == []:
     raise SystemExit(0)
 
-if errors == ["profile_expired"] and valid is False:
-    print(
-        json.dumps(
-            {
-                "archive_integrity": "PASS",
-                "live_standing": "EXPIRED",
-                "accepted_release_condition": "profile_expired_only",
-                "policy_authority": "NONE",
-            },
-            sort_keys=True,
-        )
-    )
+if proc.returncode != 0 and valid is False and errors == ["profile_expired"]:
+    print(json.dumps({
+        "archive_integrity": "PASS",
+        "live_standing": "EXPIRED",
+        "accepted_release_condition": "profile_expired_only",
+        "policy_authority": "NONE",
+    }, sort_keys=True))
     raise SystemExit(0)
 
-print(
-    json.dumps(
-        {
-            "archive_integrity": "FAIL",
-            "live_standing": "UNRESOLVED",
-            "errors": errors,
-        },
-        sort_keys=True,
-    )
-)
+print(json.dumps({
+    "archive_integrity": "FAIL",
+    "live_standing": "UNRESOLVED",
+    "errors": errors,
+}, sort_keys=True))
 raise SystemExit(proc.returncode or 2)
