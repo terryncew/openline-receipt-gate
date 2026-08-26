@@ -101,13 +101,43 @@ def load_tap_features(path: Path, cohort: pd.DataFrame) -> np.ndarray:
         if str(c).strip().lower() in {"antibody_id", "id", "antibody", "name", "antibody_name"}
     ]
     id_col = id_candidates[0] if id_candidates else tap.columns[0]
-    feat = tap.copy()
-    feat["_join"] = feat[id_col].astype(str).str.strip()
-    ref = cohort[["antibody_id"]].copy()
-    ref["_join"] = ref["antibody_id"].astype(str).str.strip()
-    merged = ref.merge(feat, on="_join", how="left", validate="one_to_one")
 
-    excluded = {id_col, "_join", "antibody_id", "antibody_id_x", "antibody_id_y"}
+    id_key = str(id_col).strip().lower()
+    if id_key == "antibody_name":
+        cohort_key = "antibody_name"
+    elif id_key in {"antibody_id", "id", "antibody"}:
+        cohort_key = "antibody_id"
+    elif id_key == "name" and "antibody_name" in cohort.columns:
+        cohort_key = "antibody_name"
+    else:
+        raise ValueError(f"unsupported TAP identity column:{id_col}")
+
+    if cohort_key not in cohort.columns:
+        raise ValueError(f"cohort missing TAP identity key:{cohort_key}")
+
+    feat = tap.copy()
+    feat["_join"] = feat[id_col].astype(str).str.strip().str.casefold()
+    ref = cohort[[cohort_key]].copy()
+    ref["_join"] = ref[cohort_key].astype(str).str.strip().str.casefold()
+
+    if feat["_join"].duplicated().any():
+        raise ValueError("duplicate TAP identity after normalization")
+    if ref["_join"].duplicated().any():
+        raise ValueError("duplicate cohort identity after normalization")
+
+    merged = ref.merge(feat, on="_join", how="left", validate="one_to_one", indicator=True)
+    missing = merged["_merge"] != "both"
+    if missing.any():
+        examples = ref.loc[missing, cohort_key].astype(str).head(5).tolist()
+        raise ValueError(
+            f"TAP identity coverage incomplete:{int(missing.sum())}/{len(ref)} missing; examples={examples}"
+        )
+
+    excluded = {
+        id_col, "_join", "_merge", cohort_key,
+        "antibody_id", "antibody_id_x", "antibody_id_y",
+        "antibody_name", "antibody_name_x", "antibody_name_y",
+    }
     numeric = {}
     for c in merged.columns:
         if c in excluded:
@@ -119,8 +149,7 @@ def load_tap_features(path: Path, cohort: pd.DataFrame) -> np.ndarray:
         raise ValueError("no numeric TAP features after identity join")
     frame = pd.DataFrame(numeric)
     if frame.isna().all(axis=1).any():
-        raise ValueError("at least one cohort antibody has no TAP feature row")
-    # Feature-only imputation is allowed for the baseline; truth is never imputed.
+        raise ValueError("at least one cohort antibody has no numeric TAP features")
     frame = frame.fillna(frame.median(numeric_only=True)).fillna(0.0)
     return frame.to_numpy(float)
 

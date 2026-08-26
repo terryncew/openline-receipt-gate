@@ -1,0 +1,6022 @@
+{
+  "authority_boundary": {
+    "RETAIN": "requires all three actually revealed assay values within frozen thresholds",
+    "VETO": "requires an actually revealed assay value beyond its frozen failure threshold",
+    "final_disposition_concordance_required": 1.0,
+    "routing_model_may": "choose next assay",
+    "routing_model_may_not": [
+      "declare VETO",
+      "declare RETAIN",
+      "replace an assay result"
+    ]
+  },
+  "claim_boundary": {
+    "forbidden": [
+      "clinical success prediction",
+      "candidate quality ranking",
+      "sequence-only veto authority",
+      "real-dollar laboratory savings without a source-backed assay cost schedule",
+      "external validation beyond GDPa1"
+    ],
+    "history": "Held-out simulation evidence that adaptive routing helped, but sequence information did not earn a material routing increment over simple conditional assay-history statistics.",
+    "sequence": "Held-out simulation evidence that sequence-conditioned routing reduced assay reveals relative to the best fixed order while all final VETO/RETAIN decisions remained measurement-backed."
+  },
+  "cohort": {
+    "bad_n": 54,
+    "clean_n": 143,
+    "n": 197
+  },
+  "concordance": {
+    "best_static": 1.0,
+    "history_adaptive": 1.0,
+    "sequence_adaptive": 1.0
+  },
+  "data_receipts": {
+    "source_sha256": "4fed9d17118d587a46b369e2dd40941f42506e40a7850d8d896de37742a29c37"
+  },
+  "evidence_grade": "EXPLORATORY_HELD_OUT_SIMULATION",
+  "experiment": "RMA-001",
+  "interpretation": "Adaptive routing did not clear the frozen savings bar over the strongest fixed-order baseline. On this three-assay substrate, there is no measurement-allocation mechanism worth promoting.",
+  "measurement_counts": {
+    "best_static": 518,
+    "exhaustive": 591,
+    "history_adaptive": 518,
+    "oracle": 483,
+    "sequence_adaptive": 514
+  },
+  "policy_authority": "NONE",
+  "relative_savings": {
+    "best_static_vs_exhaustive": 0.12351945854483926,
+    "history_vs_best_static": {
+      "ci_high": 0.0,
+      "ci_low": 0.0,
+      "point": 0.0
+    },
+    "oracle_vs_exhaustive": 0.18274111675126903,
+    "sequence_vs_best_static": {
+      "ci_high": 0.03724422171103078,
+      "ci_low": -0.020561132264143682,
+      "point": 0.007722007722007722
+    },
+    "sequence_vs_exhaustive": 0.13028764805414553,
+    "sequence_vs_history": {
+      "ci_high": 0.03724422171103078,
+      "ci_low": -0.020561132264143682,
+      "point": 0.007722007722007722
+    }
+  },
+  "schema": "openline.rma_001.report.v1",
+  "source_receipt": {
+    "candidate_ids_sha256": "f2c079f26f316e5b46607b5dd7b6c4994514ff77f010505e153398ca4791fc5a",
+    "excluded_missing_fold": 0,
+    "excluded_missing_or_invalid_sequence": 0,
+    "excluded_missing_primary_truth": 49,
+    "included_candidates": 197,
+    "outer_folds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "source_rows": 246
+  },
+  "stop_rule": "If NO_MEASUREMENT_ROUTING_SIGNAL, close the three-assay routing hypothesis on this substrate. Do not rescue it by changing thresholds, source cohort, fold assignment, savings bars, or cost weights after observing the result.",
+  "traces": [
+    {
+      "best_static_order": [
+        "AC-SINS_pH7.4",
+        "HIC",
+        "PR_CHO"
+      ],
+      "candidates": [
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-002",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "AC-SINS_pH7.4",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-004",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "HIC",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-005",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "HIC",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "candidate_id": "GDPa1-006",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-013",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "candidate_id": "GDPa1-014",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "PR_CHO",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "candidate_id": "GDPa1-029",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-042",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "PR_CHO",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-046",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "HIC",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-051",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "AC-SINS_pH7.4",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-060",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "PR_CHO",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-062",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "HIC",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-065",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "HIC",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-066",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "AC-SINS_pH7.4",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-069",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "PR_CHO",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "candidate_id": "GDPa1-072",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "PR_CHO"
+            ],
+            "reveals": 1
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-073",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "HIC",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "candidate_id": "GDPa1-076",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "PR_CHO",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-079",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-087",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "HIC",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-092",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "candidate_id": "GDPa1-097",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "HIC"
+            ],
+            "reveals": 1
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "candidate_id": "GDPa1-111",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "HIC",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 2
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "candidate_id": "GDPa1-120",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "HIC",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 2
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-142",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "HIC",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-146",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "AC-SINS_pH7.4",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-154",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "PR_CHO",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-159",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "AC-SINS_pH7.4",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-161",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "AC-SINS_pH7.4",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-172",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "HIC",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-175",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "AC-SINS_pH7.4",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-177",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "HIC",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-179",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "candidate_id": "GDPa1-181",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-182",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "PR_CHO",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-187",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "candidate_id": "GDPa1-188",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "HIC"
+            ],
+            "reveals": 1
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-196",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "PR_CHO",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-200",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-209",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "HIC",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-225",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-230",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-238",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "AC-SINS_pH7.4",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "candidate_id": "GDPa1-242",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "PR_CHO",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 2
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-244",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "PR_CHO",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        }
+      ],
+      "outer_fold": 0
+    },
+    {
+      "best_static_order": [
+        "AC-SINS_pH7.4",
+        "HIC",
+        "PR_CHO"
+      ],
+      "candidates": [
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-019",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "PR_CHO",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-021",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-022",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-036",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "HIC",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-039",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "AC-SINS_pH7.4",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-054",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "PR_CHO",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-061",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "PR_CHO",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-070",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "candidate_id": "GDPa1-074",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "PR_CHO",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-075",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-080",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "AC-SINS_pH7.4",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-082",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-096",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-098",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "candidate_id": "GDPa1-101",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "PR_CHO",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-107",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "PR_CHO",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-115",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-126",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-129",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "PR_CHO",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-130",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-134",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "HIC",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-158",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "HIC",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-164",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "AC-SINS_pH7.4",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-165",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "PR_CHO",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "candidate_id": "GDPa1-169",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-170",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-171",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-176",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-185",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-190",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "PR_CHO",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "candidate_id": "GDPa1-191",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "PR_CHO",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-193",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-201",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "AC-SINS_pH7.4",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-203",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-211",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "PR_CHO",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-215",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "PR_CHO",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-219",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-223",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-237",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "HIC",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-241",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        }
+      ],
+      "outer_fold": 1
+    },
+    {
+      "best_static_order": [
+        "AC-SINS_pH7.4",
+        "HIC",
+        "PR_CHO"
+      ],
+      "candidates": [
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-001",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "HIC",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-003",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "PR_CHO",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "candidate_id": "GDPa1-009",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "candidate_id": "GDPa1-027",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-033",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "PR_CHO"
+            ],
+            "reveals": 2
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-048",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "PR_CHO",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-056",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "AC-SINS_pH7.4",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-064",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "PR_CHO",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "candidate_id": "GDPa1-067",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "HIC"
+            ],
+            "reveals": 1
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "candidate_id": "GDPa1-078",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "candidate_id": "GDPa1-086",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "HIC",
+              "PR_CHO",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-091",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-095",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-099",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "AC-SINS_pH7.4",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-102",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "PR_CHO",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-112",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "PR_CHO",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "candidate_id": "GDPa1-113",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "HIC"
+            ],
+            "reveals": 1
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "candidate_id": "GDPa1-121",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-128",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "AC-SINS_pH7.4",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-135",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "PR_CHO",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-155",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "PR_CHO",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-160",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-162",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "PR_CHO",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-184",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-186",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "AC-SINS_pH7.4",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-189",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "PR_CHO"
+            ],
+            "reveals": 1
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-194",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "PR_CHO",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "candidate_id": "GDPa1-195",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "PR_CHO",
+              "HIC",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-202",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "PR_CHO",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-214",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "PR_CHO",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "candidate_id": "GDPa1-220",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-224",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "PR_CHO",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-228",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "PR_CHO",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-229",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "PR_CHO"
+            ],
+            "reveals": 1
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-232",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-234",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "PR_CHO",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        }
+      ],
+      "outer_fold": 2
+    },
+    {
+      "best_static_order": [
+        "AC-SINS_pH7.4",
+        "HIC",
+        "PR_CHO"
+      ],
+      "candidates": [
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-007",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "PR_CHO",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-010",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "HIC",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-024",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "HIC",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-038",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-040",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "PR_CHO",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-055",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "HIC",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-058",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "PR_CHO",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-077",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "PR_CHO",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-081",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-090",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "PR_CHO",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-094",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "PR_CHO"
+            ],
+            "reveals": 1
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-108",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-109",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "PR_CHO",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-116",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "PR_CHO",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "candidate_id": "GDPa1-123",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "PR_CHO",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 2
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "candidate_id": "GDPa1-125",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "HIC"
+            ],
+            "reveals": 1
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "candidate_id": "GDPa1-127",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "HIC"
+            ],
+            "reveals": 1
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-136",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "PR_CHO",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-144",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "HIC",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-147",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "PR_CHO",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-156",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "candidate_id": "GDPa1-163",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-168",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "AC-SINS_pH7.4",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "candidate_id": "GDPa1-192",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "PR_CHO",
+              "HIC",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-198",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "AC-SINS_pH7.4",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-204",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-206",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "PR_CHO",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-207",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "PR_CHO",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-212",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-221",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "PR_CHO",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-226",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "PR_CHO",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-235",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "candidate_id": "GDPa1-236",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 2
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-239",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "AC-SINS_pH7.4",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-245",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "PR_CHO"
+            ],
+            "reveals": 1
+          },
+          "truth": "VETO"
+        }
+      ],
+      "outer_fold": 3
+    },
+    {
+      "best_static_order": [
+        "AC-SINS_pH7.4",
+        "HIC",
+        "PR_CHO"
+      ],
+      "candidates": [
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "candidate_id": "GDPa1-011",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "PR_CHO",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 2
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-015",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-020",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "HIC",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "candidate_id": "GDPa1-025",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "PR_CHO"
+            ],
+            "reveals": 1
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "candidate_id": "GDPa1-030",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "PR_CHO",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-031",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "HIC",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "candidate_id": "GDPa1-032",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-034",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "AC-SINS_pH7.4",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "candidate_id": "GDPa1-045",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "PR_CHO",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-047",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-052",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "PR_CHO",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-057",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "AC-SINS_pH7.4",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-059",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-063",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-068",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "HIC",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-071",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "PR_CHO",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "candidate_id": "GDPa1-084",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "PR_CHO",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-085",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "HIC",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "candidate_id": "GDPa1-093",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "PR_CHO",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-103",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "PR_CHO"
+            ],
+            "reveals": 1
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-105",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "PR_CHO",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "candidate_id": "GDPa1-117",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-118",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "AC-SINS_pH7.4",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-132",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-137",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "PR_CHO"
+            ],
+            "reveals": 1
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "candidate_id": "GDPa1-140",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "candidate_id": "GDPa1-143",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "HIC",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 2
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-151",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "AC-SINS_pH7.4",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-153",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "HIC",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "candidate_id": "GDPa1-157",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-167",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "PR_CHO"
+            ],
+            "reveals": 1
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-178",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "PR_CHO",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-183",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "HIC",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-205",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-208",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "PR_CHO",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "candidate_id": "GDPa1-216",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-218",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "PR_CHO",
+              "AC-SINS_pH7.4",
+              "HIC"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-227",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "PR_CHO",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "candidate_id": "GDPa1-240",
+          "history_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "AC-SINS_pH7.4",
+              "HIC",
+              "PR_CHO"
+            ],
+            "reveals": 3
+          },
+          "sequence_adaptive": {
+            "disposition": "RETAIN",
+            "order": [
+              "HIC",
+              "PR_CHO",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 3
+          },
+          "truth": "RETAIN"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "candidate_id": "GDPa1-243",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "PR_CHO",
+              "HIC"
+            ],
+            "reveals": 2
+          },
+          "truth": "VETO"
+        },
+        {
+          "best_static": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "candidate_id": "GDPa1-246",
+          "history_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 1
+          },
+          "sequence_adaptive": {
+            "disposition": "VETO",
+            "order": [
+              "PR_CHO",
+              "AC-SINS_pH7.4"
+            ],
+            "reveals": 2
+          },
+          "truth": "VETO"
+        }
+      ],
+      "outer_fold": 4
+    }
+  ],
+  "verdict": "NO_MEASUREMENT_ROUTING_SIGNAL"
+}
