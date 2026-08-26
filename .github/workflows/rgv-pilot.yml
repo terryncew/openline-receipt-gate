@@ -1,0 +1,86 @@
+name: RGV-PILOT Reality Gate
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "benchmarks/candidate_promotion/experiments/rgv_pilot/**"
+      - ".github/workflows/rgv-pilot.yml"
+      - "docs/RGV_PILOT.md"
+
+permissions:
+  contents: read
+
+jobs:
+  source-derived-pilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GDP_REPO: https://github.com/ginkgobioworks/abdev-benchmark.git
+      GDP_COMMIT: cc6d3b69afc92695445695345399d9c91b0d14a4
+      GDP_PATH: data/GDPa1_v1.2_20250814.csv
+      GDP_BLOB: 923c38b1a7b7d2421bd4c6fa7461febc797c446c
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install pilot dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install "numpy>=2,<3" "pandas>=2,<3" "scipy>=1.14,<2" "scikit-learn==1.8.0"
+
+      - name: Verify syntax and mathematical contract
+        run: |
+          python -m py_compile benchmarks/candidate_promotion/experiments/rgv_pilot/run_suite.py
+          python -m py_compile benchmarks/candidate_promotion/experiments/rgv_pilot/verify_report.py
+          python -m benchmarks.candidate_promotion.experiments.rgv_pilot.run_suite --self-test
+
+      - name: Fetch pinned official GDPa1 source
+        shell: bash
+        run: |
+          set -euo pipefail
+          upstream="$RUNNER_TEMP/abdev-benchmark"
+          git init "$upstream"
+          git -C "$upstream" remote add origin "$GDP_REPO"
+          git -C "$upstream" fetch --depth=1 origin "$GDP_COMMIT"
+          git -C "$upstream" checkout --detach FETCH_HEAD
+          test "$(git -C "$upstream" rev-parse HEAD)" = "$GDP_COMMIT"
+          test "$(git -C "$upstream" rev-parse "HEAD:$GDP_PATH")" = "$GDP_BLOB"
+          printf 'GDP_ROOT=%s\n' "$upstream" >> "$GITHUB_ENV"
+
+      - name: Run source-derived pilot once
+        run: |
+          python -m benchmarks.candidate_promotion.experiments.rgv_pilot.run_suite \
+            --csv "$GDP_ROOT/$GDP_PATH" \
+            --tap "$GDP_ROOT/data/features/processed_features/GDPa1/TAP.csv" \
+            --json-output rgv-pilot-report.json \
+            --markdown-output rgv-pilot-report.md
+
+      - name: Verify frozen report contract
+        if: always()
+        run: |
+          test -f rgv-pilot-report.json
+          test -f rgv-pilot-report.md
+          python -m benchmarks.candidate_promotion.experiments.rgv_pilot.verify_report rgv-pilot-report.json
+
+      - name: Put canonical report on the Actions summary
+        if: always()
+        shell: bash
+        run: |
+          if test -f rgv-pilot-report.md; then
+            cat rgv-pilot-report.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload canonical report bundle
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rgv-pilot-report
+          path: |
+            rgv-pilot-report.md
+            rgv-pilot-report.json
+          if-no-files-found: error
