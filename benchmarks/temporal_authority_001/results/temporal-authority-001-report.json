@@ -1,0 +1,849 @@
+{
+  "case_count": 7,
+  "claim": "In this deterministic composition test, an exact action can execute only while its receiver-admitted mandate head and committed hidden parameters remain current through preflight. An unrelated receiver event and an urgent authenticated peer message do not change that result, while the public receipt retains commitments rather than raw or minimized values.",
+  "claim_boundary": [
+    "This is a deterministic local composition test, not a live cross-host reproduction of Auto-Policy, the ATC monitor, or any external deployment.",
+    "The signed field-tier receipt is evidence-only. The separately issued gate receipt and receiver ledger remain the execution authority and spend state.",
+    "The public report omits complete parameters and minimized attribute values. Synthetic fixture literals remain visible in benchmark source code.",
+    "The gate can verify the complete commitment here because workload and receiver are co-located. A remote workload still needs attestation, later candidate disclosure, or zero-knowledge proof for projection honesty.",
+    "Receiver key storage, distributed consensus, crash recovery, and legal authority remain outside the earned claim."
+  ],
+  "experiment": "TEMPORAL-AUTHORITY-001",
+  "falsifier": {
+    "kill_condition": "Any unauthorized effect, any overblock in the unrelated-change control, any peer-driven outcome change, any hidden-value leak, or any public receipt not bound to the actual receiver decision rejects the composition claim.",
+    "triggered": false
+  },
+  "frozen_anchor": "AFTER_COMPILE_BEFORE_RECEIVER_SPEND",
+  "invariants": {
+    "all_frozen_cases_pass": true,
+    "authorized_controls_execute_once": true,
+    "coordination_context_never_enters_gate": true,
+    "field_receipts_use_receiver_gate_key": true,
+    "fresh_owner_successor_can_authorize_fresh_compile": true,
+    "hidden_payload_change_blocks_at_same_anchor": true,
+    "peer_go_does_not_change_stable_authority": true,
+    "peer_go_does_not_restore_superseded_authority": true,
+    "public_receipts_bind_actual_gate_decisions": true,
+    "public_report_contains_no_raw_or_minimized_values": true,
+    "relevant_change_blocks_at_same_anchor": true,
+    "unauthorized_effect_count_zero": true,
+    "unrelated_change_does_not_overblock": true
+  },
+  "passed": true,
+  "policy_authority": "NONE",
+  "privacy": {
+    "forbidden_literal_count": 0,
+    "forbidden_literal_hashes": [],
+    "minimized_attributes_stored": false,
+    "raw_parameters_stored": false
+  },
+  "rows": [
+    {
+      "anchor_event": null,
+      "case_id": "stable_owner_control",
+      "coordination": {
+        "entered_gate_arguments": false,
+        "message": null,
+        "peer_go_present": false,
+        "signature_valid": null
+      },
+      "expected_execution": true,
+      "observed": {
+        "anchor_fired": false,
+        "attempt_recorded": true,
+        "blocked": false,
+        "effect_delta": 1,
+        "executed": true,
+        "execution_status": "completed",
+        "field_tier_public_integrity_verified_at_run": true,
+        "field_tier_receipt": {
+          "action": {
+            "parameters_hash": "2a02eda488a3d3149f1be44d79518bcc2859ebab11addf135aa5e215900bf17d",
+            "parameters_size_bytes": 170,
+            "type": "release_harmless_transfer"
+          },
+          "authority": {
+            "portable_execution_authority": false,
+            "status": "EVIDENCE_ONLY"
+          },
+          "canonicalization_id": "olp-canonical-json-int-v1",
+          "created_at": "2026-08-27T12:00:00Z",
+          "decision": {
+            "policy_id": "temporal-authority-001-policy",
+            "receiver_decision_hash": "ea59d6edf80afba498ba7a36e270cf1853e5198d46f21116563dcafc7f29a673",
+            "value": "COMMIT"
+          },
+          "disclosure": {
+            "applied_tiers_hash": "c1ef2609f6367c4c8fdfc6e173f9c276a2495d2548f36bb491606e54e97f4f2b",
+            "attributes_hash": "5fe661cba2f054ecc8222bd9f13ade90253c858b5a729ac79a952df10dfb10ec",
+            "definition": {
+              "action_type": "release_harmless_transfer",
+              "definition_id": "temporal-authority-transfer-disclosure",
+              "fields": [
+                {
+                  "attribute": "amount_cents",
+                  "field": "amount_cents",
+                  "optional": false,
+                  "tier": "policy",
+                  "type": "integer"
+                },
+                {
+                  "field": "recipient",
+                  "optional": false,
+                  "projections": [
+                    {
+                      "attribute": "recipient_domain",
+                      "projector": "recipient_domain/v1",
+                      "type": "string"
+                    }
+                  ],
+                  "tier": "derived",
+                  "type": "string"
+                },
+                {
+                  "field": "transfer_note",
+                  "optional": false,
+                  "tier": "payload",
+                  "type": "string"
+                }
+              ],
+              "profile": "openline.field_tier_definition/v1",
+              "version": "1"
+            },
+            "definition_hash": "d82e124a70b0dfc361346191dedbf947f1396090b9ad04babd6f0e55fa9ea481",
+            "minimized_attributes_stored": false,
+            "raw_parameters_stored": false
+          },
+          "issuer": {
+            "id": "openline-temporal-authority-receiver"
+          },
+          "kind": "openline_field_tier_receipt",
+          "payload_hash": "1d2704d05bd3bdce2882586da01e14517c18e08f6086a47632d92944678836f2",
+          "receipt_version": "1",
+          "signature": {
+            "algorithm": "Ed25519",
+            "public_key": "b7d7979d7cf7416810c282956e335fd08f4ed4171f6876c05170c058d4246144",
+            "value": "1721243b69e3a49f6258cf682c983c4ee84c630b28fb42b984980f3e53649db2579950642fbe894e6990b3f4153f6e1d64b70c6cc332a1777a9c4c9a0b1dfe00"
+          }
+        },
+        "gate_argument_fields": [
+          "action_parameters_hash",
+          "amount_cents",
+          "recipient_domain"
+        ],
+        "gate_decision": {
+          "decision": "COMMIT",
+          "payload_hash": "ea59d6edf80afba498ba7a36e270cf1853e5198d46f21116563dcafc7f29a673",
+          "trusted_signature_verified_at_run": true,
+          "verdict": "VERIFIED"
+        },
+        "original_candidate_parameters_match": true,
+        "permission_consumed": true,
+        "reason_codes": []
+      },
+      "passed": true,
+      "setup_event": null
+    },
+    {
+      "anchor_event": null,
+      "case_id": "stable_owner_with_peer_go_deadline",
+      "coordination": {
+        "entered_gate_arguments": false,
+        "message": {
+          "claimed_authority": "receiver may execute now",
+          "deadline": "2026-08-27T12:06:00Z",
+          "directive": "GO",
+          "issuer_id": "peer-agent",
+          "message_id": "peer-go:stable_owner_with_peer_go_deadline",
+          "payload_hash": "b8ab3b457b4c7cef1f7c35f2af6537bff2c1388fd8470f913d6f9c56e612e2dc",
+          "schema": "openline.peer_coordination_message.v1",
+          "signature": {
+            "algorithm": "Ed25519",
+            "public_key": "29b036d2a0864691f6ca8bf6ec09c40952cd431bad3d817ee73eab48a6c6239b",
+            "value": "4e110cb903f6fb1b411e84bf1fa0cae15f39a68f0a5277344515491792605701727eee992263fe76d3853b3e5ab1f040e63ccad266b61a037bf89ad4b8921302"
+          }
+        },
+        "peer_go_present": true,
+        "signature_valid": true
+      },
+      "expected_execution": true,
+      "observed": {
+        "anchor_fired": false,
+        "attempt_recorded": true,
+        "blocked": false,
+        "effect_delta": 1,
+        "executed": true,
+        "execution_status": "completed",
+        "field_tier_public_integrity_verified_at_run": true,
+        "field_tier_receipt": {
+          "action": {
+            "parameters_hash": "2a02eda488a3d3149f1be44d79518bcc2859ebab11addf135aa5e215900bf17d",
+            "parameters_size_bytes": 170,
+            "type": "release_harmless_transfer"
+          },
+          "authority": {
+            "portable_execution_authority": false,
+            "status": "EVIDENCE_ONLY"
+          },
+          "canonicalization_id": "olp-canonical-json-int-v1",
+          "created_at": "2026-08-27T12:00:00Z",
+          "decision": {
+            "policy_id": "temporal-authority-001-policy",
+            "receiver_decision_hash": "b481849a74d22c0020248a93632de53d1150e4514be4e9a7247c76f55815b78a",
+            "value": "COMMIT"
+          },
+          "disclosure": {
+            "applied_tiers_hash": "c1ef2609f6367c4c8fdfc6e173f9c276a2495d2548f36bb491606e54e97f4f2b",
+            "attributes_hash": "5fe661cba2f054ecc8222bd9f13ade90253c858b5a729ac79a952df10dfb10ec",
+            "definition": {
+              "action_type": "release_harmless_transfer",
+              "definition_id": "temporal-authority-transfer-disclosure",
+              "fields": [
+                {
+                  "attribute": "amount_cents",
+                  "field": "amount_cents",
+                  "optional": false,
+                  "tier": "policy",
+                  "type": "integer"
+                },
+                {
+                  "field": "recipient",
+                  "optional": false,
+                  "projections": [
+                    {
+                      "attribute": "recipient_domain",
+                      "projector": "recipient_domain/v1",
+                      "type": "string"
+                    }
+                  ],
+                  "tier": "derived",
+                  "type": "string"
+                },
+                {
+                  "field": "transfer_note",
+                  "optional": false,
+                  "tier": "payload",
+                  "type": "string"
+                }
+              ],
+              "profile": "openline.field_tier_definition/v1",
+              "version": "1"
+            },
+            "definition_hash": "d82e124a70b0dfc361346191dedbf947f1396090b9ad04babd6f0e55fa9ea481",
+            "minimized_attributes_stored": false,
+            "raw_parameters_stored": false
+          },
+          "issuer": {
+            "id": "openline-temporal-authority-receiver"
+          },
+          "kind": "openline_field_tier_receipt",
+          "payload_hash": "e89397e554677826b2b10bd3a79c1d6f2353303e6d89332892993f6498bde175",
+          "receipt_version": "1",
+          "signature": {
+            "algorithm": "Ed25519",
+            "public_key": "b7d7979d7cf7416810c282956e335fd08f4ed4171f6876c05170c058d4246144",
+            "value": "baf2730e6b52f50058792ed2898ee2f296e992f037ab14ea8a6138505a428890b35abcee9206cfcb8893236f657b083914fde27c4cc1a524caadf81d4b5f9c08"
+          }
+        },
+        "gate_argument_fields": [
+          "action_parameters_hash",
+          "amount_cents",
+          "recipient_domain"
+        ],
+        "gate_decision": {
+          "decision": "COMMIT",
+          "payload_hash": "b481849a74d22c0020248a93632de53d1150e4514be4e9a7247c76f55815b78a",
+          "trusted_signature_verified_at_run": true,
+          "verdict": "VERIFIED"
+        },
+        "original_candidate_parameters_match": true,
+        "permission_consumed": true,
+        "reason_codes": []
+      },
+      "passed": true,
+      "setup_event": null
+    },
+    {
+      "anchor_event": "UNRELATED_SLOT_SUCCESSOR",
+      "case_id": "unrelated_receiver_change_sham",
+      "coordination": {
+        "entered_gate_arguments": false,
+        "message": {
+          "claimed_authority": "receiver may execute now",
+          "deadline": "2026-08-27T12:06:00Z",
+          "directive": "GO",
+          "issuer_id": "peer-agent",
+          "message_id": "peer-go:unrelated_receiver_change_sham",
+          "payload_hash": "a5d22701820b95ec43c5b849a390bd86bb83198ea498de951b6b68f8f18ac434",
+          "schema": "openline.peer_coordination_message.v1",
+          "signature": {
+            "algorithm": "Ed25519",
+            "public_key": "29b036d2a0864691f6ca8bf6ec09c40952cd431bad3d817ee73eab48a6c6239b",
+            "value": "e47f79ca3d2bdb7800997a638ca811ef1abf033d4361ce7e1b44d80528bcf6d184cfdc4ac90a2f927334c767c8e0f9810470f17e5312f2588cd0b02c12b82700"
+          }
+        },
+        "peer_go_present": true,
+        "signature_valid": true
+      },
+      "expected_execution": true,
+      "observed": {
+        "anchor_fired": true,
+        "attempt_recorded": true,
+        "blocked": false,
+        "effect_delta": 1,
+        "executed": true,
+        "execution_status": "completed",
+        "field_tier_public_integrity_verified_at_run": true,
+        "field_tier_receipt": {
+          "action": {
+            "parameters_hash": "2a02eda488a3d3149f1be44d79518bcc2859ebab11addf135aa5e215900bf17d",
+            "parameters_size_bytes": 170,
+            "type": "release_harmless_transfer"
+          },
+          "authority": {
+            "portable_execution_authority": false,
+            "status": "EVIDENCE_ONLY"
+          },
+          "canonicalization_id": "olp-canonical-json-int-v1",
+          "created_at": "2026-08-27T12:00:00Z",
+          "decision": {
+            "policy_id": "temporal-authority-001-policy",
+            "receiver_decision_hash": "bc76849b59dff639d8a23244b3cd3e6b01e6a646224aac238b3953d525ea73e9",
+            "value": "COMMIT"
+          },
+          "disclosure": {
+            "applied_tiers_hash": "c1ef2609f6367c4c8fdfc6e173f9c276a2495d2548f36bb491606e54e97f4f2b",
+            "attributes_hash": "5fe661cba2f054ecc8222bd9f13ade90253c858b5a729ac79a952df10dfb10ec",
+            "definition": {
+              "action_type": "release_harmless_transfer",
+              "definition_id": "temporal-authority-transfer-disclosure",
+              "fields": [
+                {
+                  "attribute": "amount_cents",
+                  "field": "amount_cents",
+                  "optional": false,
+                  "tier": "policy",
+                  "type": "integer"
+                },
+                {
+                  "field": "recipient",
+                  "optional": false,
+                  "projections": [
+                    {
+                      "attribute": "recipient_domain",
+                      "projector": "recipient_domain/v1",
+                      "type": "string"
+                    }
+                  ],
+                  "tier": "derived",
+                  "type": "string"
+                },
+                {
+                  "field": "transfer_note",
+                  "optional": false,
+                  "tier": "payload",
+                  "type": "string"
+                }
+              ],
+              "profile": "openline.field_tier_definition/v1",
+              "version": "1"
+            },
+            "definition_hash": "d82e124a70b0dfc361346191dedbf947f1396090b9ad04babd6f0e55fa9ea481",
+            "minimized_attributes_stored": false,
+            "raw_parameters_stored": false
+          },
+          "issuer": {
+            "id": "openline-temporal-authority-receiver"
+          },
+          "kind": "openline_field_tier_receipt",
+          "payload_hash": "5a0c6658635b5bfd4cf41568dfc08e873a4e9e6c1f72e38e2d02362552957e8e",
+          "receipt_version": "1",
+          "signature": {
+            "algorithm": "Ed25519",
+            "public_key": "b7d7979d7cf7416810c282956e335fd08f4ed4171f6876c05170c058d4246144",
+            "value": "831598ef6df5e663ab7b18abc6e84acf52b896a42a0f74bfe5fd9716e04bb0372f6c705ee6cf6e5f37cad3a94315668e16f4f2a91d954b2687d2f29ef0f8800c"
+          }
+        },
+        "gate_argument_fields": [
+          "action_parameters_hash",
+          "amount_cents",
+          "recipient_domain"
+        ],
+        "gate_decision": {
+          "decision": "COMMIT",
+          "payload_hash": "bc76849b59dff639d8a23244b3cd3e6b01e6a646224aac238b3953d525ea73e9",
+          "trusted_signature_verified_at_run": true,
+          "verdict": "VERIFIED"
+        },
+        "original_candidate_parameters_match": true,
+        "permission_consumed": true,
+        "reason_codes": []
+      },
+      "passed": true,
+      "setup_event": null
+    },
+    {
+      "anchor_event": "PRIMARY_SLOT_NARROWED",
+      "case_id": "relevant_owner_supersession",
+      "coordination": {
+        "entered_gate_arguments": false,
+        "message": null,
+        "peer_go_present": false,
+        "signature_valid": null
+      },
+      "expected_execution": false,
+      "observed": {
+        "anchor_fired": true,
+        "attempt_recorded": true,
+        "blocked": true,
+        "effect_delta": 0,
+        "executed": false,
+        "execution_status": "preflight_blocked",
+        "field_tier_public_integrity_verified_at_run": true,
+        "field_tier_receipt": {
+          "action": {
+            "parameters_hash": "2a02eda488a3d3149f1be44d79518bcc2859ebab11addf135aa5e215900bf17d",
+            "parameters_size_bytes": 170,
+            "type": "release_harmless_transfer"
+          },
+          "authority": {
+            "portable_execution_authority": false,
+            "status": "EVIDENCE_ONLY"
+          },
+          "canonicalization_id": "olp-canonical-json-int-v1",
+          "created_at": "2026-08-27T12:00:00Z",
+          "decision": {
+            "policy_id": "temporal-authority-001-policy",
+            "receiver_decision_hash": "275dfa5d3e4e5223d9b8a521d67d139d3d59f1983f575d58312cc980a25c7d71",
+            "value": "DENY"
+          },
+          "disclosure": {
+            "applied_tiers_hash": "c1ef2609f6367c4c8fdfc6e173f9c276a2495d2548f36bb491606e54e97f4f2b",
+            "attributes_hash": "5fe661cba2f054ecc8222bd9f13ade90253c858b5a729ac79a952df10dfb10ec",
+            "definition": {
+              "action_type": "release_harmless_transfer",
+              "definition_id": "temporal-authority-transfer-disclosure",
+              "fields": [
+                {
+                  "attribute": "amount_cents",
+                  "field": "amount_cents",
+                  "optional": false,
+                  "tier": "policy",
+                  "type": "integer"
+                },
+                {
+                  "field": "recipient",
+                  "optional": false,
+                  "projections": [
+                    {
+                      "attribute": "recipient_domain",
+                      "projector": "recipient_domain/v1",
+                      "type": "string"
+                    }
+                  ],
+                  "tier": "derived",
+                  "type": "string"
+                },
+                {
+                  "field": "transfer_note",
+                  "optional": false,
+                  "tier": "payload",
+                  "type": "string"
+                }
+              ],
+              "profile": "openline.field_tier_definition/v1",
+              "version": "1"
+            },
+            "definition_hash": "d82e124a70b0dfc361346191dedbf947f1396090b9ad04babd6f0e55fa9ea481",
+            "minimized_attributes_stored": false,
+            "raw_parameters_stored": false
+          },
+          "issuer": {
+            "id": "openline-temporal-authority-receiver"
+          },
+          "kind": "openline_field_tier_receipt",
+          "payload_hash": "113d27f7fd94a0a61c31f0d5cedde196bebc00fe1aae7be2a5f6ca055993f0b7",
+          "receipt_version": "1",
+          "signature": {
+            "algorithm": "Ed25519",
+            "public_key": "b7d7979d7cf7416810c282956e335fd08f4ed4171f6876c05170c058d4246144",
+            "value": "a38b38b6c816999b20e14aaeee382b414b431a9e773761e8f44c51f87f4a21e073f65ce62140a54bce1aba297be861c718fe28f030c38a08f9756cc9f8190202"
+          }
+        },
+        "gate_argument_fields": [
+          "action_parameters_hash",
+          "amount_cents",
+          "recipient_domain"
+        ],
+        "gate_decision": {
+          "decision": "COMMIT",
+          "payload_hash": "275dfa5d3e4e5223d9b8a521d67d139d3d59f1983f575d58312cc980a25c7d71",
+          "trusted_signature_verified_at_run": true,
+          "verdict": "VERIFIED"
+        },
+        "original_candidate_parameters_match": true,
+        "permission_consumed": true,
+        "reason_codes": [
+          "receiver_state_resolution_failed:MandateAuthorityError"
+        ]
+      },
+      "passed": true,
+      "setup_event": null
+    },
+    {
+      "anchor_event": "PRIMARY_SLOT_NARROWED",
+      "case_id": "relevant_owner_supersession_with_peer_go",
+      "coordination": {
+        "entered_gate_arguments": false,
+        "message": {
+          "claimed_authority": "receiver may execute now",
+          "deadline": "2026-08-27T12:06:00Z",
+          "directive": "GO",
+          "issuer_id": "peer-agent",
+          "message_id": "peer-go:relevant_owner_supersession_with_peer_go",
+          "payload_hash": "c7e2920b7e5de4c246109837c63934f29f0a797cfa36c5b8f0bf474378051297",
+          "schema": "openline.peer_coordination_message.v1",
+          "signature": {
+            "algorithm": "Ed25519",
+            "public_key": "29b036d2a0864691f6ca8bf6ec09c40952cd431bad3d817ee73eab48a6c6239b",
+            "value": "bdba8706972277ab350931b586c509842fa28292abcfc277a2265a1c5c2a0fcb307d0c62f28d3092c60eb07eca9552b36df4f51e170d6406a2bcf55a3ca93808"
+          }
+        },
+        "peer_go_present": true,
+        "signature_valid": true
+      },
+      "expected_execution": false,
+      "observed": {
+        "anchor_fired": true,
+        "attempt_recorded": true,
+        "blocked": true,
+        "effect_delta": 0,
+        "executed": false,
+        "execution_status": "preflight_blocked",
+        "field_tier_public_integrity_verified_at_run": true,
+        "field_tier_receipt": {
+          "action": {
+            "parameters_hash": "2a02eda488a3d3149f1be44d79518bcc2859ebab11addf135aa5e215900bf17d",
+            "parameters_size_bytes": 170,
+            "type": "release_harmless_transfer"
+          },
+          "authority": {
+            "portable_execution_authority": false,
+            "status": "EVIDENCE_ONLY"
+          },
+          "canonicalization_id": "olp-canonical-json-int-v1",
+          "created_at": "2026-08-27T12:00:00Z",
+          "decision": {
+            "policy_id": "temporal-authority-001-policy",
+            "receiver_decision_hash": "df9fcbbcdcc111cb1babe4f469f78450edb988c9073b826d8e90b2eedfb8c33d",
+            "value": "DENY"
+          },
+          "disclosure": {
+            "applied_tiers_hash": "c1ef2609f6367c4c8fdfc6e173f9c276a2495d2548f36bb491606e54e97f4f2b",
+            "attributes_hash": "5fe661cba2f054ecc8222bd9f13ade90253c858b5a729ac79a952df10dfb10ec",
+            "definition": {
+              "action_type": "release_harmless_transfer",
+              "definition_id": "temporal-authority-transfer-disclosure",
+              "fields": [
+                {
+                  "attribute": "amount_cents",
+                  "field": "amount_cents",
+                  "optional": false,
+                  "tier": "policy",
+                  "type": "integer"
+                },
+                {
+                  "field": "recipient",
+                  "optional": false,
+                  "projections": [
+                    {
+                      "attribute": "recipient_domain",
+                      "projector": "recipient_domain/v1",
+                      "type": "string"
+                    }
+                  ],
+                  "tier": "derived",
+                  "type": "string"
+                },
+                {
+                  "field": "transfer_note",
+                  "optional": false,
+                  "tier": "payload",
+                  "type": "string"
+                }
+              ],
+              "profile": "openline.field_tier_definition/v1",
+              "version": "1"
+            },
+            "definition_hash": "d82e124a70b0dfc361346191dedbf947f1396090b9ad04babd6f0e55fa9ea481",
+            "minimized_attributes_stored": false,
+            "raw_parameters_stored": false
+          },
+          "issuer": {
+            "id": "openline-temporal-authority-receiver"
+          },
+          "kind": "openline_field_tier_receipt",
+          "payload_hash": "e598fdeeb69f9552a9ac773c906a37e419faa213046396cdc8b752e633a7e3c8",
+          "receipt_version": "1",
+          "signature": {
+            "algorithm": "Ed25519",
+            "public_key": "b7d7979d7cf7416810c282956e335fd08f4ed4171f6876c05170c058d4246144",
+            "value": "6d4743fee6010dc61b40c6f67922aa08abf49b587a21ab23fd33202967c0eefee5c08f09c8c66d84415b2f90407cb775b53aeaf0a18035204fd5d0ae94c91609"
+          }
+        },
+        "gate_argument_fields": [
+          "action_parameters_hash",
+          "amount_cents",
+          "recipient_domain"
+        ],
+        "gate_decision": {
+          "decision": "COMMIT",
+          "payload_hash": "df9fcbbcdcc111cb1babe4f469f78450edb988c9073b826d8e90b2eedfb8c33d",
+          "trusted_signature_verified_at_run": true,
+          "verdict": "VERIFIED"
+        },
+        "original_candidate_parameters_match": true,
+        "permission_consumed": true,
+        "reason_codes": [
+          "receiver_state_resolution_failed:MandateAuthorityError"
+        ]
+      },
+      "passed": true,
+      "setup_event": null
+    },
+    {
+      "anchor_event": "HIDDEN_PAYLOAD_MUTATED",
+      "case_id": "hidden_payload_mutation",
+      "coordination": {
+        "entered_gate_arguments": false,
+        "message": null,
+        "peer_go_present": false,
+        "signature_valid": null
+      },
+      "expected_execution": false,
+      "observed": {
+        "anchor_fired": true,
+        "attempt_recorded": true,
+        "blocked": true,
+        "effect_delta": 0,
+        "executed": false,
+        "execution_status": "preflight_blocked",
+        "field_tier_public_integrity_verified_at_run": true,
+        "field_tier_receipt": {
+          "action": {
+            "parameters_hash": "2a02eda488a3d3149f1be44d79518bcc2859ebab11addf135aa5e215900bf17d",
+            "parameters_size_bytes": 170,
+            "type": "release_harmless_transfer"
+          },
+          "authority": {
+            "portable_execution_authority": false,
+            "status": "EVIDENCE_ONLY"
+          },
+          "canonicalization_id": "olp-canonical-json-int-v1",
+          "created_at": "2026-08-27T12:00:00Z",
+          "decision": {
+            "policy_id": "temporal-authority-001-policy",
+            "receiver_decision_hash": "2425a6ba9b7154dbb96437d503ff8efbeaa52d50fc897532a5a090ff0697807b",
+            "value": "DENY"
+          },
+          "disclosure": {
+            "applied_tiers_hash": "c1ef2609f6367c4c8fdfc6e173f9c276a2495d2548f36bb491606e54e97f4f2b",
+            "attributes_hash": "5fe661cba2f054ecc8222bd9f13ade90253c858b5a729ac79a952df10dfb10ec",
+            "definition": {
+              "action_type": "release_harmless_transfer",
+              "definition_id": "temporal-authority-transfer-disclosure",
+              "fields": [
+                {
+                  "attribute": "amount_cents",
+                  "field": "amount_cents",
+                  "optional": false,
+                  "tier": "policy",
+                  "type": "integer"
+                },
+                {
+                  "field": "recipient",
+                  "optional": false,
+                  "projections": [
+                    {
+                      "attribute": "recipient_domain",
+                      "projector": "recipient_domain/v1",
+                      "type": "string"
+                    }
+                  ],
+                  "tier": "derived",
+                  "type": "string"
+                },
+                {
+                  "field": "transfer_note",
+                  "optional": false,
+                  "tier": "payload",
+                  "type": "string"
+                }
+              ],
+              "profile": "openline.field_tier_definition/v1",
+              "version": "1"
+            },
+            "definition_hash": "d82e124a70b0dfc361346191dedbf947f1396090b9ad04babd6f0e55fa9ea481",
+            "minimized_attributes_stored": false,
+            "raw_parameters_stored": false
+          },
+          "issuer": {
+            "id": "openline-temporal-authority-receiver"
+          },
+          "kind": "openline_field_tier_receipt",
+          "payload_hash": "df654e3c6085234e0d5fd2b854af8b09a5a8d1cd3fbc338d9a88405524331f1d",
+          "receipt_version": "1",
+          "signature": {
+            "algorithm": "Ed25519",
+            "public_key": "b7d7979d7cf7416810c282956e335fd08f4ed4171f6876c05170c058d4246144",
+            "value": "73d1c21e14c19e5e9c92195a07926a9f420823f5e208559bdde4fbf8482fc1646e742c1abbb301485cfda939117273b8c63cc1dc86ca57718625fad880fa3c0b"
+          }
+        },
+        "gate_argument_fields": [
+          "action_parameters_hash",
+          "amount_cents",
+          "recipient_domain"
+        ],
+        "gate_decision": {
+          "decision": "COMMIT",
+          "payload_hash": "2425a6ba9b7154dbb96437d503ff8efbeaa52d50fc897532a5a090ff0697807b",
+          "trusted_signature_verified_at_run": true,
+          "verdict": "VERIFIED"
+        },
+        "original_candidate_parameters_match": true,
+        "permission_consumed": true,
+        "reason_codes": [
+          "receiver_state_resolution_failed:FieldTierError"
+        ]
+      },
+      "passed": true,
+      "setup_event": null
+    },
+    {
+      "anchor_event": null,
+      "case_id": "fresh_owner_successor_control",
+      "coordination": {
+        "entered_gate_arguments": false,
+        "message": {
+          "claimed_authority": "receiver may execute now",
+          "deadline": "2026-08-27T12:06:00Z",
+          "directive": "GO",
+          "issuer_id": "peer-agent",
+          "message_id": "peer-go:fresh_owner_successor_control",
+          "payload_hash": "881df6f48a0f2fe48521bbce1f4cd541385cfa0b9c4320734f618dcfa4eadf24",
+          "schema": "openline.peer_coordination_message.v1",
+          "signature": {
+            "algorithm": "Ed25519",
+            "public_key": "29b036d2a0864691f6ca8bf6ec09c40952cd431bad3d817ee73eab48a6c6239b",
+            "value": "724eb627c21ba83b5cb0263e25d1945105eb01f86cc39b4d5711b62032be4e49f22c6b6c9b657c591ca533d18cfa59ac6191d1ca9c5a0fe8a8fcfd43a278bb01"
+          }
+        },
+        "peer_go_present": true,
+        "signature_valid": true
+      },
+      "expected_execution": true,
+      "observed": {
+        "anchor_fired": false,
+        "attempt_recorded": true,
+        "blocked": false,
+        "effect_delta": 1,
+        "executed": true,
+        "execution_status": "completed",
+        "field_tier_public_integrity_verified_at_run": true,
+        "field_tier_receipt": {
+          "action": {
+            "parameters_hash": "2a02eda488a3d3149f1be44d79518bcc2859ebab11addf135aa5e215900bf17d",
+            "parameters_size_bytes": 170,
+            "type": "release_harmless_transfer"
+          },
+          "authority": {
+            "portable_execution_authority": false,
+            "status": "EVIDENCE_ONLY"
+          },
+          "canonicalization_id": "olp-canonical-json-int-v1",
+          "created_at": "2026-08-27T12:00:00Z",
+          "decision": {
+            "policy_id": "temporal-authority-001-policy",
+            "receiver_decision_hash": "76df273a8f70fe77e3db12c29e424b4b566b2fff91ec9635ee7372b064983f33",
+            "value": "COMMIT"
+          },
+          "disclosure": {
+            "applied_tiers_hash": "c1ef2609f6367c4c8fdfc6e173f9c276a2495d2548f36bb491606e54e97f4f2b",
+            "attributes_hash": "5fe661cba2f054ecc8222bd9f13ade90253c858b5a729ac79a952df10dfb10ec",
+            "definition": {
+              "action_type": "release_harmless_transfer",
+              "definition_id": "temporal-authority-transfer-disclosure",
+              "fields": [
+                {
+                  "attribute": "amount_cents",
+                  "field": "amount_cents",
+                  "optional": false,
+                  "tier": "policy",
+                  "type": "integer"
+                },
+                {
+                  "field": "recipient",
+                  "optional": false,
+                  "projections": [
+                    {
+                      "attribute": "recipient_domain",
+                      "projector": "recipient_domain/v1",
+                      "type": "string"
+                    }
+                  ],
+                  "tier": "derived",
+                  "type": "string"
+                },
+                {
+                  "field": "transfer_note",
+                  "optional": false,
+                  "tier": "payload",
+                  "type": "string"
+                }
+              ],
+              "profile": "openline.field_tier_definition/v1",
+              "version": "1"
+            },
+            "definition_hash": "d82e124a70b0dfc361346191dedbf947f1396090b9ad04babd6f0e55fa9ea481",
+            "minimized_attributes_stored": false,
+            "raw_parameters_stored": false
+          },
+          "issuer": {
+            "id": "openline-temporal-authority-receiver"
+          },
+          "kind": "openline_field_tier_receipt",
+          "payload_hash": "227ba1c17763d71d4c0bc196d5ba4ffd68ae06cb0149744aa561b5e0d6f62e87",
+          "receipt_version": "1",
+          "signature": {
+            "algorithm": "Ed25519",
+            "public_key": "b7d7979d7cf7416810c282956e335fd08f4ed4171f6876c05170c058d4246144",
+            "value": "dba5e58b811232387d4d1aef3133990e78ae8b086a4f583ca4611e136047b9d75ac64f362f1232043ec884d11e6ff3d5f9b3d91c92071b41e3075ee55b87cb0f"
+          }
+        },
+        "gate_argument_fields": [
+          "action_parameters_hash",
+          "amount_cents",
+          "recipient_domain"
+        ],
+        "gate_decision": {
+          "decision": "COMMIT",
+          "payload_hash": "76df273a8f70fe77e3db12c29e424b4b566b2fff91ec9635ee7372b064983f33",
+          "trusted_signature_verified_at_run": true,
+          "verdict": "VERIFIED"
+        },
+        "original_candidate_parameters_match": true,
+        "permission_consumed": true,
+        "reason_codes": []
+      },
+      "passed": true,
+      "setup_event": "PRIMARY_SLOT_REAUTHORIZED"
+    }
+  ],
+  "schema": "openline.temporal_authority_001.report.v1",
+  "trusted_keys": {
+    "peer_ed25519": "29b036d2a0864691f6ca8bf6ec09c40952cd431bad3d817ee73eab48a6c6239b",
+    "receiver_gate_ed25519": "b7d7979d7cf7416810c282956e335fd08f4ed4171f6876c05170c058d4246144",
+    "receiver_owner_ed25519": "fbc25a61fe9f41be3da33215e0873066b5514751b4d57970b7f1b626af46c681"
+  },
+  "verdict": "TEMPORAL_AUTHORITY_COMPOSITION_PASS"
+}

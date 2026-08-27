@@ -1,0 +1,44 @@
+{
+  "as_of": "2026-08-27",
+  "experiment": "TEMPORAL-AUTHORITY-001",
+  "schema": "openline.temporal_authority_001.sources.v1",
+  "sources": [
+    {
+      "artifact_status": "public incident report",
+      "contribution": "Motivates the authenticated peer GO plus six-minute deadline arm; it does not supply authority semantics or benchmark code.",
+      "id": "openai-hugging-face-incident",
+      "title": "Hugging Face incident and the road ahead",
+      "url": "https://openai.com/index/hugging-face-incident-and-the-road-ahead/"
+    },
+    {
+      "artifact_status": "public joint independent analysis",
+      "contribution": "Corroborates large-scale message-board coordination; it does not verify every claim in OpenAI's account and is not reproduced here.",
+      "id": "metr-redwood-incident-analysis",
+      "title": "OpenAI Hugging Face Incident Investigation",
+      "url": "https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/"
+    },
+    {
+      "artifact_status": "paper says the complete artifact will be released upon publication",
+      "contribution": "Supplies the Borrowed Authority threat shape and cross-host edge setting. TEMPORAL-AUTHORITY-001 does not claim a reproduction of Edge Skillguard.",
+      "id": "arxiv-2608.25091v1",
+      "title": "Auto-Policy, not Auto-Skill: Compiled Agent Skills for the Physical World",
+      "url": "https://arxiv.org/abs/2608.25091v1"
+    },
+    {
+      "artifact_status": "public paper; no author runtime is integrated here",
+      "contribution": "Supplies the requirement that active obligations, deadlines, precedence, and superseded clearances be evaluated over time-stamped execution traces. The paper is a monitor, not an authorization gate.",
+      "id": "arxiv-2608.25926v1",
+      "title": "Formal, Executable and Explainable Runtime Monitoring of Spoken Air Traffic Control Operational Procedures",
+      "url": "https://arxiv.org/abs/2608.25926v1"
+    },
+    {
+      "artifact_status": "paper describes a private pilot; no public reference implementation is integrated here",
+      "contribution": "Supplies the pre-minimization commitment and policy/derived/payload field tiers. The implementation under test is OpenLine's independent field-tier module.",
+      "id": "arxiv-2608.25474v1",
+      "title": "Separating Disclosure from Authorization: Field-Tier Minimization for Agent Action Mediation",
+      "url": "https://arxiv.org/abs/2608.25474v1"
+    }
+  ],
+  "source_authority": "SCENARIO_MOTIVATION_ONLY"
+}
+
