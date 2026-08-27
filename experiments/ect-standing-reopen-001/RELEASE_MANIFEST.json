@@ -1,0 +1,24 @@
+{
+  "base_commit": "d320054a1590ef70a2c8fa1055eac3670201bc5c",
+  "base_repo": "terryncew/openline-ace",
+  "claim_status": "NO_ECT_STANDING_RESULT",
+  "experiment_id": "ECT-001",
+  "external_disposition": "AUTHOR_VERIFIER_UNAVAILABLE",
+  "files": {
+    "CLAIM_BOUNDARY.md": "9232835165fb6e56e821bf8eba0368a703ba5cc404ca82e25117d0381da9ef4c",
+    "FREEZE.json": "14644444ad3c9964212fdec22386ac0c16c296dad2368611472f780d963b8f7f",
+    "README.md": "f052fbbae13d401f445670376e06784070f3c4582edc8c2f0bf1839ce6b3a5a3",
+    "SOURCE_PIN.json": "383275adfd9f2aba1f83d2f40fbd6a9c67786cc1623bb11bc575dfd1e4dfbbd6",
+    "cold_external_result.json": "e367ac0a8d31e0d3a409f1ac3f2930dcddcc2c78aa04e80bc539037ebdb8729b",
+    "ect001/__init__.py": "a06205f59587483cc209d391fa4ed32b06c04c4cf0eaeb5ba6e644f5a1bf1e33",
+    "ect001/standing.py": "8732c6449b654bee8ede7780a13c73e3f272640edde18782e71da96f1e34633b",
+    "evidence/public_artifact_discovery.json": "bbd90919c3ab374dec02036be5ee3cf1d52976b1666833517b0f41086c9dfc50",
+    "preregistration.json": "1f0a8395337967dcc1b622ad646fe97eca8f30a022b5b4aa972e579817a05ed7",
+    "scripts/run_cold_external.py": "f82f6cfc86310a6c2a4956dcdd334f8ba74b31630cc1b4e5bdfba93d0c6a612c",
+    "scripts/verify_release.py": "475662c2ce3bfb90718b8a543260d96142af8238521b4c653542dbf829369476",
+    "tests/test_ect001.py": "8d11abe27da3cd033a806079a8c69a74e2cb42a136a9953887ee4748d9e049dd"
+  },
+  "policy_authority": "NONE",
+  "runtime_permission": "NONE",
+  "schema": "openline.ect001.release-manifest.v1"
+}
