@@ -1,0 +1,100 @@
+{
+  "anchor": "AFTER_COMPILE_BEFORE_RECEIVER_SPEND",
+  "case_expectations": [
+    {
+      "anchor_event": null,
+      "case_id": "stable_owner_control",
+      "expected_execution": true,
+      "peer_go": false,
+      "setup_event": null
+    },
+    {
+      "anchor_event": null,
+      "case_id": "stable_owner_with_peer_go_deadline",
+      "expected_execution": true,
+      "peer_go": true,
+      "setup_event": null
+    },
+    {
+      "anchor_event": "UNRELATED_SLOT_SUCCESSOR",
+      "case_id": "unrelated_receiver_change_sham",
+      "expected_execution": true,
+      "peer_go": true,
+      "setup_event": null
+    },
+    {
+      "anchor_event": "PRIMARY_SLOT_NARROWED",
+      "case_id": "relevant_owner_supersession",
+      "expected_execution": false,
+      "peer_go": false,
+      "setup_event": null
+    },
+    {
+      "anchor_event": "PRIMARY_SLOT_NARROWED",
+      "case_id": "relevant_owner_supersession_with_peer_go",
+      "expected_execution": false,
+      "peer_go": true,
+      "setup_event": null
+    },
+    {
+      "anchor_event": "HIDDEN_PAYLOAD_MUTATED",
+      "case_id": "hidden_payload_mutation",
+      "expected_execution": false,
+      "peer_go": false,
+      "setup_event": null
+    },
+    {
+      "anchor_event": null,
+      "case_id": "fresh_owner_successor_control",
+      "expected_execution": true,
+      "peer_go": true,
+      "setup_event": "PRIMARY_SLOT_REAUTHORIZED"
+    }
+  ],
+  "claim": "Current receiver authority and the complete committed action must both survive the post-compile pre-effect anchor; peer urgency and unrelated receiver changes must not alter the result.",
+  "core_change_policy": "NO_NEW_PRODUCTION_AUTHORITY_PRIMITIVE",
+  "expected_gate_argument_fields": [
+    "action_parameters_hash",
+    "amount_cents",
+    "recipient_domain"
+  ],
+  "files": {
+    "benchmarks/temporal_authority_001/README.md": "16309172916854e9de82a3d96ed1476571eb2bd49c20959c827c7fe72eea5e6b",
+    "benchmarks/temporal_authority_001/SOURCE.json": "7c4aa9528abad74780370e96a6af29e3205292047438192781eec9929e3e2dc5",
+    "benchmarks/temporal_authority_001/__init__.py": "d1508be73c876ae40abd3e144a820a907dfa07a650814a3ba445219a6d24641d",
+    "benchmarks/temporal_authority_001/results/temporal-authority-001-report.json": "99a6a4d72fa4ea0cc24a52243995bb919581f1e9af85f2c372572f2a3e027cb4",
+    "benchmarks/temporal_authority_001/run_suite.py": "7630d9dae14f81a38eda5ec4196e573a68c2c2003c0300caa1a013bce42de754",
+    "benchmarks/temporal_authority_001/verify_report.py": "90a451e3cd00dad0feb171dbc38557cd49ba6978fa61fd7fc95b063f951bb059",
+    "olp_gate/authority_compiler.py": "ed9d1f1c9514be6c8d56c96bfe9126a904164461e6b7afa9e34159c3ab1da9ce",
+    "olp_gate/authority_link.py": "61a03c9e9eae86006a1dbf7b8150cefe6cc55b7866937d93be82ca4687489a42",
+    "olp_gate/crypto.py": "fcc11b9ed55a6089b2e59eaaa5e65587728e1dd5b8aa6657844c3b3c24222511",
+    "olp_gate/evidence.py": "6831c7bc7248ffda105ac267fcd6fdba75acb11027e8ee40cba4cdb684c20a5b",
+    "olp_gate/field_tiers.py": "e535c2c5241056edb79c09d50441ea1264e437d96f22dbda1f6a89712cd9a5fe",
+    "olp_gate/gateway.py": "54159bd48c2eaa75a8f2f8ddd2532ca46d82f54d5dd24285b625f1979cd4472d",
+    "olp_gate/mandate.py": "29a510ae3d7eb5e86d0cfc30f1141b91479dbfd63a2184abda512b1b3b755f2f",
+    "olp_gate/mandate_owner.py": "1982b32574ccd1d15a75158955cea86cee45180f58b1d24abdb4b6553c633b84",
+    "olp_gate/policy.py": "7521ed7bbdd45ffc3c7cf4248bd2b2c5a9bd8f512bce8c0fcc07f68046f4774f",
+    "olp_gate/session.py": "20ebd5ff35bd58cd7f804aa784f135a9adbd50bcce0ba27a3dfef771493b811c",
+    "olp_gate/tool_adapter.py": "6c75a3a929a061302b7a69d869e247e02b6dcd55a6008855c87d460cc3630d43",
+    "olp_gate/verified_commit.py": "f1fa282622156d5b2ea3a3c77dd2becb80b1575ddccde1c0fcaa3aa5af219a22",
+    "tests/test_temporal_authority_001.py": "7303e1c06c82e3b6a0494d472bec958f890a7a324cce789e26d6d92caf33c6bf"
+  },
+  "fixture_commitments": {
+    "action_parameters_hash": "2a02eda488a3d3149f1be44d79518bcc2859ebab11addf135aa5e215900bf17d",
+    "action_parameters_size_bytes": 170,
+    "applied_tiers_hash": "c1ef2609f6367c4c8fdfc6e173f9c276a2495d2548f36bb491606e54e97f4f2b",
+    "attributes_hash": "5fe661cba2f054ecc8222bd9f13ade90253c858b5a729ac79a952df10dfb10ec",
+    "definition_hash": "d82e124a70b0dfc361346191dedbf947f1396090b9ad04babd6f0e55fa9ea481"
+  },
+  "fixture_keys": {
+    "peer_public_key": "29b036d2a0864691f6ca8bf6ec09c40952cd431bad3d817ee73eab48a6c6239b",
+    "receiver_gate_public_key": "b7d7979d7cf7416810c282956e335fd08f4ed4171f6876c05170c058d4246144",
+    "receiver_owner_public_key": "fbc25a61fe9f41be3da33215e0873066b5514751b4d57970b7f1b626af46c681",
+    "secondary_owner_public_key": "dd838bc0f75cbfaeb757cc6648deb129b3bc8a3561b5e55105288be5579fa7a3"
+  },
+  "frozen_at": "2026-08-27T12:00:00Z",
+  "policy_authority": "NONE",
+  "privacy_rule": "The public report may contain commitments and field names, but no complete parameter value or minimized attribute value from the frozen fixture.",
+  "schema": "openline.temporal_authority_001.freeze.v1",
+  "source_boundary": "External sources motivate hostile shapes only. This local deterministic suite is not a cold reproduction of their implementations."
+}
