@@ -82,6 +82,20 @@ from .x402_airlock import (
     validate_x402_issue,
     verification_context_hash,
 )
+from .field_tiers import (
+    DEFAULT_PROJECTORS,
+    FIELD_TIER_DEFINITION_PROFILE,
+    FIELD_TIER_RECEIPT_KIND,
+    FIELD_TIER_REQUEST_PROFILE,
+    FieldTierAdmission,
+    FieldTierError,
+    admit_minimized_request,
+    applied_tiers_hash,
+    generate_definition_artifacts,
+    issue_field_tier_receipt,
+    minimize_parameters,
+    verify_field_tier_receipt,
+)
 
 __all__ = [
     "Decision",
@@ -149,4 +163,16 @@ __all__ = [
     "execute_x402_once",
     "validate_x402_issue",
     "verification_context_hash",
+    "DEFAULT_PROJECTORS",
+    "FIELD_TIER_DEFINITION_PROFILE",
+    "FIELD_TIER_RECEIPT_KIND",
+    "FIELD_TIER_REQUEST_PROFILE",
+    "FieldTierAdmission",
+    "FieldTierError",
+    "admit_minimized_request",
+    "applied_tiers_hash",
+    "generate_definition_artifacts",
+    "issue_field_tier_receipt",
+    "minimize_parameters",
+    "verify_field_tier_receipt",
 ]

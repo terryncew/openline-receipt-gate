@@ -75,6 +75,7 @@ policy are in
 | Turn existing receipts into a signed receiver decision | olp-gate decide |
 | Carry one exact permission to another service or process | VerifiedCommitLedger |
 | Check whether explicit decision state survived an agent handoff | Handoff Check |
+| Keep sensitive action fields out of a portable audit receipt | Field-tier projections |
 
 ## Guard a Python function
 
@@ -267,6 +268,7 @@ system's enforcement powers. Details:
 | [Verified Commit](docs/VERIFIED_COMMIT.md) | Bind one signed decision to one exact destination call | Local exactly-once authorization, not globally exactly-once side effects |
 | [x402 Transaction Airlock](docs/X402_TRANSACTION_AIRLOCK.md) | Recheck exact payment state before settlement and release | Reference profile; receiver owns snapshot, settlement, confirmation, and release callbacks |
 | [Role-Confusion Consequence Gate](docs/ROLE_CONFUSION_CONSEQUENCE_GATE.md) | Block an unsupported effect even after an agent adopts an untrusted instruction | Does not classify or repair the prompt |
+| [Field-tier projections](docs/FIELD_TIER_PROJECTIONS.md) | Commit complete action parameters while exposing only receiver-declared policy attributes | The commitment is integrity, not secrecy or proof that a remote client projected honestly |
 | Verified Model Swap and Continuation | Test whether decision-relevant state survives a model or agent handoff | Current public runs are deterministic fixtures, not live-provider proof |
 
 ## Security boundaries

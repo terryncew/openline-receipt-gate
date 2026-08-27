@@ -1,5 +1,21 @@
 # Changelog
 
+## Unreleased
+
+- Adds receiver-owned field-tier definitions for policy, derived, and payload
+  fields. The complete parameter commitment is computed before minimization;
+  unclassified fields remain local and unknown projectors fail closed.
+- Generates the applied-tier view, policy schema, and strict wire schema from
+  one definition, preventing silent drift between disclosure and evaluation.
+- Adds signed public audit receipts containing only commitments, the receiver's
+  definition, and a hash binding to an existing gate decision. The receipt is
+  explicitly evidence-only and carries no portable execution authority.
+- Adds a standalone Node verifier that independently recomputes canonical
+  bytes, hashes, signatures, normalized definitions, and applied-tier hashes.
+- Pins a hand-written email corpus covering hidden-value changes,
+  reclassification, stale tier views, unexpected attributes, signature
+  tampering, candidate-preimage verification, and raw-value leak scans.
+
 ## 0.6.0rc6
 
 - Adds a behavioral comparison against the official x402 repository pinned at
