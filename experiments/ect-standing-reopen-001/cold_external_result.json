@@ -1,0 +1,17 @@
+{
+  "claim_status": "NO_ECT_STANDING_RESULT",
+  "disposition": "AUTHOR_VERIFIER_UNAVAILABLE",
+  "experiment_id": "ECT-001",
+  "openline_reconstructed_ect_verifier": false,
+  "reason": "Cold external boundary requires an authentic executable author verifier before any t0 certificate may be admitted.",
+  "schema": "openline.ect001.external-result.v1",
+  "t0": {
+    "authority": "AUTHOR_VERIFIER_ONLY",
+    "status": "UNASSESSED"
+  },
+  "t1": {
+    "authority": "OPENLINE_T1_STANDING_ONLY",
+    "executed": false,
+    "status": "UNASSESSED"
+  }
+}

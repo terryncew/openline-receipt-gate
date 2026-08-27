@@ -1,0 +1,19 @@
+{
+  "authority_boundary": {
+    "t0": "AUTHOR_VERIFIER_ONLY",
+    "t1": "OPENLINE_STANDING_ONLY"
+  },
+  "experiment_id": "ECT-001",
+  "files": {
+    "CLAIM_BOUNDARY.md": "9232835165fb6e56e821bf8eba0368a703ba5cc404ca82e25117d0381da9ef4c",
+    "SOURCE_PIN.json": "383275adfd9f2aba1f83d2f40fbd6a9c67786cc1623bb11bc575dfd1e4dfbbd6",
+    "ect001/standing.py": "8732c6449b654bee8ede7780a13c73e3f272640edde18782e71da96f1e34633b",
+    "evidence/public_artifact_discovery.json": "bbd90919c3ab374dec02036be5ee3cf1d52976b1666833517b0f41086c9dfc50",
+    "preregistration.json": "1f0a8395337967dcc1b622ad646fe97eca8f30a022b5b4aa972e579817a05ed7",
+    "scripts/run_cold_external.py": "f82f6cfc86310a6c2a4956dcdd334f8ba74b31630cc1b4e5bdfba93d0c6a612c"
+  },
+  "forbid_local_ect_verifier": true,
+  "frozen_at_date": "2026-08-27",
+  "openline_ace_base": "d320054a1590ef70a2c8fa1055eac3670201bc5c",
+  "schema": "openline.ect001.freeze.v1"
+}

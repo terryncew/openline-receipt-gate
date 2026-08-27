@@ -1,0 +1,17 @@
+{
+  "schema": "openline.ect001.source-pin.v1",
+  "paper": {
+    "title": "When May an Agent Stop? Evidence-Carrying Termination for Tool-Using LLMs",
+    "author": "Jason Liu",
+    "arxiv_id": "2608.23623",
+    "version": "v1",
+    "canonical_url": "https://arxiv.org/abs/2608.23623v1",
+    "submitted_at_utc": "2026-08-22T18:56:27Z"
+  },
+  "author_executable_verifier": {
+    "status": "NOT_LOCATED_PUBLICLY_AS_OF_2026-08-27",
+    "required_for_authoritative_t0": true,
+    "substitution_allowed": false
+  },
+  "pin_policy": "A versioned author artifact may be consumed; a locally reconstructed ECT verifier may not substitute for author authority."
+}

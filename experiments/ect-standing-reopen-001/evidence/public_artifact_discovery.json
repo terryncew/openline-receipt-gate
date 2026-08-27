@@ -1,0 +1,14 @@
+{
+  "schema": "openline.ect001.discovery.v1",
+  "observed_at": "2026-08-27",
+  "canonical_author_artifact": "arXiv:2608.23623v1",
+  "paper_status": "LOCATED_AND_VERSION_PINNED",
+  "executable_author_verifier_status": "NOT_LOCATED_PUBLICLY",
+  "discovery_scope": [
+    "canonical arXiv record",
+    "web searches for exact title plus GitHub/code/artifact",
+    "GitHub code/repository searches for exact title, arXiv id, and distinctive ECT phrases"
+  ],
+  "boundary_consequence": "No t0 certificate is admitted. OpenLine t1 standing evaluation is therefore not executed.",
+  "note": "This file records discovery disposition only. It does not prove that no private or newly published author artifact exists."
+}

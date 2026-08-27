@@ -1,0 +1,17 @@
+{
+  "base_commit": "d320054a1590ef70a2c8fa1055eac3670201bc5c",
+  "experiment_id": "ECT-001",
+  "external_disposition": "AUTHOR_VERIFIER_UNAVAILABLE",
+  "external_source_pin": "arxiv:2608.23623v1",
+  "merge_claim": "Cold external ECT boundary is preserved; no local ECT verifier is introduced.",
+  "overlay_root": "experiments/ect-standing-reopen-001",
+  "release_manifest_sha256": "a9d30100ec85bca25db744e2f306ab77f6fbf4d78445871c1394f3afd1601f48",
+  "repo": "terryncew/openline-ace",
+  "schema": "openline.ect001.handoff.v1",
+  "t0": "UNASSESSED_AUTHOR_ONLY",
+  "t1": "UNASSESSED_NOT_EXECUTED",
+  "tests": {
+    "count": 8,
+    "status": "PASS"
+  }
+}

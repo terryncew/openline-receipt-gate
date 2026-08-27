@@ -1,0 +1,36 @@
+{
+  "schema": "openline.ect001.preregistration.v1",
+  "experiment_id": "ECT-001",
+  "question": "Can OpenLine selectively reopen an externally author-verified ECT completion after a later standing event without re-verifying ECT at t0?",
+  "authority_split": {
+    "t0_certificate_validity": "AUTHOR_VERIFIER_ONLY",
+    "t1_standing_reopen": "OPENLINE_ONLY"
+  },
+  "external_run_gate": {
+    "requires_author_verifier_artifact": true,
+    "requires_author_verifier_pass": true,
+    "requires_certificate_digest": true,
+    "requires_admitted_dependency_basis": true
+  },
+  "primary_cases_after_gate": [
+    {
+      "case": "bound_basis_loses_standing",
+      "expected": "REOPEN"
+    },
+    {
+      "case": "unrelated_basis_loses_standing",
+      "expected": "NO_REOPEN"
+    }
+  ],
+  "fail_closed_dispositions": {
+    "author_verifier_unavailable": "AUTHOR_VERIFIER_UNAVAILABLE",
+    "author_verifier_nonpass": "T0_NOT_ADMITTED",
+    "missing_dependency_basis": "T0_BINDING_INCOMPLETE"
+  },
+  "forbidden": [
+    "implement ECT verifier locally",
+    "replay ECT claims with OpenLine code",
+    "infer certificate validity from the paper abstract",
+    "run t1 standing on an unverified t0 certificate"
+  ]
+}
