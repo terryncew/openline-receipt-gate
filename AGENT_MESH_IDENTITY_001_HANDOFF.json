@@ -2,7 +2,7 @@
   "artifact_hashes": {
     "release_manifest_sha256": "c37baa96259aa94d46c91c4f472592942b2a66901fab1c84806b0ceba0827a8a",
     "result_sha256": "2da730f96be6a2c5c4cb162bc1b06fc0e774f64e17573d1eccb7c07e6a4085a3",
-    "workflow_sha256": "08805fe7fb59473ed86a569194461cb352bb3690388354f6fd9be3308e87a426"
+    "workflow_sha256": "52f650e354266e372ea2e97c06bfe2b0e91572a419bfda140c909bd190721b57"
   },
   "base_commit": "0d5666a1b0097ef2bac316a99cc1834ba73460bf",
   "base_repo": "terryncew/openline-receipt-gate",
