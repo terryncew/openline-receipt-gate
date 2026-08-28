@@ -1,0 +1,51 @@
+{
+  "schema": "openline.wallet_standing_003.handoff.v1",
+  "experiment_id": "WALLET-STANDING-003",
+  "status": "FROZEN_LOCAL_BUILD",
+  "base_repo": "terryncew/openline-receipt-gate",
+  "base_commit": "bf3cb5fd9345f481aa0ae30d2990c74af986e485",
+  "branch": "feat/wallet-standing-003",
+  "commit": "feat(gate): add distributed wallet freeze test",
+  "pr_title": "feat(gate): add distributed wallet freeze test",
+  "expected_changed_file_count": 14,
+  "verdict": "RECEIVED_FREEZE_AND_FORK_QUARANTINE_ENFORCED_WITH_DECLARED_INFORMATION_LAG",
+  "passed": true,
+  "authority": {
+    "wallet_policy_authority": "NONE",
+    "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+    "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+    "decision_authority": "RECEIVER_GATE"
+  },
+  "metrics": {
+    "frozen_arms_passed": "15/15",
+    "focused_tests_passed": "29/29",
+    "freeze_received_old_root_execution_count": 0,
+    "freeze_unreceived_old_root_execution_count": 1,
+    "stale_freeze_old_root_execution_count": 1,
+    "freeze_replay_extension_seconds": 0,
+    "malicious_guardian_dos_seconds": 600,
+    "post_expiry_legitimate_execution_count": 1,
+    "post_quorum_successor_execution_count": 2,
+    "virgin_without_checkpoint_execution_count": 0,
+    "virgin_with_checkpoint_execution_count": 1,
+    "partitioned_conflicting_branch_execution_count": 2,
+    "post_fork_detection_execution_count": 0,
+    "automatic_convergence_count": 0,
+    "fork_quarantine_count": 2
+  },
+  "release_manifest_sha256": "93ba2cafa0764583819ea2f9e525c522f2974a173943d93eed98aa35eb657a96",
+  "next_falsifier": {
+    "experiment_id": "WALLET-STANDING-004",
+    "boundary": "real cross-device transport plus an independently operated witness-distribution service under delay, offline, replay, and partition schedules"
+  },
+  "working_copy": {
+    "overlay_root": true,
+    "wrapper_directory": false,
+    "cover_file": false,
+    "expected_top_level_entries": [
+      ".github",
+      "experiments",
+      "WALLET_STANDING_003_HANDOFF.json"
+    ]
+  }
+}
