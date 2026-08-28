@@ -1,0 +1,29 @@
+{
+  "allowed_arms": [
+    "paper_failed_identity",
+    "current_receipt_gate_effect_binding"
+  ],
+  "base_commit": "0d5666a1b0097ef2bac316a99cc1834ba73460bf",
+  "experiment_id": "Agent-Mesh-Identity-001",
+  "falsifiers": {
+    "fixture_translation": "Any paper-failed identity unexpectedly matching its oracle relation invalidates that case as a reproduction control.",
+    "no_new_mechanism": "Any current Receipt Gate effect binding relation that disagrees with the sealed oracle triggers SEMANTIC_IDENTITY_GAP_DETECTED.",
+    "semantic_inference": "The experiment does not earn a claim that Receipt Gate can infer semantically load-bearing fields from arbitrary payloads."
+  },
+  "frozen_case_count": 5,
+  "metrics": [
+    "oracle_relation_matches",
+    "false_collisions",
+    "false_splits"
+  ],
+  "oracle_visibility": "The runner receives pair labels and computes identities. The independent verifier owns correctness scoring from oracle.json.",
+  "policy_authority": "NONE",
+  "production_change_budget": 0,
+  "schema": "openline.agent_mesh_identity_001.preregistration.v1",
+  "stop_rule": "Run the five frozen pairs once. If all pass, add no mechanism and freeze the pack. If one fails, report only the exact gap; any repair belongs in a separately preregistered build.",
+  "verdicts": [
+    "CURRENT_EFFECT_BINDING_COVERS_ALL_FIVE_CASES",
+    "SEMANTIC_IDENTITY_GAP_DETECTED",
+    "INVALID_REPRODUCTION_CONTROL"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "base_commit": "0d5666a1b0097ef2bac316a99cc1834ba73460bf",
+  "base_repo": "terryncew/openline-receipt-gate",
+  "evidence_tier": "PAPER_DERIVED_REGRESSION_FIXTURE_PACK",
+  "experiment_id": "Agent-Mesh-Identity-001",
+  "files": {
+    "CLAIM_BOUNDARY.md": "9792eb9a7fca38ef1493ee4469c5bb869f681e4ae1edb3932c737486f0310a7a",
+    "DESIGN_LOCK.json": "1402b61763e39eca58b4f3721e1742eab54fc2f73596049b28ead9249f4d16ae",
+    "README.md": "457adbe6755ae99fe2a082364cc81d4b664d541f48dca9486b304f963b319e19",
+    "SOURCE_PIN.json": "750ad3623933b3935f625d5c0ba69461b02387fc6a64989bb19937a13f9c260f",
+    "agent_mesh_identity001/__init__.py": "914328c76b947f7e1b53ffd76802262f5e128e0fe7295f0d2abfe2f332d06ac3",
+    "agent_mesh_identity001/core.py": "4e7e4c13fddb11398510566d3493028d8f38811da62853a36e6746539a540012",
+    "fixtures/cases.json": "44d14d1703c1d5b51f36191dc8bd9057db9e75b95ef70d8b72300d5857358db2",
+    "oracle.json": "b59a37964e7b08930780a8b069a4d4eee59fac1464f40082c58ae77575b62cce",
+    "preregistration.json": "d7062b43733b89248d1a0d6146aec739cc86b29f13aa894b68c5057b6f2a83cc",
+    "result.json": "2da730f96be6a2c5c4cb162bc1b06fc0e774f64e17573d1eccb7c07e6a4085a3",
+    "scripts/run_experiment.py": "d6b626decc5d9d97f7f2cc384f73282398b7a2d4b2d41f10104b272d6900e611",
+    "scripts/verify_release.py": "60fff4bd95da2d3a5aed0b391116da221791f743721eaff8e0d5f4f0d0bbbca8",
+    "scripts/verify_result.py": "7ff9fd8075d8b26b7e184671bc12fa2e0a95c77042cd8fd20f8d77892babdc62",
+    "tests/test_agent_mesh_identity001.py": "0f055ee612c81ecc4b0a50d75adf45450dc6ad6c046d9ab392cd955025514624"
+  },
+  "policy_authority": "NONE",
+  "production_primitive": {
+    "path": "olp_gate/authority_link.py",
+    "sha256": "61a03c9e9eae86006a1dbf7b8150cefe6cc55b7866937d93be82ca4687489a42"
+  },
+  "schema": "openline.agent_mesh_identity_001.release_manifest.v1",
+  "verdict": "CURRENT_EFFECT_BINDING_COVERS_ALL_FIVE_CASES"
+}
+

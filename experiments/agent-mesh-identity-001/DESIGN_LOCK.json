@@ -1,0 +1,22 @@
+{
+  "amendments_allowed_after_lock": false,
+  "base_commit": "0d5666a1b0097ef2bac316a99cc1834ba73460bf",
+  "experiment_id": "Agent-Mesh-Identity-001",
+  "files": {
+    "CLAIM_BOUNDARY.md": "9792eb9a7fca38ef1493ee4469c5bb869f681e4ae1edb3932c737486f0310a7a",
+    "SOURCE_PIN.json": "750ad3623933b3935f625d5c0ba69461b02387fc6a64989bb19937a13f9c260f",
+    "fixtures/cases.json": "44d14d1703c1d5b51f36191dc8bd9057db9e75b95ef70d8b72300d5857358db2",
+    "oracle.json": "b59a37964e7b08930780a8b069a4d4eee59fac1464f40082c58ae77575b62cce",
+    "preregistration.json": "d7062b43733b89248d1a0d6146aec739cc86b29f13aa894b68c5057b6f2a83cc"
+  },
+  "frozen_counts": {
+    "arms": 2,
+    "cases": 5,
+    "equal_relations": 1,
+    "distinct_relations": 4,
+    "production_change_budget": 0
+  },
+  "locked_at_utc": "2026-08-28T22:24:05Z",
+  "run_status_at_lock": "NOT_RUN",
+  "schema": "openline.agent_mesh_identity_001.design_lock.v1"
+}

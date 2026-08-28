@@ -1,0 +1,141 @@
+{
+  "base_commit": "0d5666a1b0097ef2bac316a99cc1834ba73460bf",
+  "case_count": 5,
+  "claim_limit": "Existing effect_hash can represent all five paper-derived identity relations only when the receiver adapter supplies the semantically load-bearing tool, target, settings, and state fields.",
+  "design_lock_sha256": "1402b61763e39eca58b4f3721e1742eab54fc2f73596049b28ead9249f4d16ae",
+  "evidence_tier": "PAPER_DERIVED_REGRESSION_FIXTURE_PACK",
+  "experiment_id": "Agent-Mesh-Identity-001",
+  "experiment_valid": true,
+  "fixture_sha256": "44d14d1703c1d5b51f36191dc8bd9057db9e75b95ef70d8b72300d5857358db2",
+  "oracle_sha256": "b59a37964e7b08930780a8b069a4d4eee59fac1464f40082c58ae77575b62cce",
+  "policy_authority": "NONE",
+  "production_primitive": "olp_gate.authority_link.effect_hash",
+  "rows": [
+    {
+      "arm": "paper_failed_identity",
+      "case_id": "circuit-breaker-progress",
+      "expected_relation": "DISTINCT",
+      "left_identity": "e64daef5600db6c839edba34c33e0c0ae7e313833d547f9e52b17e32a306a36b",
+      "observed_relation": "EQUAL",
+      "oracle_match": false,
+      "outcome": "FALSE_COLLISION",
+      "paper_subsystem": "circuit breaker",
+      "right_identity": "e64daef5600db6c839edba34c33e0c0ae7e313833d547f9e52b17e32a306a36b"
+    },
+    {
+      "arm": "current_receipt_gate_effect_binding",
+      "case_id": "circuit-breaker-progress",
+      "expected_relation": "DISTINCT",
+      "left_identity": "2f0f5acba78ccddddc3e35609019ff57a5b35d7a3eada1c502691169ad9ad3e4",
+      "observed_relation": "DISTINCT",
+      "oracle_match": true,
+      "outcome": "PASS",
+      "paper_subsystem": "circuit breaker",
+      "right_identity": "677ee5688eb703b6b6f2a0b1db558285668c58a6747c9a46654950d7ad830a59"
+    },
+    {
+      "arm": "paper_failed_identity",
+      "case_id": "effect-ledger-content",
+      "expected_relation": "EQUAL",
+      "left_identity": "b3a223bf74e172cda8e083c15aa97e4fb57bfaccb4d17170d9f1c592e321470b",
+      "observed_relation": "DISTINCT",
+      "oracle_match": false,
+      "outcome": "FALSE_SPLIT",
+      "paper_subsystem": "effect ledger",
+      "right_identity": "4c55bb0d85091d5d0a9aaaa14c2e2d8080571f65ee2d3bc248c3745591183313"
+    },
+    {
+      "arm": "current_receipt_gate_effect_binding",
+      "case_id": "effect-ledger-content",
+      "expected_relation": "EQUAL",
+      "left_identity": "368b721137778ef73755aa66cbb6c50200bcd92ac210bc49d3e3e8b4a4b1d6cf",
+      "observed_relation": "EQUAL",
+      "oracle_match": true,
+      "outcome": "PASS",
+      "paper_subsystem": "effect ledger",
+      "right_identity": "368b721137778ef73755aa66cbb6c50200bcd92ac210bc49d3e3e8b4a4b1d6cf"
+    },
+    {
+      "arm": "paper_failed_identity",
+      "case_id": "failure-attribution-owner",
+      "expected_relation": "DISTINCT",
+      "left_identity": "2d30fadde2de49507a69d87237a6d1a259e568be4026103355b5793f53290611",
+      "observed_relation": "EQUAL",
+      "oracle_match": false,
+      "outcome": "FALSE_COLLISION",
+      "paper_subsystem": "failure attribution",
+      "right_identity": "2d30fadde2de49507a69d87237a6d1a259e568be4026103355b5793f53290611"
+    },
+    {
+      "arm": "current_receipt_gate_effect_binding",
+      "case_id": "failure-attribution-owner",
+      "expected_relation": "DISTINCT",
+      "left_identity": "bf6373a3019955895c1c0fd6b0ce33fcded55590a3fd9091778856edb67668e2",
+      "observed_relation": "DISTINCT",
+      "oracle_match": true,
+      "outcome": "PASS",
+      "paper_subsystem": "failure attribution",
+      "right_identity": "af39c49a4445d71392ac003828b4f6f5aaaf21cfdfdf38486a9c6dd37bd9bc55"
+    },
+    {
+      "arm": "paper_failed_identity",
+      "case_id": "topology-physical-resource",
+      "expected_relation": "DISTINCT",
+      "left_identity": "b669030dd9ba0a82a288e8f6cc9ad0722633dd4381829a24d7688fda6afa3385",
+      "observed_relation": "EQUAL",
+      "oracle_match": false,
+      "outcome": "FALSE_COLLISION",
+      "paper_subsystem": "topology graph",
+      "right_identity": "b669030dd9ba0a82a288e8f6cc9ad0722633dd4381829a24d7688fda6afa3385"
+    },
+    {
+      "arm": "current_receipt_gate_effect_binding",
+      "case_id": "topology-physical-resource",
+      "expected_relation": "DISTINCT",
+      "left_identity": "2aece44a2a5d5afdef0f4cffd1044e7cfbdc96da5d3b120785cad58f80f5352b",
+      "observed_relation": "DISTINCT",
+      "oracle_match": true,
+      "outcome": "PASS",
+      "paper_subsystem": "topology graph",
+      "right_identity": "53d7cab87b3ba562a2259877fa437e869705c2badf9036d5073535d645536a67"
+    },
+    {
+      "arm": "paper_failed_identity",
+      "case_id": "work-planner-component-scope",
+      "expected_relation": "DISTINCT",
+      "left_identity": "2271d7521ac8613a02c34cdb6291dd0f78f59c9fc567576733cf6d04b101c978",
+      "observed_relation": "EQUAL",
+      "oracle_match": false,
+      "outcome": "FALSE_COLLISION",
+      "paper_subsystem": "work planner",
+      "right_identity": "2271d7521ac8613a02c34cdb6291dd0f78f59c9fc567576733cf6d04b101c978"
+    },
+    {
+      "arm": "current_receipt_gate_effect_binding",
+      "case_id": "work-planner-component-scope",
+      "expected_relation": "DISTINCT",
+      "left_identity": "c21f5ea5a27981285ca2d8208280952ef29a39d9f3b0d0b54641c68bd797fc20",
+      "observed_relation": "DISTINCT",
+      "oracle_match": true,
+      "outcome": "PASS",
+      "paper_subsystem": "work planner",
+      "right_identity": "613dd85a796f0d082b870beab03b34a7f2d203ccb0566960040aaf1d718766ff"
+    }
+  ],
+  "schema": "openline.agent_mesh_identity_001.result.v1",
+  "summaries": {
+    "current_receipt_gate_effect_binding": {
+      "false_collisions": 0,
+      "false_splits": 0,
+      "oracle_matches": 5,
+      "total": 5
+    },
+    "paper_failed_identity": {
+      "false_collisions": 4,
+      "false_splits": 1,
+      "oracle_matches": 0,
+      "total": 5
+    }
+  },
+  "verdict": "CURRENT_EFFECT_BINDING_COVERS_ALL_FIVE_CASES"
+}

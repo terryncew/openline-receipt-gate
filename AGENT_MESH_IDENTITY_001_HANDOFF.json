@@ -1,0 +1,49 @@
+{
+  "artifact_hashes": {
+    "release_manifest_sha256": "c37baa96259aa94d46c91c4f472592942b2a66901fab1c84806b0ceba0827a8a",
+    "result_sha256": "2da730f96be6a2c5c4cb162bc1b06fc0e774f64e17573d1eccb7c07e6a4085a3",
+    "workflow_sha256": "52f650e354266e372ea2e97c06bfe2b0e91572a419bfda140c909bd190721b57"
+  },
+  "base_commit": "0d5666a1b0097ef2bac316a99cc1834ba73460bf",
+  "base_repo": "terryncew/openline-receipt-gate",
+  "branch": "feat/agent-mesh-identity-001",
+  "claim": "Across five sealed paper-derived Agent Mesh identity pairs, the existing Receipt Gate effect_hash matched every representation-blind equal/distinct oracle relation; the adapter must still identify the semantically load-bearing fields.",
+  "commit": "test(gate): add Agent Mesh identity regression pack",
+  "evidence_tier": "PAPER_DERIVED_REGRESSION_FIXTURE_PACK",
+  "expected_changed_file_count": 17,
+  "experiment_id": "Agent-Mesh-Identity-001",
+  "local_verification": {
+    "archive_aware_release_gate": "PASS: 40/40 release checks; manifest 810 files",
+    "existing_regression_suite": "PASS: 357 tests; 24 optional skips",
+    "focused_contract_tests": "PASS: 10/10",
+    "independent_result_verifier": "PASS: 10 serialized rows; 5/5 production oracle matches; 5/5 failed-identity errors reproduced"
+  },
+  "pr_title": "test(gate): add Agent Mesh identity regression pack",
+  "result": {
+    "current_receipt_gate_effect_binding": "5/5 ORACLE MATCH",
+    "paper_failed_identity": "0/5 ORACLE MATCH; 4 FALSE_COLLISIONS; 1 FALSE_SPLIT",
+    "production_primitive_changed": false
+  },
+  "schema": "openline.agent_mesh_identity_001.handoff.v1",
+  "scope": {
+    "author_harness_used": false,
+    "cold_external_integration_claimed": false,
+    "incident_corpus_reproduced": false,
+    "policy_authority": "NONE",
+    "production_gate_code_changed": false,
+    "sara_spec_001_changed": false,
+    "wallet_standing_001_through_004_changed": false,
+    "wikiskill_ei_001_changed": false
+  },
+  "verdict": "CURRENT_EFFECT_BINDING_COVERS_ALL_FIVE_CASES",
+  "working_copy": {
+    "cover_file": false,
+    "expected_top_level_entries": [
+      ".github",
+      "AGENT_MESH_IDENTITY_001_HANDOFF.json",
+      "experiments"
+    ],
+    "overlay_root": true,
+    "wrapper_directory": false
+  }
+}
