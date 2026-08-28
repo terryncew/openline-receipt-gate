@@ -1,0 +1,64 @@
+{
+  "schema": "openline.wallet_standing_001.preregistration.v1",
+  "experiment_id": "WALLET-STANDING-001",
+  "question": "Can a local-first wallet carry selectively disclosed mandate evidence across models and platforms while a receiver-owned Gate enforces epoch revocation with an explicit offline-lag bound?",
+  "theorem": "Local-first ownership of keys and records does not imply instant revocation knowledge at an offline verifier.",
+  "authority_split": {
+    "principal_root": "CERTIFIES_EPOCH_KEYS_AND_STANDING_WITNESSES",
+    "wallet": "CONTINUITY_AND_EVIDENCE_ONLY",
+    "receiver_gate": "ADMISSION_POLICY_AND_EXECUTION",
+    "wallet_policy_authority": "NONE"
+  },
+  "frozen_times": {
+    "t0_export": "2026-08-28T12:00:00Z",
+    "t1_epoch_revocation": "2026-08-28T12:05:00Z"
+  },
+  "receiver_policy": {
+    "high_risk_max_witness_age_seconds": 60,
+    "low_risk_max_offline_ttl_seconds": 600,
+    "unexpected_disclosures": "BLOCK"
+  },
+  "primary_arms": [
+    {"arm_id": "01_high_fresh_active", "expected": "PASS"},
+    {"arm_id": "02_high_fresh_revoked", "expected": "BLOCK:EPOCH_REVOKED"},
+    {"arm_id": "03_high_stale_active_witness", "expected": "BLOCK:FRESHNESS_REQUIRED"},
+    {"arm_id": "04_high_missing_witness", "expected": "BLOCK:FRESHNESS_REQUIRED"},
+    {"arm_id": "05_high_successor_epoch", "expected": "PASS"},
+    {"arm_id": "06_high_independent_root_sibling", "expected": "PASS"},
+    {"arm_id": "07_low_within_ttl_no_witness", "expected": "PASS"},
+    {"arm_id": "08_low_revoked_but_unexpired_offline", "expected": "PASS:DECLARED_BOUNDED_EXPOSURE"},
+    {"arm_id": "09_low_at_expiry_no_witness", "expected": "BLOCK:MANDATE_EXPIRED"},
+    {"arm_id": "10_projection_and_holder_tampering", "expected": "BLOCK_ALL"}
+  ],
+  "success_criteria": {
+    "all_arms_match": true,
+    "high_risk_stale_execution_count": 0,
+    "collateral_loss_count": 0,
+    "declared_low_risk_stale_pass_count": 1,
+    "duplicate_salt_count": 0
+  },
+  "crypto_profile": {
+    "signatures": "Ed25519 through olp_gate.crypto",
+    "selective_disclosure": "domain-separated salted Merkle commitments",
+    "salt_bytes": 32,
+    "production_entropy": "secrets.token_bytes",
+    "fixture_entropy": "deterministic unique values for reproducibility only"
+  },
+  "fixed_boundaries": {
+    "witness_distribution": "UNTESTED_WALLET_STANDING_003",
+    "root_compromise_and_succession": "UNTESTED_WALLET_STANDING_002",
+    "offline_revocation": "BOUNDED_BY_SIGNED_TTL_OR_WITNESS_FRESHNESS",
+    "unlinkability": "UNTESTED",
+    "wallet_policy_authority": "NONE"
+  },
+  "forbidden_rescue_moves": [
+    "phone home without declaring witness distribution",
+    "treat an unexpired offline pass as instant revocation enforcement",
+    "let a wallet-signed GO enlarge a mandate",
+    "rotate or recover the principal root inside this experiment",
+    "change the frozen freshness or TTL thresholds after observing results",
+    "reuse a field salt within or across mandates from the same epoch"
+  ],
+  "verdict_if_successful": "EPOCH_REVOCATION_ENFORCED_WITH_BOUNDED_OFFLINE_LAG",
+  "verdict_if_unsuccessful": "WALLET_STANDING_BOUNDARY_NOT_ESTABLISHED"
+}

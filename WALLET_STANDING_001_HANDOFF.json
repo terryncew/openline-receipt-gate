@@ -1,0 +1,39 @@
+{
+  "schema": "openline.wallet_standing_001.handoff.v1",
+  "experiment_id": "WALLET-STANDING-001",
+  "status": "FROZEN_LOCAL_BUILD",
+  "base_repo": "terryncew/openline-receipt-gate",
+  "base_commit": "c0893698d13ae152d818c0f34d52f5c945572f5b",
+  "branch": "feat/wallet-standing-001",
+  "commit": "feat(gate): add wallet standing boundary test",
+  "pr_title": "feat(gate): add wallet standing boundary test",
+  "expected_changed_file_count": 13,
+  "verdict": "EPOCH_REVOCATION_ENFORCED_WITH_BOUNDED_OFFLINE_LAG",
+  "passed": true,
+  "authority": {
+    "wallet_policy_authority": "NONE",
+    "decision_authority": "RECEIVER_GATE"
+  },
+  "metrics": {
+    "frozen_arms_passed": "10/10",
+    "focused_tests_passed": "18/18",
+    "high_risk_stale_execution_count": 0,
+    "collateral_loss_count": 0,
+    "declared_offline_exposure_seconds": 600
+  },
+  "release_manifest_sha256": "cd9a7243aba0ff9b89ac63a04d6bfb8e33ca1f19abad45abf779ff20d4a6ada5",
+  "boundaries": {
+    "WALLET-STANDING-002": "root loss, compromise, recovery, and succession",
+    "WALLET-STANDING-003": "real witness distribution and a virgin Gate under network faults"
+  },
+  "working_copy": {
+    "overlay_root": true,
+    "wrapper_directory": false,
+    "cover_file": false,
+    "expected_top_level_entries": [
+      ".github",
+      "experiments",
+      "WALLET_STANDING_001_HANDOFF.json"
+    ]
+  }
+}
