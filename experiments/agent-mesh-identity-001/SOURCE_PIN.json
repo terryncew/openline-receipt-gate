@@ -1,0 +1,46 @@
+{
+  "availability_boundary": "The paper states that fault schedules, workloads, and a framework-neutral reference harness will be released with a future controlled evaluation; none is used here.",
+  "evidence_tier": "PAPER_DERIVED_REGRESSION_FIXTURE_PACK",
+  "experiment_id": "Agent-Mesh-Identity-001",
+  "paper": {
+    "arxiv_id": "2608.26225v1",
+    "authors": [
+      "Mazhar Shaikh",
+      "Anurag Rajkumar Bombarde",
+      "Harshal Pathak"
+    ],
+    "pdf_bytes": 359048,
+    "pdf_sha256": "870ce462fc55c6a113009edcbc0cf5e7385463bc3e1f0979811c1353c42bec51",
+    "pdf_url": "https://arxiv.org/pdf/2608.26225v1",
+    "submitted_utc_date": "2026-08-26",
+    "title": "Agent Mesh: Reliability Primitives for Non-Idempotent Agent Delegation - Identity Adequacy and Evidence Adequacy"
+  },
+  "pinned_findings": {
+    "section": "V — The cross-cutting finding: identity adequacy and evidence adequacy",
+    "table": "Table II",
+    "identity_cases": [
+      {
+        "failed_identity": "progress fingerprint over the failing check name",
+        "subsystem": "circuit breaker"
+      },
+      {
+        "failed_identity": "commit identity keyed on transaction identity rather than content",
+        "subsystem": "effect ledger"
+      },
+      {
+        "failed_identity": "logical projection collapsing physically distinct service databases",
+        "subsystem": "topology graph"
+      },
+      {
+        "failed_identity": "scenario coverage used as causal identity",
+        "subsystem": "failure attribution"
+      },
+      {
+        "failed_identity": "coupling measured across components rather than per component",
+        "subsystem": "work planner"
+      }
+    ]
+  },
+  "schema": "openline.agent_mesh_identity_001.source_pin.v1"
+}
+

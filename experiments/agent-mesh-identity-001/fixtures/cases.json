@@ -1,0 +1,177 @@
+{
+  "cases": [
+    {
+      "case_id": "circuit-breaker-progress",
+      "expected_relation": "DISTINCT",
+      "failed_identity": {
+        "left": {"check_name": "cross-service-acceptance"},
+        "right": {"check_name": "cross-service-acceptance"}
+      },
+      "left": {
+        "advisory_hash": "8dae8dab0bc2208af6a344639c1606f59008eedd20439903e5f0961023957475",
+        "objective": "repair the failing acceptance check",
+        "producer_id": "repair-agent",
+        "producer_model": "model-a",
+        "profile": "decision_proposal/v1",
+        "proposal_id": "repair-round-1",
+        "settings": {"check_name": "cross-service-acceptance"},
+        "state_hash": "bcd5f907e17c35966dfda884b2885e329c6adf0c37af8c3c3fae19920da48d8a",
+        "target": "workspace://component-a",
+        "tool": "repair"
+      },
+      "paper_subsystem": "circuit breaker",
+      "right": {
+        "advisory_hash": "bdeeebb62e88d003a175df86c1a6047aadd5cf7e894e8b60518097c262e44c4f",
+        "objective": "repair the failing acceptance check",
+        "producer_id": "repair-agent",
+        "producer_model": "model-a",
+        "profile": "decision_proposal/v1",
+        "proposal_id": "repair-round-2",
+        "settings": {"check_name": "cross-service-acceptance"},
+        "state_hash": "a682b83453d0530d3ad103aa3869f699261bd6b95a8af34345c9ff2c0726c54d",
+        "target": "workspace://component-a",
+        "tool": "repair"
+      }
+    },
+    {
+      "case_id": "effect-ledger-content",
+      "expected_relation": "EQUAL",
+      "failed_identity": {
+        "left": {"transaction_id": "delegation-attempt-1"},
+        "right": {"transaction_id": "delegation-attempt-2"}
+      },
+      "left": {
+        "advisory_hash": "8dae8dab0bc2208af6a344639c1606f59008eedd20439903e5f0961023957475",
+        "objective": "publish the accepted build artifact",
+        "producer_id": "publisher-agent-a",
+        "producer_model": "model-a",
+        "profile": "decision_proposal/v1",
+        "proposal_id": "delegation-attempt-1",
+        "settings": {"artifact_digest": "sha256:accepted-build-v1", "operation": "publish"},
+        "state_hash": "cae1b3faaa5e4ac7c3306bd164b36dcfdff98294b8024c9c949639b4c480bf6b",
+        "target": "registry://release/candidate",
+        "tool": "publish_artifact"
+      },
+      "paper_subsystem": "effect ledger",
+      "right": {
+        "advisory_hash": "bdeeebb62e88d003a175df86c1a6047aadd5cf7e894e8b60518097c262e44c4f",
+        "objective": "retry publication after transport timeout",
+        "producer_id": "publisher-agent-b",
+        "producer_model": "model-b",
+        "profile": "decision_proposal/v1",
+        "proposal_id": "delegation-attempt-2",
+        "settings": {"artifact_digest": "sha256:accepted-build-v1", "operation": "publish"},
+        "state_hash": "cae1b3faaa5e4ac7c3306bd164b36dcfdff98294b8024c9c949639b4c480bf6b",
+        "target": "registry://release/candidate",
+        "tool": "publish_artifact"
+      }
+    },
+    {
+      "case_id": "topology-physical-resource",
+      "expected_relation": "DISTINCT",
+      "failed_identity": {
+        "left": {"logical_projection": "orders-db"},
+        "right": {"logical_projection": "orders-db"}
+      },
+      "left": {
+        "advisory_hash": "8dae8dab0bc2208af6a344639c1606f59008eedd20439903e5f0961023957475",
+        "objective": "migrate the orders database",
+        "producer_id": "topology-agent",
+        "producer_model": "model-a",
+        "profile": "decision_proposal/v1",
+        "proposal_id": "topology-left",
+        "settings": {"logical_projection": "orders-db", "operation": "migrate"},
+        "state_hash": "24c1993037abd853a48457bfd2367d87735ceb5b4004ebf52f6c55e73747519d",
+        "target": "database://service-a/orders",
+        "tool": "migrate_database"
+      },
+      "paper_subsystem": "topology graph",
+      "right": {
+        "advisory_hash": "bdeeebb62e88d003a175df86c1a6047aadd5cf7e894e8b60518097c262e44c4f",
+        "objective": "migrate the orders database",
+        "producer_id": "topology-agent",
+        "producer_model": "model-a",
+        "profile": "decision_proposal/v1",
+        "proposal_id": "topology-right",
+        "settings": {"logical_projection": "orders-db", "operation": "migrate"},
+        "state_hash": "24c1993037abd853a48457bfd2367d87735ceb5b4004ebf52f6c55e73747519d",
+        "target": "database://service-b/orders",
+        "tool": "migrate_database"
+      }
+    },
+    {
+      "case_id": "failure-attribution-owner",
+      "expected_relation": "DISTINCT",
+      "failed_identity": {
+        "left": {"scenario_coverage": "checkout-flow"},
+        "right": {"scenario_coverage": "checkout-flow"}
+      },
+      "left": {
+        "advisory_hash": "8dae8dab0bc2208af6a344639c1606f59008eedd20439903e5f0961023957475",
+        "objective": "repair the checkout failure",
+        "producer_id": "failure-router",
+        "producer_model": "model-a",
+        "profile": "decision_proposal/v1",
+        "proposal_id": "repair-api",
+        "settings": {"scenario_coverage": "checkout-flow"},
+        "state_hash": "1a11e5f959724cecc980e22b7163bd90a62ea5d358e3d7b83a409863c7262fb7",
+        "target": "component://checkout-api",
+        "tool": "route_repair"
+      },
+      "paper_subsystem": "failure attribution",
+      "right": {
+        "advisory_hash": "bdeeebb62e88d003a175df86c1a6047aadd5cf7e894e8b60518097c262e44c4f",
+        "objective": "repair the checkout failure",
+        "producer_id": "failure-router",
+        "producer_model": "model-a",
+        "profile": "decision_proposal/v1",
+        "proposal_id": "repair-worker",
+        "settings": {"scenario_coverage": "checkout-flow"},
+        "state_hash": "1a11e5f959724cecc980e22b7163bd90a62ea5d358e3d7b83a409863c7262fb7",
+        "target": "component://payment-worker",
+        "tool": "route_repair"
+      }
+    },
+    {
+      "case_id": "work-planner-component-scope",
+      "expected_relation": "DISTINCT",
+      "failed_identity": {
+        "left": {"cross_component_scenario": "account-lifecycle"},
+        "right": {"cross_component_scenario": "account-lifecycle"}
+      },
+      "left": {
+        "advisory_hash": "8dae8dab0bc2208af6a344639c1606f59008eedd20439903e5f0961023957475",
+        "objective": "plan account lifecycle work",
+        "producer_id": "work-planner",
+        "producer_model": "model-a",
+        "profile": "decision_proposal/v1",
+        "proposal_id": "plan-identity-service",
+        "settings": {"cross_component_scenario": "account-lifecycle", "slice": "implementation"},
+        "state_hash": "9fe4994a0fe8569a881b838296f77913ef5910924845b6f303505101d1c04c38",
+        "target": "component://identity-service",
+        "tool": "plan_work"
+      },
+      "paper_subsystem": "work planner",
+      "right": {
+        "advisory_hash": "bdeeebb62e88d003a175df86c1a6047aadd5cf7e894e8b60518097c262e44c4f",
+        "objective": "plan account lifecycle work",
+        "producer_id": "work-planner",
+        "producer_model": "model-a",
+        "profile": "decision_proposal/v1",
+        "proposal_id": "plan-profile-service",
+        "settings": {"cross_component_scenario": "account-lifecycle", "slice": "implementation"},
+        "state_hash": "9fe4994a0fe8569a881b838296f77913ef5910924845b6f303505101d1c04c38",
+        "target": "component://profile-service",
+        "tool": "plan_work"
+      }
+    }
+  ],
+  "experiment_id": "Agent-Mesh-Identity-001",
+  "invariants": {
+    "case_count": 5,
+    "production_code_frozen": true,
+    "semantic_fields_declared_by_fixture": true
+  },
+  "schema": "openline.agent_mesh_identity_001.cases.v1"
+}
+

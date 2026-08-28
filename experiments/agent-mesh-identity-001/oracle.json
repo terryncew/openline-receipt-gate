@@ -1,0 +1,16 @@
+{
+  "cases": {
+    "circuit-breaker-progress": "DISTINCT",
+    "effect-ledger-content": "EQUAL",
+    "failure-attribution-owner": "DISTINCT",
+    "topology-physical-resource": "DISTINCT",
+    "work-planner-component-scope": "DISTINCT"
+  },
+  "experiment_id": "Agent-Mesh-Identity-001",
+  "interpretation": {
+    "DISTINCT": "The receiver must preserve two semantic identities.",
+    "EQUAL": "The receiver must recognize one semantic effect despite transport or delegation provenance differences."
+  },
+  "schema": "openline.agent_mesh_identity_001.oracle.v1"
+}
+

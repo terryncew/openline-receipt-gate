@@ -1,0 +1,47 @@
+name: Agent Mesh Identity Adequacy 001
+
+on:
+  push:
+    paths:
+      - ".github/workflows/agent-mesh-identity-001.yml"
+      - "experiments/agent-mesh-identity-001/**"
+      - "AGENT_MESH_IDENTITY_001_HANDOFF.json"
+  pull_request:
+    paths:
+      - ".github/workflows/agent-mesh-identity-001.yml"
+      - "experiments/agent-mesh-identity-001/**"
+      - "AGENT_MESH_IDENTITY_001_HANDOFF.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  paper-derived-identity-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Receipt Gate
+        run: python -m pip install -e .
+      - name: Run frozen identity pairs
+        run: python experiments/agent-mesh-identity-001/scripts/run_experiment.py
+      - name: Verify serialized result independently
+        run: python experiments/agent-mesh-identity-001/scripts/verify_result.py
+      - name: Run focused contract tests
+        run: python -m unittest discover -s experiments/agent-mesh-identity-001/tests -v
+      - name: Verify release closure and frozen production primitive
+        run: python experiments/agent-mesh-identity-001/scripts/verify_release.py
+      - name: Run existing regression suite
+        run: python -m unittest discover -s tests -v
+      - name: Run archive-aware release gate
+        run: python scripts/verify_warning_time_release.py --release-check
+      - name: Upload frozen result
+        uses: actions/upload-artifact@v4
+        with:
+          name: agent-mesh-identity-001-result
+          path: experiments/agent-mesh-identity-001/result.json
+          if-no-files-found: error
