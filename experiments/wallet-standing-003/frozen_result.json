@@ -1,0 +1,729 @@
+{
+  "conclusion": "Received emergency freezes stop old-root effects without granting a single guardian succession power. Distribution delay remains execution exposure, and conflicting valid recoveries quarantine instead of claiming automatic consensus.",
+  "decision_authority": "RECEIVER_GATE",
+  "experiment_id": "WALLET-STANDING-003",
+  "explicit_boundaries": [
+    "This is a deterministic event-delivery schedule, not a real network, device, guardian-custody, or witness-distribution test.",
+    "A receiver cannot enforce a freeze it has not received; fresh and stale delivery exposures are recorded rather than rewritten as prevention.",
+    "One malicious guardian can deny high-risk execution for 600 seconds, and current-root risk resumes at exact expiry when quorum recovery does not arrive.",
+    "The freeze is nonrenewable within one root generation; a valid quorum succession installs a successor and clears the prior freeze.",
+    "A virgin Gate needs the succession lineage plus a fresh quorum checkpoint; the checkpoint confirms an already-known view and cannot install a root.",
+    "Two valid same-generation quorum branches may each execute during a partition; cross-observation quarantines both and requires external resolution.",
+    "A compromised guardian threshold remains the trust floor established in WALLET-STANDING-002 and is not retested or solved here.",
+    "The wallet has policy authority NONE; guardians may reduce or redirect only within the precommitted recovery policy, and the receiver Gate owns consequences."
+  ],
+  "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+  "generated_at": "2026-08-28T15:20:00Z",
+  "metrics": {
+    "arm_count": 15,
+    "automatic_convergence_count": 0,
+    "fork_quarantine_count": 2,
+    "freeze_received_old_root_execution_count": 0,
+    "freeze_replay_extension_seconds": 0,
+    "freeze_unreceived_old_root_execution_count": 1,
+    "malicious_guardian_dos_seconds": 600,
+    "partitioned_conflicting_branch_execution_count": 2,
+    "passed_arm_count": 15,
+    "post_expiry_legitimate_execution_count": 1,
+    "post_fork_detection_execution_count": 0,
+    "post_quorum_successor_execution_count": 2,
+    "stale_freeze_old_root_execution_count": 1,
+    "virgin_with_checkpoint_execution_count": 1,
+    "virgin_without_checkpoint_execution_count": 0
+  },
+  "passed": true,
+  "rows": [
+    {
+      "arm_id": "01_fresh_single_guardian_freeze",
+      "condition": "One precommitted guardian sends a fresh reduce-only freeze to Gate A",
+      "declared_exposure": false,
+      "expected": "ACCEPT_FREEZE",
+      "observed": {
+        "accepted": true,
+        "decision": "ACCEPT_FREEZE",
+        "decision_authority": "RECEIVER_GATE",
+        "event_hash": "1dd7667e72795603cb795eef12bbba07d905d0abcf23b6e82586325fe4990f23",
+        "expires_at": "2026-08-28T15:11:00Z",
+        "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+        "guardian_id": "guardian-1",
+        "reason_codes": [],
+        "root_generation": 1,
+        "state_delta": 1,
+        "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+        "wallet_policy_authority": "NONE"
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "02_received_freeze_blocks_old_root",
+      "condition": "The compromised old root acts after Gate A receives the freeze",
+      "declared_exposure": false,
+      "expected": "BLOCK:GUARDIAN_FREEZE_ACTIVE",
+      "observed": {
+        "decision": "BLOCK",
+        "decision_authority": "RECEIVER_GATE",
+        "effect_delta": 0,
+        "executed": false,
+        "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+        "freeze_event_hash": "1dd7667e72795603cb795eef12bbba07d905d0abcf23b6e82586325fe4990f23",
+        "freeze_expires_at": "2026-08-28T15:11:00Z",
+        "gate_id": "gate-a",
+        "reason_codes": [
+          "GUARDIAN_FREEZE_ACTIVE"
+        ],
+        "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+        "wallet_policy_authority": "NONE"
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "03_unreceived_freeze_information_lag",
+      "condition": "Gate B evaluates the same old-root action before the freeze arrives",
+      "declared_exposure": true,
+      "expected": "PASS:DECLARED_INFORMATION_LAG",
+      "observed": {
+        "decision": "PASS",
+        "decision_authority": "RECEIVER_GATE",
+        "disclosed_fields": [
+          "action",
+          "amount_cents",
+          "recipient"
+        ],
+        "effect_delta": 1,
+        "epoch_id": "epoch-compromised",
+        "executed": true,
+        "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+        "gate_id": "gate-b",
+        "mandate_id": "mandate-compromised",
+        "principal_id": "principal-terrynce",
+        "reason_codes": [],
+        "recovery_policy_hash": "98cba2260743c1a920181df6d5144ce013db00e41f9bb5cea88b08358d890207",
+        "risk_tier": "HIGH",
+        "root_generation": 1,
+        "standing_mode": "FRESH_WITNESS",
+        "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+        "wallet_policy_authority": "NONE"
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "04_fresh_cross_delivery_blocks",
+      "condition": "Gate B receives the still-fresh freeze and evaluates again",
+      "declared_exposure": false,
+      "expected": "ACCEPT_FREEZE_THEN_BLOCK",
+      "observed": {
+        "execution": {
+          "decision": "BLOCK",
+          "decision_authority": "RECEIVER_GATE",
+          "effect_delta": 0,
+          "executed": false,
+          "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+          "freeze_event_hash": "1dd7667e72795603cb795eef12bbba07d905d0abcf23b6e82586325fe4990f23",
+          "freeze_expires_at": "2026-08-28T15:11:00Z",
+          "gate_id": "gate-b",
+          "reason_codes": [
+            "GUARDIAN_FREEZE_ACTIVE"
+          ],
+          "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+          "wallet_policy_authority": "NONE"
+        },
+        "ingest": {
+          "accepted": true,
+          "decision": "ACCEPT_FREEZE",
+          "decision_authority": "RECEIVER_GATE",
+          "event_hash": "1dd7667e72795603cb795eef12bbba07d905d0abcf23b6e82586325fe4990f23",
+          "expires_at": "2026-08-28T15:11:00Z",
+          "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+          "guardian_id": "guardian-1",
+          "reason_codes": [],
+          "root_generation": 1,
+          "state_delta": 1,
+          "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+          "wallet_policy_authority": "NONE"
+        }
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "05_stale_freeze_is_not_backdated",
+      "condition": "Gate C first sees the freeze after its maximum delivery age",
+      "declared_exposure": true,
+      "expected": "REJECT_FREEZE_THEN_PASS:DECLARED_INFORMATION_LAG",
+      "observed": {
+        "execution": {
+          "decision": "PASS",
+          "decision_authority": "RECEIVER_GATE",
+          "disclosed_fields": [
+            "action",
+            "amount_cents",
+            "recipient"
+          ],
+          "effect_delta": 1,
+          "epoch_id": "epoch-stale-delivery",
+          "executed": true,
+          "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+          "gate_id": "gate-c",
+          "mandate_id": "mandate-stale-delivery",
+          "principal_id": "principal-terrynce",
+          "reason_codes": [],
+          "recovery_policy_hash": "98cba2260743c1a920181df6d5144ce013db00e41f9bb5cea88b08358d890207",
+          "risk_tier": "HIGH",
+          "root_generation": 1,
+          "standing_mode": "FRESH_WITNESS",
+          "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+          "wallet_policy_authority": "NONE"
+        },
+        "ingest": {
+          "accepted": false,
+          "decision": "REJECT_FREEZE",
+          "decision_authority": "RECEIVER_GATE",
+          "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+          "reason_codes": [
+            "FREEZE_STALE"
+          ],
+          "state_delta": 0,
+          "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+          "wallet_policy_authority": "NONE"
+        }
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "06_freeze_replay_cannot_extend",
+      "condition": "Exact replay and a second guardian freeze target the used generation",
+      "declared_exposure": false,
+      "expected": "REJECT_BOTH:NO_EXPIRY_EXTENSION",
+      "observed": {
+        "exact_replay": {
+          "accepted": false,
+          "decision": "REJECT_FREEZE",
+          "decision_authority": "RECEIVER_GATE",
+          "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+          "reason_codes": [
+            "FREEZE_REPLAYED"
+          ],
+          "state_delta": 0,
+          "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+          "wallet_policy_authority": "NONE"
+        },
+        "observed_expiries": [
+          "2026-08-28T15:11:00Z"
+        ],
+        "second_event": {
+          "accepted": false,
+          "decision": "REJECT_FREEZE",
+          "decision_authority": "RECEIVER_GATE",
+          "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+          "reason_codes": [
+            "FREEZE_GENERATION_ALREADY_USED"
+          ],
+          "state_delta": 0,
+          "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+          "wallet_policy_authority": "NONE"
+        }
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "07_malicious_guardian_bounded_dos",
+      "condition": "One guardian freezes a legitimate action until the receiver ceiling",
+      "declared_exposure": true,
+      "expected": "BLOCK:DECLARED_BOUNDED_DOS",
+      "observed": {
+        "execution": {
+          "decision": "BLOCK",
+          "decision_authority": "RECEIVER_GATE",
+          "effect_delta": 0,
+          "executed": false,
+          "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+          "freeze_event_hash": "1dd7667e72795603cb795eef12bbba07d905d0abcf23b6e82586325fe4990f23",
+          "freeze_expires_at": "2026-08-28T15:11:00Z",
+          "gate_id": "gate-malicious-freeze",
+          "reason_codes": [
+            "GUARDIAN_FREEZE_ACTIVE"
+          ],
+          "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+          "wallet_policy_authority": "NONE"
+        },
+        "ingest": {
+          "accepted": true,
+          "decision": "ACCEPT_FREEZE",
+          "decision_authority": "RECEIVER_GATE",
+          "event_hash": "1dd7667e72795603cb795eef12bbba07d905d0abcf23b6e82586325fe4990f23",
+          "expires_at": "2026-08-28T15:11:00Z",
+          "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+          "guardian_id": "guardian-1",
+          "reason_codes": [],
+          "root_generation": 1,
+          "state_delta": 1,
+          "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+          "wallet_policy_authority": "NONE"
+        }
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "08_exact_expiry_restores_current_root",
+      "condition": "No quorum recovers the root, so the one-shot freeze expires exactly on schedule",
+      "declared_exposure": true,
+      "expected": "PASS:DECLARED_RISK_RESUMPTION",
+      "observed": {
+        "decision": "PASS",
+        "decision_authority": "RECEIVER_GATE",
+        "disclosed_fields": [
+          "action",
+          "amount_cents",
+          "recipient"
+        ],
+        "effect_delta": 1,
+        "epoch_id": "epoch-legitimate-expiry",
+        "executed": true,
+        "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+        "gate_id": "gate-malicious-freeze",
+        "mandate_id": "mandate-legitimate-expiry",
+        "principal_id": "principal-terrynce",
+        "reason_codes": [],
+        "recovery_policy_hash": "98cba2260743c1a920181df6d5144ce013db00e41f9bb5cea88b08358d890207",
+        "risk_tier": "HIGH",
+        "root_generation": 1,
+        "standing_mode": "FRESH_WITNESS",
+        "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+        "wallet_policy_authority": "NONE"
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "09_old_root_cannot_fake_guardian",
+      "condition": "The compromised root signs a freeze while claiming a configured guardian id",
+      "declared_exposure": false,
+      "expected": "REJECT_FREEZE:GUARDIAN_SIGNER_MISMATCH",
+      "observed": {
+        "accepted": false,
+        "decision": "REJECT_FREEZE",
+        "decision_authority": "RECEIVER_GATE",
+        "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+        "reason_codes": [
+          "FREEZE_GUARDIAN_SIGNER_MISMATCH"
+        ],
+        "state_delta": 0,
+        "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+        "wallet_policy_authority": "NONE"
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "10_quorum_succession_clears_freeze",
+      "condition": "A two-of-three succession arrives while Gates A and B are frozen",
+      "declared_exposure": false,
+      "expected": "ACCEPT_SUCCESSION:CLEAR_FREEZE",
+      "observed": {
+        "gate_a": {
+          "accepted": true,
+          "approved_guardian_ids": [
+            "guardian-1",
+            "guardian-2"
+          ],
+          "decision": "ACCEPT_SUCCESSION",
+          "decision_authority": "RECEIVER_GATE",
+          "event_hash": "646a436ea6b616049a7553528e32fc5db7c4234e3486732a528cd5b3eef38542",
+          "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+          "freeze_cleared": true,
+          "prior_generation": 1,
+          "reason_codes": [],
+          "state_delta": 1,
+          "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+          "successor_generation": 2,
+          "threshold": 2,
+          "wallet_policy_authority": "NONE"
+        },
+        "gate_b": {
+          "accepted": true,
+          "approved_guardian_ids": [
+            "guardian-1",
+            "guardian-2"
+          ],
+          "decision": "ACCEPT_SUCCESSION",
+          "decision_authority": "RECEIVER_GATE",
+          "event_hash": "646a436ea6b616049a7553528e32fc5db7c4234e3486732a528cd5b3eef38542",
+          "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+          "freeze_cleared": true,
+          "prior_generation": 1,
+          "reason_codes": [],
+          "state_delta": 1,
+          "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+          "successor_generation": 2,
+          "threshold": 2,
+          "wallet_policy_authority": "NONE"
+        }
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "11_successor_executes_after_quorum",
+      "condition": "Both receivers admit a fresh bundle rooted in generation 2",
+      "declared_exposure": false,
+      "expected": "PASS_BOTH",
+      "observed": {
+        "gate_a": {
+          "decision": "PASS",
+          "decision_authority": "RECEIVER_GATE",
+          "disclosed_fields": [
+            "action",
+            "amount_cents",
+            "recipient"
+          ],
+          "effect_delta": 1,
+          "epoch_id": "epoch-successor",
+          "executed": true,
+          "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+          "gate_id": "gate-a",
+          "mandate_id": "mandate-successor",
+          "principal_id": "principal-terrynce",
+          "reason_codes": [],
+          "recovery_policy_hash": "98cba2260743c1a920181df6d5144ce013db00e41f9bb5cea88b08358d890207",
+          "risk_tier": "HIGH",
+          "root_generation": 2,
+          "standing_mode": "FRESH_WITNESS",
+          "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+          "wallet_policy_authority": "NONE"
+        },
+        "gate_b": {
+          "decision": "PASS",
+          "decision_authority": "RECEIVER_GATE",
+          "disclosed_fields": [
+            "action",
+            "amount_cents",
+            "recipient"
+          ],
+          "effect_delta": 1,
+          "epoch_id": "epoch-successor",
+          "executed": true,
+          "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+          "gate_id": "gate-b",
+          "mandate_id": "mandate-successor",
+          "principal_id": "principal-terrynce",
+          "reason_codes": [],
+          "recovery_policy_hash": "98cba2260743c1a920181df6d5144ce013db00e41f9bb5cea88b08358d890207",
+          "risk_tier": "HIGH",
+          "root_generation": 2,
+          "standing_mode": "FRESH_WITNESS",
+          "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+          "wallet_policy_authority": "NONE"
+        }
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "12_virgin_gate_requires_checkpoint",
+      "condition": "A virgin Gate blocks both genesis and successor bundles until a fresh quorum checkpoint",
+      "declared_exposure": false,
+      "expected": "BLOCK_BOTH:CURRENT_ROOT_CHECKPOINT_REQUIRED",
+      "observed": {
+        "after_lineage": {
+          "decision": "BLOCK",
+          "decision_authority": "RECEIVER_GATE",
+          "effect_delta": 0,
+          "executed": false,
+          "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+          "gate_id": "gate-virgin",
+          "reason_codes": [
+            "CURRENT_ROOT_CHECKPOINT_REQUIRED"
+          ],
+          "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+          "wallet_policy_authority": "NONE"
+        },
+        "before_lineage": {
+          "decision": "BLOCK",
+          "decision_authority": "RECEIVER_GATE",
+          "effect_delta": 0,
+          "executed": false,
+          "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+          "gate_id": "gate-virgin",
+          "reason_codes": [
+            "CURRENT_ROOT_CHECKPOINT_REQUIRED"
+          ],
+          "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+          "wallet_policy_authority": "NONE"
+        },
+        "succession": {
+          "accepted": true,
+          "approved_guardian_ids": [
+            "guardian-1",
+            "guardian-2"
+          ],
+          "decision": "ACCEPT_SUCCESSION",
+          "decision_authority": "RECEIVER_GATE",
+          "event_hash": "646a436ea6b616049a7553528e32fc5db7c4234e3486732a528cd5b3eef38542",
+          "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+          "freeze_cleared": false,
+          "prior_generation": 1,
+          "reason_codes": [],
+          "state_delta": 1,
+          "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+          "successor_generation": 2,
+          "threshold": 2,
+          "wallet_policy_authority": "NONE"
+        }
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "13_fresh_quorum_checkpoint_admits_known_root",
+      "condition": "The virgin Gate already knows the lineage, then receives a matching fresh two-of-three checkpoint",
+      "declared_exposure": false,
+      "expected": "ACCEPT_CHECKPOINT_THEN_PASS",
+      "observed": {
+        "checkpoint": {
+          "accepted": true,
+          "checkpoint_hash": "26ffc89a6d771af1964da39bc3edfb5c6abf621f2bf1db532de5ec873e7c81c7",
+          "decision": "ACCEPT_CHECKPOINT",
+          "decision_authority": "RECEIVER_GATE",
+          "expires_at": "2026-08-28T15:04:32Z",
+          "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+          "reason_codes": [],
+          "root_generation": 2,
+          "state_delta": 1,
+          "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+          "wallet_policy_authority": "NONE"
+        },
+        "execution": {
+          "decision": "PASS",
+          "decision_authority": "RECEIVER_GATE",
+          "disclosed_fields": [
+            "action",
+            "amount_cents",
+            "recipient"
+          ],
+          "effect_delta": 1,
+          "epoch_id": "epoch-successor",
+          "executed": true,
+          "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+          "gate_id": "gate-virgin",
+          "mandate_id": "mandate-successor",
+          "principal_id": "principal-terrynce",
+          "reason_codes": [],
+          "recovery_policy_hash": "98cba2260743c1a920181df6d5144ce013db00e41f9bb5cea88b08358d890207",
+          "risk_tier": "HIGH",
+          "root_generation": 2,
+          "standing_mode": "FRESH_WITNESS",
+          "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+          "wallet_policy_authority": "NONE"
+        }
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "14_checkpoint_tamper_stale_and_threshold",
+      "condition": "Altered-root, stale, and one-guardian checkpoints are presented",
+      "declared_exposure": false,
+      "expected": "REJECT_ALL",
+      "observed": {
+        "below_threshold": {
+          "accepted": false,
+          "decision": "REJECT_CHECKPOINT",
+          "decision_authority": "RECEIVER_GATE",
+          "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+          "reason_codes": [
+            "CHECKPOINT_THRESHOLD_NOT_MET"
+          ],
+          "state_delta": 0,
+          "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+          "wallet_policy_authority": "NONE"
+        },
+        "stale": {
+          "accepted": false,
+          "decision": "REJECT_CHECKPOINT",
+          "decision_authority": "RECEIVER_GATE",
+          "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+          "reason_codes": [
+            "CHECKPOINT_STALE"
+          ],
+          "state_delta": 0,
+          "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+          "wallet_policy_authority": "NONE"
+        },
+        "tampered": {
+          "accepted": false,
+          "decision": "REJECT_CHECKPOINT",
+          "decision_authority": "RECEIVER_GATE",
+          "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+          "reason_codes": [
+            "CHECKPOINT_ROOT_MISMATCH"
+          ],
+          "state_delta": 0,
+          "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+          "wallet_policy_authority": "NONE"
+        }
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "15_partitioned_quorum_fork_quarantine",
+      "condition": "Two Gates execute different valid branches during a partition, then cross-deliver and quarantine",
+      "declared_exposure": true,
+      "expected": "PASS_DURING_PARTITION_THEN_BLOCK_BOTH",
+      "observed": {
+        "automatic_resolution": "NONE",
+        "branch_x_accept": {
+          "accepted": true,
+          "approved_guardian_ids": [
+            "guardian-1",
+            "guardian-2"
+          ],
+          "decision": "ACCEPT_SUCCESSION",
+          "decision_authority": "RECEIVER_GATE",
+          "event_hash": "ee43279355e51c713cf8f6fa01eb20e5088cf3b52785e52fe2f98ac1fa519375",
+          "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+          "freeze_cleared": false,
+          "prior_generation": 1,
+          "reason_codes": [],
+          "state_delta": 1,
+          "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+          "successor_generation": 2,
+          "threshold": 2,
+          "wallet_policy_authority": "NONE"
+        },
+        "branch_y_accept": {
+          "accepted": true,
+          "approved_guardian_ids": [
+            "guardian-2",
+            "guardian-3"
+          ],
+          "decision": "ACCEPT_SUCCESSION",
+          "decision_authority": "RECEIVER_GATE",
+          "event_hash": "e9be3205afab82f4c93b19744c63519c42a96e3a750dded6037c19275fdbc46d",
+          "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+          "freeze_cleared": false,
+          "prior_generation": 1,
+          "reason_codes": [],
+          "state_delta": 1,
+          "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+          "successor_generation": 2,
+          "threshold": 2,
+          "wallet_policy_authority": "NONE"
+        },
+        "cross_delivery_x": {
+          "accepted": false,
+          "decision": "FORK_DETECTED",
+          "decision_authority": "RECEIVER_GATE",
+          "fork_event_hashes": [
+            "e9be3205afab82f4c93b19744c63519c42a96e3a750dded6037c19275fdbc46d",
+            "ee43279355e51c713cf8f6fa01eb20e5088cf3b52785e52fe2f98ac1fa519375"
+          ],
+          "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+          "reason_codes": [
+            "CONFLICTING_VALID_SUCCESSIONS"
+          ],
+          "resolution": "EXTERNAL_RESOLUTION_REQUIRED",
+          "state_delta": 1,
+          "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+          "wallet_policy_authority": "NONE"
+        },
+        "cross_delivery_y": {
+          "accepted": false,
+          "decision": "FORK_DETECTED",
+          "decision_authority": "RECEIVER_GATE",
+          "fork_event_hashes": [
+            "e9be3205afab82f4c93b19744c63519c42a96e3a750dded6037c19275fdbc46d",
+            "ee43279355e51c713cf8f6fa01eb20e5088cf3b52785e52fe2f98ac1fa519375"
+          ],
+          "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+          "reason_codes": [
+            "CONFLICTING_VALID_SUCCESSIONS"
+          ],
+          "resolution": "EXTERNAL_RESOLUTION_REQUIRED",
+          "state_delta": 1,
+          "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+          "wallet_policy_authority": "NONE"
+        },
+        "partition_x": {
+          "decision": "PASS",
+          "decision_authority": "RECEIVER_GATE",
+          "disclosed_fields": [
+            "action",
+            "amount_cents",
+            "recipient"
+          ],
+          "effect_delta": 1,
+          "epoch_id": "epoch-fork-x",
+          "executed": true,
+          "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+          "gate_id": "gate-fork-x",
+          "mandate_id": "mandate-fork-x",
+          "principal_id": "principal-terrynce",
+          "reason_codes": [],
+          "recovery_policy_hash": "98cba2260743c1a920181df6d5144ce013db00e41f9bb5cea88b08358d890207",
+          "risk_tier": "HIGH",
+          "root_generation": 2,
+          "standing_mode": "FRESH_WITNESS",
+          "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+          "wallet_policy_authority": "NONE"
+        },
+        "partition_y": {
+          "decision": "PASS",
+          "decision_authority": "RECEIVER_GATE",
+          "disclosed_fields": [
+            "action",
+            "amount_cents",
+            "recipient"
+          ],
+          "effect_delta": 1,
+          "epoch_id": "epoch-fork-y",
+          "executed": true,
+          "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+          "gate_id": "gate-fork-y",
+          "mandate_id": "mandate-fork-y",
+          "principal_id": "principal-terrynce",
+          "reason_codes": [],
+          "recovery_policy_hash": "98cba2260743c1a920181df6d5144ce013db00e41f9bb5cea88b08358d890207",
+          "risk_tier": "HIGH",
+          "root_generation": 2,
+          "standing_mode": "FRESH_WITNESS",
+          "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+          "wallet_policy_authority": "NONE"
+        },
+        "post_detection_x": {
+          "decision": "BLOCK",
+          "decision_authority": "RECEIVER_GATE",
+          "effect_delta": 0,
+          "executed": false,
+          "fork_event_hashes": [
+            "e9be3205afab82f4c93b19744c63519c42a96e3a750dded6037c19275fdbc46d",
+            "ee43279355e51c713cf8f6fa01eb20e5088cf3b52785e52fe2f98ac1fa519375"
+          ],
+          "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+          "gate_id": "gate-fork-x",
+          "reason_codes": [
+            "ROOT_FORK_QUARANTINED"
+          ],
+          "resolution": "EXTERNAL_RESOLUTION_REQUIRED",
+          "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+          "wallet_policy_authority": "NONE"
+        },
+        "post_detection_y": {
+          "decision": "BLOCK",
+          "decision_authority": "RECEIVER_GATE",
+          "effect_delta": 0,
+          "executed": false,
+          "fork_event_hashes": [
+            "e9be3205afab82f4c93b19744c63519c42a96e3a750dded6037c19275fdbc46d",
+            "ee43279355e51c713cf8f6fa01eb20e5088cf3b52785e52fe2f98ac1fa519375"
+          ],
+          "freeze_authority": "ONE_PRECOMMITTED_GUARDIAN_REDUCE_ONLY",
+          "gate_id": "gate-fork-y",
+          "reason_codes": [
+            "ROOT_FORK_QUARANTINED"
+          ],
+          "resolution": "EXTERNAL_RESOLUTION_REQUIRED",
+          "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+          "wallet_policy_authority": "NONE"
+        }
+      },
+      "passed": true
+    }
+  ],
+  "schema": "openline.wallet_standing_003.result.v1",
+  "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+  "verdict": "RECEIVED_FREEZE_AND_FORK_QUARANTINE_ENFORCED_WITH_DECLARED_INFORMATION_LAG",
+  "wallet_policy_authority": "NONE"
+}

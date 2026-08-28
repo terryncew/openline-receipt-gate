@@ -1,0 +1,93 @@
+{
+  "schema": "openline.wallet_standing_003.preregistration.v1",
+  "experiment_id": "WALLET-STANDING-003",
+  "question": "Can a single precommitted guardian immediately reduce execution at receivers that learn of a compromise, without gaining succession power, while virgin receivers and conflicting quorum branches fail closed?",
+  "theorem": "Revocation lag is information lag: a receiver can enforce only events it has learned and admitted. A one-guardian emergency path may reduce authority for a bounded lease; redirecting authority still requires the precommitted quorum.",
+  "authority_split": {
+    "wallet": "CONTINUITY_EVIDENCE_ONLY",
+    "wallet_policy_authority": "NONE",
+    "one_guardian": "ONE_NONRENEWABLE_600_SECOND_REDUCE_ONLY_FREEZE_PER_ROOT_GENERATION",
+    "guardian_quorum": "ROOT_SUCCESSION_OR_KNOWN_VIEW_CHECKPOINT",
+    "receiver_gate": "EVENT_ADMISSION_AND_EXECUTION",
+    "old_root": "NO_FREEZE_CANCEL_OR_GUARDIAN_AUTHORITY"
+  },
+  "controlled_schedule": {
+    "t0_policy_pinned": "2026-08-28T15:00:00Z",
+    "t1_freeze_issued": "2026-08-28T15:01:00Z",
+    "t2_quorum_succession_effective": "2026-08-28T15:02:30Z",
+    "t3_conflicting_successions_effective": "2026-08-28T15:03:20Z",
+    "t4_freeze_exact_expiry": "2026-08-28T15:11:00Z"
+  },
+  "receiver_policy": {
+    "guardian_count": 3,
+    "succession_threshold": 2,
+    "checkpoint_threshold": 2,
+    "freeze_guardian_threshold": 1,
+    "freeze_max_duration_seconds": 600,
+    "freeze_max_delivery_age_seconds": 60,
+    "freeze_renewals_per_root_generation": 0,
+    "checkpoint_max_lifetime_seconds": 120,
+    "checkpoint_max_delivery_age_seconds": 60,
+    "virgin_gate_checkpoint_required": true,
+    "fork_policy": "QUARANTINE_EXTERNAL_RESOLUTION_REQUIRED"
+  },
+  "primary_arms": [
+    {"arm_id": "01_fresh_single_guardian_freeze", "expected": "ACCEPT_FREEZE"},
+    {"arm_id": "02_received_freeze_blocks_old_root", "expected": "BLOCK:GUARDIAN_FREEZE_ACTIVE"},
+    {"arm_id": "03_unreceived_freeze_information_lag", "expected": "PASS:DECLARED_INFORMATION_LAG"},
+    {"arm_id": "04_fresh_cross_delivery_blocks", "expected": "ACCEPT_FREEZE_THEN_BLOCK"},
+    {"arm_id": "05_stale_freeze_is_not_backdated", "expected": "REJECT_FREEZE_THEN_PASS:DECLARED_INFORMATION_LAG"},
+    {"arm_id": "06_freeze_replay_cannot_extend", "expected": "REJECT_BOTH:NO_EXPIRY_EXTENSION"},
+    {"arm_id": "07_malicious_guardian_bounded_dos", "expected": "BLOCK:DECLARED_BOUNDED_DOS"},
+    {"arm_id": "08_exact_expiry_restores_current_root", "expected": "PASS:DECLARED_RISK_RESUMPTION"},
+    {"arm_id": "09_old_root_cannot_fake_guardian", "expected": "REJECT_FREEZE:GUARDIAN_SIGNER_MISMATCH"},
+    {"arm_id": "10_quorum_succession_clears_freeze", "expected": "ACCEPT_SUCCESSION:CLEAR_FREEZE"},
+    {"arm_id": "11_successor_executes_after_quorum", "expected": "PASS_BOTH"},
+    {"arm_id": "12_virgin_gate_requires_checkpoint", "expected": "BLOCK_BOTH:CURRENT_ROOT_CHECKPOINT_REQUIRED"},
+    {"arm_id": "13_fresh_quorum_checkpoint_admits_known_root", "expected": "ACCEPT_CHECKPOINT_THEN_PASS"},
+    {"arm_id": "14_checkpoint_tamper_stale_and_threshold", "expected": "REJECT_ALL"},
+    {"arm_id": "15_partitioned_quorum_fork_quarantine", "expected": "PASS_DURING_PARTITION_THEN_BLOCK_BOTH"}
+  ],
+  "success_criteria": {
+    "all_arms_match": true,
+    "freeze_received_old_root_execution_count": 0,
+    "freeze_unreceived_old_root_execution_count": 1,
+    "stale_freeze_old_root_execution_count": 1,
+    "freeze_replay_extension_seconds": 0,
+    "malicious_guardian_dos_seconds": 600,
+    "post_expiry_legitimate_execution_count": 1,
+    "post_quorum_successor_execution_count": 2,
+    "virgin_without_checkpoint_execution_count": 0,
+    "virgin_with_checkpoint_execution_count": 1,
+    "partitioned_conflicting_branch_execution_count": 2,
+    "post_fork_detection_execution_count": 0,
+    "automatic_convergence_count": 0,
+    "fork_quarantine_count": 2
+  },
+  "fixed_boundaries": {
+    "transport": "CONTROLLED_EVENT_DELIVERY_ONLY",
+    "unseen_or_stale_event": "DECLARED_EXECUTION_EXPOSURE",
+    "single_guardian_malice": "DECLARED_600_SECOND_DOS",
+    "freeze_expiry_without_recovery": "CURRENT_ROOT_RISK_RESUMES",
+    "threshold_compromise": "INHERITED_TERMINAL_TRUST_ASSUMPTION",
+    "virgin_gate": "SUCCESSION_LINEAGE_PLUS_FRESH_QUORUM_CHECKPOINT",
+    "valid_same_generation_fork": "PARTITION_EXPOSURE_THEN_QUARANTINE",
+    "fork_resolution": "EXTERNAL_UNTESTED",
+    "wallet_policy_authority": "NONE"
+  },
+  "forbidden_rescue_moves": [
+    "claim a Gate blocked an event it had not received",
+    "backdate a first-seen stale freeze",
+    "let one guardian select a successor or extend a freeze",
+    "let the old root cancel a guardian freeze",
+    "hide the 600-second malicious-guardian denial of service",
+    "hide current-root risk resumption at exact freeze expiry",
+    "let a checkpoint install a root the receiver has not derived from succession lineage",
+    "pick a winning quorum branch after observing a fork",
+    "claim quarantine is convergence or availability",
+    "add a network, blockchain, transparency log, or consensus service inside this run",
+    "modify WALLET-STANDING-001 or WALLET-STANDING-002"
+  ],
+  "verdict_if_successful": "RECEIVED_FREEZE_AND_FORK_QUARANTINE_ENFORCED_WITH_DECLARED_INFORMATION_LAG",
+  "verdict_if_unsuccessful": "DISTRIBUTED_WALLET_STANDING_BOUNDARY_NOT_ESTABLISHED"
+}

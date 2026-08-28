@@ -1,0 +1,25 @@
+{
+  "schema": "openline.wallet_standing_003.dependency-pin.v1",
+  "experiment_id": "WALLET-STANDING-003",
+  "base_repo": "terryncew/openline-receipt-gate",
+  "base_commit": "bf3cb5fd9345f481aa0ae30d2990c74af986e485",
+  "wallet_standing_001": {
+    "mutation_allowed": false,
+    "protocol_path": "experiments/wallet-standing-001/wallet001/protocol.py",
+    "protocol_sha256": "fa034c89ab0aeb7a1d624e8308865d81302c3e38c64bca255119c1a3f2282855",
+    "frozen_result_path": "experiments/wallet-standing-001/frozen_result.json",
+    "frozen_result_sha256": "bcbba96d25a9c974f17a20b5b5340d04487e7e76747324da0f1137d93635e102",
+    "release_manifest_path": "experiments/wallet-standing-001/RELEASE_MANIFEST.json",
+    "release_manifest_sha256": "cd9a7243aba0ff9b89ac63a04d6bfb8e33ca1f19abad45abf779ff20d4a6ada5"
+  },
+  "wallet_standing_002": {
+    "mutation_allowed": false,
+    "recovery_path": "experiments/wallet-standing-002/wallet002/recovery.py",
+    "recovery_sha256": "4379faf0977bd0e0920666233148415059da8fcdaa07e0fdcaef7729a3a9b756",
+    "frozen_result_path": "experiments/wallet-standing-002/frozen_result.json",
+    "frozen_result_sha256": "26bfa20014ad36d3658154f6e2f7c825e77ffe4a9b47f01f8e8369a6843e404d",
+    "release_manifest_path": "experiments/wallet-standing-002/RELEASE_MANIFEST.json",
+    "release_manifest_sha256": "ccc613864c175a6565705c85ab91baf62bf6b4d56e91bb5ca51e090004395abe"
+  }
+}
+

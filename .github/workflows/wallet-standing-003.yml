@@ -1,0 +1,45 @@
+name: WALLET-STANDING-003 Distributed Freeze
+
+on:
+  push:
+    paths:
+      - ".github/workflows/wallet-standing-003.yml"
+      - "experiments/wallet-standing-003/**"
+      - "WALLET_STANDING_003_HANDOFF.json"
+  pull_request:
+    paths:
+      - ".github/workflows/wallet-standing-003.yml"
+      - "experiments/wallet-standing-003/**"
+      - "WALLET_STANDING_003_HANDOFF.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  frozen-distributed-freeze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Receipt Gate
+        run: python -m pip install -e .
+      - name: Run focused tests
+        run: python -m unittest discover -s experiments/wallet-standing-003/tests -v
+      - name: Reproduce frozen result
+        run: |
+          cp experiments/wallet-standing-003/frozen_result.json /tmp/wallet-standing-003.json
+          python experiments/wallet-standing-003/scripts/run_frozen.py
+          cmp /tmp/wallet-standing-003.json experiments/wallet-standing-003/frozen_result.json
+      - name: Verify frozen release
+        run: python experiments/wallet-standing-003/scripts/verify_release.py
+      - name: Upload frozen receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: wallet-standing-003-frozen-result
+          path: experiments/wallet-standing-003/frozen_result.json
+          if-no-files-found: error
+
