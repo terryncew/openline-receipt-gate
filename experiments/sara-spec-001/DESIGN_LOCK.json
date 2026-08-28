@@ -1,0 +1,21 @@
+{
+  "schema": "openline.sara_spec_001.design_lock.v1",
+  "experiment_id": "SARA-SPEC-001",
+  "locked_at_utc": "2026-08-28T16:00:00Z",
+  "base_commit": "8538c88b907cf6bafbfc28ffe705c20fbe76ecba",
+  "run_status_at_lock": "NOT_RUN",
+  "files": {
+    "CLAIM_BOUNDARY.md": "d13696e04d779ab40f55340950f708078d11b0e848664cd88ccad7a8765028f8",
+    "SOURCE_PIN.json": "6f0b9fbf07b2e2eb34d325882a34ad21ef2212301aa9d7f7574f1511261b6a64",
+    "fixtures/scenario.json": "7c7e28b0526a0392ead10aae0a3e3230b5bf6b2481561d7daf74f0b5d85d3f38",
+    "oracle.json": "ce0b58046c1640677b61cdf921c99f94e7070c50f0caeacdd49afbc31c93d484",
+    "preregistration.json": "972d2e377e1467f127e62aee3064968a26e2a9d9e1d465a875801ae49b7de36a"
+  },
+  "frozen_counts": {
+    "arms": 4,
+    "authorization_roots": 2,
+    "controls": 2,
+    "decisions": 2
+  },
+  "amendments_allowed_after_lock": false
+}

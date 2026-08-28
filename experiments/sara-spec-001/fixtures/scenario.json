@@ -1,0 +1,90 @@
+{
+  "schema": "openline.sara_spec_001.fixture.v1",
+  "experiment_id": "SARA-SPEC-001",
+  "task": {
+    "task_id": "two-source-decision-task",
+    "status": "TERMINATED",
+    "user_request": "Use each independently authorized evidence source to produce its corresponding decision."
+  },
+  "K": [
+    {
+      "contract_item_id": "K1",
+      "effect": "READ_EVIDENCE",
+      "operation": "fetch_evidence",
+      "scope": "source://alpha",
+      "static_arguments": {
+        "source_uri": "source://alpha"
+      }
+    },
+    {
+      "contract_item_id": "K2",
+      "effect": "READ_EVIDENCE",
+      "operation": "fetch_evidence",
+      "scope": "source://beta",
+      "static_arguments": {
+        "source_uri": "source://beta"
+      }
+    }
+  ],
+  "F": [],
+  "H": [
+    {
+      "call": {
+        "call_id": "A",
+        "tool": "fetch_evidence",
+        "arguments": {
+          "source_uri": "source://alpha"
+        }
+      },
+      "observation": {
+        "record_id": "source-alpha-record",
+        "evidence_token": "15977537e38d04e204440e20040efd609aed47ceee4bcc41933ff39654395a23"
+      },
+      "evidence_capacity": "GOAL_BOUND",
+      "allowed": true,
+      "success": true
+    },
+    {
+      "call": {
+        "call_id": "B",
+        "tool": "fetch_evidence",
+        "arguments": {
+          "source_uri": "source://beta"
+        }
+      },
+      "observation": {
+        "record_id": "source-beta-record",
+        "evidence_token": "2122c179ff6cd4c68b09f06ebb2524687b5a9a00dec346177ff9d4e51d36693d"
+      },
+      "evidence_capacity": "GOAL_BOUND",
+      "allowed": true,
+      "success": true
+    }
+  ],
+  "decisions": [
+    {
+      "decision_id": "D1",
+      "outcome": "ACCEPT",
+      "basis_token": "15977537e38d04e204440e20040efd609aed47ceee4bcc41933ff39654395a23"
+    },
+    {
+      "decision_id": "D2",
+      "outcome": "ACCEPT",
+      "basis_token": "2122c179ff6cd4c68b09f06ebb2524687b5a9a00dec346177ff9d4e51d36693d"
+    }
+  ],
+  "controls": [
+    {
+      "control_id": "revoke_k1_after_task",
+      "event_type": "REVOKE",
+      "contract_item_id": "K1",
+      "standing": "REVOKED"
+    },
+    {
+      "control_id": "noop_k1_after_task",
+      "event_type": "NO_OP",
+      "contract_item_id": "K1",
+      "standing": "ACTIVE"
+    }
+  ]
+}

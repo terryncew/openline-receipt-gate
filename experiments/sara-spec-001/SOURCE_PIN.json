@@ -1,0 +1,53 @@
+{
+  "schema": "openline.sara_spec_001.source_pin.v1",
+  "evidence_tier": "PAPER_SPEC_RECONSTRUCTION",
+  "paper": {
+    "title": "When Tool Outputs Become Commands: Separating Action Induction from Runtime Authorization in Tool-Augmented LLM Agents",
+    "authors": [
+      "Xiaokun Guo",
+      "Zhen Xu",
+      "Dongdong Huo",
+      "Yanqiu Zhang",
+      "Wei Wang",
+      "Qinfu Yang",
+      "Dongjin Yu",
+      "Yu Wang"
+    ],
+    "arxiv_id": "2608.27146",
+    "version": "v1",
+    "submitted_at_utc": "2026-08-27T13:59:04Z",
+    "abstract_url": "https://arxiv.org/abs/2608.27146v1",
+    "pdf_url": "https://arxiv.org/pdf/2608.27146v1",
+    "pdf_sha256": "acb6f5aae45da095c08f23ca6f472045be763bd8cdc19a6230ea270bb76ebe62",
+    "pdf_bytes": 1043381
+  },
+  "mechanism_passages": [
+    {
+      "section": "2.2 Threat Model",
+      "paper_page": 3,
+      "supports": "SARA scopes authorization state to one task and clears it when that task terminates or is explicitly reset."
+    },
+    {
+      "section": "4.1 Design Overview",
+      "paper_pages": [
+        4,
+        5
+      ],
+      "supports": "K is the task authorization root, F retains action-inducing origins, and H retains audited successful execution evidence."
+    },
+    {
+      "section": "4.4 Evidence-Driven Authorization at the Execution Boundary",
+      "paper_pages": [
+        7,
+        8
+      ],
+      "supports": "H stores allowed successful calls and observations and is consulted for execution-chain and argument support."
+    }
+  ],
+  "author_implementation": {
+    "status": "NOT_IDENTIFIED_ON_CANONICAL_RECORD_OR_IN_PAPER_AS_OF_2026-08-28",
+    "paper_contains_public_repository_link": false,
+    "cold_external_integration_claimed": false
+  },
+  "boundary": "The source is independently authored. Every executable SARA component in this experiment is an OpenLine paper-spec reconstruction."
+}
