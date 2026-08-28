@@ -1,0 +1,147 @@
+{
+  "experiment_id": "WikiSkill-EI-001",
+  "invariants": {
+    "historical_artifacts_immutable": true,
+    "policy_authority": "NONE",
+    "public_state_same_for_all_worlds": true,
+    "standing_event_same_for_all_worlds": true
+  },
+  "no_op_event": {
+    "new_standing": "UNCHANGED",
+    "reason": "CONTROL",
+    "trace_id": null
+  },
+  "pattern_to_skill": {
+    "pattern-left": [
+      "skill-left"
+    ],
+    "pattern-right": [
+      "skill-right"
+    ]
+  },
+  "provenance_control": {
+    "explicit_source_trace_ids": {
+      "pattern-left": [
+        "trace-A"
+      ],
+      "pattern-right": [
+        "trace-B"
+      ]
+    },
+    "world": "world-A"
+  },
+  "public_state": {
+    "raw": {
+      "trace-A": {
+        "iteration": 1,
+        "score": 0,
+        "task_id": "task-A",
+        "trajectory": [
+          {
+            "action": "inspect --target item",
+            "observation": "workspace ready"
+          },
+          {
+            "action": "finish",
+            "observation": "opaque marker A17"
+          }
+        ]
+      },
+      "trace-B": {
+        "iteration": 1,
+        "score": 0,
+        "task_id": "task-B",
+        "trajectory": [
+          {
+            "action": "inspect --target item",
+            "observation": "workspace ready"
+          },
+          {
+            "action": "finish",
+            "observation": "opaque marker B42"
+          }
+        ]
+      }
+    },
+    "schema": "wikiskill.paper_artifacts.fixture.v1",
+    "skills": {
+      "skill-left": {
+        "PURPOSE.md": {
+          "evolution_history": [
+            "iteration 2 accepted"
+          ],
+          "origin": "wiki-guided evolution",
+          "patterns_addressed": [
+            "pattern-left"
+          ]
+        },
+        "SKILL.md": "When the left pattern applies, run the cautious operation before commit.\n"
+      },
+      "skill-right": {
+        "PURPOSE.md": {
+          "evolution_history": [
+            "iteration 3 accepted"
+          ],
+          "origin": "wiki-guided evolution",
+          "patterns_addressed": [
+            "pattern-right"
+          ]
+        },
+        "SKILL.md": "When the right pattern applies, run the bounded operation before commit.\n"
+      }
+    },
+    "wiki": {
+      "index.md": "- pattern-left: recurring state-dependent failure; use cautious mode\n- pattern-right: recurring state-dependent failure; use bounded mode\n",
+      "log.md": "iteration 1: consolidated two recurring failure patterns from sampled traces\niteration 2: accepted skill-left\niteration 3: accepted skill-right\n",
+      "patterns": {
+        "pattern-left": {
+          "description": "A recurring state-dependent failure during item inspection.",
+          "exact_command_sequence": [
+            "inspect --target item"
+          ],
+          "root_cause": "The default branch overcommits before checking the current state.",
+          "source_trace_ids": null,
+          "workaround": "apply --mode cautious"
+        },
+        "pattern-right": {
+          "description": "A recurring state-dependent failure during item inspection.",
+          "exact_command_sequence": [
+            "inspect --target item"
+          ],
+          "root_cause": "The default branch uses an unbounded operation before checking the current state.",
+          "source_trace_ids": null,
+          "workaround": "apply --mode bounded"
+        }
+      },
+      "skill-impact.md": "iteration 2: skill-left ACCEPTED; pattern-left\niteration 3: skill-right ACCEPTED; pattern-right\n"
+    }
+  },
+  "schema": "openline.wikiskill_ei_001.scenario.v1",
+  "sealed_worlds": {
+    "world-A": {
+      "derivation_truth": {
+        "trace-A": [
+          "pattern-left"
+        ],
+        "trace-B": [
+          "pattern-right"
+        ]
+      }
+    },
+    "world-B": {
+      "derivation_truth": {
+        "trace-A": [
+          "pattern-right"
+        ],
+        "trace-B": [
+          "pattern-left"
+        ]
+      }
+    }
+  },
+  "standing_event": {
+    "new_standing": "INVALIDATED",
+    "reason": "SOURCE_CORRECTED",
+    "trace_id": "trace-A"
+  }
+}

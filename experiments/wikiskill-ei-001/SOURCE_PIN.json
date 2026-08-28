@@ -1,0 +1,45 @@
+{
+  "evidence_tier": "PAPER_SPEC_RECONSTRUCTION",
+  "experiment_id": "WikiSkill-EI-001",
+  "pinned_spec_facts": [
+    {
+      "fact": "workspace separates immutable raw traces, persistent wiki knowledge, and active skills",
+      "html_lines": "100-101, 138-147"
+    },
+    {
+      "fact": "wiki patterns consolidate raw traces and may be created or updated with evidence",
+      "html_lines": "158-163"
+    },
+    {
+      "fact": "skill PURPOSE.md maps skills back to motivating wiki patterns",
+      "html_lines": "145-147, 793-795"
+    },
+    {
+      "fact": "rejected skill changes are rolled back while the wiki is retained",
+      "html_lines": "171-179"
+    },
+    {
+      "fact": "published Wiki Maintainer output contract requires pattern content, index, and log updates but does not require source trace identifiers",
+      "html_lines": "656-756"
+    }
+  ],
+  "schema": "openline.wikiskill_ei_001.source_pin.v1",
+  "scope_note": "The source does not specify later revocation/correction standing for already-consolidated raw experience; that is the external composition tested here.",
+  "source": {
+    "abstract_url": "https://arxiv.org/abs/2608.27454v1",
+    "arxiv_id": "2608.27454v1",
+    "authors": [
+      "Liyan Tang",
+      "Cyrus Rashtchian",
+      "Chun-Sung Ferng",
+      "Andrew Tomkins",
+      "Da-Cheng Juan",
+      "Tu Vu"
+    ],
+    "canonical_author_code_link_observed": false,
+    "html_url": "https://arxiv.org/html/2608.27454v1",
+    "observed_at_utc": "2026-08-28T16:10:00Z",
+    "submitted": "2026-08-27",
+    "title": "WikiSkill: Compiling Agent Experience into Persistent Knowledge for Skill Evolution"
+  }
+}

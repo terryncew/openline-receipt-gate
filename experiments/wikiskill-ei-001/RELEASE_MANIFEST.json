@@ -1,0 +1,29 @@
+{
+  "base_commit": "65527e97b68894f32235f8f8c7d9de35f65a77b8",
+  "base_repo": "terryncew/openline-receipt-gate",
+  "evidence_tier": "PAPER_SPEC_RECONSTRUCTION",
+  "experiment_id": "WikiSkill-EI-001",
+  "files": {
+    "CLAIM_BOUNDARY.md": "6ea7f0f11bf2a3458f805f4d71a5bf7ca7d39728c47434c95e33485236d2f69f",
+    "DESIGN_LOCK.json": "00f8a31e8b0353a4fbca00948c99914ed386e70c120cddd871db5fe63035b361",
+    "README.md": "ad905b742250256ff7ab64ffe35137e9755e34478eb9ce6022655c4f780e4555",
+    "SOURCE_PIN.json": "060ed012db73330f1121fc235f1e0f9efd2ba56b99bda6b6130861bc3fbed5e5",
+    "fixtures/scenario.json": "d0802670a74b2f2b372d96690381b876fa7c2efbf9b52a9e164344cb01132a2f",
+    "oracle.json": "b73cd430e90bca0fa43c3f81aae9204cbf2464db15cae5a9067f1e83a81f90c5",
+    "preregistration.json": "1d4a88d591acfafeacffc902419e6b590b3eb67769004e32980d72e35c566835",
+    "result.json": "42976283df8152e5a73507a83892d08ec721c3e92b286612f109f319c0c83ea2",
+    "scripts/run_experiment.py": "e1b9159e914f5a0d81df567f714a9b3e2ce6703cf48feffb86b6260e3ad032fb",
+    "scripts/verify_release.py": "a037089875802f054b2f7a4e6681daf8ba46809623b54a223421f018e4cf5bca",
+    "scripts/verify_result.py": "d17b4b44c8b353f471d334201ae776649f28188f829db47ec1e79b3e8256df9a",
+    "tests/test_wikiskill_ei001.py": "cc4810cb840dfa2f4b2207a6e41a6e7b50a0f2044261c4976683dbed9650598a",
+    "wikiskill_ei001/__init__.py": "add28970bf94591062d9a8930da62fe2ea8c94b517eef33fcc230a084bad56eb",
+    "wikiskill_ei001/broad_recall.py": "8bee605327143b704f642aaaac7964d31aa32254932714ab55089dfc94998e21",
+    "wikiskill_ei001/common.py": "7fcafa94fdb80d2601062caa06a1954a5bb96bd603b16116193eff0a9ba5ce5f",
+    "wikiskill_ei001/minimal_extension.py": "1d09f152581e6961b2a461034aa8e177cad6b1a00284d2da87c55a68b923174c",
+    "wikiskill_ei001/openline_recall.py": "e486a6120c8d042273d573436545a78fc1ab272d8176bbeaf7bee118befecb45",
+    "wikiskill_ei001/published_wikiskill.py": "0c798ea78a27ec44ac90ec41d1f92411052d2d456e265835c0c36a4cc403b0dc"
+  },
+  "policy_authority": "NONE",
+  "schema": "openline.wikiskill_ei_001.release_manifest.v1",
+  "verdict": "WIKISKILL_POST_HOC_PROVENANCE_GAP"
+}

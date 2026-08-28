@@ -1,0 +1,23 @@
+{
+  "amendments_allowed_after_lock": false,
+  "base_commit": "65527e97b68894f32235f8f8c7d9de35f65a77b8",
+  "experiment_id": "WikiSkill-EI-001",
+  "files": {
+    "CLAIM_BOUNDARY.md": "6ea7f0f11bf2a3458f805f4d71a5bf7ca7d39728c47434c95e33485236d2f69f",
+    "SOURCE_PIN.json": "060ed012db73330f1121fc235f1e0f9efd2ba56b99bda6b6130861bc3fbed5e5",
+    "fixtures/scenario.json": "d0802670a74b2f2b372d96690381b876fa7c2efbf9b52a9e164344cb01132a2f",
+    "oracle.json": "b73cd430e90bca0fa43c3f81aae9204cbf2464db15cae5a9067f1e83a81f90c5",
+    "preregistration.json": "1d4a88d591acfafeacffc902419e6b590b3eb67769004e32980d72e35c566835"
+  },
+  "frozen_counts": {
+    "arms": 4,
+    "controls": 2,
+    "raw_traces": 2,
+    "sealed_worlds": 2,
+    "skills": 2,
+    "wiki_patterns": 2
+  },
+  "locked_at_utc": "2026-08-28T16:15:00Z",
+  "run_status_at_lock": "NOT_RUN",
+  "schema": "openline.wikiskill_ei_001.design_lock.v1"
+}

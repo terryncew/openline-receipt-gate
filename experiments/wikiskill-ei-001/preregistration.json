@@ -1,0 +1,70 @@
+{
+  "arms": [
+    {
+      "allowed_inputs": [
+        "published artifacts"
+      ],
+      "forbidden": "post-hoc feature attribution as a paper failure",
+      "id": "published_wikiskill",
+      "scored": false
+    },
+    {
+      "allowed_inputs": [
+        "published artifacts",
+        "standing update"
+      ],
+      "id": "broad_recall",
+      "scored": true
+    },
+    {
+      "allowed_inputs": [
+        "published artifacts",
+        "standing update",
+        "explicit references already serialized"
+      ],
+      "forbidden": [
+        "LLM re-run",
+        "semantic re-derivation",
+        "new persistent trace-pattern edge",
+        "support graph",
+        "reverse index",
+        "hidden truth"
+      ],
+      "id": "minimal_wikiskill_extension",
+      "scored": true
+    },
+    {
+      "allowed_inputs": [
+        "published artifacts",
+        "standing update",
+        "explicit t0 support relations"
+      ],
+      "id": "openline_selective_standing",
+      "scored": true
+    }
+  ],
+  "base_commit": "65527e97b68894f32235f8f8c7d9de35f65a77b8",
+  "base_repo": "terryncew/openline-receipt-gate",
+  "control": "no standing change",
+  "evidence_tier": "PAPER_SPEC_RECONSTRUCTION",
+  "experiment_id": "WikiSkill-EI-001",
+  "historical_artifacts_must_remain_byte_identical": true,
+  "main_event": "trace-A INVALIDATED in both worlds",
+  "name_expansion": "Experience Invalidation",
+  "policy_authority": "NONE",
+  "positive_control": "add explicit source_trace_ids only; same minimal resolver must then match world-A oracle",
+  "question": "Does WikiSkill's published persisted representation guarantee enough deterministic source lineage to selectively reopen downstream wiki knowledge and skills after one already-consolidated raw trace later loses standing?",
+  "run_status": "NOT_RUN",
+  "schema": "openline.wikiskill_ei_001.preregistration.v1",
+  "sealed_world_count": 2,
+  "success_rule": {
+    "fallback": "boundary not established",
+    "gap": "minimal extension is provenance-unresolved on the indistinguishable worlds; OpenLine exactly matches both; broad recall over-reopens; positive provenance control passes",
+    "parity": "minimal extension exactly matches both event worlds and no-op oracle without forbidden representation"
+  },
+  "verdict_names": {
+    "fallback": "WIKISKILL_EI_BOUNDARY_NOT_ESTABLISHED",
+    "gap": "WIKISKILL_POST_HOC_PROVENANCE_GAP",
+    "parity": "WIKISKILL_EXTENSION_PARITY"
+  }
+}

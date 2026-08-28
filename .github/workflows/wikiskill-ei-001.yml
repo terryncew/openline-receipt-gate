@@ -1,0 +1,45 @@
+name: WikiSkill-EI-001 Experience Invalidation
+
+on:
+  push:
+    paths:
+      - ".github/workflows/wikiskill-ei-001.yml"
+      - "experiments/wikiskill-ei-001/**"
+      - "WIKISKILL_EI_001_HANDOFF.json"
+  pull_request:
+    paths:
+      - ".github/workflows/wikiskill-ei-001.yml"
+      - "experiments/wikiskill-ei-001/**"
+      - "WIKISKILL_EI_001_HANDOFF.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  paper-spec-experience-invalidation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Receipt Gate
+        run: python -m pip install -e .
+      - name: Run frozen representation comparison
+        run: python experiments/wikiskill-ei-001/scripts/run_experiment.py
+      - name: Verify serialized result independently
+        run: python experiments/wikiskill-ei-001/scripts/verify_result.py
+      - name: Run focused contract tests
+        run: python -m unittest discover -s experiments/wikiskill-ei-001/tests -v
+      - name: Verify release closure
+        run: python experiments/wikiskill-ei-001/scripts/verify_release.py
+      - name: Run existing regression suite
+        run: python -m unittest discover -s tests -v
+      - name: Upload frozen result
+        uses: actions/upload-artifact@v4
+        with:
+          name: wikiskill-ei-001-result
+          path: experiments/wikiskill-ei-001/result.json
+          if-no-files-found: error

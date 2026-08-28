@@ -1,0 +1,36 @@
+{
+  "event_case": {
+    "world-A": {
+      "patterns": {
+        "pattern-left": "REOPEN",
+        "pattern-right": "PRESERVE"
+      },
+      "skills": {
+        "skill-left": "REOPEN",
+        "skill-right": "PRESERVE"
+      }
+    },
+    "world-B": {
+      "patterns": {
+        "pattern-left": "PRESERVE",
+        "pattern-right": "REOPEN"
+      },
+      "skills": {
+        "skill-left": "PRESERVE",
+        "skill-right": "REOPEN"
+      }
+    }
+  },
+  "historical_artifacts": "UNCHANGED",
+  "no_op_case": {
+    "patterns": {
+      "pattern-left": "PRESERVE",
+      "pattern-right": "PRESERVE"
+    },
+    "skills": {
+      "skill-left": "PRESERVE",
+      "skill-right": "PRESERVE"
+    }
+  },
+  "schema": "openline.wikiskill_ei_001.oracle.v1"
+}
