@@ -1,0 +1,78 @@
+{
+  "schema": "openline.sara_spec_001.preregistration.v1",
+  "experiment_id": "SARA-SPEC-001",
+  "evidence_tier": "PAPER_SPEC_RECONSTRUCTION",
+  "question": "Does SARA's published K/F/H state already contain enough latent structure for selective post-task standing recall under a faithful persistence and revocation extension?",
+  "base_repo": "terryncew/openline-receipt-gate",
+  "base_commit": "8538c88b907cf6bafbfc28ffe705c20fbe76ecba",
+  "frozen_scenario": {
+    "authorization_roots": [
+      "K1",
+      "K2"
+    ],
+    "dependent_decisions": [
+      "D1",
+      "D2"
+    ],
+    "task_ends_before_standing_event": true,
+    "revocation_target": "K1",
+    "matched_noop_target": "K1"
+  },
+  "arms": [
+    {
+      "arm_id": "published_sara",
+      "post_task_state": "CLEARED",
+      "scored": false,
+      "required_disposition": "OUT_OF_SCOPE_AFTER_TASK_END"
+    },
+    {
+      "arm_id": "broad_recall",
+      "scored": true,
+      "mechanism": "REOPEN_ALL_DECISIONS_ON_ANY_REVOKE"
+    },
+    {
+      "arm_id": "minimal_sara_extension",
+      "scored": true,
+      "allowed_changes": [
+        "persist K, F, and H byte-for-byte after task termination",
+        "add a standing update for an existing K contract item",
+        "scan persisted H at query time using its existing call and observation content"
+      ],
+      "forbidden_persistent_structures": [
+        "new edge class",
+        "reverse index",
+        "descendant table",
+        "causal graph",
+        "per-decision support structure"
+      ]
+    },
+    {
+      "arm_id": "openline_selective_recall",
+      "scored": true,
+      "mechanism": "PERSIST_SUPPORT_RELATIONS_AND_TRAVERSE_LOST_STANDING_DESCENDANTS"
+    }
+  ],
+  "oracle": {
+    "representation_blind": true,
+    "implementation_imports_forbidden": true,
+    "revocation_expected": {
+      "D1": "REOPEN",
+      "D2": "PRESERVE",
+      "historical_evidence": "UNCHANGED"
+    },
+    "noop_expected": {
+      "D1": "PRESERVE",
+      "D2": "PRESERVE",
+      "historical_evidence": "UNCHANGED"
+    }
+  },
+  "verdicts": {
+    "minimal_sara_and_openline_exact": "SARA_EXTENSION_PARITY",
+    "only_openline_exact": "POST_TASK_STANDING_RECALL_DISTINCT",
+    "openline_inexact": "NO_SELECTIVE_RECALL",
+    "invalid_extension_budget_or_oracle": "INCONCLUSIVE_SPEC_RECONSTRUCTION"
+  },
+  "falsifier": "If persisted K/F/H plus only a K standing update deterministically reopens D1, preserves D2, and leaves history unchanged, selective post-task standing recall was already latent in SARA's published representation.",
+  "stop_rule": "Run the revocation and no-op controls once across exactly four frozen arms. Add no fifth arm, adversarial suite, threshold change, or rescue pass.",
+  "policy_authority": "NONE"
+}

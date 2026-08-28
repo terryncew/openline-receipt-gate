@@ -1,0 +1,45 @@
+name: SARA-SPEC-001 Post-Task Standing
+
+on:
+  push:
+    paths:
+      - ".github/workflows/sara-spec-001.yml"
+      - "experiments/sara-spec-001/**"
+      - "SARA_SPEC_001_HANDOFF.json"
+  pull_request:
+    paths:
+      - ".github/workflows/sara-spec-001.yml"
+      - "experiments/sara-spec-001/**"
+      - "SARA_SPEC_001_HANDOFF.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  paper-spec-standing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Receipt Gate
+        run: python -m pip install -e .
+      - name: Run frozen four-arm comparison
+        run: python experiments/sara-spec-001/scripts/run_experiment.py
+      - name: Verify serialized result independently
+        run: python experiments/sara-spec-001/scripts/verify_result.py
+      - name: Run focused contract tests
+        run: python -m unittest discover -s experiments/sara-spec-001/tests -v
+      - name: Verify release closure
+        run: python experiments/sara-spec-001/scripts/verify_release.py
+      - name: Run existing regression suite
+        run: python -m unittest discover -s tests -v
+      - name: Upload frozen result
+        uses: actions/upload-artifact@v4
+        with:
+          name: sara-spec-001-result
+          path: experiments/sara-spec-001/result.json
+          if-no-files-found: error

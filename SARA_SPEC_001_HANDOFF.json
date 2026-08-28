@@ -1,0 +1,48 @@
+{
+  "schema": "openline.sara_spec_001.handoff.v1",
+  "experiment_id": "SARA-SPEC-001",
+  "base_repo": "terryncew/openline-receipt-gate",
+  "base_commit": "8538c88b907cf6bafbfc28ffe705c20fbe76ecba",
+  "branch": "feat/sara-spec-001",
+  "commit": "feat(ace): add SARA paper-spec standing test",
+  "pr_title": "feat(ace): add SARA paper-spec standing test",
+  "expected_changed_file_count": 21,
+  "evidence_tier": "PAPER_SPEC_RECONSTRUCTION",
+  "verdict": "SARA_EXTENSION_PARITY",
+  "result": {
+    "published_sara": "OUT_OF_SCOPE_AFTER_TASK_END",
+    "broad_recall": "COLLATERAL_REOPEN_OF_D2",
+    "minimal_sara_extension": "EXACT_ORACLE_MATCH",
+    "openline_selective_recall": "EXACT_ORACLE_MATCH",
+    "openline_novelty_falsifier_triggered": true
+  },
+  "claim": "In the sealed paper-spec reconstruction, persisted SARA K/F/H plus only a K standing update selectively reopened D1, preserved D2, passed the no-op control, and left historical evidence unchanged.",
+  "scope": {
+    "wallet_standing_001_through_004_changed": false,
+    "production_gate_code_changed": false,
+    "published_sara_scored_as_failure": false,
+    "cold_external_integration_claimed": false,
+    "policy_authority": "NONE"
+  },
+  "local_verification": {
+    "focused_contract_tests": "9 passed",
+    "existing_regression_suite": "357 passed with 24 optional integrations skipped",
+    "independent_result_verifier": "PASS: 8 rows; design lock and representation-blind oracle verified",
+    "archive_aware_release_gate": "PASS: 40 checks; warning-time live standing remains EXPIRED"
+  },
+  "artifact_hashes": {
+    "workflow_sha256": "d788f220ac8410b0485d2b71d441fe338edad0a843f0f991d9e87ca958d8327f",
+    "release_manifest_sha256": "ce61762e3672ec12114a82b1b1edc4fa919df5a11be70b03f3b8fc99780d071a",
+    "result_sha256": "e0073ac0ab6e127556cec7e93807b56e7848955467a84582f96200334bfae4ab"
+  },
+  "working_copy": {
+    "overlay_root": true,
+    "wrapper_directory": false,
+    "cover_file": false,
+    "expected_top_level_entries": [
+      ".github",
+      "experiments",
+      "SARA_SPEC_001_HANDOFF.json"
+    ]
+  }
+}

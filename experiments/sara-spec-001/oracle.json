@@ -1,0 +1,17 @@
+{
+  "schema": "openline.sara_spec_001.oracle.v1",
+  "experiment_id": "SARA-SPEC-001",
+  "representation_blind": true,
+  "controls": {
+    "revoke_k1_after_task": {
+      "D1": "REOPEN",
+      "D2": "PRESERVE",
+      "historical_evidence": "UNCHANGED"
+    },
+    "noop_k1_after_task": {
+      "D1": "PRESERVE",
+      "D2": "PRESERVE",
+      "historical_evidence": "UNCHANGED"
+    }
+  }
+}

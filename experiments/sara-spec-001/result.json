@@ -1,0 +1,274 @@
+{
+  "arm_exactness": {
+    "broad_recall": false,
+    "minimal_sara_extension": true,
+    "openline_selective_recall": true
+  },
+  "claim_boundary": {
+    "agentdojo_agentdyn_reproduced": false,
+    "cold_external_integration": false,
+    "production_code_changed": false,
+    "published_sara_scored_as_failure": false
+  },
+  "counts": {
+    "arms": 4,
+    "controls": 2,
+    "rows": 8,
+    "scored_arms": 3
+  },
+  "design_lock_sha256": "d9e44f87cc05e940e41db7d677050005f9fe82e5b5551a83ced3e8702e7327bc",
+  "earned_claim": "In this sealed paper-spec reconstruction, persisted SARA K/F/H plus only a K standing update matched OpenLine selective post-task recall: D1 reopened after K1 revocation, D2 was preserved, the no-op changed neither decision, and historical evidence remained unchanged.",
+  "evidence_tier": "PAPER_SPEC_RECONSTRUCTION",
+  "experiment_id": "SARA-SPEC-001",
+  "minimal_extension_budget_valid": true,
+  "openline_novelty_falsifier_triggered": true,
+  "passed": true,
+  "policy_authority": "NONE",
+  "published_sara_disposition": "OUT_OF_SCOPE_AFTER_TASK_END",
+  "rows": [
+    {
+      "arm_id": "published_sara",
+      "control_id": "revoke_k1_after_task",
+      "exact_oracle_match": null,
+      "expected": null,
+      "observed": {
+        "dispositions": {
+          "D1": "UNASSESSED",
+          "D2": "UNASSESSED"
+        },
+        "historical_evidence": "UNCHANGED",
+        "historical_hash_after": "9aa20e2dfc6b62f37f5512846c4eb319ef9e70be7478af9f7fb30b87aaa37bb4",
+        "historical_hash_before": "9aa20e2dfc6b62f37f5512846c4eb319ef9e70be7478af9f7fb30b87aaa37bb4",
+        "runtime_state_after_task": "CLEARED",
+        "scope_status": "OUT_OF_SCOPE_AFTER_TASK_END",
+        "scored": false
+      },
+      "scored": false
+    },
+    {
+      "arm_id": "published_sara",
+      "control_id": "noop_k1_after_task",
+      "exact_oracle_match": null,
+      "expected": null,
+      "observed": {
+        "dispositions": {
+          "D1": "UNASSESSED",
+          "D2": "UNASSESSED"
+        },
+        "historical_evidence": "UNCHANGED",
+        "historical_hash_after": "9aa20e2dfc6b62f37f5512846c4eb319ef9e70be7478af9f7fb30b87aaa37bb4",
+        "historical_hash_before": "9aa20e2dfc6b62f37f5512846c4eb319ef9e70be7478af9f7fb30b87aaa37bb4",
+        "runtime_state_after_task": "CLEARED",
+        "scope_status": "OUT_OF_SCOPE_AFTER_TASK_END",
+        "scored": false
+      },
+      "scored": false
+    },
+    {
+      "arm_id": "broad_recall",
+      "control_id": "revoke_k1_after_task",
+      "exact_oracle_match": false,
+      "expected": {
+        "D1": "REOPEN",
+        "D2": "PRESERVE",
+        "historical_evidence": "UNCHANGED"
+      },
+      "observed": {
+        "dispositions": {
+          "D1": "REOPEN",
+          "D2": "REOPEN"
+        },
+        "historical_evidence": "UNCHANGED",
+        "historical_hash_after": "9aa20e2dfc6b62f37f5512846c4eb319ef9e70be7478af9f7fb30b87aaa37bb4",
+        "historical_hash_before": "9aa20e2dfc6b62f37f5512846c4eb319ef9e70be7478af9f7fb30b87aaa37bb4",
+        "mechanism": "REOPEN_ALL_DECISIONS_ON_ANY_REVOKE",
+        "scope_status": "ASSESSED",
+        "scored": true
+      },
+      "scored": true
+    },
+    {
+      "arm_id": "broad_recall",
+      "control_id": "noop_k1_after_task",
+      "exact_oracle_match": true,
+      "expected": {
+        "D1": "PRESERVE",
+        "D2": "PRESERVE",
+        "historical_evidence": "UNCHANGED"
+      },
+      "observed": {
+        "dispositions": {
+          "D1": "PRESERVE",
+          "D2": "PRESERVE"
+        },
+        "historical_evidence": "UNCHANGED",
+        "historical_hash_after": "9aa20e2dfc6b62f37f5512846c4eb319ef9e70be7478af9f7fb30b87aaa37bb4",
+        "historical_hash_before": "9aa20e2dfc6b62f37f5512846c4eb319ef9e70be7478af9f7fb30b87aaa37bb4",
+        "mechanism": "REOPEN_ALL_DECISIONS_ON_ANY_REVOKE",
+        "scope_status": "ASSESSED",
+        "scored": true
+      },
+      "scored": true
+    },
+    {
+      "arm_id": "minimal_sara_extension",
+      "control_id": "revoke_k1_after_task",
+      "exact_oracle_match": true,
+      "expected": {
+        "D1": "REOPEN",
+        "D2": "PRESERVE",
+        "historical_evidence": "UNCHANGED"
+      },
+      "observed": {
+        "dispositions": {
+          "D1": "REOPEN",
+          "D2": "PRESERVE"
+        },
+        "extension_state_sha256": "d3ca00d5c374aa6488d6adb6963b7a1709c32be941cbc99f53c69c1469d01c9e",
+        "historical_evidence": "UNCHANGED",
+        "historical_hash_after": "9aa20e2dfc6b62f37f5512846c4eb319ef9e70be7478af9f7fb30b87aaa37bb4",
+        "historical_hash_before": "9aa20e2dfc6b62f37f5512846c4eb319ef9e70be7478af9f7fb30b87aaa37bb4",
+        "persisted_state_sha256": "3d960912b2945d83166fb1f1f643ec97095602a62184f443d01b2f6b5065c0c4",
+        "query_time_history_rows_scanned": 4,
+        "scope_status": "ASSESSED",
+        "scored": true,
+        "state_shape": {
+          "extension_keys": [
+            "standing_updates"
+          ],
+          "new_persistent_structure_count": 0,
+          "persisted_keys": [
+            "F",
+            "H",
+            "K"
+          ],
+          "returns_derived_relationships": false
+        }
+      },
+      "scored": true
+    },
+    {
+      "arm_id": "minimal_sara_extension",
+      "control_id": "noop_k1_after_task",
+      "exact_oracle_match": true,
+      "expected": {
+        "D1": "PRESERVE",
+        "D2": "PRESERVE",
+        "historical_evidence": "UNCHANGED"
+      },
+      "observed": {
+        "dispositions": {
+          "D1": "PRESERVE",
+          "D2": "PRESERVE"
+        },
+        "extension_state_sha256": "0fbc49dcbc0c3ad3782c7ff31aede1d8ded166e1bb29e5ea78c960514a368e55",
+        "historical_evidence": "UNCHANGED",
+        "historical_hash_after": "9aa20e2dfc6b62f37f5512846c4eb319ef9e70be7478af9f7fb30b87aaa37bb4",
+        "historical_hash_before": "9aa20e2dfc6b62f37f5512846c4eb319ef9e70be7478af9f7fb30b87aaa37bb4",
+        "persisted_state_sha256": "3d960912b2945d83166fb1f1f643ec97095602a62184f443d01b2f6b5065c0c4",
+        "query_time_history_rows_scanned": 0,
+        "scope_status": "ASSESSED",
+        "scored": true,
+        "state_shape": {
+          "extension_keys": [
+            "standing_updates"
+          ],
+          "new_persistent_structure_count": 0,
+          "persisted_keys": [
+            "F",
+            "H",
+            "K"
+          ],
+          "returns_derived_relationships": false
+        }
+      },
+      "scored": true
+    },
+    {
+      "arm_id": "openline_selective_recall",
+      "control_id": "revoke_k1_after_task",
+      "exact_oracle_match": true,
+      "expected": {
+        "D1": "REOPEN",
+        "D2": "PRESERVE",
+        "historical_evidence": "UNCHANGED"
+      },
+      "observed": {
+        "dispositions": {
+          "D1": "REOPEN",
+          "D2": "PRESERVE"
+        },
+        "historical_evidence": "UNCHANGED",
+        "historical_hash_after": "9aa20e2dfc6b62f37f5512846c4eb319ef9e70be7478af9f7fb30b87aaa37bb4",
+        "historical_hash_before": "9aa20e2dfc6b62f37f5512846c4eb319ef9e70be7478af9f7fb30b87aaa37bb4",
+        "mechanism": "PERSIST_SUPPORT_RELATIONS_AND_TRAVERSE_LOST_STANDING_DESCENDANTS",
+        "persisted_support_relations": [
+          [
+            "A",
+            "D1"
+          ],
+          [
+            "B",
+            "D2"
+          ],
+          [
+            "K1",
+            "A"
+          ],
+          [
+            "K2",
+            "B"
+          ]
+        ],
+        "scope_status": "ASSESSED",
+        "scored": true
+      },
+      "scored": true
+    },
+    {
+      "arm_id": "openline_selective_recall",
+      "control_id": "noop_k1_after_task",
+      "exact_oracle_match": true,
+      "expected": {
+        "D1": "PRESERVE",
+        "D2": "PRESERVE",
+        "historical_evidence": "UNCHANGED"
+      },
+      "observed": {
+        "dispositions": {
+          "D1": "PRESERVE",
+          "D2": "PRESERVE"
+        },
+        "historical_evidence": "UNCHANGED",
+        "historical_hash_after": "9aa20e2dfc6b62f37f5512846c4eb319ef9e70be7478af9f7fb30b87aaa37bb4",
+        "historical_hash_before": "9aa20e2dfc6b62f37f5512846c4eb319ef9e70be7478af9f7fb30b87aaa37bb4",
+        "mechanism": "PERSIST_SUPPORT_RELATIONS_AND_TRAVERSE_LOST_STANDING_DESCENDANTS",
+        "persisted_support_relations": [
+          [
+            "A",
+            "D1"
+          ],
+          [
+            "B",
+            "D2"
+          ],
+          [
+            "K1",
+            "A"
+          ],
+          [
+            "K2",
+            "B"
+          ]
+        ],
+        "scope_status": "ASSESSED",
+        "scored": true
+      },
+      "scored": true
+    }
+  ],
+  "run_at_utc": "2026-08-28T16:30:00Z",
+  "schema": "openline.sara_spec_001.result.v1",
+  "source_pin_sha256": "6f0b9fbf07b2e2eb34d325882a34ad21ef2212301aa9d7f7574f1511261b6a64",
+  "verdict": "SARA_EXTENSION_PARITY"
+}

@@ -1,0 +1,33 @@
+{
+  "schema": "openline.sara_spec_001.release_manifest.v1",
+  "experiment_id": "SARA-SPEC-001",
+  "base_repo": "terryncew/openline-receipt-gate",
+  "base_commit": "8538c88b907cf6bafbfc28ffe705c20fbe76ecba",
+  "branch": "feat/sara-spec-001",
+  "evidence_tier": "PAPER_SPEC_RECONSTRUCTION",
+  "verdict": "SARA_EXTENSION_PARITY",
+  "production_code_changed": false,
+  "policy_authority": "NONE",
+  "design_lock_sha256": "d9e44f87cc05e940e41db7d677050005f9fe82e5b5551a83ced3e8702e7327bc",
+  "result_sha256": "e0073ac0ab6e127556cec7e93807b56e7848955467a84582f96200334bfae4ab",
+  "files": {
+    "CLAIM_BOUNDARY.md": "d13696e04d779ab40f55340950f708078d11b0e848664cd88ccad7a8765028f8",
+    "DESIGN_LOCK.json": "d9e44f87cc05e940e41db7d677050005f9fe82e5b5551a83ced3e8702e7327bc",
+    "README.md": "90064776cd768ad32c3aed37fdc70d4a7cd8205e5f6463f1087b348529da902f",
+    "SOURCE_PIN.json": "6f0b9fbf07b2e2eb34d325882a34ad21ef2212301aa9d7f7574f1511261b6a64",
+    "fixtures/scenario.json": "7c7e28b0526a0392ead10aae0a3e3230b5bf6b2481561d7daf74f0b5d85d3f38",
+    "oracle.json": "ce0b58046c1640677b61cdf921c99f94e7070c50f0caeacdd49afbc31c93d484",
+    "preregistration.json": "972d2e377e1467f127e62aee3064968a26e2a9d9e1d465a875801ae49b7de36a",
+    "result.json": "e0073ac0ab6e127556cec7e93807b56e7848955467a84582f96200334bfae4ab",
+    "sara_spec001/__init__.py": "4f616677b52e287f94446051c0ef30d7dead3b2ca24e7cc747928e0b643143d6",
+    "sara_spec001/broad_recall.py": "8e5b67056c463df9513ec15e304767c155b2936dd99832743f583716db1b2a29",
+    "sara_spec001/common.py": "9206d128301f01ba394b31e8280dafd2771a3d56b9399b7a4317a7d018d83040",
+    "sara_spec001/minimal_sara.py": "8d053ca98f7d34e5f2d963c7711f8dcfe6db68c8e59f11359022ae57385f4ee3",
+    "sara_spec001/openline_recall.py": "16a549d7663b6272b08c3afa76412ca420d45aee91e783278a32a515ff36f067",
+    "sara_spec001/published_sara.py": "910211e562a59e0f4c38a8a234d0913acdad3501d427212ced3730fd46754b04",
+    "scripts/run_experiment.py": "54cf26f90ad4937e79e955cea508cb4d7effe60bdb597f123b3212790aba5a95",
+    "scripts/verify_release.py": "8b7b55d67e9cb6bf5e2dccf838be2b9861eb94d57ae208264be19252c70c0298",
+    "scripts/verify_result.py": "20f45e7ae459db722aa3d24f86b612c151271c26f7fd194f2b810e2f1d21018e",
+    "tests/test_sara_spec001.py": "8c7103e9a94c962b5eda816ff91d0dfb8bd0d7c391e1ca8e6721bcd694372749"
+  }
+}
