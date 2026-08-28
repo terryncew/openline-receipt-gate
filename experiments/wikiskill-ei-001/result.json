@@ -1,0 +1,393 @@
+{
+  "base_commit": "65527e97b68894f32235f8f8c7d9de35f65a77b8",
+  "claim_limit": "Published required WikiSkill artifacts do not guarantee deterministic trace-to-pattern lineage for selective post-hoc invalidation; explicit source refs are sufficient in this fixture.",
+  "evidence_tier": "PAPER_SPEC_RECONSTRUCTION",
+  "experiment_id": "WikiSkill-EI-001",
+  "indistinguishability": {
+    "oracle_answers_differ": true,
+    "published_state_identical": true,
+    "standing_event_identical": true,
+    "world_count": 2
+  },
+  "passed": true,
+  "policy_authority": "NONE",
+  "provenance_control": {
+    "exact_oracle_match": true,
+    "expected": {
+      "patterns": {
+        "pattern-left": "REOPEN",
+        "pattern-right": "PRESERVE"
+      },
+      "skills": {
+        "skill-left": "REOPEN",
+        "skill-right": "PRESERVE"
+      }
+    },
+    "observed": {
+      "disposition": "RESOLVED_FROM_EXPLICIT_SOURCE_REFS",
+      "historical_after": "30b2a43cedab3cc65ba76499ba72a30bf5bc80a06408531c95f96d78a8f4fdbc",
+      "historical_before": "30b2a43cedab3cc65ba76499ba72a30bf5bc80a06408531c95f96d78a8f4fdbc",
+      "outcome": {
+        "patterns": {
+          "pattern-left": "REOPEN",
+          "pattern-right": "PRESERVE"
+        },
+        "skills": {
+          "skill-left": "REOPEN",
+          "skill-right": "PRESERVE"
+        }
+      }
+    }
+  },
+  "public_state_sha256": "1469e562bc1ad661ae6ece46b7afad38ebaa701af756567d8395b945f0d2232f",
+  "rows": [
+    {
+      "arm": "published_wikiskill",
+      "case": "trace-A-invalidated",
+      "exact_oracle_match": null,
+      "expected": "OUT_OF_SCOPE_POST_HOC_EXPERIENCE_INVALIDATION",
+      "historical_unchanged": true,
+      "observed": {
+        "disposition": "OUT_OF_SCOPE_POST_HOC_EXPERIENCE_INVALIDATION",
+        "historical_after": "1469e562bc1ad661ae6ece46b7afad38ebaa701af756567d8395b945f0d2232f",
+        "historical_before": "1469e562bc1ad661ae6ece46b7afad38ebaa701af756567d8395b945f0d2232f",
+        "scored": false,
+        "standing_event_applied": false
+      },
+      "scored": false,
+      "world": "world-A"
+    },
+    {
+      "arm": "broad_recall",
+      "case": "trace-A-invalidated",
+      "exact_oracle_match": false,
+      "expected": {
+        "patterns": {
+          "pattern-left": "REOPEN",
+          "pattern-right": "PRESERVE"
+        },
+        "skills": {
+          "skill-left": "REOPEN",
+          "skill-right": "PRESERVE"
+        }
+      },
+      "historical_unchanged": true,
+      "observed": {
+        "disposition": "BROAD_RECALL",
+        "historical_after": "1469e562bc1ad661ae6ece46b7afad38ebaa701af756567d8395b945f0d2232f",
+        "historical_before": "1469e562bc1ad661ae6ece46b7afad38ebaa701af756567d8395b945f0d2232f",
+        "outcome": {
+          "patterns": {
+            "pattern-left": "REOPEN",
+            "pattern-right": "REOPEN"
+          },
+          "skills": {
+            "skill-left": "REOPEN",
+            "skill-right": "REOPEN"
+          }
+        }
+      },
+      "scored": true,
+      "world": "world-A"
+    },
+    {
+      "arm": "minimal_wikiskill_extension",
+      "case": "trace-A-invalidated",
+      "exact_oracle_match": false,
+      "expected": {
+        "patterns": {
+          "pattern-left": "REOPEN",
+          "pattern-right": "PRESERVE"
+        },
+        "skills": {
+          "skill-left": "REOPEN",
+          "skill-right": "PRESERVE"
+        }
+      },
+      "historical_unchanged": true,
+      "observed": {
+        "disposition": "UNRESOLVED_PROVENANCE",
+        "historical_after": "1469e562bc1ad661ae6ece46b7afad38ebaa701af756567d8395b945f0d2232f",
+        "historical_before": "1469e562bc1ad661ae6ece46b7afad38ebaa701af756567d8395b945f0d2232f",
+        "outcome": {
+          "patterns": {
+            "pattern-left": "UNRESOLVED_PROVENANCE",
+            "pattern-right": "UNRESOLVED_PROVENANCE"
+          },
+          "skills": {
+            "skill-left": "UNRESOLVED_PROVENANCE",
+            "skill-right": "UNRESOLVED_PROVENANCE"
+          }
+        }
+      },
+      "scored": true,
+      "world": "world-A"
+    },
+    {
+      "arm": "openline_selective_standing",
+      "case": "trace-A-invalidated",
+      "exact_oracle_match": true,
+      "expected": {
+        "patterns": {
+          "pattern-left": "REOPEN",
+          "pattern-right": "PRESERVE"
+        },
+        "skills": {
+          "skill-left": "REOPEN",
+          "skill-right": "PRESERVE"
+        }
+      },
+      "historical_unchanged": true,
+      "observed": {
+        "disposition": "SELECTIVE_STANDING_PROPAGATED",
+        "historical_after": "1469e562bc1ad661ae6ece46b7afad38ebaa701af756567d8395b945f0d2232f",
+        "historical_before": "1469e562bc1ad661ae6ece46b7afad38ebaa701af756567d8395b945f0d2232f",
+        "outcome": {
+          "patterns": {
+            "pattern-left": "REOPEN",
+            "pattern-right": "PRESERVE"
+          },
+          "skills": {
+            "skill-left": "REOPEN",
+            "skill-right": "PRESERVE"
+          }
+        }
+      },
+      "scored": true,
+      "world": "world-A"
+    },
+    {
+      "arm": "published_wikiskill",
+      "case": "trace-A-invalidated",
+      "exact_oracle_match": null,
+      "expected": "OUT_OF_SCOPE_POST_HOC_EXPERIENCE_INVALIDATION",
+      "historical_unchanged": true,
+      "observed": {
+        "disposition": "OUT_OF_SCOPE_POST_HOC_EXPERIENCE_INVALIDATION",
+        "historical_after": "1469e562bc1ad661ae6ece46b7afad38ebaa701af756567d8395b945f0d2232f",
+        "historical_before": "1469e562bc1ad661ae6ece46b7afad38ebaa701af756567d8395b945f0d2232f",
+        "scored": false,
+        "standing_event_applied": false
+      },
+      "scored": false,
+      "world": "world-B"
+    },
+    {
+      "arm": "broad_recall",
+      "case": "trace-A-invalidated",
+      "exact_oracle_match": false,
+      "expected": {
+        "patterns": {
+          "pattern-left": "PRESERVE",
+          "pattern-right": "REOPEN"
+        },
+        "skills": {
+          "skill-left": "PRESERVE",
+          "skill-right": "REOPEN"
+        }
+      },
+      "historical_unchanged": true,
+      "observed": {
+        "disposition": "BROAD_RECALL",
+        "historical_after": "1469e562bc1ad661ae6ece46b7afad38ebaa701af756567d8395b945f0d2232f",
+        "historical_before": "1469e562bc1ad661ae6ece46b7afad38ebaa701af756567d8395b945f0d2232f",
+        "outcome": {
+          "patterns": {
+            "pattern-left": "REOPEN",
+            "pattern-right": "REOPEN"
+          },
+          "skills": {
+            "skill-left": "REOPEN",
+            "skill-right": "REOPEN"
+          }
+        }
+      },
+      "scored": true,
+      "world": "world-B"
+    },
+    {
+      "arm": "minimal_wikiskill_extension",
+      "case": "trace-A-invalidated",
+      "exact_oracle_match": false,
+      "expected": {
+        "patterns": {
+          "pattern-left": "PRESERVE",
+          "pattern-right": "REOPEN"
+        },
+        "skills": {
+          "skill-left": "PRESERVE",
+          "skill-right": "REOPEN"
+        }
+      },
+      "historical_unchanged": true,
+      "observed": {
+        "disposition": "UNRESOLVED_PROVENANCE",
+        "historical_after": "1469e562bc1ad661ae6ece46b7afad38ebaa701af756567d8395b945f0d2232f",
+        "historical_before": "1469e562bc1ad661ae6ece46b7afad38ebaa701af756567d8395b945f0d2232f",
+        "outcome": {
+          "patterns": {
+            "pattern-left": "UNRESOLVED_PROVENANCE",
+            "pattern-right": "UNRESOLVED_PROVENANCE"
+          },
+          "skills": {
+            "skill-left": "UNRESOLVED_PROVENANCE",
+            "skill-right": "UNRESOLVED_PROVENANCE"
+          }
+        }
+      },
+      "scored": true,
+      "world": "world-B"
+    },
+    {
+      "arm": "openline_selective_standing",
+      "case": "trace-A-invalidated",
+      "exact_oracle_match": true,
+      "expected": {
+        "patterns": {
+          "pattern-left": "PRESERVE",
+          "pattern-right": "REOPEN"
+        },
+        "skills": {
+          "skill-left": "PRESERVE",
+          "skill-right": "REOPEN"
+        }
+      },
+      "historical_unchanged": true,
+      "observed": {
+        "disposition": "SELECTIVE_STANDING_PROPAGATED",
+        "historical_after": "1469e562bc1ad661ae6ece46b7afad38ebaa701af756567d8395b945f0d2232f",
+        "historical_before": "1469e562bc1ad661ae6ece46b7afad38ebaa701af756567d8395b945f0d2232f",
+        "outcome": {
+          "patterns": {
+            "pattern-left": "PRESERVE",
+            "pattern-right": "REOPEN"
+          },
+          "skills": {
+            "skill-left": "PRESERVE",
+            "skill-right": "REOPEN"
+          }
+        }
+      },
+      "scored": true,
+      "world": "world-B"
+    },
+    {
+      "arm": "published_wikiskill",
+      "case": "no-op",
+      "exact_oracle_match": null,
+      "expected": "OUT_OF_SCOPE_POST_HOC_EXPERIENCE_INVALIDATION",
+      "historical_unchanged": true,
+      "observed": {
+        "disposition": "OUT_OF_SCOPE_POST_HOC_EXPERIENCE_INVALIDATION",
+        "historical_after": "1469e562bc1ad661ae6ece46b7afad38ebaa701af756567d8395b945f0d2232f",
+        "historical_before": "1469e562bc1ad661ae6ece46b7afad38ebaa701af756567d8395b945f0d2232f",
+        "scored": false,
+        "standing_event_applied": false
+      },
+      "scored": false,
+      "world": "control"
+    },
+    {
+      "arm": "broad_recall",
+      "case": "no-op",
+      "exact_oracle_match": true,
+      "expected": {
+        "patterns": {
+          "pattern-left": "PRESERVE",
+          "pattern-right": "PRESERVE"
+        },
+        "skills": {
+          "skill-left": "PRESERVE",
+          "skill-right": "PRESERVE"
+        }
+      },
+      "historical_unchanged": true,
+      "observed": {
+        "disposition": "NO_CHANGE",
+        "historical_after": "1469e562bc1ad661ae6ece46b7afad38ebaa701af756567d8395b945f0d2232f",
+        "historical_before": "1469e562bc1ad661ae6ece46b7afad38ebaa701af756567d8395b945f0d2232f",
+        "outcome": {
+          "patterns": {
+            "pattern-left": "PRESERVE",
+            "pattern-right": "PRESERVE"
+          },
+          "skills": {
+            "skill-left": "PRESERVE",
+            "skill-right": "PRESERVE"
+          }
+        }
+      },
+      "scored": true,
+      "world": "control"
+    },
+    {
+      "arm": "minimal_wikiskill_extension",
+      "case": "no-op",
+      "exact_oracle_match": true,
+      "expected": {
+        "patterns": {
+          "pattern-left": "PRESERVE",
+          "pattern-right": "PRESERVE"
+        },
+        "skills": {
+          "skill-left": "PRESERVE",
+          "skill-right": "PRESERVE"
+        }
+      },
+      "historical_unchanged": true,
+      "observed": {
+        "disposition": "NO_CHANGE",
+        "historical_after": "1469e562bc1ad661ae6ece46b7afad38ebaa701af756567d8395b945f0d2232f",
+        "historical_before": "1469e562bc1ad661ae6ece46b7afad38ebaa701af756567d8395b945f0d2232f",
+        "outcome": {
+          "patterns": {
+            "pattern-left": "PRESERVE",
+            "pattern-right": "PRESERVE"
+          },
+          "skills": {
+            "skill-left": "PRESERVE",
+            "skill-right": "PRESERVE"
+          }
+        }
+      },
+      "scored": true,
+      "world": "control"
+    },
+    {
+      "arm": "openline_selective_standing",
+      "case": "no-op",
+      "exact_oracle_match": true,
+      "expected": {
+        "patterns": {
+          "pattern-left": "PRESERVE",
+          "pattern-right": "PRESERVE"
+        },
+        "skills": {
+          "skill-left": "PRESERVE",
+          "skill-right": "PRESERVE"
+        }
+      },
+      "historical_unchanged": true,
+      "observed": {
+        "disposition": "NO_CHANGE",
+        "historical_after": "1469e562bc1ad661ae6ece46b7afad38ebaa701af756567d8395b945f0d2232f",
+        "historical_before": "1469e562bc1ad661ae6ece46b7afad38ebaa701af756567d8395b945f0d2232f",
+        "outcome": {
+          "patterns": {
+            "pattern-left": "PRESERVE",
+            "pattern-right": "PRESERVE"
+          },
+          "skills": {
+            "skill-left": "PRESERVE",
+            "skill-right": "PRESERVE"
+          }
+        }
+      },
+      "scored": true,
+      "world": "control"
+    }
+  ],
+  "schema": "openline.wikiskill_ei_001.result.v1",
+  "standing_event_sha256": "0c70c43bbaa8ce8fd627a1acae89112e8034a4adb68304440e148d5b01359c3b",
+  "verdict": "WIKISKILL_POST_HOC_PROVENANCE_GAP"
+}

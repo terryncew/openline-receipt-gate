@@ -1,0 +1,49 @@
+{
+  "artifact_hashes": {
+    "release_manifest_sha256": "25593035c1f7319db9291f710617d537d89d851970ec3cfbb72cf14a5658df24",
+    "result_sha256": "42976283df8152e5a73507a83892d08ec721c3e92b286612f109f319c0c83ea2",
+    "workflow_sha256": "91ea08e3d05175106d0a23d0d21254033de5389b933036311c1afd91c306320b"
+  },
+  "base_commit": "65527e97b68894f32235f8f8c7d9de35f65a77b8",
+  "base_repo": "terryncew/openline-receipt-gate",
+  "branch": "feat/wikiskill-ei-001",
+  "claim": "In the sealed paper-spec reconstruction, WikiSkill-required persisted artifacts admit two provenance worlds with identical serialized state but opposite correct selective invalidation outcomes; explicit source trace references close the gap.",
+  "commit": "feat(ace): add WikiSkill experience invalidation test",
+  "evidence_tier": "PAPER_SPEC_RECONSTRUCTION",
+  "expected_changed_file_count": 21,
+  "experiment_id": "WikiSkill-EI-001",
+  "local_verification": {
+    "existing_regression_suite": "CI_REQUIRED: base checkout unavailable in build container",
+    "focused_contract_tests": "11 passed",
+    "independent_result_verifier": "PASS: 12 serialized rows; indistinguishability, design lock, source boundary, no-op, and provenance control verified",
+    "python_compileall": "PASS"
+  },
+  "pr_title": "feat(ace): add WikiSkill experience invalidation test",
+  "result": {
+    "broad_recall": "COLLATERAL_REOPEN_BOTH_WORLDS",
+    "explicit_source_ref_control": "EXACT_ORACLE_MATCH",
+    "minimal_wikiskill_extension": "UNRESOLVED_PROVENANCE_ON_INDISTINGUISHABLE_WORLDS",
+    "openline_selective_standing": "EXACT_ORACLE_MATCH_BOTH_WORLDS",
+    "published_wikiskill": "OUT_OF_SCOPE_POST_HOC_EXPERIENCE_INVALIDATION"
+  },
+  "schema": "openline.wikiskill_ei_001.handoff.v1",
+  "scope": {
+    "cold_external_integration_claimed": false,
+    "policy_authority": "NONE",
+    "production_gate_code_changed": false,
+    "published_wikiskill_scored_as_failure": false,
+    "sara_spec_001_changed": false,
+    "wallet_standing_001_through_004_changed": false
+  },
+  "verdict": "WIKISKILL_POST_HOC_PROVENANCE_GAP",
+  "working_copy": {
+    "cover_file": false,
+    "expected_top_level_entries": [
+      ".github",
+      "experiments",
+      "WIKISKILL_EI_001_HANDOFF.json"
+    ],
+    "overlay_root": true,
+    "wrapper_directory": false
+  }
+}
