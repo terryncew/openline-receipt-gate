@@ -1,0 +1,36 @@
+{
+  "authority": {
+    "decision_authority": "RECEIVER_GATE",
+    "measurement_authority": "NONE",
+    "relay_authority": "NONE",
+    "wallet_policy_authority": "NONE"
+  },
+  "base_commit": "9278b6238bf4f04e56184135913f4a7859db66bf",
+  "base_repo": "terryncew/openline-receipt-gate",
+  "branch": "feat/wallet-standing-004",
+  "commit": "feat(gate): add live wallet transport test",
+  "expected_changed_file_count": 21,
+  "experiment_id": "WALLET-STANDING-004",
+  "local_verification": {
+    "integrated_wallet003_live_run": "UNRUN_IN_BUILD_CONTAINER_NO_BASE_CHECKOUT",
+    "python_compileall": "PASS",
+    "substrate_and_contract_tests": "8/8 with 1 dependency-pin test skipped because base checkout is unavailable in the build container"
+  },
+  "pr_title": "feat(gate): add live wallet transport test",
+  "protocol_mutation": "NONE",
+  "release_manifest_sha256": "6f62c4367adf70156561d22f31b308493dfcd6cd0704857c2d9c4d9b404d0b4e",
+  "schema": "openline.wallet_standing_004.handoff.v1",
+  "status": "ROOT_READY_UNRUN_INTEGRATION",
+  "target_verdict": "LIVE_TRANSPORT_CONTINUITY_ENFORCED_WITH_MEASURED_PROPAGATION_LAG",
+  "workflow_sha256": "15eb940b36867ca8b11ac9147eed4a43e6c975704d2bea9f5c0ba0c3e4ad70f0",
+  "working_copy": {
+    "cover_file": false,
+    "expected_top_level_entries": [
+      ".github",
+      "experiments",
+      "WALLET_STANDING_004_HANDOFF.json"
+    ],
+    "overlay_root": true,
+    "wrapper_directory": false
+  }
+}

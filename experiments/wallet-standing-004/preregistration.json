@@ -1,0 +1,71 @@
+{
+  "schema": "openline.wallet_standing_004.preregistration.v1",
+  "experiment_id": "WALLET-STANDING-004",
+  "base_commit": "9278b6238bf4f04e56184135913f4a7859db66bf",
+  "question": "Do WALLET-STANDING-003 safety properties survive when the shared deterministic scheduler is replaced by isolated Gate processes, durable local state, real socket transport, and an adversarial relay?",
+  "target_verdict": "LIVE_TRANSPORT_CONTINUITY_ENFORCED_WITH_MEASURED_PROPAGATION_LAG",
+  "failure_verdict": "LIVE_TRANSPORT_CONTINUITY_BOUNDARY_NOT_ESTABLISHED",
+  "frozen_protocol_rule": "WALLET-STANDING-001/002/003 protocol code is immutable; WALLET-004 may alter only transport, process isolation, durable storage, measurement, and adversarial delivery schedules.",
+  "authority": {
+    "wallet_policy_authority": "NONE",
+    "relay_authority": "NONE",
+    "measurement_authority": "NONE",
+    "decision_authority": "RECEIVER_GATE"
+  },
+  "substrate": {
+    "gate_processes": 3,
+    "gate_state": "ONE_PRIVATE_SQLITE_DATABASE_PER_GATE",
+    "sqlite_synchronous": "FULL",
+    "transport": "TCP_NDJSON_LOOPBACK_PROCESSES",
+    "shared_database": false,
+    "shared_mutable_filesystem_state": false,
+    "hidden_coordinator": false,
+    "relay_can": ["delay", "duplicate", "reorder", "drop"],
+    "relay_can_authorize": false
+  },
+  "clock_model": {
+    "calibration": "ONE_PRE_RUN_NTP_STYLE_HANDSHAKE_PER_GATE",
+    "live_clock_coordination": false,
+    "admission_uses_calibration": false,
+    "event_emission": "SIGNED_MEASUREMENT_ENVELOPE_FIELD_emitted_ns",
+    "measurement_envelope_authority": "NONE",
+    "old_authority_stops": "FIRST_LOCAL_WALL_TIMESTAMP_AFTER_SQLITE_SYNCHRONOUS_FULL_COMMIT_RETURNS",
+    "tau_reports": ["raw_delta", "offset_corrected_delta", "calibration_uncertainty"],
+    "inside_uncertainty_label": "<= clock resolution",
+    "never_received_label": "undefined/censored"
+  },
+  "durability_rule": {
+    "learned_means": "PROTOCOL_STATE_DURABLY_COMMITTED",
+    "ack_before_commit": false,
+    "crash_before_commit": "NO_ADMISSION_AND_NO_ACK",
+    "restart_requirement": "PRE_CRASH_STATE_ONLY"
+  },
+  "named_adversarial_schedules": [
+    "race_to_window",
+    "split_brain_delivery",
+    "successor_race",
+    "cold_start_starvation",
+    "duplicate_storm_replay",
+    "cross_epoch_reorder"
+  ],
+  "success": {
+    "post_local_admission_old_root_effects": 0,
+    "pre_delivery_exposure_hidden": false,
+    "virgin_gate_executes_before_lineage_and_fresh_checkpoint": 0,
+    "duplicate_or_reorder_regresses_standing": false,
+    "conflicting_successors_post_cross_delivery": "QUARANTINE",
+    "crash_before_commit_survives_as_admission": false
+  },
+  "decisive_falsifier": "Any old-root effect after the relevant Gate durably admits the freeze/succession/fork, any virgin-Gate effect before lineage plus fresh checkpoint, any replay/reorder regression, or any 001-003 safety property that requires shared scheduler state.",
+  "forbidden_rescue_moves": [
+    "modify wallet-standing-001 protocol logic",
+    "modify wallet-standing-002 recovery logic",
+    "modify wallet-standing-003 distribution logic",
+    "use clock calibration in admission",
+    "share a database between Gates",
+    "share mutable standing state through files",
+    "let relay signatures grant or redirect authority",
+    "hide or backdate pre-delivery exposure",
+    "automatically choose a winner after a valid successor fork"
+  ]
+}

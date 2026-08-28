@@ -1,0 +1,32 @@
+{
+  "base_commit": "9278b6238bf4f04e56184135913f4a7859db66bf",
+  "base_repo": "terryncew/openline-receipt-gate",
+  "decision_authority": "RECEIVER_GATE",
+  "experiment_id": "WALLET-STANDING-004",
+  "files": {
+    "CLAIM_BOUNDARY.md": "16458221c7b524221e88a39ee630adc97d06f2a7a08ae5a93ba43681d951389e",
+    "DEPENDENCY_PIN.json": "f8d8f022e19d31c02a6d76eb0dcb1f9e2323c709c3ddd6d214f3e4ccad23ebc1",
+    "FREEZE.json": "0c0152cc3f300d7c599747fa0f8b2915ff5667bf78831df0673e14540a31c34c",
+    "README.md": "8390a0651aaa91d8de446bf4b40e65959bc78776fe8b6a11c1ded3ac43155fb9",
+    "preregistration.json": "cc2e242af46c5828d091a62bf07568a0185c2d0246d6ffe3420f7bd8039ba5c2",
+    "scripts/run_live.py": "5642b9d66006f76cedf48c0e95048f86530131efda69e8102de0a4ca79cd458a",
+    "scripts/verify_live.py": "4888ae33f2f474eb1690e3a97241977ec4196905f47202f8b38b802fb5906f6a",
+    "scripts/verify_release.py": "af038cba873133102808c5f7165cedfe035283266569cc6026ec331717d6f7e9",
+    "tests/test_wallet004_contract.py": "790a8b2623ce95fe5912d3bf9c85ba4c5a5c5344d0c809dda7306a3437114404",
+    "tests/test_wallet004_substrate.py": "cca7fc021077bb0d7404037ffcd2f0aa70051d8d3d3c95a1071f3b7ac905002f",
+    "wallet004/__init__.py": "f5fcc8a0e43cc98668e33e3d0b408e38664d490f92307cda70a0a7f458b3102a",
+    "wallet004/clock.py": "cb916e2a4820e1951a8149b277d6e5627b4258303344c2c26f2e7bbb54ae336c",
+    "wallet004/envelope.py": "89232f746a268396f05a4802c4081f503b78254b7dd5a8e87e6ebb58e6829bd0",
+    "wallet004/gate_runtime.py": "29fa50891a304bacd25e769ab901f7c5b69ca938fce5708c51a62eda6ca98598",
+    "wallet004/gate_server.py": "3c93910ce08142feec1d6c6ee8cba0fdf586f7083c04c4889392ece8695f6756",
+    "wallet004/relay_server.py": "debde5c5436d36e59ca7fa4413aa62d3733f3b576db20eaa218fb117b95a1ea7",
+    "wallet004/store.py": "1eeaccdf95cfa993590298b4ac6e73cb48af701e058250a622d8625c2db97800",
+    "wallet004/wire.py": "d86703d737c9ea55c2c2e2f51c13029b637b3a1b732c0202a18292188b031435"
+  },
+  "measurement_authority": "NONE",
+  "relay_authority": "NONE",
+  "schema": "openline.wallet_standing_004.release-manifest.v1",
+  "status": "LIVE_TRANSPORT_BUILD_READY_UNRUN_INTEGRATION",
+  "target_verdict": "LIVE_TRANSPORT_CONTINUITY_ENFORCED_WITH_MEASURED_PROPAGATION_LAG",
+  "wallet_policy_authority": "NONE"
+}
