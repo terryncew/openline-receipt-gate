@@ -1,0 +1,307 @@
+{
+  "decision_authority": "RECEIVER_GATE",
+  "earned_claim": "Given a controlled signed standing witness, a receiver-owned Gate enforces epoch revocation within its declared freshness budget. Offline low-risk authority remains usable only for its frozen signed lifetime, and revoking one epoch leaves an independent root-certified sibling intact.",
+  "experiment_id": "WALLET-STANDING-001",
+  "explicit_boundaries": [
+    "Witness creation is controlled and local. Distribution, replication, cross-device delivery, and availability are untested.",
+    "The principal root remains intact. Root loss, compromise, recovery quorum, and root succession are untested.",
+    "The low-risk expiry-only arm intentionally accepts an unexpired stale bundle after an unseen revocation; the maximum admitted lag is the receiver's 600-second TTL ceiling.",
+    "The Merkle surface covers top-level integer-profile JSON fields. It provides selective disclosure and integrity, not unlinkability or hidden predicates.",
+    "Frozen deterministic salts exist only for reproducibility. The protocol default uses independent secrets.token_bytes(32) values and requires an epoch-scoped registry that rejects reuse across mandates.",
+    "The wallet bundle carries evidence of a signed mandate and holder possession. It never grants itself policy authority; the receiver Gate owns the consequence decision."
+  ],
+  "frozen_times": {
+    "t0_export": "2026-08-28T12:00:00Z",
+    "t1_epoch_revocation": "2026-08-28T12:05:00Z"
+  },
+  "metrics": {
+    "arm_count": 10,
+    "collateral_loss_count": 0,
+    "declared_low_risk_stale_pass_count": 1,
+    "high_risk_stale_execution_count": 0,
+    "offline_exposure_ceiling_seconds": 600,
+    "passed_arm_count": 10
+  },
+  "next_falsifiers": {
+    "WALLET-STANDING-002": "Root loss and compromise, threshold recovery, root succession, and history preservation.",
+    "WALLET-STANDING-003": "Real witness propagation across devices and a virgin Gate under delay, partition, replay, and equivocation."
+  },
+  "passed": true,
+  "policy_authority": "NONE",
+  "receiver_policy": {
+    "high_risk_max_witness_age_seconds": 60,
+    "low_risk_max_offline_ttl_seconds": 600,
+    "unexpected_disclosures": "BLOCK"
+  },
+  "root_public_key": "1cff7c352eed7623d621d2f1ebf41bc37a58b52c1a0e5a2e5dcaef187ba8930c",
+  "rows": [
+    {
+      "arm_id": "01_high_fresh_active",
+      "condition": "Epoch 1 with a fresh ACTIVE witness",
+      "declared_exposure": false,
+      "expected_decision": "PASS",
+      "expected_reason": null,
+      "observed": {
+        "decision": "PASS",
+        "decision_authority": "RECEIVER_GATE",
+        "disclosed_fields": [
+          "action",
+          "amount_cents",
+          "recipient"
+        ],
+        "effect_delta": 1,
+        "epoch_id": "epoch-1",
+        "executed": true,
+        "mandate_id": "mandate-high-epoch-1",
+        "principal_id": "principal-terrynce",
+        "reason_codes": [],
+        "risk_tier": "HIGH",
+        "standing_mode": "FRESH_WITNESS",
+        "wallet_policy_authority": "NONE"
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "02_high_fresh_revoked",
+      "condition": "Epoch 1 after revocation with a fresh REVOKED witness",
+      "declared_exposure": false,
+      "expected_decision": "BLOCK",
+      "expected_reason": "EPOCH_REVOKED",
+      "observed": {
+        "decision": "BLOCK",
+        "decision_authority": "RECEIVER_GATE",
+        "effect_delta": 0,
+        "executed": false,
+        "reason_codes": [
+          "EPOCH_REVOKED"
+        ],
+        "wallet_policy_authority": "NONE"
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "03_high_stale_active_witness",
+      "condition": "Old ACTIVE witness beyond the receiver freshness budget",
+      "declared_exposure": false,
+      "expected_decision": "BLOCK",
+      "expected_reason": "FRESHNESS_REQUIRED",
+      "observed": {
+        "decision": "BLOCK",
+        "decision_authority": "RECEIVER_GATE",
+        "effect_delta": 0,
+        "executed": false,
+        "reason_codes": [
+          "FRESHNESS_REQUIRED"
+        ],
+        "wallet_policy_authority": "NONE"
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "04_high_missing_witness",
+      "condition": "High-risk presentation carries no standing witness",
+      "declared_exposure": false,
+      "expected_decision": "BLOCK",
+      "expected_reason": "FRESHNESS_REQUIRED",
+      "observed": {
+        "decision": "BLOCK",
+        "decision_authority": "RECEIVER_GATE",
+        "effect_delta": 0,
+        "executed": false,
+        "reason_codes": [
+          "FRESHNESS_REQUIRED"
+        ],
+        "wallet_policy_authority": "NONE"
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "05_high_successor_epoch",
+      "condition": "Fresh epoch-2 successor with a fresh ACTIVE witness",
+      "declared_exposure": false,
+      "expected_decision": "PASS",
+      "expected_reason": null,
+      "observed": {
+        "decision": "PASS",
+        "decision_authority": "RECEIVER_GATE",
+        "disclosed_fields": [
+          "action",
+          "amount_cents",
+          "recipient"
+        ],
+        "effect_delta": 1,
+        "epoch_id": "epoch-2",
+        "executed": true,
+        "mandate_id": "mandate-high-epoch-2",
+        "principal_id": "principal-terrynce",
+        "reason_codes": [],
+        "risk_tier": "HIGH",
+        "standing_mode": "FRESH_WITNESS",
+        "wallet_policy_authority": "NONE"
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "06_high_independent_root_sibling",
+      "condition": "Independent root-certified sibling remains active",
+      "declared_exposure": false,
+      "expected_decision": "PASS",
+      "expected_reason": null,
+      "observed": {
+        "decision": "PASS",
+        "decision_authority": "RECEIVER_GATE",
+        "disclosed_fields": [
+          "action",
+          "amount_cents",
+          "recipient"
+        ],
+        "effect_delta": 1,
+        "epoch_id": "epoch-sibling",
+        "executed": true,
+        "mandate_id": "mandate-high-sibling",
+        "principal_id": "principal-terrynce",
+        "reason_codes": [],
+        "risk_tier": "HIGH",
+        "standing_mode": "FRESH_WITNESS",
+        "wallet_policy_authority": "NONE"
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "07_low_within_ttl_no_witness",
+      "condition": "Low-risk mandate within its 600-second TTL and no witness",
+      "declared_exposure": false,
+      "expected_decision": "PASS",
+      "expected_reason": null,
+      "observed": {
+        "decision": "PASS",
+        "decision_authority": "RECEIVER_GATE",
+        "disclosed_fields": [
+          "action",
+          "record_id",
+          "retention_days"
+        ],
+        "effect_delta": 1,
+        "epoch_id": "epoch-1",
+        "executed": true,
+        "mandate_id": "mandate-low-epoch-1",
+        "principal_id": "principal-terrynce",
+        "reason_codes": [],
+        "risk_tier": "LOW",
+        "standing_mode": "EXPIRY_ONLY",
+        "wallet_policy_authority": "NONE"
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "08_low_revoked_but_unexpired_offline",
+      "condition": "Epoch 1 is revoked externally, but the offline low-risk bundle carries no post-export witness and remains unexpired",
+      "declared_exposure": true,
+      "expected_decision": "PASS",
+      "expected_reason": null,
+      "observed": {
+        "decision": "PASS",
+        "decision_authority": "RECEIVER_GATE",
+        "disclosed_fields": [
+          "action",
+          "record_id",
+          "retention_days"
+        ],
+        "effect_delta": 1,
+        "epoch_id": "epoch-1",
+        "executed": true,
+        "mandate_id": "mandate-low-epoch-1",
+        "principal_id": "principal-terrynce",
+        "reason_codes": [],
+        "risk_tier": "LOW",
+        "standing_mode": "EXPIRY_ONLY",
+        "wallet_policy_authority": "NONE"
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "09_low_at_expiry_no_witness",
+      "condition": "The same low-risk mandate reaches its exact expiry",
+      "declared_exposure": false,
+      "expected_decision": "BLOCK",
+      "expected_reason": "MANDATE_EXPIRED",
+      "observed": {
+        "decision": "BLOCK",
+        "decision_authority": "RECEIVER_GATE",
+        "effect_delta": 0,
+        "executed": false,
+        "reason_codes": [
+          "MANDATE_EXPIRED"
+        ],
+        "wallet_policy_authority": "NONE"
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "10_projection_and_holder_tampering",
+      "condition": "Altered field, altered proof, copied bearer bundle, and replayed challenge",
+      "declared_exposure": false,
+      "expected_decision": "BLOCK_ALL",
+      "expected_reason": "VARIANT_SPECIFIC",
+      "observed": {
+        "decision": "BLOCK_ALL",
+        "effect_delta": 0,
+        "executed": false,
+        "variants": {
+          "altered_disclosed_value": {
+            "decision": "BLOCK",
+            "decision_authority": "RECEIVER_GATE",
+            "effect_delta": 0,
+            "executed": false,
+            "reason_codes": [
+              "MERKLE_PROOF_INVALID"
+            ],
+            "wallet_policy_authority": "NONE"
+          },
+          "altered_merkle_sibling": {
+            "decision": "BLOCK",
+            "decision_authority": "RECEIVER_GATE",
+            "effect_delta": 0,
+            "executed": false,
+            "reason_codes": [
+              "MERKLE_PROOF_INVALID"
+            ],
+            "wallet_policy_authority": "NONE"
+          },
+          "copied_bearer_bundle": {
+            "decision": "BLOCK",
+            "decision_authority": "RECEIVER_GATE",
+            "effect_delta": 0,
+            "executed": false,
+            "reason_codes": [
+              "HOLDER_PROOF_SIGNER_MISMATCH"
+            ],
+            "wallet_policy_authority": "NONE"
+          },
+          "replayed_holder_challenge": {
+            "decision": "BLOCK",
+            "decision_authority": "RECEIVER_GATE",
+            "effect_delta": 0,
+            "executed": false,
+            "reason_codes": [
+              "HOLDER_CHALLENGE_MISMATCH"
+            ],
+            "wallet_policy_authority": "NONE"
+          }
+        }
+      },
+      "passed": true
+    }
+  ],
+  "salt_invariants": {
+    "duplicate_salt_count": 0,
+    "frozen_fixture_entropy": "deterministic-unique-test-fixture",
+    "passed": true,
+    "production_default": "secrets.token_bytes",
+    "salt_bytes": 32,
+    "salt_count": 16,
+    "unique_salt_count": 16
+  },
+  "schema": "openline.wallet_standing_001.result.v1",
+  "verdict": "EPOCH_REVOCATION_ENFORCED_WITH_BOUNDED_OFFLINE_LAG"
+}

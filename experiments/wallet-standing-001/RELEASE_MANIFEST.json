@@ -1,0 +1,21 @@
+{
+  "schema": "openline.wallet_standing_001.release-manifest.v1",
+  "experiment_id": "WALLET-STANDING-001",
+  "base_repo": "terryncew/openline-receipt-gate",
+  "base_commit": "c0893698d13ae152d818c0f34d52f5c945572f5b",
+  "verdict": "EPOCH_REVOCATION_ENFORCED_WITH_BOUNDED_OFFLINE_LAG",
+  "wallet_policy_authority": "NONE",
+  "decision_authority": "RECEIVER_GATE",
+  "files": {
+    "CLAIM_BOUNDARY.md": "6a9944dc98e5962f71814dffa5149bbcf0df1eddea0ed6a3cc07c32101f891da",
+    "FREEZE.json": "404ecaac454a14a346d867e63e5901ca13b496ca4361e7d21f028ca0acc367f1",
+    "README.md": "f381076bd77c72da24f2bb91b6e57efa4e9fbcbc5afdb617bce637320df5d75c",
+    "frozen_result.json": "bcbba96d25a9c974f17a20b5b5340d04487e7e76747324da0f1137d93635e102",
+    "preregistration.json": "5428535a350f7020fbd3554caaefb7ab03dbbebb1e43dbafe333838323daa4d3",
+    "scripts/run_frozen.py": "229219e6cc0d6942c0f8af31e55816f6124ac838a57b6480eebeb7f212ee92ef",
+    "scripts/verify_release.py": "e7cee68b7f6b343f5e0dd4fb2f061e660edd69942acf04ab10c9ce308ba20274",
+    "tests/test_wallet001.py": "101e0d10b1a4451a52f243e8aee178513387e0641bb14468eade1f7b84b71f10",
+    "wallet001/__init__.py": "97cdbe3b1bd3e156fbf9e4ca9e0d7a617162bd1e8eca0be6f098858142b44af0",
+    "wallet001/protocol.py": "fa034c89ab0aeb7a1d624e8308865d81302c3e38c64bca255119c1a3f2282855"
+  }
+}

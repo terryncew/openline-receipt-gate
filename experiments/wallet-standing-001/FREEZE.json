@@ -1,0 +1,27 @@
+{
+  "schema": "openline.wallet_standing_001.freeze.v1",
+  "experiment_id": "WALLET-STANDING-001",
+  "frozen_at": "2026-08-28T12:00:00Z",
+  "base_repo": "terryncew/openline-receipt-gate",
+  "base_commit": "c0893698d13ae152d818c0f34d52f5c945572f5b",
+  "verdict": "EPOCH_REVOCATION_ENFORCED_WITH_BOUNDED_OFFLINE_LAG",
+  "wallet_policy_authority": "NONE",
+  "decision_authority": "RECEIVER_GATE",
+  "receiver_policy": {
+    "high_risk_max_witness_age_seconds": 60,
+    "low_risk_max_offline_ttl_seconds": 600,
+    "unexpected_disclosures": "BLOCK"
+  },
+  "files": {
+    "CLAIM_BOUNDARY.md": "6a9944dc98e5962f71814dffa5149bbcf0df1eddea0ed6a3cc07c32101f891da",
+    "frozen_result.json": "bcbba96d25a9c974f17a20b5b5340d04487e7e76747324da0f1137d93635e102",
+    "preregistration.json": "5428535a350f7020fbd3554caaefb7ab03dbbebb1e43dbafe333838323daa4d3",
+    "scripts/run_frozen.py": "229219e6cc0d6942c0f8af31e55816f6124ac838a57b6480eebeb7f212ee92ef",
+    "wallet001/__init__.py": "97cdbe3b1bd3e156fbf9e4ca9e0d7a617162bd1e8eca0be6f098858142b44af0",
+    "wallet001/protocol.py": "fa034c89ab0aeb7a1d624e8308865d81302c3e38c64bca255119c1a3f2282855"
+  },
+  "explicitly_unfrozen": {
+    "WALLET-STANDING-002": "root loss, compromise, recovery, and succession",
+    "WALLET-STANDING-003": "witness propagation, replication, delay, partition, replay, and equivocation"
+  }
+}
