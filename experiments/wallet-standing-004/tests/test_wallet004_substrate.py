@@ -9,13 +9,54 @@ import threading
 import time
 import unittest
 
+from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
+
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from olp_gate.crypto import public_key_hex, sign_olp_body
 from wallet004.clock import Calibration, tau_measurement
+from wallet004.envelope import create_envelope, verify_envelope
 from wallet004.store import DurableStore
 from wallet004.wire import recv_json, reply_json, send_json
+
+
+class EnvelopeTests(unittest.TestCase):
+    def test_epoch_nanoseconds_are_signed_as_canonical_decimal_text(self):
+        key = Ed25519PrivateKey.generate()
+        emitted = time.time_ns()
+        self.assertGreater(emitted, (1 << 53) - 1)
+        envelope = create_envelope(
+            {"schema": "fixture.v1", "value": 1},
+            kind="FREEZE",
+            emitted_ns=emitted,
+            measurement_key=key,
+        )
+        self.assertEqual(envelope["emitted_ns"], str(emitted))
+        valid, reason = verify_envelope(
+            envelope, measurement_public_key=public_key_hex(key)
+        )
+        self.assertTrue(valid, reason)
+
+    def test_noncanonical_emitted_ns_is_rejected(self):
+        key = Ed25519PrivateKey.generate()
+        envelope = create_envelope(
+            {"schema": "fixture.v1", "value": 1},
+            kind="FREEZE",
+            emitted_ns=time.time_ns(),
+            measurement_key=key,
+        )
+        body = dict(envelope)
+        body.pop("payload_hash")
+        body.pop("signature")
+        body["emitted_ns"] = "01"
+        malformed = sign_olp_body(body, key)
+        valid, reason = verify_envelope(
+            malformed, measurement_public_key=public_key_hex(key)
+        )
+        self.assertFalse(valid)
+        self.assertEqual(reason, "emitted_ns_invalid")
 
 
 class StoreTests(unittest.TestCase):

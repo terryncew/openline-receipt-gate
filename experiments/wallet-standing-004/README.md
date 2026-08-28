@@ -23,6 +23,7 @@ The boundary under test is:
 Before a scenario starts, the emitter performs a seven-sample NTP-style calibration handshake with each Gate and retains the lowest-RTT sample. Calibration is measurement-only: its offset is never passed to `wallet003`.
 
 Because the 003 event schemas are frozen exact shapes, 004 does **not** add a timestamp field to them. Instead it signs a transport measurement envelope over the unchanged inner artifact hash plus `emitted_ns`. The envelope explicitly has authority `NONE` and is stripped before 003 admission.
+`emitted_ns` is encoded inside that signed envelope as canonical decimal text, not an OLP integer: Unix epoch nanoseconds exceed OLP's interoperable `2^53-1` integer ceiling. The Gate parses it only for post-admission measurement; the representation cannot affect wallet003 policy.
 
 For each admitted event, 004 reports raw `tau`, offset-corrected `tau`, transport lag, admission/commit lag, and calibration uncertainty. Values within the uncertainty bound are labeled `<= clock resolution`. Dropped/starved events are `undefined/censored`, never zero.
 
