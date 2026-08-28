@@ -1,0 +1,358 @@
+{
+  "decision_authority": "RECEIVER_GATE",
+  "earned_claim": "Given a recovery policy pinned before compromise and a receiver that has accepted a valid two-of-three guardian event, the receiver supersedes the old root, blocks all of its descendants from new execution, admits a fresh successor, preserves old signatures as historical evidence, and leaves an unrelated principal untouched.",
+  "experiment_id": "WALLET-STANDING-002",
+  "explicit_boundaries": [
+    "The compromised root retains full practical authority until the receiver accepts a succession event; actions already executed during that lag are not undone.",
+    "The recovery quorum is the higher trust anchor. A threshold compromise produces a cryptographically valid attacker succession and is accepted in the declared boundary arm.",
+    "Guardian keys, policy creation, and succession delivery are controlled fixtures. Real custody, identity proofing, coercion, death, and availability are untested.",
+    "This is one receiver with one linear root view. Distribution to a virgin Gate, cross-device freshness, competing valid successions, and convergence are deferred to WALLET-STANDING-003.",
+    "Recovery-policy rotation and guardian replacement are frozen and untested.",
+    "Root succession invalidates every descendant of the superseded root, including legitimate old mandates. Selectivity exists across principals, not within the compromised root's descendants.",
+    "Historical authenticity does not restore execution standing. Old records remain evidence-only.",
+    "The wallet carries continuity evidence but has policy authority NONE; the receiver Gate owns the consequence decision."
+  ],
+  "frozen_times": {
+    "t0_policy_pinned": "2026-08-28T13:00:00Z",
+    "t1_root_compromise": "2026-08-28T13:01:00Z",
+    "t2_succession_accepted": "2026-08-28T13:06:00Z"
+  },
+  "metrics": {
+    "arm_count": 13,
+    "below_threshold_acceptance_count": 0,
+    "declared_threshold_compromise_acceptance_count": 1,
+    "historically_authentic_noncurrent_count": 1,
+    "passed_arm_count": 13,
+    "post_acceptance_old_root_execution_count": 0,
+    "pre_acceptance_compromised_root_execution_count": 1,
+    "recovery_lag_seconds": 300,
+    "successor_execution_count": 1,
+    "unrelated_principal_collateral_loss_count": 0
+  },
+  "next_falsifier": {
+    "experiment_id": "WALLET-STANDING-003",
+    "question": "Can two devices and a virgin Gate converge on one current root under delayed, missing, replayed, and conflicting succession delivery without silently accepting a stale fork?"
+  },
+  "passed": true,
+  "recovery_policy": {
+    "guardian_count": 3,
+    "policy_hash": "ad6d4c95adc1de252d446e47d3a554e26c1077fa6a440bb60d19e6e6da9aa218",
+    "rotation": "FROZEN",
+    "threshold": 2
+  },
+  "rows": [
+    {
+      "arm_id": "01_genesis_root_legitimate_action",
+      "condition": "A legitimate high-risk action under the pinned generation-1 root",
+      "declared_exposure": false,
+      "expected": "PASS",
+      "observed": {
+        "decision": "PASS",
+        "decision_authority": "RECEIVER_GATE",
+        "disclosed_fields": [
+          "action",
+          "amount_cents",
+          "recipient"
+        ],
+        "effect_delta": 1,
+        "epoch_id": "epoch-old-legitimate",
+        "executed": true,
+        "mandate_id": "mandate-old-legitimate",
+        "principal_id": "principal-terrynce",
+        "reason_codes": [],
+        "recovery_policy_hash": "ad6d4c95adc1de252d446e47d3a554e26c1077fa6a440bb60d19e6e6da9aa218",
+        "risk_tier": "HIGH",
+        "root_generation": 1,
+        "standing_mode": "FRESH_WITNESS",
+        "wallet_policy_authority": "NONE"
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "02_compromised_root_before_recovery_acceptance",
+      "condition": "The compromised root creates a new epoch, mandate, and ACTIVE witness before the Gate learns a succession",
+      "declared_exposure": true,
+      "expected": "PASS:DECLARED_PRE_ACCEPTANCE_EXPOSURE",
+      "observed": {
+        "decision": "PASS",
+        "decision_authority": "RECEIVER_GATE",
+        "disclosed_fields": [
+          "action",
+          "amount_cents",
+          "recipient"
+        ],
+        "effect_delta": 1,
+        "epoch_id": "epoch-old-compromised",
+        "executed": true,
+        "mandate_id": "mandate-old-compromised",
+        "principal_id": "principal-terrynce",
+        "reason_codes": [],
+        "recovery_policy_hash": "ad6d4c95adc1de252d446e47d3a554e26c1077fa6a440bb60d19e6e6da9aa218",
+        "risk_tier": "HIGH",
+        "root_generation": 1,
+        "standing_mode": "FRESH_WITNESS",
+        "wallet_policy_authority": "NONE"
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "03_old_root_self_declares_successor",
+      "condition": "The compromised old root signs while posing as one configured guardian",
+      "declared_exposure": false,
+      "expected": "REJECT:GUARDIAN_APPROVAL_SIGNER_MISMATCH",
+      "observed": {
+        "accepted": false,
+        "decision": "REJECT_SUCCESSION",
+        "decision_authority": "RECEIVER_GATE",
+        "reason_codes": [
+          "GUARDIAN_APPROVAL_SIGNER_MISMATCH"
+        ],
+        "state_delta": 0,
+        "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+        "wallet_policy_authority": "NONE"
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "04_one_of_three_guardians",
+      "condition": "One genuine guardian attempts recovery under a two-of-three policy",
+      "declared_exposure": false,
+      "expected": "REJECT:RECOVERY_THRESHOLD_NOT_MET",
+      "observed": {
+        "accepted": false,
+        "decision": "REJECT_SUCCESSION",
+        "decision_authority": "RECEIVER_GATE",
+        "reason_codes": [
+          "RECOVERY_THRESHOLD_NOT_MET"
+        ],
+        "state_delta": 0,
+        "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+        "wallet_policy_authority": "NONE"
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "05_duplicate_guardian_approval",
+      "condition": "One genuine approval is copied to appear twice",
+      "declared_exposure": false,
+      "expected": "REJECT:DUPLICATE_GUARDIAN_APPROVAL",
+      "observed": {
+        "accepted": false,
+        "decision": "REJECT_SUCCESSION",
+        "decision_authority": "RECEIVER_GATE",
+        "reason_codes": [
+          "DUPLICATE_GUARDIAN_APPROVAL"
+        ],
+        "state_delta": 0,
+        "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+        "wallet_policy_authority": "NONE"
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "06_valid_two_of_three_root_succession",
+      "condition": "Two precommitted guardians install generation 2 without an old-root signature",
+      "declared_exposure": false,
+      "expected": "ACCEPT_SUCCESSION",
+      "observed": {
+        "accepted": true,
+        "approved_guardian_ids": [
+          "guardian-1",
+          "guardian-2"
+        ],
+        "decision": "ACCEPT_SUCCESSION",
+        "decision_authority": "RECEIVER_GATE",
+        "event_hash": "a2e01ea553077488363496b5023620b2b857490c2f587bfc9611424bef15a8fc",
+        "prior_generation": 1,
+        "reason_codes": [],
+        "state_delta": 1,
+        "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+        "successor_generation": 2,
+        "threshold": 2,
+        "wallet_policy_authority": "NONE"
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "07_compromised_descendant_after_acceptance",
+      "condition": "The exact compromised-root bundle is replayed after generation 2 is accepted",
+      "declared_exposure": false,
+      "expected": "BLOCK:EPOCH_CERTIFICATE_SIGNER_MISMATCH",
+      "observed": {
+        "decision": "BLOCK",
+        "decision_authority": "RECEIVER_GATE",
+        "effect_delta": 0,
+        "executed": false,
+        "reason_codes": [
+          "EPOCH_CERTIFICATE_SIGNER_MISMATCH"
+        ],
+        "recovery_policy_hash": "ad6d4c95adc1de252d446e47d3a554e26c1077fa6a440bb60d19e6e6da9aa218",
+        "root_generation": 2,
+        "wallet_policy_authority": "NONE"
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "08_legitimate_old_descendant_after_acceptance",
+      "condition": "A pre-compromise legitimate bundle under the old root is also noncurrent",
+      "declared_exposure": false,
+      "expected": "BLOCK:EPOCH_CERTIFICATE_SIGNER_MISMATCH",
+      "observed": {
+        "decision": "BLOCK",
+        "decision_authority": "RECEIVER_GATE",
+        "effect_delta": 0,
+        "executed": false,
+        "reason_codes": [
+          "EPOCH_CERTIFICATE_SIGNER_MISMATCH"
+        ],
+        "recovery_policy_hash": "ad6d4c95adc1de252d446e47d3a554e26c1077fa6a440bb60d19e6e6da9aa218",
+        "root_generation": 2,
+        "wallet_policy_authority": "NONE"
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "09_old_history_remains_authentic_noncurrent",
+      "condition": "The old epoch certificate remains cryptographically authentic for history only",
+      "declared_exposure": false,
+      "expected": "HISTORICALLY_AUTHENTIC_NONCURRENT",
+      "observed": {
+        "cryptographically_authentic": true,
+        "execution_authority": "NONE",
+        "root_generation": 1,
+        "status": "HISTORICALLY_AUTHENTIC_NONCURRENT",
+        "verification": "PASS"
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "10_successor_root_action",
+      "condition": "Generation 2 issues a fresh epoch, mandate, and standing witness",
+      "declared_exposure": false,
+      "expected": "PASS",
+      "observed": {
+        "decision": "PASS",
+        "decision_authority": "RECEIVER_GATE",
+        "disclosed_fields": [
+          "action",
+          "amount_cents",
+          "recipient"
+        ],
+        "effect_delta": 1,
+        "epoch_id": "epoch-successor",
+        "executed": true,
+        "mandate_id": "mandate-successor",
+        "principal_id": "principal-terrynce",
+        "reason_codes": [],
+        "recovery_policy_hash": "ad6d4c95adc1de252d446e47d3a554e26c1077fa6a440bb60d19e6e6da9aa218",
+        "risk_tier": "HIGH",
+        "root_generation": 2,
+        "standing_mode": "FRESH_WITNESS",
+        "wallet_policy_authority": "NONE"
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "11_unrelated_principal_control",
+      "condition": "An independent principal remains current and executable",
+      "declared_exposure": false,
+      "expected": "PASS",
+      "observed": {
+        "decision": "PASS",
+        "decision_authority": "RECEIVER_GATE",
+        "disclosed_fields": [
+          "action",
+          "amount_cents",
+          "recipient"
+        ],
+        "effect_delta": 1,
+        "epoch_id": "epoch-unrelated",
+        "executed": true,
+        "mandate_id": "mandate-unrelated",
+        "principal_id": "principal-unrelated",
+        "reason_codes": [],
+        "recovery_policy_hash": "09c7845649267580e03383a1631cbd8dc915960d12f1ef9a82006f6a4e3daca0",
+        "risk_tier": "HIGH",
+        "root_generation": 1,
+        "standing_mode": "FRESH_WITNESS",
+        "wallet_policy_authority": "NONE"
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "12_tamper_replay_and_rollback",
+      "condition": "Altered successor, exact replay, and rollback to a superseded root",
+      "declared_exposure": false,
+      "expected": "REJECT_ALL",
+      "observed": {
+        "accepted": false,
+        "decision": "REJECT_ALL",
+        "state_delta": 0,
+        "variants": {
+          "altered_successor_after_signature": {
+            "accepted": false,
+            "decision": "REJECT_SUCCESSION",
+            "decision_authority": "RECEIVER_GATE",
+            "reason_codes": [
+              "SUCCESSION_EVENT_HASH_INVALID"
+            ],
+            "state_delta": 0,
+            "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+            "wallet_policy_authority": "NONE"
+          },
+          "exact_event_replay": {
+            "accepted": false,
+            "decision": "REJECT_SUCCESSION",
+            "decision_authority": "RECEIVER_GATE",
+            "reason_codes": [
+              "SUCCESSION_REPLAYED"
+            ],
+            "state_delta": 0,
+            "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+            "wallet_policy_authority": "NONE"
+          },
+          "rollback_to_superseded_root": {
+            "accepted": false,
+            "decision": "REJECT_SUCCESSION",
+            "decision_authority": "RECEIVER_GATE",
+            "reason_codes": [
+              "ROOT_ROLLBACK_FORBIDDEN"
+            ],
+            "state_delta": 0,
+            "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+            "wallet_policy_authority": "NONE"
+          }
+        }
+      },
+      "passed": true
+    },
+    {
+      "arm_id": "13_recovery_threshold_compromise",
+      "condition": "Two compromised guardian keys sign an attacker root; the valid quorum is indistinguishable from legitimate recovery",
+      "declared_exposure": true,
+      "expected": "ACCEPT_SUCCESSION:DECLARED_TRUST_FLOOR",
+      "observed": {
+        "accepted": true,
+        "approved_guardian_ids": [
+          "guardian-1",
+          "guardian-2"
+        ],
+        "decision": "ACCEPT_SUCCESSION",
+        "decision_authority": "RECEIVER_GATE",
+        "event_hash": "df89f7f89278e825f77e7d633301b6e3526fe72054dc73658f922c6b2f713c5f",
+        "prior_generation": 1,
+        "reason_codes": [],
+        "state_delta": 1,
+        "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+        "successor_generation": 2,
+        "threshold": 2,
+        "wallet_policy_authority": "NONE"
+      },
+      "passed": true
+    }
+  ],
+  "schema": "openline.wallet_standing_002.result.v1",
+  "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+  "verdict": "QUORUM_ROOT_SUCCESSION_ENFORCED_WITH_DECLARED_RECOVERY_LAG",
+  "wallet_policy_authority": "NONE"
+}

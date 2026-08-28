@@ -1,0 +1,69 @@
+{
+  "schema": "openline.wallet_standing_002.preregistration.v1",
+  "experiment_id": "WALLET-STANDING-002",
+  "question": "Can a receiver supersede a lost or compromised wallet root through a policy pinned before the emergency, while preserving historical authenticity and containing consequences after acceptance?",
+  "theorem": "Root recovery moves the ultimate trust anchor to a precommitted recovery authority; it does not eliminate trust or undo consequences incurred before the receiver learns the succession.",
+  "authority_split": {
+    "wallet": "CONTINUITY_EVIDENCE_ONLY",
+    "old_root": "NO_SUCCESSION_AUTHORITY_AFTER_COMPROMISE",
+    "guardian_quorum": "ROOT_SUCCESSION_AUTHORITY_ONLY",
+    "receiver_gate": "EVENT_ADMISSION_AND_EXECUTION",
+    "wallet_policy_authority": "NONE"
+  },
+  "frozen_times": {
+    "t0_policy_pinned": "2026-08-28T13:00:00Z",
+    "t1_root_compromise": "2026-08-28T13:01:00Z",
+    "t2_succession_accepted": "2026-08-28T13:06:00Z"
+  },
+  "recovery_policy": {
+    "guardian_count": 3,
+    "threshold": 2,
+    "rotation": "FROZEN",
+    "receiver_pin_required": true,
+    "old_root_signature_required_for_succession": false
+  },
+  "primary_arms": [
+    {"arm_id": "01_genesis_root_legitimate_action", "expected": "PASS"},
+    {"arm_id": "02_compromised_root_before_recovery_acceptance", "expected": "PASS:DECLARED_PRE_ACCEPTANCE_EXPOSURE"},
+    {"arm_id": "03_old_root_self_declares_successor", "expected": "REJECT:GUARDIAN_APPROVAL_SIGNER_MISMATCH"},
+    {"arm_id": "04_one_of_three_guardians", "expected": "REJECT:RECOVERY_THRESHOLD_NOT_MET"},
+    {"arm_id": "05_duplicate_guardian_approval", "expected": "REJECT:DUPLICATE_GUARDIAN_APPROVAL"},
+    {"arm_id": "06_valid_two_of_three_root_succession", "expected": "ACCEPT_SUCCESSION"},
+    {"arm_id": "07_compromised_descendant_after_acceptance", "expected": "BLOCK:EPOCH_CERTIFICATE_SIGNER_MISMATCH"},
+    {"arm_id": "08_legitimate_old_descendant_after_acceptance", "expected": "BLOCK:EPOCH_CERTIFICATE_SIGNER_MISMATCH"},
+    {"arm_id": "09_old_history_remains_authentic_noncurrent", "expected": "HISTORICALLY_AUTHENTIC_NONCURRENT"},
+    {"arm_id": "10_successor_root_action", "expected": "PASS"},
+    {"arm_id": "11_unrelated_principal_control", "expected": "PASS"},
+    {"arm_id": "12_tamper_replay_and_rollback", "expected": "REJECT_ALL"},
+    {"arm_id": "13_recovery_threshold_compromise", "expected": "ACCEPT_SUCCESSION:DECLARED_TRUST_FLOOR"}
+  ],
+  "success_criteria": {
+    "all_arms_match": true,
+    "pre_acceptance_compromised_root_execution_count": 1,
+    "post_acceptance_old_root_execution_count": 0,
+    "below_threshold_acceptance_count": 0,
+    "successor_execution_count": 1,
+    "unrelated_principal_collateral_loss_count": 0,
+    "historically_authentic_noncurrent_count": 1,
+    "declared_threshold_compromise_acceptance_count": 1
+  },
+  "fixed_boundaries": {
+    "recovery_lag_seconds": 300,
+    "threshold_compromise": "TERMINAL_TRUST_ASSUMPTION",
+    "guardian_custody_and_identity": "CONTROLLED_UNTESTED",
+    "policy_rotation": "UNTESTED",
+    "multi_receiver_distribution_and_convergence": "UNTESTED_WALLET_STANDING_003",
+    "wallet_policy_authority": "NONE"
+  },
+  "forbidden_rescue_moves": [
+    "let the old root sign its own replacement",
+    "count duplicate guardian approvals twice",
+    "hide the pre-acceptance compromised-root pass",
+    "claim threshold-signature validity proves guardian intent",
+    "restore old-root execution standing because its signature remains authentic",
+    "add a network or global ordering service inside this frozen run",
+    "change the two-of-three policy after observing results"
+  ],
+  "verdict_if_successful": "QUORUM_ROOT_SUCCESSION_ENFORCED_WITH_DECLARED_RECOVERY_LAG",
+  "verdict_if_unsuccessful": "ROOT_SUCCESSION_BOUNDARY_NOT_ESTABLISHED"
+}
