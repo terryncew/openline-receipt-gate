@@ -1,0 +1,16 @@
+{
+  "schema": "openline.wallet_standing_002.dependency-pin.v1",
+  "experiment_id": "WALLET-STANDING-002",
+  "base_repo": "terryncew/openline-receipt-gate",
+  "base_commit": "511076de6642c07647f9483774bb131850cc41ab",
+  "wallet_standing_001": {
+    "verdict": "EPOCH_REVOCATION_ENFORCED_WITH_BOUNDED_OFFLINE_LAG",
+    "protocol_path": "experiments/wallet-standing-001/wallet001/protocol.py",
+    "protocol_sha256": "fa034c89ab0aeb7a1d624e8308865d81302c3e38c64bca255119c1a3f2282855",
+    "frozen_result_path": "experiments/wallet-standing-001/frozen_result.json",
+    "frozen_result_sha256": "bcbba96d25a9c974f17a20b5b5340d04487e7e76747324da0f1137d93635e102",
+    "release_manifest_path": "experiments/wallet-standing-001/RELEASE_MANIFEST.json",
+    "release_manifest_sha256": "cd9a7243aba0ff9b89ac63a04d6bfb8e33ca1f19abad45abf779ff20d4a6ada5",
+    "mutation_allowed": false
+  }
+}

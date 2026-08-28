@@ -1,0 +1,31 @@
+{
+  "schema": "openline.wallet_standing_002.freeze.v1",
+  "experiment_id": "WALLET-STANDING-002",
+  "frozen_at": "2026-08-28T13:00:00Z",
+  "base_repo": "terryncew/openline-receipt-gate",
+  "base_commit": "511076de6642c07647f9483774bb131850cc41ab",
+  "verdict": "QUORUM_ROOT_SUCCESSION_ENFORCED_WITH_DECLARED_RECOVERY_LAG",
+  "wallet_policy_authority": "NONE",
+  "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+  "decision_authority": "RECEIVER_GATE",
+  "recovery_policy": {
+    "guardian_count": 3,
+    "threshold": 2,
+    "rotation": "FROZEN",
+    "recovery_lag_seconds": 300
+  },
+  "files": {
+    "CLAIM_BOUNDARY.md": "7eefa81bb994eb3a66a178c8c0baa119730c42a54985ab185f24bb8b27e14c66",
+    "DEPENDENCY_PIN.json": "04113a9df864a921772c2e0652cd9b1f16fc68af79601faca871d6de64cde40a",
+    "frozen_result.json": "26bfa20014ad36d3658154f6e2f7c825e77ffe4a9b47f01f8e8369a6843e404d",
+    "preregistration.json": "3ac64e572048fbef7845cdab82523cd2b097fb90338c2dc107a7185b9d51b052",
+    "scripts/run_frozen.py": "0bd4d672ac816a800e93ad06e17b373d1ae4300bce8cf5449db2adedb71e21ed",
+    "wallet002/__init__.py": "e4b081d8cfe074e349a13ee1f3917575d9cacbdb7e2e5027ba696056f58c3d98",
+    "wallet002/recovery.py": "4379faf0977bd0e0920666233148415059da8fcdaa07e0fdcaef7729a3a9b756"
+  },
+  "declared_exposures": {
+    "pre_acceptance_root_authority": "ONE_EXECUTION_DURING_300_SECOND_LAG",
+    "threshold_guardian_compromise": "ATTACKER_SUCCESSION_ACCEPTED"
+  },
+  "next_falsifier": "WALLET-STANDING-003"
+}

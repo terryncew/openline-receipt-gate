@@ -1,0 +1,44 @@
+{
+  "schema": "openline.wallet_standing_002.handoff.v1",
+  "experiment_id": "WALLET-STANDING-002",
+  "status": "FROZEN_LOCAL_BUILD",
+  "base_repo": "terryncew/openline-receipt-gate",
+  "base_commit": "511076de6642c07647f9483774bb131850cc41ab",
+  "branch": "feat/wallet-standing-002",
+  "commit": "feat(gate): add quorum root succession test",
+  "pr_title": "feat(gate): add quorum root succession test",
+  "expected_changed_file_count": 14,
+  "verdict": "QUORUM_ROOT_SUCCESSION_ENFORCED_WITH_DECLARED_RECOVERY_LAG",
+  "passed": true,
+  "authority": {
+    "wallet_policy_authority": "NONE",
+    "succession_authority": "PRECOMMITTED_GUARDIAN_QUORUM",
+    "decision_authority": "RECEIVER_GATE"
+  },
+  "metrics": {
+    "frozen_arms_passed": "13/13",
+    "focused_tests_passed": "23/23",
+    "recovery_lag_seconds": 300,
+    "pre_acceptance_compromised_root_execution_count": 1,
+    "post_acceptance_old_root_execution_count": 0,
+    "below_threshold_acceptance_count": 0,
+    "successor_execution_count": 1,
+    "unrelated_principal_collateral_loss_count": 0,
+    "declared_threshold_compromise_acceptance_count": 1
+  },
+  "release_manifest_sha256": "ccc613864c175a6565705c85ab91baf62bf6b4d56e91bb5ca51e090004395abe",
+  "next_falsifier": {
+    "experiment_id": "WALLET-STANDING-003",
+    "boundary": "multi-device and virgin-Gate succession distribution, fork detection, and convergence"
+  },
+  "working_copy": {
+    "overlay_root": true,
+    "wrapper_directory": false,
+    "cover_file": false,
+    "expected_top_level_entries": [
+      ".github",
+      "experiments",
+      "WALLET_STANDING_002_HANDOFF.json"
+    ]
+  }
+}
