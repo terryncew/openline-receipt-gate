@@ -17,6 +17,23 @@ from .modeling import (
 from .protocol import project_root, load_protocol, protocol_sha256
 
 
+def _failure_warning_threshold(y_recovery: list[int], p_recovery: list[float], budget: float) -> dict:
+    """Freeze an alert threshold for loss of recoverability.
+
+    Positive class is failure to recover within 24 months.
+    False positives are warnings on episodes that ultimately recover.
+    """
+    y_failure = [1 - int(y) for y in y_recovery]
+    failure_risk = [1.0 - float(p) for p in p_recovery]
+    out = threshold_at_fpr(y_failure, failure_risk, budget)
+    return {
+        **out,
+        "positive_class": "non_recovery_within_24m",
+        "score": "1 - P(recovery)",
+        "false_positive_definition": "warning_on_episode_that_recovers_within_24m",
+    }
+
+
 def _num(v):
     try:
         x = float(v)
@@ -283,7 +300,7 @@ def calibrate(root: Path | None = None) -> dict:
     m, pv, met = _fit_simple_model(train, val, "recoverability_margin", ["recoverability_margin"], l2=fixed_l2)
     models["recoverability_margin"] = m
     validation["recoverability_margin"] = met
-    thresholds["recoverability_margin"] = threshold_at_fpr(yv, pv, fpr_budget)
+    thresholds["recoverability_margin"] = _failure_warning_threshold(yv, pv, fpr_budget)
 
     simple_defs = {
         "state_only": cal["baselines"]["state_only"],
@@ -295,13 +312,13 @@ def calibrate(root: Path | None = None) -> dict:
         m, pv, met = _fit_simple_model(train, val, name, features, l2=fixed_l2)
         models[name] = m
         validation[name] = met
-        thresholds[name] = threshold_at_fpr(yv, pv, fpr_budget)
+        thresholds[name] = _failure_warning_threshold(yv, pv, fpr_budget)
 
     # History/persistence is a direct causal probability, not a fitted model.
     hp = [min(max(float(r["history_recovery_rate"]), 0.0), 1.0) for r in val]
     models["history_persistence"] = {"family": "direct_probability", "feature": "history_recovery_rate"}
     validation["history_persistence"] = metrics(yv, hp)
-    thresholds["history_persistence"] = threshold_at_fpr(yv, hp, fpr_budget)
+    thresholds["history_persistence"] = _failure_warning_threshold(yv, hp, fpr_budget)
 
     # Best single observable: selection uses training labels only.
     cv = []
@@ -313,7 +330,7 @@ def calibrate(root: Path | None = None) -> dict:
     m, pv, met = _fit_simple_model(train, val, "best_single", [best_single_feature], l2=fixed_l2)
     models["best_single"] = m
     validation["best_single"] = {**met, "selected_feature": best_single_feature}
-    thresholds["best_single"] = threshold_at_fpr(yv, pv, fpr_budget)
+    thresholds["best_single"] = _failure_warning_threshold(yv, pv, fpr_budget)
 
     # Hard conventional model and augmented model select regularization on validation.
     conv_features = list(cal["baselines"]["conventional_multivariable"])
@@ -326,8 +343,8 @@ def calibrate(root: Path | None = None) -> dict:
     models["rm_augmented_conventional"] = best_aug["model"]
     validation["conventional_multivariable"] = best_conv["validation"]
     validation["rm_augmented_conventional"] = best_aug["validation"]
-    thresholds["conventional_multivariable"] = threshold_at_fpr(yv, best_conv["pred"], fpr_budget)
-    thresholds["rm_augmented_conventional"] = threshold_at_fpr(yv, best_aug["pred"], fpr_budget)
+    thresholds["conventional_multivariable"] = _failure_warning_threshold(yv, best_conv["pred"], fpr_budget)
+    thresholds["rm_augmented_conventional"] = _failure_warning_threshold(yv, best_aug["pred"], fpr_budget)
 
     # Validation is diagnostic/calibration only; no success verdict is made here.
     validation_incremental_brier = (
@@ -345,7 +362,8 @@ def calibrate(root: Path | None = None) -> dict:
             else:
                 pr = predict_logistic(model, [r])[0]
             row[f"{name}_probability"] = pr
-            row[f"{name}_warn"] = int(pr >= thresholds[name]["threshold"])
+            row[f"{name}_failure_risk"] = 1.0 - pr
+            row[f"{name}_warn"] = int((1.0 - pr) >= thresholds[name]["threshold"])
         row["recoverability_margin_raw"] = float(r["recoverability_margin"])
         pred_rows.append(row)
 
@@ -359,6 +377,36 @@ def calibrate(root: Path | None = None) -> dict:
     (root / "artifacts" / "holdout_predictions.lock.sha256").write_text(
         pred_sha + "  holdout_predictions.lock.csv\n"
     )
+
+    # Prove this amendment did not alter any fitted probability or RM value.
+    probability_fields = [
+        "ID", "group", "relief_t0",
+        "recoverability_margin_probability",
+        "state_only_probability",
+        "trend_only_probability",
+        "drought_severity_duration_probability",
+        "critical_slowing_probability",
+        "history_persistence_probability",
+        "best_single_probability",
+        "conventional_multivariable_probability",
+        "rm_augmented_conventional_probability",
+        "recoverability_margin_raw",
+    ]
+    prob_path = root / "artifacts" / "holdout_probabilities.lock.csv"
+    with prob_path.open("w", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=probability_fields)
+        w.writeheader()
+        w.writerows([{k: r[k] for k in probability_fields} for r in pred_rows])
+    prob_sha = hashlib.sha256(prob_path.read_bytes()).hexdigest()
+    (root / "artifacts" / "holdout_probabilities.lock.sha256").write_text(
+        prob_sha + "  holdout_probabilities.lock.csv\n"
+    )
+    amendment = json.loads((root / "config" / "pre_holdout_warning_amendment.json").read_text())
+    if prob_sha != amendment["source_probability_only_sha256"]:
+        raise ValueError(
+            "pre-holdout warning amendment changed frozen model probabilities; "
+            f"expected {amendment['source_probability_only_sha256']} got {prob_sha}"
+        )
 
     lock = {
         "experiment_id": proto["experiment_id"],
@@ -389,6 +437,9 @@ def calibrate(root: Path | None = None) -> dict:
         "thresholds": thresholds,
         "holdout_features_match_episode_lock": hash_match,
         "holdout_predictions_sha256": pred_sha,
+        "holdout_probabilities_sha256": prob_sha,
+        "probabilities_unchanged_from_pre_amendment": True,
+        "warning_semantics": "loss_of_recoverability = 1 - P(recovery)",
         "holdout_labels_constructed": False,
         "final_verdict": "WITHHELD_PENDING_UNTOUCHED_HOLDOUT",
         "success_rule": cal["success_rule_unchanged"],
@@ -415,6 +466,9 @@ def calibrate(root: Path | None = None) -> dict:
         "validation_incremental_brier": validation_incremental_brier,
         "thresholds": thresholds,
         "holdout_predictions_sha256": pred_sha,
+        "holdout_probabilities_sha256": prob_sha,
+        "probabilities_unchanged_from_pre_amendment": True,
+        "warning_semantics": "loss_of_recoverability = 1 - P(recovery)",
         "holdout_labels_constructed": False,
         "next_gate": "Pin this calibration lock and prediction hash in source, then open 2019-2022 labels exactly once and score the frozen predictions.",
         "boundary": "Validation may look good or bad; it does not decide the claim. No RM/model/threshold changes are allowed before held-out replay once this lock is pinned.",

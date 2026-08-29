@@ -95,8 +95,10 @@
   },
   "validation": {
     "false_positive_budget": 0.1,
-    "threshold_rule": "maximize validation sensitivity subject to FPR <= 0.10; deterministic tie-break toward higher threshold",
-    "regularization_selection": "lowest validation Brier; deterministic tie-break toward smaller lambda"
+    "threshold_rule": "maximize validation sensitivity for non-recovery subject to false-warning rate among recovered episodes <= 0.10; deterministic tie-break toward higher failure-risk threshold",
+    "regularization_selection": "lowest validation Brier; deterministic tie-break toward smaller lambda",
+    "warning_positive_class": "non_recovery_within_24m",
+    "warning_score": "1 - P(recovery)"
   },
   "holdout": {
     "years": [
@@ -111,5 +113,11 @@
     "incremental_primary": "Brier(conventional) - Brier(conventional+RM) > 0 on holdout",
     "uncertainty": "basin-clustered bootstrap 95% CI for Brier improvement excludes zero",
     "no_post_holdout_retuning": true
+  },
+  "pre_holdout_amendment": {
+    "id": "PRE_HOLDOUT_WARNING_SEMANTICS_001",
+    "models_changed": false,
+    "probabilities_changed": false,
+    "warning_decisions_recomputed": true
   }
 }

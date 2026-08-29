@@ -163,3 +163,22 @@ The following details are frozen before any 2019–2022 recovery labels are cons
 
 Validation performance cannot declare success. The primary claim is decided only by the
 untouched held-out replay and the preregistered basin-clustered uncertainty test.
+
+
+## Pre-holdout amendment — warning semantics
+
+Before any 2019–2022 labels were opened, the first green Calibration Lock exposed an
+implementation semantics error: fitted probabilities represent **recovery**, while the
+operational alert had been thresholding high recovery probability as a warning.
+
+This amendment does not alter RM, features, fitted models, regularization, probability
+predictions, the holdout rows, or the primary Brier/cluster-bootstrap success rule.
+It changes only the operational warning score to:
+
+    failure_risk = 1 - P(recovery)
+
+Validation now selects a warning threshold by maximizing sensitivity to non-recovery
+subject to a <=10% false-warning rate among episodes that recover.
+
+The SHA-256 of the original 112-row probability-only holdout lock is pinned in source.
+The amended calibration must reproduce that hash exactly or fail before holdout opening.

@@ -56,3 +56,13 @@ regularization and the 10% false-positive warning thresholds.
 Crucially, the workflow then writes and hashes every 2019–2022 prediction while the
 holdout recovery labels remain unopened. The next stage may score only those frozen
 predictions.
+
+
+## Pre-holdout warning-semantics correction
+
+The first Calibration Lock was green and kept the holdout sealed, but its operational
+`warn` bit pointed in the wrong direction: high `P(recovery)` triggered the alert.
+
+`PRE_HOLDOUT_WARNING_SEMANTICS_001` fixes only that presentation/control decision.
+The fitted models and all 112 frozen recovery probabilities must remain byte-for-byte
+equivalent under the pinned probability-only SHA-256.

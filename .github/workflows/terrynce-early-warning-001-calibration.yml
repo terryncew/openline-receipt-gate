@@ -52,6 +52,8 @@ jobs:
           assert lock["holdout_labels_constructed"] is False
           assert lock["final_verdict"]=="WITHHELD_PENDING_UNTOUCHED_HOLDOUT"
           assert lock["holdout_features_match_episode_lock"] is True
+          assert lock["probabilities_unchanged_from_pre_amendment"] is True
+          assert lock["warning_semantics"]=="loss_of_recoverability = 1 - P(recovery)"
           print(json.dumps({
               "status": r["status"],
               "counts": r["counts"],
@@ -60,6 +62,8 @@ jobs:
               "validation_incremental_brier": r["validation_incremental_brier"],
               "calibration_lock_sha256": r["calibration_lock_sha256"],
               "holdout_predictions_sha256": r["holdout_predictions_sha256"],
+              "holdout_probabilities_sha256": r["holdout_probabilities_sha256"],
+              "warning_semantics": r["warning_semantics"],
               "next_gate": r["next_gate"],
           }, indent=2))
           PY
@@ -74,5 +78,6 @@ jobs:
             TERRYNCE-EARLY-WARNING-001/artifacts/*.sha256
             TERRYNCE-EARLY-WARNING-001/artifacts/episode_lock_train_validation.csv
             TERRYNCE-EARLY-WARNING-001/artifacts/holdout_predictions.lock.csv
+            TERRYNCE-EARLY-WARNING-001/artifacts/holdout_probabilities.lock.csv
           if-no-files-found: error
           retention-days: 30

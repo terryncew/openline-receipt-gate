@@ -120,3 +120,11 @@ once, then emits `holdout_predictions.lock.csv` before constructing any holdout 
 
 That file is the line in the sand: the held-out replay may join outcomes to those rows;
 it may not regenerate better predictions after seeing the outcomes.
+
+
+## Warning semantics
+
+A Terrynce Early Warning alert means **risk of failing to recover**, so the operational
+score is `1 - P(recovery)`. The correction was made before the held-out outcomes were
+opened and is guarded by a pinned hash proving the fitted holdout probabilities did not
+change.

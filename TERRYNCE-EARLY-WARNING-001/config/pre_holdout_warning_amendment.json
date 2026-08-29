@@ -1,0 +1,18 @@
+{
+  "experiment_id": "TERRYNCE-EARLY-WARNING-001",
+  "amendment": "PRE_HOLDOUT_WARNING_SEMANTICS_001",
+  "reason": "Calibration models predict recovery probability. Operational early warning must fire on non-recovery risk, not high recovery probability.",
+  "holdout_labels_opened_before_amendment": false,
+  "source_calibration_run_id": 33279285817,
+  "source_calibration_artifact_digest": "sha256:86afda25a32f93575c0231f0926e4776c9ea261c27c019122071467bb70825ad",
+  "source_calibration_lock_sha256": "c8d257556e43ead5dec0cff6908a8cd3a3859144b4c72202a4f30c76a4bf6c4d",
+  "source_holdout_predictions_sha256": "ae2574c624a0ec3c6107e8f4e3bf31a51e763e8dceadff9842d97b4c1c6829dd",
+  "source_probability_only_sha256": "a1d69a63fb2835da5f40550aaea03fd533f6bfc08f5f6ca2d1cc3a10a0e5b473",
+  "frozen_model_change": "NONE",
+  "frozen_probability_change": "NONE",
+  "warning_score_before": "P(recovery)",
+  "warning_score_after": "1 - P(recovery)",
+  "warning_positive_class": "non_recovery_within_24m",
+  "threshold_selection": "maximize validation failure sensitivity subject to false-warning rate among recoveries <= 0.10",
+  "primary_success_rule_change": "NONE"
+}
