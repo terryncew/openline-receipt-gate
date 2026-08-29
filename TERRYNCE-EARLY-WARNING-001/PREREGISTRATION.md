@@ -182,3 +182,32 @@ subject to a <=10% false-warning rate among episodes that recover.
 
 The SHA-256 of the original 112-row probability-only holdout lock is pinned in source.
 The amended calibration must reproduce that hash exactly or fail before holdout opening.
+
+
+## Final held-out replay lock — before outcome opening
+
+The exact amended green Calibration Lock is committed under `frozen/` before holdout
+outcomes are opened. Model regeneration is forbidden during replay.
+
+For the previously stated monotonic-direction condition, `direction passes` is now frozen
+as both:
+
+- mean raw RM among episodes that recover within 24 months is greater than mean raw RM
+  among episodes that do not; and
+- AUROC of raw RM for the recovery outcome is greater than 0.5.
+
+The primary incremental statistic is:
+
+    ΔBrier = Brier(conventional) - Brier(conventional + RM)
+
+The uncertainty test is a two-sided percentile 95% bootstrap with 10,000 replicates,
+resampling basin `ID` clusters with replacement using deterministic seed 20260829.
+The confidence interval passes only if its lower endpoint is greater than zero.
+
+A final survival verdict requires direction, positive point ΔBrier, and positive
+cluster-bootstrap lower bound. No post-holdout rescue is allowed under this experiment ID.
+
+Transparency limitation: outcome-side schema and published recovery fields were inspected
+globally during the earlier Science Lock solely to verify the published label mapping.
+Holdout outcomes were not used for RM scaling, fitting, feature selection, model selection,
+regularization, or warning thresholds.
