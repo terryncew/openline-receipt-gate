@@ -1,0 +1,86 @@
+name: TERRYNCE-EARLY-WARNING-001 One-Shot Heldout Replay
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  heldout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    defaults:
+      run:
+        working-directory: TERRYNCE-EARLY-WARNING-001
+    env:
+      PYTHONPATH: src
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Unit and boundary tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Verify pinned pre-outcome lock before data access
+        run: |
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+
+          proto=json.loads(Path("config/heldout_replay_protocol.frozen.json").read_text())
+          files={
+              "calibration_lock":"frozen/calibration.lock.json",
+              "holdout_predictions":"frozen/holdout_predictions.lock.csv",
+              "holdout_probabilities":"frozen/holdout_probabilities.lock.csv",
+              "episode_definition":"frozen/episode_definition.lock.json",
+          }
+          for key,path in files.items():
+              got=hashlib.sha256(Path(path).read_bytes()).hexdigest()
+              exp=proto["pinned_sha256"][key]
+              assert got==exp, (key, got, exp)
+          print("PINNED_PRE_OUTCOME_LOCK_OK")
+          PY
+
+      - name: Acquire exact public Zenodo v2 bundle
+        run: python -m terrynce_early_warning.cli acquire | tee artifacts/acquire_heldout_stdout.json
+
+      - name: Open holdout once and score frozen predictions
+        run: python -m terrynce_early_warning.cli heldout-replay | tee artifacts/heldout_stdout.json
+
+      - name: Print final verdict
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path("artifacts/heldout_report.json").read_text())
+          print(json.dumps({
+              "experiment_id": r["experiment_id"],
+              "holdout_rows": r["holdout_rows"],
+              "holdout_recovered": r["holdout_recovered"],
+              "holdout_nonrecovered": r["holdout_nonrecovered"],
+              "outcome_reconstruction_author_agreement": r["outcome_reconstruction_author_agreement"],
+              "model_metrics": r["model_metrics"],
+              "warning_metrics": r["warning_metrics"],
+              "primary_verdict": r["primary_verdict"],
+              "boundary": r["boundary"],
+          }, indent=2))
+          assert r["status"]=="COMPLETE"
+          PY
+
+      - name: Upload immutable heldout result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: TERRYNCE-EARLY-WARNING-001-heldout-result
+          path: |
+            TERRYNCE-EARLY-WARNING-001/artifacts/heldout_report.json
+            TERRYNCE-EARLY-WARNING-001/artifacts/heldout_report.sha256
+            TERRYNCE-EARLY-WARNING-001/artifacts/heldout_scored.csv
+            TERRYNCE-EARLY-WARNING-001/artifacts/heldout_scored.sha256
+            TERRYNCE-EARLY-WARNING-001/artifacts/acquisition_receipt.json
+          if-no-files-found: error
+          retention-days: 90

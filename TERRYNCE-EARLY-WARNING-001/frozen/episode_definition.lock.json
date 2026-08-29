@@ -1,0 +1,69 @@
+{
+  "experiment_id": "TERRYNCE-EARLY-WARNING-001",
+  "science_lock_receipt_sha256": "5045f3d47db978309279c5f465d6d39482c4cf8eb2e6dec3656c3c06a02f9877",
+  "episode_key": [
+    "ID",
+    "group"
+  ],
+  "relief_t0": "severe_drought_events_ensemble.EndDate",
+  "primary_outcome": {
+    "name": "TWSA recovery within 24 months after relief_t0",
+    "label_series": "TWSA_deseason_mov",
+    "recovery_fraction": 0.9,
+    "threshold": "min_TWSA + 0.90 * (init_TWSA - min_TWSA)",
+    "crossing_window": "max(relief_t0, min_TWSA_Date) through relief_t0 + 24 months",
+    "label_only_fields": [
+      "TWSA_recovery_one_95.init_TWSA",
+      "TWSA_recovery_one_95.min_TWSA",
+      "TWSA_recovery_one_95.min_TWSA_Date",
+      "TWSA_recovery_one_95.recovered",
+      "TWSA_recovery_one_95.EndDate_dgt",
+      "TWSA_recovery_one_95.recovery_time"
+    ]
+  },
+  "predictor_boundary": {
+    "timestamp": "<= relief_t0",
+    "observed_twsa": {
+      "columns": [
+        "CSR",
+        "GSFC",
+        "JPL"
+      ],
+      "monthly_value": "median of available nonmissing center observations",
+      "no_fill_or_stl_predictors": true
+    },
+    "state_baseline": "median observed TWSA in 24 calendar months before meteorological drought onset; >=6 observations",
+    "state_current": "latest observed TWSA <= relief_t0 and no more than 3 months old",
+    "trend": "OLS slope of last 6 observed TWSA values in trailing 12 months; >=4 observations",
+    "critical_slowing": "AR(1) and variance of last 12 observed TWSA values in trailing 24 months; >=8 observations",
+    "drought": "Duration, Duration_Extreme, mean p_drought, peak p_extreme over the severe-drought event",
+    "static_basin": [
+      "AI",
+      "pIRR",
+      "pSNOW",
+      "MAP",
+      "MAT",
+      "area_log",
+      "fReser_MAP"
+    ]
+  },
+  "common_complete_case": true,
+  "split": {
+    "train": [
+      "2003-01",
+      "2015-12"
+    ],
+    "validation": [
+      "2016-01",
+      "2018-12"
+    ],
+    "holdout": [
+      "2019-01",
+      "2022-12"
+    ],
+    "ordering": "relief_time_chronological",
+    "post_2022_primary": "excluded_for_equal_24_month_followup"
+  },
+  "holdout_rule": "2019-01 through 2022-12 labels remain unopened until final replay",
+  "no_post_holdout_retuning": true
+}

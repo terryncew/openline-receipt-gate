@@ -128,3 +128,27 @@ A Terrynce Early Warning alert means **risk of failing to recover**, so the oper
 score is `1 - P(recovery)`. The correction was made before the held-out outcomes were
 opened and is guarded by a pinned hash proving the fitted holdout probabilities did not
 change.
+
+
+## One-shot held-out test
+
+The final workflow is **TERRYNCE-EARLY-WARNING-001 One-Shot Heldout Replay**.
+
+Before accessing outcome-side data it verifies the committed hashes of:
+
+- the calibration lock
+- all 112 frozen holdout predictions
+- the probability-only lock
+- the episode definition
+
+Then, and only then, it constructs the 24-month recovery outcomes and scores the frozen
+predictions.
+
+Primary survival requires all three:
+
+1. raw Recoverability Margin points in the expected direction;
+2. adding RM lowers held-out Brier score versus the conventional multivariable baseline;
+3. the basin-clustered 10,000-replicate 95% bootstrap interval for that Brier improvement
+   lies entirely above zero.
+
+Any failure freezes TERRYNCE-EARLY-WARNING-001 as a negative result. No threshold rescue.

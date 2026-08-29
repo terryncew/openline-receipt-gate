@@ -66,3 +66,18 @@ The first Calibration Lock was green and kept the holdout sealed, but its operat
 `PRE_HOLDOUT_WARNING_SEMANTICS_001` fixes only that presentation/control decision.
 The fitted models and all 112 frozen recovery probabilities must remain byte-for-byte
 equivalent under the pinned probability-only SHA-256.
+
+
+## Final gate: One-Shot Heldout Replay
+
+The amended Calibration Lock is now pinned in `frozen/`. The 112 held-out predictions
+and every fitted recovery probability are immutable by SHA-256 before this workflow is
+merged or run.
+
+The held-out replay does not import or call calibration. It verifies the frozen hashes
+first, acquires the same public data, opens the 2019–2022 recovery outcomes, joins them to
+the already-frozen predictions, computes all baselines, and applies the preregistered
+basin-clustered bootstrap.
+
+The result of this run is the canonical TERRYNCE-EARLY-WARNING-001 result whether it wins
+or loses.

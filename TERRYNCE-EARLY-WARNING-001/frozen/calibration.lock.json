@@ -1,0 +1,630 @@
+{
+  "best_single_feature": "static_AI",
+  "best_single_training_cv": [
+    {
+      "feature": "static_AI",
+      "train_cv_brier": 0.1752785744908064
+    },
+    {
+      "feature": "static_MAP",
+      "train_cv_brier": 0.17762662726973946
+    },
+    {
+      "feature": "duration_months",
+      "train_cv_brier": 0.18850083246856705
+    },
+    {
+      "feature": "mean_p_drought",
+      "train_cv_brier": 0.18950956797170126
+    },
+    {
+      "feature": "log1p_pre_relief_variance",
+      "train_cv_brier": 0.19048815029923863
+    },
+    {
+      "feature": "static_fReser_MAP",
+      "train_cv_brier": 0.1906058228094329
+    },
+    {
+      "feature": "static_area_log",
+      "train_cv_brier": 0.19112870857078354
+    },
+    {
+      "feature": "extreme_duration_months",
+      "train_cv_brier": 0.19117106474989948
+    },
+    {
+      "feature": "peak_p_extreme",
+      "train_cv_brier": 0.19118943479855688
+    },
+    {
+      "feature": "pre_relief_ar1",
+      "train_cv_brier": 0.19134262700760116
+    },
+    {
+      "feature": "state_deficit",
+      "train_cv_brier": 0.19204752091700736
+    },
+    {
+      "feature": "history_recovery_rate",
+      "train_cv_brier": 0.19212713261068493
+    },
+    {
+      "feature": "pre_relief_slope",
+      "train_cv_brier": 0.19250478038484972
+    },
+    {
+      "feature": "static_pIRR",
+      "train_cv_brier": 0.1926397272251746
+    },
+    {
+      "feature": "static_pSNOW",
+      "train_cv_brier": 0.19332338461706866
+    },
+    {
+      "feature": "static_MAT",
+      "train_cv_brier": 0.19400955398319927
+    }
+  ],
+  "calibration_protocol_sha256": "31897d11bff6f0000a8316b96c3d31d432d141cb140248a25db07efdcb5822c9",
+  "episode_definition_sha256": "b5f46ed72f917e482da5cf8c72be4cf71260b1a20e59f5352d493def2df7de77",
+  "experiment_id": "TERRYNCE-EARLY-WARNING-001",
+  "final_verdict": "WITHHELD_PENDING_UNTOUCHED_HOLDOUT",
+  "history_diagnostics": {
+    "holdout": {
+      "history_source_basin_rows": 47,
+      "history_source_global_rows": 65,
+      "rows": 112
+    },
+    "train": {
+      "burn_in": 20,
+      "fit_rows": 231,
+      "history_source_basin_rows": 38,
+      "history_source_global_rows": 193
+    },
+    "validation": {
+      "history_source_basin_rows": 22,
+      "history_source_global_rows": 45,
+      "rows": 67
+    }
+  },
+  "holdout_features_match_episode_lock": true,
+  "holdout_labels_constructed": false,
+  "holdout_prediction_rows": 112,
+  "holdout_predictions_sha256": "e58e14dba4f06af3819be5c9666fee20607b3d9a8252fe42619ca70bd3c5c07a",
+  "holdout_probabilities_sha256": "a1d69a63fb2835da5f40550aaea03fd533f6bfc08f5f6ca2d1cc3a10a0e5b473",
+  "models": {
+    "best_single": {
+      "beta": [
+        1.3778173178651572,
+        1.0002681582020014
+      ],
+      "family": "l2_logistic",
+      "features": [
+        "static_AI"
+      ],
+      "l2": 0.1,
+      "scaler": {
+        "means": {
+          "static_AI": 0.6162021449696969
+        },
+        "stds": {
+          "static_AI": 0.4880825404130464
+        }
+      }
+    },
+    "conventional_multivariable": {
+      "beta": [
+        1.367652567289913,
+        -0.4511705024654098,
+        -0.22213718577026711,
+        -0.06026350842660541,
+        -0.10295635266180134,
+        0.39428095865789875,
+        -0.09574472208982149,
+        -0.08163353967332783,
+        -0.007285832297290178,
+        0.04254415160509936,
+        0.5386749801875922,
+        -0.06206327363550169,
+        -0.15208696224323728,
+        0.44857034355642456,
+        -0.307688387997967,
+        0.1695141870843911,
+        -0.05284553882446722
+      ],
+      "family": "l2_logistic",
+      "features": [
+        "state_deficit",
+        "pre_relief_slope",
+        "duration_months",
+        "extreme_duration_months",
+        "mean_p_drought",
+        "peak_p_extreme",
+        "history_recovery_rate",
+        "pre_relief_ar1",
+        "log1p_pre_relief_variance",
+        "static_AI",
+        "static_pIRR",
+        "static_pSNOW",
+        "static_MAP",
+        "static_MAT",
+        "static_area_log",
+        "static_fReser_MAP"
+      ],
+      "l2": 10.0,
+      "scaler": {
+        "means": {
+          "duration_months": 14.913419913419913,
+          "extreme_duration_months": 5.7272727272727275,
+          "history_recovery_rate": 0.7988146670954923,
+          "log1p_pre_relief_variance": 2.452764252571295,
+          "mean_p_drought": 0.7599878330567903,
+          "peak_p_extreme": 0.7499753454523373,
+          "pre_relief_ar1": 1.0142572998362913,
+          "pre_relief_slope": 0.10712282952879047,
+          "state_deficit": 3.5266951685292587,
+          "static_AI": 0.6162021449696969,
+          "static_MAP": 630.2223677162425,
+          "static_MAT": 13.451180296428571,
+          "static_area_log": 5.6877410000822515,
+          "static_fReser_MAP": 7.4740588057835495,
+          "static_pIRR": 0.06659490448051948,
+          "static_pSNOW": 13.21454380442684
+        },
+        "stds": {
+          "duration_months": 7.374422979340022,
+          "extreme_duration_months": 2.6676011743112826,
+          "history_recovery_rate": 0.1467451957107414,
+          "log1p_pre_relief_variance": 1.3756287271595307,
+          "mean_p_drought": 0.0869825223606039,
+          "peak_p_extreme": 0.1503573735732542,
+          "pre_relief_ar1": 0.10686791234912127,
+          "pre_relief_slope": 1.7944987276345734,
+          "state_deficit": 5.8774934606482026,
+          "static_AI": 0.4880825404130464,
+          "static_MAP": 511.2288853944668,
+          "static_MAT": 10.174482355072385,
+          "static_area_log": 0.31449901988778645,
+          "static_fReser_MAP": 12.734191751829098,
+          "static_pIRR": 0.11681798863484913,
+          "static_pSNOW": 15.72778678481595
+        }
+      }
+    },
+    "critical_slowing": {
+      "beta": [
+        1.1761589464168476,
+        -0.007614189408907121,
+        0.3793302971439249
+      ],
+      "family": "l2_logistic",
+      "features": [
+        "pre_relief_ar1",
+        "log1p_pre_relief_variance"
+      ],
+      "l2": 0.1,
+      "scaler": {
+        "means": {
+          "log1p_pre_relief_variance": 2.452764252571295,
+          "pre_relief_ar1": 1.0142572998362913
+        },
+        "stds": {
+          "log1p_pre_relief_variance": 1.3756287271595307,
+          "pre_relief_ar1": 0.10686791234912127
+        }
+      }
+    },
+    "drought_severity_duration": {
+      "beta": [
+        1.1848178955640145,
+        -0.17440901931259556,
+        -0.016414051172655677,
+        0.3707542641547791,
+        -0.2818251615372683
+      ],
+      "family": "l2_logistic",
+      "features": [
+        "duration_months",
+        "extreme_duration_months",
+        "mean_p_drought",
+        "peak_p_extreme"
+      ],
+      "l2": 0.1,
+      "scaler": {
+        "means": {
+          "duration_months": 14.913419913419913,
+          "extreme_duration_months": 5.7272727272727275,
+          "mean_p_drought": 0.7599878330567903,
+          "peak_p_extreme": 0.7499753454523373
+        },
+        "stds": {
+          "duration_months": 7.374422979340022,
+          "extreme_duration_months": 2.6676011743112826,
+          "mean_p_drought": 0.0869825223606039,
+          "peak_p_extreme": 0.1503573735732542
+        }
+      }
+    },
+    "history_persistence": {
+      "family": "direct_probability",
+      "feature": "history_recovery_rate"
+    },
+    "recoverability_margin": {
+      "beta": [
+        1.1649940717432645,
+        0.3276759535724695
+      ],
+      "family": "l2_logistic",
+      "features": [
+        "recoverability_margin"
+      ],
+      "l2": 0.1,
+      "scaler": {
+        "means": {
+          "recoverability_margin": -1.0453002551169182
+        },
+        "stds": {
+          "recoverability_margin": 1.223054866141367
+        }
+      }
+    },
+    "rm_augmented_conventional": {
+      "beta": [
+        1.374195367486673,
+        -0.35768506277244755,
+        -0.2568896335005546,
+        -0.01053362998441531,
+        -0.08662127386613107,
+        0.3954660968160298,
+        -0.09141758561718136,
+        -0.10127163490785818,
+        -0.012056567759266347,
+        0.06090141298090575,
+        0.5337394906373583,
+        -0.06078888096084043,
+        -0.14796725703762653,
+        0.45830237001079394,
+        -0.2989839562657788,
+        0.1648759280514018,
+        -0.04770046500581959,
+        0.16886492564951128
+      ],
+      "family": "l2_logistic",
+      "features": [
+        "state_deficit",
+        "pre_relief_slope",
+        "duration_months",
+        "extreme_duration_months",
+        "mean_p_drought",
+        "peak_p_extreme",
+        "history_recovery_rate",
+        "pre_relief_ar1",
+        "log1p_pre_relief_variance",
+        "static_AI",
+        "static_pIRR",
+        "static_pSNOW",
+        "static_MAP",
+        "static_MAT",
+        "static_area_log",
+        "static_fReser_MAP",
+        "recoverability_margin"
+      ],
+      "l2": 10.0,
+      "scaler": {
+        "means": {
+          "duration_months": 14.913419913419913,
+          "extreme_duration_months": 5.7272727272727275,
+          "history_recovery_rate": 0.7988146670954923,
+          "log1p_pre_relief_variance": 2.452764252571295,
+          "mean_p_drought": 0.7599878330567903,
+          "peak_p_extreme": 0.7499753454523373,
+          "pre_relief_ar1": 1.0142572998362913,
+          "pre_relief_slope": 0.10712282952879047,
+          "recoverability_margin": -1.0453002551169182,
+          "state_deficit": 3.5266951685292587,
+          "static_AI": 0.6162021449696969,
+          "static_MAP": 630.2223677162425,
+          "static_MAT": 13.451180296428571,
+          "static_area_log": 5.6877410000822515,
+          "static_fReser_MAP": 7.4740588057835495,
+          "static_pIRR": 0.06659490448051948,
+          "static_pSNOW": 13.21454380442684
+        },
+        "stds": {
+          "duration_months": 7.374422979340022,
+          "extreme_duration_months": 2.6676011743112826,
+          "history_recovery_rate": 0.1467451957107414,
+          "log1p_pre_relief_variance": 1.3756287271595307,
+          "mean_p_drought": 0.0869825223606039,
+          "peak_p_extreme": 0.1503573735732542,
+          "pre_relief_ar1": 0.10686791234912127,
+          "pre_relief_slope": 1.7944987276345734,
+          "recoverability_margin": 1.223054866141367,
+          "state_deficit": 5.8774934606482026,
+          "static_AI": 0.4880825404130464,
+          "static_MAP": 511.2288853944668,
+          "static_MAT": 10.174482355072385,
+          "static_area_log": 0.31449901988778645,
+          "static_fReser_MAP": 12.734191751829098,
+          "static_pIRR": 0.11681798863484913,
+          "static_pSNOW": 15.72778678481595
+        }
+      }
+    },
+    "state_only": {
+      "beta": [
+        1.1568580124287735,
+        -0.26765771538658994
+      ],
+      "family": "l2_logistic",
+      "features": [
+        "state_deficit"
+      ],
+      "l2": 0.1,
+      "scaler": {
+        "means": {
+          "state_deficit": 3.5266951685292587
+        },
+        "stds": {
+          "state_deficit": 5.8774934606482026
+        }
+      }
+    },
+    "trend_only": {
+      "beta": [
+        1.14175104388479,
+        0.09485126510872598
+      ],
+      "family": "l2_logistic",
+      "features": [
+        "pre_relief_slope"
+      ],
+      "l2": 0.1,
+      "scaler": {
+        "means": {
+          "pre_relief_slope": 0.10712282952879047
+        },
+        "stds": {
+          "pre_relief_slope": 1.7944987276345734
+        }
+      }
+    }
+  },
+  "probabilities_unchanged_from_pre_amendment": true,
+  "protocol_sha256": "f5cb73b4db765284dbef7be827d88099d242d3903c2b410a4d18f6178cb7f8e8",
+  "regularization_search": {
+    "conventional": [
+      {
+        "lambda": 10.0,
+        "validation": {
+          "auprc": 0.9729262073174817,
+          "auroc": 0.7096774193548387,
+          "brier": 0.09237935287809754
+        }
+      },
+      {
+        "lambda": 1.0,
+        "validation": {
+          "auprc": 0.9705474366495648,
+          "auroc": 0.6967741935483871,
+          "brier": 0.10510969995607734
+        }
+      },
+      {
+        "lambda": 0.1,
+        "validation": {
+          "auprc": 0.9684075932193988,
+          "auroc": 0.6838709677419355,
+          "brier": 0.11238395717631403
+        }
+      },
+      {
+        "lambda": 0.01,
+        "validation": {
+          "auprc": 0.9677355502086461,
+          "auroc": 0.6806451612903226,
+          "brier": 0.1137691280369988
+        }
+      },
+      {
+        "lambda": 0.0,
+        "validation": {
+          "auprc": 0.9673426635254369,
+          "auroc": 0.6774193548387096,
+          "brier": 0.113940592593901
+        }
+      }
+    ],
+    "rm_augmented_conventional": [
+      {
+        "lambda": 10.0,
+        "validation": {
+          "auprc": 0.9750556899588787,
+          "auroc": 0.7258064516129032,
+          "brier": 0.08988779045798706
+        }
+      },
+      {
+        "lambda": 1.0,
+        "validation": {
+          "auprc": 0.9705474366495648,
+          "auroc": 0.6967741935483871,
+          "brier": 0.10528951263237807
+        }
+      },
+      {
+        "lambda": 0.1,
+        "validation": {
+          "auprc": 0.9663802935497889,
+          "auroc": 0.667741935483871,
+          "brier": 0.11678923203900515
+        }
+      },
+      {
+        "lambda": 0.01,
+        "validation": {
+          "auprc": 0.9666473651878283,
+          "auroc": 0.6709677419354839,
+          "brier": 0.11915165899099482
+        }
+      },
+      {
+        "lambda": 0.0,
+        "validation": {
+          "auprc": 0.9666473651878283,
+          "auroc": 0.6709677419354839,
+          "brier": 0.11944842329673605
+        }
+      }
+    ]
+  },
+  "rm_scales": {
+    "available": 8.030377328080801,
+    "drought": 10.133726252143578,
+    "momentum": 1.0,
+    "state": 4.431738307699551
+  },
+  "stage": "CALIBRATION_LOCK",
+  "success_rule": {
+    "incremental_primary": "Brier(conventional) - Brier(conventional+RM) > 0 on holdout",
+    "no_post_holdout_retuning": true,
+    "rm_direction": "larger RM predicts more recovery",
+    "uncertainty": "basin-clustered bootstrap 95% CI for Brier improvement excludes zero"
+  },
+  "thresholds": {
+    "best_single": {
+      "budget": 0.1,
+      "false_positive_definition": "warning_on_episode_that_recovers_within_24m",
+      "positive_class": "non_recovery_within_24m",
+      "score": "1 - P(recovery)",
+      "threshold": 0.43918573916220083,
+      "validation_fpr": 0.06451612903225806,
+      "validation_sensitivity": 0.4
+    },
+    "conventional_multivariable": {
+      "budget": 0.1,
+      "false_positive_definition": "warning_on_episode_that_recovers_within_24m",
+      "positive_class": "non_recovery_within_24m",
+      "score": "1 - P(recovery)",
+      "threshold": 1.000000000001,
+      "validation_fpr": 0.0,
+      "validation_sensitivity": 0.0
+    },
+    "critical_slowing": {
+      "budget": 0.1,
+      "false_positive_definition": "warning_on_episode_that_recovers_within_24m",
+      "positive_class": "non_recovery_within_24m",
+      "score": "1 - P(recovery)",
+      "threshold": 0.3361528646302473,
+      "validation_fpr": 0.04838709677419355,
+      "validation_sensitivity": 0.2
+    },
+    "drought_severity_duration": {
+      "budget": 0.1,
+      "false_positive_definition": "warning_on_episode_that_recovers_within_24m",
+      "positive_class": "non_recovery_within_24m",
+      "score": "1 - P(recovery)",
+      "threshold": 1.000000000001,
+      "validation_fpr": 0.0,
+      "validation_sensitivity": 0.0
+    },
+    "history_persistence": {
+      "budget": 0.1,
+      "false_positive_definition": "warning_on_episode_that_recovers_within_24m",
+      "positive_class": "non_recovery_within_24m",
+      "score": "1 - P(recovery)",
+      "threshold": 0.6666666666666667,
+      "validation_fpr": 0.03225806451612903,
+      "validation_sensitivity": 0.2
+    },
+    "recoverability_margin": {
+      "budget": 0.1,
+      "false_positive_definition": "warning_on_episode_that_recovers_within_24m",
+      "positive_class": "non_recovery_within_24m",
+      "score": "1 - P(recovery)",
+      "threshold": 0.30922718626118806,
+      "validation_fpr": 0.08064516129032258,
+      "validation_sensitivity": 0.2
+    },
+    "rm_augmented_conventional": {
+      "budget": 0.1,
+      "false_positive_definition": "warning_on_episode_that_recovers_within_24m",
+      "positive_class": "non_recovery_within_24m",
+      "score": "1 - P(recovery)",
+      "threshold": 1.000000000001,
+      "validation_fpr": 0.0,
+      "validation_sensitivity": 0.0
+    },
+    "state_only": {
+      "budget": 0.1,
+      "false_positive_definition": "warning_on_episode_that_recovers_within_24m",
+      "positive_class": "non_recovery_within_24m",
+      "score": "1 - P(recovery)",
+      "threshold": 1.000000000001,
+      "validation_fpr": 0.0,
+      "validation_sensitivity": 0.0
+    },
+    "trend_only": {
+      "budget": 0.1,
+      "false_positive_definition": "warning_on_episode_that_recovers_within_24m",
+      "positive_class": "non_recovery_within_24m",
+      "score": "1 - P(recovery)",
+      "threshold": 1.000000000001,
+      "validation_fpr": 0.0,
+      "validation_sensitivity": 0.0
+    }
+  },
+  "training_rows_after_history_burnin": 231,
+  "validation_incremental_brier": 0.002491562420110477,
+  "validation_metrics": {
+    "best_single": {
+      "auprc": 0.9644752312125953,
+      "auroc": 0.6709677419354839,
+      "brier": 0.09552016515900984,
+      "selected_feature": "static_AI"
+    },
+    "conventional_multivariable": {
+      "auprc": 0.9729262073174817,
+      "auroc": 0.7096774193548387,
+      "brier": 0.09237935287809754
+    },
+    "critical_slowing": {
+      "auprc": 0.9620420557184212,
+      "auroc": 0.6774193548387096,
+      "brier": 0.08994109586502524
+    },
+    "drought_severity_duration": {
+      "auprc": 0.9557182407654167,
+      "auroc": 0.6161290322580645,
+      "brier": 0.10111499419999567
+    },
+    "history_persistence": {
+      "auprc": 0.9038231689068155,
+      "auroc": 0.5016129032258064,
+      "brier": 0.12358445480464751
+    },
+    "recoverability_margin": {
+      "auprc": 0.9697934485582188,
+      "auroc": 0.6967741935483871,
+      "brier": 0.09482709899108496
+    },
+    "rm_augmented_conventional": {
+      "auprc": 0.9750556899588787,
+      "auroc": 0.7258064516129032,
+      "brier": 0.08988779045798706
+    },
+    "state_only": {
+      "auprc": 0.9562954042257821,
+      "auroc": 0.6225806451612903,
+      "brier": 0.09595419694160846
+    },
+    "trend_only": {
+      "auprc": 0.9595696266332172,
+      "auroc": 0.6161290322580645,
+      "brier": 0.09646502637307022
+    }
+  },
+  "validation_rows": 67,
+  "warning_semantics": "loss_of_recoverability = 1 - P(recovery)"
+}

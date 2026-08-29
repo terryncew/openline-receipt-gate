@@ -1,0 +1,56 @@
+{
+  "experiment_id": "TERRYNCE-EARLY-WARNING-001",
+  "stage": "ONE_SHOT_HELDOUT_REPLAY",
+  "source_green_calibration": {
+    "github_run_id": 33279580933,
+    "commit_sha": "2a87aa0dd7f78e79dffb101409f340f740e6bf38",
+    "artifact_name": "TERRYNCE-EARLY-WARNING-001-calibration-lock",
+    "artifact_digest": "sha256:45e110df7840775504f9f72c1a1519a91164141f619db9885279d7c3319b2040"
+  },
+  "pinned_sha256": {
+    "calibration_lock": "e57a085a4ff26988e834898160afef8fffab429a478bee6c93af976b0b6beea0",
+    "holdout_predictions": "e58e14dba4f06af3819be5c9666fee20607b3d9a8252fe42619ca70bd3c5c07a",
+    "holdout_probabilities": "a1d69a63fb2835da5f40550aaea03fd533f6bfc08f5f6ca2d1cc3a10a0e5b473",
+    "episode_definition": "b5f46ed72f917e482da5cf8c72be4cf71260b1a20e59f5352d493def2df7de77"
+  },
+  "holdout": {
+    "period": [
+      "2019-01",
+      "2022-12"
+    ],
+    "expected_prediction_rows": 112,
+    "outcome_horizon_months": 24,
+    "outcome_recovery_fraction": 0.9,
+    "outcome_reconstruction_integrity_min_agreement": 0.98,
+    "prediction_regeneration_forbidden": true,
+    "model_or_threshold_change_forbidden": true
+  },
+  "primary_success": {
+    "rm_direction": {
+      "rule": "mean raw RM among recovered episodes > mean raw RM among non-recovered episodes AND AUROC(raw RM, recovery) > 0.5"
+    },
+    "incremental_brier": {
+      "definition": "Brier(conventional_multivariable) - Brier(rm_augmented_conventional)",
+      "point_estimate_must_be_positive": true
+    },
+    "basin_cluster_bootstrap": {
+      "cluster": "ID",
+      "replicates": 10000,
+      "seed": 20260829,
+      "interval": "two-sided percentile 95%",
+      "success": "lower endpoint > 0"
+    },
+    "verdict": "all three conditions must pass"
+  },
+  "warning_metrics": {
+    "positive_class": "non_recovery_within_24m",
+    "frozen_on_validation": true,
+    "report": [
+      "sensitivity",
+      "false_positive_rate",
+      "precision",
+      "warning_count"
+    ]
+  },
+  "limitation_to_record": "Outcome-side schema/recovery fields were inspected globally during the pre-model Science Lock to prove the published recovery mapping. Holdout outcomes were not used for fitting, feature selection, model selection, RM scaling, regularization, or warning thresholds."
+}
