@@ -30,3 +30,18 @@ dates that can encode the recovery outcome itself. The experiment therefore lock
 fields as labels only.
 
 No RM fitting or holdout scoring occurs in this gate.
+
+
+## Science Lock result
+
+The Science Lock Diagnostic passed:
+
+- 531 severe-drought episodes and 531 recovery rows
+- 531/531 exact `(ID, group)` joins
+- the recovery table's `EndDate_dgt` was proven outcome-derived
+- `TWSA_deseason_mov` reproduced the authors' `init_TWSA` and `min_TWSA` exactly across
+  1,062 checked values
+- raw chronological counts: 251 train / 103 validation / 112 holdout
+
+The next gate freezes the actual episode table and 24-month outcome reconstruction using
+train + validation only. Holdout labels remain unopened.

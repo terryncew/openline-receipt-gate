@@ -1,0 +1,69 @@
+name: TERRYNCE-EARLY-WARNING-001 Episode Lock
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  episode-lock:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: TERRYNCE-EARLY-WARNING-001
+    env:
+      PYTHONPATH: src
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Unit and boundary tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Acquire exact Zenodo v2 bundle
+        run: python -m terrynce_early_warning.cli acquire | tee artifacts/acquire_episode_lock_stdout.json
+
+      - name: Re-enforce data preflight
+        run: python -m terrynce_early_warning.cli preflight | tee artifacts/preflight_episode_lock_stdout.json
+
+      - name: Re-enforce science-lock diagnostic
+        run: python -m terrynce_early_warning.cli science-lock-diagnostic | tee artifacts/science_lock_episode_stdout.json
+
+      - name: Freeze causal episodes and outcome reconstruction
+        run: python -m terrynce_early_warning.cli episode-lock | tee artifacts/episode_lock_stdout.json
+
+      - name: Enforce holdout closure
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path("artifacts/episode_lock_report.json").read_text())
+          h=json.loads(Path("artifacts/holdout_feature_hashes.json").read_text())
+          assert r["status"]=="PASS_EPISODE_LOCK"
+          assert h["labels_constructed"] is False
+          print(json.dumps({
+              "status": r["status"],
+              "counts": r["common_complete_case_counts"],
+              "label_reproduction": r["train_validation_label_reproduction"],
+              "episode_definition_sha256": r["episode_definition_sha256"],
+              "next_gate": r["next_gate"],
+              "boundary": r["boundary"],
+          }, indent=2))
+          PY
+
+      - name: Upload episode-lock receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: TERRYNCE-EARLY-WARNING-001-episode-lock
+          path: |
+            TERRYNCE-EARLY-WARNING-001/artifacts/*.json
+            TERRYNCE-EARLY-WARNING-001/artifacts/*.sha256
+            TERRYNCE-EARLY-WARNING-001/artifacts/episode_lock_train_validation.csv
+          if-no-files-found: error
+          retention-days: 30

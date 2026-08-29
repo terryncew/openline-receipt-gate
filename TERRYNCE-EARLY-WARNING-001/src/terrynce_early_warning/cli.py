@@ -4,6 +4,7 @@ from .acquire import acquire
 from .preflight import preflight
 from .synthetic import smoke_receipt
 from .science_lock import diagnose_science_lock
+from .episode_lock import build_episode_lock
 
 def main():
     ap = argparse.ArgumentParser()
@@ -12,6 +13,7 @@ def main():
     sub.add_parser("preflight")
     sub.add_parser("synthetic")
     sub.add_parser("science-lock-diagnostic")
+    sub.add_parser("episode-lock")
     args = ap.parse_args()
     if args.cmd == "acquire":
         print(json.dumps(acquire(), indent=2))
@@ -19,6 +21,8 @@ def main():
         print(json.dumps(preflight(), indent=2))
     elif args.cmd == "science-lock-diagnostic":
         print(json.dumps(diagnose_science_lock(), indent=2))
+    elif args.cmd == "episode-lock":
+        print(json.dumps(build_episode_lock(), indent=2))
     else:
         print(json.dumps(smoke_receipt(), indent=2))
 
