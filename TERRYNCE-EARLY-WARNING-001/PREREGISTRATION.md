@@ -143,3 +143,23 @@ After the primary result is frozen:
 - alternate drought products
 
 These cannot overwrite the primary result.
+
+
+## Calibration lock amendment — before holdout opening
+
+The following details are frozen before any 2019–2022 recovery labels are constructed:
+
+- first 20 chronological training episodes are history burn-in only
+- basin-specific history requires at least 2 prior completed training episodes; otherwise
+  the prior pool is global training history
+- RM has fixed equal component weights after training-only median-positive scaling
+- simple baselines use deterministic L2 logistic regression with lambda 0.1
+- the best single observable is selected by five-block chronological training CV
+- conventional and conventional+RM logistic baselines choose lambda from
+  {0, 0.01, 0.1, 1, 10} on validation Brier score
+- warning thresholds are frozen on validation at a 10% false-positive budget
+- all holdout probabilities and warning decisions are generated and SHA-256 locked
+  before holdout labels are opened
+
+Validation performance cannot declare success. The primary claim is decided only by the
+untouched held-out replay and the preregistered basin-clustered uncertainty test.

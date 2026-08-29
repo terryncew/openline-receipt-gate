@@ -45,3 +45,14 @@ The Science Lock Diagnostic passed:
 
 The next gate freezes the actual episode table and 24-month outcome reconstruction using
 train + validation only. Holdout labels remain unopened.
+
+
+## Next: Calibration Lock
+
+After Episode Lock passes, training-only history constructs response lag and historical
+recovery capacity. Validation is consumed once to freeze conventional-model
+regularization and the 10% false-positive warning thresholds.
+
+Crucially, the workflow then writes and hashes every 2019–2022 prediction while the
+holdout recovery labels remain unopened. The next stage may score only those frozen
+predictions.
