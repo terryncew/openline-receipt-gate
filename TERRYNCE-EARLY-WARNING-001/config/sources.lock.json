@@ -1,0 +1,21 @@
+{
+  "dataset": {
+    "record": "10.5281/zenodo.18326378",
+    "version": "v2",
+    "published": "2026-01-21",
+    "files": [
+      {
+        "name": "data.zip",
+        "url": "https://zenodo.org/records/18326378/files/data.zip?download=1",
+        "md5": "a51b2b62686c9949695d791f5b0c1dc7",
+        "size_hint_bytes": 46500000
+      },
+      {
+        "name": "code.zip",
+        "url": "https://zenodo.org/records/18326378/files/code.zip?download=1",
+        "md5": "c45fd3e2b0fb445ce9a5461ea8587645",
+        "size_hint_bytes": 17500
+      }
+    ]
+  }
+}

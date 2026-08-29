@@ -1,0 +1,48 @@
+{
+  "experiment_id": "TERRYNCE-EARLY-WARNING-001",
+  "public_layer": "Terrynce Early Warning",
+  "state_variable": "Recoverability Margin",
+  "claim": "pre-relief RM adds held-out information about subsequent recovery beyond conventional causal baselines",
+  "primary_horizon_months": 24,
+  "split": {
+    "train": [
+      "2003-01",
+      "2015-12"
+    ],
+    "validation": [
+      "2016-01",
+      "2018-12"
+    ],
+    "holdout": [
+      "2019-01",
+      "2022-12"
+    ],
+    "ordering": "relief_time_chronological",
+    "post_2022_primary": "excluded_for_equal_24_month_followup"
+  },
+  "formula_structure": {
+    "future_burden": "state_deficit + max(0, adverse_momentum) * response_lag + drought_burden",
+    "available_recovery": "historical_recovery_capacity * max(0, horizon - response_lag)",
+    "recoverability_margin": "available_recovery - future_burden"
+  },
+  "baselines": [
+    "state_only",
+    "trend_only",
+    "drought_severity_duration",
+    "best_single_causal_observable",
+    "history_persistence",
+    "pre_relief_ar1_variance",
+    "conventional_multivariable"
+  ],
+  "primary_metrics": [
+    "brier",
+    "auroc",
+    "auprc"
+  ],
+  "success_rule": {
+    "monotonic_direction": true,
+    "incremental_brier_better_than_conventional": true,
+    "basin_clustered_bootstrap_95ci_excludes_zero": true
+  },
+  "no_post_holdout_retuning": true
+}

@@ -1,0 +1,61 @@
+name: TERRYNCE-EARLY-WARNING-001 Data Preflight
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: TERRYNCE-EARLY-WARNING-001
+    env:
+      PYTHONPATH: src
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Unit and causal-boundary tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Synthetic RM smoke test
+        run: python -m terrynce_early_warning.cli synthetic | tee artifacts/synthetic_receipt.json
+
+      - name: Acquire exact public Zenodo v2 bundle
+        run: python -m terrynce_early_warning.cli acquire | tee artifacts/acquire_stdout.json
+
+      - name: Data and causality preflight
+        run: python -m terrynce_early_warning.cli preflight | tee artifacts/preflight_stdout.json
+
+      - name: Enforce stage boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path("artifacts/preflight_report.json").read_text())
+          assert r["status"]=="PASS_DATA_PREFLIGHT"
+          assert r["science_lock_ready"] is False
+          print(json.dumps({
+              "status": r["status"],
+              "next_gate": r["next_gate"],
+              "boundary": r["boundary"],
+          }, indent=2))
+          PY
+
+      - name: Upload small receipts only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: TERRYNCE-EARLY-WARNING-001-data-preflight
+          path: |
+            TERRYNCE-EARLY-WARNING-001/artifacts/*.json
+            TERRYNCE-EARLY-WARNING-001/artifacts/*.sha256
+          if-no-files-found: error
+          retention-days: 30
