@@ -86,3 +86,14 @@ captures sample rows/headers from the key tables, scans the author code for the 
 definition, and emits a small receipt artifact.
 
 No holdout is scored in this stage.
+
+
+## Causality correction after preflight
+
+The released `TWSA_recovery_one_95.csv` contains outcome-side dates and recovery metrics.
+They are never allowed to define the predictor cutoff. `relief_t0` is anchored to
+`severe_drought_events_ensemble.csv:EndDate` using the `(ID, group)` episode key.
+
+The Science Lock Diagnostic verifies this join and identifies the exact released TWSA
+series that reproduces the authors' recovery values before we freeze the outcome
+reconstruction.

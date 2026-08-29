@@ -1,0 +1,65 @@
+name: TERRYNCE-EARLY-WARNING-001 Science Lock Diagnostic
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lock:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: TERRYNCE-EARLY-WARNING-001
+    env:
+      PYTHONPATH: src
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Unit and boundary tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Reacquire and verify exact public bundle
+        run: python -m terrynce_early_warning.cli acquire | tee artifacts/acquire_science_lock_stdout.json
+
+      - name: Re-enforce data preflight
+        run: python -m terrynce_early_warning.cli preflight | tee artifacts/preflight_science_lock_stdout.json
+
+      - name: Diagnose episode and recovery causality mapping
+        run: python -m terrynce_early_warning.cli science-lock-diagnostic | tee artifacts/science_lock_stdout.json
+
+      - name: Print lock decision
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path("artifacts/science_lock_diagnostic.json").read_text())
+          print(json.dumps({
+              "status": r["status"],
+              "checks": r["checks"],
+              "split_counts": r["split_counts"],
+              "eligible_24m_followup": r["eligible_24m_followup"],
+              "date_relationships": r["date_relationships"],
+              "best_twsa_reproduction_candidate": r["lock_candidate"]["best_twsa_reproduction_candidate"],
+              "boundary": r["boundary"],
+          }, indent=2))
+          if r["status"] == "FAIL":
+              raise SystemExit(2)
+          PY
+
+      - name: Upload science-lock receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: TERRYNCE-EARLY-WARNING-001-science-lock-diagnostic
+          path: |
+            TERRYNCE-EARLY-WARNING-001/artifacts/*.json
+            TERRYNCE-EARLY-WARNING-001/artifacts/*.sha256
+          if-no-files-found: error
+          retention-days: 30

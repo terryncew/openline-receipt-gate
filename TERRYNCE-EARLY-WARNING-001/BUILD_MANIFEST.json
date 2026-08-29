@@ -1,12 +1,18 @@
 {
   "experiment_id": "TERRYNCE-EARLY-WARNING-001",
-  "handoff": "DATA_PREFLIGHT",
+  "handoff": "SCIENCE_LOCK_DIAGNOSTIC",
   "root_ready": true,
+  "validation": "Python syntax + 8 local unit/boundary tests; full public-data diagnostic runs in GitHub Actions.",
   "files": [
     {
       "path": ".github/workflows/terrynce-early-warning-001-preflight.yml",
       "sha256": "2dd2ccf90aae628d98e931dca22ba4b7873def30b6bbbb6013392e6c0149842a",
       "bytes": 1816
+    },
+    {
+      "path": ".github/workflows/terrynce-early-warning-001-science-lock.yml",
+      "sha256": "bfe9370862f5aad5b5817409186f1eaefbbf8fcd44c10d41b29007808266a10b",
+      "bytes": 2140
     },
     {
       "path": "TERRYNCE-EARLY-WARNING-001/.gitignore",
@@ -25,13 +31,13 @@
     },
     {
       "path": "TERRYNCE-EARLY-WARNING-001/README.md",
-      "sha256": "932649d663ef4cd9a3edc929801575c7c2858fdc47a04680c58d68e5225e6580",
-      "bytes": 3229
+      "sha256": "b23c6de7a1fc81fc39f1c28bbf78d8eeeeb000d6f9398eb61a0088ee429d5b3e",
+      "bytes": 3710
     },
     {
       "path": "TERRYNCE-EARLY-WARNING-001/STATUS.md",
-      "sha256": "31e1dc3541bb831e0e5250465e576fa940f24277533d5f6d9019b1d67318524f",
-      "bytes": 659
+      "sha256": "7bd91ecc3041beaa599034acb9aca55910307e38d4c659dc138379e2b7d46224",
+      "bytes": 1179
     },
     {
       "path": "TERRYNCE-EARLY-WARNING-001/artifacts/.gitkeep",
@@ -70,8 +76,8 @@
     },
     {
       "path": "TERRYNCE-EARLY-WARNING-001/src/terrynce_early_warning/cli.py",
-      "sha256": "99c4ca637a92429a8a55c69306638a765566536ca1adfcc3d45c246cb711e732",
-      "bytes": 642
+      "sha256": "39569ce0a8b9e57b22bebd7c67bf85075bcd9df1ffc2628f69e1891aaa3e8f8b",
+      "bytes": 845
     },
     {
       "path": "TERRYNCE-EARLY-WARNING-001/src/terrynce_early_warning/inventory.py",
@@ -94,6 +100,11 @@
       "bytes": 517
     },
     {
+      "path": "TERRYNCE-EARLY-WARNING-001/src/terrynce_early_warning/science_lock.py",
+      "sha256": "b075a5490058c9b4525587c6de02572674e3fd4b16985d592a9f4dd1959aab86",
+      "bytes": 12317
+    },
+    {
       "path": "TERRYNCE-EARLY-WARNING-001/src/terrynce_early_warning/synthetic.py",
       "sha256": "f3a77cb7aa6dc35cfda01cedbface3b3305d320cc682ef2c72c2b91e5d857ad3",
       "bytes": 611
@@ -112,6 +123,11 @@
       "path": "TERRYNCE-EARLY-WARNING-001/tests/test_protocol.py",
       "sha256": "f98e84d95811e45753ed6c3f4a9000205c08f84e3e345df6b08199bf64a2614f",
       "bytes": 499
+    },
+    {
+      "path": "TERRYNCE-EARLY-WARNING-001/tests/test_science_lock.py",
+      "sha256": "cf04538051d8eba92a7d251fd70710f7fb49511c77b17dde393d70742034f0ac",
+      "bytes": 1130
     }
   ]
 }
