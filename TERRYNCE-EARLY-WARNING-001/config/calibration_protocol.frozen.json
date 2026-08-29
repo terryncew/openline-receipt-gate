@@ -1,0 +1,115 @@
+{
+  "experiment_id": "TERRYNCE-EARLY-WARNING-001",
+  "stage": "CALIBRATION_LOCK",
+  "primary_horizon_months": 24,
+  "history": {
+    "training_burn_in_episodes": 20,
+    "basin_min_prior_completed_episodes": 2,
+    "validation_and_holdout_history_source": "training_only",
+    "response_lag": "median max(0, months from relief_t0 to TWSA minimum) in prior pool",
+    "recovery_capacity": "prior recovery fraction times median 90%-recovery amplitude per month among prior recovered episodes",
+    "history_probability": "fraction of prior episodes recovered within 24 months"
+  },
+  "recoverability_margin": {
+    "state_burden": "max(0, state_baseline - state_current)",
+    "momentum_burden": "max(0, -pre_relief_slope) * response_lag_months",
+    "drought_burden": "max(0, duration_months) * max(0, mean_p_drought)",
+    "available_recovery": "historical_recovery_capacity_per_month * max(0, 24 - response_lag_months)",
+    "scaling": "divide each nonnegative component by its training-only median-positive scale; no centering",
+    "formula": "RM = available_recovery_scaled - state_burden_scaled - momentum_burden_scaled - drought_burden_scaled",
+    "weights": "fixed equal weights; no label-fitted RM coefficients"
+  },
+  "modeling": {
+    "family": "deterministic L2 logistic regression implemented in stdlib Python",
+    "regularization_grid_conventional": [
+      0.0,
+      0.01,
+      0.1,
+      1.0,
+      10.0
+    ],
+    "regularization_fixed_simple": 0.1,
+    "standardization": "training-only mean/std; intercept unpenalized",
+    "max_iterations": 200,
+    "tolerance": 1e-09
+  },
+  "best_single": {
+    "selection": "lowest five-block chronological training cross-validated Brier score",
+    "regularization": 0.1,
+    "candidates": [
+      "state_deficit",
+      "pre_relief_slope",
+      "pre_relief_ar1",
+      "log1p_pre_relief_variance",
+      "duration_months",
+      "extreme_duration_months",
+      "mean_p_drought",
+      "peak_p_extreme",
+      "history_recovery_rate",
+      "static_AI",
+      "static_pIRR",
+      "static_pSNOW",
+      "static_MAP",
+      "static_MAT",
+      "static_area_log",
+      "static_fReser_MAP"
+    ]
+  },
+  "baselines": {
+    "state_only": [
+      "state_deficit"
+    ],
+    "trend_only": [
+      "pre_relief_slope"
+    ],
+    "drought_severity_duration": [
+      "duration_months",
+      "extreme_duration_months",
+      "mean_p_drought",
+      "peak_p_extreme"
+    ],
+    "history_persistence": "direct history_recovery_rate probability",
+    "critical_slowing": [
+      "pre_relief_ar1",
+      "log1p_pre_relief_variance"
+    ],
+    "conventional_multivariable": [
+      "state_deficit",
+      "pre_relief_slope",
+      "duration_months",
+      "extreme_duration_months",
+      "mean_p_drought",
+      "peak_p_extreme",
+      "history_recovery_rate",
+      "pre_relief_ar1",
+      "log1p_pre_relief_variance",
+      "static_AI",
+      "static_pIRR",
+      "static_pSNOW",
+      "static_MAP",
+      "static_MAT",
+      "static_area_log",
+      "static_fReser_MAP"
+    ],
+    "rm_augmented_conventional": "conventional_multivariable plus recoverability_margin"
+  },
+  "validation": {
+    "false_positive_budget": 0.1,
+    "threshold_rule": "maximize validation sensitivity subject to FPR <= 0.10; deterministic tie-break toward higher threshold",
+    "regularization_selection": "lowest validation Brier; deterministic tie-break toward smaller lambda"
+  },
+  "holdout": {
+    "years": [
+      "2019-01",
+      "2022-12"
+    ],
+    "labels": "must remain unopened during calibration",
+    "predictions": "freeze and hash all model probabilities and warning decisions before labels are constructed"
+  },
+  "success_rule_unchanged": {
+    "rm_direction": "larger RM predicts more recovery",
+    "incremental_primary": "Brier(conventional) - Brier(conventional+RM) > 0 on holdout",
+    "uncertainty": "basin-clustered bootstrap 95% CI for Brier improvement excludes zero",
+    "no_post_holdout_retuning": true
+  }
+}

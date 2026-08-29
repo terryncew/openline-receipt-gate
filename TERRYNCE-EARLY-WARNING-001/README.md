@@ -110,3 +110,13 @@ The primary label is recovery of 90% of the TWS loss within 24 months after mete
 drought relief. Its reconstruction is verified against the released author outcome on
 training + validation before any model is fitted. Holdout labels are not created in this
 stage.
+
+
+## Calibration
+
+`TERRYNCE-EARLY-WARNING-001 Calibration Lock` turns the frozen episode definition into
+a true pre-outcome prediction lock. It trains on the training period, consumes validation
+once, then emits `holdout_predictions.lock.csv` before constructing any holdout labels.
+
+That file is the line in the sand: the held-out replay may join outcomes to those rows;
+it may not regenerate better predictions after seeing the outcomes.
