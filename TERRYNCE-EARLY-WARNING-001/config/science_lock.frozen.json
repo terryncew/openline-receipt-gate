@@ -1,0 +1,76 @@
+{
+  "experiment_id": "TERRYNCE-EARLY-WARNING-001",
+  "source_run_id": 33277613480,
+  "source_artifact_name": "TERRYNCE-EARLY-WARNING-001-science-lock-diagnostic",
+  "source_artifact_digest": "sha256:1a2d03bcee279720096286f9cbd44d030c91603d3319b16c2dfa40a928759c0b",
+  "science_lock_receipt_sha256": "5045f3d47db978309279c5f465d6d39482c4cf8eb2e6dec3656c3c06a02f9877",
+  "episode_key": [
+    "ID",
+    "group"
+  ],
+  "relief_t0": {
+    "table": "severe_drought_events_ensemble.csv",
+    "column": "EndDate"
+  },
+  "outcome": {
+    "series_table": "data_TWSA_all_filled_stl.csv",
+    "series_column": "TWSA_deseason_mov",
+    "recovery_fraction": 0.9,
+    "horizon_months": 24,
+    "label_only_columns": [
+      "TWSA_recovery_one_95.init_TWSA",
+      "TWSA_recovery_one_95.min_TWSA",
+      "TWSA_recovery_one_95.min_TWSA_Date",
+      "TWSA_recovery_one_95.recovered",
+      "TWSA_recovery_one_95.EndDate_dgt",
+      "TWSA_recovery_one_95.recovery_time"
+    ]
+  },
+  "predictors": {
+    "twsa_observed_columns": [
+      "CSR",
+      "GSFC",
+      "JPL"
+    ],
+    "twsa_month_aggregation": "median_available_observed_centers",
+    "baseline_window_months_before_drought_start": 24,
+    "baseline_min_observations": 6,
+    "current_max_age_months": 3,
+    "trend_lookback_months": 12,
+    "trend_last_n_observations": 6,
+    "trend_min_observations": 4,
+    "resilience_lookback_months": 24,
+    "resilience_last_n_observations": 12,
+    "resilience_min_observations": 8,
+    "drought_series_table": "basin_ensemble_spei06.csv",
+    "drought_features": [
+      "Duration",
+      "Duration_Extreme",
+      "mean_p_drought",
+      "peak_p_extreme"
+    ],
+    "static_basin_table": "basin_attr.csv",
+    "static_basin_columns": [
+      "AI",
+      "pIRR",
+      "pSNOW",
+      "MAP",
+      "MAT",
+      "area_log",
+      "fReser_MAP"
+    ]
+  },
+  "quarantined_predictor_material": [
+    "TWSA_deseason_mov",
+    "all *_season columns",
+    "all *_trend columns from STL",
+    "all *_residual columns",
+    "all *_deseason columns",
+    "GF_DL",
+    "GF_climSSA",
+    "any measurement Date > relief_t0",
+    "any recovery-table field"
+  ],
+  "primary_episode_set_rule": "common complete-case causal feature set across RM and all hard baselines",
+  "holdout_visibility": "features hashed only; labels not constructed until final held-out replay"
+}

@@ -97,3 +97,16 @@ They are never allowed to define the predictor cutoff. `relief_t0` is anchored t
 The Science Lock Diagnostic verifies this join and identifies the exact released TWSA
 series that reproduces the authors' recovery values before we freeze the outcome
 reconstruction.
+
+
+## Episode Lock
+
+After the Science Lock passed, the experiment freezes a stricter predictor boundary:
+only observed CSR/GSFC/JPL center values timestamped at or before `relief_t0` may supply
+the TWSA state/trend/resilience features. Filled and STL-derived series are outcome-only
+or quarantined.
+
+The primary label is recovery of 90% of the TWS loss within 24 months after meteorological
+drought relief. Its reconstruction is verified against the released author outcome on
+training + validation before any model is fitted. Holdout labels are not created in this
+stage.
