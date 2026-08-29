@@ -1,14 +1,16 @@
 {
   "experiment_id": "TERRYNCE-EARLY-WARNING-001",
-  "handoff": "CALIBRATION_LOCK",
+  "handoff": "PRE_HOLDOUT_WARNING_SEMANTICS_FIX",
   "root_ready": true,
-  "validation": "Python syntax + local unit/boundary tests. Full data calibration and prediction locking run in GitHub Actions.",
-  "holdout_policy": "Predictions frozen and hashed before 2019-2022 labels are constructed.",
+  "source_green_calibration_run": 33279285817,
+  "source_probability_only_sha256": "a1d69a63fb2835da5f40550aaea03fd533f6bfc08f5f6ca2d1cc3a10a0e5b473",
+  "scientific_models_changed": false,
+  "holdout_opened": false,
   "files": [
     {
       "path": ".github/workflows/terrynce-early-warning-001-calibration.yml",
-      "sha256": "cb169a2aeca4873c55a1d82a22955eab487fdf366ffe92988d068337fd02b1fa",
-      "bytes": 3018
+      "sha256": "2ab9218096afdaebf5d9401c31ab48a84f7f29779fcc30bc0c02802ae9599e32",
+      "bytes": 3401
     },
     {
       "path": ".github/workflows/terrynce-early-warning-001-episode-lock.yml",
@@ -37,18 +39,18 @@
     },
     {
       "path": "TERRYNCE-EARLY-WARNING-001/PREREGISTRATION.md",
-      "sha256": "e972a35b1624a974934beb524a1e324bf48da618a1900491151cba82bc746d09",
-      "bytes": 6070
+      "sha256": "ac72177bca893f856bfb3666236b3edc34325a427dad6dc42e92e81ecc1421e9",
+      "bytes": 6962
     },
     {
       "path": "TERRYNCE-EARLY-WARNING-001/README.md",
-      "sha256": "9b3fa722355d0bbe2cd48b519c4b09134cf1a23c72e16bef649b00ac0332ac9f",
-      "bytes": 4722
+      "sha256": "70f824f8950eb89b42cb64da6a3a2222ae819e09700e6790b993e2def248d365",
+      "bytes": 5016
     },
     {
       "path": "TERRYNCE-EARLY-WARNING-001/STATUS.md",
-      "sha256": "02b6ce5c7bb7fb365bbc9ea3244d77311786bea5b8ae68883069285f628f001f",
-      "bytes": 2160
+      "sha256": "aee662262093c3bf306eb3e29359d600dafad082c5cc0ccbe6c1128bb4c177ee",
+      "bytes": 2600
     },
     {
       "path": "TERRYNCE-EARLY-WARNING-001/artifacts/.gitkeep",
@@ -57,13 +59,18 @@
     },
     {
       "path": "TERRYNCE-EARLY-WARNING-001/config/calibration_protocol.frozen.json",
-      "sha256": "d61d374c11402805409691b9c638e55afb1fbac839e840b2a106937195e5735c",
-      "bytes": 3969
+      "sha256": "31897d11bff6f0000a8316b96c3d31d432d141cb140248a25db07efdcb5822c9",
+      "bytes": 4323
     },
     {
       "path": "TERRYNCE-EARLY-WARNING-001/config/frozen_protocol.json",
       "sha256": "f5cb73b4db765284dbef7be827d88099d242d3903c2b410a4d18f6178cb7f8e8",
       "bytes": 1365
+    },
+    {
+      "path": "TERRYNCE-EARLY-WARNING-001/config/pre_holdout_warning_amendment.json",
+      "sha256": "23dde87e1f7d1d58f1efadafef1e6df0070c0fceccaf2ed061ffac4ca0dcbe2d",
+      "bytes": 1158
     },
     {
       "path": "TERRYNCE-EARLY-WARNING-001/config/science_lock.frozen.json",
@@ -97,8 +104,8 @@
     },
     {
       "path": "TERRYNCE-EARLY-WARNING-001/src/terrynce_early_warning/calibration.py",
-      "sha256": "5baf2a908f3cd7e94d1bd76b9a87d47e1b2335d8e70be0c1ca51d2098bba742c",
-      "bytes": 18431
+      "sha256": "d4a769d64e0673b2c38e83651b467c5bc6a6faaad8d576a8c23b50f1c3550425",
+      "bytes": 21003
     },
     {
       "path": "TERRYNCE-EARLY-WARNING-001/src/terrynce_early_warning/cli.py",
@@ -174,6 +181,11 @@
       "path": "TERRYNCE-EARLY-WARNING-001/tests/test_science_lock.py",
       "sha256": "cf04538051d8eba92a7d251fd70710f7fb49511c77b17dde393d70742034f0ac",
       "bytes": 1130
+    },
+    {
+      "path": "TERRYNCE-EARLY-WARNING-001/tests/test_warning_semantics.py",
+      "sha256": "22fe4e1ff804ea7e0c36d49ad6f3a48fa75690ee1febcc6848c4d05935e02459",
+      "bytes": 1585
     }
   ]
 }
