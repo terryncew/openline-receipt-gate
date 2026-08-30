@@ -84,8 +84,20 @@ class UnitreeG1Adapter:
         self.mujoco.mj_setState(self.model,data,x,self.mujoco.mjtState.mjSTATE_INTEGRATION)
         self.mujoco.mj_forward(self.model,data)
 
+    def copy_data(self,src):
+        """Full in-memory MuJoCo branch copy.
+
+        mjSTATE_INTEGRATION remains the portable state digest, but exact branching
+        uses mj_copyData so engine-side state outside the portable state vector
+        cannot silently differ between counterfactual arms.
+        """
+        dest=self.new_data()
+        self.mujoco.mj_copyData(dest,self.model,src)
+        return dest
+
     def snapshot(self,data,w):
         return {
+            "data":self.copy_data(data),
             "integration":self.integration_state(data).copy(),
             "wrapper":WrapperSnapshot(
                 action=w.action.copy(),
@@ -97,8 +109,7 @@ class UnitreeG1Adapter:
         }
 
     def restore(self,snap):
-        d=self.new_data()
-        self.set_integration_state(d,snap["integration"])
+        d=self.copy_data(snap["data"])
         sw=snap["wrapper"]
         w=WrapperSnapshot(
             action=sw.action.copy(),target_dof_pos=sw.target_dof_pos.copy(),
