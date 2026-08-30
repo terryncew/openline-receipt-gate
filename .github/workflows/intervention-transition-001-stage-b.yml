@@ -1,0 +1,96 @@
+name: INTERVENTION-TRANSITION-001 Stage B Heldout
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  heldout-transition-benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: INTERVENTION-TRANSITION-001/stage_b
+    env:
+      PYTHONPATH: src:../src
+      UNITREE_COMMIT: 276801e46c5d433564f24658bac64f254b7d2d4b
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Unit and boundary tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Download exact frozen Stage A artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: INTERVENTION-TRANSITION-001-stage-a
+          path: INTERVENTION-TRANSITION-001/stage_b/input/stage-a
+          github-token: ${{ github.token }}
+          repository: terryncew/openline-receipt-gate
+          run-id: 33288841294
+
+      - name: Verify Stage A evidence pins
+        run: python -m transition_benchmark.cli verify --stage-a input/stage-a
+
+      - name: Install frozen Stage B dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu torch==2.7.1
+
+      - name: Acquire pinned Unitree G1 controller
+        run: |
+          rm -rf data/work/unitree_rl_gym
+          mkdir -p data/work/unitree_rl_gym
+          git -C data/work/unitree_rl_gym init
+          git -C data/work/unitree_rl_gym remote add origin https://github.com/unitreerobotics/unitree_rl_gym.git
+          git -C data/work/unitree_rl_gym fetch --depth 1 origin "$UNITREE_COMMIT"
+          git -C data/work/unitree_rl_gym checkout --detach FETCH_HEAD
+          test "$(git -C data/work/unitree_rl_gym rev-parse HEAD)" = "$UNITREE_COMMIT"
+
+      - name: Reconstruct and bind heldout state features
+        run: |
+          python -m transition_benchmark.cli features \
+            --stage-a input/stage-a \
+            --unitree-root data/work/unitree_rl_gym \
+            --out artifacts/features
+
+      - name: Freeze model and holdout predictions
+        run: |
+          python -m transition_benchmark.cli calibrate \
+            --stage-a input/stage-a \
+            --features artifacts/features \
+            --out artifacts/calibration
+
+      - name: One-shot open heldout outcomes
+        run: |
+          python -m transition_benchmark.cli replay \
+            --stage-a input/stage-a \
+            --calibration artifacts/calibration \
+            --out artifacts/result
+
+      - name: Upload immutable Stage B receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: INTERVENTION-TRANSITION-001-stage-b-result
+          path: |
+            INTERVENTION-TRANSITION-001/stage_b/artifacts/features/*.json
+            INTERVENTION-TRANSITION-001/stage_b/artifacts/features/*.sha256
+            INTERVENTION-TRANSITION-001/stage_b/artifacts/features/*.npz
+            INTERVENTION-TRANSITION-001/stage_b/artifacts/calibration/*.json
+            INTERVENTION-TRANSITION-001/stage_b/artifacts/calibration/*.sha256
+            INTERVENTION-TRANSITION-001/stage_b/artifacts/calibration/*.csv
+            INTERVENTION-TRANSITION-001/stage_b/artifacts/calibration/*.npz
+            INTERVENTION-TRANSITION-001/stage_b/artifacts/result/*.json
+            INTERVENTION-TRANSITION-001/stage_b/artifacts/result/*.sha256
+          if-no-files-found: error
+          retention-days: 90

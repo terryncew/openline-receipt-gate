@@ -1,0 +1,16 @@
+{
+  "experiment_id": "INTERVENTION-TRANSITION-001",
+  "stage": "STAGE_B_HELDOUT_TRANSITION_BENCHMARK",
+  "base_main_commit": "20db896fafabe197039e567f364ec5f7a6c3d699",
+  "stage_a_run_id": 33288841294,
+  "stage_a_artifact_id": 9725332707,
+  "stage_a_dataset_sha256": "50bdcc13dff766fc13f9694347bfaef3f12b6951a85340ae96cd1cc5abb4c94c",
+  "stage_b_config_sha256": "092d0f298b21d58fdadf9a4e24f30124dde170578014b27f1a8c772b547307e0",
+  "local_validation": [
+    "5 Stage B unit/boundary tests passed",
+    "synthetic end-to-end calibration/replay smoke passed",
+    "Python syntax compilation passed"
+  ],
+  "workflow": "INTERVENTION-TRANSITION-001 Stage B Heldout",
+  "scientific_boundary": "No Terrynce scalar or margin is fit; direct action-conditioned transition learning is tested first."
+}

@@ -1,0 +1,115 @@
+{
+  "experiment_id": "INTERVENTION-TRANSITION-001",
+  "stage": "STAGE_B_HELDOUT_TRANSITION_BENCHMARK",
+  "split_method": "Sort all 50 context_id values by SHA256(stage_a_dataset_sha256 + \"|\" + context_id); first 30 train, next 10 validation, final 10 holdout.",
+  "stage_a_run_id": 33288841294,
+  "stage_a_artifact_id": 9725332707,
+  "stage_a_artifact_zip_sha256": "c5d9abaa9bcc36ad5863190698ea6862a654a75769fa7b6ca637615ee9acce7b",
+  "stage_a_dataset_sha256": "50bdcc13dff766fc13f9694347bfaef3f12b6951a85340ae96cd1cc5abb4c94c",
+  "stage_a_context_receipts_sha256": "9fb1b1d661c48bdd19e4db9fd97d5e219b767d54b1168f494ee64f1d59fb204e",
+  "stage_a_manifest_sha256": "3410f5e13ae835ccc88c40624f60fe961f8bb81b1fdcc1e3abc16fb3d197fb45",
+  "base_main_commit": "20db896fafabe197039e567f364ec5f7a6c3d699",
+  "split": {
+    "train": [
+      "g1-002",
+      "g1-045",
+      "g1-046",
+      "g1-025",
+      "g1-006",
+      "g1-035",
+      "g1-018",
+      "g1-003",
+      "g1-008",
+      "g1-022",
+      "g1-029",
+      "g1-017",
+      "g1-023",
+      "g1-004",
+      "g1-021",
+      "g1-031",
+      "g1-039",
+      "g1-013",
+      "g1-015",
+      "g1-043",
+      "g1-047",
+      "g1-024",
+      "g1-007",
+      "g1-042",
+      "g1-049",
+      "g1-005",
+      "g1-026",
+      "g1-020",
+      "g1-041",
+      "g1-044"
+    ],
+    "validation": [
+      "g1-014",
+      "g1-030",
+      "g1-011",
+      "g1-034",
+      "g1-033",
+      "g1-027",
+      "g1-010",
+      "g1-032",
+      "g1-038",
+      "g1-040"
+    ],
+    "holdout": [
+      "g1-019",
+      "g1-012",
+      "g1-028",
+      "g1-009",
+      "g1-000",
+      "g1-001",
+      "g1-036",
+      "g1-048",
+      "g1-016",
+      "g1-037"
+    ]
+  },
+  "model": {
+    "state_embedding": "StandardScaler then PCA fit on the 30 unique training context vectors only.",
+    "pca_components_max": 12,
+    "learner": "inverse-distance k-nearest-context probability estimator",
+    "k_grid": [
+      3,
+      5,
+      7,
+      9
+    ],
+    "k_selection": "minimum validation Brier independently for each model; ties choose smaller k",
+    "probability_target": "failure = 1 - outcome_success",
+    "feasible_threshold": 0.95,
+    "models": {
+      "state_only": "nearest contexts; average all action\u00d7lag failure outcomes within each neighbor context",
+      "state_plus_lag": "nearest contexts; average all actions at the exact lag",
+      "state_plus_action": "nearest contexts; average all lags for the exact action",
+      "direct_action_lag": "nearest contexts; exact action and exact lag",
+      "action_lag_global": "training-context mean for exact action and lag; no state"
+    },
+    "feasible_threshold_semantics": "feasible iff P(success) >= 0.95, equivalently P(fail) <= 0.05"
+  },
+  "primary_falsifiers": {
+    "action_conditioning_redundancy": "Brier(state_plus_lag) - Brier(direct_action_lag) must be > 0 with context-bootstrap 95% lower bound > 0.",
+    "lag_conditioning_redundancy": "Brier(state_plus_action) - Brier(direct_action_lag) must be > 0 with context-bootstrap 95% lower bound > 0.",
+    "remedy_set_recovery": "On held-out remedy-divergent context\u00d7lag groups, direct mean Jaccard must exceed both state_plus_lag and state_only."
+  },
+  "secondary_matched_risk_test": {
+    "baseline": "state_only predicted P(fail) for CONTINUE at lag 0",
+    "risk_tolerance_absolute": 0.1,
+    "unit": "holdout context-pair \u00d7 lag",
+    "minimum_pairs_for_interpretation": 5,
+    "test": "Among pairs with comparable baseline risk but different oracle feasible sets, measure whether predicted feasible sets also differ."
+  },
+  "bootstrap": {
+    "replicates": 10000,
+    "seed": 20260830,
+    "cluster": "context_id"
+  },
+  "claim_boundary": [
+    "This tests learnability of intervention-conditioned outcomes under one frozen Unitree G1 controller and MuJoCo model.",
+    "It does not establish physical non-viability for the robot under all controllers.",
+    "It does not test or fit a Terrynce Curve, recoverability margin, or domain-independent scalar.",
+    "No action, lag, perturbation, target, outcome rule, or Stage A oracle may be changed after this lock."
+  ]
+}
