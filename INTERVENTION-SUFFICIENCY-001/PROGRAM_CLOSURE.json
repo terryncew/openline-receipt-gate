@@ -1,0 +1,25 @@
+{
+  "program": "Terrynce recoverability / margin-discovery line",
+  "disposition": "NO_DOMAIN_INDEPENDENT_RECOVERABILITY_MARGIN_SIGNAL",
+  "status": "FROZEN_NEGATIVE_PROGRAM_RESULT",
+  "claim_closed": "Current evidence does not support a universal or domain-independent scalar, curve, or state-only metric that reveals remaining recoverability across unrelated systems.",
+  "surviving_intuition": "Options can disappear before catastrophe, and execution delay can remove the last useful intervention.",
+  "scientific_correction": "The missing variable is the transition under intervention. Recoverability is a property of state/history, action, lag, target, constraints, and their outcome distribution together.",
+  "required_mapping": "(state/history, action, lag) -> outcome distribution",
+  "reopen_only_if": [
+    "same or credibly matched contexts are evaluated under different actions",
+    "execution lag is varied within matched context-action pairs",
+    "successful and failed recoveries are both represented",
+    "the data contain remedy-divergence cases under matched context",
+    "a strong action-conditioned transition model is the first comparator"
+  ],
+  "terrynce_curve_role_if_reopened": "Display/compression of action-set contraction computed by a domain transition model; not a universal predictor.",
+  "openline_role": [
+    "verify evidence provenance and standing",
+    "record the transition model, target, constraints, actions, and lags used",
+    "derive and receipt the feasible action set",
+    "enforce mandate/authority separately from physical feasibility",
+    "expire stale action-set results",
+    "reopen prior decisions when the feasible or authorized action set changes"
+  ]
+}

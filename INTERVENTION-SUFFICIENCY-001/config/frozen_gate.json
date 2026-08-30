@@ -1,0 +1,64 @@
+{
+  "experiment_id": "INTERVENTION-SUFFICIENCY-001",
+  "purpose": "Reject recoverability substrates before modeling unless their evidence can support a credible action-conditioned transition test.",
+  "canonical_columns": [
+    "context_id",
+    "action_id",
+    "lag",
+    "target_id",
+    "constraint_set_id"
+  ],
+  "evidence_modes": {
+    "deterministic_rollout": {
+      "required_value_column": "outcome_success",
+      "allowed_values": [
+        0,
+        1
+      ],
+      "min_trials_per_cell": 1
+    },
+    "stochastic_rollout": {
+      "required_value_column": "outcome_success",
+      "allowed_values": [
+        0,
+        1
+      ],
+      "min_trials_per_cell": 5
+    },
+    "validated_dynamics_model": {
+      "required_value_column": "success_probability",
+      "range": [
+        0.0,
+        1.0
+      ],
+      "requires_model_validation_receipt_sha256": true,
+      "min_trials_per_cell": 1
+    }
+  },
+  "contrast_thresholds": {
+    "feasible_score": 0.8,
+    "infeasible_score": 0.2
+  },
+  "minimums": {
+    "unique_contexts": 50,
+    "transition_cells": 150,
+    "unique_actions": 2,
+    "unique_lags": 2,
+    "action_tested_context_lag_groups": 25,
+    "remedy_divergent_context_lag_groups": 10,
+    "lag_tested_context_action_groups": 25,
+    "lag_contraction_context_action_groups": 10,
+    "success_like_cells": 20,
+    "failure_like_cells": 20
+  },
+  "matching_requirements": {
+    "matching_procedure_required": true,
+    "matching_frozen_before_outcome_analysis": true,
+    "context_id_semantics": "context_id denotes the same state/history or a domain-justified matched state/history. Target and constraint_set must also match for a valid intervention contrast."
+  },
+  "decision": {
+    "pass": "PASS_INTERVENTION_SUFFICIENCY",
+    "fail": "UNTESTABLE_FOR_RECOVERABILITY",
+    "meaning": "PASS means the candidate contains the counterfactual variation needed to justify building a direct action-conditioned comparator. It is not evidence that any recoverability claim is true."
+  }
+}

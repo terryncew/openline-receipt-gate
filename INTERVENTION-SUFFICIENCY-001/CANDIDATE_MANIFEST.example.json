@@ -1,0 +1,14 @@
+{
+  "candidate_id": "EXAMPLE-CANDIDATE-001",
+  "domain": "simulation-or-empirical-domain",
+  "evidence_mode": "deterministic_rollout",
+  "dataset_receipt_sha256": "REPLACE_WITH_REAL_SHA256",
+  "context_definition": "Frozen definition of same or matched state/history.",
+  "matching_procedure": "Frozen exact matcher or exact-state identity rule.",
+  "matching_frozen_before_outcome_analysis": true,
+  "target_definition": "Explicit acceptable-state target.",
+  "constraint_definition": "Explicit physical/operational constraints.",
+  "lag_unit": "milliseconds",
+  "action_definition": "Enumerated interventions with stable semantics.",
+  "model_validation_receipt_sha256": null
+}
