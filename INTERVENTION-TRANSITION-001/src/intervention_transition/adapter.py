@@ -76,7 +76,7 @@ class UnitreeG1Adapter:
 
     def integration_state(self,data):
         n=self.mujoco.mj_stateSize(self.model,self.mujoco.mjtState.mjSTATE_INTEGRATION)
-        x=self.np.empty(n,dtype=np.float64)
+        x=self.np.empty(n,dtype=self.np.float64)
         self.mujoco.mj_getState(self.model,data,x,self.mujoco.mjtState.mjSTATE_INTEGRATION)
         return x
 
