@@ -1,237 +1,75 @@
 {
-  "experiment_id": "TERRYNCE-EARLY-WARNING-001",
-  "handoff": "ONE_SHOT_HELDOUT_REPLAY",
+  "handoff": "INTERVENTION_SUFFICIENCY_PREFLIGHT",
+  "base_repo": "terryncew/openline-receipt-gate",
+  "base_main_sha_observed": "3c49d38e9efbd12ac5818c8508ec1caa6633c655",
   "root_ready": true,
-  "source_green_calibration_run_id": 33279580933,
-  "pinned_sha256": {
-    "calibration_lock": "e57a085a4ff26988e834898160afef8fffab429a478bee6c93af976b0b6beea0",
-    "holdout_predictions": "e58e14dba4f06af3819be5c9666fee20607b3d9a8252fe42619ca70bd3c5c07a",
-    "holdout_probabilities": "a1d69a63fb2835da5f40550aaea03fd533f6bfc08f5f6ca2d1cc3a10a0e5b473",
-    "episode_definition": "b5f46ed72f917e482da5cf8c72be4cf71260b1a20e59f5352d493def2df7de77"
-  },
-  "holdout_prediction_rows": 112,
-  "holdout_opened_during_build": false,
-  "local_validation": "Python syntax + 25 unit/boundary tests. Real outcome scoring occurs only in GitHub Actions.",
+  "program_disposition": "NO_DOMAIN_INDEPENDENT_RECOVERABILITY_MARGIN_SIGNAL",
+  "local_validation": "6 unit/boundary tests passed; synthetic positive control passes; one-action and no-remedy-divergence controls fail closed.",
   "files": [
     {
-      "path": ".github/workflows/terrynce-early-warning-001-calibration.yml",
-      "sha256": "2ab9218096afdaebf5d9401c31ab48a84f7f29779fcc30bc0c02802ae9599e32",
-      "bytes": 3401
+      "path": ".github/workflows/intervention-sufficiency-001.yml",
+      "sha256": "3cbfe17d25c1d2eb7adc2898109215e80a7afd51e1730ee8ce91625aac6e9569",
+      "bytes": 2849
     },
     {
-      "path": ".github/workflows/terrynce-early-warning-001-episode-lock.yml",
-      "sha256": "3f0a9e4258d099dbf610550adef4e95648fd80a24eb90cb50e52474dbc216ab6",
-      "bytes": 2408
+      "path": "INTERVENTION-SUFFICIENCY-001/CANDIDATE_MANIFEST.example.json",
+      "sha256": "5a1ba45d690228562ff499c7862b738bc8eb72bea29d3215dd103d58edff8c00",
+      "bytes": 680
     },
     {
-      "path": ".github/workflows/terrynce-early-warning-001-heldout.yml",
-      "sha256": "96ceef05127915bd683890ee05e806af2412c2e2bdad9719abcf53e4afa0f4f0",
-      "bytes": 3143
+      "path": "INTERVENTION-SUFFICIENCY-001/PROGRAM_CLOSURE.json",
+      "sha256": "5372ba6b28c1cafad8326d0cc10bb3ed9ad11029b121f6705a6a8e0a0f3c86ad",
+      "bytes": 1716
     },
     {
-      "path": ".github/workflows/terrynce-early-warning-001-preflight.yml",
-      "sha256": "2dd2ccf90aae628d98e931dca22ba4b7873def30b6bbbb6013392e6c0149842a",
-      "bytes": 1816
+      "path": "INTERVENTION-SUFFICIENCY-001/README.md",
+      "sha256": "904711fa813cb1f6040419b9aa1bd178f8cdba5027a1a820017b8c8a0f526ee5",
+      "bytes": 2693
     },
     {
-      "path": ".github/workflows/terrynce-early-warning-001-science-lock.yml",
-      "sha256": "bfe9370862f5aad5b5817409186f1eaefbbf8fcd44c10d41b29007808266a10b",
-      "bytes": 2140
-    },
-    {
-      "path": "TERRYNCE-EARLY-WARNING-001/.gitignore",
-      "sha256": "5906a0afc9261040d551f24d9e2116e10c503236f82d7f65db90050095d4c5a1",
-      "bytes": 113
-    },
-    {
-      "path": "TERRYNCE-EARLY-WARNING-001/CITATIONS.md",
-      "sha256": "d8ecc5ba49e77d80c7f400f5f4c251ddb56b231cfd51af43eb55b231cff522ff",
-      "bytes": 1078
-    },
-    {
-      "path": "TERRYNCE-EARLY-WARNING-001/PREREGISTRATION.md",
-      "sha256": "f30059737a90ebc78d1ce7d91a820f31f0b343e666a16696e278b647a165034f",
-      "bytes": 8294
-    },
-    {
-      "path": "TERRYNCE-EARLY-WARNING-001/README.md",
-      "sha256": "55b1164c9cb088430413a29701413592deaf34453a02f9c4b383f40000cac82c",
-      "bytes": 5813
-    },
-    {
-      "path": "TERRYNCE-EARLY-WARNING-001/STATUS.md",
-      "sha256": "6f15162d16da6f48b58d66925d388f27f16b37c470ed8b1cc62b8988b882d8f6",
-      "bytes": 3225
-    },
-    {
-      "path": "TERRYNCE-EARLY-WARNING-001/artifacts/.gitkeep",
+      "path": "INTERVENTION-SUFFICIENCY-001/artifacts/.gitkeep",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "bytes": 0
     },
     {
-      "path": "TERRYNCE-EARLY-WARNING-001/config/calibration_protocol.frozen.json",
-      "sha256": "31897d11bff6f0000a8316b96c3d31d432d141cb140248a25db07efdcb5822c9",
-      "bytes": 4323
+      "path": "INTERVENTION-SUFFICIENCY-001/config/frozen_gate.json",
+      "sha256": "4940e76d445259f2fd4ae2e733966e3327a1a7d48f95c8cc89eefd2cb54ea127",
+      "bytes": 2015
     },
     {
-      "path": "TERRYNCE-EARLY-WARNING-001/config/frozen_protocol.json",
-      "sha256": "f5cb73b4db765284dbef7be827d88099d242d3903c2b410a4d18f6178cb7f8e8",
-      "bytes": 1365
-    },
-    {
-      "path": "TERRYNCE-EARLY-WARNING-001/config/heldout_replay_protocol.frozen.json",
-      "sha256": "b31dd32f14bb8b8fd84889bcb45110f4b2990aec55817e738a5e3a988f597928",
-      "bytes": 2255
-    },
-    {
-      "path": "TERRYNCE-EARLY-WARNING-001/config/pre_holdout_warning_amendment.json",
-      "sha256": "23dde87e1f7d1d58f1efadafef1e6df0070c0fceccaf2ed061ffac4ca0dcbe2d",
-      "bytes": 1158
-    },
-    {
-      "path": "TERRYNCE-EARLY-WARNING-001/config/science_lock.frozen.json",
-      "sha256": "a6aca4630ecebd94d95bf9c4771aa9badecf38a889c5adf22b29368a782edb3b",
-      "bytes": 2339
-    },
-    {
-      "path": "TERRYNCE-EARLY-WARNING-001/config/sources.lock.json",
-      "sha256": "cdc7c8f8b829832c4c2c333c18fef47fc8bd86533a95d834b67ea625412e2849",
-      "bytes": 557
-    },
-    {
-      "path": "TERRYNCE-EARLY-WARNING-001/data/raw/.gitkeep",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "bytes": 0
-    },
-    {
-      "path": "TERRYNCE-EARLY-WARNING-001/data/work/.gitkeep",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "bytes": 0
-    },
-    {
-      "path": "TERRYNCE-EARLY-WARNING-001/frozen/calibration.lock.json",
-      "sha256": "e57a085a4ff26988e834898160afef8fffab429a478bee6c93af976b0b6beea0",
-      "bytes": 18554
-    },
-    {
-      "path": "TERRYNCE-EARLY-WARNING-001/frozen/episode_definition.lock.json",
-      "sha256": "b5f46ed72f917e482da5cf8c72be4cf71260b1a20e59f5352d493def2df7de77",
-      "bytes": 2247
-    },
-    {
-      "path": "TERRYNCE-EARLY-WARNING-001/frozen/holdout_predictions.lock.csv",
-      "sha256": "e58e14dba4f06af3819be5c9666fee20607b3d9a8252fe42619ca70bd3c5c07a",
-      "bytes": 44712
-    },
-    {
-      "path": "TERRYNCE-EARLY-WARNING-001/frozen/holdout_probabilities.lock.csv",
-      "sha256": "a1d69a63fb2835da5f40550aaea03fd533f6bfc08f5f6ca2d1cc3a10a0e5b473",
-      "bytes": 23056
-    },
-    {
-      "path": "TERRYNCE-EARLY-WARNING-001/src/terrynce_early_warning/__init__.py",
+      "path": "INTERVENTION-SUFFICIENCY-001/src/intervention_sufficiency/__init__.py",
       "sha256": "91447944015cec709e8aa7655f7e9d64e1e4508e7023a57fe3746911c0fc6fed",
       "bytes": 22
     },
     {
-      "path": "TERRYNCE-EARLY-WARNING-001/src/terrynce_early_warning/acquire.py",
-      "sha256": "3a757e71f4b7d398950ceb351d08370cac667967462e7c0a97080a00bf9fd33c",
-      "bytes": 2067
+      "path": "INTERVENTION-SUFFICIENCY-001/src/intervention_sufficiency/__main__.py",
+      "sha256": "353c12aea2579531b119f1ab4ba0d80a346cbe6cc120636988eb1e2c94e16876",
+      "bytes": 977
     },
     {
-      "path": "TERRYNCE-EARLY-WARNING-001/src/terrynce_early_warning/calibration.py",
-      "sha256": "d4a769d64e0673b2c38e83651b467c5bc6a6faaad8d576a8c23b50f1c3550425",
-      "bytes": 21003
+      "path": "INTERVENTION-SUFFICIENCY-001/src/intervention_sufficiency/cli.py",
+      "sha256": "353c12aea2579531b119f1ab4ba0d80a346cbe6cc120636988eb1e2c94e16876",
+      "bytes": 977
     },
     {
-      "path": "TERRYNCE-EARLY-WARNING-001/src/terrynce_early_warning/cli.py",
-      "sha256": "2c8b576f67d470b6541b41b155270bf020b2416d4e61fbfcac710bb5555d6368",
-      "bytes": 1327
+      "path": "INTERVENTION-SUFFICIENCY-001/src/intervention_sufficiency/preflight.py",
+      "sha256": "2c5c1267d8e3749edf4def62cc56d55382a08507bc39b8054daca5c0fa4d30dd",
+      "bytes": 9851
     },
     {
-      "path": "TERRYNCE-EARLY-WARNING-001/src/terrynce_early_warning/episode_lock.py",
-      "sha256": "d4d0f60a94ce29e0b8a6d2eca4c6af8bd919401db9b2ce0224a9fd763e1793d1",
-      "bytes": 16225
+      "path": "INTERVENTION-SUFFICIENCY-001/src/intervention_sufficiency/synthetic.py",
+      "sha256": "1bfc369660a0e11647cfa8f82a8c7861e2c504bcc17889c79011da670e306542",
+      "bytes": 2915
     },
     {
-      "path": "TERRYNCE-EARLY-WARNING-001/src/terrynce_early_warning/heldout_replay.py",
-      "sha256": "79a2f22dbc8c8e896943e47b6f2f60dd6f718fd77a9af58fc0f9adcfd5da19db",
-      "bytes": 11350
+      "path": "INTERVENTION-SUFFICIENCY-001/tests/test_preflight.py",
+      "sha256": "c3e31e13d9ebe87b8b00bc4d0309fbaaad8c217b648c506cb617ae4c722a2d9a",
+      "bytes": 2700
     },
     {
-      "path": "TERRYNCE-EARLY-WARNING-001/src/terrynce_early_warning/inventory.py",
-      "sha256": "96db87ea75915d5e0d7fbf3a2d004e6639b0869d5cef9ee1746b9bcfd2cec839",
-      "bytes": 3839
-    },
-    {
-      "path": "TERRYNCE-EARLY-WARNING-001/src/terrynce_early_warning/margin.py",
-      "sha256": "b71e02c2f6c945b75229a30842fc8a052e5575cf7dccb7bd778bc57336c06281",
-      "bytes": 819
-    },
-    {
-      "path": "TERRYNCE-EARLY-WARNING-001/src/terrynce_early_warning/modeling.py",
-      "sha256": "301677e1d5bf3c49e916b37c501cd8656b5d1b0b82437433ddec83a030ab638b",
-      "bytes": 6351
-    },
-    {
-      "path": "TERRYNCE-EARLY-WARNING-001/src/terrynce_early_warning/preflight.py",
-      "sha256": "f64d0e3a219390832f0279e9033d76f0af56a0dcb14a0ff1887a64a81149b5f4",
-      "bytes": 2496
-    },
-    {
-      "path": "TERRYNCE-EARLY-WARNING-001/src/terrynce_early_warning/protocol.py",
-      "sha256": "27c4ddf06782f91a735d4e83d0e5247f2b0ea2313c676a5af8889b69ce440024",
-      "bytes": 517
-    },
-    {
-      "path": "TERRYNCE-EARLY-WARNING-001/src/terrynce_early_warning/science_lock.py",
-      "sha256": "b075a5490058c9b4525587c6de02572674e3fd4b16985d592a9f4dd1959aab86",
-      "bytes": 12317
-    },
-    {
-      "path": "TERRYNCE-EARLY-WARNING-001/src/terrynce_early_warning/synthetic.py",
-      "sha256": "f3a77cb7aa6dc35cfda01cedbface3b3305d320cc682ef2c72c2b91e5d857ad3",
-      "bytes": 611
-    },
-    {
-      "path": "TERRYNCE-EARLY-WARNING-001/tests/test_calibration.py",
-      "sha256": "eb290508a8688b1f657826b36823d16915719fe2c1d87e394297df9b8a01f319",
-      "bytes": 2521
-    },
-    {
-      "path": "TERRYNCE-EARLY-WARNING-001/tests/test_causal_boundary.py",
-      "sha256": "38debe5ab7c7bd6a378772f5d6f30ba65622ce31b29155c939ac595cb127c5bd",
-      "bytes": 704
-    },
-    {
-      "path": "TERRYNCE-EARLY-WARNING-001/tests/test_episode_lock.py",
-      "sha256": "309681abafd6c1bf25184cbada5c9f244b3a4c2384ca7561571b45627587d1ca",
-      "bytes": 1105
-    },
-    {
-      "path": "TERRYNCE-EARLY-WARNING-001/tests/test_heldout_replay.py",
-      "sha256": "d4773d29f18b6663e3f0cb5e58bbb00c02daa58bc61f38cceffe997854d8987b",
-      "bytes": 2381
-    },
-    {
-      "path": "TERRYNCE-EARLY-WARNING-001/tests/test_margin.py",
-      "sha256": "183c7eb0fb1b832bd17f5b706e4f02de2b8a4b77c2db02117d291666401ef3e8",
-      "bytes": 674
-    },
-    {
-      "path": "TERRYNCE-EARLY-WARNING-001/tests/test_protocol.py",
-      "sha256": "f98e84d95811e45753ed6c3f4a9000205c08f84e3e345df6b08199bf64a2614f",
-      "bytes": 499
-    },
-    {
-      "path": "TERRYNCE-EARLY-WARNING-001/tests/test_science_lock.py",
-      "sha256": "cf04538051d8eba92a7d251fd70710f7fb49511c77b17dde393d70742034f0ac",
-      "bytes": 1130
-    },
-    {
-      "path": "TERRYNCE-EARLY-WARNING-001/tests/test_warning_semantics.py",
-      "sha256": "22fe4e1ff804ea7e0c36d49ad6f3a48fa75690ee1febcc6848c4d05935e02459",
-      "bytes": 1585
+      "path": "docs/RECOVERABILITY_PROGRAM_CLOSURE.md",
+      "sha256": "5bc2e34ef3983f142668a89879f241f16f1a888c138c810aeb5c4d1ed58800bc",
+      "bytes": 2132
     }
   ]
 }

@@ -1,0 +1,75 @@
+name: INTERVENTION-SUFFICIENCY-001 Preflight
+
+on:
+  workflow_dispatch:
+    inputs:
+      dataset_path:
+        description: "Optional repo-relative candidate CSV. Leave blank for guardrail self-test only."
+        required: false
+        default: ""
+      manifest_path:
+        description: "Optional repo-relative candidate manifest JSON."
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: INTERVENTION-SUFFICIENCY-001
+    env:
+      PYTHONPATH: src
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Unit and boundary tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Generate synthetic falsifier controls
+        run: python -m intervention_sufficiency.cli synthetic --out artifacts/synthetic
+
+      - name: Positive control must pass
+        run: |
+          python -m intervention_sufficiency.cli preflight             --dataset artifacts/synthetic/pass.csv             --manifest artifacts/synthetic/pass.manifest.json             --out artifacts/selftest-pass
+
+      - name: One-action substrate must be rejected
+        run: |
+          set +e
+          python -m intervention_sufficiency.cli preflight             --dataset artifacts/synthetic/fail_one_action.csv             --manifest artifacts/synthetic/fail_one_action.manifest.json             --out artifacts/selftest-fail-one-action
+          code=$?
+          set -e
+          test "$code" -eq 3
+
+      - name: No-remedy-divergence substrate must be rejected
+        run: |
+          set +e
+          python -m intervention_sufficiency.cli preflight             --dataset artifacts/synthetic/fail_no_remedy_divergence.csv             --manifest artifacts/synthetic/fail_no_remedy_divergence.manifest.json             --out artifacts/selftest-fail-no-remedy
+          code=$?
+          set -e
+          test "$code" -eq 3
+
+      - name: Preflight committed candidate
+        if: ${{ inputs.dataset_path != '' && inputs.manifest_path != '' }}
+        run: |
+          python -m intervention_sufficiency.cli preflight             --dataset "../${{ inputs.dataset_path }}"             --manifest "../${{ inputs.manifest_path }}"             --out artifacts/candidate
+
+      - name: Upload receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: INTERVENTION-SUFFICIENCY-001-receipts
+          path: |
+            INTERVENTION-SUFFICIENCY-001/artifacts/**/*.json
+            INTERVENTION-SUFFICIENCY-001/artifacts/**/*.sha256
+            INTERVENTION-SUFFICIENCY-001/artifacts/**/transition_cell_inventory.csv
+          if-no-files-found: error
+          retention-days: 30
