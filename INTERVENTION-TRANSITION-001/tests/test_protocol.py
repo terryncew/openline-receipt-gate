@@ -26,7 +26,7 @@ class ProtocolTests(unittest.TestCase):
 
     def test_wrapper_snapshot_contains_released_mutable_state(self):
         fields=set(self.p["controller"]["snapshot_python_state"])
-        self.assertEqual(fields,{"action","target_dof_pos","obs","counter","cmd"})
+        self.assertEqual(fields,{"action","target_dof_pos","obs","counter","cmd","policy_hidden_state","policy_cell_state"})
 
     def test_controller_scope_is_operational(self):
         allowed=self.p["claim_boundary"]["allowed"].lower()

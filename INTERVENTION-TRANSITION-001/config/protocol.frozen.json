@@ -45,7 +45,9 @@
       "target_dof_pos",
       "obs",
       "counter",
-      "cmd"
+      "cmd",
+      "policy_hidden_state",
+      "policy_cell_state"
     ],
     "constant_controller_state": [
       "policy weights",
@@ -53,14 +55,35 @@
       "default joint angles",
       "observation/action scales"
     ],
-    "policy_recurrence_assumption": "Released deploy_mujoco.py exposes no recurrent hidden state. If runtime inventory detects a changed adapter contract, preflight fails closed."
+    "policy_recurrence_assumption": "Released motion.pt is a PolicyExporterLSTM artifact. hidden_state and cell_state are mutable TorchScript buffers and are part of every counterfactual snapshot.",
+    "recurrent_state_source": "unitreerobotics/unitree_rl_gym legged_gym/utils/helpers.py PolicyExporterLSTM registers hidden_state and cell_state and mutates both on every forward call."
   },
   "snapshot": {
     "mujoco_state_spec": "mjSTATE_INTEGRATION",
     "requires_python_wrapper_clone": true,
     "fidelity_steps": 300,
     "max_abs_state_error": 1e-12,
-    "max_abs_wrapper_error": 1e-12
+    "max_abs_wrapper_error": 1e-12,
+    "clone_method": "mj_copyData + branch-local recurrent policy memory",
+    "portable_receipt_state": "mjSTATE_INTEGRATION + recurrent-policy-state hashes",
+    "fidelity_failure_receipt": {
+      "github_run_id": 33285269528,
+      "head_sha": "d12c4033413ffbc72d84290b2d196d0695a767b0",
+      "status": "FAIL_SNAPSHOT_FIDELITY",
+      "max_abs_integration_state_error": 675.8634141105389,
+      "max_abs_action_error": 1.1732040345668793,
+      "max_abs_target_dof_pos_error": 0.2933010086417198,
+      "max_abs_obs_error": 0.7615363597869873,
+      "disposition": "Portable mjSTATE_INTEGRATION reconstruction plus mj_forward is rejected for counterfactual branching in this stack. Full mjData copies are required."
+    },
+    "scientific_rule": "Do not weaken the 1e-12 fidelity tolerance. MuJoCo integration state, deployment-loop state, and recurrent LSTM hidden/cell state must remain identical under identical replay.",
+    "fidelity_failure_receipt_run3": {
+      "github_run_id": 33287597000,
+      "head_sha": "ff84cfb38e3a2cb6e6a8eaee72a7da0ba38a3346",
+      "status": "FAIL_SNAPSHOT_FIDELITY",
+      "diagnosis": "MuJoCo cloning alone was insufficient because the released policy is recurrent and shared mutable LSTM memory was not branch-local.",
+      "oracle_cells_generated": 0
+    }
   },
   "context_generation": {
     "count": 50,

@@ -57,6 +57,7 @@ def run_oracle(unitree_root:Path,outdir:Path,project_root:Path|None=None)->dict:
             "obs":[float(x) for x in snap["wrapper"].obs],
             "counter":int(snap["wrapper"].counter),
             "cmd":[float(x) for x in snap["wrapper"].cmd],
+            "policy_state":a.policy_state_hashes(snap["wrapper"]),
         }
         wrapper_sha=canonical_sha256(wrapper_obj)
         health=a.state_health(d)
@@ -149,7 +150,7 @@ def run_oracle(unitree_root:Path,outdir:Path,project_root:Path|None=None)->dict:
         "domain":"Unitree G1 / MuJoCo / released locomotion controller",
         "evidence_mode":"deterministic_rollout",
         "dataset_receipt_sha256":sha256_file(canonical),
-        "context_definition":"Exact full MuJoCo integration state plus released Python deployment-loop mutable state after a frozen physical perturbation.",
+        "context_definition":"Exact full MuJoCo integration state plus released deployment-loop mutable state and branch-local recurrent LSTM hidden/cell state after a frozen physical perturbation.",
         "matching_procedure":"Exact context_id identity; every action×lag arm restores the same integration-state and wrapper-state hashes.",
         "matching_frozen_before_outcome_analysis":True,
         "target_definition":p["rollout"]["target_id"],

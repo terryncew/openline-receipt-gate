@@ -1,7 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
-import copy, json, math
+import copy, json, math, hashlib
 
 @dataclass
 class WrapperSnapshot:
@@ -10,6 +10,8 @@ class WrapperSnapshot:
     obs: object
     counter: int
     cmd: object
+    policy_hidden_state: object = None
+    policy_cell_state: object = None
 
 class UnitreeG1Adapter:
     """Headless reproduction of the released deploy_mujoco.py loop.
@@ -52,17 +54,32 @@ class UnitreeG1Adapter:
         except Exception:
             pass
 
+        has_hidden=hasattr(self.policy,"hidden_state")
+        has_cell=hasattr(self.policy,"cell_state")
+        if has_hidden != has_cell:
+            raise RuntimeError("Incomplete recurrent policy state: hidden_state/cell_state mismatch")
+        self.policy_is_recurrent=bool(has_hidden and has_cell)
+        if self.policy_is_recurrent and hasattr(self.policy,"reset_memory"):
+            self.policy.reset_memory()
+
     def new_data(self):
         return self.mujoco.MjData(self.model)
 
     def new_wrapper(self):
         np=self.np
+        hidden=None
+        cell=None
+        if self.policy_is_recurrent:
+            hidden=self.torch.zeros_like(self.policy.hidden_state.detach())
+            cell=self.torch.zeros_like(self.policy.cell_state.detach())
         return WrapperSnapshot(
             action=np.zeros(self.num_actions,dtype=np.float64),
             target_dof_pos=self.default.copy(),
             obs=np.zeros(self.num_obs,dtype=np.float64),
             counter=0,
             cmd=self.initial_cmd.copy(),
+            policy_hidden_state=hidden,
+            policy_cell_state=cell,
         )
 
     def gravity_orientation(self,q):
@@ -105,6 +122,8 @@ class UnitreeG1Adapter:
                 obs=w.obs.copy(),
                 counter=int(w.counter),
                 cmd=w.cmd.copy(),
+                policy_hidden_state=None if w.policy_hidden_state is None else w.policy_hidden_state.detach().clone(),
+                policy_cell_state=None if w.policy_cell_state is None else w.policy_cell_state.detach().clone(),
             ),
         }
 
@@ -113,7 +132,9 @@ class UnitreeG1Adapter:
         sw=snap["wrapper"]
         w=WrapperSnapshot(
             action=sw.action.copy(),target_dof_pos=sw.target_dof_pos.copy(),
-            obs=sw.obs.copy(),counter=int(sw.counter),cmd=sw.cmd.copy()
+            obs=sw.obs.copy(),counter=int(sw.counter),cmd=sw.cmd.copy(),
+            policy_hidden_state=None if sw.policy_hidden_state is None else sw.policy_hidden_state.detach().clone(),
+            policy_cell_state=None if sw.policy_cell_state is None else sw.policy_cell_state.detach().clone(),
         )
         return d,w
 
@@ -137,9 +158,27 @@ class UnitreeG1Adapter:
         w.obs[9+3*n:9+3*n+2]=np.asarray([np.sin(2*np.pi*phase),np.cos(2*np.pi*phase)])
         t=self.torch.from_numpy(w.obs.astype(np.float32)).unsqueeze(0)
         with self.torch.no_grad():
+            if self.policy_is_recurrent:
+                self.policy.hidden_state.copy_(w.policy_hidden_state)
+                self.policy.cell_state.copy_(w.policy_cell_state)
             a=self.policy(t).detach().cpu().numpy().squeeze()
+            if self.policy_is_recurrent:
+                w.policy_hidden_state=self.policy.hidden_state.detach().clone()
+                w.policy_cell_state=self.policy.cell_state.detach().clone()
         w.action=a.astype(np.float64)
         w.target_dof_pos=w.action*self.action_scale+self.default
+
+    def policy_state_hashes(self,w):
+        if not self.policy_is_recurrent:
+            return {"recurrent":False}
+        def digest(t):
+            raw=t.detach().cpu().contiguous().numpy().tobytes()
+            return hashlib.sha256(raw).hexdigest()
+        return {
+            "recurrent":True,
+            "hidden_state_sha256":digest(w.policy_hidden_state),
+            "cell_state_sha256":digest(w.policy_cell_state),
+        }
 
     def step(self,d,w):
         tau=(w.target_dof_pos-d.qpos[7:])*self.kps+(0.0-d.qvel[6:])*self.kds

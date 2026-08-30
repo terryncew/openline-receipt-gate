@@ -31,6 +31,8 @@ def run_snapshot_fidelity(unitree_root: Path, outdir: Path, project_root: Path|N
     max_obs=0.0
     counter_match=True
     cmd_match=True
+    max_policy_hidden=0.0
+    max_policy_cell=0.0
 
     for _ in range(steps):
         a.step(d1,w1); a.step(d2,w2)
@@ -40,11 +42,19 @@ def run_snapshot_fidelity(unitree_root: Path, outdir: Path, project_root: Path|N
         max_obs=max(max_obs,_max_abs(a.np,w1.obs,w2.obs))
         counter_match=counter_match and (w1.counter==w2.counter)
         cmd_match=cmd_match and bool(a.np.array_equal(w1.cmd,w2.cmd))
+        if a.policy_is_recurrent:
+            h1=w1.policy_hidden_state.detach().cpu().numpy()
+            h2=w2.policy_hidden_state.detach().cpu().numpy()
+            c1=w1.policy_cell_state.detach().cpu().numpy()
+            c2=w2.policy_cell_state.detach().cpu().numpy()
+            max_policy_hidden=max(max_policy_hidden,_max_abs(a.np,h1,h2))
+            max_policy_cell=max(max_policy_cell,_max_abs(a.np,c1,c2))
 
     tol=float(p["snapshot"]["max_abs_state_error"])
     wtol=float(p["snapshot"]["max_abs_wrapper_error"])
     passed=(max_state<=tol and max_action<=wtol and max_target<=wtol and
-            max_obs<=wtol and counter_match and cmd_match)
+            max_obs<=wtol and max_policy_hidden<=wtol and max_policy_cell<=wtol and
+            counter_match and cmd_match)
     r={
         "experiment_id":p["experiment_id"],
         "stage":"SNAPSHOT_FIDELITY",
@@ -55,11 +65,14 @@ def run_snapshot_fidelity(unitree_root: Path, outdir: Path, project_root: Path|N
         "max_abs_action_error":max_action,
         "max_abs_target_dof_pos_error":max_target,
         "max_abs_obs_error":max_obs,
+        "max_abs_policy_hidden_state_error":max_policy_hidden,
+        "max_abs_policy_cell_state_error":max_policy_cell,
+        "policy_is_recurrent":a.policy_is_recurrent,
         "counter_match":counter_match,
         "cmd_match":cmd_match,
         "state_tolerance":tol,
         "wrapper_tolerance":wtol,
-        "boundary":"PASS proves repeatable cloning for identical future controls. It does not prove intervention sufficiency."
+        "boundary":"PASS proves repeatable cloning of MuJoCo state, Python wrapper state, and recurrent policy memory under identical future controls. It does not prove intervention sufficiency."
     }
     outdir.mkdir(parents=True,exist_ok=True)
     rp=outdir/"snapshot_fidelity.json"
