@@ -23,5 +23,10 @@ class SourceBoundaryTests(unittest.TestCase):
                      "obs=w.obs.copy()","counter=int(w.counter)","cmd=w.cmd.copy()"):
             self.assertIn(name,text)
 
+    def test_integration_state_uses_bound_numpy_namespace(self):
+        text=(self.root/"src/intervention_transition/adapter.py").read_text()
+        self.assertIn("x=self.np.empty(n,dtype=self.np.float64)",text)
+        self.assertNotIn("x=self.np.empty(n,dtype=np.float64)",text)
+
 if __name__=="__main__":
     unittest.main()
