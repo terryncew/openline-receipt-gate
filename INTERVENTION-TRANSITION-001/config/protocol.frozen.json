@@ -1,0 +1,189 @@
+{
+  "experiment_id": "INTERVENTION-TRANSITION-001",
+  "stage": "COUNTERFACTUAL_ORACLE_PREFLIGHT",
+  "scientific_question": "Can exact cloned control states generate a credible empirical mapping (state/history, action, lag) -> outcome under a frozen controller?",
+  "claim_boundary": {
+    "allowed": "Feasibility is operationally scoped to the frozen controller/policy family, physical model, constraints, target, horizon, and action semantics.",
+    "forbidden": [
+      "claiming physical non-viability for the robot in general",
+      "claiming a domain-independent recoverability margin",
+      "fitting a Terrynce scalar or curve before the direct transition model",
+      "using outcome results to change the perturbation distribution, action set, lag grid, or target under this experiment ID"
+    ]
+  },
+  "upstream": {
+    "unitree_rl_gym": {
+      "repository": "https://github.com/unitreerobotics/unitree_rl_gym.git",
+      "commit": "276801e46c5d433564f24658bac64f254b7d2d4b",
+      "deploy_script": "deploy/deploy_mujoco/deploy_mujoco.py",
+      "deploy_script_git_blob": "94bfb411140bbffd4e4ff8573b42bca90735340c",
+      "config": "deploy/deploy_mujoco/configs/g1.yaml",
+      "config_git_blob": "db18fdfa78fe142c4d23d4bd5bccfcc4101c55fe",
+      "policy": "deploy/pre_train/g1/motion.pt",
+      "policy_git_blob": "91a042aa76f6f3ec0f47b6b8839ba9ce2ca060c9",
+      "xml": "resources/robots/g1_description/scene.xml"
+    },
+    "mujoco": {
+      "version": "3.12.0",
+      "release_tag": "3.12.0",
+      "release_target_commit": "13827e9ee56f097f57acf69ae52b078f9839682d"
+    },
+    "reference_model_not_used_in_primary_oracle": {
+      "repository": "google-deepmind/mujoco_menagerie",
+      "commit": "da76818e269b82289eba39808e2fb91d679d6994",
+      "path": "unitree_g1/g1.xml",
+      "reason": "Reserved for later controller/model robustness. The primary policy is evaluated against the Unitree deployment XML it was released with."
+    }
+  },
+  "controller": {
+    "id": "unitree_g1_released_locomotion_policy",
+    "policy_update_hz": 50,
+    "simulation_dt_seconds": 0.002,
+    "control_decimation": 10,
+    "snapshot_python_state": [
+      "action",
+      "target_dof_pos",
+      "obs",
+      "counter",
+      "cmd"
+    ],
+    "constant_controller_state": [
+      "policy weights",
+      "PD gains",
+      "default joint angles",
+      "observation/action scales"
+    ],
+    "policy_recurrence_assumption": "Released deploy_mujoco.py exposes no recurrent hidden state. If runtime inventory detects a changed adapter contract, preflight fails closed."
+  },
+  "snapshot": {
+    "mujoco_state_spec": "mjSTATE_INTEGRATION",
+    "requires_python_wrapper_clone": true,
+    "fidelity_steps": 300,
+    "max_abs_state_error": 1e-12,
+    "max_abs_wrapper_error": 1e-12
+  },
+  "context_generation": {
+    "count": 50,
+    "seed": 20260829,
+    "warmup_seconds": 1.0,
+    "phase_offsets_seconds": [
+      0.0,
+      0.04,
+      0.08,
+      0.12,
+      0.16
+    ],
+    "push_duration_seconds": 0.08,
+    "force_magnitudes_newtons": [
+      120.0,
+      180.0,
+      240.0,
+      320.0,
+      420.0
+    ],
+    "torque_magnitudes_nm": [
+      0.0,
+      15.0,
+      30.0,
+      45.0
+    ],
+    "force_directions_xy": [
+      [
+        1.0,
+        0.0
+      ],
+      [
+        -1.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        -1.0
+      ],
+      [
+        0.70710678,
+        0.70710678
+      ],
+      [
+        0.70710678,
+        -0.70710678
+      ],
+      [
+        -0.70710678,
+        0.70710678
+      ],
+      [
+        -0.70710678,
+        -0.70710678
+      ]
+    ],
+    "selection": "deterministic seeded draw from the frozen grid; no outcome-adaptive boundary hunting",
+    "snapshot_time": "immediately after perturbation force/torque is cleared and mj_forward is called"
+  },
+  "actions": {
+    "CONTINUE": [
+      0.5,
+      0.0,
+      0.0
+    ],
+    "SLOW": [
+      0.15,
+      0.0,
+      0.0
+    ],
+    "STOP": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "RETREAT": [
+      -0.3,
+      0.0,
+      0.0
+    ],
+    "LATERAL_LEFT": [
+      0.0,
+      0.3,
+      0.0
+    ],
+    "LATERAL_RIGHT": [
+      0.0,
+      -0.3,
+      0.0
+    ]
+  },
+  "lags_ms": [
+    0,
+    40,
+    80,
+    120,
+    160
+  ],
+  "lag_semantics": "During lag, the cloned wrapper continues with the pre-intervention command. The intervention command becomes active at the first policy update at or after the exact frozen lag.",
+  "rollout": {
+    "horizon_seconds": 1.2,
+    "target_id": "upright_stable_1p2s",
+    "constraint_set_id": "released_g1_model_and_pd_limits",
+    "failure_if": [
+      "non-finite integration state",
+      "base height < 0.45 m at any time after intervention becomes active",
+      "projected gravity z > -0.35 at any time after intervention becomes active"
+    ],
+    "success_if": [
+      "no failure condition",
+      "during final 0.30 s: median base height >= 0.60 m",
+      "during final 0.30 s: median projected-gravity horizontal norm <= 0.45"
+    ],
+    "ground_truth": "deterministic binary rollout outcome; model probabilities are not used in Stage A"
+  },
+  "intervention_sufficiency_gate": {
+    "path": "../INTERVENTION-SUFFICIENCY-001/config/frozen_gate.json",
+    "required_status": "PASS_INTERVENTION_SUFFICIENCY",
+    "failure_status": "UNTESTABLE_FOR_RECOVERABILITY"
+  },
+  "next_stage_only_if_pass": "Freeze state-level train/validation/holdout split by context_id and benchmark a direct action-conditioned transition learner. No branches from one context may cross splits."
+}
