@@ -1,0 +1,109 @@
+name: INTERVENTION-TRANSITION-001 Oracle Preflight
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  oracle-preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: INTERVENTION-TRANSITION-001
+    env:
+      PYTHONPATH: src
+      UNITREE_COMMIT: 276801e46c5d433564f24658bac64f254b7d2d4b
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Unit and boundary tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Install deterministic simulation dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu torch==2.7.1
+
+      - name: Acquire pinned Unitree G1 controller
+        run: |
+          mkdir -p data/work/unitree_rl_gym
+          git -C data/work/unitree_rl_gym init
+          git -C data/work/unitree_rl_gym remote add origin https://github.com/unitreerobotics/unitree_rl_gym.git
+          git -C data/work/unitree_rl_gym fetch --depth 1 origin "$UNITREE_COMMIT"
+          git -C data/work/unitree_rl_gym checkout --detach FETCH_HEAD
+          test "$(git -C data/work/unitree_rl_gym rev-parse HEAD)" = "$UNITREE_COMMIT"
+
+      - name: Freeze controller inventory
+        run: |
+          python -m intervention_transition.cli inventory             --unitree-root data/work/unitree_rl_gym             --out artifacts
+
+      - name: Prove complete snapshot fidelity
+        run: |
+          python -m intervention_transition.cli snapshot-fidelity             --unitree-root data/work/unitree_rl_gym             --out artifacts
+
+      - name: Generate exact action-by-lag counterfactual oracle
+        run: |
+          python -m intervention_transition.cli oracle             --unitree-root data/work/unitree_rl_gym             --out artifacts
+
+      - name: Run frozen Intervention Sufficiency gate
+        shell: bash
+        run: |
+          set +e
+          PYTHONPATH="../INTERVENTION-SUFFICIENCY-001/src:src"             python -m intervention_sufficiency.cli preflight               --dataset artifacts/intervention_sufficiency_input.csv               --manifest artifacts/intervention_sufficiency_manifest.json               --gate ../INTERVENTION-SUFFICIENCY-001/config/frozen_gate.json               --out artifacts/intervention-sufficiency             | tee artifacts/intervention_sufficiency_stdout.json
+          code=${PIPESTATUS[0]}
+          set -e
+
+          python - "$code" <<'PY'
+          import json, sys
+          from pathlib import Path
+
+          code=int(sys.argv[1])
+          root=Path("artifacts")
+          oracle=json.loads((root/"oracle_receipt.json").read_text())
+          snap=json.loads((root/"snapshot_fidelity.json").read_text())
+          suff_path=root/"intervention-sufficiency/intervention_sufficiency_receipt.json"
+          suff=json.loads(suff_path.read_text()) if suff_path.exists() else None
+
+          summary={
+              "experiment_id":"INTERVENTION-TRANSITION-001",
+              "stage":"COUNTERFACTUAL_ORACLE_PREFLIGHT",
+              "snapshot_fidelity":snap["status"],
+              "oracle":oracle,
+              "intervention_sufficiency":suff,
+              "workflow_exit_code":code,
+              "stage_b_authorized":bool(suff and suff["status"]=="PASS_INTERVENTION_SUFFICIENCY"),
+              "next_step":(
+                  "Freeze context-level train/validation/holdout split and build direct action-conditioned learner."
+                  if suff and suff["status"]=="PASS_INTERVENTION_SUFFICIENCY"
+                  else "Freeze this result. Do not tune Stage A under this experiment ID."
+              )
+          }
+          (root/"stage_a_summary.json").write_text(json.dumps(summary,indent=2,sort_keys=True)+"\n")
+          print(json.dumps(summary,indent=2))
+          PY
+
+          exit "$code"
+
+      - name: Upload immutable Stage A receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: INTERVENTION-TRANSITION-001-stage-a
+          path: |
+            INTERVENTION-TRANSITION-001/artifacts/*.json
+            INTERVENTION-TRANSITION-001/artifacts/*.sha256
+            INTERVENTION-TRANSITION-001/artifacts/*.csv
+            INTERVENTION-TRANSITION-001/artifacts/intervention-sufficiency/*.json
+            INTERVENTION-TRANSITION-001/artifacts/intervention-sufficiency/*.sha256
+            INTERVENTION-TRANSITION-001/artifacts/intervention-sufficiency/*.csv
+          if-no-files-found: error
+          retention-days: 90

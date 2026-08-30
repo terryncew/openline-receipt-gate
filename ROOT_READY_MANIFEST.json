@@ -1,75 +1,102 @@
 {
-  "handoff": "INTERVENTION_SUFFICIENCY_PREFLIGHT",
-  "base_repo": "terryncew/openline-receipt-gate",
-  "base_main_sha_observed": "3c49d38e9efbd12ac5818c8508ec1caa6633c655",
+  "experiment_id": "INTERVENTION-TRANSITION-001",
+  "handoff": "COUNTERFACTUAL_ORACLE_PREFLIGHT",
   "root_ready": true,
-  "program_disposition": "NO_DOMAIN_INDEPENDENT_RECOVERABILITY_MARGIN_SIGNAL",
-  "local_validation": "6 unit/boundary tests passed; synthetic positive control passes; one-action and no-remedy-divergence controls fail closed.",
+  "target_repo": "terryncew/openline-receipt-gate",
+  "base_main_tree_observed": "b509a467a97fe0db0b84c492718861c4a720dee9",
+  "pins": {
+    "unitree_rl_gym_commit": "276801e46c5d433564f24658bac64f254b7d2d4b",
+    "mujoco": "3.12.0",
+    "mujoco_release_target_commit": "13827e9ee56f097f57acf69ae52b078f9839682d",
+    "mujoco_menagerie_reference_commit": "da76818e269b82289eba39808e2fb91d679d6994"
+  },
+  "stage_b_locked": true,
+  "local_validation": "9 stdlib unit/boundary tests passed. Real MuJoCo/Unitree oracle runs only in GitHub Actions.",
   "files": [
     {
-      "path": ".github/workflows/intervention-sufficiency-001.yml",
-      "sha256": "3cbfe17d25c1d2eb7adc2898109215e80a7afd51e1730ee8ce91625aac6e9569",
-      "bytes": 2849
+      "path": ".github/workflows/intervention-transition-001.yml",
+      "sha256": "8eef6b5695c1b45e7e532da125cc0227247de6505e70f0feef553ed164d0130b",
+      "bytes": 4693
     },
     {
-      "path": "INTERVENTION-SUFFICIENCY-001/CANDIDATE_MANIFEST.example.json",
-      "sha256": "5a1ba45d690228562ff499c7862b738bc8eb72bea29d3215dd103d58edff8c00",
-      "bytes": 680
+      "path": "INTERVENTION-TRANSITION-001/PREREGISTRATION.md",
+      "sha256": "b24447ba3be91e75d40b007d16a17a385008b243c8e7db691ac171c04e49c5ff",
+      "bytes": 1785
     },
     {
-      "path": "INTERVENTION-SUFFICIENCY-001/PROGRAM_CLOSURE.json",
-      "sha256": "5372ba6b28c1cafad8326d0cc10bb3ed9ad11029b121f6705a6a8e0a0f3c86ad",
-      "bytes": 1716
+      "path": "INTERVENTION-TRANSITION-001/README.md",
+      "sha256": "cd820dfb6168a9bf3a68e91d49cb27537d7db078fc453dc07a3cb4023ff5ad91",
+      "bytes": 2774
     },
     {
-      "path": "INTERVENTION-SUFFICIENCY-001/README.md",
-      "sha256": "904711fa813cb1f6040419b9aa1bd178f8cdba5027a1a820017b8c8a0f526ee5",
-      "bytes": 2693
+      "path": "INTERVENTION-TRANSITION-001/STATUS.md",
+      "sha256": "eb502b2dd317b2915ef6c6b055e4c3bc8d599a020f1fa052872ebb4d9e90f446",
+      "bytes": 100
     },
     {
-      "path": "INTERVENTION-SUFFICIENCY-001/artifacts/.gitkeep",
+      "path": "INTERVENTION-TRANSITION-001/artifacts/.gitkeep",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "bytes": 0
     },
     {
-      "path": "INTERVENTION-SUFFICIENCY-001/config/frozen_gate.json",
-      "sha256": "4940e76d445259f2fd4ae2e733966e3327a1a7d48f95c8cc89eefd2cb54ea127",
-      "bytes": 2015
+      "path": "INTERVENTION-TRANSITION-001/config/protocol.frozen.json",
+      "sha256": "f1dccfd01e9588fd0c41b9cd1a500db7db442f15cbb95140b1f1680c55139810",
+      "bytes": 5561
     },
     {
-      "path": "INTERVENTION-SUFFICIENCY-001/src/intervention_sufficiency/__init__.py",
-      "sha256": "91447944015cec709e8aa7655f7e9d64e1e4508e7023a57fe3746911c0fc6fed",
-      "bytes": 22
+      "path": "INTERVENTION-TRANSITION-001/requirements.txt",
+      "sha256": "99c6e0854e7bb64855b65d72ad4dccbc183b4f1594e1ca5000c8ea95a391d8aa",
+      "bytes": 42
     },
     {
-      "path": "INTERVENTION-SUFFICIENCY-001/src/intervention_sufficiency/__main__.py",
-      "sha256": "353c12aea2579531b119f1ab4ba0d80a346cbe6cc120636988eb1e2c94e16876",
-      "bytes": 977
+      "path": "INTERVENTION-TRANSITION-001/src/intervention_transition/__init__.py",
+      "sha256": "a3f7f6d5937bec359685bd111481c5ae644f3079f53325bd50490b812a9d2177",
+      "bytes": 20
     },
     {
-      "path": "INTERVENTION-SUFFICIENCY-001/src/intervention_sufficiency/cli.py",
-      "sha256": "353c12aea2579531b119f1ab4ba0d80a346cbe6cc120636988eb1e2c94e16876",
-      "bytes": 977
+      "path": "INTERVENTION-TRANSITION-001/src/intervention_transition/__main__.py",
+      "sha256": "cf7390a2508a0fcad4777a4a629fc5212ab655cb45845975995f835676a834e3",
+      "bytes": 29
     },
     {
-      "path": "INTERVENTION-SUFFICIENCY-001/src/intervention_sufficiency/preflight.py",
-      "sha256": "2c5c1267d8e3749edf4def62cc56d55382a08507bc39b8054daca5c0fa4d30dd",
-      "bytes": 9851
+      "path": "INTERVENTION-TRANSITION-001/src/intervention_transition/adapter.py",
+      "sha256": "d5243cdae13a0b961343cd67c61e63866d2df6fa783df1b29b4aa164a4533ffe",
+      "bytes": 5939
     },
     {
-      "path": "INTERVENTION-SUFFICIENCY-001/src/intervention_sufficiency/synthetic.py",
-      "sha256": "1bfc369660a0e11647cfa8f82a8c7861e2c504bcc17889c79011da670e306542",
-      "bytes": 2915
+      "path": "INTERVENTION-TRANSITION-001/src/intervention_transition/cli.py",
+      "sha256": "1c45b72a6de4a370ef5f6889ef9a9e89a1e20f8deb02dda24f9244a60443cfc6",
+      "bytes": 833
     },
     {
-      "path": "INTERVENTION-SUFFICIENCY-001/tests/test_preflight.py",
-      "sha256": "c3e31e13d9ebe87b8b00bc4d0309fbaaad8c217b648c506cb617ae4c722a2d9a",
-      "bytes": 2700
+      "path": "INTERVENTION-TRANSITION-001/src/intervention_transition/common.py",
+      "sha256": "039a5761f41d0779946de73d58b4cf384eb13fdf227a0a5a55d850ba67498a36",
+      "bytes": 591
     },
     {
-      "path": "docs/RECOVERABILITY_PROGRAM_CLOSURE.md",
-      "sha256": "5bc2e34ef3983f142668a89879f241f16f1a888c138c810aeb5c4d1ed58800bc",
-      "bytes": 2132
+      "path": "INTERVENTION-TRANSITION-001/src/intervention_transition/inventory.py",
+      "sha256": "0c1cb243a34a198f5aa5faf9937da758489ab53814da748b5ea160b4cdbc8c3a",
+      "bytes": 2076
+    },
+    {
+      "path": "INTERVENTION-TRANSITION-001/src/intervention_transition/oracle.py",
+      "sha256": "d7e89fb0bbaa7aab2a45465da14934de3c6bae12ac8cdd5e96f16515e3cb3dfb",
+      "bytes": 8636
+    },
+    {
+      "path": "INTERVENTION-TRANSITION-001/src/intervention_transition/snapshot.py",
+      "sha256": "d30499ddaf15f6d2b1b8d6f8d8df63fee26d84b70f351a9d857284d0b461da77",
+      "bytes": 2682
+    },
+    {
+      "path": "INTERVENTION-TRANSITION-001/tests/test_protocol.py",
+      "sha256": "85dc38ad7adc782fcad7b9804d52d72d531dd5fedaa2859020840f0858d500ea",
+      "bytes": 1594
+    },
+    {
+      "path": "INTERVENTION-TRANSITION-001/tests/test_source_boundaries.py",
+      "sha256": "2f3dafe1158344f368da4f33ba293e3840656b21b1627fa6b607cc33364eb320",
+      "bytes": 1093
     }
   ]
 }
