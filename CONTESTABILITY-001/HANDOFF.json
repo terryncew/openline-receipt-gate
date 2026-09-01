@@ -1,10 +1,9 @@
 {
+  "canonical_branch_handoff": "feat/contestability-001",
+  "canonical_handoff_zip_sha256": "c2bd8a6c1a1c897b71a9fc00f0b672071696484d0d1d42cd1720ce868cf7b282",
+  "canonical_path": "CONTESTABILITY-001",
+  "canonical_repository": "terryncew/openline-claim-graph",
   "experiment": "CONTESTABILITY-001",
-  "base_repo": "terryncew/openline-receipt-gate",
-  "base_main_sha": "1a52d82141bfae1473bc7d9376cfe455d70dfc16",
-  "branch": "feat/contestability-001",
-  "commit_message": "experiment: add foreign contestation selective-reopen test",
-  "pr_title": "CONTESTABILITY-001: foreign contestation to selective reopen",
-  "merge_direction": "feat/contestability-001 \u2192 main",
-  "local_validation": "8/8 unit tests green; 10/10 confirmatory cases PASS"
+  "note": "Historical receipt-gate prototype retained for provenance; do not treat as canonical.",
+  "status": "SUPERSEDED_PROTOTYPE"
 }

@@ -1,15 +1,16 @@
 # CONTESTABILITY-001 — status
 
-Status: `FROZEN_COMPLETE / PASS`
+Status: `SUPERSEDED_PROTOTYPE / NON_CANONICAL`
 
-Confirmatory cases: 10/10 passed.
+Original receipt-gate prototype: PASS.
 
-Observed boundary:
+Supersession reason: the stronger experiment exercises the mechanism at the Claim Graph layer, where standing changes can selectively reopen dependent consequences while preserving the already-executed action and independent lineages.
 
-- `filed`: admitted as evidence; all decisions preserved;
-- `accepted`: only dependent decisions quarantined;
-- `applied`: only dependent decisions reopened;
-- tamper, substitution, wrong forum, replay, ordering regression, and unrelated authorization: rejected;
-- foreign direct-consequence instruction: ignored.
+Canonical target:
 
-No independent decision reopened. The foreign artifact remained evidence; OpenLine receiver policy remained the authority assigning standing and consequences.
+- repository: `terryncew/openline-claim-graph`
+- experiment: `CONTESTABILITY-001`
+- branch handoff: `feat/contestability-001`
+- canonical handoff ZIP SHA-256: `c2bd8a6c1a1c897b71a9fc00f0b672071696484d0d1d42cd1720ce868cf7b282`
+
+The historical prototype files and receipts are intentionally preserved. They are provenance, not a second live claim.

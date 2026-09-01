@@ -1,27 +1,37 @@
-# CONTESTABILITY-001
+# CONTESTABILITY-001 — SUPERSEDED PROTOTYPE
 
-A foreign-contestation → selective-reconsideration test for OpenLine.
+This directory is retained for provenance only.
 
-An action is validly authorized and executed. Later, a foreign contestability artifact arrives. The artifact is authenticated and exactly bound to the authorization, but it is evidence only. OpenLine decides locally whether standing changed and what downstream consequences follow.
+The receipt-gate implementation from PR #75 was the first architectural prototype of the foreign-contestation boundary. It demonstrated the core separation:
 
-`filed -> evidence recorded`
+`foreign artifact -> receiver validation -> receiver-owned consequence assignment`
 
-`accepted -> dependent claims QUARANTINE`
+It is **not** the canonical CONTESTABILITY-001 experiment.
 
-`applied -> dependent claims REOPEN`
+## Canonical home
 
-An unrelated decision remains `PRESERVE` throughout.
+The canonical experiment belongs in:
 
-## Run
+`terryncew/openline-claim-graph / CONTESTABILITY-001`
 
-```bash
-cd CONTESTABILITY-001
-python run.py
-python -m unittest discover -s tests -v
-```
+Canonical handoff branch:
 
-The confirmatory run writes `artifacts-confirmatory/summary.json` and `artifacts-confirmatory/receipt.json`.
+`feat/contestability-001`
 
-## Boundary
+Canonical handoff ZIP SHA-256:
 
-A PASS means receiver policy owns consequences, dependency closure is selective, and replay/order attacks fail closed. It does not establish legal standing, adjudication, remedy, forum independence, or wire-format conformance with the Internet-Draft.
+`c2bd8a6c1a1c897b71a9fc00f0b672071696484d0d1d42cd1720ce868cf7b282`
+
+The Claim Graph version is authoritative because it tests the actual post-execution standing/reconsideration seam:
+
+`foreign filing -> ingest only -> receiver-local standing decision -> local application -> selective reopen`
+
+It also demonstrates that the already-executed action remains `EXECUTED`, the independent lineage remains closed, and draft-specific fields are isolated behind an adapter profile rather than production OpenLine core.
+
+## Status of this directory
+
+The source, tests, preregistration, and confirmatory artifacts remain here so the prototype can be audited and reproduced historically.
+
+Do not cite this directory as the authoritative CONTESTABILITY-001 result and do not extend it as CONTESTABILITY-002.
+
+Any future contestability work should start from the canonical Claim Graph experiment.
