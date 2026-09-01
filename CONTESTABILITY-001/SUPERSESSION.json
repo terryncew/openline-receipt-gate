@@ -1,0 +1,14 @@
+{
+  "canonical_branch_handoff": "feat/contestability-001",
+  "canonical_handoff_zip_sha256": "c2bd8a6c1a1c897b71a9fc00f0b672071696484d0d1d42cd1720ce868cf7b282",
+  "canonical_path": "CONTESTABILITY-001",
+  "canonical_repository": "terryncew/openline-claim-graph",
+  "experiment_id": "CONTESTABILITY-001",
+  "prototype_artifacts_preserved": true,
+  "prototype_ci_active": false,
+  "reason": "Claim Graph is the authoritative layer for post-execution standing decisions and selective consequence reopen. Receipt Gate prototype retained for provenance only.",
+  "schema": "openline.experiment-supersession.v1",
+  "source_pr": 75,
+  "this_repository": "terryncew/openline-receipt-gate",
+  "this_role": "historical_prototype"
+}

@@ -1,26 +1,49 @@
-name: contestability-001
+name: contestability-001-supersession-guard
+
 on:
   pull_request:
-    paths: ['CONTESTABILITY-001/**', '.github/workflows/contestability-001.yml']
+    paths:
+      - 'CONTESTABILITY-001/README.md'
+      - 'CONTESTABILITY-001/STATUS.md'
+      - 'CONTESTABILITY-001/HANDOFF.json'
+      - 'CONTESTABILITY-001/SUPERSESSION.json'
+      - '.github/workflows/contestability-001.yml'
   push:
     branches: [main]
-    paths: ['CONTESTABILITY-001/**', '.github/workflows/contestability-001.yml']
+    paths:
+      - 'CONTESTABILITY-001/README.md'
+      - 'CONTESTABILITY-001/STATUS.md'
+      - 'CONTESTABILITY-001/HANDOFF.json'
+      - 'CONTESTABILITY-001/SUPERSESSION.json'
+      - '.github/workflows/contestability-001.yml'
+
 jobs:
-  test-and-replay:
+  provenance-guard:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Unit tests
-        working-directory: CONTESTABILITY-001
-        run: python -m unittest discover -s tests -v
-      - name: Frozen replay
-        working-directory: CONTESTABILITY-001
+      - name: Verify supersession metadata
         run: |
-          cp artifacts-confirmatory/summary.json /tmp/summary.expected.json
-          cp artifacts-confirmatory/receipt.json /tmp/receipt.expected.json
-          python run.py
-          cmp /tmp/summary.expected.json artifacts-confirmatory/summary.json
-          cmp /tmp/receipt.expected.json artifacts-confirmatory/receipt.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path("CONTESTABILITY-001")
+          status = (root / "STATUS.md").read_text()
+          readme = (root / "README.md").read_text()
+          meta = json.loads((root / "SUPERSESSION.json").read_text())
+          handoff = json.loads((root / "HANDOFF.json").read_text())
+
+          assert "SUPERSEDED_PROTOTYPE" in status
+          assert "SUPERSEDED PROTOTYPE" in readme
+          assert meta["this_repository"] == "terryncew/openline-receipt-gate"
+          assert meta["canonical_repository"] == "terryncew/openline-claim-graph"
+          assert meta["canonical_path"] == "CONTESTABILITY-001"
+          assert meta["prototype_ci_active"] is False
+          assert handoff["status"] == "SUPERSEDED_PROTOTYPE"
+          assert handoff["canonical_repository"] == meta["canonical_repository"]
+          print("CONTESTABILITY-001 receipt-gate copy is provenance-only.")
+          PY
