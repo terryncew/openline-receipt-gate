@@ -1,0 +1,169 @@
+{
+  "cases": [
+    {
+      "case": "filed_preserves",
+      "pass": true,
+      "result": {
+        "consequences": {
+          "D1": "PRESERVE",
+          "D1A": "PRESERVE",
+          "D2": "PRESERVE"
+        },
+        "event_id": "e1",
+        "evidence_status": "ADMIT",
+        "foreign_state": "filed",
+        "reason": "VALID_FOREIGN_EVIDENCE",
+        "standing": "UNCHANGED"
+      }
+    },
+    {
+      "case": "accepted_quarantines",
+      "pass": true,
+      "result": {
+        "consequences": {
+          "D1": "QUARANTINE",
+          "D1A": "QUARANTINE",
+          "D2": "PRESERVE"
+        },
+        "event_id": "e2",
+        "evidence_status": "ADMIT",
+        "foreign_state": "accepted",
+        "reason": "VALID_FOREIGN_EVIDENCE",
+        "standing": "CONTESTED"
+      }
+    },
+    {
+      "case": "applied_reopens",
+      "pass": true,
+      "result": {
+        "consequences": {
+          "D1": "REOPEN",
+          "D1A": "REOPEN",
+          "D2": "PRESERVE"
+        },
+        "event_id": "e3",
+        "evidence_status": "ADMIT",
+        "foreign_state": "applied",
+        "reason": "VALID_FOREIGN_EVIDENCE",
+        "standing": "LOST"
+      }
+    },
+    {
+      "case": "tamper_rejected",
+      "pass": true,
+      "result": {
+        "consequences": {
+          "D1": "PRESERVE",
+          "D1A": "PRESERVE",
+          "D2": "PRESERVE"
+        },
+        "event_id": "e4",
+        "evidence_status": "REJECT",
+        "foreign_state": "filed",
+        "reason": "INVALID_SIGNATURE",
+        "standing": "UNCHANGED"
+      }
+    },
+    {
+      "case": "auth_substitution",
+      "pass": true,
+      "result": {
+        "consequences": {
+          "D1": "PRESERVE",
+          "D1A": "PRESERVE",
+          "D2": "PRESERVE"
+        },
+        "event_id": "e5",
+        "evidence_status": "REJECT",
+        "foreign_state": "applied",
+        "reason": "AUTHORIZATION_MISMATCH",
+        "standing": "UNCHANGED"
+      }
+    },
+    {
+      "case": "forum_rejected",
+      "pass": true,
+      "result": {
+        "consequences": {
+          "D1": "PRESERVE",
+          "D1A": "PRESERVE",
+          "D2": "PRESERVE"
+        },
+        "event_id": "e6",
+        "evidence_status": "REJECT",
+        "foreign_state": "applied",
+        "reason": "UNRECOGNIZED_FORUM",
+        "standing": "UNCHANGED"
+      }
+    },
+    {
+      "case": "replay_rejected",
+      "pass": true,
+      "result": {
+        "consequences": {
+          "D1": "PRESERVE",
+          "D1A": "PRESERVE",
+          "D2": "PRESERVE"
+        },
+        "event_id": "e7",
+        "evidence_status": "REJECT",
+        "foreign_state": "accepted",
+        "reason": "REPLAY",
+        "standing": "UNCHANGED"
+      }
+    },
+    {
+      "case": "ordering_regression",
+      "pass": true,
+      "result": {
+        "consequences": {
+          "D1": "PRESERVE",
+          "D1A": "PRESERVE",
+          "D2": "PRESERVE"
+        },
+        "event_id": "e8b",
+        "evidence_status": "REJECT",
+        "foreign_state": "filed",
+        "reason": "ORDERING_REGRESSION",
+        "standing": "UNCHANGED"
+      }
+    },
+    {
+      "case": "foreign_directive_ignored",
+      "pass": true,
+      "result": {
+        "consequences": {
+          "D1": "PRESERVE",
+          "D1A": "PRESERVE",
+          "D2": "PRESERVE"
+        },
+        "event_id": "e9",
+        "evidence_status": "ADMIT",
+        "foreign_state": "filed",
+        "reason": "VALID_FOREIGN_EVIDENCE",
+        "standing": "UNCHANGED"
+      }
+    },
+    {
+      "case": "unrelated_auth",
+      "pass": true,
+      "result": {
+        "consequences": {
+          "D1": "PRESERVE",
+          "D1A": "PRESERVE",
+          "D2": "PRESERVE"
+        },
+        "event_id": "e10",
+        "evidence_status": "REJECT",
+        "foreign_state": "applied",
+        "reason": "AUTHORIZATION_MISMATCH",
+        "standing": "UNCHANGED"
+      }
+    }
+  ],
+  "cases_passed": 10,
+  "cases_total": 10,
+  "disposition": "PASS",
+  "independent_reopens": 0,
+  "schema": "openline.contestability.summary.v1"
+}

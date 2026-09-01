@@ -1,0 +1,10 @@
+{
+  "experiment": "CONTESTABILITY-001",
+  "base_repo": "terryncew/openline-receipt-gate",
+  "base_main_sha": "1a52d82141bfae1473bc7d9376cfe455d70dfc16",
+  "branch": "feat/contestability-001",
+  "commit_message": "experiment: add foreign contestation selective-reopen test",
+  "pr_title": "CONTESTABILITY-001: foreign contestation to selective reopen",
+  "merge_direction": "feat/contestability-001 \u2192 main",
+  "local_validation": "8/8 unit tests green; 10/10 confirmatory cases PASS"
+}

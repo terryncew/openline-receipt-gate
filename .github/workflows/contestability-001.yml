@@ -1,0 +1,26 @@
+name: contestability-001
+on:
+  pull_request:
+    paths: ['CONTESTABILITY-001/**', '.github/workflows/contestability-001.yml']
+  push:
+    branches: [main]
+    paths: ['CONTESTABILITY-001/**', '.github/workflows/contestability-001.yml']
+jobs:
+  test-and-replay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Unit tests
+        working-directory: CONTESTABILITY-001
+        run: python -m unittest discover -s tests -v
+      - name: Frozen replay
+        working-directory: CONTESTABILITY-001
+        run: |
+          cp artifacts-confirmatory/summary.json /tmp/summary.expected.json
+          cp artifacts-confirmatory/receipt.json /tmp/receipt.expected.json
+          python run.py
+          cmp /tmp/summary.expected.json artifacts-confirmatory/summary.json
+          cmp /tmp/receipt.expected.json artifacts-confirmatory/receipt.json
