@@ -1,19 +1,23 @@
-name: STOLEN-AUTHORITY-001 builder
+name: STOLEN-AUTHORITY-001 closure
 
 on:
-  push:
-    branches:
-      - feat/stolen-authority-001
+  pull_request:
+    paths:
+      - "olp_gate/subject_bound_commit.py"
+      - "tests/test_stolen_authority_001.py"
+      - "STOLEN_AUTHORITY_001_CONTRACT.json"
+      - "tools/apply_stolen_authority_001.py"
+      - ".github/workflows/stolen-authority-001-builder.yml"
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 env:
   FROZEN_BASE_SHA: 3ae2918d59125e13cf8f58147e482ebb940b6da6
 
 jobs:
-  close-stolen-authority:
+  verify-stolen-authority:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -25,17 +29,30 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Verify frozen base is branch ancestor
+      - name: Record run identity
         run: |
-          git merge-base --is-ancestor "$FROZEN_BASE_SHA" HEAD
-          test "$(git show "$FROZEN_BASE_SHA:olp_gate/verified_commit.py" | git hash-object --stdin)" = "2d3fde48bf9cf8cc66466b7a876e14f7a11f13d1"
-          test "$(git show "$FROZEN_BASE_SHA:olp_gate/authority_compiler.py" | git hash-object --stdin)" = "3d8382eab09880eaa534e6e2ab39e342343916c4"
-          test "$(git show "$FROZEN_BASE_SHA:olp_gate/tool_adapter.py" | git hash-object --stdin)" = "8fc200e8ad44e461b50cef90426ad141bdb8238b"
+          mkdir -p "$RUNNER_TEMP/stolen-authority-001"
+          printf '%s\n' \
+            "head_sha=$GITHUB_SHA" \
+            "event=$GITHUB_EVENT_NAME" \
+            "ref=$GITHUB_REF" \
+            "runner_os=$RUNNER_OS" \
+            "runner_arch=$RUNNER_ARCH" \
+            > "$RUNNER_TEMP/stolen-authority-001/run-context.txt"
+          python --version >> "$RUNNER_TEMP/stolen-authority-001/run-context.txt"
 
-      - name: Apply minimal subject-binding closure
-        run: python tools/apply_stolen_authority_001.py
+      - name: Prove frozen core remains untouched
+        run: |
+          python tools/apply_stolen_authority_001.py
+          git diff --exit-code "$FROZEN_BASE_SHA" -- \
+            olp_gate/verified_commit.py \
+            olp_gate/authority_compiler.py \
+            olp_gate/tool_adapter.py
+          git show "$FROZEN_BASE_SHA:olp_gate/verified_commit.py" | sha256sum
+          git show "$FROZEN_BASE_SHA:olp_gate/authority_compiler.py" | sha256sum
+          git show "$FROZEN_BASE_SHA:olp_gate/tool_adapter.py" | sha256sum
 
-      - name: Static patch sanity
+      - name: Static sanity
         run: |
           python -m compileall -q olp_gate tests/test_stolen_authority_001.py
           git diff --check
@@ -43,82 +60,104 @@ jobs:
       - name: Install package and test runner
         run: python -m pip install . pytest
 
-      - name: Run hostile and directly affected gates
+      - name: Run hostile closure plus historical source-closure sentinels
+        shell: bash
         run: |
+          set +e
           python -m pytest \
             tests/test_stolen_authority_001.py \
             tests/test_verified_commit.py \
-            tests/test_authority_compiler.py \
-            tests/test_tool_adapter_runtime.py \
-            -q
+            tests/test_peer_authority_001.py \
+            tests/test_temporal_authority_001.py \
+            tests/test_x402_freeze.py \
+            -q 2>&1 | tee "$RUNNER_TEMP/stolen-authority-001/focused.log"
+          status=${PIPESTATUS[0]}
+          printf '%s\n' "$status" > "$RUNNER_TEMP/stolen-authority-001/focused.status"
+          exit 0
 
-      - name: Run full regression suite
-        run: python -m pytest -q
+      - name: Run entire downstream regression suite
+        shell: bash
+        run: |
+          set +e
+          python -m pytest -q 2>&1 | tee "$RUNNER_TEMP/stolen-authority-001/full-suite.log"
+          status=${PIPESTATUS[0]}
+          printf '%s\n' "$status" > "$RUNNER_TEMP/stolen-authority-001/full-suite.status"
+          exit 0
 
-      - name: Freeze passing receipt
+      - name: Verify tests did not mutate frozen core
+        if: always()
+        run: |
+          git diff --exit-code "$FROZEN_BASE_SHA" -- \
+            olp_gate/verified_commit.py \
+            olp_gate/authority_compiler.py \
+            olp_gate/tool_adapter.py
+
+      - name: Freeze CI receipt
+        if: always()
+        shell: bash
         run: |
           python - <<'PY'
-          import hashlib, json, subprocess
+          import hashlib
+          import json
+          import os
           from pathlib import Path
 
-          root = Path('.')
+          evidence = Path(os.environ["RUNNER_TEMP"]) / "stolen-authority-001"
+          def status(name):
+              path = evidence / name
+              return int(path.read_text().strip()) if path.exists() else None
+
+          focused = status("focused.status")
+          full = status("full-suite.status")
+          passed = focused == 0 and full == 0
           result = {
-              "schema": "openline.stolen-authority-001.result.v1",
+              "schema": "openline.stolen-authority-001.ci-result.v1",
               "experiment": "STOLEN-AUTHORITY-001",
               "base_sha": "3ae2918d59125e13cf8f58147e482ebb940b6da6",
-              "verdict": "HOLE_CONFIRMED_AND_CLOSED",
-              "before": "Verified Commit exact-action spend accepted possession of a valid receipt/action/code without a receiver-observed authority subject.",
-              "after": "A receiver-owned signed policy binding names a stable authority subject by domain-separated hash; spend requires a matching receiver observation before permission consumption.",
-              "hostile_result": {
-                  "stolen_exact_artifacts": "BLOCKED_AUTHORITY_SUBJECT_MISMATCH",
-                  "thief_burns_owner_permission": False,
-                  "owner_after_thief": "AUTHORIZED_ONCE",
-                  "owner_replay": "BLOCKED",
-                  "bound_without_observation": "BLOCKED_AUTHORITY_SUBJECT_MISSING",
-                  "same_subject_provider_swap": "AUTHORIZED"
-              },
-              "scope": {
-                  "subject": "stable receiver authority slot; LocalAuthorityRuntime uses mandate.agent_id",
-                  "provider_model_bound": False,
-                  "producer_declared_subject_authoritative": False
-              },
-              "tests": [
-                  "python -m pytest tests/test_stolen_authority_001.py tests/test_verified_commit.py tests/test_authority_compiler.py tests/test_tool_adapter_runtime.py -q",
-                  "python -m pytest -q"
-              ]
+              "head_sha": os.environ.get("GITHUB_SHA"),
+              "run_id": os.environ.get("GITHUB_RUN_ID"),
+              "run_attempt": os.environ.get("GITHUB_RUN_ATTEMPT"),
+              "trigger": os.environ.get("GITHUB_EVENT_NAME"),
+              "focused_status": focused,
+              "full_suite_status": full,
+              "frozen_core_modified": False,
+              "verdict": (
+                  "STOLEN_AUTHORITY_CONTAINED_AT_RECEIVER_BOUNDARY"
+                  if passed
+                  else "UNRESOLVED"
+              ),
+              "claim_boundary": (
+                  "Receiver-controlled subject authentication is assumed; "
+                  "same-subject credential compromise is not covered."
+              ),
           }
-          path = root / "STOLEN_AUTHORITY_001_HANDOFF.json"
-          path.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+          path = evidence / "STOLEN_AUTHORITY_001_RESULT.json"
+          path.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
           digest = hashlib.sha256(path.read_bytes()).hexdigest()
-          (root / "STOLEN_AUTHORITY_001_HANDOFF.sha256").write_text(
-              f"{digest}  STOLEN_AUTHORITY_001_HANDOFF.json\n", encoding="utf-8"
+          (evidence / "STOLEN_AUTHORITY_001_RESULT.sha256").write_text(
+              f"{digest}  STOLEN_AUTHORITY_001_RESULT.json\n"
           )
           PY
 
-      - name: Build root-ready fallback artifact
+      - name: Capture workspace diagnostics
+        if: always()
+        shell: bash
         run: |
-          mkdir -p "$RUNNER_TEMP/stolen-root/olp_gate" "$RUNNER_TEMP/stolen-root/tests"
-          cp olp_gate/verified_commit.py "$RUNNER_TEMP/stolen-root/olp_gate/"
-          cp olp_gate/authority_compiler.py "$RUNNER_TEMP/stolen-root/olp_gate/"
-          cp olp_gate/tool_adapter.py "$RUNNER_TEMP/stolen-root/olp_gate/"
-          cp tests/test_stolen_authority_001.py "$RUNNER_TEMP/stolen-root/tests/"
-          cp STOLEN_AUTHORITY_001_CONTRACT.json "$RUNNER_TEMP/stolen-root/"
-          cp STOLEN_AUTHORITY_001_HANDOFF.json "$RUNNER_TEMP/stolen-root/"
-          cp STOLEN_AUTHORITY_001_HANDOFF.sha256 "$RUNNER_TEMP/stolen-root/"
+          git status --short > "$RUNNER_TEMP/stolen-authority-001/git-status.txt"
+          git diff --stat "$FROZEN_BASE_SHA"...HEAD > "$RUNNER_TEMP/stolen-authority-001/branch-diff-stat.txt"
+          git diff --check > "$RUNNER_TEMP/stolen-authority-001/git-diff-check.txt" 2>&1 || true
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload complete STOLEN-AUTHORITY-001 evidence
+        if: always()
+        uses: actions/upload-artifact@v4
         with:
-          name: stolen-authority-001-root-ready
-          path: ${{ runner.temp }}/stolen-root/
+          name: stolen-authority-001-evidence
+          path: ${{ runner.temp }}/stolen-authority-001/
           if-no-files-found: error
-          retention-days: 30
+          retention-days: 90
 
-      - name: Replace builder with tested implementation and proof
+      - name: Require every downstream gate
+        shell: bash
         run: |
-          git rm .github/workflows/stolen-authority-001-builder.yml tools/apply_stolen_authority_001.py
-          git add -A
-          git diff --cached --check
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "feat: bind verified commit authority to subject"
-          git push origin HEAD:feat/stolen-authority-001
+          test "$(cat "$RUNNER_TEMP/stolen-authority-001/focused.status")" = "0"
+          test "$(cat "$RUNNER_TEMP/stolen-authority-001/full-suite.status")" = "0"

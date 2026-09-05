@@ -1,17 +1,26 @@
 {
   "base_sha": "3ae2918d59125e13cf8f58147e482ebb940b6da6",
+  "claim_boundary": "SubjectBoundCommitGate does not authenticate an agent itself. subject_source must be backed by receiver-controlled authentication such as verified workload identity, mTLS identity, or protected local process context. Compromise that authenticates an attacker as the same stable subject is outside this proof.",
   "experiment": "STOLEN-AUTHORITY-001",
   "falsifier": {
-    "attacker": "Agent B possesses Agent A's exact signed COMMIT receipt, exact action, and one-use code and attempts the action first.",
-    "failure": "Agent B is authorized, or Agent B can burn Agent A's permission merely by presenting the stolen artifacts.",
-    "success": "Agent B is denied before execution and before consumption; Agent A can still execute exactly once; Agent A replay is denied."
+    "attacker": "Agent B possesses Agent A's exact signed COMMIT receipt, exact action, and one-use code and reaches the same receiver boundary first.",
+    "failure": "Agent B reaches the underlying one-use ledger, executes the effect, or consumes Agent A's permission.",
+    "success": "Agent B is rejected before the underlying ledger; Agent A subsequently executes exactly once; replay is rejected."
   },
-  "invariant": "A permission granted to one authority subject must not become authority for another subject merely because the receipt and code traveled.",
+  "historical_proof_rule": "Existing PEER-AUTHORITY-001, TEMPORAL-AUTHORITY-001, and x402 source closures remain byte-identical. STOLEN-AUTHORITY-001 must not re-hash or rewrite those frozen experiments.",
+  "invariant": "Possession of another subject's valid portable COMMIT artifacts must not confer execution authority or let the thief burn the rightful subject's one-use permission.",
   "non_goals": [
-    "Do not bind authority to provider model identity; model replacement under the same stable authority subject must remain possible.",
-    "Do not add ancestry or cascade controls already covered by RUNTIME-CONTRACT-002.",
-    "Do not treat a producer-declared subject string as receiver-observed identity."
+    "Do not bind authority to provider/model identity; provider replacement under the same stable authority subject must remain possible.",
+    "Do not alter Verified Commit exact-action, one-use, replay, x402 preflight, ancestry, or cascade invariants.",
+    "Do not accept a subject string from the receipt, proposal, model output, or tool arguments as authenticated identity."
   ],
-  "receiver_rule": "Subject binding is created by receiver-owned policy and checked against identity observed by the receiver-owned execution boundary before permission consumption.",
-  "schema": "openline.stolen-authority-001.contract.v1"
+  "remedy": {
+    "expected_subject": "current receiver-admitted MandateSpec.agent_id",
+    "frozen_core_files_modified": [],
+    "observed_subject": "zero-argument receiver-owned subject_source",
+    "producer_claims_authoritative": false,
+    "provider_model_bound": false,
+    "surface": "receiver-owned composition immediately outside VerifiedCommitLedger"
+  },
+  "schema": "openline.stolen-authority-001.contract.v2"
 }
