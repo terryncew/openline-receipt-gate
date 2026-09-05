@@ -1,0 +1,149 @@
+name: EGRESS-SEMANTICS-001 closure
+
+on:
+  pull_request:
+    paths:
+      - "olp_gate/egress_semantics.py"
+      - "tests/test_egress_semantics_001.py"
+      - "EGRESS_SEMANTICS_001_CONTRACT.json"
+      - ".github/workflows/egress-semantics-001.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "olp_gate/egress_semantics.py"
+      - "tests/test_egress_semantics_001.py"
+      - "EGRESS_SEMANTICS_001_CONTRACT.json"
+      - ".github/workflows/egress-semantics-001.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  FROZEN_BASE_SHA: 20dc7fcd3abc5132021fdc80a75e03c3f3da521c
+
+jobs:
+  verify-egress-semantics:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Record run identity
+        run: |
+          mkdir -p "$RUNNER_TEMP/egress-semantics-001"
+          printf '%s\n'             "head_sha=$GITHUB_SHA"             "event=$GITHUB_EVENT_NAME"             "ref=$GITHUB_REF"             "runner_os=$RUNNER_OS"             "runner_arch=$RUNNER_ARCH"             > "$RUNNER_TEMP/egress-semantics-001/run-context.txt"
+          python --version >> "$RUNNER_TEMP/egress-semantics-001/run-context.txt"
+
+      - name: Preserve frozen authority stack
+        run: |
+          git merge-base --is-ancestor "$FROZEN_BASE_SHA" HEAD
+          git diff --exit-code "$FROZEN_BASE_SHA" --             olp_gate/verified_commit.py             olp_gate/authority_compiler.py             olp_gate/tool_adapter.py             olp_gate/mandate_owner.py             olp_gate/subject_bound_commit.py
+
+      - name: Static sanity
+        run: |
+          python -m compileall -q olp_gate tests/test_egress_semantics_001.py
+          git diff --check
+
+      - name: Install package and test runner
+        run: python -m pip install . pytest
+
+      - name: Run EGRESS falsifier and authority sentinels
+        shell: bash
+        run: |
+          set +e
+          python -m pytest             tests/test_egress_semantics_001.py             tests/test_stolen_authority_001.py             tests/test_mandate_owner_001.py             tests/test_verified_commit.py             tests/test_tool_adapter_runtime.py             -q 2>&1 | tee "$RUNNER_TEMP/egress-semantics-001/focused.log"
+          status=${PIPESTATUS[0]}
+          printf '%s\n' "$status" > "$RUNNER_TEMP/egress-semantics-001/focused.status"
+          exit 0
+
+      - name: Run entire downstream regression suite
+        shell: bash
+        run: |
+          set +e
+          python -m pytest -q 2>&1 | tee "$RUNNER_TEMP/egress-semantics-001/full-suite.log"
+          status=${PIPESTATUS[0]}
+          printf '%s\n' "$status" > "$RUNNER_TEMP/egress-semantics-001/full-suite.status"
+          exit 0
+
+      - name: Verify tests did not mutate frozen authority stack
+        if: always()
+        run: |
+          git diff --exit-code "$FROZEN_BASE_SHA" --             olp_gate/verified_commit.py             olp_gate/authority_compiler.py             olp_gate/tool_adapter.py             olp_gate/mandate_owner.py             olp_gate/subject_bound_commit.py
+
+      - name: Freeze CI receipt
+        if: always()
+        shell: bash
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+
+          evidence = Path(os.environ["RUNNER_TEMP"]) / "egress-semantics-001"
+
+          def status(name):
+              path = evidence / name
+              return int(path.read_text().strip()) if path.exists() else None
+
+          focused = status("focused.status")
+          full = status("full-suite.status")
+          passed = focused == 0 and full == 0
+          result = {
+              "schema": "openline.egress-semantics-001.ci-result.v1",
+              "experiment": "EGRESS-SEMANTICS-001",
+              "base_sha": "20dc7fcd3abc5132021fdc80a75e03c3f3da521c",
+              "head_sha": os.environ.get("GITHUB_SHA"),
+              "run_id": os.environ.get("GITHUB_RUN_ID"),
+              "run_attempt": os.environ.get("GITHUB_RUN_ATTEMPT"),
+              "trigger": os.environ.get("GITHUB_EVENT_NAME"),
+              "focused_status": focused,
+              "full_suite_status": full,
+              "frozen_authority_stack_modified": False,
+              "network_stack_added": False,
+              "verdict": (
+                  "EGRESS_EFFECT_CONTRACT_ENFORCED_BEFORE_DISPATCH"
+                  if passed
+                  else "UNRESOLVED"
+              ),
+              "claim_boundary": (
+                  "Only traffic routed through the receiver-owned two-phase "
+                  "adapter is covered; transport continuity is assumed."
+              ),
+          }
+          path = evidence / "EGRESS_SEMANTICS_001_RESULT.json"
+          path.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
+          digest = hashlib.sha256(path.read_bytes()).hexdigest()
+          (evidence / "EGRESS_SEMANTICS_001_RESULT.sha256").write_text(
+              f"{digest}  EGRESS_SEMANTICS_001_RESULT.json\n"
+          )
+          PY
+
+      - name: Capture downstream diagnostics
+        if: always()
+        run: |
+          git status --short > "$RUNNER_TEMP/egress-semantics-001/git-status.txt"
+          git diff --stat "$FROZEN_BASE_SHA"...HEAD             > "$RUNNER_TEMP/egress-semantics-001/branch-diff-stat.txt"
+          git diff --check             > "$RUNNER_TEMP/egress-semantics-001/git-diff-check.txt" 2>&1 || true
+
+      - name: Upload complete EGRESS evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: egress-semantics-001-evidence
+          path: ${{ runner.temp }}/egress-semantics-001/
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Require every downstream gate
+        run: |
+          test "$(cat "$RUNNER_TEMP/egress-semantics-001/focused.status")" = "0"
+          test "$(cat "$RUNNER_TEMP/egress-semantics-001/full-suite.status")" = "0"
