@@ -1,0 +1,124 @@
+name: STOLEN-AUTHORITY-001 builder
+
+on:
+  push:
+    branches:
+      - feat/stolen-authority-001
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  FROZEN_BASE_SHA: 3ae2918d59125e13cf8f58147e482ebb940b6da6
+
+jobs:
+  close-stolen-authority:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Verify frozen base is branch ancestor
+        run: |
+          git merge-base --is-ancestor "$FROZEN_BASE_SHA" HEAD
+          test "$(git show "$FROZEN_BASE_SHA:olp_gate/verified_commit.py" | git hash-object --stdin)" = "2d3fde48bf9cf8cc66466b7a876e14f7a11f13d1"
+          test "$(git show "$FROZEN_BASE_SHA:olp_gate/authority_compiler.py" | git hash-object --stdin)" = "3d8382eab09880eaa534e6e2ab39e342343916c4"
+          test "$(git show "$FROZEN_BASE_SHA:olp_gate/tool_adapter.py" | git hash-object --stdin)" = "8fc200e8ad44e461b50cef90426ad141bdb8238b"
+
+      - name: Apply minimal subject-binding closure
+        run: python tools/apply_stolen_authority_001.py
+
+      - name: Static patch sanity
+        run: |
+          python -m compileall -q olp_gate tests/test_stolen_authority_001.py
+          git diff --check
+
+      - name: Install package and test runner
+        run: python -m pip install . pytest
+
+      - name: Run hostile and directly affected gates
+        run: |
+          python -m pytest \
+            tests/test_stolen_authority_001.py \
+            tests/test_verified_commit.py \
+            tests/test_authority_compiler.py \
+            tests/test_tool_adapter_runtime.py \
+            -q
+
+      - name: Run full regression suite
+        run: python -m pytest -q
+
+      - name: Freeze passing receipt
+        run: |
+          python - <<'PY'
+          import hashlib, json, subprocess
+          from pathlib import Path
+
+          root = Path('.')
+          result = {
+              "schema": "openline.stolen-authority-001.result.v1",
+              "experiment": "STOLEN-AUTHORITY-001",
+              "base_sha": "3ae2918d59125e13cf8f58147e482ebb940b6da6",
+              "verdict": "HOLE_CONFIRMED_AND_CLOSED",
+              "before": "Verified Commit exact-action spend accepted possession of a valid receipt/action/code without a receiver-observed authority subject.",
+              "after": "A receiver-owned signed policy binding names a stable authority subject by domain-separated hash; spend requires a matching receiver observation before permission consumption.",
+              "hostile_result": {
+                  "stolen_exact_artifacts": "BLOCKED_AUTHORITY_SUBJECT_MISMATCH",
+                  "thief_burns_owner_permission": False,
+                  "owner_after_thief": "AUTHORIZED_ONCE",
+                  "owner_replay": "BLOCKED",
+                  "bound_without_observation": "BLOCKED_AUTHORITY_SUBJECT_MISSING",
+                  "same_subject_provider_swap": "AUTHORIZED"
+              },
+              "scope": {
+                  "subject": "stable receiver authority slot; LocalAuthorityRuntime uses mandate.agent_id",
+                  "provider_model_bound": False,
+                  "producer_declared_subject_authoritative": False
+              },
+              "tests": [
+                  "python -m pytest tests/test_stolen_authority_001.py tests/test_verified_commit.py tests/test_authority_compiler.py tests/test_tool_adapter_runtime.py -q",
+                  "python -m pytest -q"
+              ]
+          }
+          path = root / "STOLEN_AUTHORITY_001_HANDOFF.json"
+          path.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+          digest = hashlib.sha256(path.read_bytes()).hexdigest()
+          (root / "STOLEN_AUTHORITY_001_HANDOFF.sha256").write_text(
+              f"{digest}  STOLEN_AUTHORITY_001_HANDOFF.json\n", encoding="utf-8"
+          )
+          PY
+
+      - name: Build root-ready fallback artifact
+        run: |
+          mkdir -p "$RUNNER_TEMP/stolen-root/olp_gate" "$RUNNER_TEMP/stolen-root/tests"
+          cp olp_gate/verified_commit.py "$RUNNER_TEMP/stolen-root/olp_gate/"
+          cp olp_gate/authority_compiler.py "$RUNNER_TEMP/stolen-root/olp_gate/"
+          cp olp_gate/tool_adapter.py "$RUNNER_TEMP/stolen-root/olp_gate/"
+          cp tests/test_stolen_authority_001.py "$RUNNER_TEMP/stolen-root/tests/"
+          cp STOLEN_AUTHORITY_001_CONTRACT.json "$RUNNER_TEMP/stolen-root/"
+          cp STOLEN_AUTHORITY_001_HANDOFF.json "$RUNNER_TEMP/stolen-root/"
+          cp STOLEN_AUTHORITY_001_HANDOFF.sha256 "$RUNNER_TEMP/stolen-root/"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: stolen-authority-001-root-ready
+          path: ${{ runner.temp }}/stolen-root/
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Replace builder with tested implementation and proof
+        run: |
+          git rm .github/workflows/stolen-authority-001-builder.yml tools/apply_stolen_authority_001.py
+          git add -A
+          git diff --cached --check
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "feat: bind verified commit authority to subject"
+          git push origin HEAD:feat/stolen-authority-001

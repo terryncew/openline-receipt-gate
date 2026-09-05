@@ -1,0 +1,17 @@
+{
+  "base_sha": "3ae2918d59125e13cf8f58147e482ebb940b6da6",
+  "experiment": "STOLEN-AUTHORITY-001",
+  "falsifier": {
+    "attacker": "Agent B possesses Agent A's exact signed COMMIT receipt, exact action, and one-use code and attempts the action first.",
+    "failure": "Agent B is authorized, or Agent B can burn Agent A's permission merely by presenting the stolen artifacts.",
+    "success": "Agent B is denied before execution and before consumption; Agent A can still execute exactly once; Agent A replay is denied."
+  },
+  "invariant": "A permission granted to one authority subject must not become authority for another subject merely because the receipt and code traveled.",
+  "non_goals": [
+    "Do not bind authority to provider model identity; model replacement under the same stable authority subject must remain possible.",
+    "Do not add ancestry or cascade controls already covered by RUNTIME-CONTRACT-002.",
+    "Do not treat a producer-declared subject string as receiver-observed identity."
+  ],
+  "receiver_rule": "Subject binding is created by receiver-owned policy and checked against identity observed by the receiver-owned execution boundary before permission consumption.",
+  "schema": "openline.stolen-authority-001.contract.v1"
+}
