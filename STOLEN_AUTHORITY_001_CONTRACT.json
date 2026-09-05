@@ -4,8 +4,8 @@
   "experiment": "STOLEN-AUTHORITY-001",
   "falsifier": {
     "attacker": "Agent B possesses Agent A's exact signed COMMIT receipt, exact action, and one-use code and reaches the same receiver boundary first.",
-    "failure": "Agent B reaches the underlying one-use ledger, executes the effect, or consumes Agent A's permission.",
-    "success": "Agent B is rejected before the underlying ledger; Agent A subsequently executes exactly once; replay is rejected."
+    "failure": "Agent B reaches the underlying one-use ledger, executes the effect, consumes Agent A's permission, or the supported owner-authorized local runtime can execute without traversing SubjectBoundCommitGate.",
+    "success": "Agent B is rejected before the underlying ledger; Agent A subsequently executes exactly once; replay is rejected; and the supported authorize_owned local consequence path is demonstrably subject-bound."
   },
   "historical_proof_rule": "Existing PEER-AUTHORITY-001, TEMPORAL-AUTHORITY-001, and x402 source closures remain byte-identical. STOLEN-AUTHORITY-001 must not re-hash or rewrite those frozen experiments.",
   "invariant": "Possession of another subject's valid portable COMMIT artifacts must not confer execution authority or let the thief burn the rightful subject's one-use permission.",
@@ -20,7 +20,8 @@
     "observed_subject": "zero-argument receiver-owned subject_source",
     "producer_claims_authoritative": false,
     "provider_model_bound": false,
-    "surface": "receiver-owned composition immediately outside VerifiedCommitLedger"
+    "runtime_integration_required": true,
+    "surface": "authorize_subject_bound_owned -> SubjectBoundLocalAuthorityRuntime -> AuthorityCompiler.execute_once -> SubjectBoundCommitGate -> VerifiedCommitLedger"
   },
-  "schema": "openline.stolen-authority-001.contract.v2"
+  "schema": "openline.stolen-authority-001.contract.v3"
 }

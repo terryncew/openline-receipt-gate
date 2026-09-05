@@ -269,3 +269,167 @@ class SubjectBoundCommitGate:
             result["subject_gate"] = "PASSED"
             result["subject_gate_detail"] = detail
         return result
+
+class _SubjectBoundCompilerProxy:
+    """Install SubjectBoundCommitGate at AuthorityCompiler's spend call."""
+
+    def __init__(
+        self,
+        compiler: Any,
+        *,
+        mandate_view: Any,
+        mandate_slot_id: str,
+        subject_source: Callable[[], str],
+    ) -> None:
+        if not hasattr(compiler, "execute_once") or not callable(compiler.execute_once):
+            raise SubjectBoundCommitError("authority_compiler_invalid")
+        self._compiler = compiler
+        self._mandate_view = mandate_view
+        self._mandate_slot_id = mandate_slot_id
+        self._subject_source = subject_source
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._compiler, name)
+
+    def execute_once(self, ledger: Any, *args: Any, **kwargs: Any) -> dict[str, Any]:
+        subject_bound_ledger = SubjectBoundCommitGate(
+            ledger,
+            mandate_view=self._mandate_view,
+            mandate_slot_id=self._mandate_slot_id,
+            subject_source=self._subject_source,
+        )
+        return self._compiler.execute_once(
+            subject_bound_ledger,
+            *args,
+            **kwargs,
+        )
+
+
+class SubjectBoundLocalAuthorityRuntime:
+    """Compose subject binding into the real LocalAuthorityRuntime consequence path.
+
+    The underlying LocalAuthorityRuntime still owns keys, evidence, receipt
+    issuance, replay state, and the actual VerifiedCommitLedger.  This wrapper
+    changes only the compiler object handed to that runtime so the existing
+    AuthorityCompiler installs its normal fresh preflight on top of a
+    SubjectBoundCommitGate instead of the bare ledger.
+    """
+
+    def __init__(
+        self,
+        runtime: Any,
+        *,
+        mandate_view: Any,
+        mandate_slot_id: str,
+        subject_source: Callable[[], str],
+    ) -> None:
+        if not hasattr(runtime, "record_compilation") or not callable(
+            runtime.record_compilation
+        ):
+            raise SubjectBoundCommitError("local_authority_runtime_invalid")
+        if not hasattr(runtime, "execute") or not callable(runtime.execute):
+            raise SubjectBoundCommitError("local_authority_runtime_invalid")
+        if not callable(subject_source):
+            raise SubjectBoundCommitError("subject_source_invalid")
+        self._runtime = runtime
+        self._mandate_view = mandate_view
+        self._mandate_slot_id = mandate_slot_id
+        self._subject_source = subject_source
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._runtime, name)
+
+    def record_compilation(self, compilation: Mapping[str, Any]) -> None:
+        self._runtime.record_compilation(compilation)
+
+    def execute(
+        self,
+        *,
+        compiler: Any,
+        proposal: Mapping[str, Any],
+        compilation: Mapping[str, Any],
+        executor: Callable[[], Any],
+        now: datetime,
+    ) -> Any:
+        proxy = _SubjectBoundCompilerProxy(
+            compiler,
+            mandate_view=self._mandate_view,
+            mandate_slot_id=self._mandate_slot_id,
+            subject_source=self._subject_source,
+        )
+        return self._runtime.execute(
+            compiler=proxy,
+            proposal=proposal,
+            compilation=compilation,
+            executor=executor,
+            now=now,
+        )
+
+
+def authorize_subject_bound_owned(
+    *,
+    policy: Any,
+    mandate_view: Any,
+    mandate_slot_id: str,
+    subject_source: Callable[[], str],
+    target: Any,
+    semantics: Callable[[Any], Mapping[str, Any]],
+    state_source: Callable[[Any], Mapping[str, Any] | str],
+    evidence_sources: Mapping[str, Callable[[Any], Any]],
+    tool: str | None = None,
+    producer_model: str = "untrusted-agent",
+    objective: str = "execute the requested tool call",
+    runtime: Any | None = None,
+    runtime_dir: Any = ".openline/runtime",
+    return_receipt: bool = False,
+) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
+    """Guard an owner-authorized tool with receiver-authenticated subject identity.
+
+    This is the supported local consequential path for STOLEN-AUTHORITY-001.
+    It deliberately composes the new subject gate around the existing runtime
+    instead of modifying Verified Commit, Authority Compiler, or the ordinary
+    tool adapter.
+
+    ``subject_source`` is an authentication seam, not an identity assertion
+    field.  It must be supplied by receiver-controlled authentication.
+
+    A custom runtime is intentionally restricted to LocalAuthorityRuntime.
+    Otherwise a caller could pass an implementation that never invokes the
+    compiler's Verified Commit spend path and silently bypass subject binding.
+    """
+
+    # Late imports avoid changing the import graph of historical frozen modules.
+    from .mandate_owner import authorize_owned
+    from .tool_adapter import LocalAuthorityRuntime
+
+    if runtime is None:
+        base_runtime = LocalAuthorityRuntime(runtime_dir)
+    elif isinstance(runtime, LocalAuthorityRuntime):
+        base_runtime = runtime
+    else:
+        raise SubjectBoundCommitError(
+            "subject_bound_runtime_requires_local_authority_runtime"
+        )
+
+    bound_runtime = SubjectBoundLocalAuthorityRuntime(
+        base_runtime,
+        mandate_view=mandate_view,
+        mandate_slot_id=mandate_slot_id,
+        subject_source=subject_source,
+    )
+    return authorize_owned(
+        policy=policy,
+        mandate_view=mandate_view,
+        mandate_slot_id=mandate_slot_id,
+        target=target,
+        semantics=semantics,
+        state_source=state_source,
+        evidence_sources=evidence_sources,
+        tool=tool,
+        producer_model=producer_model,
+        objective=objective,
+        runtime=bound_runtime,
+        runtime_dir=runtime_dir,
+        return_receipt=return_receipt,
+    )
+

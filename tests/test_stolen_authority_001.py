@@ -1,7 +1,10 @@
 from __future__ import annotations
 
+import json
+import tempfile
 import threading
 import unittest
+from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
 
@@ -9,7 +12,13 @@ from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 
 from olp_gate.crypto import public_key_hex
 from olp_gate.mandate_owner import MandateOwnerView, issue_mandate_authorization
-from olp_gate.subject_bound_commit import SubjectBoundCommitGate
+from benchmarks.mandate_owner_001.run_suite import Harness
+from olp_gate.subject_bound_commit import (
+    SubjectBoundCommitError,
+    SubjectBoundCommitGate,
+    authorize_subject_bound_owned,
+)
+from olp_gate.tool_adapter import AuthorizationBlocked, LocalAuthorityRuntime, payment_semantics
 
 
 def _iso(value: datetime) -> str:
@@ -303,6 +312,87 @@ class StolenAuthority001Tests(unittest.TestCase):
                 )
                 self.assertTrue(result["authorized"])
                 self.assertEqual(result["tool_result"], provider)
+
+
+    def test_real_authorize_owned_runtime_is_subject_bound(self) -> None:
+        """The production local runtime must not leave the new gate on a side path."""
+
+        h = Harness()
+        mandate = h.mandate(10_000, version="stolen-authority-runtime")
+        h.admit_owner(mandate)
+        effects: list[tuple[int, str, str]] = []
+
+        with tempfile.TemporaryDirectory(prefix="stolen-authority-runtime-") as temp:
+            runtime = LocalAuthorityRuntime(Path(temp))
+
+            def guarded(subject: str, provider: str):
+                @authorize_subject_bound_owned(
+                    policy=h.bundle(mandate),
+                    mandate_view=h.view,
+                    mandate_slot_id=h.SLOT_ID,
+                    subject_source=lambda: subject,
+                    tool="process_refund",
+                    target="refund://process",
+                    semantics=payment_semantics("amount_cents"),
+                    state_source=h._state,
+                    evidence_sources={"refund_authority": h._authority},
+                    producer_model=provider,
+                    runtime=runtime,
+                )
+                def process_refund(amount_cents: int, customer_id: str):
+                    effects.append((amount_cents, customer_id, provider))
+                    return {
+                        "refunded_cents": amount_cents,
+                        "customer_id": customer_id,
+                        "provider": provider,
+                    }
+
+                return process_refund
+
+            attacker = guarded("agent-b", "provider-a")
+            with self.assertRaises(AuthorizationBlocked) as blocked:
+                attacker(7_500, "C-1")
+            self.assertIn("authority_subject_mismatch", blocked.exception.reason_codes)
+            self.assertEqual(effects, [])
+
+            # VerifiedCommitLedger.__init__ is reached by LocalAuthorityRuntime,
+            # but SubjectBoundCommitGate rejects before the ledger's _locked()
+            # path can create/consume persistent permission state.
+            self.assertFalse(runtime.commit_ledger_path.exists())
+
+            rightful = guarded("refund-agent", "provider-b")
+            result = rightful(7_500, "C-1")
+            self.assertEqual(result["provider"], "provider-b")
+            self.assertEqual(effects, [(7_500, "C-1", "provider-b")])
+
+            ledger = json.loads(runtime.commit_ledger_path.read_text(encoding="utf-8"))
+            self.assertEqual(len(ledger["attempts"]), 1)
+            self.assertEqual(ledger["attempts"][0]["result"], "AUTHORIZED")
+            self.assertEqual(len(ledger["consumed_decisions"]), 1)
+            self.assertEqual(len(ledger["consumed_codes"]), 1)
+
+    def test_subject_bound_owned_rejects_runtime_that_can_bypass_compiler_spend(self) -> None:
+        h = Harness()
+        mandate = h.mandate(10_000, version="stolen-authority-runtime-sham")
+        h.admit_owner(mandate)
+
+        with self.assertRaisesRegex(
+            SubjectBoundCommitError,
+            "subject_bound_runtime_requires_local_authority_runtime",
+        ):
+            authorize_subject_bound_owned(
+                policy=h.bundle(mandate),
+                mandate_view=h.view,
+                mandate_slot_id=h.SLOT_ID,
+                subject_source=lambda: "refund-agent",
+                tool="process_refund",
+                target="refund://process",
+                semantics=payment_semantics("amount_cents"),
+                state_source=h._state,
+                evidence_sources={"refund_authority": h._authority},
+                runtime=object(),
+            )
+
 
 
 if __name__ == "__main__":

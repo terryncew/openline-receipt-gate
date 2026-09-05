@@ -1,6 +1,15 @@
 name: STOLEN-AUTHORITY-001 closure
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - "olp_gate/subject_bound_commit.py"
+      - "tests/test_stolen_authority_001.py"
+      - "STOLEN_AUTHORITY_001_CONTRACT.json"
+      - "tools/apply_stolen_authority_001.py"
+      - ".github/workflows/stolen-authority-001-builder.yml"
   pull_request:
     paths:
       - "olp_gate/subject_bound_commit.py"
@@ -67,6 +76,7 @@ jobs:
           python -m pytest \
             tests/test_stolen_authority_001.py \
             tests/test_verified_commit.py \
+            tests/test_mandate_owner_001.py \
             tests/test_peer_authority_001.py \
             tests/test_temporal_authority_001.py \
             tests/test_x402_freeze.py \
@@ -121,6 +131,8 @@ jobs:
               "focused_status": focused,
               "full_suite_status": full,
               "frozen_core_modified": False,
+              "supported_runtime_subject_bound": focused == 0,
+              "runtime_path": "authorize_subject_bound_owned -> SubjectBoundLocalAuthorityRuntime -> AuthorityCompiler.execute_once -> SubjectBoundCommitGate -> VerifiedCommitLedger",
               "verdict": (
                   "STOLEN_AUTHORITY_CONTAINED_AT_RECEIVER_BOUNDARY"
                   if passed
