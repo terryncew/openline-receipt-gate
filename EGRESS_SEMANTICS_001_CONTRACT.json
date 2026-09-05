@@ -1,0 +1,27 @@
+{
+  "base_sha": "20dc7fcd3abc5132021fdc80a75e03c3f3da521c",
+  "claim": "For outbound traffic deliberately routed through a receiver-owned two-phase egress seam, authority follows the receiver-owned endpoint effect contract and exact observed destination identity, not the HTTP verb or producer claim.",
+  "claim_boundary": "The injected transport must guarantee that dispatch(token) uses the same prepared receiver-owned handle whose destination was observed by prepare(). Raw sockets, another client/process, compromised receiver transport state, and arbitrary remote behavior not declared in the receiver contract are outside this proof.",
+  "enforcement_surface": {
+    "seam": "ReceiverEgressAdapter over an injected receiver-owned transport with prepare -> authorize -> dispatch phases; the consequential dispatcher is wrapped by the existing authorize_subject_bound_owned Receipt Gate path.",
+    "status": "FOUND",
+    "why_not_missing_enforcement_surface": "Receipt Gate already interposes at a guarded callable immediately before the effect. The adapter supplies the missing receiver-owned egress contract/identity observation without implementing networking itself."
+  },
+  "experiment": "EGRESS-SEMANTICS-001",
+  "falsifier": {
+    "identity": "Mismatch among requested hostname, resolved endpoint, SNI hostname, TLS identity, and the authorized contract fails closed before dispatch.",
+    "kill_condition": "If the only possible implementation must infer arbitrary remote side effects after dispatch, or requires Receipt Gate to become an HTTP/DNS/TLS stack, return MISSING_ENFORCEMENT_SURFACE instead of claiming prevention.",
+    "legacy_get_write": "A GET endpoint whose receiver-owned contract is REMOTE_MUTATION is not dispatched when the current mandate allows only inspect/read authority.",
+    "producer_claim": "A producer-supplied 'READ' claim cannot change a receiver-owned REMOTE_MUTATION contract.",
+    "read_positive": "A GET endpoint whose receiver-owned contract is READ and whose prepared destination identity matches executes exactly once without remote mutation.",
+    "redirect": "A redirect target is treated as a new exact destination and cannot inherit the authority of the prior origin."
+  },
+  "non_goals": [
+    "Do not infer remote mutation from GET/POST or from response bodies.",
+    "Do not claim to govern traffic that bypasses ReceiverEgressAdapter.",
+    "Do not implement sockets, DNS resolution, TLS verification, or an HTTP client.",
+    "Do not include multi-agent shared-memory/coordination as a core pass criterion.",
+    "Do not weaken or rewrite STOLEN-AUTHORITY-001 or earlier frozen primitives."
+  ],
+  "schema": "openline.egress-semantics-001.contract.v1"
+}
