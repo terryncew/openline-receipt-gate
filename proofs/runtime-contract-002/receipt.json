@@ -1,0 +1,87 @@
+{
+  "claim_boundary": [
+    "Historical receipt hashes/signatures remain authentic; standing changes, not provenance.",
+    "One accepted basis per committed receipt only.",
+    "No multi-basis sufficiency semantics are earned.",
+    "No automatic undo of already-executed external effects.",
+    "No cross-receiver closure propagation or distributed consistency claim.",
+    "No production-scale graph storage or latency claim."
+  ],
+  "earned_claim": "For a local receiver-owned single-basis dependency chain, OpenLine can record BASIS_FOR ancestry at commit time and, when upstream standing is later revoked, compute exact transitive downstream closure so affected descendant receipts stop earning unchanged execution standing while unrelated receipts remain executable.",
+  "experiment": "RUNTIME-CONTRACT-002",
+  "frozen_contract": {
+    "git_blob_sha": "0d8ca58d86c108d2a7d1365b4986aa9fba474403",
+    "multi_basis_sufficiency_in_scope": false,
+    "schema": "openline.runtime-contract-002.contract.v1",
+    "scope": "receiver-owned single-basis ancestry closure",
+    "sha256": "2fd83bc34ee459f80ef03aeff71df3579f907fc448398e5e410794efd3f538b2"
+  },
+  "main_sha": "50cb779d486f0b4dba14f4f8f509b1561373d9dc",
+  "problem_proof": {
+    "artifact_id": 9960693195,
+    "artifact_zip_sha256": "4aa21bb254b874a144b0cab19935003a2f39f0b2fbd84993ba86f429a89b2b81",
+    "experiment": "RUNTIME-CONTRACT-001B",
+    "observation": {
+      "A_blocked_directly": true,
+      "A_receipt_recorded_X_as_basis": true,
+      "B_still_executed": true,
+      "B_used_A_receipt_as_exact_support": true,
+      "X_lost_standing": true,
+      "explicit_X_to_B_update": false,
+      "unrelated_C_executed": true
+    },
+    "result_sha256": "44db09e4c229e7f5654059a64b047fbe31f22f4e67afd0b18ad6f89d91634f7f",
+    "verdict": "TRANSITIVE_CONSEQUENCE_NOT_DISCOVERED",
+    "workflow_run_id": 33937615382
+  },
+  "remedy_proof": {
+    "ancestry_module_sha256": "cbf73f1c35ce84c76036029700f3380f4f1dd573c03ef066b73f74b0dd21f8ff",
+    "artifact_id": 9961721364,
+    "artifact_zip_sha256": "4f9645144fc2f223388a6fe316990184b963c3ca39661b4da8a3846561b702d6",
+    "observed": {
+      "adversarial_checks": {
+        "cycle_edge": true,
+        "historical_authenticity": true,
+        "producer_forged_edge": true,
+        "standing_event_replay": true,
+        "unrelated_control": true
+      },
+      "adversarial_checks_passed": 5,
+      "adversarial_checks_total": 5,
+      "affected_closure_exactly": [
+        "A_receipt",
+        "B_receipt"
+      ],
+      "after_X_revoke": {
+        "A_blocked": true,
+        "B_blocked": true,
+        "C_executed": true
+      },
+      "before_revoke": {
+        "A_executed": true,
+        "B_executed": true,
+        "C_executed": true
+      },
+      "causal_path": [
+        "X",
+        "A_receipt",
+        "B_receipt"
+      ],
+      "manual_X_to_B_update_used": false
+    },
+    "pr": 80,
+    "pr_head_sha": "7eb8711dfdd35339286eea6fa8b1805d7c2477ab",
+    "pr_merge_commit_sha": "50cb779d486f0b4dba14f4f8f509b1561373d9dc",
+    "pr_merge_test_sha": "777c0ac40fe229597bf6195e2d3d51059aebb42f",
+    "result_sha256": "1f9b484430e9e2c6edaf02197d368af6a56f99ea83feb70122898d9d2132759c",
+    "verdict": "TRANSITIVE_CONSEQUENCE_CLOSURE_ENFORCED",
+    "workflow_run_id": 33940739810
+  },
+  "research_decision": {
+    "multi_basis_sufficiency": "PARKED_UNTIL_EARNED",
+    "next_thread": "STOLEN-AUTHORITY-001",
+    "runtime_contract_002": "CLOSED"
+  },
+  "schema": "openline.runtime-contract-002.freeze.v1",
+  "status": "FROZEN"
+}
