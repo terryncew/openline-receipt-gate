@@ -1,0 +1,166 @@
+{
+  "adversarial_checks": [
+    {
+      "expected": "receiver rejects; closure state unchanged",
+      "name": "producer_forged_edge"
+    },
+    {
+      "expected": "receiver rejects edge that would create a cycle",
+      "name": "cycle_edge"
+    },
+    {
+      "expected": "idempotent; no duplicate affected/closure events",
+      "name": "standing_event_replay"
+    },
+    {
+      "expected": "C never enters affected closure for X",
+      "name": "unrelated_control"
+    },
+    {
+      "expected": "A_receipt and B_receipt signatures/hashes remain valid after reopening",
+      "name": "historical_authenticity"
+    }
+  ],
+  "base_sha": "3f7874dde7e0e1b7918ceac00eee0f251c452b94",
+  "closure_contract": {
+    "affected_state": "AFFECTED_UPSTREAM_STANDING_LOSS",
+    "effect": "A receipt marked affected remains authentic historical evidence but cannot continue to earn unchanged execution standing at the receiver gate.",
+    "historical_receipt_authenticity_preserved": true,
+    "operation": "transitive downstream reachability over admitted BASIS_FOR edges",
+    "output": "exact affected descendant receipt hashes plus causal paths",
+    "replay_rule": "Replaying the same standing-loss event produces no duplicate closure events."
+  },
+  "earned_from": {
+    "artifact_zip_sha256": "4aa21bb254b874a144b0cab19935003a2f39f0b2fbd84993ba86f429a89b2b81",
+    "experiment": "RUNTIME-CONTRACT-001B",
+    "observation": {
+      "A_directly_blocked_after_X_revoke": true,
+      "A_receipt_recorded_X_as_basis": true,
+      "B_still_executed_after_X_revoke": true,
+      "B_used_A_receipt_as_exact_support": true,
+      "explicit_X_to_B_update": false,
+      "unrelated_C_still_executed": true
+    },
+    "result_sha256": "44db09e4c229e7f5654059a64b047fbe31f22f4e67afd0b18ad6f89d91634f7f",
+    "verdict": "TRANSITIVE_CONSEQUENCE_NOT_DISCOVERED",
+    "workflow_run_id": 33937615382
+  },
+  "edge_contract": {
+    "admission_boundary": "An edge is admitted only at the receiver commit boundary from support artifacts actually accepted for that committed decision.",
+    "cycle_rule": "reject an edge that would create a cycle",
+    "direction": "support_hash -> derived_receipt_hash",
+    "duplicate_rule": "exact duplicate edge admission is idempotent",
+    "missing_edge_rule": "The closure layer cannot infer an unrecorded dependency after the fact.",
+    "relationship": "BASIS_FOR",
+    "required_fields": [
+      "edge_id",
+      "support_hash",
+      "derived_receipt_hash",
+      "relationship",
+      "decision_id",
+      "sequence"
+    ]
+  },
+  "experiment": "RUNTIME-CONTRACT-002",
+  "explicitly_not_earned_yet": [
+    "multi-basis sufficiency semantics",
+    "a rule that any one parent loss always invalidates a multi-parent decision",
+    "production graph database architecture",
+    "cross-receiver closure propagation",
+    "global distributed consistency",
+    "automatic undo of already-executed external effects",
+    "provider-specific integration",
+    "production latency or scale claims"
+  ],
+  "fail": {
+    "conditions": [
+      "B remains executable after X standing loss",
+      "B is only blocked after a hand-written X -> B update",
+      "C is incorrectly affected",
+      "producer can create authoritative dependency edges",
+      "cycle admission corrupts closure",
+      "replay duplicates reopening events",
+      "historical receipts are rewritten or invalidated to enforce closure"
+    ],
+    "verdict": "TRANSITIVE_CONSEQUENCE_CLOSURE_STILL_ESCAPABLE"
+  },
+  "fixed_fixture": {
+    "before": [
+      "A executes and commits A_receipt using X",
+      "B executes and commits B_receipt using A_receipt",
+      "C executes and commits C_receipt using unrelated CONTROL_C"
+    ],
+    "event": "X becomes INACTIVE/REVOKED",
+    "expected_closure": [
+      "A_receipt",
+      "B_receipt"
+    ],
+    "expected_unaffected": [
+      "C_receipt"
+    ],
+    "graph": [
+      "X -> A_receipt",
+      "A_receipt -> B_receipt",
+      "CONTROL_C -> C_receipt"
+    ],
+    "no_explicit_updates": [
+      "no X -> B standing update",
+      "no X -> B dependency edge added after revocation",
+      "no B-specific manual reopening instruction"
+    ]
+  },
+  "gate_integration": {
+    "after_event": "B retry using unchanged A_receipt must be QUARANTINED/BLOCKED because A_receipt is now affected by upstream standing loss.",
+    "before_event": "B may execute while A_receipt has no affected closure state",
+    "control": "C retry remains allowed",
+    "no_signature_rewrite": true
+  },
+  "implementation_constraint": "Build the smallest local receiver-owned closure view and gate integration that can pass or fail this contract. Do not build a general graph platform.",
+  "minimum_receiver_state": [
+    "admitted nodes",
+    "BASIS_FOR edges",
+    "monotonic edge sequence",
+    "processed standing-loss event ids",
+    "affected receipt hashes",
+    "causal path for each affected receipt",
+    "monotonic closure-event sequence"
+  ],
+  "next_after_contract_merge": "Implement RUNTIME-CONTRACT-002 once, run the frozen fixture and adversarial checks, freeze the receipt, then decide whether multi-basis sufficiency needs a separate experiment.",
+  "node_identity": {
+    "rule": "A node is identified by the same canonical support hash used by current Receipt Gate standing. Authentic historical receipts are never rewritten.",
+    "type": "canonical support/decision receipt hash"
+  },
+  "obligation": "The receiver must be able to record which accepted support artifacts were actually used to commit a derived decision receipt, and later compute the transitive downstream closure of a receiver-recognized standing loss without requiring hand-written updates for every descendant.",
+  "ownership": {
+    "closure_events": "receiver-owned",
+    "edges": "receiver-owned",
+    "gate_remains_final_execution_authority": true,
+    "producer_may_assert_edges": false,
+    "producer_may_mutate_closure_state": false,
+    "standing_events": "receiver-owned"
+  },
+  "pass": {
+    "requirements": [
+      "receiver admits X -> A_receipt and A_receipt -> B_receipt before revocation",
+      "X revocation yields exact affected closure A_receipt,B_receipt",
+      "closure includes causal path X -> A_receipt -> B_receipt",
+      "no explicit X -> B update is used",
+      "B retry is blocked/quarantined under unchanged direct support",
+      "C remains executable and outside affected closure",
+      "historical receipt authenticity is preserved",
+      "all adversarial checks pass"
+    ],
+    "verdict": "TRANSITIVE_CONSEQUENCE_CLOSURE_ENFORCED"
+  },
+  "schema": "openline.runtime-contract-002.contract.v1",
+  "standing_loss_input": {
+    "required_fields": [
+      "support_hash",
+      "standing_event_id",
+      "standing_event_sequence"
+    ],
+    "trigger": "receiver-recognized upstream support becomes INACTIVE/REVOKED"
+  },
+  "status": "FROZEN_BEFORE_REMEDY_IMPLEMENTATION",
+  "title": "Receiver-owned ancestry closure"
+}
