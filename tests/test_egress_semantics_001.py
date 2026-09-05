@@ -71,7 +71,10 @@ class SyntheticPreparedTransport:
 
 class EgressSemantics001Tests(unittest.TestCase):
     def setUp(self) -> None:
-        self.now = datetime(2026, 9, 5, 5, 0, tzinfo=timezone.utc)
+        # The supported runtime checks mandate standing against receiver wall time.
+        # Keep this runtime fixture live relative to test start: a fixed timestamp
+        # silently turns into an expired authorization as CI ages.
+        self.now = datetime.now(timezone.utc).replace(microsecond=0)
         self.owner_key = Ed25519PrivateKey.from_private_bytes(bytes.fromhex("51" * 32))
         self.owner_id = "alice"
         self.agent_id = "portable-agent"
@@ -191,6 +194,9 @@ class EgressSemantics001Tests(unittest.TestCase):
             key=self.owner_key,
         )
         view.admit(authorization, mandate, now=self.now)
+        # Regression guard: the exact production-style runtime path below checks
+        # current standing without receiving this fixture's synthetic ``now``.
+        self.assertEqual(view.status(self.slot_id), "ACTIVE")
         return view
 
     def adapter(self, transport, allowed_targets):
