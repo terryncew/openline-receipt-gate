@@ -1,0 +1,51 @@
+{
+  "base_sha": "6c01bfcfe6f1226ec1483a0000817401cc937814",
+  "claim_boundary": [
+    "This tests transitive consequence discovery, not direct standing enforcement.",
+    "It does not test sufficiency when a decision has multiple independent bases.",
+    "It does not implement or import Claim Graph.",
+    "A FAIL earns the need for an ancestry/closure mechanism; it does not by itself prove one specific implementation."
+  ],
+  "constraints": {
+    "claim_graph_or_dependency_remedy_forbidden": true,
+    "deterministic_local_fixture": true,
+    "no_new_product_code": true,
+    "product_source_must_equal_base": true,
+    "scientific_fail_is_green_ci": true
+  },
+  "experiment": "RUNTIME-CONTRACT-001B",
+  "fail": {
+    "condition": "After X loses standing, A is directly blocked but B still executes under its unchanged direct standing while C also executes.",
+    "verdict": "TRANSITIVE_CONSEQUENCE_NOT_DISCOVERED"
+  },
+  "fixed_sequence": [
+    "Create signed support X for exact decision A.",
+    "Receiver admits X as ACTIVE for A.",
+    "A executes through the current guarded-tool path.",
+    "Current ReceiptGate emits committed receipt A with X's support hash recorded as A's basis.",
+    "Decision B uses receipt A itself as its direct support artifact.",
+    "Receiver admits receipt A as ACTIVE for B.",
+    "Independent control C receives unrelated signed support and ACTIVE standing.",
+    "B and C both execute before the standing change.",
+    "Receiver admits REVOKE/INACTIVE successor for X -> A.",
+    "Retry A; direct standing must block it.",
+    "Retry B without any hand-written X -> B update.",
+    "Retry unrelated C."
+  ],
+  "fixture_validity": [
+    "A, B, and C execute before X loses standing.",
+    "A's committed receipt contains X's support hash as its recorded basis.",
+    "B's direct support artifact is exactly A's committed receipt.",
+    "After X revocation, direct retry of A is blocked.",
+    "After X revocation, unrelated C still executes.",
+    "olp_gate source tree is byte-identical to the frozen base."
+  ],
+  "pass": {
+    "condition": "After X loses standing, current runtime blocks or reopens B without an explicit X -> B update, while C remains unaffected.",
+    "verdict": "TRANSITIVE_CONSEQUENCE_ALREADY_ENFORCED"
+  },
+  "question": "If support X justified decision A, and A's committed receipt later becomes the direct support for decision B, can the current Receipt Gate runtime discover that B is affected when X loses receiver-recognized standing, without being explicitly told that B depends on X?",
+  "reason_001a_skipped": "STANDING-SEAM-001 already proves the direct case: a relevant receiver-admitted standing loss blocks the same unchanged action while an unrelated action survives.",
+  "schema": "openline.runtime-contract-001b.freeze.v1",
+  "status": "FROZEN_BEFORE_RUN"
+}
