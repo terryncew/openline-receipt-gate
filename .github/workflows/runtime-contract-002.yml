@@ -1,0 +1,68 @@
+name: RUNTIME-CONTRACT-002 — ancestry closure
+
+on:
+  pull_request:
+    paths:
+      - "olp_gate/ancestry.py"
+      - "tests/test_runtime_contract_002.py"
+      - "benchmarks/runtime_contract_002/**"
+      - ".github/workflows/runtime-contract-002.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ancestry-closure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install current package and test runner
+        run: python -m pip install . pytest
+
+      - name: Initialize evidence directory
+        run: |
+          mkdir -p "$RUNNER_TEMP/runtime-contract-002"
+          printf '%s\n' \
+            '{"schema":"openline.runtime-contract-002.workflow-start.v1","status":"STARTED"}' \
+            > "$RUNNER_TEMP/runtime-contract-002/workflow-start.json"
+
+      - name: Unit-test receiver ancestry closure
+        run: python -m pytest tests/test_runtime_contract_002.py -q
+
+      - name: Run frozen RUNTIME-CONTRACT-002 proof
+        run: |
+          python benchmarks/runtime_contract_002/run_002.py \
+            --repo "$GITHUB_WORKSPACE" \
+            --out "$RUNNER_TEMP/runtime-contract-002"
+
+      - name: Show scientific verdict
+        if: success()
+        run: |
+          cat "$RUNNER_TEMP/runtime-contract-002/RUNTIME_CONTRACT_002_RESULT.json"
+          cat "$RUNNER_TEMP/runtime-contract-002/RUNTIME_CONTRACT_002_RESULT.sha256"
+
+      - name: Show infrastructure failure
+        if: failure()
+        run: |
+          test -f "$RUNNER_TEMP/runtime-contract-002/RUNTIME_CONTRACT_002_INFRA_FAILURE.json" \
+            && cat "$RUNNER_TEMP/runtime-contract-002/RUNTIME_CONTRACT_002_INFRA_FAILURE.json" \
+            || true
+
+      - name: Freeze RUNTIME-CONTRACT-002 evidence
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: runtime-contract-002
+          path: ${{ runner.temp }}/runtime-contract-002/
+          if-no-files-found: error
+          retention-days: 30
