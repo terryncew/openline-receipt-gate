@@ -1,0 +1,64 @@
+{
+  "after_standing_loss": {
+    "A": {
+      "blocked": true,
+      "effect_delta": 0,
+      "executed": false,
+      "reason": "evidence_revoked:decision_standing"
+    },
+    "B": {
+      "blocked": false,
+      "effect_delta": 1,
+      "executed": true
+    },
+    "C": {
+      "blocked": false,
+      "effect_delta": 1,
+      "executed": true
+    }
+  },
+  "ancestry": {
+    "a_receipt_records_x_basis": true,
+    "a_receipt_signature_valid": true,
+    "b_direct_support_is_exactly_a_receipt": true,
+    "explicit_x_to_b_update_after_revoke": false
+  },
+  "artifact_id": 9960693195,
+  "artifact_zip_sha256": "4aa21bb254b874a144b0cab19935003a2f39f0b2fbd84993ba86f429a89b2b81",
+  "base_main_sha": "58c5f63532ae2bf0f859146d50c1b2804a2e390d",
+  "before_standing_loss": {
+    "A_executed": true,
+    "B_executed": true,
+    "C_executed": true
+  },
+  "earned_conclusion": "Current Receipt Gate standing enforcement is direct, not transitive. When X lost standing, A was blocked, but B remained executable even though B's exact support was A's signed receipt and A's receipt recorded X as its basis. No explicit X-to-B update was provided.",
+  "experiment": "RUNTIME-CONTRACT-001B",
+  "next": "Freeze the minimum ancestry/closure contract before implementing the remedy.",
+  "not_earned": [
+    "No claim that full Claim Graph semantics are required.",
+    "No claim yet about partial sufficiency with multiple independent bases.",
+    "No claim about production-scale graph storage or propagation latency.",
+    "No claim that every downstream consequence must always reopen."
+  ],
+  "pr_head_sha": "d8370f85a4b496a30b41bf71e751c06e96cd6126",
+  "pr_merge_commit_sha": "58c5f63532ae2bf0f859146d50c1b2804a2e390d",
+  "preregistered_freeze_sha256": "7ff13f1568ccb3f655ddf737bb1af37c1e8da18960b3ba2701ff6b27d2aa7ab2",
+  "product_source_guard": {
+    "base_olp_gate_tree": "5b7f139ad83f2f15b283270b94b46009889cbb4e",
+    "claim_graph_runtime_dependency": false,
+    "head_olp_gate_tree": "5b7f139ad83f2f15b283270b94b46009889cbb4e",
+    "unchanged": true
+  },
+  "research_consequence": "An ancestry/closure mechanism is now earned. The next remedy may be a Claim Graph or equivalent dependency closure layer, but the experiment does not dictate the implementation.",
+  "result_sha256": "44db09e4c229e7f5654059a64b047fbe31f22f4e67afd0b18ad6f89d91634f7f",
+  "schema": "openline.runtime-contract-001b.freeze.v1",
+  "standing_change": {
+    "direct_decision": "A",
+    "event_type": "REVOKE",
+    "new_standing": "INACTIVE",
+    "support": "X"
+  },
+  "status": "FROZEN",
+  "verdict": "TRANSITIVE_CONSEQUENCE_NOT_DISCOVERED",
+  "workflow_run_id": 33937615382
+}
