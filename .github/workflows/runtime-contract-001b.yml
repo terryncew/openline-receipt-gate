@@ -1,0 +1,65 @@
+name: RUNTIME-CONTRACT-001B — transitive consequence
+
+on:
+  pull_request:
+    paths:
+      - "benchmarks/runtime_contract_001/**"
+      - ".github/workflows/runtime-contract-001b.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  current-runtime:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install frozen runtime dependency
+        run: python -m pip install "cryptography>=42"
+
+      - name: Initialize evidence directory
+        run: |
+          mkdir -p "$RUNNER_TEMP/runtime-contract-001b"
+          printf '%s\n' \
+            '{"schema":"openline.runtime-contract-001b.workflow-start.v1","status":"STARTED"}' \
+            > "$RUNNER_TEMP/runtime-contract-001b/workflow-start.json"
+
+      - name: Run current-runtime transitivity falsifier
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          python benchmarks/runtime_contract_001/run_001b.py \
+            --repo "$GITHUB_WORKSPACE" \
+            --out "$RUNNER_TEMP/runtime-contract-001b"
+
+      - name: Show scientific verdict
+        if: success()
+        run: |
+          cat "$RUNNER_TEMP/runtime-contract-001b/RUNTIME_CONTRACT_001B_RESULT.json"
+          cat "$RUNNER_TEMP/runtime-contract-001b/RUNTIME_CONTRACT_001B_RESULT.sha256"
+
+      - name: Show infrastructure failure
+        if: failure()
+        run: |
+          test -f "$RUNNER_TEMP/runtime-contract-001b/RUNTIME_CONTRACT_001B_INFRA_FAILURE.json" \
+            && cat "$RUNNER_TEMP/runtime-contract-001b/RUNTIME_CONTRACT_001B_INFRA_FAILURE.json" \
+            || true
+
+      - name: Freeze 001B evidence
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: runtime-contract-001b
+          path: ${{ runner.temp }}/runtime-contract-001b/
+          if-no-files-found: error
+          retention-days: 30
