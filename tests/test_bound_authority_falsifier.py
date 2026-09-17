@@ -19,10 +19,10 @@ import subprocess
 import sys
 import threading
 import time
+from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-import pytest
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 
 from olp_gate import capability_gate as gate
@@ -40,6 +40,17 @@ from olp_gate.mandate_gate import mandate_preflight
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 CHILD = REPO_ROOT / "tests" / "falsifier_crash_child.py"
+
+
+@contextmanager
+def _raises(expected):
+    """Stdlib equivalent of pytest.raises for the release-check's
+    pytest-free unittest environment."""
+    try:
+        yield
+    except expected:
+        return
+    raise AssertionError(f"expected {expected.__name__} to be raised")
 
 
 def _now():
@@ -149,15 +160,15 @@ def _preflight(mandate_id: str, effect_id: str, principal_id: str, **kw):
 def test_receipt_verification_fails_closed(tmp_path):
     owner, other = Owner("principal-p"), Owner("principal-evil")
     receipt = _receipt("cap-x", owner)
-    with pytest.raises(receipts.CapabilityReceiptError):  # wrong pinned key
+    with _raises(receipts.CapabilityReceiptError):  # wrong pinned key
         receipts.verify_capability_receipt(receipt, owner.owner_id, other.pubkey)
     tampered = json.loads(json.dumps(receipt))
     tampered["budget"]["amount"] = 999  # signature no longer binds
-    with pytest.raises(receipts.CapabilityReceiptError):
+    with _raises(receipts.CapabilityReceiptError):
         receipts.verify_capability_receipt(tampered, owner.owner_id, owner.pubkey)
     delegated = json.loads(json.dumps(receipt))
     delegated["parent"] = "cap-parent"  # delegation excluded from the profile
-    with pytest.raises(receipts.CapabilityReceiptError):
+    with _raises(receipts.CapabilityReceiptError):
         receipts.verify_capability_receipt(delegated, owner.owner_id, owner.pubkey)
 
 
@@ -188,7 +199,7 @@ def test_registration_idempotent_and_single_active(tmp_path):
         auth2, capability_id="cap-p-002", receipt_digest=parsed2["receipt_digest"],
         pinned_owner_id=owner.owner_id, pinned_pubkey_hex=owner.pubkey,
     )
-    with pytest.raises(store.StoreError):
+    with _raises(store.StoreError):
         store.register_capability(conn, parsed2, auth2_digest, _unix())
     conn.close()
 
@@ -288,14 +299,14 @@ def test_t4_t8_crash_restart_encumbrance_and_evidence(tmp_path):
     res_b = gate.reserve_for_effect(conn, pre_b, eff_b, op_id="op-b", now_unix=_unix())
     assert res_b["allowed"] is False  # T7
 
-    with pytest.raises(lifecycle.OperationError):  # T8a: bad token, nothing changes
+    with _raises(lifecycle.OperationError):  # T8a: bad token, nothing changes
         lifecycle.commit(
             conn, "cap-p-001", parsed["receipt_digest"], "op-a",
             token="00" * 16, outcome="executed",
             evidence_digest="ab" * 32, now_unix=_unix(),
         )
     assert lifecycle.available(conn, "cap-p-001")["available"] == 40
-    with pytest.raises(lifecycle.OperationError):  # T8a: malformed evidence
+    with _raises(lifecycle.OperationError):  # T8a: malformed evidence
         lifecycle.resolve_indeterminate(
             conn, "cap-p-001", parsed["receipt_digest"], "op-a", "executed",
             evidence_digest="not-hex", resolver_id="op-1", note="x", now_unix=_unix(),
@@ -427,12 +438,12 @@ def test_t11_replay_cannot_double_consume(tmp_path):
     assert res2["reservation"]["duplicate"] is True
     assert res2["reservation"]["token"] is None  # token issued exactly once
     assert lifecycle.available(conn, "cap-p-001")["available"] == 40
-    with pytest.raises(lifecycle.OperationError):  # op key reuse, different terms
+    with _raises(lifecycle.OperationError):  # op key reuse, different terms
         lifecycle.reserve(conn, parsed, "op-r", 50, "different", "different", _unix())
     gate.note_entry_for(conn, res["reservation"], "cap-p-001", token, _unix())
     gate.settle_for(conn, res["reservation"], "cap-p-001", token, "executed",
                     evidence_digest="ef" * 32, now_unix=_unix())
-    with pytest.raises(lifecycle.OperationError):  # duplicate commit rejected
+    with _raises(lifecycle.OperationError):  # duplicate commit rejected
         gate.settle_for(conn, res["reservation"], "cap-p-001", token, "executed",
                         evidence_digest="ef" * 32, now_unix=_unix())
     posture = lifecycle.available(conn, "cap-p-001")
@@ -450,7 +461,7 @@ def test_t12_mandate_deny_still_wins(tmp_path):
     _register(db, "cap-p-001", owner)
     conn = store.open_store(db)
     # the existing path raises on denial before the capability layer runs
-    with pytest.raises(PermissionError):
+    with _raises(PermissionError):
         _preflight("mandate-d-001", "effect-d-001", owner.owner_id,
                    action_type="send")  # not in allowed_action_types
     # and the gate itself never widens a deny into an allowed action
