@@ -1,0 +1,25 @@
+{
+ "experiment": "SENTRY-LIVE-001",
+ "terminal": "PASS_SENTRY_LIVE_001_GRACEFUL_DEGRADATION_OBSERVED",
+ "no_rerun": true,
+ "static_outcomes": {
+  "LV-01": "COMMIT",
+  "LV-02": "COMMIT",
+  "LV-03": "DENY",
+  "LV-04": "COMMIT"
+ },
+ "guardian_decisions": {
+  "LV-02": "FINE",
+  "LV-03": "HOLD",
+  "LV-01": "HOLD",
+  "LV-04": "FINE"
+ },
+ "final_outcomes": {
+  "LV-01": "QUARANTINE",
+  "LV-02": "COMMIT",
+  "LV-03": "DENY",
+  "LV-04": "COMMIT"
+ },
+ "arm_map_sealed": "see benchmark/gold.json (not shown to guardian)",
+ "extra": {}
+}
