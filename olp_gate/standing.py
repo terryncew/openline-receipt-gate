@@ -308,6 +308,14 @@ class ReceiverStandingView:
         current = self._heads.get((support_hash, action_hash))
         return None if current is None else str(current["payload_hash"])
 
+    def _heads_snapshot(self) -> list[dict[str, Any]]:
+        """Copies of current heads for ancestry reconciliation (002).
+
+        Read-only; used by ClosureAwareStandingView to re-derive
+        standing-loss events from the durable head frontier after restart.
+        """
+        return [dict(head) for head in self._heads.values()]
+
     def assess(
         self,
         projection: Mapping[str, Any],
