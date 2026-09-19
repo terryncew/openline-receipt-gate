@@ -18,12 +18,40 @@ from typing import Any, Callable, Mapping
 from .authority_link import canonical_hash
 from .crypto import verify_olp_signature
 from .tool_adapter import EvidenceAssertion, ToolCallContext
+from ._durable_heads import DurableHeadStore
 
 
 STANDING_PROJECTION_SCHEMA = "openline.standing_projection.v1"
 _ALLOWED_STANDING = {"ACTIVE", "INACTIVE"}
 _ALLOWED_EVENTS = {"ADMIT", "REVOKE", "EXPIRE", "SUPERSEDE", "CORRECT"}
 _HEX = frozenset("0123456789abcdef")
+_STANDING_VIEW_IDENTITY = "standing/v1"
+
+
+def _standing_store_key(support_hash: str, action_hash: str) -> str:
+    # Hashes are validated as 64-char lowercase hex, so ":" cannot collide.
+    return f"{support_hash}:{action_hash}"
+
+
+def _split_standing_store_key(store_key: str) -> tuple[str, str]:
+    support_hash, action_hash = store_key.split(":", 1)
+    return support_hash, action_hash
+
+
+def _apply_standing_successor(
+    current: dict[str, Any] | None, checked: dict[str, Any]
+) -> None:
+    """Enforce the monotonic head rule; raise unless `checked` succeeds `current`."""
+    if current is None:
+        if checked["sequence"] != 1:
+            raise StandingProjectionError("standing_initial_sequence_invalid")
+        if checked["predecessor_hash"] is not None:
+            raise StandingProjectionError("standing_initial_predecessor_forbidden")
+    else:
+        if checked["sequence"] != current["sequence"] + 1:
+            raise StandingProjectionError("standing_successor_sequence_invalid")
+        if checked["predecessor_hash"] != current["payload_hash"]:
+            raise StandingProjectionError("standing_successor_predecessor_mismatch")
 
 
 class StandingProjectionError(ValueError):
@@ -196,7 +224,12 @@ class ReceiverStandingView:
     this head merely by emitting an event.
     """
 
-    def __init__(self, trusted_issuers: Mapping[str, str]) -> None:
+    def __init__(
+        self,
+        trusted_issuers: Mapping[str, str],
+        *,
+        durable_path: str | None = None,
+    ) -> None:
         if not isinstance(trusted_issuers, Mapping) or not trusted_issuers:
             raise StandingProjectionError("standing_trust_store_required")
         normalized: dict[str, str] = {}
@@ -209,6 +242,18 @@ class ReceiverStandingView:
             normalized[issuer_id] = key
         self._trusted_issuers = normalized
         self._heads: dict[tuple[str, str], dict[str, Any]] = {}
+        # Explicit opt-in durability. Without durable_path the view keeps the
+        # legacy in-memory head frontier, which resets on process restart.
+        self._durable: DurableHeadStore | None = None
+        if durable_path is not None:
+            self._durable = DurableHeadStore(
+                durable_path,
+                {"view": _STANDING_VIEW_IDENTITY, "trusted_issuers": normalized},
+            )
+            self._heads = {
+                _split_standing_store_key(store_key): head
+                for store_key, head in self._durable.load().items()
+            }
 
     def admit(
         self,
@@ -223,18 +268,32 @@ class ReceiverStandingView:
             now=now,
         )
         key = (checked["support_hash"], checked["action_hash"])
-        current = self._heads.get(key)
-        if current is None:
-            if checked["sequence"] != 1:
-                raise StandingProjectionError("standing_initial_sequence_invalid")
-            if checked["predecessor_hash"] is not None:
-                raise StandingProjectionError("standing_initial_predecessor_forbidden")
+        if self._durable is None:
+            _apply_standing_successor(self._heads.get(key), checked)
+            self._heads[key] = checked
         else:
-            if checked["sequence"] != current["sequence"] + 1:
-                raise StandingProjectionError("standing_successor_sequence_invalid")
-            if checked["predecessor_hash"] != current["payload_hash"]:
-                raise StandingProjectionError("standing_successor_predecessor_mismatch")
-        self._heads[key] = checked
+            # Persistence-before-decision: the successor rule runs against the
+            # freshly-loaded durable heads inside the store lock, the write is
+            # atomic, and only then does in-memory state move.
+            store_key = _standing_store_key(*key)
+
+            def _advance(heads: dict[str, Any]) -> dict[str, Any]:
+                advanced = dict(heads)
+                _apply_standing_successor(advanced.get(store_key), checked)
+                advanced[store_key] = checked
+                return advanced
+
+            try:
+                committed = self._durable.read_modify_write(_advance)
+            except StandingProjectionError:
+                # The file moved under this view (another writer advanced the
+                # head). Sync memory to the durable truth before refusing.
+                self._heads = {
+                    _split_standing_store_key(k): v
+                    for k, v in self._durable.load().items()
+                }
+                raise
+            self._heads[key] = committed[store_key]
         return {
             "admitted": True,
             "support_hash": checked["support_hash"],
