@@ -300,8 +300,15 @@ claims.
 Run the unit and adversarial tests:
 
 ~~~bash
-python -m unittest discover -s tests -v
+python -m unittest discover -s tests -t . -v
 ~~~
+
+The `-t .` matters: byte-frozen historical test modules are excluded
+from current-development discovery by tests/__init__.py (their
+source-closure assertions are obsolete once production evolves; their
+historical verification runs via
+`python scripts/freeze_governance.py verify-all` against reconstructed
+frozen snapshot roots).
 
 Run the complete release gate with the archived warning-time policy:
 

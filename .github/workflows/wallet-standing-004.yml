@@ -36,7 +36,7 @@ jobs:
       - name: Verify live result
         run: python experiments/wallet-standing-004/scripts/verify_live.py
       - name: Run existing regression suite
-        run: python -m unittest discover -s tests -v
+        run: python -m unittest discover -s tests -t . -v
       - name: Upload live receipt
         uses: actions/upload-artifact@v4
         with:

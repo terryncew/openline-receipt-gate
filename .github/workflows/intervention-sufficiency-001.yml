@@ -32,7 +32,7 @@ jobs:
           python-version: '3.11'
 
       - name: Unit and boundary tests
-        run: python -m unittest discover -s tests -v
+        run: python -m unittest discover -s tests -t . -v
 
       - name: Generate synthetic falsifier controls
         run: python -m intervention_sufficiency.cli synthetic --out artifacts/synthetic

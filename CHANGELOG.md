@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+- Adds frozen source-closure governance (`scripts/freeze_governance.py`).
+  Byte-frozen historical test modules are excluded from
+  current-development discovery (run
+  `python -m unittest discover -s tests -t . -v`; the `-t .` is
+  required); their historical verification now runs against
+  reconstructed frozen snapshot roots instead of current HEAD.
+  `python scripts/freeze_governance.py verify-all` reproduces all five
+  affected experiment closures byte-exact from repository history and
+  reports production drift as information, never as failure. No
+  historical hash was changed.
 - Adds receiver-owned field-tier definitions for policy, derived, and payload
   fields. The complete parameter commitment is computed before minimization;
   unclassified fields remain local and unknown projectors fail closed.
