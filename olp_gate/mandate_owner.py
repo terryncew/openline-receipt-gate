@@ -341,6 +341,16 @@ class MandateOwnerView:
         current = self._heads.get(slot_id)
         return 0 if current is None else int(current["authorization"]["sequence"])
 
+    def head_record(self, slot_id: str) -> dict[str, Any] | None:
+        """Return a copy of the current head (authorization + mandate), if any.
+
+        Read-only. Used by the final-authority check so the journal can bind
+        the exact owner-signed record observed at finalize time.
+        """
+        self._slot(slot_id)
+        current = self._heads.get(slot_id)
+        return None if current is None else _json_copy(current)
+
     def status(self, slot_id: str, *, now: datetime | None = None) -> str:
         self._slot(slot_id)
         current = self._heads.get(slot_id)

@@ -106,18 +106,39 @@ def execute_mandated_once(
     executor: Callable[[], T],
     now: datetime | None = None,
     attempt_label: str | None = None,
+    mandate_owner_view: Any | None = None,
+    mandate_slot_id: str | None = None,
 ) -> dict[str, Any]:
     """Consume exact Verified Commit permission and re-check mandate before effect.
 
     VerifiedCommitLedger consumes the one-use authorization before it invokes
     this receiver-owned preflight. A failed mandate check therefore cannot be
     retried with the same authorization.
+
+    When ``mandate_owner_view`` (and ``mandate_slot_id``) is supplied, the
+    owner's current standing for the slot is consulted as the final authority
+    inside the ledger's locked region: a superseding owner-signed terminal
+    record (REVOKED) refuses the effect even though the compiled mandate fit
+    check below still passes. Compiled authorization is non-authoritative at
+    finalize time.
     """
     settings = action.get("settings")
     if not isinstance(settings, Mapping):
         raise VerifiedCommitError("mandate_execution_settings_invalid")
 
     check_time = now or _utc_now()
+
+    final_authority_check = None
+    if mandate_owner_view is not None:
+        if not mandate_slot_id:
+            raise VerifiedCommitError("mandate_owner_slot_required")
+        from .stop_standing import owner_mandate_stop_check
+
+        final_authority_check = owner_mandate_stop_check(
+            mandate_owner_view,
+            mandate_slot_id,
+            now=check_time,
+        )
 
     return ledger.execute_once(
         receipt,
@@ -132,4 +153,5 @@ def execute_mandated_once(
         ),
         now=check_time,
         attempt_label=attempt_label,
+        final_authority_check=final_authority_check,
     )

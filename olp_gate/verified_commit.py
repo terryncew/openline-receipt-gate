@@ -43,7 +43,10 @@ from .crypto import (
 
 
 VERIFIED_COMMIT_PROFILE = "verified_commit/v1"
-COMMIT_LEDGER_SCHEMA = "openline.proof_to_policy.commit-ledger.v1"
+COMMIT_LEDGER_SCHEMA = "openline.proof_to_policy.commit-ledger.v1.1"
+# v1 ledgers remain readable: _locked() migrates them in place (additive
+# fields only; no historical attempt record is rewritten).
+COMMIT_LEDGER_SCHEMA_V1 = "openline.proof_to_policy.commit-ledger.v1"
 PREFLIGHT_REQUIRED_SETTINGS_PROFILES = frozenset(
     {"x402_transaction_airlock/v1"}
 )
@@ -637,6 +640,103 @@ def _path_lock(path: Path) -> threading.RLock:
         return _LOCAL_LOCKS.setdefault(key, threading.RLock())
 
 
+_FINAL_STANDING_REQUIRED_KEYS = {
+    "installed",
+    "allowed",
+    "standing",
+    "terminal",
+    "head_seq",
+    "head_hash",
+    "reason_codes",
+}
+
+
+def _normalize_final_standing_observation(
+    raw: Mapping[str, Any],
+) -> dict[str, Any]:
+    """Validate a final-authority check observation; fail closed on malformed.
+
+    The observation must be a mapping with the adapter's contract keys.
+    Anything else is treated as an inability to establish standing.
+    """
+    if not isinstance(raw, Mapping):
+        raise VerifiedCommitError("final_standing_observation_invalid")
+    missing = _FINAL_STANDING_REQUIRED_KEYS - set(raw)
+    if missing:
+        raise VerifiedCommitError("final_standing_observation_incomplete")
+    allowed = raw.get("allowed")
+    if not isinstance(allowed, bool):
+        raise VerifiedCommitError("final_standing_observation_allowed_invalid")
+    reason_codes = raw.get("reason_codes")
+    if not isinstance(reason_codes, list) or not all(
+        isinstance(code, str) and code for code in reason_codes
+    ):
+        raise VerifiedCommitError("final_standing_observation_reasons_invalid")
+    head_seq = raw.get("head_seq")
+    if head_seq is not None and (
+        isinstance(head_seq, bool) or not isinstance(head_seq, int)
+    ):
+        raise VerifiedCommitError("final_standing_observation_seq_invalid")
+    head_hash = raw.get("head_hash")
+    if head_hash is not None and not _is_hash(head_hash):
+        raise VerifiedCommitError("final_standing_observation_head_hash_invalid")
+    if allowed and reason_codes:
+        raise VerifiedCommitError("final_standing_observation_allowed_with_reasons")
+    if not allowed and not reason_codes:
+        raise VerifiedCommitError("final_standing_observation_refused_without_reasons")
+    return {
+        "installed": True,
+        "allowed": allowed,
+        "standing": str(raw.get("standing")),
+        "terminal": bool(raw.get("terminal")),
+        "head_seq": head_seq,
+        "head_hash": head_hash,
+        "reason_codes": list(reason_codes),
+        "check_error": raw.get("check_error"),
+        "record": raw.get("record"),
+    }
+
+
+def _finalize_path_verdict(
+    *,
+    authorized: bool,
+    reason_codes: Sequence[str],
+    observation: Mapping[str, Any],
+) -> dict[str, Any] | None:
+    """Observation-time path verdict for one covered attempt.
+
+    Later ordering classifications (e.g. PRE_STOP_COMMIT, where terminal
+    standing is admitted after the effect committed) are derived by an
+    independent appraiser via ``olp_gate.stop_standing.derive_path_verdict``;
+    the journal carries everything needed to re-derive them.
+    """
+    if observation.get("standing") == "CHECK_FAILED":
+        return {
+            "verdict": "UNKNOWN",
+            "ordering": "CHECK_FAILED",
+            "stop_effective_seq": None,
+        }
+    final_refusal = any(
+        str(code).startswith(("owner_standing_", "final_standing_"))
+        for code in reason_codes
+    )
+    if not authorized and final_refusal:
+        if observation.get("terminal") is True and isinstance(
+            observation.get("head_seq"), int
+        ):
+            return {
+                "verdict": "STOPPED",
+                "ordering": "STOP_FIRST",
+                "stop_effective_seq": observation["head_seq"],
+            }
+        return {
+            "verdict": "UNKNOWN",
+            "ordering": "NOT_ESTABLISHED",
+            "stop_effective_seq": None,
+        }
+    return None
+
+
 class VerifiedCommitLedger:
     """Atomic receiver-side consumption state for portable COMMIT permission."""
 
@@ -653,6 +753,10 @@ class VerifiedCommitLedger:
             "consumed_codes": {},
             "consumed_replay_scopes": {},
             "attempts": [],
+            # Monotonic commit sequence binding for the stop-standing
+            # adapter: every attempt record carries the commit_seq assigned
+            # under this lock. Additive; old journals start at 1.
+            "commit_seq_next": 1,
         }
 
     @contextmanager
@@ -666,8 +770,16 @@ class VerifiedCommitLedger:
                     state = strict_json_loads(self.path.read_text(encoding="utf-8"))
                 else:
                     state = self._empty()
-                if not isinstance(state, dict) or state.get("schema") != COMMIT_LEDGER_SCHEMA:
+                if not isinstance(state, dict) or state.get("schema") not in (
+                    COMMIT_LEDGER_SCHEMA,
+                    COMMIT_LEDGER_SCHEMA_V1,
+                ):
                     raise VerifiedCommitError("commit_ledger_schema_invalid")
+                if state.get("schema") == COMMIT_LEDGER_SCHEMA_V1:
+                    # In-place additive migration: v1 journals gain the new
+                    # optional fields; no existing record is rewritten.
+                    state["schema"] = COMMIT_LEDGER_SCHEMA
+                state.setdefault("commit_seq_next", 1)
                 # v0.5.0rc6 adds an optional receiver-defined replay scope.
                 # Existing v1 ledgers remain readable; a receiver that needs
                 # this control must protect the ledger from local tampering,
@@ -704,8 +816,17 @@ class VerifiedCommitLedger:
         replay_scope_hash: str | None = None,
         now: datetime | None = None,
         attempt_label: str | None = None,
+        final_authority_check: Callable[[], Mapping[str, Any]] | None = None,
     ) -> dict[str, Any]:
-        """Verify and atomically spend permission before any tool side effect."""
+        """Verify and atomically spend permission before any tool side effect.
+
+        When ``final_authority_check`` is installed (see
+        ``olp_gate.stop_standing``), it runs inside the same ``_locked()``
+        region as permission consumption: the final standing check and
+        commit-or-refuse share one serialization point. A refused or
+        uncheckable standing blocks the effect and is journaled; the check
+        can never be bypassed by stale compiled authorization.
+        """
 
         check_time = now or _utc_now()
         with self._locked() as state:
@@ -786,12 +907,42 @@ class VerifiedCommitLedger:
                 ):
                     errors.append("replay_scope_reused")
 
+            # Final-authority standing check, under the same lock as
+            # permission consumption. Compiled/preliminary authorization is
+            # non-authoritative at finalize time: only this observation
+            # governs. Any failure to establish standing fails closed and
+            # is recorded in the attempt journal.
+            standing_observation: dict[str, Any] | None = None
+            if final_authority_check is not None:
+                try:
+                    raw_observation = final_authority_check()
+                    standing_observation = _normalize_final_standing_observation(
+                        raw_observation
+                    )
+                except Exception as exc:  # noqa: BLE001 - fail closed, record
+                    standing_observation = {
+                        "installed": True,
+                        "allowed": False,
+                        "standing": "CHECK_FAILED",
+                        "terminal": False,
+                        "head_seq": None,
+                        "head_hash": None,
+                        "reason_codes": ["final_standing_check_failed"],
+                        "check_error": type(exc).__name__,
+                        "record": None,
+                    }
+                if standing_observation["allowed"] is not True:
+                    errors.extend(standing_observation["reason_codes"])
+
             authorized = not errors
             attempt_id = secrets.token_hex(12)
+            commit_seq = int(state.get("commit_seq_next", 1) or 1)
+            state["commit_seq_next"] = commit_seq + 1
             record = {
                 "attempt_id": attempt_id,
                 "attempt_label": attempt_label,
                 "checked_at": _iso(check_time),
+                "commit_seq": commit_seq,
                 "decision_payload_hash": decision_hash,
                 "authorization_hash": authorization.get("authorization_hash"),
                 "attempt_action_hash": attempted_hash,
@@ -801,6 +952,22 @@ class VerifiedCommitLedger:
                 "execution_status": "permitted" if authorized else "not_started",
                 "tool_result_hash": None,
             }
+            if standing_observation is not None:
+                record["standing_final_check_v1"] = standing_observation
+                # STOP_EFFECTIVE binding, known at finalize time only when a
+                # terminal head was observed under the lock.
+                stop_seq = standing_observation.get("head_seq")
+                record["stop_effective_seq"] = (
+                    stop_seq
+                    if standing_observation.get("terminal") is True
+                    and isinstance(stop_seq, int)
+                    else None
+                )
+                record["path_verdict_v1"] = _finalize_path_verdict(
+                    authorized=authorized,
+                    reason_codes=record["reason_codes"],
+                    observation=standing_observation,
+                )
             state["attempts"].append(record)
             if authorized:
                 state["consumed_decisions"][decision_hash] = {
@@ -923,12 +1090,18 @@ class VerifiedCommitLedger:
         replay_scope_hash: str | None = None,
         now: datetime | None = None,
         attempt_label: str | None = None,
+        final_authority_check: Callable[[], Mapping[str, Any]] | None = None,
     ) -> dict[str, Any]:
         """Spend permission, run any required fresh check, then invoke once.
 
         Permission is consumed before the receiver-owned preflight callback.
         A failed or malformed preflight therefore blocks the effect and also
         prevents reuse of the stale authorization.
+
+        When ``final_authority_check`` is installed, the authoritative
+        standing observation is taken inside the same locked region as
+        permission consumption (see ``check_and_consume``): the final
+        standing check and commit-or-refuse share one serialization point.
         """
 
         result = self.check_and_consume(
@@ -939,6 +1112,7 @@ class VerifiedCommitLedger:
             replay_scope_hash=replay_scope_hash,
             now=now,
             attempt_label=attempt_label,
+            final_authority_check=final_authority_check,
         )
         if not result["authorized"]:
             return result
