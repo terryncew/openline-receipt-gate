@@ -29,6 +29,7 @@ from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 
 from .crypto import sign_olp_body, verify_olp_signature
 from .mandate import MandateSpec
+from ._durable_heads import DurableHeadStore
 from .tool_adapter import (
     AuthorizationBlocked,
     LocalAuthorityRuntime,
@@ -41,10 +42,45 @@ MANDATE_AUTHORIZATION_SCHEMA = "openline.mandate_owner_authorization.v1"
 POLICY_BUNDLE_SCHEMA = "openline.authorized_tool_policy.v1"
 _ALLOWED_STATES = {"ACTIVE", "REVOKED"}
 _HEX = frozenset("0123456789abcdef")
+_MANDATE_OWNER_VIEW_IDENTITY = "mandate_owner/v1"
 
 
 class MandateAuthorityError(ValueError):
     """Raised when mandate-owner authority cannot be admitted or used."""
+
+
+def _apply_mandate_successor(
+    current: dict[str, Any] | None, checked: dict[str, Any]
+) -> None:
+    """Enforce the monotonic head rule; raise unless `checked` succeeds `current`."""
+    if current is None:
+        if checked["state"] != "ACTIVE":
+            raise MandateAuthorityError(
+                "mandate_authorization_initial_state_invalid"
+            )
+        if checked["sequence"] != 1:
+            raise MandateAuthorityError(
+                "mandate_authorization_initial_sequence_invalid"
+            )
+        if checked["predecessor_hash"] is not None:
+            raise MandateAuthorityError(
+                "mandate_authorization_initial_predecessor_forbidden"
+            )
+    else:
+        current_auth = current["authorization"]
+        if checked["sequence"] != int(current_auth["sequence"]) + 1:
+            raise MandateAuthorityError(
+                "mandate_authorization_successor_sequence_invalid"
+            )
+        if checked["predecessor_hash"] != current_auth["payload_hash"]:
+            raise MandateAuthorityError(
+                "mandate_authorization_successor_predecessor_mismatch"
+            )
+        if (
+            checked["state"] == "REVOKED"
+            and checked["mandate_hash"] != current_auth["mandate_hash"]
+        ):
+            raise MandateAuthorityError("mandate_revocation_target_mismatch")
 
 
 def _utc_now() -> datetime:
@@ -252,7 +288,12 @@ class MandateOwnerView:
     current per slot.
     """
 
-    def __init__(self, slots: Mapping[str, Mapping[str, str]]) -> None:
+    def __init__(
+        self,
+        slots: Mapping[str, Mapping[str, str]],
+        *,
+        durable_path: str | None = None,
+    ) -> None:
         if not isinstance(slots, Mapping) or not slots:
             raise MandateAuthorityError("mandate_owner_slots_required")
         normalized: dict[str, dict[str, str]] = {}
@@ -270,6 +311,17 @@ class MandateOwnerView:
             normalized[slot_id] = {"owner_id": owner_id, "public_key": key}
         self._slots = normalized
         self._heads: dict[str, dict[str, Any]] = {}
+        # Explicit opt-in durability. Without durable_path the view keeps the
+        # legacy in-memory head frontier, which resets on process restart.
+        self._durable: DurableHeadStore | None = None
+        if durable_path is not None:
+            self._durable = DurableHeadStore(
+                durable_path,
+                {"view": _MANDATE_OWNER_VIEW_IDENTITY, "slots": normalized},
+            )
+            self._heads = {
+                slot_id: head for slot_id, head in self._durable.load().items()
+            }
 
     def _slot(self, slot_id: str) -> dict[str, str]:
         slot = self._slots.get(slot_id)
@@ -372,29 +424,33 @@ class MandateOwnerView:
             raise MandateAuthorityError("mandate_principal_owner_mismatch")
 
         current = self._heads.get(slot_id)
-        if current is None:
-            if checked["state"] != "ACTIVE":
-                raise MandateAuthorityError("mandate_authorization_initial_state_invalid")
-            if checked["sequence"] != 1:
-                raise MandateAuthorityError("mandate_authorization_initial_sequence_invalid")
-            if checked["predecessor_hash"] is not None:
-                raise MandateAuthorityError("mandate_authorization_initial_predecessor_forbidden")
-        else:
-            current_auth = current["authorization"]
-            if checked["sequence"] != int(current_auth["sequence"]) + 1:
-                raise MandateAuthorityError("mandate_authorization_successor_sequence_invalid")
-            if checked["predecessor_hash"] != current_auth["payload_hash"]:
-                raise MandateAuthorityError("mandate_authorization_successor_predecessor_mismatch")
-            if (
-                checked["state"] == "REVOKED"
-                and checked["mandate_hash"] != current_auth["mandate_hash"]
-            ):
-                raise MandateAuthorityError("mandate_revocation_target_mismatch")
-
-        self._heads[slot_id] = {
+        entry = {
             "authorization": checked,
             "mandate": mandate_dict,
         }
+        if self._durable is None:
+            _apply_mandate_successor(current, checked)
+            self._heads[slot_id] = entry
+        else:
+            # Persistence-before-decision: the successor rule runs against the
+            # freshly-loaded durable heads inside the store lock, the write is
+            # atomic, and only then does in-memory state move.
+            def _advance(heads: dict[str, Any]) -> dict[str, Any]:
+                advanced = dict(heads)
+                _apply_mandate_successor(advanced.get(slot_id), checked)
+                advanced[slot_id] = entry
+                return advanced
+
+            try:
+                committed = self._durable.read_modify_write(_advance)
+            except MandateAuthorityError:
+                # The file moved under this view (another writer advanced the
+                # head). Sync memory to the durable truth before refusing.
+                self._heads = {
+                    sid: head for sid, head in self._durable.load().items()
+                }
+                raise
+            self._heads[slot_id] = committed[slot_id]
         return {
             "admitted": True,
             "slot_id": slot_id,
