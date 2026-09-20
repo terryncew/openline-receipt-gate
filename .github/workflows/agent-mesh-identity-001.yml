@@ -38,7 +38,7 @@ jobs:
       - name: Verify release closure and frozen production primitive
         run: python experiments/agent-mesh-identity-001/scripts/verify_release.py
       - name: Run existing regression suite
-        run: python -m unittest discover -s tests -v
+        run: python -m unittest discover -s tests -t . -v
       - name: Run archive-aware release gate
         run: python scripts/verify_warning_time_release.py --release-check
       - name: Upload frozen result

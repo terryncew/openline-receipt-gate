@@ -77,19 +77,22 @@ CI_REQUIRED_SNIPPETS = (
     "benchmarks/verified_continuation/FREEZE.json",
     "benchmarks/verified_continuation/results/continuation_report.json",
     "Verify frozen Verified Continuation harness",
-    "python scripts/verify_verified_continuation.py",
+    "python scripts/freeze_governance.py verify benchmarks/verified_continuation/FREEZE.json",
+    "Verify historical source closures (temporal, peer authority)",
+    "python scripts/freeze_governance.py verify benchmarks/temporal_authority_001/FREEZE.json",
+    "python scripts/freeze_governance.py verify benchmarks/peer_authority_001/FREEZE.json",
     "python scripts/release_check.py",
     "python scripts/verify_manifest.py",
     "python scripts/verify_warning_time_benchmark.py",
     "python benchmarks/x402_airlock/run_hostile_suite.py",
-    "python scripts/verify_x402_airlock.py",
+    "python scripts/freeze_governance.py verify benchmarks/x402_airlock/FREEZE.json",
     "benchmarks/x402_upstream_consequence/results/comparison.json",
     "python benchmarks/x402_upstream_consequence/run_comparison.py",
     "python scripts/verify_x402_upstream_consequence.py",
     "benchmarks/role_confusion_consequence/FREEZE.json",
     "benchmarks/role_confusion_consequence/results/hostile_report.json",
     "python benchmarks/role_confusion_consequence/run_suite.py",
-    "python scripts/verify_role_confusion_consequence.py",
+    "python scripts/freeze_governance.py verify benchmarks/role_confusion_consequence/FREEZE.json",
 )
 
 
@@ -123,6 +126,29 @@ def execute(
         "stderr": completed.stderr[-16000:],
     }
     return record, bool(record["passed"])
+
+
+def shallow_checkout_skips() -> int:
+    """Gate-expected skips caused by a shallow checkout.
+
+    tests/test_freeze_governance.py::test_recorded_freeze_commit_matches_history_search
+    skips when the checkout is shallow (CI checks out with fetch-depth 1)
+    because the diagnostic history search cannot run without full history.
+    The gate's "did the right tests run" accounting must expect that skip,
+    or the gate fails its own self-check in exactly the environment that
+    enforces it.
+    """
+    try:
+        completed = subprocess.run(
+            ["git", "rev-parse", "--is-shallow-repository"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+    except OSError:
+        return 0
+    return 1 if completed.stdout.strip() == "true" else 0
 
 
 def pipelock_runtime() -> dict[str, Any]:
@@ -651,6 +677,11 @@ def main() -> int:
     except (OSError, json.JSONDecodeError, KeyError, TypeError):
         x402_upstream_report = {}
 
+    # Root repository discovery MUST use "-t ." so the tests/__init__.py
+    # load_tests hook excludes byte-frozen historical modules (their
+    # "current HEAD must equal historical source" assertions are obsolete
+    # once production evolves; their historical verification runs through
+    # scripts/freeze_governance.py against reconstructed snapshot roots).
     unit_command = [
         sys.executable,
         "-m",
@@ -658,10 +689,15 @@ def main() -> int:
         "discover",
         "-s",
         "tests",
+        "-t",
+        ".",
         "-v",
     ]
     unit_record, unit_okay = execute("unittest", unit_command)
     unit_counts = unittest_counts(unit_record)
+    # The freeze-governance parity test skips in shallow checkouts (CI);
+    # expect it alongside the optional-integration skips.
+    expected_shallow_skips = shallow_checkout_skips()
     expected_main_skips = (
         (0 if pipelock_info["supported"] else PIPELOCK_INTEGRATION_TESTS)
         + (0 if assay_info["supported"] else ASSAY_INTEGRATION_TESTS)
@@ -671,6 +707,7 @@ def main() -> int:
             if model_swap_info["supported"]
             else VERIFIED_CONTINUATION_INTEGRATION_TESTS
         )
+        + expected_shallow_skips
     )
     unit_record["counts"] = unit_counts
     unit_record["optional_pipelock"] = pipelock_info
@@ -711,6 +748,7 @@ def main() -> int:
         + ASSAY_INTEGRATION_TESTS
         + MODEL_SWAP_INTEGRATION_TESTS
         + VERIFIED_CONTINUATION_INTEGRATION_TESTS
+        + expected_shallow_skips
     )
     absent_record["passed"] = absent_okay
     steps.append(absent_record)

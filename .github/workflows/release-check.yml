@@ -127,7 +127,10 @@ jobs:
           set -euo pipefail
           python benchmarks/x402_airlock/run_hostile_suite.py
           git diff --exit-code -- benchmarks/x402_airlock/results/hostile_report.json
-          python scripts/verify_x402_airlock.py
+          # Historical source-closure verification runs against the
+          # reconstructed frozen snapshot root, not current HEAD; current
+          # production drift is reported, not failed.
+          python scripts/freeze_governance.py verify benchmarks/x402_airlock/FREEZE.json
 
       - name: Reproduce pinned upstream x402 consequence order
         shell: bash
@@ -145,10 +148,22 @@ jobs:
           set -euo pipefail
           python benchmarks/role_confusion_consequence/run_suite.py
           git diff --exit-code -- benchmarks/role_confusion_consequence/results/hostile_report.json
-          python scripts/verify_role_confusion_consequence.py
+          # Historical source-closure verification runs against the
+          # reconstructed frozen snapshot root, not current HEAD.
+          python scripts/freeze_governance.py verify benchmarks/role_confusion_consequence/FREEZE.json
 
       - name: Verify frozen Verified Continuation harness
-        run: python scripts/verify_verified_continuation.py
+        # Historical source-closure verification runs against the
+        # reconstructed frozen snapshot root, not current HEAD.
+        run: python scripts/freeze_governance.py verify benchmarks/verified_continuation/FREEZE.json
+
+      - name: Verify historical source closures (temporal, peer authority)
+        # These suites' frozen test modules are excluded from
+        # current-development discovery (see tests/__init__.py); their
+        # historical verification runs here against snapshot roots.
+        run: |
+          python scripts/freeze_governance.py verify benchmarks/temporal_authority_001/FREEZE.json
+          python scripts/freeze_governance.py verify benchmarks/peer_authority_001/FREEZE.json
 
       - name: Run complete release gate
         # The wrapper preserves the complete python scripts/release_check.py run
