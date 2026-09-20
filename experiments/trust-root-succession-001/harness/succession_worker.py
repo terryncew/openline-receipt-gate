@@ -180,6 +180,15 @@ class Worker:
         result = self.view.assess(record, self.mandate, now=_now())
         return {"assessment": result}
 
+    def _write_res(self, name: str, payload: dict) -> None:
+        # Atomic: the driver treats file-existence as response-readiness,
+        # so the response must never be observable partially written.
+        tmp = self.res_dir / f".{name}.tmp"
+        tmp.write_text(
+            json.dumps(payload, sort_keys=True) + "\n", encoding="utf-8"
+        )
+        tmp.rename(self.res_dir / f"{name}.json")
+
     def run(self) -> None:
         (self.res_dir / "ready").write_text("ready\n", encoding="utf-8")
         # Durable processed-command set: a respawned worker (resume mode)
@@ -209,9 +218,9 @@ class Worker:
                 cmd = json.loads(path.read_text(encoding="utf-8"))
                 name = str(cmd.get("cmd"))
                 if name == "shutdown":
-                    (self.res_dir / path.name.replace("cmd_", "res_")).write_text(
-                        json.dumps({"ok": True, "shutdown": True}) + "\n",
-                        encoding="utf-8",
+                    self._write_res(
+                        path.name.replace("cmd_", "res_"),
+                        {"ok": True, "shutdown": True},
                     )
                     return
                 try:
@@ -219,9 +228,7 @@ class Worker:
                     result = {"ok": True, **result}
                 except Exception as exc:
                     result = {"ok": False, "error": f"{type(exc).__name__}:{exc}"}
-                (self.res_dir / path.name.replace("cmd_", "res_")).write_text(
-                    json.dumps(result, sort_keys=True) + "\n", encoding="utf-8"
-                )
+                self._write_res(path.name.replace("cmd_", "res_"), result)
             if not progressed:
                 time.sleep(0.05)
 

@@ -180,8 +180,9 @@ class Driver:
     def deliver(self, record: dict, receiver: str, filename: str) -> None:
         inbox = self.run_dir / "inbox" / receiver
         inbox.mkdir(parents=True, exist_ok=True)
-        (inbox / filename).write_text(
-            json.dumps(record, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+        self._atomic_write(
+            inbox / filename,
+            json.dumps(record, indent=2, sort_keys=True) + "\n",
         )
         self.log("owner_delivered", receiver=receiver, file=filename)
 
@@ -238,12 +239,19 @@ class Driver:
             time.sleep(0.05)
         self.log("worker_started", receiver=name, init=init)
 
+    def _atomic_write(self, path: Path, text: str) -> None:
+        # Atomic: the worker treats file-existence as readiness, so a file
+        # must never be observable partially written.
+        tmp = path.parent / f".{path.name}.tmp"
+        tmp.write_text(text, encoding="utf-8")
+        tmp.rename(path)
+
     def command(self, name: str, cmd: dict, timeout: float = 60.0) -> dict:
         w = self.workers[name]
         self.cmd_seq += 1
         fname = f"cmd_{self.cmd_seq:04d}.json"
-        (w["cmd_dir"] / fname).write_text(
-            json.dumps(cmd, sort_keys=True) + "\n", encoding="utf-8"
+        self._atomic_write(
+            w["cmd_dir"] / fname, json.dumps(cmd, sort_keys=True) + "\n"
         )
         res = w["res_dir"] / fname.replace("cmd_", "res_")
         deadline = time.time() + timeout
