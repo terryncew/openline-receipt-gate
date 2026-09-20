@@ -1,0 +1,171 @@
+{
+  "accepted_checkpoint_definition": "what B inherits: (1) slot-A admission history: seq1 ACTIVE (mandate_hash of M_A) and seq2 REVOKED (the owner STOP), both owner-signed by O; (2) the ordered VerifiedCommitLedger journal commit_seq 1..N_A with A-era effect attempts, each bound to its standing_final_check_v1 observation; (3) the A-era effect markers on the effect target. B's first attempt continues the same ledger (commit_seq N_A+1) against the same receiver state; no new trust root, no new receiver, no re-issuance of history.",
+  "agent_definitions": {
+    "agent_a": "identity = agent_id 'agent-a' + own Ed25519 worker keypair K_A + mandate slot 'agent-a/platform-exit-job' + mandate M_A. Worker code runs in dedicated OS subprocesses (worker_agent.py --agent a) that are terminated between phases. Holds: K_A private, M_A, owner public key O, receiver gate/witness/source scaffolding keys (disclosed below). Never holds K_B or any owner private key.",
+    "agent_b": "identity = agent_id 'agent-b' + own Ed25519 worker keypair K_B + mandate slot 'agent-b/platform-exit-job' + mandate M_B. Worker code runs in a dedicated OS subprocess (worker_agent.py --agent b) launched only after A is stopped. Holds: K_B private, M_B, owner public key O, receiver scaffolding keys. Never holds K_A, never sees K_A's key file, no shared private key material with A.",
+    "shared_scaffolding_disclosed": "the receiver's own gate signing key, the outcome witness key, and the repo code are shared harness infrastructure, not agent authority: they confer no mandate standing. Each agent has its own source key (source_A, source_B) for its proof-to-policy claim. Agent-distinctness for the claim rests on {agent_id, worker keypair, mandate slot}, which are never shared."
+  },
+  "allowed_apparatus_repairs_pre_contact": {
+    "conditions": [
+      "original failure preserved under run/run_attemptN_failed_<reason>/",
+      "repair disclosed in TERMINAL.md",
+      "preregistered semantics unchanged"
+    ],
+    "scope": "harness/driver/appraiser/worker/unit-tests only; no product-code semantic repair"
+  },
+  "apparatus_repair_disclosed": {
+    "description": "worker_agent.py reads the attempt list from the driver-emitted plan envelope: plan = json.loads(...)[\"plan\"]. 001's worker iterated the envelope object directly (plan = json.loads(...)) and crashed with TypeError before case 1 \u2014 frozen INCONCLUSIVE_APPARATUS. One line; semantics byte-identical.",
+    "files_touched": [
+      "experiments/platform-exit-kill-002/harness/worker_agent.py"
+    ],
+    "label_renames": "harness files and unit test renamed 001->002 verbatim (docstrings, paths, test module name); driver EXP path points at experiments/platform-exit-kill-002.",
+    "repair_id": "APPARATUS-002-001"
+  },
+  "baseline_main_sha": "95c1ecfd77bd13b9e7b0f441559e69223ee7b20b",
+  "baseline_note": "openline-receipt-gate main; PR #97 (PLATFORM-EXIT-KILL-001 INCONCLUSIVE_APPARATUS) merged by explicit owner approval. Tree clean at branch creation.",
+  "bounded_cases": {
+    "case_1_a_operates": {
+      "expect": [
+        "both ACCEPTED and EFFECTED; markers present and attributed to agent-a",
+        "journal commit_seq 1,2 with standing_final_check_v1 allowed=True, standing ACTIVE, head_seq 1",
+        "slot A status ACTIVE before and after",
+        "worker attestations verify under K_A public key"
+      ],
+      "steps": [
+        "owner admits M_A ACTIVE seq1 (predecessor null) on slot A",
+        "worker A subprocess attempts 2 authorize_payment effects via execute_mandated_once (slot A)"
+      ]
+    },
+    "case_2_owner_stops_a": {
+      "expect": [
+        "admitted; slot A status ACTIVE -> REVOKED; head seq 2",
+        "STOP event attributable to O (signature verifies under O; observed signer == pinned key)",
+        "standing recorded before and after"
+      ],
+      "steps": [
+        "owner issues REVOKED seq2 (predecessor = payload_hash(seq1)) on slot A; driver admits"
+      ]
+    },
+    "case_3_a_cannot_continue": {
+      "expect": [
+        "all 3 refused with reason owner_standing_revoked; execution_status not_started; zero markers",
+        "path verdicts STOPPED / STOP_FIRST with stop_effective_seq 2 (stored and re-derived)",
+        "mandate_preflight computed separately on the refused settings returns allowed=True (refusal is standing, not format)",
+        "no head movement on slot A (head seq stays 2); no new receipts minted for A"
+      ],
+      "steps": [
+        "worker A subprocess attempts 2 further effects (slot A)",
+        "worker A process terminated; relaunched fresh (new process, same A keys, fresh view+ledger over the same durable files); attempts 1 more effect"
+      ]
+    },
+    "case_4_b_continues_under_same_regime": {
+      "expect": [
+        "both ACCEPTED and EFFECTED; markers present and attributed to agent-b",
+        "journal continues commit_seq 3,4 (shared ordered history with A-era attempts)",
+        "slot B standing ACTIVE; owner for slot B == O (same pinned root as slot A)",
+        "A-era history intact in the same ledger and on the effect target",
+        "worker attestations verify under K_B public key; K_B != K_A",
+        "no trust-root succession event exists in run evidence (succession_sequence 0, schedule length 1 on both slots)"
+      ],
+      "steps": [
+        "owner admits M_B ACTIVE seq1 (predecessor null) on slot B \u2014 owner-signed by the SAME key O; no succession event, no new trust root",
+        "worker B subprocess (fresh keypair K_B, never held A material) attempts 2 effects from the accepted checkpoint via execute_mandated_once (slot B)"
+      ]
+    },
+    "case_5_a_stays_stopped": {
+      "expect": [
+        "all refused with reason owner_standing_revoked; zero markers; execution_status not_started",
+        "slot A head seq stays 2; slot B head seq stays 1; no resurrection by fresh attempt, replay, or restart",
+        "B's operations unaffected (slot B still ACTIVE)"
+      ],
+      "steps": [
+        "after B is operating, worker A relaunched (restart): (a) fresh effect attempt; (b) replay of the exact case-1 effect payload with a fresh one-use code and fresh decision receipt (so refusal cannot be attributed to replay protection)"
+      ]
+    },
+    "case_6_history_intact_across_switch": {
+      "expect": [
+        "every owner-signed admission verifies under O (SIGNATURE_VALID); slot-A seq1 + seq2 and slot-B seq1 all present",
+        "STOP event present and attributable to O",
+        "A-era attempts attributable to agent-a (settings evidence agent_id + markers + K_A attestations); B-era attributable to agent-b",
+        "no attempt record rewritten: per-case frozen ledger snapshots are byte-equal prefixes of the final journal",
+        "MandateOwnerView.assess() on slot-A seq1 ACTIVE authorization: verified=True, current=False; slot A status stays REVOKED (historical verification confers no currency on A)",
+        "stored path_verdict_v1 on every attempt equals derive_path_verdicts re-derivation",
+        "A-era receipts remain verifiable and attributable without making A current"
+      ],
+      "steps": [
+        "appraiser re-derives from frozen run/ evidence only"
+      ]
+    }
+  },
+  "carried_forward_contract": {
+    "contract_note": "all case semantics, success/failure conditions, receipt distinctions, agent definitions, STOP semantics, and acceptance boundary carried verbatim; only the disclosed apparatus repair below differs",
+    "from_label": "PLATFORM-EXIT-KILL-001",
+    "from_preregistration_sha256": "bdc9bf10622b28fb74abb2bb510559fc7d41daa9205a53ac27ab7539145671be",
+    "from_terminal": "experiments/platform-exit-kill-001/TERMINAL.md (INCONCLUSIVE_APPARATUS, merged on main via PR #97)"
+  },
+  "consequential_action_under_test": {
+    "action": "authorize_payment effect (principal_effect/v1) against target 'payments://ledger', executed via olp_gate.mandate_gate.execute_mandated_once with mandate_owner_view + mandate_slot_id set to the acting agent's slot",
+    "discrimination": "mandate_preflight (compiled fit: mandate_id/principal_id/agent_id binding, action type, target, caps) runs before the final-authority owner check; the final owner_mandate_stop_check observation is taken inside the ledger commit lock. ACCEPTED = ledger execute_once authorized=True and executor ran (EFFECTED = marker present). Refusal after the STOP must carry reason owner_standing_revoked with execution_status not_started and no marker, while a separately computed mandate_preflight on the same settings still returns allowed=True (standing failure, not format failure)."
+  },
+  "do_not": [
+    "reopen OWNER-CONTROL-002, TRUST-ROOT-SUCCESSION-001, or DISTRIBUTED-STOP-001",
+    "touch Holmes",
+    "build recovery UX, multisig, social recovery, generic PKI, or redesign Wallet",
+    "add UI, standards work, or recovery-product design",
+    "repair CI or the baseline test files inside this experiment",
+    "modify other study branches",
+    "start any follow-on lane",
+    "count the 001 harness crash as scientific evidence of any kind (it preceded case 1 and STOP was never exercised)"
+  ],
+  "downstream_checks_preregistered": [
+    "experiment unit tests (tests/test_platform_exit_kill_002.py)",
+    "Wallet tests (none in this repo; openline-wallet is separate and untouched)",
+    "Receiver Gate tests",
+    "standing tests",
+    "STOP/revocation tests",
+    "TRUST-ROOT-SUCCESSION-001 tests",
+    "OWNER-CONTROL-002 tests",
+    "DISTRIBUTED-STOP-001 tests as available (do not rerun the live lane itself)",
+    "effect-closure / reconciliation tests",
+    "full project suite (pytest tests/)",
+    "CI-equivalent: unittest discovery with pytest import blocked (classify pre-existing failures separately; reproduce on clean baseline main)"
+  ],
+  "earned_machinery_used": [
+    "OWNER-CONTROL-002: owner holds the kill authority; worker cannot self-elevate; superseded authority does not return; restart preserves current standing; historical receipts verifiable without conferring currency.",
+    "TRUST-ROOT-SUCCESSION-001: in-band succession primitive (not exercised here; pinned as the negative control: this experiment must show NO succession event).",
+    "DISTRIBUTED-STOP-001: STOP propagation across independent receivers (not rerun; its verdict reused as established).",
+    "stop-standing adapter (olp_gate/stop_standing.py): owner_mandate_stop_check as the final-authority check inside the VerifiedCommitLedger commit lock; derive_path_verdicts for independent re-derivation.",
+    "mandate_gate.execute_mandated_once: mandate preflight plus owner-standing final check at finalize time; compiled authorization non-authoritative at finalize."
+  ],
+  "exact_success_condition": "PASS only if every bounded-case expectation holds, the appraiser re-derives all expectations from frozen evidence with zero VIOLATIONs, all downstream suites pass with no new failures and no rewritten prior PASS evidence, and: A performs consequential work under owner authority before the STOP (case 1); the owner STOP revokes A's consequential authority under established gate semantics (case 2); A cannot perform consequential work after the STOP, refused on authority standing with zero effects (case 3); B, distinct with no shared private authority with A, continues from the accepted checkpoint under the same owner-controlled regime with no fresh unrelated authority setup and no invented trust root (case 4); B's consequential work is accepted with receipts attributable to B (case 4); A cannot resume after B is operating by fresh attempt, replay, or restart (case 5); the full history is intact and verifiable with A-era attributable to A, B-era to B, the owner STOP present and attributable, nothing rewritten (case 6); historical verification never confers current authority on A; existing Receiver Gate / Wallet / STOP / succession / distributed-STOP / effect-closure invariants remain intact; no existing PASS receipt is rewritten.",
+  "experiment_label": "PLATFORM-EXIT-KILL-002",
+  "failure_condition": "FAIL on the first tested path that allows: A retaining consequential authority after the owner STOP (any accepted effect, head movement, or minted receipt post-STOP attributable to A's authority); B requiring a fresh unrelated authority setup or a newly invented trust root to operate; broken historical continuity (rewritten, unattributable, or unverifiable A-era receipts); A regaining consequential authority by any path (fresh attempt, replay, restart, stale evidence); B's work accepted under A's authority rather than B's own under the owner regime; or the experiment being unable to distinguish the stopped agent from the continuing agent in its receipts. Freeze the first real failure. No patch-and-rerun under PLATFORM-EXIT-KILL-002 after scientific contact.",
+  "forbidden_semantic_changes_after_contact": [
+    "mandate/authorization/succession event schemas",
+    "sequence/predecessor/signer admission rules",
+    "atomicity (one current head per slot)",
+    "historical-verification rule",
+    "the bounded case set",
+    "the narrow claim itself; no rescue reruns under this label"
+  ],
+  "historical_verification_requirement": "A-era authorizations must remain attributable and verifiable as historical facts (SIGNATURE_VALID under the still-pinned root O; assess() reports verified=True, current=False) without A becoming current again; the ledger journal plus per-case snapshots must show no rewriting; historical verification must never move slot A standing off REVOKED.",
+  "implementation": "harness-only around shipped primitives: driver (owns owner key O, issues/admits all owner-signed records, spawns worker subprocesses, freezes evidence), worker_agent.py (per-agent subprocess: builds proof-to-policy decision receipts through the existing evaluate_request path, executes via execute_mandated_once against the shared durable receiver state, attests attempts with the agent's own key), appraise.py (independent re-derivation from frozen run/ evidence). Zero product-code changes is the plan; if implementation proves required, the smallest change necessary, disclosed, with semantics frozen here.",
+  "mandates": {
+    "mandate_a": "agent_id 'agent-a', purpose 'platform exit study job', allowed_action_types ['authorize_payment'], allowed_targets ['payments://ledger'], allowed_disclosure_classes [], forbidden_disclosure_classes [], max_settlement_cents 0, max_payment_cents 10000, delegation_allowed false, expires_at 2030-01-01T00:00:00Z, version 'v1'",
+    "mandate_b": "identical to mandate_a except agent_id 'agent-b' (continuation mandate for the same job)",
+    "mandate_id": "platform-exit-job (shared: the SAME job continues under a new worker)",
+    "principal_id": "owner (must equal the slot owner_id per mandate_principal_owner_mismatch)"
+  },
+  "narrow_claim_tested": "AGENT A CAN BE STOPPED BY OWNER AUTHORITY, AND AGENT B CAN CONTINUE UNDER THE SAME OWNER-CONTROLLED REGIME WITHOUT BREAKING HISTORICAL CONTINUITY.",
+  "owner_trust_anchor": "receiver-pinned Ed25519 owner key O (generated per run; public key frozen in run/keys.json). Two mandate slots pinned out-of-band in the receiver configuration at init, BOTH to the same owner root: 'agent-a/platform-exit-job' and 'agent-b/platform-exit-job', each {owner_id: 'owner', public_key: O}. The pinned root never changes during the experiment: no trust-root succession event is admitted, on any slot.",
+  "receipt_distinctions": {
+    "ACCEPTED": "ledger execute_once returned authorized=True (all checks passed; permission consumed).",
+    "AUTHORIZED_FOR_THIS_ACTION": "the final-authority check observation (standing_final_check_v1) allowed=True at commit-lock time for the acting agent's slot.",
+    "CURRENT_AUTHORITY": "per agent: the agent's slot standing as reported by MandateOwnerView.status() (ACTIVE = holds consequential authority now; REVOKED = does not).",
+    "EFFECTED": "the executor ran and the effect marker is independently observable on the effect target.",
+    "HISTORICALLY_VALID": "record validates fully under the still-pinned owner root O as a superseded authorization: signature valid, root was authoritative when admitted, root unchanged but the record is not the current head.",
+    "SIGNATURE_VALID": "Ed25519 signature verifies against the claimed signer's public key (olp_gate.crypto.verify_olp_signature). Pure cryptography; says nothing about authority."
+  },
+  "stop_used": "mandate revocation (pinned; the alternative standing-change vocabulary is not used). The owner issues an owner-signed REVOKED authorization, sequence 2, predecessor_hash = payload_hash(seq1), on slot 'agent-a/platform-exit-job', admitted via MandateOwnerView.admit. Slot A standing moves ACTIVE -> REVOKED. STOP_EFFECTIVE = head sequence 2. B's slot is never revoked.",
+  "topology": "one driver process (holds O, gate, witness, source keys; issues and admits all owner-signed records; spawns workers; freezes evidence) + per-phase worker agent OS subprocesses (A-era, A-restart, B-era, A-post-handoff), each holding only its own agent key file + mandate + slot id + shared receiver state dir paths + scaffolding keys. One shared receiver state dir: durable mandate heads (DurableHeadStore), one VerifiedCommitLedger journal, admissions journal, effect target dir. No in-process double-calling across the agent boundary: every agent attempt crosses a process boundary."
+}
