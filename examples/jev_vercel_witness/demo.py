@@ -44,7 +44,8 @@ if str(REPO_ROOT) not in sys.path:
 from olp_gate.crypto import public_key_hex, sign_olp_body  # noqa: E402
 from olp_gate.standing import ReceiverStandingView, STANDING_PROJECTION_SCHEMA  # noqa: E402
 from olp_gate.stop_standing import receiver_action_stop_check  # noqa: E402
-from olp_gate.integrations.jev_vercel import (  # noqa: E402
+from olp_gate.integrations.jev_vercel_v2 import (  # noqa: E402
+    GATEWAY_EVALUATE_URL,
     JEV_MODEL_ID,
     JevVercelEvidenceError,
     JevVercelEvidenceLedger,
@@ -53,19 +54,20 @@ from olp_gate.integrations.jev_vercel import (  # noqa: E402
     evaluate_jev_vercel_witness,
     extract_jev_signal,
     extract_request_id,
+    extract_request_id_v2,
     verify_jev_vercel_evidence,
 )
 
-GATEWAY_URL = "https://ai-gateway.vercel.sh/v4/ai/evaluation-model"
+GATEWAY_URL = GATEWAY_EVALUATE_URL
 ACTION = {
     "kind": "write_marker_file",
     "filename": "marker-v1.txt",
-    "content": "jev-witness-vercel-001 marker",
+    "content": "jev-witness-vercel-002 marker",
 }
 ACTION_SUBSTITUTED = {
     "kind": "write_marker_file",
     "filename": "marker-substituted.txt",
-    "content": "jev-witness-vercel-001 marker",
+    "content": "jev-witness-vercel-002 marker",
 }
 POLICY = JevVercelWitnessPolicy()
 
@@ -79,7 +81,12 @@ def _iso(value: datetime) -> str:
 
 
 def call_jev(api_key: str, request_body: dict) -> tuple[dict, dict]:
-    """One real Jev evaluation through Vercel AI Gateway. No reruns."""
+    """One real Jev evaluation through Vercel AI Gateway. No reruns.
+
+    Public route: POST {GATEWAY_URL} with the body
+    {"model": "typesafe-ai/jev", "state": ..., "questions": ...,
+    "providerOptions": {"gateway": {"zeroDataRetention": true}}}.
+    """
     req = urllib.request.Request(
         GATEWAY_URL,
         data=json.dumps(request_body).encode("utf-8"),
@@ -87,9 +94,6 @@ def call_jev(api_key: str, request_body: dict) -> tuple[dict, dict]:
     )
     req.add_header("Content-Type", "application/json")
     req.add_header("Authorization", f"Bearer {api_key}")
-    req.add_header("ai-gateway-protocol-version", "0.0.1")
-    req.add_header("ai-evaluation-model-specification-version", "4")
-    req.add_header("ai-model-id", JEV_MODEL_ID)
     try:
         with urllib.request.urlopen(req, timeout=60) as resp:
             body = json.loads(resp.read().decode("utf-8"))
@@ -114,7 +118,7 @@ def main() -> int:
         return 2
 
     frozen = json.loads(
-        (REPO_ROOT / "experiments/jev-witness-vercel-001/harness/frozen_request.json")
+        (REPO_ROOT / "experiments/jev-witness-vercel-002/harness/frozen_request.json")
         .read_text(encoding="utf-8")
     )
     demo_dir = Path(tempfile.mkdtemp(prefix="jev-vercel-demo-"))
@@ -141,8 +145,10 @@ def main() -> int:
         action=ACTION,
         witness_key=witness_key,
         model_requested=JEV_MODEL_ID,
-        model_reported=JEV_MODEL_ID,
-        request_id=extract_request_id(resp_headers),
+        model_reported=resp_body.get("model")
+        if isinstance(resp_body.get("model"), str)
+        else None,
+        request_id=extract_request_id_v2(resp_body) or extract_request_id(resp_headers),
     )
     support, action_hash = evidence["payload_hash"], evidence["action_hash"]
     admit(

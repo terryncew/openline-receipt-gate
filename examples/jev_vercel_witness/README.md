@@ -30,9 +30,13 @@ The demo makes exactly one live Jev call. It never reruns the call to chase
 a threshold: if Jev returns a below-threshold probability, the receiver's
 frozen policy decides QUARANTINE or DENY and the demo shows that instead.
 
+Transport: the documented public route `POST https://ai-gateway.vercel.sh/v1/evaluate`
+with `{"model": "typesafe-ai/jev", "state", "questions", "providerOptions":
+{"gateway": {"zeroDataRetention": true}}}` in the body.
+
 ## What this does not claim
 
 Jev correctness, improved calibration, any official TypeSafe or Vercel
 partnership, universal safety, demand, adoption, or production readiness.
 The full scientific record (frozen preregistration, acceptance cases V1–V5,
-terminal receipt) lives in `experiments/jev-witness-vercel-001/`.
+terminal receipt) lives in `experiments/jev-witness-vercel-002/`.
