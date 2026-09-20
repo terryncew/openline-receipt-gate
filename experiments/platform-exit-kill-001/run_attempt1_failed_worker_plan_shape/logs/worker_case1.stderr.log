@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/home/hatch/workspace/openline-receipt-gate/experiments/platform-exit-kill-001/harness/worker_agent.py", line 176, in <module>
+    main()
+  File "/home/hatch/workspace/openline-receipt-gate/experiments/platform-exit-kill-001/harness/worker_agent.py", line 83, in main
+    attempt_id = item["attempt_id"]
+                 ~~~~^^^^^^^^^^^^^^
+TypeError: string indices must be integers, not 'str'

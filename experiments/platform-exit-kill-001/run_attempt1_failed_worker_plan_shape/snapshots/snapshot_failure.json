@@ -1,0 +1,32 @@
+{
+  "attempts": [],
+  "head_hash": {
+    "agent-a/platform-exit-job": "a609fbc1d1d79d73fcbc872971e00ee463c75bf6ba4774aab9722666f3cddefd",
+    "agent-b/platform-exit-job": null
+  },
+  "head_seq": {
+    "agent-a/platform-exit-job": 1,
+    "agent-b/platform-exit-job": 0
+  },
+  "name": "failure",
+  "owner_a": {
+    "owner_id": "owner",
+    "public_key": "65bf1f4fb99514a89ec1fd6df4edb913315d0257f20c7fd2289173e462fb080a"
+  },
+  "owner_b": {
+    "owner_id": "owner",
+    "public_key": "65bf1f4fb99514a89ec1fd6df4edb913315d0257f20c7fd2289173e462fb080a"
+  },
+  "schedule_len": {
+    "agent-a/platform-exit-job": 1,
+    "agent-b/platform-exit-job": 1
+  },
+  "slot_status": {
+    "agent-a/platform-exit-job": "ACTIVE",
+    "agent-b/platform-exit-job": "MISSING"
+  },
+  "succession_seq": {
+    "agent-a/platform-exit-job": 0,
+    "agent-b/platform-exit-job": 0
+  }
+}
