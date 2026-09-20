@@ -1,0 +1,9 @@
+Jev: proceed, 0.84
+Receiver policy: COMMIT
+Effect: executed
+
+Owner revoked the agent.
+
+Same Jev judgment. Same action.
+Receiver: DENY
+Effect: not executed

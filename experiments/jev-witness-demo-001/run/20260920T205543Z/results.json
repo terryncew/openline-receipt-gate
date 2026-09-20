@@ -1,0 +1,45 @@
+{
+  "label": "JEV-WITNESS-DEMO-001",
+  "terminal": "PASS_JEV_WITNESS_DEMO_001",
+  "signal_v1": 0.84,
+  "below_demo_threshold": false,
+  "effect_count": 1,
+  "public_output": [
+    "Jev: proceed, 0.84",
+    "Receiver policy: COMMIT",
+    "Effect: executed",
+    "",
+    "Owner revoked the agent.",
+    "",
+    "Same Jev judgment. Same action.",
+    "Receiver: DENY",
+    "Effect: not executed"
+  ],
+  "cases": {
+    "V1": {
+      "case": "V1",
+      "verdict": "PASS",
+      "detail": "signal=0.8400; decision=COMMIT; effects=1; reasons=['policy:commit_band']"
+    },
+    "V2": {
+      "case": "V2",
+      "verdict": "PASS",
+      "detail": "decision=DENY; receipt_still_verifies=True; effects=1; reasons=['authority:owner_standing_revoked']"
+    },
+    "V3": {
+      "case": "V3",
+      "verdict": "PASS",
+      "detail": "decision=DENY; substituted_effect_absent=True; reasons=['jev_vercel_evidence_action_binding_mismatch']"
+    },
+    "V4": {
+      "case": "V4",
+      "verdict": "PASS",
+      "detail": "verification_failed=True; decision=DENY; reasons=['jev_vercel_evidence_signature_invalid:payload_hash_mismatch']"
+    },
+    "V5": {
+      "case": "V5",
+      "verdict": "PASS",
+      "detail": "decision=DENY; effects=1; reasons=['evidence_replay', 'policy:commit_band']"
+    }
+  }
+}
