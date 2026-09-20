@@ -1,0 +1,123 @@
+{
+  "checks": 213,
+  "experiment": "PLATFORM-EXIT-KILL-002",
+  "historical_verification": {
+    "a_seq1_assessment": {
+      "authorization_hash": "a783dc239c155cd91f4716eed4b07283d354421e5fdef056be732874b319b4c3",
+      "current": false,
+      "current_head_hash": "ab4807d5c07fb4118ddc43b621933337ffdad21c0a2a78ea75b9a03bf802f5eb",
+      "mandate_hash": "e2df4bd16984929290ee460b41335a8ad463c6de0c89b606a2e8b969f3a9bcd4",
+      "reason_codes": [
+        "mandate_authorization_head_mismatch"
+      ],
+      "sequence": 1,
+      "state": "ACTIVE",
+      "verified": true
+    },
+    "slot_a_status": "REVOKED",
+    "slot_b_status": "ACTIVE"
+  },
+  "passed": true,
+  "receipt_distinctions": [
+    {
+      "ACCEPTED": true,
+      "AUTHORIZED_FOR_THIS_ACTION": true,
+      "CURRENT_AUTHORITY": "ACTIVE",
+      "EFFECTED": true,
+      "HISTORICALLY_VALID": "n/a (effect attempt, not an authorization)",
+      "SIGNATURE_VALID": true,
+      "agent": "agent-a",
+      "attempt": "c1-a1",
+      "case": "case_1"
+    },
+    {
+      "ACCEPTED": true,
+      "AUTHORIZED_FOR_THIS_ACTION": true,
+      "CURRENT_AUTHORITY": "ACTIVE",
+      "EFFECTED": true,
+      "HISTORICALLY_VALID": "n/a (effect attempt, not an authorization)",
+      "SIGNATURE_VALID": true,
+      "agent": "agent-a",
+      "attempt": "c1-a2",
+      "case": "case_1"
+    },
+    {
+      "ACCEPTED": false,
+      "AUTHORIZED_FOR_THIS_ACTION": false,
+      "CURRENT_AUTHORITY": "REVOKED",
+      "EFFECTED": false,
+      "HISTORICALLY_VALID": "n/a (effect attempt, not an authorization)",
+      "SIGNATURE_VALID": true,
+      "agent": "agent-a",
+      "attempt": "c3-a1",
+      "case": "case_3"
+    },
+    {
+      "ACCEPTED": false,
+      "AUTHORIZED_FOR_THIS_ACTION": false,
+      "CURRENT_AUTHORITY": "REVOKED",
+      "EFFECTED": false,
+      "HISTORICALLY_VALID": "n/a (effect attempt, not an authorization)",
+      "SIGNATURE_VALID": true,
+      "agent": "agent-a",
+      "attempt": "c3-a2",
+      "case": "case_3"
+    },
+    {
+      "ACCEPTED": false,
+      "AUTHORIZED_FOR_THIS_ACTION": false,
+      "CURRENT_AUTHORITY": "REVOKED",
+      "EFFECTED": false,
+      "HISTORICALLY_VALID": "n/a (effect attempt, not an authorization)",
+      "SIGNATURE_VALID": true,
+      "agent": "agent-a",
+      "attempt": "c3-a3",
+      "case": "case_3"
+    },
+    {
+      "ACCEPTED": true,
+      "AUTHORIZED_FOR_THIS_ACTION": true,
+      "CURRENT_AUTHORITY": "ACTIVE",
+      "EFFECTED": true,
+      "HISTORICALLY_VALID": "n/a (effect attempt, not an authorization)",
+      "SIGNATURE_VALID": true,
+      "agent": "agent-b",
+      "attempt": "c4-b1",
+      "case": "case_4"
+    },
+    {
+      "ACCEPTED": true,
+      "AUTHORIZED_FOR_THIS_ACTION": true,
+      "CURRENT_AUTHORITY": "ACTIVE",
+      "EFFECTED": true,
+      "HISTORICALLY_VALID": "n/a (effect attempt, not an authorization)",
+      "SIGNATURE_VALID": true,
+      "agent": "agent-b",
+      "attempt": "c4-b2",
+      "case": "case_4"
+    },
+    {
+      "ACCEPTED": false,
+      "AUTHORIZED_FOR_THIS_ACTION": false,
+      "CURRENT_AUTHORITY": "REVOKED",
+      "EFFECTED": false,
+      "HISTORICALLY_VALID": "n/a (effect attempt, not an authorization)",
+      "SIGNATURE_VALID": true,
+      "agent": "agent-a",
+      "attempt": "c5-a1",
+      "case": "case_5"
+    },
+    {
+      "ACCEPTED": false,
+      "AUTHORIZED_FOR_THIS_ACTION": false,
+      "CURRENT_AUTHORITY": "REVOKED",
+      "EFFECTED": false,
+      "HISTORICALLY_VALID": "n/a (effect attempt, not an authorization)",
+      "SIGNATURE_VALID": true,
+      "agent": "agent-a",
+      "attempt": "c5-a2",
+      "case": "case_5"
+    }
+  ],
+  "violations": []
+}

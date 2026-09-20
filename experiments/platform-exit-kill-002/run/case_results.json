@@ -1,0 +1,61 @@
+{
+  "case_results": [
+    {
+      "attempts": [
+        "c1-a1",
+        "c1-a2"
+      ],
+      "case": "case_1_a_operates",
+      "commit_seqs": [
+        1,
+        2
+      ],
+      "expectation": "A performs consequential work under owner authority; receipts accepted and attributed to A",
+      "slot_a_status": "ACTIVE"
+    },
+    {
+      "case": "case_2_owner_stops_a",
+      "expectation": "owner STOP revokes A's consequential authority; standing ACTIVE -> REVOKED",
+      "standing_after": "REVOKED",
+      "standing_before": "ACTIVE",
+      "stop_effective_seq": 2,
+      "stop_payload_hash": "ab4807d5c07fb4118ddc43b621933337ffdad21c0a2a78ea75b9a03bf802f5eb",
+      "stop_signer_is_owner": true
+    },
+    {
+      "attempts": [
+        "c3-a1",
+        "c3-a2",
+        "c3-a3"
+      ],
+      "case": "case_3_a_cannot_continue",
+      "expectation": "A refused on authority standing (not format); zero effects; restart does not restore",
+      "refusal_reason": "owner_standing_revoked",
+      "slot_a_head_seq": 2
+    },
+    {
+      "attempts": [
+        "c4-b1",
+        "c4-b2"
+      ],
+      "case": "case_4_b_continues_under_same_regime",
+      "commit_seqs": [
+        6,
+        7
+      ],
+      "expectation": "B continues from the accepted checkpoint under the same owner-controlled regime; no new trust root",
+      "slot_a_still_revoked": true,
+      "slot_b_owner_is_O": true
+    },
+    {
+      "attempts": [
+        "c5-a1",
+        "c5-a2"
+      ],
+      "case": "case_5_a_stays_stopped",
+      "expectation": "A cannot resume by fresh attempt, replay of pre-STOP evidence, or restart; B unaffected",
+      "refusal_reason": "owner_standing_revoked"
+    }
+  ],
+  "failure": null
+}

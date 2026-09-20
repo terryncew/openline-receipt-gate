@@ -1,0 +1,10 @@
+{
+  "agent-a/platform-exit-job": {
+    "owner_id": "owner",
+    "public_key": "bcb7432d0c97d6fc3e1acec1f2da5647d40bde86c5653084f26310767003a431"
+  },
+  "agent-b/platform-exit-job": {
+    "owner_id": "owner",
+    "public_key": "bcb7432d0c97d6fc3e1acec1f2da5647d40bde86c5653084f26310767003a431"
+  }
+}

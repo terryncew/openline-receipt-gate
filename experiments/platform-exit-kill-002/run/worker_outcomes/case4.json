@@ -1,0 +1,167 @@
+{
+  "agent": "agent-b",
+  "outcomes": [
+    {
+      "agent_id": "agent-b",
+      "attempt_id": "c4-b1",
+      "attestation": {
+        "agent_id": "agent-b",
+        "attempt_id": "c4-b1",
+        "effect_hash": "e5c4fcf3c7cbf8c1bc7badaa547a3287a73d736ee4ae6ad1e22593f001292076",
+        "payload_hash": "866c40ced067699b68292a41f6ac1d95eb84502e71b4711c69d18a059997f5b7",
+        "schema": "openline.platform-exit.worker_attestation.v1",
+        "signature": {
+          "algorithm": "Ed25519",
+          "public_key": "bc0f00e0905d2c6e0c59d38a1e88fc2669aee421fc84849404fe5ee34a779c6c",
+          "value": "cb7af4bfaf8ed5d66332913150f1db735a301ba94b56ae691d17d0cfeeec646b43ebd243395b61ad7d450ce17e9a03a8948cd7dd1fbeed11b610ff7d890bae04"
+        }
+      },
+      "authorized": true,
+      "case": "case_4",
+      "commit_seq": 6,
+      "effect_hash": "e5c4fcf3c7cbf8c1bc7badaa547a3287a73d736ee4ae6ad1e22593f001292076",
+      "execution_status": "completed",
+      "journal_execution_status": "completed",
+      "journal_result": "AUTHORIZED",
+      "marker_exists": true,
+      "path_verdict": null,
+      "preflight_allowed": true,
+      "preflight_reasons": [],
+      "reason_codes": [],
+      "slot": "agent-b/platform-exit-job",
+      "standing_final_check": {
+        "allowed": true,
+        "check_error": null,
+        "head_hash": "d1fe761daf62450dbcead8d740d5ff601368bb970c4bde6a129265b64c81ce21",
+        "head_seq": 1,
+        "installed": true,
+        "reason_codes": [],
+        "record": {
+          "authorization": {
+            "authorization_id": "agent-b/platform-exit-job:1",
+            "expires_at": "2036-09-17T03:48:52.215569Z",
+            "issued_at": "2026-09-20T03:48:52.215569Z",
+            "mandate_hash": "a1a58cef986233a8cc610cbdc528b78c0301f377a59c3d15770a4e883bb8e9b6",
+            "owner_id": "owner",
+            "payload_hash": "d1fe761daf62450dbcead8d740d5ff601368bb970c4bde6a129265b64c81ce21",
+            "predecessor_hash": null,
+            "schema": "openline.mandate_owner_authorization.v1",
+            "sequence": 1,
+            "signature": {
+              "algorithm": "Ed25519",
+              "public_key": "bcb7432d0c97d6fc3e1acec1f2da5647d40bde86c5653084f26310767003a431",
+              "value": "6d0fed672c1ad0799cd5729c00976674054f8869a6d59b1fff9b170f3f8b111fbd5f5c1fec5ac2df4b92474060cd374171416f309dfb13d11def6fdff765650f"
+            },
+            "slot_id": "agent-b/platform-exit-job",
+            "state": "ACTIVE"
+          },
+          "mandate": {
+            "agent_id": "agent-b",
+            "allowed_action_types": [
+              "authorize_payment"
+            ],
+            "allowed_disclosure_classes": [],
+            "allowed_targets": [
+              "payments://ledger"
+            ],
+            "delegation_allowed": false,
+            "expires_at": "2030-01-01T00:00:00Z",
+            "forbidden_disclosure_classes": [],
+            "mandate_id": "platform-exit-job",
+            "max_payment_cents": 10000,
+            "max_settlement_cents": 0,
+            "principal_id": "owner",
+            "profile": "principal_mandate/v1",
+            "purpose": "platform exit study job",
+            "version": "v1"
+          }
+        },
+        "standing": "ACTIVE",
+        "terminal": false
+      },
+      "stop_effective_seq": null
+    },
+    {
+      "agent_id": "agent-b",
+      "attempt_id": "c4-b2",
+      "attestation": {
+        "agent_id": "agent-b",
+        "attempt_id": "c4-b2",
+        "effect_hash": "86cade1ee636d310d3eab417875337051003093987ee6b5f7486e9a9e3b69b0c",
+        "payload_hash": "17b47a1912ccda5ec1dedb357ea794d81649e82330d292eaecd67b77ef24fb5e",
+        "schema": "openline.platform-exit.worker_attestation.v1",
+        "signature": {
+          "algorithm": "Ed25519",
+          "public_key": "bc0f00e0905d2c6e0c59d38a1e88fc2669aee421fc84849404fe5ee34a779c6c",
+          "value": "6a5a8f5acee9e0f30517f0d9f35752aab5ea6c0579b4f9e0b12713864d44b933be94043b7b4266c96db92e432e72d308a4d4c58dafa16eb846418c194959ef0d"
+        }
+      },
+      "authorized": true,
+      "case": "case_4",
+      "commit_seq": 7,
+      "effect_hash": "86cade1ee636d310d3eab417875337051003093987ee6b5f7486e9a9e3b69b0c",
+      "execution_status": "completed",
+      "journal_execution_status": "completed",
+      "journal_result": "AUTHORIZED",
+      "marker_exists": true,
+      "path_verdict": null,
+      "preflight_allowed": true,
+      "preflight_reasons": [],
+      "reason_codes": [],
+      "slot": "agent-b/platform-exit-job",
+      "standing_final_check": {
+        "allowed": true,
+        "check_error": null,
+        "head_hash": "d1fe761daf62450dbcead8d740d5ff601368bb970c4bde6a129265b64c81ce21",
+        "head_seq": 1,
+        "installed": true,
+        "reason_codes": [],
+        "record": {
+          "authorization": {
+            "authorization_id": "agent-b/platform-exit-job:1",
+            "expires_at": "2036-09-17T03:48:52.215569Z",
+            "issued_at": "2026-09-20T03:48:52.215569Z",
+            "mandate_hash": "a1a58cef986233a8cc610cbdc528b78c0301f377a59c3d15770a4e883bb8e9b6",
+            "owner_id": "owner",
+            "payload_hash": "d1fe761daf62450dbcead8d740d5ff601368bb970c4bde6a129265b64c81ce21",
+            "predecessor_hash": null,
+            "schema": "openline.mandate_owner_authorization.v1",
+            "sequence": 1,
+            "signature": {
+              "algorithm": "Ed25519",
+              "public_key": "bcb7432d0c97d6fc3e1acec1f2da5647d40bde86c5653084f26310767003a431",
+              "value": "6d0fed672c1ad0799cd5729c00976674054f8869a6d59b1fff9b170f3f8b111fbd5f5c1fec5ac2df4b92474060cd374171416f309dfb13d11def6fdff765650f"
+            },
+            "slot_id": "agent-b/platform-exit-job",
+            "state": "ACTIVE"
+          },
+          "mandate": {
+            "agent_id": "agent-b",
+            "allowed_action_types": [
+              "authorize_payment"
+            ],
+            "allowed_disclosure_classes": [],
+            "allowed_targets": [
+              "payments://ledger"
+            ],
+            "delegation_allowed": false,
+            "expires_at": "2030-01-01T00:00:00Z",
+            "forbidden_disclosure_classes": [],
+            "mandate_id": "platform-exit-job",
+            "max_payment_cents": 10000,
+            "max_settlement_cents": 0,
+            "principal_id": "owner",
+            "profile": "principal_mandate/v1",
+            "purpose": "platform exit study job",
+            "version": "v1"
+          }
+        },
+        "standing": "ACTIVE",
+        "terminal": false
+      },
+      "stop_effective_seq": null
+    }
+  ],
+  "slot": "agent-b/platform-exit-job",
+  "worker_pubkey": "bc0f00e0905d2c6e0c59d38a1e88fc2669aee421fc84849404fe5ee34a779c6c"
+}

@@ -1,0 +1,183 @@
+{
+  "agent": "agent-a",
+  "outcomes": [
+    {
+      "agent_id": "agent-a",
+      "attempt_id": "c3-a1",
+      "attestation": {
+        "agent_id": "agent-a",
+        "attempt_id": "c3-a1",
+        "effect_hash": "05d062d742def576125ceb33bedfd1c7d9fe638b1550c61ff025905ea8496942",
+        "payload_hash": "b5b7d8a8ae06901862ef700475d8d1e591cb7574daf0e39d7fece47854692304",
+        "schema": "openline.platform-exit.worker_attestation.v1",
+        "signature": {
+          "algorithm": "Ed25519",
+          "public_key": "4c8eb96b1aa0c43a1918183420256e40bb0ac53b66ad306f416077db97e7c126",
+          "value": "992ae2ab534fff5feb8433434727317315533433d2a414af6f2baa0ee0b9f21d115963bcefc2a6fb1b47090d37f998e2c978aabf939d63877050a249d654f504"
+        }
+      },
+      "authorized": false,
+      "case": "case_3",
+      "commit_seq": 3,
+      "effect_hash": "05d062d742def576125ceb33bedfd1c7d9fe638b1550c61ff025905ea8496942",
+      "execution_status": null,
+      "journal_execution_status": "not_started",
+      "journal_result": "BLOCKED",
+      "marker_exists": false,
+      "path_verdict": {
+        "ordering": "STOP_FIRST",
+        "stop_effective_seq": 2,
+        "verdict": "STOPPED"
+      },
+      "preflight_allowed": true,
+      "preflight_reasons": [],
+      "reason_codes": [
+        "owner_standing_revoked"
+      ],
+      "slot": "agent-a/platform-exit-job",
+      "standing_final_check": {
+        "allowed": false,
+        "check_error": null,
+        "head_hash": "ab4807d5c07fb4118ddc43b621933337ffdad21c0a2a78ea75b9a03bf802f5eb",
+        "head_seq": 2,
+        "installed": true,
+        "reason_codes": [
+          "owner_standing_revoked"
+        ],
+        "record": {
+          "authorization": {
+            "authorization_id": "agent-a/platform-exit-job:2",
+            "expires_at": "2036-09-17T03:48:52.215569Z",
+            "issued_at": "2026-09-20T03:48:52.215569Z",
+            "mandate_hash": "e2df4bd16984929290ee460b41335a8ad463c6de0c89b606a2e8b969f3a9bcd4",
+            "owner_id": "owner",
+            "payload_hash": "ab4807d5c07fb4118ddc43b621933337ffdad21c0a2a78ea75b9a03bf802f5eb",
+            "predecessor_hash": "a783dc239c155cd91f4716eed4b07283d354421e5fdef056be732874b319b4c3",
+            "schema": "openline.mandate_owner_authorization.v1",
+            "sequence": 2,
+            "signature": {
+              "algorithm": "Ed25519",
+              "public_key": "bcb7432d0c97d6fc3e1acec1f2da5647d40bde86c5653084f26310767003a431",
+              "value": "6b8f48d732f02add55adeaea523b09a98a5e491fb6a673d4ac25dc6504e85edc37f22a4789c5876deb65d81eefe78362e7ecbb787833b0adb813683d8c56fc00"
+            },
+            "slot_id": "agent-a/platform-exit-job",
+            "state": "REVOKED"
+          },
+          "mandate": {
+            "agent_id": "agent-a",
+            "allowed_action_types": [
+              "authorize_payment"
+            ],
+            "allowed_disclosure_classes": [],
+            "allowed_targets": [
+              "payments://ledger"
+            ],
+            "delegation_allowed": false,
+            "expires_at": "2030-01-01T00:00:00Z",
+            "forbidden_disclosure_classes": [],
+            "mandate_id": "platform-exit-job",
+            "max_payment_cents": 10000,
+            "max_settlement_cents": 0,
+            "principal_id": "owner",
+            "profile": "principal_mandate/v1",
+            "purpose": "platform exit study job",
+            "version": "v1"
+          }
+        },
+        "standing": "REVOKED",
+        "terminal": true
+      },
+      "stop_effective_seq": 2
+    },
+    {
+      "agent_id": "agent-a",
+      "attempt_id": "c3-a2",
+      "attestation": {
+        "agent_id": "agent-a",
+        "attempt_id": "c3-a2",
+        "effect_hash": "8e583933594dd72757051f10300da487fade97d53f61770286d2cbe876ff6f1d",
+        "payload_hash": "87bb1fbc1ea2f7724fb052a684dea825c9fd73d87079cae3e2c7c83612c6d5cf",
+        "schema": "openline.platform-exit.worker_attestation.v1",
+        "signature": {
+          "algorithm": "Ed25519",
+          "public_key": "4c8eb96b1aa0c43a1918183420256e40bb0ac53b66ad306f416077db97e7c126",
+          "value": "7a6c917603bc8f5af5fbab0b642834f412a86e25e787ab1d7575aec3cf9046e742c0c0958bf724b7fb38a5dcc03e31f789183e367475367bef33ae35f4b1c10d"
+        }
+      },
+      "authorized": false,
+      "case": "case_3",
+      "commit_seq": 4,
+      "effect_hash": "8e583933594dd72757051f10300da487fade97d53f61770286d2cbe876ff6f1d",
+      "execution_status": null,
+      "journal_execution_status": "not_started",
+      "journal_result": "BLOCKED",
+      "marker_exists": false,
+      "path_verdict": {
+        "ordering": "STOP_FIRST",
+        "stop_effective_seq": 2,
+        "verdict": "STOPPED"
+      },
+      "preflight_allowed": true,
+      "preflight_reasons": [],
+      "reason_codes": [
+        "owner_standing_revoked"
+      ],
+      "slot": "agent-a/platform-exit-job",
+      "standing_final_check": {
+        "allowed": false,
+        "check_error": null,
+        "head_hash": "ab4807d5c07fb4118ddc43b621933337ffdad21c0a2a78ea75b9a03bf802f5eb",
+        "head_seq": 2,
+        "installed": true,
+        "reason_codes": [
+          "owner_standing_revoked"
+        ],
+        "record": {
+          "authorization": {
+            "authorization_id": "agent-a/platform-exit-job:2",
+            "expires_at": "2036-09-17T03:48:52.215569Z",
+            "issued_at": "2026-09-20T03:48:52.215569Z",
+            "mandate_hash": "e2df4bd16984929290ee460b41335a8ad463c6de0c89b606a2e8b969f3a9bcd4",
+            "owner_id": "owner",
+            "payload_hash": "ab4807d5c07fb4118ddc43b621933337ffdad21c0a2a78ea75b9a03bf802f5eb",
+            "predecessor_hash": "a783dc239c155cd91f4716eed4b07283d354421e5fdef056be732874b319b4c3",
+            "schema": "openline.mandate_owner_authorization.v1",
+            "sequence": 2,
+            "signature": {
+              "algorithm": "Ed25519",
+              "public_key": "bcb7432d0c97d6fc3e1acec1f2da5647d40bde86c5653084f26310767003a431",
+              "value": "6b8f48d732f02add55adeaea523b09a98a5e491fb6a673d4ac25dc6504e85edc37f22a4789c5876deb65d81eefe78362e7ecbb787833b0adb813683d8c56fc00"
+            },
+            "slot_id": "agent-a/platform-exit-job",
+            "state": "REVOKED"
+          },
+          "mandate": {
+            "agent_id": "agent-a",
+            "allowed_action_types": [
+              "authorize_payment"
+            ],
+            "allowed_disclosure_classes": [],
+            "allowed_targets": [
+              "payments://ledger"
+            ],
+            "delegation_allowed": false,
+            "expires_at": "2030-01-01T00:00:00Z",
+            "forbidden_disclosure_classes": [],
+            "mandate_id": "platform-exit-job",
+            "max_payment_cents": 10000,
+            "max_settlement_cents": 0,
+            "principal_id": "owner",
+            "profile": "principal_mandate/v1",
+            "purpose": "platform exit study job",
+            "version": "v1"
+          }
+        },
+        "standing": "REVOKED",
+        "terminal": true
+      },
+      "stop_effective_seq": 2
+    }
+  ],
+  "slot": "agent-a/platform-exit-job",
+  "worker_pubkey": "4c8eb96b1aa0c43a1918183420256e40bb0ac53b66ad306f416077db97e7c126"
+}
