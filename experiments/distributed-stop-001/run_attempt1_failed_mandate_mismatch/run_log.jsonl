@@ -1,0 +1,7 @@
+{"event": "run_start", "preregistration": "experiments/distributed-stop-001/preregistration.json", "t": "2026-09-20T03:03:20.888974Z"}
+{"event": "worker_started", "init": true, "receiver": "R1", "t": "2026-09-20T03:03:21.090833Z"}
+{"event": "worker_started", "init": true, "receiver": "R2", "t": "2026-09-20T03:03:21.303654Z"}
+{"event": "owner_issued", "issued_at": "2026-09-20T03:03:21.303793Z", "lease_seconds": 3600, "payload_hash": "628a89d42ca591932fe4cf941a013e09e84236a1081baab5a9437d51460baee2", "sequence": 1, "state": "ACTIVE", "t": "2026-09-20T03:03:21.304863Z"}
+{"event": "owner_delivered", "file": "seq1.json", "receiver": "R1", "sequence": 1, "state": "ACTIVE", "t": "2026-09-20T03:03:21.305151Z"}
+{"event": "owner_delivered", "file": "seq1.json", "receiver": "R2", "sequence": 1, "state": "ACTIVE", "t": "2026-09-20T03:03:21.305345Z"}
+{"cmd": "poll", "event": "worker_result", "receiver": "R1", "result": {"ok": true, "outcomes": [{"admitted": false, "error": "MandateAuthorityError:mandate_authorization_hash_mismatch", "file": "seq1.json"}]}, "t": "2026-09-20T03:03:21.355827Z"}

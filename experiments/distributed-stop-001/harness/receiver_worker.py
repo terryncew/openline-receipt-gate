@@ -8,7 +8,9 @@ via command files; reports via result files. Harness only.
 from __future__ import annotations
 
 import argparse
+import fcntl
 import json
+import shutil
 import sys
 import time
 from datetime import datetime, timedelta, timezone
@@ -37,25 +39,6 @@ def _now() -> datetime:
     return datetime.now(timezone.utc)
 
 
-def _mandate(owner_id: str, now: datetime) -> dict:
-    return {
-        "profile": "principal_mandate/v1",
-        "mandate_id": "distributed-stop-mandate",
-        "principal_id": owner_id,
-        "agent_id": "distributed-stop-agent",
-        "purpose": "distributed stop experiment",
-        "allowed_action_types": ["authorize_payment"],
-        "allowed_targets": ["payments://ledger"],
-        "allowed_disclosure_classes": [],
-        "forbidden_disclosure_classes": [],
-        "max_settlement_cents": 0,
-        "max_payment_cents": 10_000,
-        "delegation_allowed": False,
-        "expires_at": _iso(now + timedelta(days=1)),
-        "version": "v1",
-    }
-
-
 class Worker:
     def __init__(self, args) -> None:
         self.args = args
@@ -67,10 +50,27 @@ class Worker:
             d.mkdir(parents=True, exist_ok=True)
         self.effects = self.state / "effects"
         self.effects.mkdir(exist_ok=True)
+        self.rejected = self.state / "rejected"
+        self.rejected.mkdir(exist_ok=True)
+
+        # One receiver identity = one live process. A second worker on the
+        # same state dir is split-brain, not independence: refuse loudly.
+        self._lock_fh = open(self.state / ".lock", "w", encoding="utf-8")
+        try:
+            fcntl.flock(self._lock_fh, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except OSError:
+            print(f"state dir locked: {self.state} (another worker owns this receiver)",
+                  file=sys.stderr)
+            sys.exit(2)
 
         self.slot = args.slot
         self.owner_id = args.owner_id
-        self.mandate = _mandate(args.owner_id, _now())
+        # The mandate is pinned out-of-band (agreed by owner and receiver
+        # before the experiment); the worker loads the driver's copy so the
+        # mandate_hash in owner-signed records matches exactly.
+        self.mandate = json.loads(
+            Path(args.mandate_file).read_text(encoding="utf-8")
+        )
 
         heads_path = str(self.state / "owner_heads.json")
         if args.init:
@@ -127,9 +127,9 @@ class Worker:
     def cmd_poll(self, payload: dict) -> dict:
         outcomes = []
         for path in sorted(self.inbox.glob("*.json")):
-            record = json.loads(path.read_text(encoding="utf-8"))
             now = _now()
             try:
+                record = json.loads(path.read_text(encoding="utf-8"))
                 admission = self.view.admit(record, self.mandate, now=now)
                 outcome = {
                     "file": path.name,
@@ -151,14 +151,16 @@ class Worker:
                         )
                         + "\n"
                     )
-            except Exception as exc:  # harness: record, do not crash
+                path.unlink()
+            except Exception as exc:  # harness: record, quarantine, do not crash
                 outcome = {
                     "file": path.name,
                     "admitted": False,
                     "error": f"{type(exc).__name__}:{exc}",
                 }
+                # Quarantine: keep the evidence, keep the inbox clean.
+                shutil.move(str(path), str(self.rejected / path.name))
             outcomes.append(outcome)
-            path.unlink()
         return {"outcomes": outcomes}
 
     # -- receipt issuance (mirrors tests/test_stop_standing_integration) --
@@ -329,7 +331,18 @@ class Worker:
 
     def run(self) -> None:
         (self.res_dir / "ready").write_text("ready\n", encoding="utf-8")
-        seen: set[str] = set()
+        # Durable processed-command set: a respawned worker (resume mode)
+        # must not re-execute another lifetime's commands.
+        seen_path = self.state / "seen_cmds.json"
+        try:
+            seen = set(json.loads(seen_path.read_text(encoding="utf-8")))
+        except Exception:
+            seen = set()
+
+        def mark_seen(name: str) -> None:
+            seen.add(name)
+            seen_path.write_text(json.dumps(sorted(seen)) + "\n", encoding="utf-8")
+
         handlers = {
             "poll": self.cmd_poll,
             "attempt": self.cmd_attempt,
@@ -340,7 +353,7 @@ class Worker:
             for path in sorted(self.cmd_dir.glob("cmd_*.json")):
                 if path.name in seen:
                     continue
-                seen.add(path.name)
+                mark_seen(path.name)
                 progressed = True
                 cmd = json.loads(path.read_text(encoding="utf-8"))
                 name = str(cmd.get("cmd"))
@@ -371,6 +384,7 @@ def main() -> None:
     parser.add_argument("--slot", required=True)
     parser.add_argument("--owner-id", required=True)
     parser.add_argument("--owner-pubkey", required=True)
+    parser.add_argument("--mandate-file", required=True)
     parser.add_argument("--init", action="store_true")
     args = parser.parse_args()
     Worker(args).run()

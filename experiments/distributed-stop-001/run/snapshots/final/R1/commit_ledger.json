@@ -1,0 +1,83 @@
+{
+  "attempts": [
+    {
+      "attempt_action_hash": "54176b1061214515b49aae91d2a289c50d8866541d4b0af930e0f41523696307",
+      "attempt_id": "f13f9e8e3fee174da06b2c40",
+      "attempt_label": "ds3-r1-poststop",
+      "authorization_hash": "a4fdfaf0b83769db67950a6b9695482dc9f355c202fd48a5d3ae047f87701e4f",
+      "checked_at": "2026-09-20T03:08:27.233035Z",
+      "commit_seq": 1,
+      "decision_payload_hash": "a999c4590fae24fa95cac646ef76215f8a0218a372c42d182de45723c6fbbd37",
+      "execution_status": "not_started",
+      "path_verdict_v1": {
+        "ordering": "STOP_FIRST",
+        "stop_effective_seq": 2,
+        "verdict": "STOPPED"
+      },
+      "reason_codes": [
+        "owner_standing_revoked"
+      ],
+      "replay_scope_hash": null,
+      "result": "BLOCKED",
+      "standing_final_check_v1": {
+        "allowed": false,
+        "check_error": null,
+        "head_hash": "b5152fde3bed0f0748c611192c9ee9b8b95d7f7e7347c9dc3cd4406cc7e9fe24",
+        "head_seq": 2,
+        "installed": true,
+        "reason_codes": [
+          "owner_standing_revoked"
+        ],
+        "record": {
+          "authorization": {
+            "authorization_id": "payments/default:2",
+            "expires_at": "2026-09-20T04:08:27.149544Z",
+            "issued_at": "2026-09-20T03:08:27.149544Z",
+            "mandate_hash": "95a137627c5351c9403b67b9575b2160c4f30e1e5e181ee7356aa31c5bac6ee4",
+            "owner_id": "alice",
+            "payload_hash": "b5152fde3bed0f0748c611192c9ee9b8b95d7f7e7347c9dc3cd4406cc7e9fe24",
+            "predecessor_hash": "a7b3d81b221266a3648c121913fbea5897fb691c84ad68a59b357d8b2088c27d",
+            "schema": "openline.mandate_owner_authorization.v1",
+            "sequence": 2,
+            "signature": {
+              "algorithm": "Ed25519",
+              "public_key": "4721b5b632272e65a68dda7ac25b4185f8b01916db185c14287db92e2b770fae",
+              "value": "4fd9a913f069dedf9feac34f6e600fe5d753e4726666be5f960adda0d3ed6b70f48f82cde3d552644e97c9e968efbb8f1b6a4d73d0494ebf60ea2b5c4c06d60a"
+            },
+            "slot_id": "payments/default",
+            "state": "REVOKED"
+          },
+          "mandate": {
+            "agent_id": "distributed-stop-agent",
+            "allowed_action_types": [
+              "authorize_payment"
+            ],
+            "allowed_disclosure_classes": [],
+            "allowed_targets": [
+              "payments://ledger"
+            ],
+            "delegation_allowed": false,
+            "expires_at": "2030-01-01T00:00:00Z",
+            "forbidden_disclosure_classes": [],
+            "mandate_id": "distributed-stop-mandate",
+            "max_payment_cents": 10000,
+            "max_settlement_cents": 0,
+            "principal_id": "alice",
+            "profile": "principal_mandate/v1",
+            "purpose": "distributed stop experiment",
+            "version": "v1"
+          }
+        },
+        "standing": "REVOKED",
+        "terminal": true
+      },
+      "stop_effective_seq": 2,
+      "tool_result_hash": null
+    }
+  ],
+  "commit_seq_next": 2,
+  "consumed_codes": {},
+  "consumed_decisions": {},
+  "consumed_replay_scopes": {},
+  "schema": "openline.proof_to_policy.commit-ledger.v1.1"
+}

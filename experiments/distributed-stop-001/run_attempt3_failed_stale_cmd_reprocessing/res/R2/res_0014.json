@@ -1,0 +1,1 @@
+{"attempt_result": "BLOCKED", "authorized": false, "case": "ds3-r2-partitioned", "commit_seq": 9, "effect_observed": false, "execution_status": null, "head_seq": 2, "ok": true, "path_ordering": "STOP_FIRST", "path_verdict": "STOPPED", "reason_codes": ["owner_standing_revoked"], "standing": "REVOKED", "stop_effective_seq": 2, "terminal": true}

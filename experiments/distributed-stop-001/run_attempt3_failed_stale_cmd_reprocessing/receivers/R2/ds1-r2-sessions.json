@@ -1,0 +1,34 @@
+{
+  "consumed_nonces": {
+    "0a5a45d7844daea2669632552b4f41bf": {
+      "consumed_at": "2026-09-20T03:05:31.470865Z",
+      "decision_hash": "678054c15e90a42168e529dcca4a99637728dcd42a7cbf6155303944f7137897",
+      "run_id": "run-ds1-r2",
+      "sequence": 2,
+      "session_id": "session-ds1-r2",
+      "source_hash": "bdad8197c42c9bb163afe874ddd569d6129f3935cf49fc496ce40e685d665dfb"
+    },
+    "20e370af42b81774f5c8dc38c4192a18": {
+      "consumed_at": "2026-09-20T03:05:23.560304Z",
+      "decision_hash": "9be62d97734c653efeff2f3c414842b191f0d9fe9ffb1c268f1ebbef61b37bd0",
+      "run_id": "run-ds1-r2",
+      "sequence": 1,
+      "session_id": "session-ds1-r2",
+      "source_hash": "67cc6e963f6ab2dcbb700f64b180e4400bf000cbf7c159adb32ed9c0e232328b"
+    }
+  },
+  "schema": "openline.proof_to_policy.sessions.v0.2",
+  "sessions": {
+    "run-ds1-r2\u001fsession-ds1-r2": {
+      "next_sequence": 3,
+      "parent_decision_hash": "678054c15e90a42168e529dcca4a99637728dcd42a7cbf6155303944f7137897",
+      "pending": {},
+      "run_id": "run-ds1-r2",
+      "seen_source_hashes": [
+        "67cc6e963f6ab2dcbb700f64b180e4400bf000cbf7c159adb32ed9c0e232328b",
+        "bdad8197c42c9bb163afe874ddd569d6129f3935cf49fc496ce40e685d665dfb"
+      ],
+      "session_id": "session-ds1-r2"
+    }
+  }
+}

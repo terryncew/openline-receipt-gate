@@ -1,0 +1,18 @@
+{
+  "authorization_id": "payments/default:1",
+  "expires_at": "2026-09-20T04:07:45.367661Z",
+  "issued_at": "2026-09-20T03:07:45.367661Z",
+  "mandate_hash": "95a137627c5351c9403b67b9575b2160c4f30e1e5e181ee7356aa31c5bac6ee4",
+  "owner_id": "alice",
+  "payload_hash": "0a90ca1e9431ec0feed9ce2cbe6aa2d5fab67b4858333e95647355ba634c464d",
+  "predecessor_hash": null,
+  "schema": "openline.mandate_owner_authorization.v1",
+  "sequence": 1,
+  "signature": {
+    "algorithm": "Ed25519",
+    "public_key": "4721b5b632272e65a68dda7ac25b4185f8b01916db185c14287db92e2b770fae",
+    "value": "4b80d5e0f21e93c113b40bb33d7e105dc6cb6bb80db1cfcf5d99863ae8679b1161f817ec37eef269714783019a1d088074dd1c7df538f4beac2e0b9ff6ad640a"
+  },
+  "slot_id": "payments/default",
+  "state": "ACTIVE"
+}

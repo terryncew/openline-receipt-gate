@@ -1,0 +1,1 @@
+{"ok": true, "outcomes": [{"admitted": false, "error": "MandateAuthorityError:mandate_authorization_initial_state_invalid", "file": "a_seq2_first.json"}]}

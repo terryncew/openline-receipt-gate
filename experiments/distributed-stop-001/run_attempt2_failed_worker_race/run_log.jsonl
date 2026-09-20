@@ -1,0 +1,8 @@
+{"event": "run_start", "preregistration": "experiments/distributed-stop-001/preregistration.json", "t": "2026-09-20T03:03:33.385180Z"}
+{"event": "worker_started", "init": true, "receiver": "R1", "t": "2026-09-20T03:03:33.587014Z"}
+{"event": "worker_started", "init": true, "receiver": "R2", "t": "2026-09-20T03:03:33.789083Z"}
+{"event": "owner_issued", "issued_at": "2026-09-20T03:03:33.789230Z", "lease_seconds": 3600, "payload_hash": "c106f5b6ef19a97e01ea68fe15006c88f3d846af81a1076014b6bb477c399788", "sequence": 1, "state": "ACTIVE", "t": "2026-09-20T03:03:33.790287Z"}
+{"event": "owner_delivered", "file": "seq1.json", "receiver": "R1", "sequence": 1, "state": "ACTIVE", "t": "2026-09-20T03:03:33.790516Z"}
+{"event": "owner_delivered", "file": "seq1.json", "receiver": "R2", "sequence": 1, "state": "ACTIVE", "t": "2026-09-20T03:03:33.790678Z"}
+{"cmd": "poll", "event": "worker_result", "receiver": "R1", "result": {"ok": true, "outcomes": [{"admitted": true, "file": "seq1.json", "sequence": 1, "state": "ACTIVE"}]}, "t": "2026-09-20T03:03:33.841186Z"}
+{"cmd": "poll", "event": "worker_result", "receiver": "R2", "result": {"error": "FileNotFoundError:[Errno 2] No such file or directory: 'experiments/distributed-stop-001/run/inbox/R2/seq1.json'", "ok": false}, "t": "2026-09-20T03:03:33.892200Z"}

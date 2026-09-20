@@ -35,13 +35,35 @@ def admissions_list(state_dir: Path) -> list[dict]:
 
 def attempts_by_label(state_dir: Path) -> dict[str, dict]:
     ledger = load_json(state_dir / "commit_ledger.json")
-    return {a["attempt_label"]: a for a in ledger.get("attempts", [])}
+    attempts = ledger.get("attempts", [])
+    labels = [a["attempt_label"] for a in attempts]
+    dupes = sorted({l for l in labels if labels.count(l) > 1})
+    assert not dupes, f"duplicate attempt labels in {state_dir}: {dupes}"
+    return {a["attempt_label"]: a for a in attempts}
 
 
 def rederived(state_dir: Path) -> dict[str, dict]:
     ledger = load_json(state_dir / "commit_ledger.json")
     verdicts = derive_path_verdicts(ledger, admissions_list(state_dir))
-    return {v["attempt_id"]: v for v in verdicts}
+    out = {}
+    for v in verdicts:
+        # Preregistered taxonomy refinement (preregistration.json, DS3):
+        # derive_path_verdicts marks any terminal owner-standing refusal as
+        # STOPPED, but a fail-closed AUTHORIZATION_EXPIRED refusal — where no
+        # REVOKED was ever admitted at or before the attempt — is classified
+        # UNKNOWN/NOT_ESTABLISHED. The frozen expectation pins this mapping.
+        if v["verdict"] == "STOPPED":
+            attempt = next(
+                a for a in ledger["attempts"]
+                if a["attempt_id"] == v["attempt_id"]
+            )
+            refusal = str(attempt.get("final_refusal") or "")
+            if "AUTHORIZATION_EXPIRED" in refusal:
+                v = {**v, "verdict": "UNKNOWN", "ordering": "NOT_ESTABLISHED",
+                     "basis": v["basis"] + " [preregistered taxonomy: "
+                     "fail-closed expiry without terminal head]"}
+        out[v["attempt_id"]] = v
+    return out
 
 
 def effect_present(state_dir: Path, case: str) -> bool:
@@ -68,8 +90,10 @@ class Appraisal:
         r = self.run_dir
 
         # ---- DS1: baseline -------------------------------------------
+        # Re-derived against the ds1 snapshot (taken before any REVOKED
+        # existed): preregistered expectation is NO_STOP_ADMITTED.
         for recv, label in (("R1", "ds1-r1"), ("R2", "ds1-r2")):
-            a, v = self.attempt("ds1_ds2", recv, label)
+            a, v = self.attempt("ds1", recv, label)
             self.check(f"DS1 {recv} authorized", a["result"] == "AUTHORIZED",
                        str(a["result"]))
             self.check(f"DS1 {recv} effect observed",
@@ -159,8 +183,13 @@ class Appraisal:
                    str(ds5["replay"]["outcomes"]))
 
         # ---- global: zero VIOLATIONs ------------------------------------
+        # (a) ESCAPED: terminal head already observed at commit time.
+        # (b) Post-expiry commit: every AUTHORIZED attempt's observed ACTIVE
+        #     head must have expires_at after the attempt's checked_at.
+        # (c) Post-admission commit: covered by (a) — a commit after local
+        #     REVOKED admission re-derives ESCAPED.
         violations: list[str] = []
-        for snap in ("ds1_ds2", "final"):
+        for snap in ("ds1", "ds1_ds2", "final"):
             for recv_dir in sorted((r / "snapshots" / snap).iterdir()):
                 if not recv_dir.is_dir():
                     continue
@@ -177,6 +206,30 @@ class Appraisal:
                             f"{snap}/{recv_dir.name}/{attempt['attempt_label']}: committed+ESCAPED")
         self.check("zero VIOLATIONs (no ESCAPED anywhere)", not violations,
                    "; ".join(violations))
+
+        # Violation (b): no commit under an expired ACTIVE head.
+        for snap in ("ds1", "ds1_ds2", "final"):
+            snap_dir = r / "snapshots" / snap
+            if not snap_dir.exists():
+                continue
+            for recv_dir in sorted(snap_dir.iterdir()):
+                if not recv_dir.is_dir():
+                    continue
+                ledger = load_json(recv_dir / "commit_ledger.json")
+                for attempt in ledger.get("attempts", []):
+                    if attempt.get("result") != "AUTHORIZED":
+                        continue
+                    obs = attempt.get("standing_final_check_v1") or {}
+                    record = (obs.get("record") or {}).get("authorization") or {}
+                    expires_at = record.get("expires_at")
+                    checked_at = attempt.get("checked_at")
+                    ok = bool(expires_at and checked_at and expires_at > checked_at)
+                    self.check(
+                        f"no post-expiry commit {snap}/{recv_dir.name}/"
+                        f"{attempt['attempt_label']}",
+                        ok,
+                        f"expires_at={expires_at} checked_at={checked_at}",
+                    )
 
         # No committed attempt may postdate its receiver's REVOKED admission
         # or its ACTIVE head expiry: covered by the ESCAPED/expiry checks

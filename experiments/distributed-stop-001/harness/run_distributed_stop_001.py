@@ -45,6 +45,10 @@ class Driver:
         self.log_path = self.run_dir / "run_log.jsonl"
         self.owner_key = Ed25519PrivateKey.from_private_bytes(bytes.fromhex("b1" * 32))
         self.owner_pubkey = public_key_hex(self.owner_key)
+        # The mandate is pinned out-of-band before the experiment; owner and
+        # receivers must use the byte-identical mandate (mandate_hash is
+        # signed into every authorization). Fixed far-future expiry so the
+        # mandate itself never becomes the ceiling under test.
         self.mandate = {
             "profile": "principal_mandate/v1",
             "mandate_id": "distributed-stop-mandate",
@@ -58,9 +62,14 @@ class Driver:
             "max_settlement_cents": 0,
             "max_payment_cents": 10_000,
             "delegation_allowed": False,
-            "expires_at": _iso(_now() + timedelta(days=1)),
+            "expires_at": "2030-01-01T00:00:00Z",
             "version": "v1",
         }
+        self.mandate_path = self.run_dir / "mandate.json"
+        self.mandate_path.write_text(
+            json.dumps(self.mandate, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
         self.workers: dict[str, dict] = {}
         self.cmd_seq = 0
 
@@ -122,6 +131,14 @@ class Driver:
     # -- workers -------------------------------------------------------
 
     def spawn(self, name: str, *, init: bool) -> None:
+        # Fresh mailbox per spawn: a respawned worker must never reprocess
+        # another lifetime's command files (stale cmd files + deterministic
+        # one-use codes caused phantom re-attempts in attempt 3).
+        for d in ("cmd", "res"):
+            p = self.run_dir / d / name
+            if p.exists():
+                shutil.rmtree(p)
+        self.sweep_stale_workers()
         state_dir = self.run_dir / "receivers" / name
         inbox_dir = self.run_dir / "inbox" / name
         cmd_dir = self.run_dir / "cmd" / name
@@ -139,6 +156,7 @@ class Driver:
                 "--slot", SLOT,
                 "--owner-id", OWNER_ID,
                 "--owner-pubkey", self.owner_pubkey,
+                "--mandate-file", str(self.mandate_path),
             ] + (["--init"] if init else []),
             env=env,
             stdout=subprocess.DEVNULL,
@@ -191,9 +209,57 @@ class Driver:
             w["proc"].kill()
         self.log("worker_terminated", receiver=name)
 
+    def sweep_stale_workers(self) -> None:
+        """Best-effort: kill any worker still bound to this run's dirs.
+
+        A crashed earlier attempt must not leave a live process racing the
+        new one on the same inbox/state. The worker's state-dir lock is the
+        hard guard; this sweep is hygiene so the run fails loudly instead.
+        """
+        import os
+        import signal
+        import subprocess
+
+        anchor_abs = str(self.run_dir.resolve())
+        anchor_rel = str(self.run_dir)
+        try:
+            out = subprocess.run(
+                ["pgrep", "-f", "receiver_worker[.]py"],
+                capture_output=True, text=True, check=False,
+            )
+        except Exception:
+            return
+        live_pids = {
+            w["proc"].pid for w in self.workers.values() if w["proc"].pid
+        }
+        for pid in out.stdout.split():
+            if int(pid) in live_pids:
+                continue  # our own live worker, not stale
+            try:
+                with open(f"/proc/{pid}/cmdline", "rb") as fh:
+                    cmdline = fh.read().decode("utf-8", "replace")
+            except Exception:
+                continue
+            if anchor_abs in cmdline or anchor_rel in cmdline:
+                try:
+                    os.kill(int(pid), signal.SIGTERM)
+                    self.log("swept_stale_worker", pid=int(pid))
+                except Exception:
+                    pass
+
     # -- scenario ------------------------------------------------------
 
     def run(self) -> None:
+        try:
+            self._run()
+        finally:
+            for name in list(self.workers):
+                try:
+                    self.terminate(name)
+                except Exception:
+                    pass
+
+    def _run(self) -> None:
         self.log("run_start", preregistration="experiments/distributed-stop-001/preregistration.json")
         self.spawn("R1", init=True)
         self.spawn("R2", init=True)
@@ -207,6 +273,10 @@ class Driver:
         d1a = self.command("R1", {"cmd": "attempt", "case": "ds1-r1"})
         d1b = self.command("R2", {"cmd": "attempt", "case": "ds1-r2"})
         self.log("DS1_done", r1=d1a, r2=d1b)
+        # Snapshot at the DS1 boundary: no REVOKED exists anywhere yet, so
+        # the preregistered DS1 re-derivation (NO_STOP_ADMITTED) is evaluated
+        # against this admission history, not the later one.
+        self.snapshot("ds1")
 
         # ---- DS2: stale read -----------------------------------------
         revoked = self.issue("REVOKED", 2, active["payload_hash"], lease_seconds=3600)
