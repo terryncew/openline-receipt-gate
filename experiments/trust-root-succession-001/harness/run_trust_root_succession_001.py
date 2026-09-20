@@ -18,7 +18,7 @@ from pathlib import Path
 
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 
-REPO = Path(__file__).resolve().parents[2]
+REPO = Path(__file__).resolve().parents[3]
 EXP = REPO / "experiments" / "trust-root-succession-001"
 WORKER = EXP / "harness" / "succession_worker.py"
 sys.path.insert(0, str(REPO))

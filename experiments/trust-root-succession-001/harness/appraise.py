@@ -12,7 +12,7 @@ import json
 import sys
 from pathlib import Path
 
-REPO = Path(__file__).resolve().parents[2]
+REPO = Path(__file__).resolve().parents[3]
 EXP = REPO / "experiments" / "trust-root-succession-001"
 RUN = EXP / "run"
 sys.path.insert(0, str(REPO))
