@@ -1,0 +1,18 @@
+{
+  "authorization_id": "agent-a/platform-exit-job:1",
+  "expires_at": "2036-09-17T03:44:22.188480Z",
+  "issued_at": "2026-09-20T03:44:22.188480Z",
+  "mandate_hash": "e2df4bd16984929290ee460b41335a8ad463c6de0c89b606a2e8b969f3a9bcd4",
+  "owner_id": "owner",
+  "payload_hash": "a609fbc1d1d79d73fcbc872971e00ee463c75bf6ba4774aab9722666f3cddefd",
+  "predecessor_hash": null,
+  "schema": "openline.mandate_owner_authorization.v1",
+  "sequence": 1,
+  "signature": {
+    "algorithm": "Ed25519",
+    "public_key": "65bf1f4fb99514a89ec1fd6df4edb913315d0257f20c7fd2289173e462fb080a",
+    "value": "1972adf51a53e874402f644a2ac301e00e1f42a0fe0c239b686828ab0029718b5652e2f339b94021d982aaf20a50b7439ed4fbb4d168599b18521af2b7b8550f"
+  },
+  "slot_id": "agent-a/platform-exit-job",
+  "state": "ACTIVE"
+}

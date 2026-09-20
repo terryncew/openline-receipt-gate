@@ -1,0 +1,4 @@
+{
+  "case_results": [],
+  "failure": "CaseFailure: worker case1 exited 1; see /home/hatch/workspace/openline-receipt-gate/experiments/platform-exit-kill-001/run/logs/worker_case1.stderr.log"
+}

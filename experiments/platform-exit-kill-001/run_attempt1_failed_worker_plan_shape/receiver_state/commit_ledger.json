@@ -1,0 +1,8 @@
+{
+  "attempts": [],
+  "commit_seq_next": 1,
+  "consumed_codes": {},
+  "consumed_decisions": {},
+  "consumed_replay_scopes": {},
+  "schema": "openline.proof_to_policy.commit-ledger.v1.1"
+}
