@@ -10,7 +10,10 @@ import json
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-import pytest
+try:
+    import pytest
+except ImportError:  # CI release-check runs without pytest installed
+    pytest = None
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 
 from olp_gate._durable_heads import DurableHeadStore
