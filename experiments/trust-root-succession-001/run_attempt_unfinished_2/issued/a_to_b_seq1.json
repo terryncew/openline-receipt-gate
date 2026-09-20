@@ -1,0 +1,18 @@
+{
+  "expires_at": "2036-09-17T03:27:52.418940Z",
+  "issued_at": "2026-09-20T03:27:52.418940Z",
+  "owner_id": "owner",
+  "payload_hash": "2e8a015705656c95cec5975661ae8027979b5508fc69498cad2c07622425d89e",
+  "predecessor_succession_hash": null,
+  "schema": "openline.owner_trust_root_succession.v1",
+  "signature": {
+    "algorithm": "Ed25519",
+    "public_key": "36c03ed338efde0ac63d41c3ee2c1d0b31af39957b22a708ca08ea21c3aa51b0",
+    "value": "205b5e8b07e17bb14c4265139f047680a6bf4af85eea0fdaf8a8069ed5d34f39a7065f06e69dc4ca96f9ab2381b6350d84188f2ec60e6dbe6ff3d80a7073b004"
+  },
+  "slot_id": "owner/default",
+  "succession_id": "owner/default:trust-root:1",
+  "succession_sequence": 1,
+  "successor_owner_id": "owner",
+  "successor_public_key": "01381d64331b1bb8a0538c43109e4a040181cf17506397e378facc7581161805"
+}

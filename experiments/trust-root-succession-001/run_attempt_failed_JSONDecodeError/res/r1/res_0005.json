@@ -1,0 +1,1 @@
+{"ok": true, "outcomes": [{"admitted": true, "event_hash": "bcc76525c63d2a8d4b768c0cc3f1be43903d7b3efddd643d61e5a28d77f04579", "file": "a_to_b_seq1.json", "kind": "trust_root_succession", "owner_id": "owner", "succession_sequence": 1}]}

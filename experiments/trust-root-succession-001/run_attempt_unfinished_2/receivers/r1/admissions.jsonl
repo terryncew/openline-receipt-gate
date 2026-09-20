@@ -1,0 +1,14 @@
+{"admitted": true, "admitted_at": "2026-09-20T03:27:52.223037Z", "detail": {"head_hash": "7c0e34a860532c904c9dfb169658dbe08b67b297fddb5cb722f286f03419465b", "sequence": 1, "state": "ACTIVE"}, "file": "a_active_seq1.json", "kind": "mandate_authorization"}
+{"admitted": true, "admitted_at": "2026-09-20T03:27:52.443594Z", "detail": {"event_hash": "2e8a015705656c95cec5975661ae8027979b5508fc69498cad2c07622425d89e", "owner_id": "owner", "succession_sequence": 1}, "file": "a_to_b_seq1.json", "kind": "trust_root_succession"}
+{"admitted": true, "admitted_at": "2026-09-20T03:27:52.713546Z", "detail": {"head_hash": "e36971c361dfb6938211518479d481260f3884477e87fc77e371e2da79583d62", "sequence": 2, "state": "ACTIVE"}, "file": "b_active_seq2.json", "kind": "mandate_authorization"}
+{"admitted": true, "admitted_at": "2026-09-20T03:27:52.983094Z", "detail": {"head_hash": "70910b04e14fbfa6b953adab6c33df272fa9410daa46fe7a97722c2b84a1f324", "sequence": 3, "state": "REVOKED"}, "file": "b_stop_seq3.json", "kind": "mandate_authorization"}
+{"admitted": true, "admitted_at": "2026-09-20T03:27:53.202636Z", "detail": {"head_hash": "55a317b568a966b5a8be11be02be560733f80d63b27d61462b67221a43cb7770", "sequence": 4, "state": "ACTIVE"}, "file": "b_active_seq4.json", "kind": "mandate_authorization"}
+{"admitted": false, "admitted_at": "2026-09-20T03:27:53.420662Z", "error": "MandateAuthorityError:mandate_authorization_owner_key_mismatch", "file": "w_stop_seq5.json"}
+{"admitted": false, "admitted_at": "2026-09-20T03:27:53.623720Z", "error": "MandateAuthorityError:mandate_authorization_owner_key_mismatch", "file": "a_active_seq5.json"}
+{"admitted": false, "admitted_at": "2026-09-20T03:27:53.826810Z", "error": "MandateAuthorityError:trust_root_succession_signer_not_current_owner", "file": "c_self_seq2.json"}
+{"admitted": false, "admitted_at": "2026-09-20T03:27:54.031378Z", "error": "MandateAuthorityError:trust_root_succession_key_unchanged", "file": "replay_a_to_b.json"}
+{"admitted": false, "admitted_at": "2026-09-20T03:27:54.235347Z", "error": "MandateAuthorityError:trust_root_succession_sequence_invalid", "file": "b_dup_seq1.json"}
+{"admitted": false, "admitted_at": "2026-09-20T03:27:54.337985Z", "error": "MandateAuthorityError:trust_root_succession_predecessor_mismatch", "file": "b_badpred_seq2.json"}
+{"admitted": false, "admitted_at": "2026-09-20T03:27:54.440120Z", "error": "MandateAuthorityError:trust_root_succession_signer_not_current_owner", "file": "a_forge_seq2.json"}
+{"admitted": true, "admitted_at": "2026-09-20T03:27:54.920921Z", "detail": {"head_hash": "9d9b12958bfd9612a1874c51536e4eab486fcbecc351788038344e58f5f0273c", "sequence": 5, "state": "ACTIVE"}, "file": "b_active_seq5.json", "kind": "mandate_authorization"}
+{"admitted": false, "admitted_at": "2026-09-20T03:27:54.988432Z", "error": "MandateAuthorityError:mandate_authorization_owner_key_mismatch", "file": "a_active_seq6.json"}

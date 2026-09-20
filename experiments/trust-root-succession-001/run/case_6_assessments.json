@@ -1,0 +1,26 @@
+{
+  "a_era": {
+    "authorization_hash": "a9063a976db5bdca0293052bd027bd4027cc99cbb7a8f97dd4206e43be92dfab",
+    "current": false,
+    "current_head_hash": "4d31e6ea00516990edfac145db1e41292d1b373b05197dd37a495d183b001a60",
+    "historical_owner_id": "owner",
+    "historical_public_key": "f450451b44965fe631667225b16743eaa2af4b3bf85db64ddc175b1a8cf841d1",
+    "mandate_hash": "8ca4cc5f92c21e12419cd7a7e9446f4b62cd4705dbc0ef47f2671adaa8d99a64",
+    "reason_codes": [
+      "trust_root_succession_historical_key"
+    ],
+    "sequence": 1,
+    "state": "ACTIVE",
+    "verified": true
+  },
+  "b_era": {
+    "authorization_hash": "4d31e6ea00516990edfac145db1e41292d1b373b05197dd37a495d183b001a60",
+    "current": true,
+    "current_head_hash": "4d31e6ea00516990edfac145db1e41292d1b373b05197dd37a495d183b001a60",
+    "mandate_hash": "8ca4cc5f92c21e12419cd7a7e9446f4b62cd4705dbc0ef47f2671adaa8d99a64",
+    "reason_codes": [],
+    "sequence": 4,
+    "state": "ACTIVE",
+    "verified": true
+  }
+}

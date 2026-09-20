@@ -1,0 +1,20 @@
+{
+  "agent_id": "trust-root-succession-agent",
+  "allowed_action_types": [
+    "authorize_payment"
+  ],
+  "allowed_disclosure_classes": [],
+  "allowed_targets": [
+    "payments://ledger"
+  ],
+  "delegation_allowed": false,
+  "expires_at": "2030-01-01T00:00:00Z",
+  "forbidden_disclosure_classes": [],
+  "mandate_id": "trust-root-succession-mandate",
+  "max_payment_cents": 10000,
+  "max_settlement_cents": 0,
+  "principal_id": "owner",
+  "profile": "principal_mandate/v1",
+  "purpose": "trust root succession experiment",
+  "version": "v1"
+}

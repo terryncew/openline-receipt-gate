@@ -1,0 +1,8 @@
+{"event": "worker_started", "init": true, "receiver": "r1", "t": "2026-09-20T03:25:22.128194Z"}
+{"event": "worker_started", "init": true, "receiver": "r2", "t": "2026-09-20T03:25:22.334351Z"}
+{"event": "owner_issued_auth", "name": "a_active_seq1", "payload_hash": "8c5685deddc4a94dba6c5b156bd8a2a91ff137a23bededf9b42c61f5f3f8fcf5", "sequence": 1, "signer": "A", "state": "ACTIVE", "t": "2026-09-20T03:25:22.335340Z"}
+{"event": "owner_delivered", "file": "a_active_seq1.json", "receiver": "r1", "t": "2026-09-20T03:25:22.336068Z"}
+{"event": "owner_delivered", "file": "a_active_seq1.json", "receiver": "r2", "t": "2026-09-20T03:25:22.336268Z"}
+{"error": "RuntimeError:worker r1 died during {'cmd': 'poll'}", "event": "driver_failed", "t": "2026-09-20T03:25:22.336474Z"}
+{"event": "worker_terminated", "receiver": "r1", "t": "2026-09-20T03:25:22.336547Z"}
+{"event": "worker_terminated", "receiver": "r2", "t": "2026-09-20T03:25:22.339809Z"}

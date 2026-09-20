@@ -1,0 +1,1 @@
+{"ok": true, "outcomes": [{"admitted": true, "file": "b_stop_seq3.json", "head_hash": "70910b04e14fbfa6b953adab6c33df272fa9410daa46fe7a97722c2b84a1f324", "kind": "mandate_authorization", "sequence": 3, "state": "REVOKED"}]}
