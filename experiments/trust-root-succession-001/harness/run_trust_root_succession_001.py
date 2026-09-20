@@ -47,7 +47,7 @@ class Driver:
         self.log_path = run_dir / "run_log.jsonl"
         self.issued_dir = run_dir / "issued"
         self.snap_dir = run_dir / "snapshots"
-        for d in (self.issued_dir, self.snap_dir):
+        for d in (self.issued_dir, self.snap_dir, run_dir / "logs"):
             d.mkdir(parents=True, exist_ok=True)
         # Owner key material. A = genesis owner, B = successor,
         # C = attacker, W = non-owner worker credential.
