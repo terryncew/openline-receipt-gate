@@ -101,3 +101,15 @@ Untouched: 001 INCONCLUSIVE_APPARATUS @ b0640cd; 002 NOT STARTED;
 VERCEL-001 INCONCLUSIVE_PROVIDER_RUNTIME @ ad8270b;
 VERCEL-002 INCONCLUSIVE_PROVIDER_RUNTIME @ 6d14506;
 VERCEL-003 BELOW_RECEIVER_THRESHOLD @ 9ec76ba.
+
+## Post-freeze metadata correction (no order change)
+
+The preregistration.json as frozen at the pre-contact commit 77a475a
+(sha256 1514d52321e48b4be3660cad35ba606cd2ee81d05314ad6261349b778b869e82,
+authoritative for the pre-contact freeze) contained a mismatched full-SHA
+string in the `baseline_sha` field: prefix `9ec76ba` was correct but the tail
+was a typo. Corrected post-freeze to the actual baseline SHA
+9ec76ba69c0bdf56077f0746f0ee122d43bed4e8 (VERCEL-003 terminal tip).
+No frozen order element (request, policy, action, rules, claim ceiling)
+changed; the correction is metadata only. Corrected preregistration.json
+sha256: 2db31044c264fda628355e2e30577fe161301a47f2f887e0957a46007f0435bf.
