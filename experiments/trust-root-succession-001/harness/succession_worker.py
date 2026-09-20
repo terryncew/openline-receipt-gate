@@ -180,14 +180,15 @@ class Worker:
         result = self.view.assess(record, self.mandate, now=_now())
         return {"assessment": result}
 
-    def _write_res(self, name: str, payload: dict) -> None:
+    def _write_res(self, res_filename: str, payload: dict) -> None:
         # Atomic: the driver treats file-existence as response-readiness,
         # so the response must never be observable partially written.
-        tmp = self.res_dir / f".{name}.tmp"
+        # res_filename already carries its extension (e.g. res_0001.json).
+        tmp = self.res_dir / f".{res_filename}.tmp"
         tmp.write_text(
             json.dumps(payload, sort_keys=True) + "\n", encoding="utf-8"
         )
-        tmp.rename(self.res_dir / f"{name}.json")
+        tmp.rename(self.res_dir / res_filename)
 
     def run(self) -> None:
         (self.res_dir / "ready").write_text("ready\n", encoding="utf-8")
