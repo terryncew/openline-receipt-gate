@@ -1,0 +1,36 @@
+{
+  "terminal": "BELOW_RECEIVER_THRESHOLD",
+  "signal_v1": 0.88,
+  "precondition_miss": true,
+  "effect_count": 0,
+  "cases": {
+    "V1": {
+      "case": "V1",
+      "verdict": "PASS",
+      "detail": "PRECONDITION MISS (signal=0.8800 < 0.95); policy mapping for actual band: expected=QUARANTINE, got=QUARANTINE; effects=0",
+      "precondition_miss": true,
+      "signal": 0.88
+    },
+    "V2": {
+      "case": "V2",
+      "verdict": "PASS",
+      "detail": "decision=DENY; receipt_still_verifies=True; reasons=['authority:owner_standing_revoked']"
+    },
+    "V3": {
+      "case": "V3",
+      "verdict": "PASS",
+      "detail": "decision=DENY; substituted_effect_absent=True; reasons=['jev_vercel_evidence_action_binding_mismatch']"
+    },
+    "V4": {
+      "case": "V4",
+      "verdict": "PASS",
+      "detail": "verification_failed=True; decision=DENY; reasons=['jev_vercel_evidence_signature_invalid:payload_hash_mismatch']"
+    },
+    "V5": {
+      "case": "V5",
+      "verdict": "NOT_APPLICABLE",
+      "detail": "V1 did not COMMIT, so no receipt was consumed on the protected-effect path; nothing exists to replay. One-use ledger semantics are covered by pre-contact unit tests.",
+      "not_applicable": true
+    }
+  }
+}
