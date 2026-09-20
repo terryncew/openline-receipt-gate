@@ -308,7 +308,11 @@ from current-development discovery by tests/__init__.py (their
 source-closure assertions are obsolete once production evolves; their
 historical verification runs via
 `python scripts/freeze_governance.py verify-all` against reconstructed
-frozen snapshot roots).
+frozen snapshot roots). Each closure's exact freeze commit is recorded as
+an explicit retrieval locator in `scripts/freeze_governance.py` and every
+reconstructed path is hash-verified against the untouched FREEZE manifest
+before use, so verification works in shallow CI checkouts with no history
+search (`locate` remains as a local diagnostic).
 
 Run the complete release gate with the archived warning-time policy:
 

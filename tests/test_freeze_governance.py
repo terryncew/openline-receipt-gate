@@ -4,9 +4,10 @@ These tests do NOT touch historical artifacts.  They assert:
 
 * every affected FREEZE manifest is byte-identical to git HEAD
   (the invariant: no historical hash may change);
-* every affected historical closure reconstructs byte-exact from
-  repository history and its original verifier passes against the
-  reconstructed snapshot root;
+* every affected historical closure reconstructs byte-exact from its
+  recorded freeze commit (hash-verified against the manifest before use)
+  and its original verifier passes against the reconstructed snapshot
+  root;
 * the drift report is accurate (self-consistency, not fixed filenames);
 * the pytest collection exclusion matches the canonical frozen-module
   list, so both runners exclude exactly the same historical modules.
@@ -29,9 +30,12 @@ sys.path.insert(0, str(ROOT))
 from scripts.freeze_governance import (  # noqa: E402
     AFFECTED_MANIFESTS,
     FROZEN_TEST_MODULES,
+    SourceBytesUnrecoverable,
+    _ensure_commit_present,
     current_drift,
     find_freeze_commit,
     historical_freeze_root,
+    recorded_freeze_commit,
     verify_historical,
     verify_snapshot_hashes,
 )
@@ -63,8 +67,13 @@ class FreezeGovernanceTests(unittest.TestCase):
     def test_historical_closures_reconstruct_and_verify(self) -> None:
         for manifest in sorted(AFFECTED_MANIFESTS):
             with self.subTest(manifest=manifest):
-                commit = find_freeze_commit(manifest)
+                # The recorded commit is a retrieval locator, not an
+                # authority: it is hash-verified against the manifest
+                # inside historical_freeze_root before any use.  No local
+                # history search is required (shallow CI checkouts).
+                commit = recorded_freeze_commit(manifest)
                 self.assertRegex(commit, r"^[0-9a-f]{40}$")
+                _ensure_commit_present(ROOT, commit)
                 with tempfile.TemporaryDirectory(
                     prefix="freeze-governance-test-"
                 ) as tmp:
@@ -77,6 +86,21 @@ class FreezeGovernanceTests(unittest.TestCase):
                         details["ok"],
                         json.dumps(details, indent=2, sort_keys=True)[:3000],
                     )
+
+    def test_recorded_freeze_commit_matches_history_search(self) -> None:
+        # Diagnostic parity check between the recorded locator and the
+        # independent history search.  Requires full local history;
+        # skipped in shallow checkouts (CI), where the search cannot run.
+        shallow = _git("rev-parse", "--is-shallow-repository")
+        if shallow.stdout.strip() == "true":
+            self.skipTest("shallow checkout: history search unavailable")
+        for manifest in sorted(AFFECTED_MANIFESTS):
+            with self.subTest(manifest=manifest):
+                try:
+                    located = find_freeze_commit(manifest)
+                except SourceBytesUnrecoverable as exc:
+                    self.fail(f"history search failed locally: {exc}")
+                self.assertEqual(located, recorded_freeze_commit(manifest))
 
     def test_drift_report_is_accurate(self) -> None:
         for manifest in sorted(AFFECTED_MANIFESTS):

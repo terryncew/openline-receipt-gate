@@ -16,18 +16,23 @@ Mechanism
 ---------
 For each affected manifest:
 
-* find the freeze commit: the newest commit whose tree contains every
-  pinned path at exactly the frozen sha256 (hashes authenticate the
-  reconstruction; filenames alone are not trusted);
+* take the recorded freeze commit locator from AFFECTED_MANIFESTS
+  (recovered once from history; recorded explicitly so shallow CI
+  checkouts need no history search);
+* ensure the commit is present with an exact ``git fetch --depth 1
+  origin <sha>`` if it is missing locally -- no full-history fetch;
+* verify every pinned path's bytes AT THAT COMMIT against the existing
+  FREEZE.json hashes; any mismatch is unrecoverable, never re-frozen;
 * materialize that commit with ``git archive`` into a snapshot directory,
   preserving original relative paths;
-* verify every pinned path's sha256 against the manifest;
+* re-verify every extracted pinned path's sha256 against the manifest;
 * run the original historical verifier / frozen test module against the
   snapshot root instead of current HEAD.
 
 Frozen manifests, hashes, verifiers, results, and claims are never
-modified.  The manifest remains authoritative; the snapshot is a
-verified materialization of what the manifest names.
+modified.  The manifest remains authoritative; the recorded commit is only
+a retrieval locator; the snapshot is a verified materialization of what
+the manifest names.
 
 Usage
 -----
@@ -39,6 +44,11 @@ Usage
 
     python scripts/freeze_governance.py verify <manifest>
         Same, for a single manifest (used by per-suite CI steps).
+
+    python scripts/freeze_governance.py locate <manifest>
+        Diagnostic only: compare the recorded freeze commit against a
+        local history search.  Requires full history; never used by
+        verification (shallow CI checkouts cannot run it).
 """
 
 from __future__ import annotations
@@ -59,25 +69,40 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 # Manifests whose FREEZE.json pins mutable production paths (olp_gate/*).
 # Every other manifest in the repo pins only benchmark-local files and is
 # unaffected by production evolution.
+#
+# "freeze_commit" is the exact historical commit whose tree matches every
+# pinned hash.  It was recovered once from repository history and recorded
+# here as an explicit retrieval locator, because CI uses shallow checkouts
+# in which a history search cannot discover drifted freeze commits.  The
+# locator is NOT trusted on its own: every retrieval first ensures the
+# commit is present (exact fetch), then verifies EVERY pinned path's bytes
+# at that commit against the EXISTING FREEZE.json hashes before any
+# snapshot is materialized.  If any path hash differs from the manifest,
+# the closure is unrecoverable -- the manifest remains authoritative.
 AFFECTED_MANIFESTS: dict[str, dict[str, object]] = {
     "benchmarks/x402_airlock/FREEZE.json": {
         "suite": "x402_airlock",
+        "freeze_commit": "870c51035f95a085e581e28661dd11b55b48c6aa",
         "frozen_tests": ["test_x402_freeze"],
     },
     "benchmarks/temporal_authority_001/FREEZE.json": {
         "suite": "temporal_authority_001",
+        "freeze_commit": "efc63ead44f7da1eb3165ef1288b2f387674d70a",
         "frozen_tests": ["test_temporal_authority_001"],
     },
     "benchmarks/peer_authority_001/FREEZE.json": {
         "suite": "peer_authority_001",
+        "freeze_commit": "77f88b4f965ace21ce12b1534464d1de58dc26d6",
         "frozen_tests": ["test_peer_authority_001"],
     },
     "benchmarks/role_confusion_consequence/FREEZE.json": {
         "suite": "role_confusion_consequence",
+        "freeze_commit": "8840417f58264d047060544947e9ace33a3bda9f",
         "frozen_tests": ["test_role_confusion_freeze"],
     },
     "benchmarks/verified_continuation/FREEZE.json": {
         "suite": "verified_continuation",
+        "freeze_commit": "97cfc43027f09c17ad81f38227d0b30d0856d8e9",
         "frozen_tests": ["test_verified_continuation"],
         # This suite's historical gate is the standalone script verifier,
         # which derives its root from its own __file__ location, so it is
@@ -116,8 +141,9 @@ def _git(repo: Path, *args: str) -> subprocess.CompletedProcess[str]:
 def _ensure_commit_present(repo: Path, commit: str) -> None:
     if _git(repo, "cat-file", "-e", f"{commit}^{{commit}}").returncode == 0:
         return
-    # Shallow CI checkouts may not contain the freeze commit; fetch it by SHA.
-    fetched = _git(repo, "fetch", "--quiet", "origin", commit)
+    # Shallow CI checkouts may not contain the freeze commit; fetch exactly
+    # that commit, nothing more.  No full-history fetch is ever required.
+    fetched = _git(repo, "fetch", "--quiet", "--depth", "1", "origin", commit)
     if fetched.returncode != 0 or _git(
         repo, "cat-file", "-e", f"{commit}^{{commit}}"
     ).returncode != 0:
@@ -139,14 +165,45 @@ def _blob_sha256(repo: Path, commit: str, path: str) -> str | None:
     return hashlib.sha256(proc.stdout).hexdigest()
 
 
+def recorded_freeze_commit(manifest: str) -> str:
+    """Return the recorded retrieval locator for a manifest's freeze commit.
+
+    This is a locator, not an authority: callers must verify every pinned
+    path at this commit against the manifest hashes before trusting it.
+    """
+    return str(AFFECTED_MANIFESTS[manifest]["freeze_commit"])
+
+
+def verify_commit_hashes(
+    manifest: str, commit: str, repo: Path = REPO_ROOT
+) -> list[str]:
+    """Return pinned paths whose bytes at <commit> differ from frozen hashes.
+
+    The manifest remains authoritative; the commit is only a retrieval
+    locator.  Any mismatch means the locator is wrong (or history was
+    rewritten) and the closure is unrecoverable -- never "re-frozen".
+    """
+    frozen = json.loads((repo / manifest).read_text(encoding="utf-8"))["files"]
+    mismatches: list[str] = []
+    for relative, expected in sorted(frozen.items()):
+        digest = _blob_sha256(repo, commit, relative)
+        if digest is None:
+            mismatches.append(f"{relative}:missing_at_{commit[:12]}")
+        elif digest != expected:
+            mismatches.append(f"{relative}:hash_mismatch_at_{commit[:12]}")
+    return mismatches
+
+
 def find_freeze_commit(
     manifest: str, repo: Path = REPO_ROOT
 ) -> str:
-    """Return the newest commit whose tree matches every pinned hash.
+    """DIAGNOSTIC ONLY: search local history for the freeze commit.
 
-    The manifest's own history is walked newest-first; the first commit at
-    which all pinned paths hash to the frozen values is the freeze point.
-    Hashes authenticate the match -- filenames alone are not trusted.
+    Returns the newest commit whose tree matches every pinned hash.
+    Requires enough local history to contain the freeze commit, so it is
+    NOT used by normal verification (shallow CI checkouts cannot run it).
+    Use the recorded ``freeze_commit`` locator plus hash verification
+    instead.  Exposed for diagnostics via ``freeze_governance.py locate``.
     """
     manifest_path = repo / manifest
     frozen = json.loads(manifest_path.read_text(encoding="utf-8"))["files"]
@@ -172,15 +229,26 @@ def historical_freeze_root(
 ) -> Path:
     """Materialize the frozen source closure into snapshot_directory.
 
-    The freeze commit is archived preserving original relative paths, then
-    every manifest-pinned path is hash-verified against the manifest.
+    Retrieval order is deterministic and history-search-free:
+      1. take the recorded freeze commit locator from AFFECTED_MANIFESTS;
+      2. ensure the commit is present (exact --depth 1 fetch if needed);
+      3. verify EVERY pinned path's bytes AT THAT COMMIT against the
+         manifest hashes -- any mismatch is unrecoverable, never re-frozen;
+      4. only then archive the commit preserving original relative paths;
+      5. re-verify the extracted snapshot bytes against the manifest.
     Returns the snapshot root.  Raises SourceBytesUnrecoverable if the
     exact bytes cannot be recovered or fail verification.
     """
     snapshot = Path(snapshot_directory)
     snapshot.mkdir(parents=True, exist_ok=True)
-    commit = find_freeze_commit(manifest, repo)
+    commit = recorded_freeze_commit(manifest)
     _ensure_commit_present(repo, commit)
+    mismatches = verify_commit_hashes(manifest, commit, repo)
+    if mismatches:
+        raise SourceBytesUnrecoverable(
+            f"recorded freeze commit {commit} does not reproduce frozen "
+            f"hashes: {mismatches}"
+        )
     raw = subprocess.run(
         ["git", "archive", commit], cwd=repo, capture_output=True, check=False
     )
@@ -330,11 +398,7 @@ def verify_all(
                     "error": f"source_bytes_unrecoverable: {exc}",
                 }
             details["drift"] = current_drift(manifest, repo)
-            details["freeze_commit"] = (
-                find_freeze_commit(manifest, repo)
-                if "error" not in details
-                else None
-            )
+            details["freeze_commit"] = recorded_freeze_commit(manifest)
             report["suites"][manifest] = details
             if not details["ok"]:
                 report["ok"] = False
@@ -357,11 +421,17 @@ def main(argv: list[str] | None = None) -> int:
         "verify", help="verify a single manifest's historical closure"
     )
     verify_one.add_argument("manifest", help="manifest path, repo-relative")
+    locate_one = sub.add_parser(
+        "locate",
+        help="diagnostic: compare recorded freeze commit against a local "
+        "history search (requires full history; not used by verification)",
+    )
+    locate_one.add_argument("manifest", help="manifest path, repo-relative")
     args = parser.parse_args(argv)
 
     if args.command == "verify-all":
         report = verify_all()
-    else:
+    elif args.command == "verify":
         manifest = args.manifest
         if manifest not in AFFECTED_MANIFESTS:
             print(f"unknown manifest: {manifest}", file=sys.stderr)
@@ -376,11 +446,23 @@ def main(argv: list[str] | None = None) -> int:
                     "error": f"source_bytes_unrecoverable: {exc}",
                 }
             details["drift"] = current_drift(manifest)
-            try:
-                details["freeze_commit"] = find_freeze_commit(manifest)
-            except SourceBytesUnrecoverable:
-                details["freeze_commit"] = None
+            details["freeze_commit"] = recorded_freeze_commit(manifest)
         report = {"suites": {manifest: details}, "ok": bool(details["ok"])}
+
+    if args.command == "locate":
+        manifest = args.manifest
+        if manifest not in AFFECTED_MANIFESTS:
+            print(f"unknown manifest: {manifest}", file=sys.stderr)
+            return 2
+        recorded = recorded_freeze_commit(manifest)
+        print(f"recorded freeze commit: {recorded}")
+        try:
+            located = find_freeze_commit(manifest)
+        except SourceBytesUnrecoverable as exc:
+            print(f"history search unavailable or failed: {exc}")
+            return 2
+        print(f"history-search commit:  {located}")
+        return 0 if located == recorded else 2
 
     print(json.dumps(report, indent=2, sort_keys=True))
     print()
