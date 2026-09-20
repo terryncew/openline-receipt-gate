@@ -1102,8 +1102,18 @@ def main() -> int:
             ],
         ),
         (
+            # Historical closure: verify against the reconstructed frozen
+            # snapshot root via freeze_governance.py, never current HEAD.
+            # Running scripts/verify_x402_airlock.py directly here would
+            # re-check current HEAD against frozen byte hashes and trip its
+            # historical byte-identity precondition on legitimate drift.
             "x402_transaction_airlock_independent_verifier",
-            [sys.executable, "scripts/verify_x402_airlock.py"],
+            [
+                sys.executable,
+                "scripts/freeze_governance.py",
+                "verify",
+                "benchmarks/x402_airlock/FREEZE.json",
+            ],
         ),
         (
             "verified_continuation_independent_verifier",

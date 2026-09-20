@@ -308,6 +308,15 @@ class ReceiverStandingView:
         current = self._heads.get((support_hash, action_hash))
         return None if current is None else str(current["payload_hash"])
 
+    def head(self, support_hash: str, action_hash: str) -> dict[str, Any] | None:
+        """Return a copy of the current admitted head for one covered action.
+
+        Read-only. Used by the final-authority check so the journal can bind
+        the exact admitted projection observed at finalize time.
+        """
+        current = self._heads.get((support_hash, action_hash))
+        return None if current is None else _copy_json(current)
+
     def _heads_snapshot(self) -> list[dict[str, Any]]:
         """Copies of current heads for ancestry reconciliation (002).
 

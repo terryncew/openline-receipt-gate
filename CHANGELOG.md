@@ -12,6 +12,28 @@
   affected experiment closures byte-exact from repository history and
   reports production drift as information, never as failure. No
   historical hash was changed.
+- Adds the portable stop-standing adapter (`olp_gate/stop_standing.py`):
+  portable owner-STOP maps to the existing owner-signed terminal standing
+  (`MandateOwnerView` head REVOKED / `ReceiverStandingView` head INACTIVE)
+  via the existing `admit` successor rules; no new authority machinery.
+- `VerifiedCommitLedger.check_and_consume` / `execute_once` accept an
+  optional `final_authority_check` that runs inside the same `_locked()`
+  region as permission consumption, so the final standing check and
+  commit-or-refuse share one serialization point. Uncheckable standing
+  fails closed and is journaled.
+- `mandate_gate.execute_mandated_once` accepts an optional
+  `mandate_owner_view` + `mandate_slot_id` so the mandated path consults
+  owner standing at finalize time.
+- Attempt journal gains a monotonic `commit_seq`, `stop_effective_seq`,
+  `standing_final_check_v1`, and `path_verdict_v1` (STOPPED / ESCAPED /
+  UNKNOWN, plus PRE_STOP_COMMIT ordering via
+  `olp_gate.stop_standing.derive_path_verdicts`). Commit ledger schema
+  `openline.proof_to_policy.commit-ledger.v1.1`, backward-compatible with
+  v1 journals.
+- Adds read-only `MandateOwnerView.head_record()` and
+  `ReceiverStandingView.head()` accessors for finalize-time evidence binding.
+- Freezes the claim ceiling in `PORTABLE_STANDING_CLAIM.md`.
+
 - Adds receiver-owned field-tier definitions for policy, derived, and payload
   fields. The complete parameter commitment is computed before minimization;
   unclassified fields remain local and unknown projectors fail closed.
