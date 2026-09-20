@@ -67,11 +67,22 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-sys.path.insert(0, "/opt/hatch/skills/skill-creator/bin")
-from dynamic_credentials import (  # noqa: E402
-    add_surrogate_to_request,
-    read_json_response,
-)
+def _credential_helpers():
+    """Import the authd surrogate-exchange helpers lazily.
+
+    Imported at live-call time, not at module import, so the frozen
+    harness (including its stub-qualified acceptance path) loads in
+    environments without the Secure Vault skill path, e.g. CI or a
+    stranger's machine. The credential gate in the live-call function
+    still fires before any network call when the connector is
+    unavailable.
+    """
+    sys.path.insert(0, "/opt/hatch/skills/skill-creator/bin")
+    from dynamic_credentials import (  # noqa: E402
+        add_surrogate_to_request,
+        read_json_response,
+    )
+    return add_surrogate_to_request, read_json_response
 
 from olp_gate.crypto import public_key_hex, sign_olp_body  # noqa: E402
 from olp_gate.standing import ReceiverStandingView, STANDING_PROJECTION_SCHEMA  # noqa: E402
@@ -132,6 +143,7 @@ def live_jev_judgment(request_body: dict) -> tuple[dict, dict]:
     )
     req.add_header("Content-Type", "application/json")
     try:
+        add_surrogate_to_request, read_json_response = _credential_helpers()
         add_surrogate_to_request(req, CREDENTIAL_NAME, allowed_hosts=[GATEWAY_HOST])
     except Exception as exc:
         print(

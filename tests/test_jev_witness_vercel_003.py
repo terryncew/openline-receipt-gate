@@ -20,7 +20,48 @@ import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-import pytest
+try:
+    import pytest
+except ImportError:  # CI discovers tests with `python -m unittest` and no pytest installed
+    import math
+
+    class _Approx:
+        """Minimal pytest.approx replacement: equality via math.isclose."""
+
+        def __init__(self, expected, rel=1e-6, abs=1e-12):
+            self.expected = expected
+            self.rel = rel
+            self.abs = abs
+
+        def __eq__(self, other):
+            return math.isclose(other, self.expected, rel_tol=self.rel, abs_tol=self.abs)
+
+        def __repr__(self):
+            return f"approx({self.expected!r})"
+
+    class _RaisesContext:
+        """Minimal pytest.raises replacement supporting `as exc` / exc.value."""
+
+        def __init__(self, expected):
+            self.expected = expected
+            self.value = None
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc_value, traceback):
+            if exc_type is None:
+                raise AssertionError(f"DID NOT RAISE {self.expected.__name__}")
+            if issubclass(exc_type, self.expected):
+                self.value = exc_value
+                return True
+            return False
+
+    class _PytestShim:
+        approx = staticmethod(_Approx)
+        raises = staticmethod(_RaisesContext)
+
+    pytest = _PytestShim()
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
