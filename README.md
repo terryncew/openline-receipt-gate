@@ -271,6 +271,33 @@ system's enforcement powers. Details:
 | [Field-tier projections](docs/FIELD_TIER_PROJECTIONS.md) | Commit complete action parameters while exposing only receiver-declared policy attributes | The commitment is integrity, not secrecy or proof that a remote client projected honestly |
 | Verified Model Swap and Continuation | Test whether decision-relevant state survives a model or agent handoff | Current public runs are deterministic fixtures, not live-provider proof |
 
+## Jev Witness via Vercel AI Gateway (study)
+
+OpenLine Jev Witness (Vercel) takes a real Jev judgment through Vercel AI
+Gateway (`typesafe-ai/jev`), binds it as signed OpenLine evidence to the
+exact proposed action, and lets receiver-owned authority and policy decide
+whether the action proceeds. Jev produces a probability judgment; OpenLine
+treats each judgment as evidence inside existing receiver-owned authority
+and policy checks — the receiver enforces its own threshold on top of Jev
+evidence, and revocation stops a previously-witnessed action.
+
+Run the one-command demo with a Vercel AI Gateway key:
+
+~~~bash
+AI_GATEWAY_API_KEY=... python3 examples/jev_vercel_witness/demo.py
+~~~
+
+The study lives on the `study/jev-witness-vercel-001` branch under
+`experiments/jev-witness-vercel-001/` with a hashed preregistration and
+frozen acceptance cases V1–V5. The 2026-09-20 run froze as
+INCONCLUSIVE_PROVIDER_RUNTIME: the live call was refused (HTTP 403) because
+the Vercel account needs a credit card on file before the gateway serves
+model traffic — no Jev judgment was returned, so no claim is earned.
+
+What is not claimed: Jev correctness; improved Jev calibration; any official
+integration with TypeSafe AI or Vercel; universal Jev safety; market demand;
+adoption; or production readiness.
+
 ## Security boundaries
 
 Receipt Gate is useful only where it actually controls the effect:

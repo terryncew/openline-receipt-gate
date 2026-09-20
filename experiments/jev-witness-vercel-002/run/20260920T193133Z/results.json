@@ -1,0 +1,10 @@
+{
+  "terminal": "INCONCLUSIVE_PROVIDER_RUNTIME",
+  "cases": {
+    "V1": {
+      "case": "V1",
+      "verdict": "INCONCLUSIVE",
+      "detail": "provider/transport failure before any judgment: gateway HTTP 403: {\"error\":{\"message\":\"Zero Data Retention (ZDR) is only available for Pro and Enterprise plans. Current plan: hobby. Please upgrade your plan at https://vercel.com/d?to=%2F%5Bteam%5D%2F%7E%2Fsettings%2Fbilling to access this feature.\",\"type\":\"permission_denied\",\"param\":{\"error\":\"Zero Data Retention (ZDR) is only available for Pro and Enterprise plans. Current plan: hobby. Please upgrade your plan at https://vercel.com/d?to=%2F%5Bteam%5D%2F%7E%2Fsettings%2Fbilling to access this feature.\",\"type\":\"permission_denied\",\"statusCode\":403,\"name\":\"ZdrUnauthorizedError\",\"message\":\"Zero Data Retention (ZDR) is only available for Pro and Enterprise plans. Current plan: hobby. Please upgrade your plan at https://vercel.com/d?to=%2F%5Bteam%5D%2F%7E%2Fsettings%2Fbilling to access this feature.\"}},\"providerMetadata\":{\"gateway\":{\"routing\":{\"originalModelId\":\"typesafe-ai/jev\",\"resolvedProvider\":\"typesafe-ai\",\"fallbacksAvailable\":[],\"canonicalSlug\":\"typesafe-ai/jev\",\"modelAttemptCount\":1,\"modelAttempts\":[{\"canonicalSlug\":\"typesafe-ai/jev\",\"success\":false,\"providerAttemptCount\":0,\"providerAttempts\":[]}],\"totalProviderAttemptCount\":0},\"generationId\":\"gen_01M304TTS5EYAHY5FCSP5NEEX6\"}}}"
+    }
+  }
+}

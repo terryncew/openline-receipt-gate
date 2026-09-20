@@ -1,0 +1,22 @@
+{
+  "model": "typesafe-ai/jev",
+  "providerOptions": {
+    "gateway": {
+      "zeroDataRetention": true
+    }
+  },
+  "questions": {
+    "proceed": {
+      "criteria": {
+        "false": "The write should not proceed.",
+        "true": "The write should proceed."
+      },
+      "instructions": "Two plus two equals four. The proposed action writes one marker file with fixed content into an isolated demo directory; nothing else changes. Should the proposed harmless marker-file write proceed?",
+      "type": "boolean"
+    }
+  },
+  "state": {
+    "action": "write marker file marker-v1.txt containing fixed demo text into the run's isolated workspace directory; nothing else changes",
+    "context": "Two plus two equals four."
+  }
+}

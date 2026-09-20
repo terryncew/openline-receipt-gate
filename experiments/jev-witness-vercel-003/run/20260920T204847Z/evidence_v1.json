@@ -1,0 +1,96 @@
+{
+  "action": {
+    "content": "jev-witness-vercel-002 marker",
+    "filename": "marker-v1.txt",
+    "kind": "write_marker_file"
+  },
+  "action_hash": "9a4ed6df9500561300215943c1b9fb3a02aafcd505b38b2004d7124415079b7f",
+  "evidence_id": "a282d48a85004f3d32f3c56bfda6a6d2",
+  "jev": {
+    "disallow_prompt_training_requested": true,
+    "evaluate_path": "/v1/evaluate",
+    "evaluated_at": "2026-09-20T20:48:48.652665Z",
+    "evaluated_at_source": "witness_clock",
+    "gateway_host": "ai-gateway.vercel.sh",
+    "model_reported": "typesafe-ai/jev",
+    "model_requested": "typesafe-ai/jev",
+    "questions": {
+      "proceed": {
+        "criteria": {
+          "false": "The write should not proceed.",
+          "true": "The write should proceed."
+        },
+        "instructions": "Two plus two equals four. The proposed action writes one marker file with fixed content into an isolated demo directory; nothing else changes. Should the proposed harmless marker-file write proceed?",
+        "type": "boolean"
+      }
+    },
+    "request_id": "gen_01M30988PH1X8605DY9HD40861",
+    "response": {
+      "answers": {
+        "proceed": {
+          "probability": "0.88",
+          "type": "boolean"
+        }
+      },
+      "provider_metadata": {
+        "gateway": {
+          "cost": "0",
+          "gatewayCost": "0",
+          "generationId": "gen_01M30988PH1X8605DY9HD40861",
+          "marketCost": "0.000015498",
+          "routing": {
+            "canonicalSlug": "typesafe-ai/jev",
+            "fallbacksAvailable": [],
+            "finalProvider": "typesafe-ai",
+            "modelAttemptCount": 1,
+            "modelAttempts": [
+              {
+                "canonicalSlug": "typesafe-ai/jev",
+                "providerAttemptCount": 1,
+                "providerAttempts": [
+                  {
+                    "credentialType": "system",
+                    "endTime": 1789937329349,
+                    "provider": "typesafe-ai",
+                    "startTime": 1789937329195,
+                    "statusCode": 200,
+                    "success": true
+                  }
+                ],
+                "success": true
+              }
+            ],
+            "originalModelId": "typesafe-ai/jev",
+            "planningReasoning": "System credentials planned for: typesafe-ai. Disallow prompt training requested: all 1 attempts disallow prompt training",
+            "resolvedProvider": "typesafe-ai",
+            "totalProviderAttemptCount": 1
+          },
+          "surchargeCost": "0"
+        },
+        "typesafe": {
+          "confidence": {}
+        }
+      },
+      "rounding": null,
+      "usage": {
+        "inputTokens": 369,
+        "outputTokens": 21
+      },
+      "warnings": null
+    },
+    "state": {
+      "action": "write marker file marker-v1.txt containing fixed demo text into the run's isolated workspace directory; nothing else changes",
+      "context": "Two plus two equals four."
+    },
+    "surface": "vercel-ai-gateway",
+    "zero_data_retention_requested": false
+  },
+  "payload_hash": "91c2d9b50cf38a86ec5483ef320d4fee0390ee9def82247a2b65f4b79ad7c925",
+  "schema": "openline.jev_vercel_evidence.v1",
+  "schema_version": 1,
+  "signature": {
+    "algorithm": "Ed25519",
+    "public_key": "99a634b5f77453932d35e8d608441bac13f5257d86239131afe01fcd6171b845",
+    "value": "1874807e96d497cb03762b01fad75a8e4eb26610fb4aeae9de82dda027558598bcfa8a1d9ebc3e58f559ce5569763d707c769fe652ff5b9569a98571181c9100"
+  }
+}

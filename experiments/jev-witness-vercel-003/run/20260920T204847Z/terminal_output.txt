@@ -1,0 +1,7 @@
+V1: PASS -- PRECONDITION MISS (signal=0.8800 < 0.95); policy mapping for actual band: expected=QUARANTINE, got=QUARANTINE; effects=0
+V2: PASS -- decision=DENY; receipt_still_verifies=True; reasons=['authority:owner_standing_revoked']
+V3: PASS -- decision=DENY; substituted_effect_absent=True; reasons=['jev_vercel_evidence_action_binding_mismatch']
+V4: PASS -- verification_failed=True; decision=DENY; reasons=['jev_vercel_evidence_signature_invalid:payload_hash_mismatch']
+V5: NOT_APPLICABLE -- V1 did not COMMIT, so no receipt was consumed on the protected-effect path; nothing exists to replay. One-use ledger semantics are covered by pre-contact unit tests.
+TERMINAL: BELOW_RECEIVER_THRESHOLD
+signal_v1=0.8800 effects=0
