@@ -31,9 +31,9 @@ from olp_gate.gateway import evaluate_request
 from olp_gate.mandate import (
     MandateSpec,
     compile_verified_commit_settings,
-    mandate_preflight,
     validate_effect,
 )
+from olp_gate.mandate_gate import mandate_preflight
 from olp_gate.mandate_gate import execute_mandated_once
 from olp_gate.mandate_owner import MandateOwnerView
 from olp_gate.policy import PolicySpec

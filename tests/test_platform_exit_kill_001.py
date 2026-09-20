@@ -31,7 +31,7 @@ from olp_gate._durable_heads import DurableHeadStore  # noqa: E402
 from olp_gate.crypto import public_key_hex, verify_olp_signature  # noqa: E402
 from olp_gate.mandate import MandateSpec  # noqa: E402
 from olp_gate.mandate_owner import MandateOwnerView, issue_mandate_authorization  # noqa: E402
-from olp_gate.stop_standing import derive_path_verdicts  # noqa: E402
+from olp_gate.stop_standing import derive_path_verdict  # noqa: E402
 from olp_gate.verified_commit import VerifiedCommitLedger  # noqa: E402
 
 SLOT_A = "agent-a/platform-exit-job"
@@ -118,6 +118,15 @@ class PlatformExitKill(unittest.TestCase):
         result["marker_exists"] = marker.exists()
         result["effect_id"] = effect_id
         result["attempt_id"] = attempt_id
+        # Authoritative per-attempt fields live in the journal, not in the
+        # early-refusal result dict.
+        journal_hit = None
+        for attempt in self._ledger().read_state().get("attempts", []):
+            if attempt.get("attempt_label") == attempt_id:
+                journal_hit = attempt
+        assert journal_hit is not None, f"{attempt_id} missing from journal"
+        result["journal_execution_status"] = journal_hit.get("execution_status")
+        result["journal_result"] = journal_hit.get("result")
         return result
 
     # -- cases --------------------------------------------------------
@@ -129,28 +138,28 @@ class PlatformExitKill(unittest.TestCase):
         for effect_id in ("e1", "e2"):
             result = self._attempt("a", effect_id)
             self.assertTrue(result["authorized"], result.get("reason_codes"))
-            self.assertEqual(result["execution_status"], "completed")
+            self.assertEqual(result["journal_execution_status"], "completed")
             self.assertTrue(result["marker_exists"])
             self.assertTrue(result["preflight_allowed"])
         state = self._ledger().read_state()
         self.assertEqual([a["commit_seq"] for a in state["attempts"]], [1, 2])
 
     def test_2_owner_stop_revokes_a_standing(self):
-        view = self._view()
         self._admit(SLOT_A, self.mandate_a, "ACTIVE", 1, None)
-        self.assertEqual(view.status(SLOT_A, now=NOW), "ACTIVE")
-        self._admit(SLOT_A, self.mandate_a, "REVOKED", 2, view.head_hash(SLOT_A))
+        self.assertEqual(self._view().status(SLOT_A, now=NOW), "ACTIVE")
+        self._admit(SLOT_A, self.mandate_a, "REVOKED", 2,
+                    self._view().head_hash(SLOT_A))
         self.assertEqual(self._view().status(SLOT_A, now=NOW), "REVOKED")
         result = self._attempt("a", "e3")
         self.assertFalse(result["authorized"])
         self.assertIn("owner_standing_revoked", result["reason_codes"])
-        self.assertEqual(result["execution_status"], "not_started")
+        self.assertEqual(result["journal_execution_status"], "not_started")
         self.assertFalse(result["marker_exists"])
 
     def test_3_refusal_is_standing_not_format(self):
-        view = self._view()
         self._admit(SLOT_A, self.mandate_a, "ACTIVE", 1, None)
-        self._admit(SLOT_A, self.mandate_a, "REVOKED", 2, view.head_hash(SLOT_A))
+        self._admit(SLOT_A, self.mandate_a, "REVOKED", 2,
+                    self._view().head_hash(SLOT_A))
         result = self._attempt("a", "e4")
         self.assertFalse(result["authorized"])
         # Compiled mandate fit still passes: the refusal is authority
@@ -169,7 +178,7 @@ class PlatformExitKill(unittest.TestCase):
         for effect_id in ("e5", "e6"):
             result = self._attempt("b", effect_id)
             self.assertTrue(result["authorized"], result.get("reason_codes"))
-            self.assertEqual(result["execution_status"], "completed")
+            self.assertEqual(result["journal_execution_status"], "completed")
             self.assertTrue(result["marker_exists"])
         # A's slot is untouched by B's operation.
         self.assertEqual(view.status(SLOT_A, now=NOW), "REVOKED")
@@ -220,11 +229,28 @@ class PlatformExitKill(unittest.TestCase):
         valid, _ = verify_olp_signature(active)
         self.assertTrue(valid)
         state = self._ledger().read_state()
-        derived = derive_path_verdicts(state, self.admissions)
-        for item, attempt in zip(derived, state["attempts"]):
-            stored = attempt.get("path_verdict_v1") or {}
-            self.assertEqual(stored.get("verdict"), item["verdict"])
-            self.assertEqual(stored.get("ordering"), item["ordering"])
+        # Per-slot re-derivation: the STOP lived on slot A; slot B's
+        # admissions must not leak into B-era verdicts.
+        slot_of = {}
+        for attempt in state["attempts"]:
+            label = attempt["attempt_label"]
+            agent = label.split("-")[1]
+            slot_of[label] = SLOT_A if agent == "a" else SLOT_B
+        by_slot = {SLOT_A: [], SLOT_B: []}
+        for entry in self.admissions:
+            by_slot[entry["slot"]].append(entry)
+        for attempt in state["attempts"]:
+            label = attempt["attempt_label"]
+            item = derive_path_verdict(attempt, by_slot[slot_of[label]])
+            stored = attempt.get("path_verdict_v1")
+            if stored is None:
+                # Observation-time verdict covers refusals only; committed
+                # attempts re-derive to verdict None (PRE_STOP_COMMIT /
+                # NO_STOP_ADMITTED ordering is the appraiser's classification).
+                self.assertIsNone(item["verdict"], label)
+            else:
+                self.assertEqual(stored.get("verdict"), item["verdict"], label)
+                self.assertEqual(stored.get("ordering"), item["ordering"], label)
 
     def test_7_receipt_distinctions_hold_per_attempt(self):
         self._admit(SLOT_A, self.mandate_a, "ACTIVE", 1, None)

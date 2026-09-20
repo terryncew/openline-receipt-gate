@@ -26,7 +26,7 @@ for _p in (str(REPO), str(HARNESS)):
 from olp_gate.crypto import verify_olp_signature  # noqa: E402
 from olp_gate.gateway import verify_decision_receipt  # noqa: E402
 from olp_gate.mandate_owner import MandateOwnerView  # noqa: E402
-from olp_gate.stop_standing import derive_path_verdicts  # noqa: E402
+from olp_gate.stop_standing import derive_path_verdict  # noqa: E402
 import gate_path as gp  # noqa: E402
 
 RUN = EXP / "run"
@@ -172,16 +172,28 @@ class Appraiser:
         self.check([a.get("attempt_label") for a in attempts] == ORDER,
                    "attempt order wrong")
         by_label = {a["attempt_label"]: a for a in attempts}
-        derived = derive_path_verdicts(d["ledger"], d["admissions"])
-        self.check(len(derived) == 9, f"derived verdict count {len(derived)}")
-        for item in derived:
-            label = item["attempt_id"]
-            stored = by_label[label].get("path_verdict_v1") or {}
-            self.check(
-                stored.get("verdict") == item["verdict"]
-                and stored.get("ordering") == item["ordering"],
-                f"{label}: stored verdict {stored} != derived {item}",
-            )
+        # Per-slot re-derivation: the STOP lived on slot A; slot B's
+        # admissions must not leak into B-era verdicts (and vice versa).
+        slot_admissions: dict[str, list[dict]] = {SLOT_A: [], SLOT_B: []}
+        for entry in d["admissions"]:
+            slot_admissions[entry["slot"]].append(entry)
+        for label in ORDER:
+            _case, _agent, _auth, slot, _seq = EXPECTED[label]
+            item = derive_path_verdict(by_label[label], slot_admissions[slot])
+            stored = by_label[label].get("path_verdict_v1")
+            if stored is None:
+                # Observation-time verdict covers refusals only; a committed
+                # attempt must re-derive to verdict None (PRE_STOP_COMMIT /
+                # NO_STOP_ADMITTED is the appraiser's ordering classification).
+                self.check(item["verdict"] is None,
+                           f"{label}: derived verdict {item} for committed attempt")
+            else:
+                self.check(
+                    stored.get("verdict") == item["verdict"]
+                    and stored.get("ordering") == item["ordering"]
+                    and stored.get("stop_effective_seq") == item["stop_effective_seq"],
+                    f"{label}: stored verdict {stored} != derived {item}",
+                )
         # Per-attempt expectations.
         for label, (case, agent, authorized, slot, head_seq) in EXPECTED.items():
             a = by_label[label]
@@ -211,8 +223,6 @@ class Appraiser:
                            f"{label}: path verdict {v}")
             self.check(final.get("head_seq") == head_seq,
                        f"{label}: head_seq {final.get('head_seq')} != {head_seq}")
-            # Agent attribution inside the journal: the settings evidence.
-            self.check(True, "attribution_placeholder")
         return by_label
 
     def check_snapshots(self, d: dict, by_label: dict) -> None:
