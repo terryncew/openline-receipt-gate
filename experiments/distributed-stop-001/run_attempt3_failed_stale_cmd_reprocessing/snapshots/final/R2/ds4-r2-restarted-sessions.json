@@ -1,0 +1,25 @@
+{
+  "consumed_nonces": {
+    "034b5054dba62c0fe1501c897adc2958": {
+      "consumed_at": "2026-09-20T03:05:32.077989Z",
+      "decision_hash": "b65e69d2702cf3d0895fd9f9c14e43b444c2e9eb3b585ccb18ac0dc21efe1c9b",
+      "run_id": "run-ds4-r2-restarted",
+      "sequence": 1,
+      "session_id": "session-ds4-r2-restarted",
+      "source_hash": "8c758979ce75d6df57584b7cb04fbd9d025069827575cbbfafe97f61b36873d0"
+    }
+  },
+  "schema": "openline.proof_to_policy.sessions.v0.2",
+  "sessions": {
+    "run-ds4-r2-restarted\u001fsession-ds4-r2-restarted": {
+      "next_sequence": 2,
+      "parent_decision_hash": "b65e69d2702cf3d0895fd9f9c14e43b444c2e9eb3b585ccb18ac0dc21efe1c9b",
+      "pending": {},
+      "run_id": "run-ds4-r2-restarted",
+      "seen_source_hashes": [
+        "8c758979ce75d6df57584b7cb04fbd9d025069827575cbbfafe97f61b36873d0"
+      ],
+      "session_id": "session-ds4-r2-restarted"
+    }
+  }
+}

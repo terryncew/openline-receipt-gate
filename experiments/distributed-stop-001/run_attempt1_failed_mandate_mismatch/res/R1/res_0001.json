@@ -1,0 +1,1 @@
+{"ok": true, "outcomes": [{"admitted": false, "error": "MandateAuthorityError:mandate_authorization_hash_mismatch", "file": "seq1.json"}]}

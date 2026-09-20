@@ -1,0 +1,1 @@
+{"ok": true, "outcomes": [{"admitted": false, "error": "MandateAuthorityError:mandate_authorization_successor_sequence_invalid", "file": "d_seq1_replay.json"}]}

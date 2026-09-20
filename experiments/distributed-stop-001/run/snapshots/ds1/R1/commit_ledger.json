@@ -1,0 +1,90 @@
+{
+  "attempts": [
+    {
+      "attempt_action_hash": "2e401b680984310540c16c042599e1ecb75b73b9a70f7d6a8766aa2ce7e7c5d6",
+      "attempt_id": "a63efd2c39709b122b8ccdac",
+      "attempt_label": "ds1-r1",
+      "authorization_hash": "243853e1c163464e2f53d7f4d505c4e3a5a09c9742ba0aa0daf891019453790d",
+      "checked_at": "2026-09-20T03:08:25.431174Z",
+      "commit_seq": 1,
+      "decision_payload_hash": "7102a8617f8479d1292f05dd798f8fb4b7a372c9e107f773e3bf0d27f29eea14",
+      "execution_status": "completed",
+      "execution_updated_at": "2026-09-20T03:08:25.526866Z",
+      "path_verdict_v1": null,
+      "reason_codes": [],
+      "replay_scope_hash": null,
+      "result": "AUTHORIZED",
+      "standing_final_check_v1": {
+        "allowed": true,
+        "check_error": null,
+        "head_hash": "5f22fc2b5c4f0074f0b19c1c693da5558c1020cd2a9c5f773ab1f4c4cf5123f3",
+        "head_seq": 1,
+        "installed": true,
+        "reason_codes": [],
+        "record": {
+          "authorization": {
+            "authorization_id": "payments/default:1",
+            "expires_at": "2026-09-20T04:08:25.298119Z",
+            "issued_at": "2026-09-20T03:08:25.298119Z",
+            "mandate_hash": "95a137627c5351c9403b67b9575b2160c4f30e1e5e181ee7356aa31c5bac6ee4",
+            "owner_id": "alice",
+            "payload_hash": "5f22fc2b5c4f0074f0b19c1c693da5558c1020cd2a9c5f773ab1f4c4cf5123f3",
+            "predecessor_hash": null,
+            "schema": "openline.mandate_owner_authorization.v1",
+            "sequence": 1,
+            "signature": {
+              "algorithm": "Ed25519",
+              "public_key": "4721b5b632272e65a68dda7ac25b4185f8b01916db185c14287db92e2b770fae",
+              "value": "6709d909bd38cd7c4152268ada90ec62c1148843f434b9de56e08297200c3500c96d5964f5a0e9d791d7b6a534c2ce252c95b3ee5911ee1d764bd0db6a689306"
+            },
+            "slot_id": "payments/default",
+            "state": "ACTIVE"
+          },
+          "mandate": {
+            "agent_id": "distributed-stop-agent",
+            "allowed_action_types": [
+              "authorize_payment"
+            ],
+            "allowed_disclosure_classes": [],
+            "allowed_targets": [
+              "payments://ledger"
+            ],
+            "delegation_allowed": false,
+            "expires_at": "2030-01-01T00:00:00Z",
+            "forbidden_disclosure_classes": [],
+            "mandate_id": "distributed-stop-mandate",
+            "max_payment_cents": 10000,
+            "max_settlement_cents": 0,
+            "principal_id": "alice",
+            "profile": "principal_mandate/v1",
+            "purpose": "distributed stop experiment",
+            "version": "v1"
+          }
+        },
+        "standing": "ACTIVE",
+        "terminal": false
+      },
+      "stop_effective_seq": null,
+      "tool_result_hash": "7828aa88e09193fb2f5691b79883432d528d8180309c23d13f4d82e5c78ea5cd"
+    }
+  ],
+  "commit_seq_next": 2,
+  "consumed_codes": {
+    "2822eaef105538e4cfddb22d59825e28cd7b46f8f4ae567e9a96afcf1236f962": {
+      "attempt_id": "a63efd2c39709b122b8ccdac",
+      "consumed_at": "2026-09-20T03:08:25.431174Z",
+      "decision_payload_hash": "7102a8617f8479d1292f05dd798f8fb4b7a372c9e107f773e3bf0d27f29eea14"
+    }
+  },
+  "consumed_decisions": {
+    "7102a8617f8479d1292f05dd798f8fb4b7a372c9e107f773e3bf0d27f29eea14": {
+      "action_hash": "2e401b680984310540c16c042599e1ecb75b73b9a70f7d6a8766aa2ce7e7c5d6",
+      "attempt_id": "a63efd2c39709b122b8ccdac",
+      "authorization_hash": "243853e1c163464e2f53d7f4d505c4e3a5a09c9742ba0aa0daf891019453790d",
+      "consumed_at": "2026-09-20T03:08:25.431174Z",
+      "one_use_code_hash": "2822eaef105538e4cfddb22d59825e28cd7b46f8f4ae567e9a96afcf1236f962"
+    }
+  },
+  "consumed_replay_scopes": {},
+  "schema": "openline.proof_to_policy.commit-ledger.v1.1"
+}

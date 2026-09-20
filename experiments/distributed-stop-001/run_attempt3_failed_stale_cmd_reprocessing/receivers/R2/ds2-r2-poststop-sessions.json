@@ -1,0 +1,34 @@
+{
+  "consumed_nonces": {
+    "3d924e7b3d0e92d0ba3dba9d304efe0f": {
+      "consumed_at": "2026-09-20T03:05:24.019545Z",
+      "decision_hash": "99ac0d1acaf0db5c054fb9c0ff89623a8f22e7b9803fa13bb993afd5326d0193",
+      "run_id": "run-ds2-r2-poststop",
+      "sequence": 1,
+      "session_id": "session-ds2-r2-poststop",
+      "source_hash": "fc35169e6f35e4f3eeb70d0302c66994834b0c32c977c814f848a123beac68c7"
+    },
+    "5077afa578688c9de7e5795e0bbaa4fd": {
+      "consumed_at": "2026-09-20T03:05:31.691089Z",
+      "decision_hash": "9d5bf50baa40c73e4f584d09f8d64d8f56e09619a6e9031ab6db774811d8d644",
+      "run_id": "run-ds2-r2-poststop",
+      "sequence": 2,
+      "session_id": "session-ds2-r2-poststop",
+      "source_hash": "2f21ac720204d6dc3b414300f56b1619bfd682412267ed3e8e41b6f4e60b7aa9"
+    }
+  },
+  "schema": "openline.proof_to_policy.sessions.v0.2",
+  "sessions": {
+    "run-ds2-r2-poststop\u001fsession-ds2-r2-poststop": {
+      "next_sequence": 3,
+      "parent_decision_hash": "9d5bf50baa40c73e4f584d09f8d64d8f56e09619a6e9031ab6db774811d8d644",
+      "pending": {},
+      "run_id": "run-ds2-r2-poststop",
+      "seen_source_hashes": [
+        "fc35169e6f35e4f3eeb70d0302c66994834b0c32c977c814f848a123beac68c7",
+        "2f21ac720204d6dc3b414300f56b1619bfd682412267ed3e8e41b6f4e60b7aa9"
+      ],
+      "session_id": "session-ds2-r2-poststop"
+    }
+  }
+}

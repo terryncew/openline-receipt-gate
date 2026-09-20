@@ -1,0 +1,1 @@
+{"attempt_result": "AUTHORIZED", "authorized": true, "case": "ds2-r1-poststop", "commit_seq": 2, "effect_observed": true, "execution_status": "completed", "head_seq": 1, "ok": true, "path_ordering": null, "path_verdict": null, "reason_codes": [], "standing": "ACTIVE", "stop_effective_seq": null, "terminal": false}

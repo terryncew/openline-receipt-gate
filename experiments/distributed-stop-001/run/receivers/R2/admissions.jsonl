@@ -1,0 +1,2 @@
+{"admitted_at": "2026-09-20T03:08:27.099507Z", "file": "seq1.json", "payload_hash": "a7b3d81b221266a3648c121913fbea5897fb691c84ad68a59b357d8b2088c27d", "sequence": 1, "state": "ACTIVE"}
+{"admitted_at": "2026-09-20T03:08:34.047859Z", "file": "seq2.json", "payload_hash": "b5152fde3bed0f0748c611192c9ee9b8b95d7f7e7347c9dc3cd4406cc7e9fe24", "sequence": 2, "state": "REVOKED"}

@@ -1,0 +1,25 @@
+{
+  "consumed_nonces": {
+    "66cd214e4f7c3b04057f6dc48c93ebdf": {
+      "consumed_at": "2026-09-20T03:08:33.933799Z",
+      "decision_hash": "541ddb7decdaa2d666fb65191ab44023eac22434e6000c7b492db369249bd829",
+      "run_id": "run-ds3-r2-partitioned",
+      "sequence": 1,
+      "session_id": "session-ds3-r2-partitioned",
+      "source_hash": "eede3707fd8c3c7f227a07064d68642300bb62efcbb3e5e8f262bd75a6142dbc"
+    }
+  },
+  "schema": "openline.proof_to_policy.sessions.v0.2",
+  "sessions": {
+    "run-ds3-r2-partitioned\u001fsession-ds3-r2-partitioned": {
+      "next_sequence": 2,
+      "parent_decision_hash": "541ddb7decdaa2d666fb65191ab44023eac22434e6000c7b492db369249bd829",
+      "pending": {},
+      "run_id": "run-ds3-r2-partitioned",
+      "seen_source_hashes": [
+        "eede3707fd8c3c7f227a07064d68642300bb62efcbb3e5e8f262bd75a6142dbc"
+      ],
+      "session_id": "session-ds3-r2-partitioned"
+    }
+  }
+}

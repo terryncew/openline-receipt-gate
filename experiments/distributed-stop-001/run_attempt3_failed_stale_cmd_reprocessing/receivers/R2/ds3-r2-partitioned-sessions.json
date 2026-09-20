@@ -1,0 +1,34 @@
+{
+  "consumed_nonces": {
+    "603426bf7c8e3410513d22544b2fdcbe": {
+      "consumed_at": "2026-09-20T03:05:30.951536Z",
+      "decision_hash": "14a754812a32a5f077d1824362b33279ccfd00828bb767892ef1b58100d77a8d",
+      "run_id": "run-ds3-r2-partitioned",
+      "sequence": 1,
+      "session_id": "session-ds3-r2-partitioned",
+      "source_hash": "20fa9fd931a83582c6145463ac3cf1d54e8c6819e05a2239a0b1359c6353b66c"
+    },
+    "f3ad64aa94817039a894d2a684836b29": {
+      "consumed_at": "2026-09-20T03:05:31.800420Z",
+      "decision_hash": "aa3ae3b1b5b2ee2ace3eeee917413e0e53ae48df3464b37453cbda20bf9c2fee",
+      "run_id": "run-ds3-r2-partitioned",
+      "sequence": 2,
+      "session_id": "session-ds3-r2-partitioned",
+      "source_hash": "c2f2dee19b78b859b1f9759c69e13af5ebcdd20fc6aace268edfaae43cfa0c2c"
+    }
+  },
+  "schema": "openline.proof_to_policy.sessions.v0.2",
+  "sessions": {
+    "run-ds3-r2-partitioned\u001fsession-ds3-r2-partitioned": {
+      "next_sequence": 3,
+      "parent_decision_hash": "aa3ae3b1b5b2ee2ace3eeee917413e0e53ae48df3464b37453cbda20bf9c2fee",
+      "pending": {},
+      "run_id": "run-ds3-r2-partitioned",
+      "seen_source_hashes": [
+        "20fa9fd931a83582c6145463ac3cf1d54e8c6819e05a2239a0b1359c6353b66c",
+        "c2f2dee19b78b859b1f9759c69e13af5ebcdd20fc6aace268edfaae43cfa0c2c"
+      ],
+      "session_id": "session-ds3-r2-partitioned"
+    }
+  }
+}

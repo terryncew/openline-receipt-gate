@@ -1,0 +1,34 @@
+{
+  "consumed_nonces": {
+    "b9db3dd559c747b864ed97a751e0034b": {
+      "consumed_at": "2026-09-20T03:05:31.179115Z",
+      "decision_hash": "e931f20ac2a241adb4d5275c02db1077f43b4428083dc9238ed3d80fb872641e",
+      "run_id": "run-ds3-r2-poststop",
+      "sequence": 1,
+      "session_id": "session-ds3-r2-poststop",
+      "source_hash": "d46e53b78b832c0ddfd1fe1f080a8ce7a09f8e167267e15f2b4bc132834a9e97"
+    },
+    "ea6cb67193ed0d326217c9b0f5d6405e": {
+      "consumed_at": "2026-09-20T03:05:31.916407Z",
+      "decision_hash": "20e3b704481e14a8e510694ac93d6accbc3cdeb8063efc6654fdb5d33d9d39ad",
+      "run_id": "run-ds3-r2-poststop",
+      "sequence": 2,
+      "session_id": "session-ds3-r2-poststop",
+      "source_hash": "9618e1b78c7823d7487a4b3ab50b6af9d1cffa81d7f72f22a4992df7ddbd8551"
+    }
+  },
+  "schema": "openline.proof_to_policy.sessions.v0.2",
+  "sessions": {
+    "run-ds3-r2-poststop\u001fsession-ds3-r2-poststop": {
+      "next_sequence": 3,
+      "parent_decision_hash": "20e3b704481e14a8e510694ac93d6accbc3cdeb8063efc6654fdb5d33d9d39ad",
+      "pending": {},
+      "run_id": "run-ds3-r2-poststop",
+      "seen_source_hashes": [
+        "d46e53b78b832c0ddfd1fe1f080a8ce7a09f8e167267e15f2b4bc132834a9e97",
+        "9618e1b78c7823d7487a4b3ab50b6af9d1cffa81d7f72f22a4992df7ddbd8551"
+      ],
+      "session_id": "session-ds3-r2-poststop"
+    }
+  }
+}

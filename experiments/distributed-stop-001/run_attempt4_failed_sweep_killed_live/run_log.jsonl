@@ -1,0 +1,9 @@
+{"event": "run_start", "preregistration": "experiments/distributed-stop-001/preregistration.json", "t": "2026-09-20T03:07:44.216391Z"}
+{"event": "worker_started", "init": true, "receiver": "R1", "t": "2026-09-20T03:07:44.879924Z"}
+{"event": "swept_stale_worker", "pid": 6495, "t": "2026-09-20T03:07:44.907867Z"}
+{"event": "worker_started", "init": true, "receiver": "R2", "t": "2026-09-20T03:07:45.367500Z"}
+{"event": "owner_issued", "issued_at": "2026-09-20T03:07:45.367661Z", "lease_seconds": 3600, "payload_hash": "0a90ca1e9431ec0feed9ce2cbe6aa2d5fab67b4858333e95647355ba634c464d", "sequence": 1, "state": "ACTIVE", "t": "2026-09-20T03:07:45.368899Z"}
+{"event": "owner_delivered", "file": "seq1.json", "receiver": "R1", "sequence": 1, "state": "ACTIVE", "t": "2026-09-20T03:07:45.369170Z"}
+{"event": "owner_delivered", "file": "seq1.json", "receiver": "R2", "sequence": 1, "state": "ACTIVE", "t": "2026-09-20T03:07:45.370437Z"}
+{"event": "worker_terminated", "receiver": "R1", "t": "2026-09-20T03:07:45.370648Z"}
+{"event": "worker_terminated", "receiver": "R2", "t": "2026-09-20T03:07:45.378031Z"}

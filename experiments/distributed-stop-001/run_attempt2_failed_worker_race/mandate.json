@@ -1,0 +1,20 @@
+{
+  "agent_id": "distributed-stop-agent",
+  "allowed_action_types": [
+    "authorize_payment"
+  ],
+  "allowed_disclosure_classes": [],
+  "allowed_targets": [
+    "payments://ledger"
+  ],
+  "delegation_allowed": false,
+  "expires_at": "2030-01-01T00:00:00Z",
+  "forbidden_disclosure_classes": [],
+  "mandate_id": "distributed-stop-mandate",
+  "max_payment_cents": 10000,
+  "max_settlement_cents": 0,
+  "principal_id": "alice",
+  "profile": "principal_mandate/v1",
+  "purpose": "distributed stop experiment",
+  "version": "v1"
+}

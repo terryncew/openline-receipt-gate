@@ -1,0 +1,164 @@
+{
+  "checks": [
+    {
+      "detail": "AUTHORIZED",
+      "name": "DS1 R1 authorized",
+      "ok": true
+    },
+    {
+      "detail": "ds1-r1",
+      "name": "DS1 R1 effect observed",
+      "ok": true
+    },
+    {
+      "detail": "{'attempt_id': '3b853d30c50981a79bba8c1f', 'commit_seq': 1, 'verdict': None, 'ordering': 'PRE_STOP_COMMIT', 'stop_effective_seq': 2, 'basis': 'effect committed while standing was ACTIVE; terminal standing admitted later'}",
+      "name": "DS1 R1 re-derived NO_STOP_ADMITTED",
+      "ok": false
+    },
+    {
+      "detail": "AUTHORIZED",
+      "name": "DS1 R2 authorized",
+      "ok": true
+    },
+    {
+      "detail": "ds1-r2",
+      "name": "DS1 R2 effect observed",
+      "ok": true
+    },
+    {
+      "detail": "{'attempt_id': '6a903b3dfbe86f3d6dd6f0ee', 'commit_seq': 1, 'verdict': None, 'ordering': 'PRE_STOP_COMMIT', 'stop_effective_seq': 2, 'basis': 'effect committed while standing was ACTIVE; terminal standing admitted later'}",
+      "name": "DS1 R2 re-derived NO_STOP_ADMITTED",
+      "ok": false
+    },
+    {
+      "detail": "['owner_standing_revoked']",
+      "name": "DS2 R1 post-STOP blocked",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "DS2 R1 no effect",
+      "ok": true
+    },
+    {
+      "detail": "{'attempt_id': 'b26941e6c62ecaa58ef1fc50', 'commit_seq': 2, 'verdict': 'STOPPED', 'ordering': 'STOP_FIRST', 'stop_effective_seq': 2, 'basis': 'terminal owner standing observed under the commit lock'}",
+      "name": "DS2 R1 re-derived STOPPED/STOP_FIRST",
+      "ok": true
+    },
+    {
+      "detail": "result=AUTHORIZED ordering=PRE_STOP_COMMIT",
+      "name": "DS2 R2 stale commit classified PRE_STOP_COMMIT (expected residual)",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "DS2 R2 stale effect observed",
+      "ok": true
+    },
+    {
+      "detail": "['owner_standing_revoked']",
+      "name": "DS2 R2 post-admission blocked",
+      "ok": true
+    },
+    {
+      "detail": "{'attempt_id': 'e1a03b81df849e370e9f1908', 'commit_seq': 3, 'verdict': 'STOPPED', 'ordering': 'STOP_FIRST', 'stop_effective_seq': 2, 'basis': 'terminal owner standing observed under the commit lock'}",
+      "name": "DS2 R2 re-derived STOPPED",
+      "ok": true
+    },
+    {
+      "detail": "['owner_standing_revoked']",
+      "name": "DS3 R1 post-STOP blocked",
+      "ok": true
+    },
+    {
+      "detail": "{'attempt_id': '23381ab9415ebf4f812cd869', 'commit_seq': 3, 'verdict': 'STOPPED', 'ordering': 'STOP_FIRST', 'stop_effective_seq': 2, 'basis': 'terminal owner standing observed under the commit lock'}",
+      "name": "DS3 R1 re-derived STOPPED",
+      "ok": true
+    },
+    {
+      "detail": "BLOCKED",
+      "name": "DS3 R2 partitioned attempt blocked",
+      "ok": true
+    },
+    {
+      "detail": "['owner_standing_revoked']",
+      "name": "DS3 R2 blocked for AUTHORIZATION_EXPIRED",
+      "ok": false
+    },
+    {
+      "detail": "",
+      "name": "DS3 R2 no effect while partitioned",
+      "ok": true
+    },
+    {
+      "detail": "{'attempt_id': '1f35a3a69e15d463668de0e7', 'commit_seq': 9, 'verdict': 'STOPPED', 'ordering': 'STOP_FIRST', 'stop_effective_seq': 2, 'basis': 'terminal owner standing observed under the commit lock'}",
+      "name": "DS3 R2 re-derived UNKNOWN/NOT_ESTABLISHED (fail-closed, expected)",
+      "ok": false
+    },
+    {
+      "detail": "['owner_standing_revoked']",
+      "name": "DS3 R2 post-admission blocked",
+      "ok": true
+    },
+    {
+      "detail": "{'attempt_id': '79e4a4fe4435496b634e4979', 'commit_seq': 10, 'verdict': 'STOPPED', 'ordering': 'STOP_FIRST', 'stop_effective_seq': 2, 'basis': 'terminal owner standing observed under the commit lock'}",
+      "name": "DS3 R2 re-derived STOPPED",
+      "ok": true
+    },
+    {
+      "detail": "['owner_standing_revoked']",
+      "name": "DS4 R2 restarted still blocked",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "DS4 R2 no effect after restart",
+      "ok": true
+    },
+    {
+      "detail": "{'attempt_id': '8fa77b4b0f11bc325119edc2', 'commit_seq': 11, 'verdict': 'STOPPED', 'ordering': 'STOP_FIRST', 'stop_effective_seq': 2, 'basis': 'terminal owner standing observed under the commit lock'}",
+      "name": "DS4 R2 re-derived STOPPED",
+      "ok": true
+    },
+    {
+      "detail": "REVOKED",
+      "name": "DS4 head survived restart as REVOKED",
+      "ok": true
+    },
+    {
+      "detail": "[{'admitted': False, 'error': 'MandateAuthorityError:mandate_authorization_initial_state_invalid', 'file': 'a_seq2_first.json'}]",
+      "name": "DS5 out-of-order seq-2 admit refused",
+      "ok": true
+    },
+    {
+      "detail": "[{'admitted': True, 'file': 'b_seq1.json', 'sequence': 1, 'state': 'ACTIVE'}]",
+      "name": "DS5 seq-1 admits",
+      "ok": true
+    },
+    {
+      "detail": "[{'admitted': True, 'file': 'c_seq2_again.json', 'sequence': 2, 'state': 'REVOKED'}]",
+      "name": "DS5 seq-2 admits after seq-1",
+      "ok": true
+    },
+    {
+      "detail": "['owner_standing_revoked']",
+      "name": "DS5 R3 blocked after ordered admission",
+      "ok": true
+    },
+    {
+      "detail": "[{'admitted': False, 'error': 'MandateAuthorityError:mandate_authorization_successor_sequence_invalid', 'file': 'd_seq1_replay.json'}]",
+      "name": "DS5 replayed seq-1 admit refused",
+      "ok": true
+    },
+    {
+      "detail": "",
+      "name": "zero VIOLATIONs (no ESCAPED anywhere)",
+      "ok": true
+    }
+  ],
+  "failed_checks": 4,
+  "run_dir": "experiments/distributed-stop-001/run",
+  "schema": "openline.distributed_stop_001.appraisal.v1",
+  "terminal": "FAIL",
+  "total_checks": 31
+}
