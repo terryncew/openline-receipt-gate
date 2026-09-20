@@ -1,0 +1,59 @@
+[
+  {
+    "case": "case_1",
+    "expectation": "A-issued ACTIVE then owner STOP (REVOKED) accepted on both",
+    "head_seq": 2,
+    "receivers": [
+      "r1",
+      "r2"
+    ],
+    "status": "REVOKED"
+  },
+  {
+    "case": "case_2",
+    "expectation": "W-signed owner STOP refused; signature valid, standing gate holds",
+    "head_seq": 2,
+    "reason": "mandate_authorization_owner_key_mismatch",
+    "w_signature_valid": true
+  },
+  {
+    "case": "case_3",
+    "event_hash": "d57aee4754de401af6bf21de665ba8e02af19c9a739c5173daccc0d1b4b57453",
+    "expectation": "A->B succession admitted; B current on both",
+    "receivers": [
+      "r1",
+      "r2"
+    ]
+  },
+  {
+    "case": "case_4",
+    "expectation": "B exercises owner authority (ACTIVE / STOP / ACTIVE)",
+    "head_seq": 5,
+    "receivers": [
+      "r1",
+      "r2"
+    ],
+    "status": "ACTIVE"
+  },
+  {
+    "a_signature_valid": true,
+    "case": "case_5",
+    "expectation": "A-signed fresh STOP refused post-succession; signature valid, standing refused",
+    "head_seq": 5,
+    "reason": "mandate_authorization_owner_key_mismatch"
+  },
+  {
+    "case": "case_6",
+    "expectation": "restart preserves B current; B acts, A refused",
+    "head_seq": 6,
+    "receiver": "r1"
+  },
+  {
+    "a_current": false,
+    "a_verified": true,
+    "b_current": true,
+    "b_verified": true,
+    "case": "case_7",
+    "expectation": "A-era receipt historically verifiable; B-era current"
+  }
+]

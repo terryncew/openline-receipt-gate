@@ -171,8 +171,8 @@ def main() -> int:
     # -- case 5: superseded owner cannot return ----------------------------
     a_stop6 = issued["a_stop_seq6"]
     valid, reason = verify_olp_signature(a_stop6)
-    check("case5_a_stop6_signature_valid", valid is True, str(reason),
-          "SIGNATURE_VALID must hold even as standing fails")
+    check("case5_a_stop6_signature_valid", valid is True,
+          f"{reason} (SIGNATURE_VALID must hold even as standing fails)")
     check("case5_a_stop6_signed_by_A",
           a_stop6["signature"]["public_key"].lower() == A.lower())
     for r in ("r1", "r2"):
