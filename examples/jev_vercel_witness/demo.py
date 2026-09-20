@@ -18,6 +18,10 @@ No new authority primitive is introduced; everything composes the existing
 olp_gate machinery (signing, canonicalization, standing, exact-action
 binding, one-use ledger).
 
+Data hygiene: the example sends only synthetic, non-sensitive fixture data
+and does NOT request Vercel's Zero Data Retention control (it sends
+disallowPromptTraining instead). It does not establish a ZDR execution path.
+
 Needs: Python 3.10+, the `cryptography` package, this repository on
 sys.path (run from the repo root or from this directory).
 """
@@ -44,7 +48,7 @@ if str(REPO_ROOT) not in sys.path:
 from olp_gate.crypto import public_key_hex, sign_olp_body  # noqa: E402
 from olp_gate.standing import ReceiverStandingView, STANDING_PROJECTION_SCHEMA  # noqa: E402
 from olp_gate.stop_standing import receiver_action_stop_check  # noqa: E402
-from olp_gate.integrations.jev_vercel_v2 import (  # noqa: E402
+from olp_gate.integrations.jev_vercel_v3 import (  # noqa: E402
     GATEWAY_EVALUATE_URL,
     JEV_MODEL_ID,
     JevVercelEvidenceError,
@@ -85,7 +89,7 @@ def call_jev(api_key: str, request_body: dict) -> tuple[dict, dict]:
 
     Public route: POST {GATEWAY_URL} with the body
     {"model": "typesafe-ai/jev", "state": ..., "questions": ...,
-    "providerOptions": {"gateway": {"zeroDataRetention": true}}}.
+    "providerOptions": {"gateway": {"disallowPromptTraining": true}}}.
     """
     req = urllib.request.Request(
         GATEWAY_URL,
@@ -118,7 +122,7 @@ def main() -> int:
         return 2
 
     frozen = json.loads(
-        (REPO_ROOT / "experiments/jev-witness-vercel-002/harness/frozen_request.json")
+        (REPO_ROOT / "experiments/jev-witness-vercel-003/harness/frozen_request.json")
         .read_text(encoding="utf-8")
     )
     demo_dir = Path(tempfile.mkdtemp(prefix="jev-vercel-demo-"))
@@ -149,6 +153,9 @@ def main() -> int:
         if isinstance(resp_body.get("model"), str)
         else None,
         request_id=extract_request_id_v2(resp_body) or extract_request_id(resp_headers),
+        # Frozen 003 request: disallowPromptTraining sent, ZDR not sent.
+        zero_data_retention_requested=False,
+        disallow_prompt_training_requested=True,
     )
     support, action_hash = evidence["payload_hash"], evidence["action_hash"]
     admit(
