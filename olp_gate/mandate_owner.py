@@ -40,9 +40,11 @@ from .tool_adapter import (
 
 MANDATE_AUTHORIZATION_SCHEMA = "openline.mandate_owner_authorization.v1"
 POLICY_BUNDLE_SCHEMA = "openline.authorized_tool_policy.v1"
+TRUST_ROOT_SUCCESSION_SCHEMA = "openline.owner_trust_root_succession.v1"
 _ALLOWED_STATES = {"ACTIVE", "REVOKED"}
 _HEX = frozenset("0123456789abcdef")
 _MANDATE_OWNER_VIEW_IDENTITY = "mandate_owner/v1"
+_TRUST_ROOT_VIEW_IDENTITY = "owner_trust_root/v1"
 
 
 class MandateAuthorityError(ValueError):
@@ -271,6 +273,282 @@ def validate_mandate_authorization(
     return item
 
 
+def issue_owner_trust_root_succession(
+    *,
+    slot_id: str,
+    owner_id: str,
+    successor_owner_id: str,
+    successor_public_key: str,
+    succession_sequence: int,
+    predecessor_succession_hash: str | None,
+    issued_at: datetime,
+    expires_at: datetime,
+    key: Ed25519PrivateKey,
+    succession_id: str | None = None,
+) -> dict[str, Any]:
+    """Sign one owner-authorized trust-root transition.
+
+    Signing is only authorship. A receiver still has to admit this event
+    against its current pinned owner key before the successor key becomes
+    authoritative for anything. The event binds the successor key, a
+    monotonic succession sequence, and the hash of the previously admitted
+    succession event, so the transition is chained to the current authority
+    rather than floating on arrival order.
+    """
+    if not isinstance(slot_id, str) or not slot_id:
+        raise MandateAuthorityError("trust_root_succession_slot_id_invalid")
+    if not isinstance(owner_id, str) or not owner_id:
+        raise MandateAuthorityError("trust_root_succession_owner_id_invalid")
+    if not isinstance(successor_owner_id, str) or not successor_owner_id:
+        raise MandateAuthorityError("trust_root_succession_successor_owner_id_invalid")
+    successor_key = str(successor_public_key).lower()
+    if len(successor_key) != 64 or any(char not in _HEX for char in successor_key):
+        raise MandateAuthorityError("trust_root_succession_successor_key_invalid")
+    if (
+        not isinstance(succession_sequence, int)
+        or isinstance(succession_sequence, bool)
+        or succession_sequence <= 0
+    ):
+        raise MandateAuthorityError("trust_root_succession_sequence_invalid")
+    if predecessor_succession_hash is not None and not _is_hash(
+        predecessor_succession_hash
+    ):
+        raise MandateAuthorityError("trust_root_succession_predecessor_invalid")
+    issued = issued_at.astimezone(timezone.utc) if issued_at.tzinfo else None
+    expires = expires_at.astimezone(timezone.utc) if expires_at.tzinfo else None
+    if issued is None or expires is None:
+        raise MandateAuthorityError(
+            "trust_root_succession_timestamp_timezone_required"
+        )
+    if expires <= issued:
+        raise MandateAuthorityError("trust_root_succession_lifetime_invalid")
+    body = {
+        "schema": TRUST_ROOT_SUCCESSION_SCHEMA,
+        "succession_id": succession_id or f"{slot_id}:trust-root:{succession_sequence}",
+        "slot_id": slot_id,
+        "owner_id": owner_id,
+        "successor_owner_id": successor_owner_id,
+        "successor_public_key": successor_key,
+        "succession_sequence": succession_sequence,
+        "predecessor_succession_hash": predecessor_succession_hash,
+        "issued_at": _iso(issued),
+        "expires_at": _iso(expires),
+    }
+    return sign_olp_body(body, key)
+
+
+def validate_owner_trust_root_succession(
+    event: Mapping[str, Any],
+    *,
+    expected_slot_id: str,
+    expected_owner_id: str,
+    expected_public_key: str,
+    now: datetime | None = None,
+) -> dict[str, Any]:
+    """Verify one trust-root succession event against the current pinned root.
+
+    The event is only admissible if it is signed by the key that is currently
+    authoritative for the slot. A successor key can never install itself: its
+    own signature against its own key fails the signer check below.
+    """
+    if not isinstance(event, Mapping):
+        raise MandateAuthorityError("trust_root_succession_invalid")
+    item = _json_copy(dict(event))
+    required = {
+        "schema",
+        "succession_id",
+        "slot_id",
+        "owner_id",
+        "successor_owner_id",
+        "successor_public_key",
+        "succession_sequence",
+        "predecessor_succession_hash",
+        "issued_at",
+        "expires_at",
+        "payload_hash",
+        "signature",
+    }
+    if set(item) != required:
+        raise MandateAuthorityError("trust_root_succession_shape_invalid")
+    if item.get("schema") != TRUST_ROOT_SUCCESSION_SCHEMA:
+        raise MandateAuthorityError("trust_root_succession_schema_invalid")
+    for name in ("succession_id", "slot_id", "owner_id", "successor_owner_id"):
+        if not isinstance(item.get(name), str) or not item[name]:
+            raise MandateAuthorityError(f"trust_root_succession_{name}_invalid")
+    if item["slot_id"] != expected_slot_id:
+        raise MandateAuthorityError("trust_root_succession_slot_mismatch")
+    if item["owner_id"] != expected_owner_id:
+        raise MandateAuthorityError("trust_root_succession_owner_mismatch")
+    successor_key = str(item.get("successor_public_key", "")).lower()
+    if len(successor_key) != 64 or any(char not in _HEX for char in successor_key):
+        raise MandateAuthorityError("trust_root_succession_successor_key_invalid")
+    expected_key = str(expected_public_key).lower()
+    if len(expected_key) != 64 or any(char not in _HEX for char in expected_key):
+        raise MandateAuthorityError("mandate_owner_public_key_invalid")
+    if successor_key == expected_key:
+        raise MandateAuthorityError("trust_root_succession_key_unchanged")
+    sequence = item.get("succession_sequence")
+    if not isinstance(sequence, int) or isinstance(sequence, bool) or sequence <= 0:
+        raise MandateAuthorityError("trust_root_succession_sequence_invalid")
+    predecessor = item.get("predecessor_succession_hash")
+    if predecessor is not None and not _is_hash(predecessor):
+        raise MandateAuthorityError("trust_root_succession_predecessor_invalid")
+    if not _is_hash(item.get("payload_hash")):
+        raise MandateAuthorityError("trust_root_succession_payload_hash_invalid")
+
+    issued_at = _parse_time(item["issued_at"])
+    expires_at = _parse_time(item["expires_at"])
+    current = now or _utc_now()
+    if current.tzinfo is None:
+        raise MandateAuthorityError("trust_root_succession_now_timezone_required")
+    current = current.astimezone(timezone.utc)
+    if issued_at > current:
+        raise MandateAuthorityError("trust_root_succession_from_future")
+    if expires_at <= issued_at:
+        raise MandateAuthorityError("trust_root_succession_lifetime_invalid")
+    if expires_at <= current:
+        raise MandateAuthorityError("trust_root_succession_expired")
+
+    valid, reason = verify_olp_signature(item)
+    if valid is not True:
+        raise MandateAuthorityError(
+            f"trust_root_succession_signature_invalid:{reason or 'unknown'}"
+        )
+    signature = item.get("signature")
+    if not isinstance(signature, Mapping):
+        raise MandateAuthorityError("trust_root_succession_signature_shape_invalid")
+    observed_key = str(signature.get("public_key", "")).lower()
+    if observed_key != expected_key:
+        raise MandateAuthorityError("trust_root_succession_signer_not_current_owner")
+    return item
+
+
+def _initial_trust_root_entry(slot: Mapping[str, str]) -> dict[str, Any]:
+    return {
+        "sequence": 0,
+        "events": [],
+        "schedule": [
+            {
+                "owner_id": slot["owner_id"],
+                "public_key": slot["public_key"],
+                "succession_sequence": 0,
+            }
+        ],
+    }
+
+
+def _check_trust_root_entry(entry: Any) -> dict[str, Any]:
+    """Fail closed on malformed persisted succession state."""
+    if not isinstance(entry, dict):
+        raise MandateAuthorityError("trust_root_state_invalid")
+    sequence = entry.get("sequence")
+    events = entry.get("events")
+    schedule = entry.get("schedule")
+    if (
+        not isinstance(sequence, int)
+        or isinstance(sequence, bool)
+        or sequence < 0
+        or not isinstance(events, list)
+        or not isinstance(schedule, list)
+        or not schedule
+    ):
+        raise MandateAuthorityError("trust_root_state_invalid")
+    for digest in events:
+        if not _is_hash(digest):
+            raise MandateAuthorityError("trust_root_state_invalid")
+    for point in schedule:
+        if not isinstance(point, dict):
+            raise MandateAuthorityError("trust_root_state_invalid")
+        owner_id = point.get("owner_id")
+        key = str(point.get("public_key", "")).lower()
+        point_seq = point.get("succession_sequence")
+        if (
+            not isinstance(owner_id, str)
+            or not owner_id
+            or len(key) != 64
+            or any(char not in _HEX for char in key)
+            or not isinstance(point_seq, int)
+            or isinstance(point_seq, bool)
+            or point_seq < 0
+        ):
+            raise MandateAuthorityError("trust_root_state_invalid")
+    return {
+        "sequence": sequence,
+        "events": list(events),
+        "schedule": [
+            {
+                "owner_id": str(point["owner_id"]),
+                "public_key": str(point["public_key"]).lower(),
+                "succession_sequence": int(point["succession_sequence"]),
+            }
+            for point in schedule
+        ],
+    }
+
+
+def _apply_trust_root_successor(
+    entry: dict[str, Any], checked: dict[str, Any]
+) -> dict[str, Any]:
+    """Enforce the monotonic succession rule; return the advanced entry."""
+    current = entry["schedule"][-1]
+    if checked["succession_sequence"] != entry["sequence"] + 1:
+        raise MandateAuthorityError("trust_root_succession_sequence_invalid")
+    expected_predecessor = entry["events"][-1] if entry["events"] else None
+    if checked["predecessor_succession_hash"] != expected_predecessor:
+        raise MandateAuthorityError("trust_root_succession_predecessor_mismatch")
+    if checked["owner_id"] != current["owner_id"]:
+        raise MandateAuthorityError("trust_root_succession_owner_mismatch")
+    return {
+        "sequence": checked["succession_sequence"],
+        "events": [*entry["events"], checked["payload_hash"]],
+        "schedule": [
+            *entry["schedule"],
+            {
+                "owner_id": checked["successor_owner_id"],
+                "public_key": checked["successor_public_key"].lower(),
+                "succession_sequence": checked["succession_sequence"],
+            },
+        ],
+    }
+
+
+def _normalize_slot_config(
+    slots: Mapping[str, Mapping[str, str]],
+) -> dict[str, dict[str, str]]:
+    if not isinstance(slots, Mapping) or not slots:
+        raise MandateAuthorityError("mandate_owner_slots_required")
+    normalized: dict[str, dict[str, str]] = {}
+    for slot_id, raw in slots.items():
+        if not isinstance(slot_id, str) or not slot_id:
+            raise MandateAuthorityError("mandate_slot_id_invalid")
+        if not isinstance(raw, Mapping) or set(raw) != {"owner_id", "public_key"}:
+            raise MandateAuthorityError("mandate_owner_slot_config_invalid")
+        owner_id = raw.get("owner_id")
+        key = str(raw.get("public_key", "")).lower()
+        if not isinstance(owner_id, str) or not owner_id:
+            raise MandateAuthorityError("mandate_owner_id_invalid")
+        if len(key) != 64 or any(char not in _HEX for char in key):
+            raise MandateAuthorityError("mandate_owner_public_key_invalid")
+        normalized[slot_id] = {"owner_id": owner_id, "public_key": key}
+    return normalized
+
+
+def create_trust_root_store(
+    path: str, slots: Mapping[str, Mapping[str, str]]
+) -> DurableHeadStore:
+    """First boot: create the durable trust-root succession store.
+
+    The identity pins the initial slot configuration (the genesis trust
+    roots). Succession advances are domain state inside the store, so a
+    restarted receiver reconstructs the current root deterministically and
+    never confuses a replaced file for protocol succession.
+    """
+    normalized = _normalize_slot_config(slots)
+    return DurableHeadStore.create(
+        path, {"view": _TRUST_ROOT_VIEW_IDENTITY, "slots": normalized}
+    )
+
+
 class MandateOwnerView:
     """Receiver-owned current mandate heads keyed by out-of-band slots.
 
@@ -293,22 +571,9 @@ class MandateOwnerView:
         slots: Mapping[str, Mapping[str, str]],
         *,
         durable_path: str | None = None,
+        trust_root_path: str | None = None,
     ) -> None:
-        if not isinstance(slots, Mapping) or not slots:
-            raise MandateAuthorityError("mandate_owner_slots_required")
-        normalized: dict[str, dict[str, str]] = {}
-        for slot_id, raw in slots.items():
-            if not isinstance(slot_id, str) or not slot_id:
-                raise MandateAuthorityError("mandate_slot_id_invalid")
-            if not isinstance(raw, Mapping) or set(raw) != {"owner_id", "public_key"}:
-                raise MandateAuthorityError("mandate_owner_slot_config_invalid")
-            owner_id = raw.get("owner_id")
-            key = str(raw.get("public_key", "")).lower()
-            if not isinstance(owner_id, str) or not owner_id:
-                raise MandateAuthorityError("mandate_owner_id_invalid")
-            if len(key) != 64 or any(char not in _HEX for char in key):
-                raise MandateAuthorityError("mandate_owner_public_key_invalid")
-            normalized[slot_id] = {"owner_id": owner_id, "public_key": key}
+        normalized = _normalize_slot_config(slots)
         self._slots = normalized
         self._heads: dict[str, dict[str, Any]] = {}
         # Explicit opt-in durability. Without durable_path the view keeps the
@@ -322,6 +587,37 @@ class MandateOwnerView:
             self._heads = {
                 slot_id: head for slot_id, head in self._durable.load().items()
             }
+        # Trust-root succession state. The slot's pinned owner key starts at
+        # the configured genesis root and advances only through admitted
+        # in-band succession events. Without trust_root_path the succession
+        # frontier is in-memory and resets on process restart.
+        self._initial_slots = dict(normalized)
+        self._trust_root_state: dict[str, dict[str, Any]] = {
+            slot_id: _initial_trust_root_entry(slot)
+            for slot_id, slot in normalized.items()
+        }
+        self._trust_roots: DurableHeadStore | None = None
+        if trust_root_path is not None:
+            self._trust_roots = DurableHeadStore(
+                trust_root_path,
+                {"view": _TRUST_ROOT_VIEW_IDENTITY, "slots": normalized},
+            )
+            loaded = self._trust_roots.load()
+            rebuilt: dict[str, dict[str, Any]] = {}
+            for slot_id, slot in normalized.items():
+                raw = loaded.get(slot_id)
+                rebuilt[slot_id] = (
+                    _check_trust_root_entry(raw)
+                    if raw is not None
+                    else _initial_trust_root_entry(slot)
+                )
+            self._trust_root_state = rebuilt
+            for slot_id, entry in rebuilt.items():
+                current = entry["schedule"][-1]
+                self._slots[slot_id] = {
+                    "owner_id": current["owner_id"],
+                    "public_key": current["public_key"],
+                }
 
     def _slot(self, slot_id: str) -> dict[str, str]:
         slot = self._slots.get(slot_id)
@@ -471,6 +767,112 @@ class MandateOwnerView:
             "mandate_hash": checked["mandate_hash"],
         }
 
+    def admit_trust_root_succession(
+        self,
+        event: Mapping[str, Any],
+        *,
+        now: datetime | None = None,
+    ) -> dict[str, Any]:
+        """Admit one owner-signed trust-root transition for a slot.
+
+        The event must be signed by the key that is currently authoritative
+        for the slot. On admission the slot's pinned owner key advances to
+        the successor key atomically: there is exactly one current owner
+        root per slot at all times. Historical keys stay verifiable through
+        the schedule; they do not stay authoritative.
+        """
+        if not isinstance(event, Mapping):
+            raise MandateAuthorityError("trust_root_succession_invalid")
+        slot_id = str(event.get("slot_id", ""))
+        slot = self._slot(slot_id)
+        previous = {"owner_id": slot["owner_id"], "public_key": slot["public_key"]}
+
+        def _apply(entry: dict[str, Any]) -> dict[str, Any]:
+            current = entry["schedule"][-1]
+            checked = validate_owner_trust_root_succession(
+                event,
+                expected_slot_id=slot_id,
+                expected_owner_id=current["owner_id"],
+                expected_public_key=current["public_key"],
+                now=now,
+            )
+            return _apply_trust_root_successor(entry, checked)
+
+        if self._trust_roots is None:
+            entry = _check_trust_root_entry(self._trust_root_state[slot_id])
+            advanced = _apply(entry)
+            self._trust_root_state[slot_id] = advanced
+            current = advanced["schedule"][-1]
+            self._slots[slot_id] = {
+                "owner_id": current["owner_id"],
+                "public_key": current["public_key"],
+            }
+        else:
+            # Persistence-before-decision: the successor rule runs against
+            # the freshly-loaded durable succession state inside the store
+            # lock, the write is atomic, and only then does in-memory state
+            # move. The head store keeps its original identity: succession
+            # advances are domain state of the trust-root store, not edits
+            # to the genesis configuration.
+            initial = self._initial_slots[slot_id]
+
+            def _transition(heads: dict[str, Any]) -> dict[str, Any]:
+                raw = heads.get(slot_id)
+                fresh = (
+                    _check_trust_root_entry(raw)
+                    if raw is not None
+                    else _initial_trust_root_entry(initial)
+                )
+                transitioned = dict(heads)
+                transitioned[slot_id] = _apply(fresh)
+                return transitioned
+
+            try:
+                committed = self._trust_roots.read_modify_write(_transition)
+            except MandateAuthorityError:
+                self._trust_root_state = {
+                    sid: _check_trust_root_entry(entry)
+                    for sid, entry in self._trust_roots.load().items()
+                    if sid in self._initial_slots
+                }
+                raise
+            self._trust_root_state = {
+                sid: entry
+                for sid, entry in committed.items()
+                if sid in self._initial_slots
+            }
+            current = self._trust_root_state[slot_id]["schedule"][-1]
+            self._slots[slot_id] = {
+                "owner_id": current["owner_id"],
+                "public_key": current["public_key"],
+            }
+        return {
+            "admitted": True,
+            "slot_id": slot_id,
+            "previous_owner_id": previous["owner_id"],
+            "previous_public_key": previous["public_key"],
+            "owner_id": current["owner_id"],
+            "public_key": current["public_key"],
+            "succession_sequence": self._trust_root_state[slot_id]["sequence"],
+            "event_hash": self._trust_root_state[slot_id]["events"][-1],
+        }
+
+    def current_owner(self, slot_id: str) -> dict[str, str]:
+        """The currently authoritative owner root for a slot."""
+        slot = self._slot(slot_id)
+        return {"owner_id": slot["owner_id"], "public_key": slot["public_key"]}
+
+    def key_schedule(self, slot_id: str) -> list[dict[str, Any]]:
+        """Ordered root schedule: genesis first, current last. Read-only."""
+        self._slot(slot_id)
+        entry = _check_trust_root_entry(self._trust_root_state[slot_id])
+        return [dict(point) for point in entry["schedule"]]
+
+    def succession_sequence(self, slot_id: str) -> int:
+        self._slot(slot_id)
+        entry = _check_trust_root_entry(self._trust_root_state[slot_id])
+        return int(entry["sequence"])
+
     def assess(
         self,
         authorization: Mapping[str, Any],
@@ -478,22 +880,35 @@ class MandateOwnerView:
         *,
         now: datetime | None = None,
     ) -> dict[str, Any]:
-        """Assess historical authenticity separately from current authority."""
+        """Assess historical authenticity separately from current authority.
+
+        The record is first validated against the current pinned root. If
+        that fails, it is validated against each superseded root in the
+        slot's key schedule (newest first). A record that verifies under a
+        historical root reports ``verified=True, current=False`` with reason
+        ``trust_root_succession_historical_key``: signature validity is not
+        confused with current standing.
+        """
         slot_id = str(authorization.get("slot_id", "")) if isinstance(authorization, Mapping) else ""
-        try:
-            slot = self._slot(slot_id)
+
+        def _attempt(owner_id: str, public_key: str) -> dict[str, Any]:
+            self._slot(slot_id)
             checked = validate_mandate_authorization(
                 authorization,
                 expected_slot_id=slot_id,
-                expected_owner_id=slot["owner_id"],
-                expected_public_key=slot["public_key"],
+                expected_owner_id=owner_id,
+                expected_public_key=public_key,
                 now=now,
             )
             _mandate_dict, spec = _normalized_mandate(mandate)
             if spec.mandate_hash != checked["mandate_hash"]:
                 raise MandateAuthorityError("mandate_authorization_hash_mismatch")
-            if spec.principal_id != slot["owner_id"]:
+            if spec.principal_id != owner_id:
                 raise MandateAuthorityError("mandate_principal_owner_mismatch")
+            return checked
+
+        try:
+            current = self.current_owner(slot_id)
         except MandateAuthorityError as exc:
             return {
                 "verified": False,
@@ -505,8 +920,47 @@ class MandateOwnerView:
                     else None
                 ),
             }
+
+        failure: MandateAuthorityError | None = None
+        historical: dict[str, Any] | None = None
+        try:
+            checked = _attempt(current["owner_id"], current["public_key"])
+        except MandateAuthorityError as exc:
+            failure = exc
+            checked = None
+            for point in reversed(self.key_schedule(slot_id)[:-1]):
+                try:
+                    checked = _attempt(point["owner_id"], point["public_key"])
+                except MandateAuthorityError:
+                    continue
+                historical = point
+                break
+        if checked is None:
+            return {
+                "verified": False,
+                "current": False,
+                "reason_codes": [str(failure)] if failure else ["mandate_authorization_invalid"],
+                "authorization_hash": (
+                    str(authorization.get("payload_hash"))
+                    if isinstance(authorization, Mapping)
+                    else None
+                ),
+            }
         current_head = self.head_hash(slot_id)
         is_current = current_head == checked["payload_hash"]
+        if historical is not None:
+            return {
+                "verified": True,
+                "current": False,
+                "state": checked["state"],
+                "reason_codes": ["trust_root_succession_historical_key"],
+                "authorization_hash": checked["payload_hash"],
+                "current_head_hash": current_head,
+                "historical_owner_id": historical["owner_id"],
+                "historical_public_key": historical["public_key"],
+                "mandate_hash": checked["mandate_hash"],
+                "sequence": checked["sequence"],
+            }
         return {
             "verified": True,
             "current": is_current,

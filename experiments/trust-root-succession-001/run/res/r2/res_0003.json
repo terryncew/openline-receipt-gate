@@ -1,0 +1,1 @@
+{"ok": true, "outcomes": [{"admitted": true, "file": "a_active_seq1.json", "head_hash": "a9063a976db5bdca0293052bd027bd4027cc99cbb7a8f97dd4206e43be92dfab", "kind": "mandate_authorization", "sequence": 1, "state": "ACTIVE"}]}

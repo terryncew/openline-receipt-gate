@@ -1,0 +1,8 @@
+{"event": "worker_started", "init": true, "receiver": "r1", "t": "2026-09-20T03:28:41.419013Z"}
+{"event": "worker_started", "init": true, "receiver": "r2", "t": "2026-09-20T03:28:41.624762Z"}
+{"event": "owner_issued_auth", "name": "a_active_seq1", "payload_hash": "4ca909a4ef912a3c6b87cc35ae8b80e72bb7b8bc1f86e8f3c4a47df3bfa0e129", "sequence": 1, "signer": "A", "state": "ACTIVE", "t": "2026-09-20T03:28:41.625803Z"}
+{"event": "owner_delivered", "file": "a_active_seq1.json", "receiver": "r1", "t": "2026-09-20T03:28:41.626603Z"}
+{"event": "owner_delivered", "file": "a_active_seq1.json", "receiver": "r2", "t": "2026-09-20T03:28:41.626835Z"}
+{"error": "RuntimeError:worker r1 command {'cmd': 'poll'} timed out", "event": "driver_failed", "t": "2026-09-20T03:29:41.631369Z"}
+{"event": "worker_terminated", "receiver": "r1", "t": "2026-09-20T03:29:41.732389Z"}
+{"event": "worker_terminated", "receiver": "r2", "t": "2026-09-20T03:29:41.783241Z"}

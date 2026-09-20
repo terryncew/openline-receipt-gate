@@ -1,0 +1,2 @@
+{"admitted": true, "admitted_at": "2026-09-20T03:29:53.208301Z", "detail": {"head_hash": "a9063a976db5bdca0293052bd027bd4027cc99cbb7a8f97dd4206e43be92dfab", "sequence": 1, "state": "ACTIVE"}, "file": "a_active_seq1.json", "kind": "mandate_authorization"}
+{"admitted": true, "admitted_at": "2026-09-20T03:29:53.427559Z", "detail": {"event_hash": "dade0aa2f2923084970a3cab2a7e0fdab3ba21a3a7461be8f7b7c73a7abf344f", "owner_id": "owner", "succession_sequence": 1}, "file": "a_to_b_seq1.json", "kind": "trust_root_succession"}

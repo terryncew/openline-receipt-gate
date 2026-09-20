@@ -1,0 +1,1 @@
+{"ok": true, "outcomes": [{"admitted": false, "error": "MandateAuthorityError:trust_root_succession_sequence_invalid", "file": "b_dup_seq1.json"}]}

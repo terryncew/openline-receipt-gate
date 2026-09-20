@@ -1,0 +1,18 @@
+{
+  "authorization_id": "owner/default:3",
+  "expires_at": "2036-09-17T03:29:53.547433Z",
+  "issued_at": "2026-09-20T03:29:53.547433Z",
+  "mandate_hash": "8ca4cc5f92c21e12419cd7a7e9446f4b62cd4705dbc0ef47f2671adaa8d99a64",
+  "owner_id": "owner",
+  "payload_hash": "cafb9c448e3371ee7656e1b45741c260bbbec5cb3164628507454de69271754b",
+  "predecessor_hash": "e1b253747b60e5b2a1622c8e1970d3398500bd3ff25056873ea935d3cf8808f0",
+  "schema": "openline.mandate_owner_authorization.v1",
+  "sequence": 3,
+  "signature": {
+    "algorithm": "Ed25519",
+    "public_key": "0e2a91beb1c357151d109fa67c495c944be79bffe612d735dc70c0e36a266b22",
+    "value": "6e33563f12d463093471150feaa0f06ca68d0043a4dd6079246f52b06be17123c025da5b2ac3a69ce6de78bd7c1c9f243f595a1c8d03c7afc48c019cacfd5a06"
+  },
+  "slot_id": "owner/default",
+  "state": "REVOKED"
+}

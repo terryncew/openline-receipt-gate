@@ -1,0 +1,78 @@
+[
+  {
+    "case": "case_1a",
+    "expectation": "A-signed ACTIVE admitted pre-succession",
+    "receivers": [
+      "r1",
+      "r2"
+    ]
+  },
+  {
+    "case": "case_1b",
+    "event_hash": "dade0aa2f2923084970a3cab2a7e0fdab3ba21a3a7461be8f7b7c73a7abf344f",
+    "expectation": "A->B succession admitted; B current on both",
+    "receivers": [
+      "r1",
+      "r2"
+    ]
+  },
+  {
+    "case": "case_1c",
+    "expectation": "B exercises owner authority incl. STOP",
+    "receivers": [
+      "r1",
+      "r2"
+    ]
+  },
+  {
+    "case": "case_2a",
+    "expectation": "W-signed owner STOP refused",
+    "reason": "mandate_authorization_owner_key_mismatch"
+  },
+  {
+    "case": "case_2b",
+    "expectation": "A-signed fresh auth refused post-succession",
+    "reason": "mandate_authorization_owner_key_mismatch"
+  },
+  {
+    "case": "case_3",
+    "expectation": "C self-declaration refused",
+    "reason": "trust_root_succession_signer_not_current_owner"
+  },
+  {
+    "case": "case_4a",
+    "expectation": "replayed A->B event refused",
+    "receivers": [
+      "r1",
+      "r2"
+    ]
+  },
+  {
+    "case": "case_4b",
+    "expectation": "duplicate succession sequence refused",
+    "reason": "trust_root_succession_sequence_invalid"
+  },
+  {
+    "case": "case_4c",
+    "expectation": "wrong predecessor hash refused",
+    "reason": "trust_root_succession_predecessor_mismatch"
+  },
+  {
+    "case": "case_4d",
+    "expectation": "A-forged succession refused",
+    "reason": "trust_root_succession_signer_not_current_owner"
+  },
+  {
+    "case": "case_5",
+    "expectation": "restart preserves B; A stays refused",
+    "receiver": "r1"
+  },
+  {
+    "a_current": false,
+    "a_verified": true,
+    "b_current": true,
+    "b_verified": true,
+    "case": "case_6",
+    "expectation": "A-era receipt historically verifiable"
+  }
+]

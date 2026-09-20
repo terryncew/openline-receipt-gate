@@ -1,0 +1,1 @@
+{"error": "FileNotFoundError:[Errno 2] No such file or directory: '/home/hatch/workspace/openline-receipt-gate/experiments/trust-root-succession-001/run/logs/worker_r1.stderr.log'", "event": "driver_failed", "t": "2026-09-20T03:27:45.532895Z"}
