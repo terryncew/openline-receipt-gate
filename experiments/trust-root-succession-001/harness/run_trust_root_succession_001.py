@@ -13,7 +13,6 @@ import subprocess
 import sys
 import time
 from datetime import datetime, timedelta, timezone
-from os import environ as os_environ
 from pathlib import Path
 
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
@@ -199,7 +198,7 @@ class Driver:
         inbox_dir = self.run_dir / "inbox" / name
         cmd_dir = self.run_dir / "cmd" / name
         res_dir = self.run_dir / "res" / name
-        env = dict(os_environ())
+        env = dict(os.environ)
         env["PYTHONPATH"] = str(REPO)
         proc = subprocess.Popen(
             [
