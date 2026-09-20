@@ -59,6 +59,7 @@ class Driver:
             json.dumps(self.pubkeys, indent=2, sort_keys=True) + "\n",
             encoding="utf-8",
         )
+        self._own_pids: set[int] = set()
         # The mandate is pinned out-of-band before the experiment; owner and
         # receivers use the byte-identical mandate (mandate_hash is signed
         # into every authorization). Fixed far-future expiry so the mandate
@@ -200,6 +201,8 @@ class Driver:
         res_dir = self.run_dir / "res" / name
         env = dict(os.environ)
         env["PYTHONPATH"] = str(REPO)
+        stderr_path = self.run_dir / "logs" / f"worker_{name}.stderr.log"
+        stderr_fh = open(stderr_path, "ab")
         proc = subprocess.Popen(
             [
                 sys.executable,
@@ -216,14 +219,17 @@ class Driver:
             + (["--init"] if init else []),
             env=env,
             stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
+            stderr=stderr_fh,
         )
         self.workers[name] = {
             "proc": proc,
             "cmd_dir": cmd_dir,
             "res_dir": res_dir,
             "state_dir": state_dir,
+            "stderr_fh": stderr_fh,
+            "pid": proc.pid,
         }
+        self._own_pids.add(proc.pid)
         ready = res_dir / "ready"
         deadline = time.time() + 30
         while not ready.exists():
@@ -252,20 +258,33 @@ class Driver:
         return result
 
     def terminate(self, name: str) -> None:
-        w = self.workers.pop(name)
+        w = self.workers.get(name)
+        if w is None:
+            return
         try:
             self.command(name, {"cmd": "shutdown"}, timeout=10.0)
         except Exception:
             pass
+        self.workers.pop(name, None)
         w["proc"].terminate()
         try:
             w["proc"].wait(timeout=10)
         except Exception:
             w["proc"].kill()
+        self._own_pids.discard(w["pid"])
+        try:
+            w["stderr_fh"].close()
+        except Exception:
+            pass
         self.log("worker_terminated", receiver=name)
 
     def sweep_stale_workers(self) -> None:
-        anchor = str(self.run_dir.resolve())
+        """Kill succession_worker processes that are not ours.
+
+        Only ever called between spawns; any live worker not in _own_pids
+        is a stale orphan from an earlier crashed run.
+        """
+        me = os.getpid()
         try:
             out = subprocess.run(
                 ["pgrep", "-f", "succession_worker[.]py"],
@@ -277,18 +296,14 @@ class Driver:
             pid = line.strip()
             if not pid.isdigit():
                 continue
-            try:
-                cmdline = Path(f"/proc/{pid}/cmdline").read_bytes().replace(
-                    b"\0", b" "
-                ).decode("utf-8", "replace")
-            except Exception:
+            pid_i = int(pid)
+            if pid_i == me or pid_i in self._own_pids:
                 continue
-            if anchor in cmdline:
-                try:
-                    import signal
-                    os.kill(int(pid), signal.SIGKILL)
-                except Exception:
-                    pass
+            try:
+                import signal
+                os.kill(pid_i, signal.SIGKILL)
+            except Exception:
+                pass
 
     # -- case helpers ---------------------------------------------------
 
@@ -540,15 +555,20 @@ class Driver:
             self.terminate(r)
 
 
+def _unique_failed_dir(base: str) -> Path:
+    target = EXP / base
+    i = 2
+    while target.exists():
+        target = EXP / f"{base}_{i}"
+        i += 1
+    return target
+
+
 def main() -> int:
     run_dir = EXP / "run"
     # Pre-contact apparatus preservation: never overwrite a previous run.
-    attempt = 0
     if run_dir.exists():
-        while (EXP / f"run_attempt{attempt + 1}_failed").exists():
-            attempt += 1
-        attempt += 1
-        run_dir.rename(EXP / f"run_attempt{attempt}_failed_unfinished")
+        run_dir.rename(_unique_failed_dir("run_attempt_unfinished"))
     run_dir.mkdir(parents=True)
     driver = Driver(run_dir)
     try:
@@ -560,7 +580,9 @@ def main() -> int:
                 driver.terminate(r)
             except Exception:
                 pass
-        run_dir.rename(EXP / f"run_attempt{attempt + 1}_failed_{type(exc).__name__}")
+        run_dir.rename(
+            _unique_failed_dir(f"run_attempt_failed_{type(exc).__name__}")
+        )
         raise
     driver.log("driver_complete", cases=len(driver.case_results))
     print(f"TRUST-ROOT-SUCCESSION-001 driver complete: "
