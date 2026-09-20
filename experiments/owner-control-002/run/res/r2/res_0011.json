@@ -1,0 +1,1 @@
+{"ok": true, "outcomes": [{"admitted": false, "error": "MandateAuthorityError:mandate_authorization_owner_key_mismatch", "file": "w_stop_seq3.json"}]}

@@ -1,0 +1,4 @@
+{"admitted": true, "admitted_at": "2026-09-20T03:37:00.161642Z", "detail": {"head_hash": "146cd07622c3c01e80506b8d0a25cc18892c44b0499c892e43beb5d622f7371b", "sequence": 1, "state": "ACTIVE"}, "file": "a_active_seq1.json", "kind": "mandate_authorization"}
+{"admitted": true, "admitted_at": "2026-09-20T03:37:00.432919Z", "detail": {"head_hash": "894872a0bfe140c09de83b4e8499162767ff5493a9e1140a3d39702297b8dabc", "sequence": 2, "state": "REVOKED"}, "file": "a_stop_seq2.json", "kind": "mandate_authorization"}
+{"admitted": false, "admitted_at": "2026-09-20T03:37:00.654438Z", "error": "MandateAuthorityError:mandate_authorization_owner_key_mismatch", "file": "w_stop_seq3.json"}
+{"admitted": true, "admitted_at": "2026-09-20T03:37:00.909283Z", "detail": {"event_hash": "d57aee4754de401af6bf21de665ba8e02af19c9a739c5173daccc0d1b4b57453", "owner_id": "owner", "succession_sequence": 1}, "file": "a_to_b_seq1.json", "kind": "trust_root_succession"}
