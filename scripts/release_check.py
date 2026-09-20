@@ -654,6 +654,11 @@ def main() -> int:
     except (OSError, json.JSONDecodeError, KeyError, TypeError):
         x402_upstream_report = {}
 
+    # Root repository discovery MUST use "-t ." so the tests/__init__.py
+    # load_tests hook excludes byte-frozen historical modules (their
+    # "current HEAD must equal historical source" assertions are obsolete
+    # once production evolves; their historical verification runs through
+    # scripts/freeze_governance.py against reconstructed snapshot roots).
     unit_command = [
         sys.executable,
         "-m",
@@ -661,6 +666,8 @@ def main() -> int:
         "discover",
         "-s",
         "tests",
+        "-t",
+        ".",
         "-v",
     ]
     unit_record, unit_okay = execute("unittest", unit_command)
