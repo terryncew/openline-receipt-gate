@@ -128,6 +128,29 @@ def execute(
     return record, bool(record["passed"])
 
 
+def shallow_checkout_skips() -> int:
+    """Gate-expected skips caused by a shallow checkout.
+
+    tests/test_freeze_governance.py::test_recorded_freeze_commit_matches_history_search
+    skips when the checkout is shallow (CI checks out with fetch-depth 1)
+    because the diagnostic history search cannot run without full history.
+    The gate's "did the right tests run" accounting must expect that skip,
+    or the gate fails its own self-check in exactly the environment that
+    enforces it.
+    """
+    try:
+        completed = subprocess.run(
+            ["git", "rev-parse", "--is-shallow-repository"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+    except OSError:
+        return 0
+    return 1 if completed.stdout.strip() == "true" else 0
+
+
 def pipelock_runtime() -> dict[str, Any]:
     try:
         module = importlib.import_module("pipelock_verify")
@@ -672,6 +695,9 @@ def main() -> int:
     ]
     unit_record, unit_okay = execute("unittest", unit_command)
     unit_counts = unittest_counts(unit_record)
+    # The freeze-governance parity test skips in shallow checkouts (CI);
+    # expect it alongside the optional-integration skips.
+    expected_shallow_skips = shallow_checkout_skips()
     expected_main_skips = (
         (0 if pipelock_info["supported"] else PIPELOCK_INTEGRATION_TESTS)
         + (0 if assay_info["supported"] else ASSAY_INTEGRATION_TESTS)
@@ -681,6 +707,7 @@ def main() -> int:
             if model_swap_info["supported"]
             else VERIFIED_CONTINUATION_INTEGRATION_TESTS
         )
+        + expected_shallow_skips
     )
     unit_record["counts"] = unit_counts
     unit_record["optional_pipelock"] = pipelock_info
@@ -721,6 +748,7 @@ def main() -> int:
         + ASSAY_INTEGRATION_TESTS
         + MODEL_SWAP_INTEGRATION_TESTS
         + VERIFIED_CONTINUATION_INTEGRATION_TESTS
+        + expected_shallow_skips
     )
     absent_record["passed"] = absent_okay
     steps.append(absent_record)
