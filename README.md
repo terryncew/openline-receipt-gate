@@ -289,7 +289,10 @@ AI_GATEWAY_API_KEY=... python3 examples/jev_vercel_witness/demo.py
 
 The study lives on the `study/jev-witness-vercel-001` branch under
 `experiments/jev-witness-vercel-001/` with a hashed preregistration and
-frozen acceptance cases V1–V5.
+frozen acceptance cases V1–V5. The 2026-09-20 run froze as
+INCONCLUSIVE_PROVIDER_RUNTIME: the live call was refused (HTTP 403) because
+the Vercel account needs a credit card on file before the gateway serves
+model traffic — no Jev judgment was returned, so no claim is earned.
 
 What is not claimed: Jev correctness; improved Jev calibration; any official
 integration with TypeSafe AI or Vercel; universal Jev safety; market demand;
