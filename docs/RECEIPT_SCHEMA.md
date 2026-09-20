@@ -120,6 +120,38 @@ NO_BADGE
 ROLLBACK_REQUEST
 ```
 
+## Terminal-revocation pairing (pinned)
+
+A receipt records terminal revocation when its meaning is: the named action's
+current authority is terminated. Mechanically, a terminal-revocation receipt is
+identified by ALL of:
+
+- `decision` is `DENY`
+- `verdict` is `REJECTED`
+- `commit_authorization` is null
+
+The valid terminal-revocation pairing is exactly `(verdict=REJECTED,
+decision=DENY)`. A receiver MUST treat a well-formed signed receipt with this
+pairing as the terminal standing for the receipt's `action` (identified by
+`action.type` and `action.id`): the action has no current executable authority
+after this receipt is admitted.
+
+The following contradictory pairings MUST NOT be treated as terminal
+revocation:
+
+- `(verdict=VERIFIED, decision=DENY)`: a DENY carried under a VERIFIED verdict
+  does not terminate current authority.
+- `(verdict=REJECTED, decision=COMMIT)`: a REJECTED verdict never authorizes an
+  effect; a COMMIT under a REJECTED verdict is contradictory and MUST be
+  refused.
+- `(verdict=UNDECIDABLE, decision=DENY)`: an UNDECIDABLE verdict carries no
+  determination; it does not terminate current authority.
+
+No other verdict/decision meaning changes. `(verdict=VERIFIED,
+decision=COMMIT)` remains the grant pairing. `QUARANTINE`, `NO_BADGE`, and
+`ROLLBACK_REQUEST` keep whatever meanings the issuing policy assigns; this
+pinning does not define pairings for them.
+
 ## Legacy schema
 
 The Python and Node verifiers continue to accept signed v0.2 and v0.3 decision
