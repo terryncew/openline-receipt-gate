@@ -1,7 +1,7 @@
 # DEMAND-CONTACT-001 — Preregistration (AMENDED, pre-contact)
 
-This is the authoritative protocol as amended by AMENDMENT-001. No external
-contact has occurred under this label.
+This is the authoritative protocol as amended by AMENDMENT-001 and
+AMENDMENT-002. No external contact has occurred under this label.
 
 - **Label:** DEMAND-CONTACT-001
 - **Baseline main SHA:** `325a662a9d4135dba80c560c5660502da461da4c`
@@ -9,6 +9,9 @@ contact has occurred under this label.
 - **Amendment:** AMENDMENT-001 invalidates the original OpenCodex selection
   (duplicate contact on the same problem — see AMENDMENT-001.md). Candidate
   selection reran under the permanent contact-hygiene gate below.
+- **Amendment:** AMENDMENT-002 replaces the frozen probe with a version that
+  discriminates authority-continuity demand rather than credential freshness
+  (see AMENDMENT-002.md).
 
 ## Purpose
 
@@ -167,23 +170,21 @@ architectural interest as demand.
   not architectural evidence. Silence must not hold the roadmap hostage. A
   later contact with another party requires a fresh label.
 
-## Step 4 — exact frozen probe
+## Step 4 — exact frozen probe (AMENDMENT-002)
 
 The probe below is frozen. Do not change the message and try again under this
 label.
 
-> Operational question on this issue's premise. Pinning each conversation's
-> resolved credentials at creation means one credential rotation silently
-> kills every pre-rotation conversation — your #16356 shows ~13 conversations
-> dying from a single rotation on a shared box. Is that pinning intentional
-> isolation — i.e., a rotated credential should never automatically flow into
-> an existing conversation — or is the desired behavior that a conversation
-> tracks the account's current authority, so when the owner rotates the
-> backing credential, existing conversations continue under the new one?
+> Operational question on the structural fix here. If a conversation
+> re-resolves to a new credential/profile after rotation, what should happen
+> to any execution permissions or approvals already associated with that
+> conversation—carry forward with the conversation, be rechecked under the
+> replacement credential, or reset?
 >
-> Concretely: have operators asked for conversations to survive credential
-> rotation, or is "recreate the conversation under the new key" the accepted
-> operating model?
+> I'm trying to understand whether operators need the conversation's
+> authority state to survive credential/provider changes independently of
+> whichever credential is currently backing the LLM, or whether
+> re-creating/re-approving the conversation is the expected model.
 
 In their vocabulary (conversations, profiles, credentials, resume,
 agent-server). No OpenLine terminology. No selling. No adoption ask. No
