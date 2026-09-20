@@ -236,6 +236,7 @@ def main() -> None:
     parser.add_argument("--owner-id", required=True)
     parser.add_argument("--owner-pubkey", required=True)
     parser.add_argument("--mandate-file", required=True)
+    parser.add_argument("--receiver-id", default="")
     parser.add_argument("--init", action="store_true")
     args = parser.parse_args()
     Worker(args).run()
