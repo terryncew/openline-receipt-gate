@@ -1,0 +1,21 @@
+{"baseline": "95c1ecf", "event": "driver_init", "run_now": "2026-09-20T03:48:52.215569Z", "t": "2026-09-20T03:48:52.246854Z"}
+{"event": "owner_admitted", "head_hash": "a783dc239c155cd91f4716eed4b07283d354421e5fdef056be732874b319b4c3", "mandate_hash": "e2df4bd16984929290ee460b41335a8ad463c6de0c89b606a2e8b969f3a9bcd4", "name": "a_active_seq1", "payload_hash": "a783dc239c155cd91f4716eed4b07283d354421e5fdef056be732874b319b4c3", "sequence": 1, "signer": "bcb7432d0c97d6fc3e1acec1f2da5647d40bde86c5653084f26310767003a431", "slot": "agent-a/platform-exit-job", "state": "ACTIVE", "t": "2026-09-20T03:48:52.265529Z"}
+{"agent": "a", "event": "worker_completed", "outcomes": 2, "plan": "case1", "t": "2026-09-20T03:48:52.799873Z"}
+{"event": "snapshot", "name": "case1", "t": "2026-09-20T03:48:52.817873Z"}
+{"attempts": ["c1-a1", "c1-a2"], "case": "case_1_a_operates", "commit_seqs": [1, 2], "event": "case_result", "expectation": "A performs consequential work under owner authority; receipts accepted and attributed to A", "slot_a_status": "ACTIVE", "t": "2026-09-20T03:48:52.818202Z"}
+{"event": "owner_admitted", "head_hash": "ab4807d5c07fb4118ddc43b621933337ffdad21c0a2a78ea75b9a03bf802f5eb", "mandate_hash": "e2df4bd16984929290ee460b41335a8ad463c6de0c89b606a2e8b969f3a9bcd4", "name": "a_revoked_seq2", "payload_hash": "ab4807d5c07fb4118ddc43b621933337ffdad21c0a2a78ea75b9a03bf802f5eb", "sequence": 2, "signer": "bcb7432d0c97d6fc3e1acec1f2da5647d40bde86c5653084f26310767003a431", "slot": "agent-a/platform-exit-job", "state": "REVOKED", "t": "2026-09-20T03:48:52.831690Z"}
+{"event": "snapshot", "name": "case2", "t": "2026-09-20T03:48:52.847949Z"}
+{"case": "case_2_owner_stops_a", "event": "case_result", "expectation": "owner STOP revokes A's consequential authority; standing ACTIVE -> REVOKED", "standing_after": "REVOKED", "standing_before": "ACTIVE", "stop_effective_seq": 2, "stop_payload_hash": "ab4807d5c07fb4118ddc43b621933337ffdad21c0a2a78ea75b9a03bf802f5eb", "stop_signer_is_owner": true, "t": "2026-09-20T03:48:52.848045Z"}
+{"agent": "a", "event": "worker_completed", "outcomes": 2, "plan": "case3", "t": "2026-09-20T03:48:53.268989Z"}
+{"agent": "a", "event": "worker_completed", "outcomes": 1, "plan": "case3_restart", "t": "2026-09-20T03:48:53.585672Z"}
+{"event": "snapshot", "name": "case3", "t": "2026-09-20T03:48:53.603784Z"}
+{"attempts": ["c3-a1", "c3-a2", "c3-a3"], "case": "case_3_a_cannot_continue", "event": "case_result", "expectation": "A refused on authority standing (not format); zero effects; restart does not restore", "refusal_reason": "owner_standing_revoked", "slot_a_head_seq": 2, "t": "2026-09-20T03:48:53.604176Z"}
+{"event": "owner_admitted", "head_hash": "d1fe761daf62450dbcead8d740d5ff601368bb970c4bde6a129265b64c81ce21", "mandate_hash": "a1a58cef986233a8cc610cbdc528b78c0301f377a59c3d15770a4e883bb8e9b6", "name": "b_active_seq1", "payload_hash": "d1fe761daf62450dbcead8d740d5ff601368bb970c4bde6a129265b64c81ce21", "sequence": 1, "signer": "bcb7432d0c97d6fc3e1acec1f2da5647d40bde86c5653084f26310767003a431", "slot": "agent-b/platform-exit-job", "state": "ACTIVE", "t": "2026-09-20T03:48:53.616348Z"}
+{"agent": "b", "event": "worker_completed", "outcomes": 2, "plan": "case4", "t": "2026-09-20T03:48:54.134504Z"}
+{"event": "snapshot", "name": "case4", "t": "2026-09-20T03:48:54.154182Z"}
+{"attempts": ["c4-b1", "c4-b2"], "case": "case_4_b_continues_under_same_regime", "commit_seqs": [6, 7], "event": "case_result", "expectation": "B continues from the accepted checkpoint under the same owner-controlled regime; no new trust root", "slot_a_still_revoked": true, "slot_b_owner_is_O": true, "t": "2026-09-20T03:48:54.154293Z"}
+{"agent": "a", "event": "worker_completed", "outcomes": 2, "plan": "case5", "t": "2026-09-20T03:48:54.625523Z"}
+{"event": "snapshot", "name": "case5", "t": "2026-09-20T03:48:54.651206Z"}
+{"attempts": ["c5-a1", "c5-a2"], "case": "case_5_a_stays_stopped", "event": "case_result", "expectation": "A cannot resume by fresh attempt, replay of pre-STOP evidence, or restart; B unaffected", "refusal_reason": "owner_standing_revoked", "t": "2026-09-20T03:48:54.652535Z"}
+{"event": "snapshot", "name": "final", "t": "2026-09-20T03:48:54.673202Z"}
+{"event": "driver_finalize", "failure": false, "t": "2026-09-20T03:48:54.675533Z"}

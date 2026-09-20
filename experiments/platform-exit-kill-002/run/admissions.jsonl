@@ -1,0 +1,31 @@
+{
+  "admissions": [
+    {
+      "head_hash": "a783dc239c155cd91f4716eed4b07283d354421e5fdef056be732874b319b4c3",
+      "mandate_hash": "e2df4bd16984929290ee460b41335a8ad463c6de0c89b606a2e8b969f3a9bcd4",
+      "payload_hash": "a783dc239c155cd91f4716eed4b07283d354421e5fdef056be732874b319b4c3",
+      "sequence": 1,
+      "signer": "bcb7432d0c97d6fc3e1acec1f2da5647d40bde86c5653084f26310767003a431",
+      "slot": "agent-a/platform-exit-job",
+      "state": "ACTIVE"
+    },
+    {
+      "head_hash": "ab4807d5c07fb4118ddc43b621933337ffdad21c0a2a78ea75b9a03bf802f5eb",
+      "mandate_hash": "e2df4bd16984929290ee460b41335a8ad463c6de0c89b606a2e8b969f3a9bcd4",
+      "payload_hash": "ab4807d5c07fb4118ddc43b621933337ffdad21c0a2a78ea75b9a03bf802f5eb",
+      "sequence": 2,
+      "signer": "bcb7432d0c97d6fc3e1acec1f2da5647d40bde86c5653084f26310767003a431",
+      "slot": "agent-a/platform-exit-job",
+      "state": "REVOKED"
+    },
+    {
+      "head_hash": "d1fe761daf62450dbcead8d740d5ff601368bb970c4bde6a129265b64c81ce21",
+      "mandate_hash": "a1a58cef986233a8cc610cbdc528b78c0301f377a59c3d15770a4e883bb8e9b6",
+      "payload_hash": "d1fe761daf62450dbcead8d740d5ff601368bb970c4bde6a129265b64c81ce21",
+      "sequence": 1,
+      "signer": "bcb7432d0c97d6fc3e1acec1f2da5647d40bde86c5653084f26310767003a431",
+      "slot": "agent-b/platform-exit-job",
+      "state": "ACTIVE"
+    }
+  ]
+}

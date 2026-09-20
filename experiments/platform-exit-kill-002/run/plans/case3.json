@@ -1,0 +1,14 @@
+{
+  "plan": [
+    {
+      "attempt_id": "c3-a1",
+      "case": "case_3",
+      "effect_id": "job-effect-3"
+    },
+    {
+      "attempt_id": "c3-a2",
+      "case": "case_3",
+      "effect_id": "job-effect-4"
+    }
+  ]
+}
