@@ -1,0 +1,20 @@
+test_algorithm_and_type_confusion_rejected (test_protocol.ProtocolSecurity.test_algorithm_and_type_confusion_rejected) ... ok
+test_amount_cap_enforced (test_protocol.ProtocolSecurity.test_amount_cap_enforced) ... ok
+test_exact_expiry_with_zero_leeway (test_protocol.ProtocolSecurity.test_exact_expiry_with_zero_leeway) ... ok
+test_exchange_rejects_scope_target_revoked_grant_and_wrong_client (test_protocol.ProtocolSecurity.test_exchange_rejects_scope_target_revoked_grant_and_wrong_client) ... ok
+test_exchange_valid_response_and_assertion_replay (test_protocol.ProtocolSecurity.test_exchange_valid_response_and_assertion_replay) ... ok
+test_holder_binding_is_not_bearer_succession (test_protocol.ProtocolSecurity.test_holder_binding_is_not_bearer_succession) ... ok
+test_missing_required_claim_rejected (test_protocol.ProtocolSecurity.test_missing_required_claim_rejected) ... ok
+test_mutated_job_and_escalated_scope_rejected (test_protocol.ProtocolSecurity.test_mutated_job_and_escalated_scope_rejected) ... ok
+test_receiver_rejects_list_rollback (test_protocol.ProtocolSecurity.test_receiver_rejects_list_rollback) ... ok
+test_revocation_and_stale_list_fail_closed (test_protocol.ProtocolSecurity.test_revocation_and_stale_list_fail_closed) ... ok
+test_signature_tamper_rejected (test_protocol.ProtocolSecurity.test_signature_tamper_rejected) ... ok
+test_signed_introspection_binds_exact_token_and_revocation (test_protocol.ProtocolSecurity.test_signed_introspection_binds_exact_token_and_revocation) ... ok
+test_untrusted_signer_rejected (test_protocol.ProtocolSecurity.test_untrusted_signer_rejected) ... ok
+test_wrong_issuer_and_audience_rejected (test_protocol.ProtocolSecurity.test_wrong_issuer_and_audience_rejected) ... ok
+test_wrong_owner_cannot_revoke (test_protocol.ProtocolSecurity.test_wrong_owner_cannot_revoke) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.016s
+
+OK

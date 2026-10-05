@@ -1,0 +1,15 @@
+{
+  "at": {
+    "monotonic_ns": "911297457712",
+    "utc_ns": "1791243013753317323"
+  },
+  "pid": 2310,
+  "reaped": true,
+  "remaining_departed_authority_services": [],
+  "removed_roles": [
+    "Worker A",
+    "Provider A"
+  ],
+  "returncode": -15,
+  "unique_directory_removed": true
+}

@@ -1,0 +1,25 @@
+{
+  "arms": [
+    "OL_JOB",
+    "JWT_OFFLINE",
+    "OAUTH_EXCHANGE",
+    "OWNER_LIST",
+    "OL_BOUND",
+    "JWT_BOUND"
+  ],
+  "began": {
+    "monotonic_ns": "898942132756",
+    "utc_ns": "1791243001397992277"
+  },
+  "command": "experiments/baseline-exit-001/run.py --out experiments/baseline-exit-001/run_001",
+  "dependencies": {
+    "PyJWT": "2.15.1",
+    "cryptography": "50.0.2",
+    "openline-receipt-gate": "0.6.0rc6",
+    "setuptools": "82.0.1",
+    "wheel": "0.47.0"
+  },
+  "implementation_commit": "74f23d5650ce119e066df07ec3c1b01d8c49c70c",
+  "preregistration_commit": "e259c854458fcbf741b4610e85626edf3c29eebb",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+}

@@ -1,0 +1,106 @@
+[
+  {
+    "cwd": "/workspace/openline-receipt-gate",
+    "argv": [
+      ".venv/bin/python",
+      "-m",
+      "pip",
+      "install",
+      "--no-cache-dir",
+      "PyJWT==2.15.1"
+    ]
+  },
+  {
+    "cwd": "/workspace/openline-receipt-gate/experiments/baseline-exit-001",
+    "argv": [
+      "../../.venv/bin/python",
+      "-m",
+      "unittest",
+      "test_protocol",
+      "-v"
+    ],
+    "output": "validation/protocol-tests.log",
+    "exit": 0
+  },
+  {
+    "cwd": "/workspace/openline-receipt-gate",
+    "argv": [
+      ".venv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-t",
+      ".",
+      "-v"
+    ],
+    "output": "validation/repository-tests.log",
+    "exit": 0
+  },
+  {
+    "cwd": "/workspace/openline-receipt-gate",
+    "argv": [
+      ".venv/bin/python",
+      "experiments/baseline-exit-001/run.py",
+      "--out",
+      "experiments/baseline-exit-001/run_001"
+    ],
+    "output": "validation/run.log",
+    "exit": 0
+  },
+  {
+    "cwd": "/workspace/openline-receipt-gate",
+    "argv": [
+      ".venv/bin/python",
+      "experiments/baseline-exit-001/verify.py",
+      "experiments/baseline-exit-001/run_001",
+      "--out",
+      "experiments/baseline-exit-001/verification_001.json"
+    ],
+    "output": "verification_001.json",
+    "exit": 0
+  },
+  {
+    "cwd": "/workspace/openline-receipt-gate",
+    "argv": [
+      ".venv/bin/python",
+      "experiments/baseline-exit-001/audit_evidence.py",
+      "controls",
+      "--run",
+      "experiments/baseline-exit-001/run_001",
+      "--out",
+      "experiments/baseline-exit-001/evidence-integrity.json"
+    ],
+    "output": "evidence-integrity.json",
+    "exit": 0
+  },
+  {
+    "cwd": "/workspace/openline-receipt-gate",
+    "argv": [
+      ".venv/bin/python",
+      "experiments/baseline-exit-001/verify.py",
+      "experiments/baseline-exit-001/run_001",
+      "--out",
+      "/tmp/baseline-exit-independent-recheck.json"
+    ],
+    "output": "validation/verify.log",
+    "exit": 0
+  },
+  {
+    "cwd": "/workspace/openline-receipt-gate",
+    "argv": [
+      ".venv/bin/python",
+      "experiments/baseline-exit-001/audit_evidence.py",
+      "seal"
+    ]
+  },
+  {
+    "cwd": "/workspace/openline-receipt-gate",
+    "argv": [
+      ".venv/bin/python",
+      "experiments/baseline-exit-001/audit_evidence.py",
+      "check"
+    ]
+  }
+]

@@ -1,0 +1,24 @@
+{
+  "B_directory_distinct": true,
+  "B_pid": 2041,
+  "expiry_numeric_date": 1791243070,
+  "finished": {
+    "monotonic_ns": "909177231300",
+    "utc_ns": "1791243011633090531"
+  },
+  "issuance": {
+    "monotonic_ns": "907758593210",
+    "utc_ns": "1791243010214453612"
+  },
+  "owner_revocation": {
+    "monotonic_ns": "908958687925",
+    "utc_ns": "1791243011414545664"
+  },
+  "removal": {
+    "monotonic_ns": "908435967179",
+    "utc_ns": "1791243010891826820"
+  },
+  "revoke_due_monotonic_ns": "908958592428",
+  "sampling_interval_seconds": 0.1,
+  "shared_clock": "all processes use the same host monotonic/UTC clocks"
+}

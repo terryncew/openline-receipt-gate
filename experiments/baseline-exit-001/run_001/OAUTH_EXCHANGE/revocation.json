@@ -1,0 +1,15 @@
+{
+  "owner_at": {
+    "monotonic_ns": "908958687925",
+    "utc_ns": "1791243011414545664"
+  },
+  "owner_request": "eyJhbGciOiJFZERTQSIsInR5cCI6Im93bmVyLXJldm9jYXRpb24rand0In0.eyJpc3MiOiJ1cm46YmFzZWxpbmUtZXhpdDpvd25lcjpPIiwic3ViIjoidXJuOmJhc2VsaW5lLWV4aXQ6b3duZXI6TyIsImF1ZCI6InVybjpiYXNlbGluZS1leGl0OnJlY2VpdmVyOlIiLCJpYXQiOjE3OTEyNDMwMTEsIm5iZiI6MTc5MTI0MzAxMSwiZXhwIjoxNzkxMjQzMDcxLCJqdGkiOiIzZTA0NzJhNjVkMTc0NWQ4OWZmMzQwYmU1ZmU4ZWQyMiIsImpvYl9pZCI6IkoiLCJncmFudF9oYXNoIjoiODQwMjc0NTE3ZWJmOGIwOTlhNmVmMDcwZTIyMTVlZmUyNWY4NDI5ZmVkMjEwYmE4ZDExYzFkNWQ2NzhkNjUxYSIsIm93bmVyX3Jldm9rZWRfYXRfbnMiOiIxNzkxMjQzMDExNDE0NTQ1NjY0In0.OG91G0O7B7O4zq9nkTqkw8yie4dNEpeEkY2f8CB2EJwq1IDEMAR5lHfCnpE24dkNOvbb0WtSD8EGF__bb1BDDQ",
+  "service_response": {
+    "at": {
+      "monotonic_ns": "908959702623",
+      "utc_ns": "1791243011415563145"
+    },
+    "recorded": true,
+    "sequence": 2
+  }
+}

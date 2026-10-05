@@ -1,0 +1,6 @@
+OL_JOB: {"P1": "PASS", "P2": "PASS", "P3": "PASS", "P4": "PASS", "P5": "PASS", "P6": "PASS"}
+JWT_OFFLINE: {"P1": "PASS", "P2": "PASS", "P3": "PASS", "P4": "PARTIAL", "P5": "PASS", "P6": "PASS"}
+OAUTH_EXCHANGE: {"P1": "PASS", "P2": "PASS", "P3": "PASS", "P4": "PASS", "P5": "PASS", "P6": "PASS"}
+OWNER_LIST: {"P1": "PASS", "P2": "PASS", "P3": "PASS", "P4": "PASS", "P5": "PASS", "P6": "PASS"}
+OL_BOUND: {"P1": "PASS", "P2": "PASS", "P3": "FAIL", "P4": "PARTIAL", "P5": "PASS", "P6": "PASS"}
+JWT_BOUND: {"P1": "PASS", "P2": "PASS", "P3": "FAIL", "P4": "PARTIAL", "P5": "PASS", "P6": "PASS"}

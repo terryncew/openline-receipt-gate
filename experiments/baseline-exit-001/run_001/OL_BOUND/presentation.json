@@ -1,0 +1,43 @@
+{
+  "arm": "OL_BOUND",
+  "contract": "eyJhbGciOiJFZERTQSIsInR5cCI6ImJhc2VsaW5lLWV4aXQtY29udHJhY3Qrand0In0.eyJpc3MiOiJ1cm46YmFzZWxpbmUtZXhpdDpvd25lcjpPIiwic3ViIjoidXJuOmJhc2VsaW5lLWV4aXQ6b3duZXI6TyIsImF1ZCI6InVybjpiYXNlbGluZS1leGl0OnJlY2VpdmVyOlIiLCJpYXQiOjE3OTEyNDMwMTMsIm5iZiI6MTc5MTI0MzAxMywiZXhwIjoxNzkxMjQzMTMzLCJqdGkiOiJkNTc2NGIwYjMzNWQ0MWI3OWJmMTUwNjUxZTc3MTgzYSIsInByb2ZpbGUiOiJCQVNFTElORS1FWElULTAwMS9PTF9CT1VORCIsImpvYl9pZCI6IkoiLCJvd25lcl9rZXkiOiI5YmE3Zjk1MjM5MWE3N2UzYjc4MTlkMjFlYTczMTc5ZmY4NGE2NjQzMWI0Y2Y5YzVhNGQ3MzU5Y2IyNGY4NGNiIiwicmVjZWl2ZXJfa2V5IjoiNmI3ODU2ZWNlMjRlYTNkZGVhNjdmZjk1NTA5NTZhZGY1YTJjZGZiODg1NWYyMTk0ZjcyMGU0MTI3ZDVjMjY2MSIsImFzX2tleSI6ImU2ZTZjNDgzYmRhNTBiZDMzODA2YzhkMjA0NmQ1NjUyZGYxZDE1ODE2NWU5ZjcxMTYzYjBiYmFjNjZjODEzNTIiLCJ3b3JrZXJzIjp7IkEiOiI1NzUwYTkzZjNmMmM2MzlhMmI0YzM5NGQwMDVkZTQ1OGE5MGRhY2ZmMmYzNmZlNTZiNjVjNjYxNGQzODJhNGVjIiwiQiI6ImM1YjY0YTc2ZmZiMDQxNDE5ZjVmMjZiMzlhZjlhNmUzYmFjN2ZlMTA1M2JhYWRiOGE4MmMwOGE2MWFjNjYyNjIifSwiZ3JhbnRfaGFzaCI6IjE0MjFiZDk4OTY3YmI2OWFjMjU1NjYwMzM4MmY2MGVmOGMwMTYzY2I0NGNkMTQ1OWEwZDljMDcyNTRlNDUxMWIiLCJydW50aW1lX2tleXMiOnsic291cmNlIjoiYjg3NjdkMjgzZTk3MDQ5YjY5YmQ0MTk1ZGIzZDI5ZjI3ZjQxYjI2NTY5YjA4MTkxMzMyOWUxNGJlYWNkOTRiNSIsIndpdG5lc3MiOiI0MjBkYjMyOGI5NWI3NThmODM2NDk2ZmM0MjMzNzU5ODkzYTNmYzA4MGIwNWI2NmRhOGM4Y2M0YmJmMzU5NzcxIiwiZ2F0ZSI6IjNkMzk1M2M4MGFhZWQ1N2QwMjVjNDE5N2YzODBhNmM2NmIxYTVkYmNhODVkM2YxYzYwYWI0MTVmYjE4ODNkODYifSwic2NvcGUiOiJyZWZ1bmQiLCJtYXhfYW1vdW50X2NlbnRzIjoxMDAsInN0YXR1c19tYXhfbGlmZXRpbWVfc2Vjb25kcyI6MSwiYXNfZGVsZWdhdGlvbiI6ZmFsc2V9.tM9cvEIyRNFQHm8KMEgpr0S0d37ncyw2bwQPvMJZAYkbj2Z2XLSpvWr_zICrJbsA7r-1JrXXoa2ngKTrBKzMDg",
+  "grant": {
+    "authorization_id": "baseline-exit/J:1",
+    "expires_at": "2026-10-05T23:31:13Z",
+    "issued_at": "2026-10-05T23:30:13Z",
+    "mandate_hash": "841a806c3f4018de1e08cb3b1dead90422a469ba481bcdaffa68356ad5a89899",
+    "owner_id": "urn:baseline-exit:owner:O",
+    "payload_hash": "6534ecccca865b50051d1a976aadabf2f293534a4bde6144f91b6bb2ac8eca9c",
+    "predecessor_hash": null,
+    "schema": "openline.mandate_owner_authorization.v1",
+    "sequence": 1,
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "9ba7f952391a77e3b7819d21ea73179ff84a66431b4cf9c5a4d7359cb24f84cb",
+      "value": "dd738a58df877b25db596fed8d05a4f3ab8f57a6d74aab36069cb694ba5b0f8328aaf162a6fd2fddb5fad8e84ace5c1f986e5a0d2e2bc67984542c6df1dd5f02"
+    },
+    "slot_id": "baseline-exit/J",
+    "state": "ACTIVE"
+  },
+  "mandate": {
+    "agent_id": "A",
+    "allowed_action_types": [
+      "authorize_payment"
+    ],
+    "allowed_disclosure_classes": [],
+    "allowed_targets": [
+      "refund://J"
+    ],
+    "delegation_allowed": false,
+    "expires_at": "2026-10-05T23:31:13Z",
+    "forbidden_disclosure_classes": [],
+    "mandate_id": "J",
+    "max_payment_cents": 100,
+    "max_settlement_cents": 0,
+    "principal_id": "urn:baseline-exit:owner:O",
+    "profile": "principal_mandate/v1",
+    "purpose": "continue job J",
+    "version": "1"
+  },
+  "owner_public_key": "9ba7f952391a77e3b7819d21ea73179ff84a66431b4cf9c5a4d7359cb24f84cb"
+}

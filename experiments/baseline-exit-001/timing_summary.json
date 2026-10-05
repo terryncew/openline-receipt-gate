@@ -1,0 +1,140 @@
+[
+  {
+    "arm": "OL_JOB",
+    "owner_revoke_time": {
+      "monotonic_ns": "900143982610",
+      "utc_ns": "1791243002599838626"
+    },
+    "last_R_accept_time": {
+      "utc_ns": "1791243002601365430",
+      "monotonic_ns": "900145505258"
+    },
+    "last_R_accept_worker": "B",
+    "first_B_continuation_refuse_time": {
+      "utc_ns": "1791243002706488678",
+      "monotonic_ns": "900250628145"
+    },
+    "owner_revoke_relative_seconds": 1.200124065,
+    "last_R_accept_relative_seconds": 1.201646713,
+    "first_B_refuse_relative_seconds": 1.3067696,
+    "revocation_lag_seconds": 0.106645535,
+    "last_B_accept_relative_to_O_revoke_seconds": 0.001522648,
+    "first_B_refuse_reason": "mandate_owner_authority_revoked",
+    "already_denied_at_succession": false
+  },
+  {
+    "arm": "JWT_OFFLINE",
+    "owner_revoke_time": {
+      "monotonic_ns": "901619516398",
+      "utc_ns": "1791243004075372434"
+    },
+    "last_R_accept_time": {
+      "utc_ns": "1791243009970471018",
+      "monotonic_ns": "907514610376"
+    },
+    "last_R_accept_worker": "B",
+    "first_B_continuation_refuse_time": {
+      "utc_ns": "1791243010072524331",
+      "monotonic_ns": "907616663788"
+    },
+    "owner_revoke_relative_seconds": 1.200141742,
+    "last_R_accept_relative_seconds": 7.09523572,
+    "first_B_refuse_relative_seconds": 7.197289132,
+    "revocation_lag_seconds": 5.99714739,
+    "last_B_accept_relative_to_O_revoke_seconds": 5.895093978,
+    "first_B_refuse_reason": "expired_token_or_status",
+    "already_denied_at_succession": false
+  },
+  {
+    "arm": "OAUTH_EXCHANGE",
+    "owner_revoke_time": {
+      "monotonic_ns": "908958687925",
+      "utc_ns": "1791243011414545664"
+    },
+    "last_R_accept_time": {
+      "utc_ns": "1791243011391379948",
+      "monotonic_ns": "908935519625"
+    },
+    "last_R_accept_worker": "B",
+    "first_B_continuation_refuse_time": {
+      "utc_ns": "1791243011495913701",
+      "monotonic_ns": "909040053338"
+    },
+    "owner_revoke_relative_seconds": 1.200094715,
+    "last_R_accept_relative_seconds": 1.176926415,
+    "first_B_refuse_relative_seconds": 1.281460128,
+    "revocation_lag_seconds": 0.081365413,
+    "last_B_accept_relative_to_O_revoke_seconds": -0.0231683,
+    "first_B_refuse_reason": "revoked_at_as",
+    "already_denied_at_succession": false
+  },
+  {
+    "arm": "OWNER_LIST",
+    "owner_revoke_time": {
+      "monotonic_ns": "910380274901",
+      "utc_ns": "1791243012836132840"
+    },
+    "last_R_accept_time": {
+      "utc_ns": "1791243012811796481",
+      "monotonic_ns": "910355936219"
+    },
+    "last_R_accept_worker": "B",
+    "first_B_continuation_refuse_time": {
+      "utc_ns": "1791243012915508886",
+      "monotonic_ns": "910459648363"
+    },
+    "owner_revoke_relative_seconds": 1.200090414,
+    "last_R_accept_relative_seconds": 1.175751732,
+    "first_B_refuse_relative_seconds": 1.279463876,
+    "revocation_lag_seconds": 0.079373462,
+    "last_B_accept_relative_to_O_revoke_seconds": -0.024338682,
+    "first_B_refuse_reason": "owner_revoked_jti",
+    "already_denied_at_succession": false
+  },
+  {
+    "arm": "OL_BOUND",
+    "owner_revoke_time": {
+      "monotonic_ns": "911803166972",
+      "utc_ns": "1791243014259024590"
+    },
+    "last_R_accept_time": {
+      "utc_ns": "1791243013351045434",
+      "monotonic_ns": "910895185222"
+    },
+    "last_R_accept_worker": "A",
+    "first_B_continuation_refuse_time": {
+      "utc_ns": "1791243013830230780",
+      "monotonic_ns": "911374370458"
+    },
+    "owner_revoke_relative_seconds": 1.200090565,
+    "last_R_accept_relative_seconds": 0.292108815,
+    "first_B_refuse_relative_seconds": 0.771294051,
+    "revocation_lag_seconds": null,
+    "last_B_accept_relative_to_O_revoke_seconds": null,
+    "first_B_refuse_reason": "authority_subject_mismatch",
+    "already_denied_at_succession": true
+  },
+  {
+    "arm": "JWT_BOUND",
+    "owner_revoke_time": {
+      "monotonic_ns": "913328035869",
+      "utc_ns": "1791243015783891655"
+    },
+    "last_R_accept_time": {
+      "utc_ns": "1791243014852757024",
+      "monotonic_ns": "912396896631"
+    },
+    "last_R_accept_worker": "A",
+    "first_B_continuation_refuse_time": {
+      "utc_ns": "1791243015357484715",
+      "monotonic_ns": "912901624162"
+    },
+    "owner_revoke_relative_seconds": 1.200159588,
+    "last_R_accept_relative_seconds": 0.26902035,
+    "first_B_refuse_relative_seconds": 0.773747881,
+    "revocation_lag_seconds": null,
+    "last_B_accept_relative_to_O_revoke_seconds": null,
+    "first_B_refuse_reason": "holder_mismatch",
+    "already_denied_at_succession": true
+  }
+]

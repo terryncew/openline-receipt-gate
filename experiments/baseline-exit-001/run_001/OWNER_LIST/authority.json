@@ -1,0 +1,178 @@
+{
+  "records": [],
+  "requests": [
+    {
+      "body": {},
+      "end": {
+        "monotonic_ns": "909462131261",
+        "utc_ns": "1791243011917991323"
+      },
+      "endpoint": "/status",
+      "response": {
+        "snapshot": "eyJhbGciOiJFZERTQSIsInR5cCI6InJldm9jYXRpb24tbGlzdCtqd3QifQ.eyJpc3MiOiJ1cm46YmFzZWxpbmUtZXhpdDpvd25lcjpPIiwic3ViIjoidXJuOmJhc2VsaW5lLWV4aXQ6cmVjZWl2ZXI6UiIsImF1ZCI6InVybjpiYXNlbGluZS1leGl0OnJlY2VpdmVyOlIiLCJpYXQiOjE3OTEyNDMwMTEsIm5iZiI6MTc5MTI0MzAxMSwiZXhwIjoxNzkxMjQzMDEyLCJqdGkiOiIyM2VlZWI2ZDI4YWQ0ZmFjOTk5NDk2OWFjNDBlNzhiNyIsImpvYl9pZCI6IkoiLCJzZXF1ZW5jZSI6MSwicmV2b2tlZCI6W119.78zvu-giDZ7H7gk0bfTamN60FOOnSzt6aYt6yqxvTU4t7-sw8TDJxwG2IOHC1zJrCziSiMkwiBoOC9My2N0HDg"
+      },
+      "start": {
+        "monotonic_ns": "909461228902",
+        "utc_ns": "1791243011917088353"
+      }
+    },
+    {
+      "body": {},
+      "end": {
+        "monotonic_ns": "909935728492",
+        "utc_ns": "1791243012391588854"
+      },
+      "endpoint": "/status",
+      "response": {
+        "snapshot": "eyJhbGciOiJFZERTQSIsInR5cCI6InJldm9jYXRpb24tbGlzdCtqd3QifQ.eyJpc3MiOiJ1cm46YmFzZWxpbmUtZXhpdDpvd25lcjpPIiwic3ViIjoidXJuOmJhc2VsaW5lLWV4aXQ6cmVjZWl2ZXI6UiIsImF1ZCI6InVybjpiYXNlbGluZS1leGl0OnJlY2VpdmVyOlIiLCJpYXQiOjE3OTEyNDMwMTIsIm5iZiI6MTc5MTI0MzAxMiwiZXhwIjoxNzkxMjQzMDEzLCJqdGkiOiI2OWMwNjk2YzhjMTI0MDM1YjQ1MjcwZmFiZjI4MDc0YSIsImpvYl9pZCI6IkoiLCJzZXF1ZW5jZSI6MSwicmV2b2tlZCI6W119.rdw8O8-XNpBscy_bEZaQ2_Oj1lnwDDgwVsUkwG27CnVIE4yRaVItbw4Vx61JbpVtVtK0KZKfg9z4kYl2iH57CQ"
+      },
+      "start": {
+        "monotonic_ns": "909935509542",
+        "utc_ns": "1791243012391369184"
+      }
+    },
+    {
+      "body": {},
+      "end": {
+        "monotonic_ns": "909938616802",
+        "utc_ns": "1791243012394477324"
+      },
+      "endpoint": "/status",
+      "response": {
+        "snapshot": "eyJhbGciOiJFZERTQSIsInR5cCI6InJldm9jYXRpb24tbGlzdCtqd3QifQ.eyJpc3MiOiJ1cm46YmFzZWxpbmUtZXhpdDpvd25lcjpPIiwic3ViIjoidXJuOmJhc2VsaW5lLWV4aXQ6cmVjZWl2ZXI6UiIsImF1ZCI6InVybjpiYXNlbGluZS1leGl0OnJlY2VpdmVyOlIiLCJpYXQiOjE3OTEyNDMwMTIsIm5iZiI6MTc5MTI0MzAxMiwiZXhwIjoxNzkxMjQzMDEzLCJqdGkiOiJlOGJjM2ZjNWZiMDI0Y2I1ODQzMGVlNGJkN2Q4MWU0NSIsImpvYl9pZCI6IkoiLCJzZXF1ZW5jZSI6MSwicmV2b2tlZCI6W119.aVmZWrmJgzb09Y1LDmHxQqQ5xWoJigPIpzLnj35OMeIfiTYoN_f5i_OVGynwvd2PVPLLG3lwoFfEDgTahPEdBg"
+      },
+      "start": {
+        "monotonic_ns": "909938487958",
+        "utc_ns": "1791243012394348020"
+      }
+    },
+    {
+      "body": {},
+      "end": {
+        "monotonic_ns": "909941609979",
+        "utc_ns": "1791243012397470402"
+      },
+      "endpoint": "/status",
+      "response": {
+        "snapshot": "eyJhbGciOiJFZERTQSIsInR5cCI6InJldm9jYXRpb24tbGlzdCtqd3QifQ.eyJpc3MiOiJ1cm46YmFzZWxpbmUtZXhpdDpvd25lcjpPIiwic3ViIjoidXJuOmJhc2VsaW5lLWV4aXQ6cmVjZWl2ZXI6UiIsImF1ZCI6InVybjpiYXNlbGluZS1leGl0OnJlY2VpdmVyOlIiLCJpYXQiOjE3OTEyNDMwMTIsIm5iZiI6MTc5MTI0MzAxMiwiZXhwIjoxNzkxMjQzMDEzLCJqdGkiOiJkZjUyOWM5NzVmMTM0OTM4YjhmZDRlYzQyN2FjYjdiOSIsImpvYl9pZCI6IkoiLCJzZXF1ZW5jZSI6MSwicmV2b2tlZCI6W119.-7zisL3oaXssXUtbyqbrvaAZoPsfnb3bEpJz9JZuAhMm_TX9HIk9rCZ4TmoAMEfae-fUDSYHODdhO0sHDLDuBQ"
+      },
+      "start": {
+        "monotonic_ns": "909941435947",
+        "utc_ns": "1791243012397296240"
+      }
+    },
+    {
+      "body": {},
+      "end": {
+        "monotonic_ns": "910044857421",
+        "utc_ns": "1791243012500717853"
+      },
+      "endpoint": "/status",
+      "response": {
+        "snapshot": "eyJhbGciOiJFZERTQSIsInR5cCI6InJldm9jYXRpb24tbGlzdCtqd3QifQ.eyJpc3MiOiJ1cm46YmFzZWxpbmUtZXhpdDpvd25lcjpPIiwic3ViIjoidXJuOmJhc2VsaW5lLWV4aXQ6cmVjZWl2ZXI6UiIsImF1ZCI6InVybjpiYXNlbGluZS1leGl0OnJlY2VpdmVyOlIiLCJpYXQiOjE3OTEyNDMwMTIsIm5iZiI6MTc5MTI0MzAxMiwiZXhwIjoxNzkxMjQzMDEzLCJqdGkiOiIzYjI2MTc4Y2NlODc0NmY0YTNmMDg4MDcxYzRkYjJlMSIsImpvYl9pZCI6IkoiLCJzZXF1ZW5jZSI6MSwicmV2b2tlZCI6W119.-7PgsFWX8oOti8PWKfu9_x8yf82wD0oCowadBPRMDNFjNoXHGUH1j5_MW_u7RD6U46foOW-zUBy3mUjP5Uo4BA"
+      },
+      "start": {
+        "monotonic_ns": "910044634856",
+        "utc_ns": "1791243012500494607"
+      }
+    },
+    {
+      "body": {},
+      "end": {
+        "monotonic_ns": "910148190314",
+        "utc_ns": "1791243012604050767"
+      },
+      "endpoint": "/status",
+      "response": {
+        "snapshot": "eyJhbGciOiJFZERTQSIsInR5cCI6InJldm9jYXRpb24tbGlzdCtqd3QifQ.eyJpc3MiOiJ1cm46YmFzZWxpbmUtZXhpdDpvd25lcjpPIiwic3ViIjoidXJuOmJhc2VsaW5lLWV4aXQ6cmVjZWl2ZXI6UiIsImF1ZCI6InVybjpiYXNlbGluZS1leGl0OnJlY2VpdmVyOlIiLCJpYXQiOjE3OTEyNDMwMTIsIm5iZiI6MTc5MTI0MzAxMiwiZXhwIjoxNzkxMjQzMDEzLCJqdGkiOiIzMzUxMzg2MzJiMzQ0NjY3OTU0MDIwOTQzNzhjMzRiYyIsImpvYl9pZCI6IkoiLCJzZXF1ZW5jZSI6MSwicmV2b2tlZCI6W119.udO50I-w3uhobSQRjzBYL_9WWDiMlyRT3hBa-iYfF86dKaxrgcTQ5i9pXyUjS89cmzBpcUrNuMRvtypcTM-_Dg"
+      },
+      "start": {
+        "monotonic_ns": "910147982581",
+        "utc_ns": "1791243012603842253"
+      }
+    },
+    {
+      "body": {},
+      "end": {
+        "monotonic_ns": "910251495066",
+        "utc_ns": "1791243012707355558"
+      },
+      "endpoint": "/status",
+      "response": {
+        "snapshot": "eyJhbGciOiJFZERTQSIsInR5cCI6InJldm9jYXRpb24tbGlzdCtqd3QifQ.eyJpc3MiOiJ1cm46YmFzZWxpbmUtZXhpdDpvd25lcjpPIiwic3ViIjoidXJuOmJhc2VsaW5lLWV4aXQ6cmVjZWl2ZXI6UiIsImF1ZCI6InVybjpiYXNlbGluZS1leGl0OnJlY2VpdmVyOlIiLCJpYXQiOjE3OTEyNDMwMTIsIm5iZiI6MTc5MTI0MzAxMiwiZXhwIjoxNzkxMjQzMDEzLCJqdGkiOiIyZDJlNzNjOWRhYjc0N2M2YjljNjc4ZTljMjYwNTUxMSIsImpvYl9pZCI6IkoiLCJzZXF1ZW5jZSI6MSwicmV2b2tlZCI6W119.XwdhynAbpdGFrAMxuHY-v3Jv51HmJD4EyfHAnY-t5cooBYsec_uqOS9F3FaQDasBOjVaZmZDBx1kCA01X6_bDA"
+      },
+      "start": {
+        "monotonic_ns": "910251317478",
+        "utc_ns": "1791243012707177330"
+      }
+    },
+    {
+      "body": {},
+      "end": {
+        "monotonic_ns": "910354910594",
+        "utc_ns": "1791243012810771016"
+      },
+      "endpoint": "/status",
+      "response": {
+        "snapshot": "eyJhbGciOiJFZERTQSIsInR5cCI6InJldm9jYXRpb24tbGlzdCtqd3QifQ.eyJpc3MiOiJ1cm46YmFzZWxpbmUtZXhpdDpvd25lcjpPIiwic3ViIjoidXJuOmJhc2VsaW5lLWV4aXQ6cmVjZWl2ZXI6UiIsImF1ZCI6InVybjpiYXNlbGluZS1leGl0OnJlY2VpdmVyOlIiLCJpYXQiOjE3OTEyNDMwMTIsIm5iZiI6MTc5MTI0MzAxMiwiZXhwIjoxNzkxMjQzMDEzLCJqdGkiOiI2YzlmYWY1NTUzOWM0ZmIyODE0YzRhNWFiNTg5OTFlZCIsImpvYl9pZCI6IkoiLCJzZXF1ZW5jZSI6MSwicmV2b2tlZCI6W119.2XWHP4B7G5dGRlVaJlfqXeuFdL8TewBPVRcKBAlmQ301wqR73mBUnswtwDkXDyrrFXVJOfYMBcYJZqjlzthlDg"
+      },
+      "start": {
+        "monotonic_ns": "910354717874",
+        "utc_ns": "1791243012810577535"
+      }
+    },
+    {
+      "body": {
+        "owner_request": "eyJhbGciOiJFZERTQSIsInR5cCI6Im93bmVyLXJldm9jYXRpb24rand0In0.eyJpc3MiOiJ1cm46YmFzZWxpbmUtZXhpdDpvd25lcjpPIiwic3ViIjoidXJuOmJhc2VsaW5lLWV4aXQ6b3duZXI6TyIsImF1ZCI6InVybjpiYXNlbGluZS1leGl0OnJlY2VpdmVyOlIiLCJpYXQiOjE3OTEyNDMwMTIsIm5iZiI6MTc5MTI0MzAxMiwiZXhwIjoxNzkxMjQzMDcyLCJqdGkiOiJlOTFjNGNmZmY3MGI0OTVlYWY3MzBjOTQxNTM0MzM4MCIsImpvYl9pZCI6IkoiLCJncmFudF9oYXNoIjoiNzg4Mzc0NTI0YzIyYWU2MjI2MjkzYTAwMzk5MmI5YThmY2Y5ZTUwMzg4MTQ1YjVkNzYyM2M5ZjZiYWU5NTZkMCIsIm93bmVyX3Jldm9rZWRfYXRfbnMiOiIxNzkxMjQzMDEyODM2MTMyODQwIn0.WKh9shzMj2udauRyuogrHChQ8TMxDhqTmuT4t5cps69LKEHyBqUJlgp2pFm-BCqaDXoTQXzXe0uaxFYoYZ31BA"
+      },
+      "end": {
+        "monotonic_ns": "910381371753",
+        "utc_ns": "1791243012837232385"
+      },
+      "endpoint": "/revoke",
+      "response": {
+        "at": {
+          "monotonic_ns": "910381370421",
+          "utc_ns": "1791243012837230783"
+        },
+        "recorded": true,
+        "sequence": 2
+      },
+      "start": {
+        "monotonic_ns": "910381002106",
+        "utc_ns": "1791243012836861907"
+      }
+    },
+    {
+      "body": {},
+      "end": {
+        "monotonic_ns": "910458871658",
+        "utc_ns": "1791243012914732051"
+      },
+      "endpoint": "/status",
+      "response": {
+        "snapshot": "eyJhbGciOiJFZERTQSIsInR5cCI6InJldm9jYXRpb24tbGlzdCtqd3QifQ.eyJpc3MiOiJ1cm46YmFzZWxpbmUtZXhpdDpvd25lcjpPIiwic3ViIjoidXJuOmJhc2VsaW5lLWV4aXQ6cmVjZWl2ZXI6UiIsImF1ZCI6InVybjpiYXNlbGluZS1leGl0OnJlY2VpdmVyOlIiLCJpYXQiOjE3OTEyNDMwMTIsIm5iZiI6MTc5MTI0MzAxMiwiZXhwIjoxNzkxMjQzMDEzLCJqdGkiOiJlOTVmOTNjMTY1YWI0NDY1ODhjMjU3NDE4ODk5MzgwMyIsImpvYl9pZCI6IkoiLCJzZXF1ZW5jZSI6MiwicmV2b2tlZCI6WyIyMzdiZjFiYmZlZjU0ZGMzOWVlOWU0NDY5MzgzOGMzMyJdfQ.twdzZz4J5JNjAX_yqzqneYZH57nYy2UowUfMApGdLLEZkhSq_3UFp36AhSX_JDAUIoI8ts0qiw50xupscl7fDQ"
+      },
+      "start": {
+        "monotonic_ns": "910458662714",
+        "utc_ns": "1791243012914522275"
+      }
+    },
+    {
+      "body": {},
+      "end": {
+        "monotonic_ns": "910562273385",
+        "utc_ns": "1791243013018133838"
+      },
+      "endpoint": "/status",
+      "response": {
+        "snapshot": "eyJhbGciOiJFZERTQSIsInR5cCI6InJldm9jYXRpb24tbGlzdCtqd3QifQ.eyJpc3MiOiJ1cm46YmFzZWxpbmUtZXhpdDpvd25lcjpPIiwic3ViIjoidXJuOmJhc2VsaW5lLWV4aXQ6cmVjZWl2ZXI6UiIsImF1ZCI6InVybjpiYXNlbGluZS1leGl0OnJlY2VpdmVyOlIiLCJpYXQiOjE3OTEyNDMwMTMsIm5iZiI6MTc5MTI0MzAxMywiZXhwIjoxNzkxMjQzMDE0LCJqdGkiOiJkNTljMzI4MjNjZDc0OTVkOWQzMzNhNTY0NzNkY2VlNyIsImpvYl9pZCI6IkoiLCJzZXF1ZW5jZSI6MiwicmV2b2tlZCI6WyIyMzdiZjFiYmZlZjU0ZGMzOWVlOWU0NDY5MzgzOGMzMyJdfQ.w6Vr6fXQCpTeCoARR2TUlzUznRr6vIVxkmLZRxoVIfo9oNn9u-vwRWoY86yzSxW59NjiYM_a-8-PJHy3p1thCQ"
+      },
+      "start": {
+        "monotonic_ns": "910562076619",
+        "utc_ns": "1791243013017936351"
+      }
+    }
+  ],
+  "revoked": true
+}

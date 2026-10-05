@@ -1,0 +1,42 @@
+{
+  "controls": [
+    {
+      "control": "receiver_decision_tamper",
+      "detected": true,
+      "error_type": "InvalidSignatureError",
+      "reason": "Signature verification failed"
+    },
+    {
+      "control": "owner_contract_tamper",
+      "detected": true,
+      "error_type": "InvalidSignatureError",
+      "reason": "Signature verification failed"
+    },
+    {
+      "control": "owner_grant_scope_tamper",
+      "detected": true,
+      "error_type": "ValueError",
+      "reason": "grant_hash_mismatch"
+    },
+    {
+      "control": "owner_revocation_tamper",
+      "detected": true,
+      "error_type": "InvalidSignatureError",
+      "reason": "Signature verification failed"
+    },
+    {
+      "control": "final_effect_query_tamper",
+      "detected": true,
+      "error_type": "ValueError",
+      "reason": "final_effect_query_mismatch"
+    },
+    {
+      "control": "receiver_event_deleted",
+      "detected": true,
+      "error_type": "ValueError",
+      "reason": "effect_checkpoint_not_continuous"
+    }
+  ],
+  "passed": 6,
+  "failed": 0
+}
