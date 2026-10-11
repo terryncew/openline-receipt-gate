@@ -70,6 +70,9 @@ static_resources:
   - name: mock_api
     connect_timeout: 1s
     type: STRICT_DNS
+    # Re-resolve frequently: container IPs change on down/up recreation,
+    # and a stale DNS cache would blackhole the upstream.
+    dns_refresh_rate: 5s
     load_assignment:
       cluster_name: mock_api
       endpoints:
