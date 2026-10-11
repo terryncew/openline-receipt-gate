@@ -45,6 +45,10 @@ from wallet_bridge import worker_present  # noqa: E402
 import mock_api as _mock_api  # noqa: E402
 _b64u_decode = _mock_api.b64u_decode
 
+# Local end-to-end probes must not leak loopback traffic through a
+# developer environment's HTTP(S) proxy (which can itself return 403).
+_LOOPBACK = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+
 GW_PY = sys.executable
 ENVOY_BIN = Path(os.environ.get("ENVOY_BIN", str(Path.home()
                                                 / "workspace" / ".envoy-binary")))
@@ -61,7 +65,7 @@ def wait_for(url: str, timeout: float = 20.0) -> bool:
     deadline = time.time() + timeout
     while time.time() < deadline:
         try:
-            with urllib.request.urlopen(url, timeout=2) as r:
+            with _LOOPBACK.open(url, timeout=2) as r:
                 if r.status == 200:
                     return True
         except Exception:
@@ -75,7 +79,7 @@ def http_post(url: str, body: dict, headers: dict) -> tuple[int, dict]:
     req = urllib.request.Request(url, data=data, headers=headers,
                                  method="POST")
     try:
-        with urllib.request.urlopen(req, timeout=15) as r:
+        with _LOOPBACK.open(req, timeout=15) as r:
             return r.status, json.loads(r.read())
     except urllib.error.HTTPError as e:
         try:
@@ -87,7 +91,7 @@ def http_post(url: str, body: dict, headers: dict) -> tuple[int, dict]:
 
 
 def http_get(url: str) -> dict:
-    with urllib.request.urlopen(url, timeout=5) as r:
+    with _LOOPBACK.open(url, timeout=5) as r:
         return json.loads(r.read())
 
 
@@ -264,7 +268,7 @@ def main() -> int:
         appr = tx_approval(operation, bundle, mid)
         s2, r2 = http_post(envoy_url, body, full_path_headers(4250, appr))
         check("full path -> 200", s2 == 200,
-              f"status {s2} err={r2.get('error')}")
+              f"status {s2} response={str(r2)[:450]}")
         receipt = r2.get("poppy_receipt", {})
         check("receipt present", bool(receipt))
         check("receipt signature verifies independently",
@@ -300,14 +304,14 @@ def main() -> int:
         op4 = dict(operation, order_ref="ord_full_004")
         scope4 = mandate_scope_for_operation(op4)
         m4 = wallet.grant(
-            subject_id="poppy-agent-4",
+            subject_id="poppy-agent",
             subject_public_key=public_key_hex(akey),
             scopes=[scope4], expires_at=now + timedelta(hours=1))
         mid4 = m4["data"]["mandate_id"]
         bundle4 = wallet.export_bundle(ttl_seconds=300)
         http_post("http://127.0.0.1:9000/poppy-admit", {"bundle": bundle4},
                   {"Content-Type": "application/json"})
-        appr4 = tx_approval(op4, bundle4, mid4, "poppy-agent-4")
+        appr4 = tx_approval(op4, bundle4, mid4)
         # Agent signs for $0 but presents $42.50 approval.
         s4, r4 = http_post(envoy_url, {"operation": op4},
                            full_path_headers(0, appr4))
@@ -322,20 +326,43 @@ def main() -> int:
                    merchant="manzanita-supply")
         scope5 = mandate_scope_for_operation(op5)
         m5 = wallet.grant(
-            subject_id="poppy-agent-5",
+            subject_id="poppy-agent",
             subject_public_key=public_key_hex(akey),
             scopes=[scope5], expires_at=now + timedelta(hours=1))
         mid5 = m5["data"]["mandate_id"]
         bundle5 = wallet.export_bundle(ttl_seconds=300)
         http_post("http://127.0.0.1:9000/poppy-admit", {"bundle": bundle5},
                   {"Content-Type": "application/json"})
-        appr5 = tx_approval(op5, bundle5, mid5, "poppy-agent-5")
+        appr5 = tx_approval(op5, bundle5, mid5)
         tampered = {"operation": dict(op5, merchant="evil-corp")}
         s5, r5 = http_post(envoy_url, tampered,
                            full_path_headers(4250, appr5))
         check("terms mismatch -> 403", s5 == 403, f"status {s5}")
         check("reason TRANSACTION_TERMS_MISMATCH",
               r5.get("error") == "TRANSACTION_TERMS_MISMATCH")
+
+        # Explicit negative test: a signed Wallet presentation for a
+        # different agent cannot be combined with a valid Gateway token.
+        print("\\n--- Case 5b: cross-agent approval must be refused")
+        op_mixed = dict(operation, order_ref="ord_full_mixed")
+        scope_mixed = mandate_scope_for_operation(op_mixed)
+        m_mixed = wallet.grant(
+            subject_id="unrelated-agent",
+            subject_public_key=public_key_hex(akey),
+            scopes=[scope_mixed], expires_at=now + timedelta(hours=1))
+        mid_mixed = m_mixed["data"]["mandate_id"]
+        bundle_mixed = wallet.export_bundle(ttl_seconds=300)
+        http_post("http://127.0.0.1:9000/poppy-admit", {"bundle": bundle_mixed},
+                  {"Content-Type": "application/json"})
+        mixed_appr = tx_approval(
+            op_mixed, bundle_mixed, mid_mixed, "unrelated-agent")
+        mixed_status, mixed_body = http_post(
+            envoy_url, {"operation": op_mixed},
+            full_path_headers(4250, mixed_appr))
+        check("mixed agent refused -> 403", mixed_status == 403,
+              f"status {mixed_status} response={str(mixed_body)[:450]}")
+        check("mixed agent identity reason", 
+              mixed_body.get("error") == "IDENTITY_MISMATCH")
 
         # Case 6: Revoked approval.
         print("\n--- Case 6: revoked transaction approval")
@@ -352,6 +379,14 @@ def main() -> int:
 
     finally:
         stop_all()
+        if any(s == FAIL for s, _ in results):
+            # Preserve actionable diagnostics on a failing run, rather than
+            # deleting the temp logs before the failure has been explained.
+            for name in ("authz.log", "mockapi.log"):
+                log = rundir / name
+                if log.exists():
+                    print(f"\\n--- {name} (last 40 lines) ---")
+                    print("\\n".join(log.read_text(errors="replace").splitlines()[-40:]))
         shutil.rmtree(rundir, ignore_errors=True)
 
     n_fail = sum(1 for s, _ in results if s == FAIL)
