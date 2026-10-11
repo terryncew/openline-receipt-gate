@@ -53,8 +53,21 @@ claim is made anywhere.
 
 `.github/workflows/gateway-subscription-001-docker.yml` runs the
 compose stack for real on a GitHub Actions runner (the compose files
-were previously written but never executed). Evidence:
-`gateway/subscription001/EVIDENCE-docker.md`.
+were previously written but never executed). 6 runs total.
+
+**Verdict: NOT fully verified — 20/22 checks pass.** The `MOCK_API_HOST`
+fix works: full HTTP path, exact ledger deltas, tamper/replay/revoke
+denials, `verify-receipts` clean, persistence across service restart,
+and receipt survival across full-stack restart all pass on real
+Docker. The gap: balance reads via Envoy after a FULL-stack restart
+timed out (90 s); the mockapi container logged nothing post-restart.
+Balance persistence itself is proven (service-restart and DB-volume
+checks), so this is not data loss — but the root cause (Envoy
+upstream recovery vs compose restart ordering) is unisolated.
+Evidence: `gateway/subscription001/EVIDENCE-docker.md` (full attempt
+record). Re-running needs the temporary push trigger re-added or a
+`main` stub (workflow_dispatch is undiscoverable for branch-only
+files).
 
 ## Public materials (docs only, no claims beyond evidence)
 
