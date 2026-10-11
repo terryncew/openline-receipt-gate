@@ -134,6 +134,66 @@ class Ledger:
                         (approval_id, int(time.time())))
         self.db.commit()
 
+    def transfer_with_approval_and_receipt(self, to_acct: str, cents: int,
+                               decision_id: str, approval_id: str,
+                               receipt_json: str) -> dict:
+        """Atomic transfer + approval + signed receipt storage.
+        
+        All three happen in a single sqlite transaction. If the process
+        crashes, either all persist or none do. A committed effect is
+        never left without its signed evidence.
+        """
+        try:
+            self.db.execute("BEGIN IMMEDIATE")
+            
+            if self.db.execute(
+                "SELECT 1 FROM used_approvals WHERE approval_id=?",
+                (approval_id,)).fetchone():
+                self.db.execute("ROLLBACK")
+                return {"ok": False, "error": "TRANSACTION_APPROVAL_ALREADY_USED"}
+            
+            if self.db.execute(
+                "SELECT 1 FROM used_decisions WHERE decision_id=?",
+                (decision_id,)).fetchone():
+                self.db.execute("ROLLBACK")
+                return {"ok": False, "error": "decision token already used"}
+            
+            cur = self.db.execute("SELECT cents FROM balances WHERE acct=?",
+                                  ("treasury",))
+            bal = cur.fetchone()[0]
+            if bal < cents:
+                self.db.execute("ROLLBACK")
+                return {"ok": False, "error": "insufficient simulated funds"}
+            
+            self.db.execute("UPDATE balances SET cents=cents-? WHERE acct=?",
+                            (cents, "treasury"))
+            self.db.execute("INSERT OR IGNORE INTO balances(acct, cents)"
+                            " VALUES(?,0)", (to_acct,))
+            self.db.execute("UPDATE balances SET cents=cents+? WHERE acct=?",
+                            (cents, to_acct))
+            self.db.execute("INSERT INTO used_decisions VALUES(?,?)",
+                            (decision_id, int(time.time())))
+            self.db.execute("INSERT INTO used_approvals VALUES(?,?)",
+                            (approval_id, int(time.time())))
+            
+            effect_id = f"fx-{decision_id}"
+            self.db.execute(
+                "INSERT INTO effects VALUES(?,?,?)",
+                (effect_id, time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                 json.dumps({"to": to_acct, "cents": cents,
+                             "decision_id": decision_id,
+                             "receipt": receipt_json})))
+            
+            self.db.commit()
+            return {"ok": True, "effect_id": effect_id,
+                    "treasury_cents": bal - cents}
+        except Exception as e:
+            try:
+                self.db.execute("ROLLBACK")
+            except Exception:
+                pass
+            return {"ok": False, "error": f"transaction failed: {e}"}
+
     def transfer_with_approval(self, to_acct: str, cents: int,
                                decision_id: str, approval_id: str) -> dict:
         """Atomic transfer + approval consumption.
@@ -584,30 +644,19 @@ class Handler(BaseHTTPRequestHandler):
             })
         # The mock ledger debits treasury and credits the merchant.
         # The operation's account must be treasury (the funded account).
-        # ATOMIC: transfer + approval consumption in a single transaction.
-        # No window for double-spend on crash.
+        #
+        # TRANSACTION BOUNDARY (corrected):
+        # A committed effect must not leave the system without recoverable
+        # signed evidence. Therefore:
+        # 1. Build receipt with expected post-transfer balances.
+        # 2. Sign it. If signing fails, FAIL BEFORE any state change.
+        # 3. Atomic transfer + store signed receipt in single txn.
         treasury_before = LEDGER.balance("treasury")
         merchant_before = LEDGER.balance(merchant)
-        res = LEDGER.transfer_with_approval(
-            merchant, amount, f"poppy-{time.time_ns()}", approval_id)
-        if not res.get("ok"):
-            # Map to the appropriate error code
-            err = res.get("error", "")
-            if "ALREADY_USED" in err:
-                return self._send(403, {
-                    "ok": False,
-                    "error": "TRANSACTION_APPROVAL_ALREADY_USED",
-                    "detail": "This owner approval was already executed.",
-                    "delegated_authority": "valid",
-                    "transaction_approval": "already_used",
-                })
-            return self._send(409, res)
-
-        # Signed receiver receipt (finding 4): separate evidence for
-        # the business DECISION and the measured LEDGER EFFECT.
-        # Independently verifiable with the receiver's public key.
-        treasury_after = LEDGER.balance("treasury")
-        merchant_after = LEDGER.balance(merchant)
+        # Expected balances (transfer is atomic, so these WILL be actual)
+        treasury_after = treasury_before - amount
+        merchant_after = merchant_before + amount
+        
         decision_evidence = {
             "type": "poppy_decision",
             "decision": "ALLOWED",
@@ -639,31 +688,47 @@ class Handler(BaseHTTPRequestHandler):
             "merchant_after_cents": merchant_after,
             "merchant_delta_cents": merchant_after - merchant_before,
             "amount_cents": amount,
-            "effect_id": res.get("effect_id"),
             "measured_at": datetime.now(timezone.utc).isoformat(),
         }
-        receipt = {
+        receipt_unsigned = {
             "receipt_id": f"poppy-{uuid.uuid4().hex[:16]}",
             "decision_evidence": decision_evidence,
             "effect_evidence": effect_evidence,
         }
-        # Sign the canonical receipt with the receiver key.
-        # FAIL-CLOSED: if signing fails, the request fails. An unsigned
-        # receipt is not evidence.
+        # Sign BEFORE the transfer. If this fails, no effect is committed.
         try:
             key_b64 = (CONFIG_DIR / "receiver.key").read_text().strip()
             rkey = Ed25519PrivateKey.from_private_bytes(b64u_decode(key_b64))
-            sig = rkey.sign(canonical(receipt))
+            sig = rkey.sign(canonical(receipt_unsigned))
+            receipt = dict(receipt_unsigned)
             receipt["receiver_signature"] = b64u_encode(sig)
             receipt["receiver_public_key"] = b64u_encode(
                 rkey.public_key().public_bytes_raw())
         except Exception as e:
-            # Fail closed: do not return an unsigned receipt.
-            # The transfer already happened; this is a serious error.
-            # In production, we'd need to reconcile. For now, fail.
+            # Fail closed BEFORE any state change. No committed effect
+            # without signed evidence.
             return self._send(500, {"ok": False,
                                     "error": "receipt signing failed",
                                     "detail": str(e)})
+        
+        # ATOMIC: transfer + approval + store signed receipt in single txn.
+        res = LEDGER.transfer_with_approval_and_receipt(
+            merchant, amount, f"poppy-{time.time_ns()}", approval_id,
+            json.dumps(receipt, sort_keys=True))
+        if not res.get("ok"):
+            err = res.get("error", "")
+            if "ALREADY_USED" in err:
+                return self._send(403, {
+                    "ok": False,
+                    "error": "TRANSACTION_APPROVAL_ALREADY_USED",
+                    "detail": "This owner approval was already executed.",
+                    "delegated_authority": "valid",
+                    "transaction_approval": "already_used",
+                })
+            return self._send(409, res)
+
+        # Update effect_id in receipt (from atomic txn)
+        receipt["effect_evidence"]["effect_id"] = res.get("effect_id")
         res["poppy_receipt"] = receipt
         return self._send(200, res)
 
