@@ -45,6 +45,12 @@ jobs:
         env:
           AUTH_MODE: openline
         run: |
+          # Clean slate: remove stale networks/volumes from earlier runs.
+          # Docker reuses existing networks; a network created with
+          # internal:true (before the fix) silently drops port publishing
+          # even after the compose file is corrected.
+          docker compose --profile openline down --volumes 2>/dev/null || true
+          docker network rm compose_gateway 2>/dev/null || true
           docker compose --profile openline up --build -d
           docker compose --profile openline ps
 
