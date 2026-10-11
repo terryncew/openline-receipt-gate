@@ -33,4 +33,9 @@ else
   fi
 fi
 
+echo "[entrypoint] exec: $*"
+if [ $# -eq 0 ]; then
+  echo "[entrypoint] ERROR: no command to exec (empty CMD)" >&2
+  exit 1
+fi
 exec "$@"

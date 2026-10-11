@@ -47,7 +47,10 @@ services:
     profiles: [openline]
     # Bootstraps receiver.key + policy.json on a fresh gateway-config
     # volume before the service starts (see entrypoint-gateway.sh).
+    # Explicit command (not just the image CMD): the service must not
+    # depend on image-CMD propagation through the entrypoint override.
     entrypoint: ["/app/gateway/compose/entrypoint-gateway.sh"]
+    command: ["python3", "/app/gateway/authz_server.py", "50051"]
     environment:
       GATEWAY_CONFIG: /config
       GATEWAY_DB: /state/gateway.db
@@ -114,4 +117,11 @@ volumes:
 networks:
   gateway:
     driver: bridge
-    internal: true
+    # NOTE: this network is deliberately NOT `internal: true`. Docker
+    # silently drops host port publishing for containers whose only
+    # network is internal (verified in CI: `docker ps` showed an empty
+    # PORTS column and 127.0.0.1:8080 refused connections even though
+    # Envoy was healthy inside its container). The isolation that
+    # matters for the demo is preserved: only Envoy publishes a host
+    # port; authz (:50051) and the mock API (:9000) are reachable only
+    # inside this bridge network.
