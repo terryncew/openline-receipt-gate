@@ -1,0 +1,5 @@
+# OPA configuration for baseline A: envoy ext_authz plugin, no extras.
+plugins:
+  envoy_ext_authz_grpc:
+    addr: :50052
+    query: data.envoy.authz.allow

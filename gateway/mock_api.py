@@ -32,6 +32,10 @@ HERE = Path(__file__).resolve().parent
 CONFIG_DIR = Path(os.environ.get("GATEWAY_CONFIG", HERE / "config"))
 DB_PATH = Path(os.environ.get("GATEWAY_DB", HERE / "state" / "gateway.db"))
 PORT = int(os.environ.get("MOCK_API_PORT", "9000"))
+# GATEWAY_AUTH_MODE=openline (default): require receiver-signed decision
+# token. =opa: accept OPA's unsigned x-opa-decision header (used for the
+# head-to-head baselines; see the report for the security implications).
+AUTH_MODE = os.environ.get("GATEWAY_AUTH_MODE", "openline")
 
 
 def b64u_decode(s: str) -> bytes:
@@ -169,6 +173,20 @@ class Handler(BaseHTTPRequestHandler):
             res["observe_decision"] = decided
             res["warning"] = "OBSERVE MODE: executed without enforcement"
             return self._send(200, res)
+        if AUTH_MODE == "opa":
+            # Head-to-head baseline: OPA's decision arrives as an unsigned
+            # header. The security boundary here is the network (Envoy as
+            # the only ingress), not cryptography — this is the honest
+            # architectural difference under test.
+            if self.headers.get("x-opa-decision") != "allow":
+                return self._send(403, {"ok": False,
+                                        "error": "OPA did not allow"})
+            to_acct = body.get("to", "vendor")
+            cents = int(body.get("cents", 0))
+            res = LEDGER.transfer(to_acct, cents,
+                                  f"opa-{time.time_ns()}")
+            res["note"] = "executed per OPA allow (unsigned header)"
+            return self._send(200 if res["ok"] else 409, res)
         # ENFORCE: only a receiver-signed, single-use decision token
         # authorizes execution. The body is NOT trusted for amount or
         # destination; the token's authorized params are executed.

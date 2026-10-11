@@ -1,0 +1,9 @@
+# OPA configuration for baseline B: envoy plugin + decision logs.
+# Decision logs record what was asked and answered (unsigned; they prove
+# evaluation, not enforcement — see the head-to-head report).
+plugins:
+  envoy_ext_authz_grpc:
+    addr: :50052
+    query: data.envoy.authz.allow
+decision_logs:
+  console: true
