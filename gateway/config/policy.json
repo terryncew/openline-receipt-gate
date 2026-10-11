@@ -1,0 +1,4 @@
+{
+  "mode": "enforce",
+  "note": "OBSERVE evaluates and records without enforcing. Mode changes are administrator actions only."
+}
