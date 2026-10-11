@@ -24,20 +24,14 @@ containing the MANDATE_REVOKED event.
 
 from __future__ import annotations
 
-import sys
-from pathlib import Path
 from typing import Any, Mapping
-
-HERE = Path(__file__).resolve().parent
-sys.path.insert(0, str(HERE))
-
-from openline_wallet import (  # noqa: E402
+from .openline_wallet import (
     ReferenceGate,
     WalletError,
     create_presentation,
 )
-from openline_wallet.crypto import public_key_hex  # noqa: E402
-from cryptography.hazmat.primitives.asymmetric.ed25519 import (  # noqa: E402
+from .openline_wallet.crypto import public_key_hex
+from cryptography.hazmat.primitives.asymmetric.ed25519 import (
     Ed25519PrivateKey,
 )
 

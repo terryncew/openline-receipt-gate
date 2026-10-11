@@ -1,0 +1,65 @@
+{
+  "event_type": "card_authorization.approval_request",
+  "token": "00000000-0000-4000-8000-000000000101",
+  "status": "AUTHORIZATION",
+  "created": "2026-10-11T22:00:00Z",
+  "transaction_initiator": "CARDHOLDER",
+  "amount": 100,
+  "authorization_amount": 100,
+  "merchant_amount": 100,
+  "settled_amount": 0,
+  "acquirer_fee": 0,
+  "cash_amount": 0,
+  "cardholder_currency": "USD",
+  "merchant_currency": "USD",
+  "amounts": {
+    "cardholder": {
+      "amount": 100,
+      "currency": "USD",
+      "conversion_rate": "1.000000"
+    },
+    "merchant": {
+      "amount": 100,
+      "currency": "USD"
+    },
+    "hold": null,
+    "settlement": null
+  },
+  "card": {
+    "token": "00000000-0000-4000-8000-000000000001",
+    "last_four": "0000",
+    "memo": "OFFLINE SYNTHETIC PILOT CARD",
+    "state": "OPEN",
+    "type": "VIRTUAL",
+    "spend_limit": 100,
+    "spend_limit_duration": "TRANSACTION"
+  },
+  "merchant": {
+    "acceptor_id": "OPENLINE-SYNTHETIC-001",
+    "acquiring_institution_id": "000001",
+    "descriptor": "OPENLINE OFFLINE PILOT",
+    "mcc": "5999",
+    "city": "NEW YORK",
+    "country": "USA",
+    "state": "NY",
+    "phone_number": null,
+    "postal_code": null,
+    "street_address": null
+  },
+  "avs": {
+    "address": "",
+    "zipcode": "",
+    "address_on_file_match": "NOT_PRESENT"
+  },
+  "name_validation": null,
+  "service_location": null,
+  "network": "VISA",
+  "pos": {
+    "entry_mode": {
+      "card": "NOT_PRESENT",
+      "cardholder": "ELECTRONIC_ORDER",
+      "pan": "ECOMMERCE",
+      "pin_entered": false
+    }
+  }
+}

@@ -1,0 +1,80 @@
+name: openline-lithic-preflight-001
+on:
+  push:
+    branches: [codex/openline-lithic-preflight-001]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline-preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Require the verified PR 107 base and unchanged Gateway protections
+        run: |
+          git fetch origin 8a2ddf2af62374b70908421da6066afb69d5803e
+          git merge-base --is-ancestor 8a2ddf2af62374b70908421da6066afb69d5803e HEAD
+          git diff --exit-code 8a2ddf2af62374b70908421da6066afb69d5803e -- \
+            gateway/authz_server.py gateway/mock_api.py gateway/wallet_bridge.py \
+            gateway/poppy/poppy_receiver.py gateway/poppy/test_gateway_path.py \
+            gateway/poppy/test_atomic_receipt.py gateway/envoy/envoy-openline.yaml
+      - name: Install pinned tests and receiver package in clean environment
+        run: |
+          python3 -m venv /tmp/lithic-preflight-venv
+          /tmp/lithic-preflight-venv/bin/python -m pip install \
+            -r gateway/receiver-package/requirements-preflight.txt \
+            grpcio==1.84.0 protobuf==7.36.2 ./gateway/receiver-package
+          mkdir -p /tmp/lithic-preflight-tests /tmp/lithic-preflight-evidence
+          cp gateway/receiver-package/test_lithic_hmac.py \
+             gateway/receiver-package/test_lithic_wallet_revocation.py \
+             gateway/receiver-package/test_lithic_atomicity.py \
+             gateway/receiver-package/test_lithic_preflight.py \
+             gateway/receiver-package/test_lithic_schema.py /tmp/lithic-preflight-tests/
+          cp -R gateway/receiver-package/fixtures /tmp/lithic-preflight-tests/
+          (cd /tmp && /tmp/lithic-preflight-venv/bin/python -c \
+            'import openline_receiver.lithic_adapter as a; assert "site-packages" in a.__file__; print(a.__file__)')
+      - name: Require official verifier, real signed Wallet flow and offline pilot regressions
+        working-directory: /tmp/lithic-preflight-tests
+        env:
+          OPENLINE_REQUIRE_OFFICIAL_LITHIC: "1"
+          OPENLINE_TEST_MEASUREMENT_DIR: /tmp/lithic-preflight-evidence/measurements
+        run: |
+          set -o pipefail
+          /tmp/lithic-preflight-venv/bin/python -m unittest -v \
+            test_lithic_hmac test_lithic_wallet_revocation test_lithic_atomicity \
+            test_lithic_preflight test_lithic_schema \
+            2>&1 | tee /tmp/lithic-preflight-evidence/installed-tests.log
+          python3 - <<'PY'
+          from pathlib import Path
+          print('PUBLIC_PREFLIGHT_MEASUREMENTS_BEGIN')
+          for path in sorted(Path('/tmp/lithic-preflight-evidence/measurements').glob('*.json')):
+              print('FILE ' + path.name)
+              print(path.read_text())
+          print('PUBLIC_PREFLIGHT_MEASUREMENTS_END')
+          PY
+      - name: Require unchanged atomic receipt and crash tests
+        run: |
+          set -o pipefail
+          /tmp/lithic-preflight-venv/bin/python -m unittest gateway/poppy/test_atomic_receipt.py -v \
+            2>&1 | tee /tmp/lithic-preflight-evidence/gateway-atomic-receipt.log
+      - name: Require unchanged actual Envoy Gateway and Wallet integration
+        run: |
+          docker pull envoyproxy/envoy:v1.39.3
+          docker create --name lithic-preflight-envoy-extract envoyproxy/envoy:v1.39.3
+          docker cp lithic-preflight-envoy-extract:/usr/local/bin/envoy /tmp/openline-envoy
+          docker rm lithic-preflight-envoy-extract
+          chmod +x /tmp/openline-envoy
+          set -o pipefail
+          ENVOY_BIN=/tmp/openline-envoy NO_PROXY=localhost,127.0.0.1 \
+            /tmp/lithic-preflight-venv/bin/python gateway/poppy/test_gateway_path.py \
+            2>&1 | tee /tmp/lithic-preflight-evidence/gateway-path.log
+      - name: Preserve public evidence only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: openline-lithic-preflight-001
+          path: /tmp/lithic-preflight-evidence/
+          retention-days: 30
