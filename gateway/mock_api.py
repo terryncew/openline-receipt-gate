@@ -36,6 +36,13 @@ PORT = int(os.environ.get("MOCK_API_PORT", "9000"))
 # token. =opa: accept OPA's unsigned x-opa-decision header (used for the
 # head-to-head baselines; see the report for the security implications).
 AUTH_MODE = os.environ.get("GATEWAY_AUTH_MODE", "openline")
+# GATEWAY_STANDING_CHECK=1: before executing, re-verify with the authz
+# service that the decision is still standing (experimental; see
+# docs/STANDING-CHECK.md). Narrows the post-revocation window from the
+# token TTL to the check-to-commit interval. Fail-closed.
+STANDING_CHECK = os.environ.get("GATEWAY_STANDING_CHECK") == "1"
+STANDING_URL = os.environ.get("GATEWAY_STANDING_URL",
+                              "http://127.0.0.1:50053/standing")
 
 
 def b64u_decode(s: str) -> bytes:
@@ -126,6 +133,23 @@ def verify_decision_token(token_b64: str):
         return None
 
 
+def _standing_ok(token) -> bool:
+    """Ask the authz service whether this decision is still standing."""
+    import urllib.request as _url
+    from urllib.parse import urlencode
+    qs = urlencode({"decision_id": token["decision_id"],
+                    "agent_id": token.get("agent_id", ""),
+                    "issued_at": token["issued_at"]})
+    try:
+        with _url.urlopen(STANDING_URL + "?" + qs, timeout=2) as r:
+            return json.loads(r.read()).get("standing") is True
+    except Exception:
+        # Fail closed: if the standing service is unreachable, do not
+        # execute. This is a new availability dependency — documented in
+        # docs/STANDING-CHECK.md.
+        return False
+
+
 class Handler(BaseHTTPRequestHandler):
     server_version = "MockLedger/0.1"
 
@@ -200,8 +224,32 @@ class Handler(BaseHTTPRequestHandler):
             return self._send(403, {"ok": False,
                                     "error": "decision token does not "
                                              "authorize this endpoint"})
+        check_at = None
+        if STANDING_CHECK:
+            # Execution-time standing verification: is this decision
+            # still good RIGHT NOW, not just at authorization time?
+            check_at = time.time()
+            if not _standing_ok(token):
+                return self._send(403, {"ok": False,
+                                        "error": "decision no longer "
+                                                 "standing at execution"})
+        # TEST-ONLY hook (no-op unless GATEWAY_TEST_PRE_COMMIT_DELAY_MS
+        # is set): sleep between the standing check and the ledger
+        # commit so kill -9 tests can land the process inside that
+        # window. Never set in production.
+        _pre = os.environ.get("GATEWAY_TEST_PRE_COMMIT_DELAY_MS")
+        if _pre:
+            try:
+                time.sleep(float(_pre) / 1000.0)
+            except ValueError:
+                pass
         res = LEDGER.transfer("vendor", token["value_cents"],
                               token["decision_id"])
+        if check_at is not None:
+            # The irreducible race, measured: revocation landing between
+            # the standing check and the ledger commit still executes.
+            res["standing_to_commit_ms"] = round(
+                (time.time() - check_at) * 1000, 3)
         res["authorized_params"] = {
             "value_cents": token["value_cents"],
             "agent": token.get("agent_id")}
