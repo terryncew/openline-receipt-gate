@@ -55,7 +55,7 @@ static_resources:
   clusters:
   - name: authz_cluster
     connect_timeout: 1s
-    type: STATIC
+    type: STRICT_DNS
     typed_extension_protocol_options:
       envoy.extensions.upstreams.http.v3.HttpProtocolOptions:
         "@type": type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions
@@ -70,7 +70,7 @@ static_resources:
               socket_address: {address: authz, port_value: 50051}
   - name: mock_api
     connect_timeout: 1s
-    type: STATIC
+    type: STRICT_DNS
     load_assignment:
       cluster_name: mock_api
       endpoints:
