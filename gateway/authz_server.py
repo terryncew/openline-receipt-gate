@@ -199,6 +199,14 @@ class Authorizer(pb2_grpc.AuthorizationServicer):
             sig = b64u_decode(sig_b64)
         except Exception:
             return ("deny", ["malformed_action_claim"], {})
+        if not isinstance(action, dict):
+            return ("deny", ["malformed_action_claim"], {})
+        # The header selects the receiver-owned registered key and mandate.
+        # The signed action must name that same identity. Otherwise a
+        # registered worker could sign a *different* worker's ID, causing
+        # the minted token to impersonate the second worker.
+        if action.get("agent_id") != agent_id:
+            return ("deny", ["action_agent_id_mismatch"], {})
         for f in ("action_type", "target", "value_cents", "nonce", "ts"):
             if f not in action:
                 return ("deny", ["action_field_missing:" + f], {})
@@ -245,13 +253,14 @@ class Authorizer(pb2_grpc.AuthorizationServicer):
             return ("deny", pre["reason_codes"], {})
         self.state.mark_nonce(action["nonce"])
         return ("allow", [], {"action": action,
+                              "verified_agent_id": agent_id,
                               "mandate_id": mandate["mandate_id"]})
 
     def _mint_decision_token(self, detail) -> str:
         action = detail["action"]
         token = {
             "decision_id": uuid.uuid4().hex[:16],
-            "agent_id": action.get("agent_id", ""),
+            "agent_id": detail["verified_agent_id"],
             "action_type": action["action_type"],
             "target": action["target"],
             "value_cents": action["value_cents"],
