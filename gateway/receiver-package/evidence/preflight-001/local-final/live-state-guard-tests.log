@@ -1,0 +1,13 @@
+test_authenticated_receipt_read_refuses_replaced_live_database (test_lithic_live_state.LiveStateTests.test_authenticated_receipt_read_refuses_replaced_live_database) ... ok
+test_committed_approval_retry_fails_when_live_state_file_is_replaced (test_lithic_live_state.LiveStateTests.test_committed_approval_retry_fails_when_live_state_file_is_replaced) ... ok
+test_file_replacement_during_signing_rolls_back_before_commit (test_lithic_live_state.LiveStateTests.test_file_replacement_during_signing_rolls_back_before_commit) ... ok
+test_main_btree_corruption_with_valid_file_header_fails_closed (test_lithic_live_state.LiveStateTests.test_main_btree_corruption_with_valid_file_header_fails_closed) ... ok
+test_open_database_replaced_by_corrupt_file_does_not_acknowledge_approval (test_lithic_live_state.LiveStateTests.test_open_database_replaced_by_corrupt_file_does_not_acknowledge_approval) ... ok
+test_open_database_replaced_by_empty_file_does_not_acknowledge_approval (test_lithic_live_state.LiveStateTests.test_open_database_replaced_by_empty_file_does_not_acknowledge_approval) ... ok
+test_same_inode_header_corruption_does_not_acknowledge_approval (test_lithic_live_state.LiveStateTests.test_same_inode_header_corruption_does_not_acknowledge_approval) ... ok
+test_same_inode_main_file_truncation_does_not_acknowledge_approval (test_lithic_live_state.LiveStateTests.test_same_inode_main_file_truncation_does_not_acknowledge_approval) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 4.161s
+
+OK

@@ -1,0 +1,1 @@
+{"result": "PASS", "independently_verified_receipts": 3, "decision_sequence": ["APPROVED", "CARD_PAUSED", "APPROVED"], "key_source": "explicit independent pin file; embedded receipt keys not trusted"}

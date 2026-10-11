@@ -1,0 +1,7 @@
+owner: openline:principal:8d15b58a92295...
+mandate: mandate_03153f9bf21a05bc
+receiver: owner pinned
+receiver: BUNDLE_ADMITTED
+worker: presentation signed
+receiver: ALLOWED
+The worker may read reports. The receiver signed a receipt.

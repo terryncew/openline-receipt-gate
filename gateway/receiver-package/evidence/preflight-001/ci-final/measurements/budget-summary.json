@@ -1,0 +1,35 @@
+{
+  "asa-sequence-budget.json": {
+    "samples": 3,
+    "concurrency": 1,
+    "p50_ms": 6.014002999997103,
+    "p95_ms": 8.455764199995741,
+    "p99_ms": 8.67280963999562,
+    "max_ms": 8.72707099999559,
+    "statuses": [
+      200
+    ]
+  },
+  "http-duplicate-budget.json": {
+    "samples": 80,
+    "concurrency": 8,
+    "p50_ms": 35.889172500002786,
+    "p95_ms": 36.49173495000362,
+    "p99_ms": 37.79092709000271,
+    "max_ms": 41.235665999998616,
+    "statuses": [
+      200
+    ]
+  },
+  "http-unavailable-writer-budget.json": {
+    "samples": 8,
+    "concurrency": 8,
+    "p50_ms": 1003.6394739999998,
+    "p95_ms": 1007.7073549999998,
+    "p99_ms": 1009.0476870000016,
+    "max_ms": 1009.382770000002,
+    "statuses": [
+      503
+    ]
+  }
+}

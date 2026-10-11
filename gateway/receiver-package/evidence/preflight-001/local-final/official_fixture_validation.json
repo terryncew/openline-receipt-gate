@@ -1,0 +1,10 @@
+{
+  "source_url": "https://github.com/lithic-com/lithic-openapi/blob/0afad9e69e57f2e0bbace17c1f03f79c97c07c76/lithic-openapi.yml",
+  "source_sha256": "13f01516dfbc129804b5086b1a45beb8e413b24148458af234e01e46a1a4f09c",
+  "fixture_sha256": "b3c6a8d3851f95c6848c18bdcdc48b1454c221cd5f22386849c06ee8e26b49db",
+  "fixture_kind": "Synthetic independent fixture; not a published Lithic example, delivered request, or issued card",
+  "schema_path": "webhooks.card_authorization.approval_request.post.requestBody.content.application/json.schema",
+  "validation": "PASS",
+  "response_schemas_validated": 8,
+  "jsonschema_version": "4.26.0"
+}

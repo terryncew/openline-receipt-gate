@@ -1,0 +1,27 @@
+{
+  "concurrency": 1,
+  "timing": "client through localhost HTTP; complete response body; seconds",
+  "samples": [
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.003096188000000666
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "CARD_PAUSED"
+      },
+      "elapsed_seconds": 0.002613988000007339
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.004404055999998491
+    }
+  ]
+}

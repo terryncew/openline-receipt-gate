@@ -52,8 +52,12 @@ decision, durably record any effect, and provide evidence appropriate to
 that effect. The separate Gateway/Poppy mock-ledger proof is experimental.
 
 The package contains `openline_receiver.openline_wallet` (vendored Wallet
-contracts) and `openline_receiver.wallet_bridge`. It has no Envoy,
-network listeners, ledger, card integration, or public key infrastructure.
+contracts) and `openline_receiver.wallet_bridge`. The separate optional
+`openline_receiver.lithic_adapter` adds durable state for the narrowly bounded
+ASA pilot, and `openline_receiver.lithic_server` exposes loopback-only preflight
+routes. It does not deploy Envoy, enroll cards, settle payments, or provide
+public key infrastructure. See [the pilot report](LITHIC_PREFLIGHT.md) and
+[the accurate ASA contract](LITHIC_CONTRACT.md).
 
 ## Known limitations
 
@@ -65,7 +69,8 @@ network listeners, ledger, card integration, or public key infrastructure.
   guaranteed instantaneous revocation.
 - Approval/effect atomicity demonstrated elsewhere is not automatically
   inherited by consumers of this Python library.
-- The Lithic adapter remains a local test, not a networked ASA integration.
+- The Lithic adapter has a local authenticated HTTP test interface; no Lithic
+  enrollment, public endpoint, or actual delivered ASA request is claimed.
 - Do not install this package into production payment systems as-is.
 
 See [ENROLLMENT.md](ENROLLMENT.md) for actual supported onboarding

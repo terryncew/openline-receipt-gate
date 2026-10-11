@@ -1,0 +1,79 @@
+[
+  {
+    "case": "replace-corrupt",
+    "checkpoint": [
+      [
+        0,
+        0,
+        0
+      ]
+    ],
+    "inode_changed": true,
+    "size_before": 73728,
+    "size_after": 13,
+    "response": {
+      "result": "APPROVED"
+    },
+    "live_decisions": 1,
+    "restart_error": "ReceiverStateError",
+    "restart_cause": "database disk image is malformed"
+  },
+  {
+    "case": "replace-empty",
+    "checkpoint": [
+      [
+        0,
+        0,
+        0
+      ]
+    ],
+    "inode_changed": true,
+    "size_before": 73728,
+    "size_after": 0,
+    "response": {
+      "result": "APPROVED"
+    },
+    "live_decisions": 1,
+    "restart_error": "ReceiverStateError",
+    "restart_cause": "no such table: metadata"
+  },
+  {
+    "case": "overwrite-header",
+    "checkpoint": [
+      [
+        0,
+        0,
+        0
+      ]
+    ],
+    "inode_changed": false,
+    "size_before": 73728,
+    "size_after": 73728,
+    "response": {
+      "result": "APPROVED"
+    },
+    "live_decisions": 1,
+    "restart_response": {
+      "result": "APPROVED"
+    }
+  },
+  {
+    "case": "truncate-main",
+    "checkpoint": [
+      [
+        0,
+        0,
+        0
+      ]
+    ],
+    "inode_changed": false,
+    "size_before": 73728,
+    "size_after": 13,
+    "response": {
+      "result": "APPROVED"
+    },
+    "live_decisions": 1,
+    "restart_error": "ReceiverStateError",
+    "restart_cause": "database disk image is malformed"
+  }
+]

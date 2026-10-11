@@ -1,0 +1,19 @@
+============================================================
+OpenLine Receiver Quickstart
+============================================================
+
+[Owner] Creating Wallet and issuing mandate...
+[Owner] Principal: quickstart-owner
+[Owner] Root key: d8cbe0ffe2c8910e...
+
+[Receiver] Creating receiver and pinning owner key...
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/gateway/receiver-package/quickstart.py", line 70, in <module>
+    main()
+  File "/workspace/openline-receipt-gate/gateway/receiver-package/quickstart.py", line 47, in main
+    receiver.pin_owner(principal_id, owner_pub_hex)
+  File "/workspace/openline-receipt-gate/gateway/receiver-package/openline_receiver/wallet_bridge.py", line 77, in pin_owner
+    self.gate.pin_principal(principal_id, root_public_key)
+  File "/workspace/openline-receipt-gate/gateway/receiver-package/openline_receiver/openline_wallet/receiver.py", line 122, in pin_principal
+    raise WalletError("PINNED_PRINCIPAL_ROOT_MISMATCH")
+openline_wallet.errors.WalletError: PINNED_PRINCIPAL_ROOT_MISMATCH

@@ -1,7 +1,5 @@
 name: openline-lithic-preflight-001
 on:
-  push:
-    branches: [codex/openline-lithic-preflight-001]
   workflow_dispatch:
 permissions:
   contents: read
