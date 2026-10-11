@@ -1,0 +1,109 @@
+# OPENLINE-GATEWAY-001 reference environment.
+#
+# Profiles:
+#   openline  Envoy -> OpenLine authz service -> mock API
+#   opa-a     Envoy -> OPA (baseline A) -> mock API
+#   opa-b     Envoy -> OPA (baseline B) -> mock API
+#
+# Usage:
+#   docker compose --profile openline up --build
+#   docker compose --profile opa-b up --build
+
+services:
+  envoy:
+    image: envoyproxy/envoy:v1.39.3
+    profiles: [openline, opa-a, opa-b]
+    ports:
+      - "8080:8080"
+    volumes:
+      - ../envoy/envoy-openline.yaml:/etc/envoy/envoy.yaml:ro
+    command: ["-c", "/etc/envoy/envoy.yaml"]
+    depends_on:
+      - authz
+      - mockapi
+    networks:
+      - gateway
+
+  envoy-opa:
+    image: envoyproxy/envoy:v1.39.3
+    profiles: [opa-a, opa-b]
+    ports:
+      - "8080:8080"
+    volumes:
+      - ../envoy/envoy-opa.yaml:/etc/envoy/envoy.yaml:ro
+    command: ["-c", "/etc/envoy/envoy.yaml"]
+    depends_on:
+      - opa
+      - mockapi
+    networks:
+      - gateway
+
+  authz:
+    build:
+      context: ..
+      dockerfile: compose/Dockerfile.gateway
+    profiles: [openline]
+    environment:
+      GATEWAY_CONFIG: /config
+      GATEWAY_DB: /state/gateway.db
+      PYTHONPATH: /app
+    volumes:
+      - gateway-config:/config
+      - gateway-state:/state
+    networks:
+      - gateway
+
+  mockapi:
+    build:
+      context: ..
+      dockerfile: compose/Dockerfile.gateway
+    profiles: [openline, opa-a, opa-b]
+    environment:
+      GATEWAY_CONFIG: /config
+      GATEWAY_DB: /state/gateway.db
+      GATEWAY_AUTH_MODE: ${AUTH_MODE:-openline}
+      MOCK_API_PORT: "9000"
+      PYTHONPATH: /app
+    volumes:
+      - gateway-config:/config
+      - gateway-state:/state
+    command: ["python3", "/app/gateway/mock_api.py"]
+    networks:
+      - gateway
+
+  opa:
+    image: openpolicyagent/opa:1.10.1
+    profiles: [opa-a, opa-b]
+    command:
+      - "run"
+      - "--server"
+      - "--addr"
+      - "0.0.0.0:8181"
+      - "/policies/${OPA_POLICY:-policy-a.rego}"
+    volumes:
+      - ../opa/policy-a.rego:/policies/policy-a.rego:ro
+      - ../opa/policy-b.rego:/policies/policy-b.rego:ro
+    networks:
+      - gateway
+
+  opa-shim:
+    build:
+      context: ..
+      dockerfile: compose/Dockerfile.gateway
+    profiles: [opa-a, opa-b]
+    environment:
+      PYTHONPATH: /app
+    command: ["python3", "/app/gateway/opa_shim.py", "50052"]
+    depends_on:
+      - opa
+    networks:
+      - gateway
+
+volumes:
+  gateway-config:
+  gateway-state:
+
+networks:
+  gateway:
+    driver: bridge
+    internal: true
