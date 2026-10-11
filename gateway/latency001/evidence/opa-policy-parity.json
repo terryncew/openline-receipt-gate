@@ -1,0 +1,11 @@
+{
+  "parity_cases_passed": 326,
+  "fail_closed": {
+    "http-error": "signed refusal; nonce unconsumed",
+    "undefined": "signed refusal; nonce unconsumed",
+    "invalid-json": "signed refusal; nonce unconsumed",
+    "invalid-result": "signed refusal; nonce unconsumed",
+    "timeout": "signed refusal; nonce unconsumed",
+    "connection-error": "signed refusal; nonce unconsumed"
+  }
+}

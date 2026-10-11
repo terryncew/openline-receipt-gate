@@ -1,0 +1,20 @@
+# Prefer this official native plugin for the fair A/B comparison. The Python
+# shim alternative remains available to explain historical measurements.
+# Requires Docker Compose >=2.24.4 for !override.
+services:
+  envoy:
+    depends_on: !override
+      opa:
+        condition: service_started
+      mockapi:
+        condition: service_started
+    volumes:
+      - ./envoy-opa-native-compose.yaml:/etc/envoy/envoy.yaml:ro
+  opa:
+    image: openpolicyagent/opa:1.10.1-envoy
+    command: ["run", "--server", "--addr", "0.0.0.0:8181", "--config-file", "/bench/opa-config.yaml", "/policies/policy.rego", "/policies/native.rego", "/bench/opa-data.json"]
+    volumes:
+      - ./opa-native.rego:/policies/native.rego:ro
+      - ./opa-native-config-${OPA_VARIANT:-a}.yaml:/bench/opa-config.yaml:ro
+  opa-shim:
+    profiles: [shim-only]

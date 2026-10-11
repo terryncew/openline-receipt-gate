@@ -1,0 +1,54 @@
+# Separate comparison stack; historical Gateway Compose remains untouched.
+# OPA_VARIANT=a or b selects basic bearer policy or allowlist + revocation
+# policy and unsigned decision logs. Only Envoy publishes a port.
+services:
+  envoy:
+    image: envoyproxy/envoy:v1.39.3
+    ports:
+      - "127.0.0.1:${LATENCY_PORT:-8080}:8080"
+    volumes:
+      - ./envoy-opa-compose.yaml:/etc/envoy/envoy.yaml:ro
+    command: ["-c", "/etc/envoy/envoy.yaml", "--concurrency", "2"]
+    depends_on: [opa-shim, mockapi]
+    networks: [gateway]
+  opa:
+    image: openpolicyagent/opa:1.10.1
+    command: ["run", "--server", "--addr", "0.0.0.0:8181", "--config-file", "/bench/opa-config.yaml", "/policies/policy.rego", "/bench/opa-data.json"]
+    volumes:
+      - ../opa/policy-${OPA_VARIANT:-a}.rego:/policies/policy.rego:ro
+      - ./opa-config-${OPA_VARIANT:-a}.yaml:/bench/opa-config.yaml:ro
+      - ./opa-data.json:/bench/opa-data.json:ro
+    networks: [gateway]
+  opa-shim:
+    build:
+      context: ../..
+      dockerfile: gateway/compose/Dockerfile.gateway
+    environment:
+      PYTHONPATH: /app
+      LATENCY_OPA_URL: http://opa:8181/v1/data/envoy/authz
+    command: ["python3", "/app/gateway/latency001/opa_shim.py", "50052"]
+    depends_on: [opa]
+    networks: [gateway]
+  mockapi:
+    build:
+      context: ../..
+      dockerfile: gateway/compose/Dockerfile.gateway
+    entrypoint: ["/app/gateway/compose/entrypoint-gateway.sh"]
+    environment:
+      GATEWAY_CONFIG: /config
+      GATEWAY_DB: /state/gateway.db
+      GATEWAY_AUTH_MODE: opa
+      MOCK_API_PORT: "9000"
+      MOCK_API_HOST: "0.0.0.0"
+      PYTHONPATH: /app
+    volumes:
+      - gateway-config:/config
+      - gateway-state:/state
+    command: ["python3", "/app/gateway/mock_api.py"]
+    networks: [gateway]
+volumes:
+  gateway-config:
+  gateway-state:
+networks:
+  gateway:
+    driver: bridge

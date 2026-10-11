@@ -1,0 +1,19 @@
+test_acknowledged_state_survives_sigkill_and_full_process_restart (gateway.tests.test_latency_regressions.LatencySecurityRegressions.test_acknowledged_state_survives_sigkill_and_full_process_restart) ... ok
+test_authorization_ack_is_durable_before_protected_api_execution (gateway.tests.test_latency_regressions.LatencySecurityRegressions.test_authorization_ack_is_durable_before_protected_api_execution)
+Kill directly after Check returns, before any downstream work. ... ok
+test_authorization_and_ledger_connections_retain_full_durability (gateway.tests.test_latency_regressions.LatencySecurityRegressions.test_authorization_and_ledger_connections_retain_full_durability)
+Check the actual writer connections, not another SQLite default. ... ok
+test_concurrent_unique_requests_preserve_every_receipt_and_effect (gateway.tests.test_latency_regressions.LatencySecurityRegressions.test_concurrent_unique_requests_preserve_every_receipt_and_effect) ... ok
+test_independent_verifier_rejects_tampering_duplicates_and_empty_log (gateway.tests.test_latency_regressions.LatencySecurityRegressions.test_independent_verifier_rejects_tampering_duplicates_and_empty_log) ... ok
+test_permission_updates_and_revocation_are_read_fresh (gateway.tests.test_latency_regressions.LatencySecurityRegressions.test_permission_updates_and_revocation_are_read_fresh) ... ok
+test_signed_action_cannot_substitute_another_standing_identity (gateway.tests.test_latency_regressions.LatencySecurityRegressions.test_signed_action_cannot_substitute_another_standing_identity)
+A valid agent signature cannot relabel the downstream identity. ... ok
+test_simultaneous_nonce_claim_mints_exactly_one_token (gateway.tests.test_latency_regressions.LatencySecurityRegressions.test_simultaneous_nonce_claim_mints_exactly_one_token)
+Force contenders past verification before the nonce write. ... [authz] config reloaded: mode=enforce
+ok
+test_tampering_cannot_change_authorized_execution (gateway.tests.test_latency_regressions.LatencySecurityRegressions.test_tampering_cannot_change_authorized_execution) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 3.334s
+
+OK

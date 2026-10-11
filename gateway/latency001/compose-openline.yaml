@@ -1,0 +1,21 @@
+# Add to gateway/compose/docker-compose.yml for matched laboratory runs.
+# Both original and optimized images use the same topology and Envoy workers.
+services:
+  envoy:
+    command: ["-c", "/etc/envoy/envoy.yaml", "--concurrency", "2"]
+  authz:
+    image: ${LATENCY_IMAGE:-gateway-latency-optimized:local}
+    environment:
+      GATEWAY_PROFILE: ${LATENCY_AUTHZ_PROFILE:-}
+      GATEWAY_STANDING_PORT: "50053"
+      GATEWAY_STANDING_HOST: "0.0.0.0"
+      NO_PROXY: "authz,mockapi,opa,127.0.0.1,localhost"
+      no_proxy: "authz,mockapi,opa,127.0.0.1,localhost"
+  mockapi:
+    image: ${LATENCY_IMAGE:-gateway-latency-optimized:local}
+    environment:
+      GATEWAY_PROFILE: ${LATENCY_API_PROFILE:-}
+      GATEWAY_STANDING_CHECK: ${LATENCY_STANDING_CHECK:-1}
+      GATEWAY_STANDING_URL: http://authz:50053/standing
+      NO_PROXY: "authz,mockapi,opa,127.0.0.1,localhost"
+      no_proxy: "authz,mockapi,opa,127.0.0.1,localhost"

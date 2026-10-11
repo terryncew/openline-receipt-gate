@@ -1,0 +1,84 @@
+test_acknowledged_state_survives_sigkill_and_full_process_restart (gateway.tests.test_latency_regressions.LatencySecurityRegressions.test_acknowledged_state_survives_sigkill_and_full_process_restart) ... ok
+test_authorization_ack_is_durable_before_protected_api_execution (gateway.tests.test_latency_regressions.LatencySecurityRegressions.test_authorization_ack_is_durable_before_protected_api_execution)
+Kill directly after Check returns, before any downstream work. ... ok
+test_concurrent_unique_requests_preserve_every_receipt_and_effect (gateway.tests.test_latency_regressions.LatencySecurityRegressions.test_concurrent_unique_requests_preserve_every_receipt_and_effect) ... ERROR
+test_independent_verifier_rejects_tampering_duplicates_and_empty_log (gateway.tests.test_latency_regressions.LatencySecurityRegressions.test_independent_verifier_rejects_tampering_duplicates_and_empty_log) ... ok
+test_permission_updates_and_revocation_are_read_fresh (gateway.tests.test_latency_regressions.LatencySecurityRegressions.test_permission_updates_and_revocation_are_read_fresh) ... ok
+test_signed_action_cannot_substitute_another_standing_identity (gateway.tests.test_latency_regressions.LatencySecurityRegressions.test_signed_action_cannot_substitute_another_standing_identity)
+A valid agent signature cannot relabel the downstream identity. ... FAIL
+test_simultaneous_nonce_claim_mints_exactly_one_token (gateway.tests.test_latency_regressions.LatencySecurityRegressions.test_simultaneous_nonce_claim_mints_exactly_one_token)
+Force contenders past verification before the nonce write. ... [authz] config reloaded: mode=enforce
+ERROR
+test_tampering_cannot_change_authorized_execution (gateway.tests.test_latency_regressions.LatencySecurityRegressions.test_tampering_cannot_change_authorized_execution) ... ok
+
+======================================================================
+ERROR: test_concurrent_unique_requests_preserve_every_receipt_and_effect (gateway.tests.test_latency_regressions.LatencySecurityRegressions.test_concurrent_unique_requests_preserve_every_receipt_and_effect)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/gateway/tests/test_latency_regressions.py", line 135, in test_concurrent_unique_requests_preserve_every_receipt_and_effect
+    responses = list(executor.map(self.check, headers))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/_base.py", line 619, in result_iterator
+    yield _result_or_cancel(fs.pop())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/_base.py", line 317, in _result_or_cancel
+    return fut.result(timeout)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/_base.py", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/openline-receipt-gate/gateway/tests/test_latency_regressions.py", line 62, in check
+    return self.stack.stub.Check(request(headers), timeout=20)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/openline-receipt-gate/.venv/lib/python3.12/site-packages/grpc/_channel.py", line 1168, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/openline-receipt-gate/.venv/lib/python3.12/site-packages/grpc/_channel.py", line 999, in _end_unary_response_blocking
+    raise _InactiveRpcError(state)  # pytype: disable=not-instantiable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+grpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:
+	status = StatusCode.UNKNOWN
+	details = "Exception calling application: bad parameter or other API misuse"
+	debug_error_string = "UNKNOWN:Exception calling application: bad parameter or other API misuse"
+>
+
+======================================================================
+ERROR: test_simultaneous_nonce_claim_mints_exactly_one_token (gateway.tests.test_latency_regressions.LatencySecurityRegressions.test_simultaneous_nonce_claim_mints_exactly_one_token)
+Force contenders past verification before the nonce write.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/gateway/tests/test_latency_regressions.py", line 110, in test_simultaneous_nonce_claim_mints_exactly_one_token
+    responses = [future.result(timeout=30) for future in futures]
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/openline-receipt-gate/gateway/authz_server.py", line 171, in Check
+    self.state.add_receipt(receipt)
+  File "/workspace/openline-receipt-gate/gateway/authz_server.py", line 108, in add_receipt
+    self.db.execute(
+sqlite3.InterfaceError: bad parameter or other API misuse
+
+======================================================================
+FAIL: test_signed_action_cannot_substitute_another_standing_identity (gateway.tests.test_latency_regressions.LatencySecurityRegressions.test_signed_action_cannot_substitute_another_standing_identity)
+A valid agent signature cannot relabel the downstream identity.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/gateway/tests/test_latency_regressions.py", line 230, in test_signed_action_cannot_substitute_another_standing_identity
+    self.assertEqual(response.status.code, 7)
+AssertionError: 0 != 7
+
+----------------------------------------------------------------------
+Ran 8 tests in 18.052s
+
+FAILED (failures=1, errors=2)

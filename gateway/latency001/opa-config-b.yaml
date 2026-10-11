@@ -1,0 +1,3 @@
+# Ordinary OPA decision logs. These are unsigned; they do not prove execution.
+decision_logs:
+  console: true

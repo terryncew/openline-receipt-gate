@@ -1,0 +1,15 @@
+# Add to the standard OpenLine Compose stack. All security mechanisms and
+# state remain the same; only mandate fit evaluation uses the extra OPA service.
+services:
+  authz:
+    command: ["python3", "/app/gateway/latency001/opa_stateful_authz.py", "50051"]
+    environment:
+      LATENCY_OPA_URL: http://opa:8181/v1/data/gateway_mandate/decision
+    depends_on: [opa]
+  opa:
+    profiles: [openline]
+    image: openpolicyagent/opa:1.10.1
+    command: ["run", "--server", "--addr", "0.0.0.0:8181", "/policies/policy-stateful.rego"]
+    volumes:
+      - ../latency001/policy-stateful.rego:/policies/policy-stateful.rego:ro
+    networks: [gateway]

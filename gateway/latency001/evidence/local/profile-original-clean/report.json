@@ -1,0 +1,662 @@
+{
+  "metadata": {
+    "label": "original-profile-standing-on",
+    "mode": "openline",
+    "transport": "http",
+    "url": "http://127.0.0.1:8080",
+    "python": "3.12.14",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "command": [
+      "gateway/latency001/benchmark.py",
+      "--mode",
+      "openline",
+      "--samples",
+      "1000",
+      "--concurrency",
+      "1",
+      "8",
+      "--clients",
+      "persistent",
+      "--workloads",
+      "transfer",
+      "--amount",
+      "1",
+      "--warmup",
+      "20",
+      "--profile-file",
+      "authz:/tmp/authz-profile.jsonl",
+      "--profile-file",
+      "mockapi:/tmp/api-profile.jsonl",
+      "--output",
+      "/workspace/gateway-latency-scratch/profile-original-clean",
+      "--label",
+      "original-profile-standing-on"
+    ],
+    "compose_file": "/workspace/openline-receipt-gate/gateway/compose/docker-compose.yml:/workspace/openline-receipt-gate/gateway/latency001/compose-openline.yaml:/workspace/gateway-latency-scratch/compose-original-local.yaml",
+    "compose_project_name": "latency-profile-original",
+    "agent_id": "latency-66e53d26337a",
+    "measurement": "closed-loop, no think time; full response body consumed; request signing separate; elapsed throughput includes client preparation and result collection; no retries",
+    "percentiles": "linear interpolation (n-1)*p; successful samples only, any failure fails case",
+    "runtime_flags": {
+      "mockapi": {
+        "GATEWAY_AUTH_MODE": "openline",
+        "GATEWAY_STANDING_CHECK": "1",
+        "GATEWAY_STANDING_URL": "http://authz:50053/standing",
+        "GATEWAY_STANDING_PORT": null,
+        "GATEWAY_PROFILE": "/tmp/api-profile.jsonl",
+        "GATEWAY_TEST_PRE_COMMIT_DELAY_MS": null
+      },
+      "authz": {
+        "GATEWAY_AUTH_MODE": null,
+        "GATEWAY_STANDING_CHECK": null,
+        "GATEWAY_STANDING_URL": null,
+        "GATEWAY_STANDING_PORT": "50053",
+        "GATEWAY_PROFILE": "/tmp/authz-profile.jsonl",
+        "GATEWAY_TEST_PRE_COMMIT_DELAY_MS": null
+      }
+    }
+  },
+  "passed": false,
+  "cases": [
+    {
+      "case": "openline-http-transfer-persistent-c1",
+      "samples_requested": 1000,
+      "concurrency": 1,
+      "client": "persistent",
+      "workload": "transfer",
+      "amount_cents": 1,
+      "passed": true,
+      "status_counts": {
+        "200": 1000
+      },
+      "failures": 0,
+      "all_attempted_latency": {
+        "n": 1000,
+        "p50_ms": 6.8467424999999995,
+        "p95_ms": 10.641633399999998,
+        "p99_ms": 12.811820509999997,
+        "mean_ms": 7.294777699,
+        "max_ms": 16.987768
+      },
+      "successful_latency": {
+        "n": 1000,
+        "p50_ms": 6.8467424999999995,
+        "p95_ms": 10.641633399999998,
+        "p99_ms": 12.811820509999997,
+        "mean_ms": 7.294777699,
+        "max_ms": 16.987768
+      },
+      "successful_response_headers_latency": {
+        "n": 1000,
+        "p50_ms": 6.836888,
+        "p95_ms": 10.627663899999998,
+        "p99_ms": 12.794094899999997,
+        "mean_ms": 7.282787653,
+        "max_ms": 16.971824
+      },
+      "client_prepare": {
+        "n": 1000,
+        "p50_ms": 0.104988,
+        "p95_ms": 0.15049999999999997,
+        "p99_ms": 0.18658571,
+        "mean_ms": 0.110098643,
+        "max_ms": 0.976253
+      },
+      "elapsed_seconds": 7.433500407001702,
+      "achieved_successful_requests_per_second": 134.52612433545954,
+      "first_client_request": {
+        "index": -1,
+        "worker": 0,
+        "phase": "first_client_request",
+        "trace_id": "60ab5b05-a88c-4c0a-b280-28abac090a43",
+        "client_prepare_ms": 0.278019,
+        "status": 200,
+        "success": true,
+        "effect_id": "fx-57b0c9c2da4044c8",
+        "latency_ms": 31.226315,
+        "response_headers_ms": 31.205844,
+        "response_bytes": 181,
+        "error": null
+      },
+      "warmup_requests_per_worker": 20,
+      "ledger": {
+        "passed": true,
+        "before": {
+          "balances": {
+            "treasury": 1000000,
+            "ops": 50000
+          },
+          "effects": 0,
+          "receipts": 1021,
+          "journal_mode": "delete"
+        },
+        "after": {
+          "balances": {
+            "treasury": 998979,
+            "ops": 50000,
+            "vendor": 1021
+          },
+          "effects": 1021,
+          "receipts": 2042,
+          "journal_mode": "delete"
+        },
+        "expected_transfer_count_including_first_and_warmup": 1021,
+        "expected_delta_cents": 1021
+      },
+      "profiling": {
+        "record_counts": {
+          "authz.request": 1000,
+          "api.request": 1000
+        },
+        "successful_measured_requests": 1000,
+        "unique_traces_with_profiles": 1000,
+        "stages": {
+          "authz.request.total": {
+            "n": 1000,
+            "p50_ms": 2.800574,
+            "p95_ms": 5.0401145,
+            "p99_ms": 7.37216627,
+            "mean_ms": 3.074147508,
+            "max_ms": 11.095121
+          },
+          "authz.request.authz.claim_decode": {
+            "n": 1000,
+            "p50_ms": 0.016640000000000002,
+            "p95_ms": 0.0239465,
+            "p99_ms": 0.04322612999999998,
+            "mean_ms": 0.017972281,
+            "max_ms": 0.115975
+          },
+          "authz.request.authz.mandate_compile": {
+            "n": 1000,
+            "p50_ms": 0.093947,
+            "p95_ms": 0.14202455,
+            "p99_ms": 0.18152012,
+            "mean_ms": 0.098739205,
+            "max_ms": 0.277859
+          },
+          "authz.request.authz.mandate_preflight": {
+            "n": 1000,
+            "p50_ms": 0.05978,
+            "p95_ms": 0.09551899999999999,
+            "p99_ms": 0.14498867999999995,
+            "mean_ms": 0.067009971,
+            "max_ms": 1.284537
+          },
+          "authz.request.authz.request": {
+            "n": 1000,
+            "p50_ms": 2.800574,
+            "p95_ms": 5.0401145,
+            "p99_ms": 7.37216627,
+            "mean_ms": 3.074147508,
+            "max_ms": 11.095121
+          },
+          "authz.request.authz.request_handling": {
+            "n": 1000,
+            "p50_ms": 0.0260695,
+            "p95_ms": 0.0419445,
+            "p99_ms": 0.05486452999999999,
+            "mean_ms": 0.028175698,
+            "max_ms": 0.085929
+          },
+          "authz.request.authz.revocation_check": {
+            "n": 1000,
+            "p50_ms": 0.053710999999999995,
+            "p95_ms": 0.08474249999999998,
+            "p99_ms": 0.11281641999999999,
+            "mean_ms": 0.058579724,
+            "max_ms": 0.249326
+          },
+          "authz.request.crypto.action_verification": {
+            "n": 1000,
+            "p50_ms": 0.14415250000000002,
+            "p95_ms": 0.19375859999999992,
+            "p99_ms": 0.22658475999999989,
+            "mean_ms": 0.152000389,
+            "max_ms": 0.368686
+          },
+          "authz.request.crypto.decision_signing": {
+            "n": 1000,
+            "p50_ms": 0.0771815,
+            "p95_ms": 0.11448654999999999,
+            "p99_ms": 0.14533573,
+            "mean_ms": 0.084482861,
+            "max_ms": 0.17285
+          },
+          "authz.request.crypto.receipt_signing": {
+            "n": 1000,
+            "p50_ms": 0.06453249999999999,
+            "p95_ms": 0.0968195,
+            "p99_ms": 0.12522301,
+            "mean_ms": 0.070053374,
+            "max_ms": 0.155524
+          },
+          "authz.request.sqlite.agent_read": {
+            "n": 1000,
+            "p50_ms": 0.049935999999999994,
+            "p95_ms": 0.0795375,
+            "p99_ms": 0.10711853999999998,
+            "mean_ms": 0.054626528,
+            "max_ms": 0.243547
+          },
+          "authz.request.sqlite.durable_commit": {
+            "n": 1000,
+            "p50_ms": 1.934873,
+            "p95_ms": 4.0827053,
+            "p99_ms": 6.26048792,
+            "mean_ms": 2.200375289,
+            "max_ms": 10.356207
+          },
+          "authz.request.sqlite.nonce_read": {
+            "n": 1000,
+            "p50_ms": 0.013816,
+            "p95_ms": 0.02210655,
+            "p99_ms": 0.04257641999999999,
+            "mean_ms": 0.015400608,
+            "max_ms": 0.089556
+          },
+          "authz.request.sqlite.nonce_transaction": {
+            "n": 1000,
+            "p50_ms": 1.0805444999999998,
+            "p95_ms": 1.9465972499999988,
+            "p99_ms": 4.064612619999998,
+            "mean_ms": 1.223765586,
+            "max_ms": 6.652232
+          },
+          "authz.request.sqlite.receipt_transaction": {
+            "n": 1000,
+            "p50_ms": 0.992151,
+            "p95_ms": 2.068879999999998,
+            "p99_ms": 3.885704459999999,
+            "mean_ms": 1.151620506,
+            "max_ms": 9.641589
+          },
+          "api.request.total": {
+            "n": 1000,
+            "p50_ms": 2.432593,
+            "p95_ms": 3.9507784999999997,
+            "p99_ms": 5.446568189999999,
+            "mean_ms": 2.624749812,
+            "max_ms": 9.402259
+          },
+          "api.request.api.policy_read": {
+            "n": 1000,
+            "p50_ms": 0.064903,
+            "p95_ms": 0.096734,
+            "p99_ms": 0.14697291,
+            "mean_ms": 0.071918466,
+            "max_ms": 2.124964
+          },
+          "api.request.api.protected_execution": {
+            "n": 1000,
+            "p50_ms": 1.1068544999999999,
+            "p95_ms": 2.2378191499999995,
+            "p99_ms": 3.7723042199999997,
+            "mean_ms": 1.248668307,
+            "max_ms": 7.815015
+          },
+          "api.request.api.request": {
+            "n": 1000,
+            "p50_ms": 2.432593,
+            "p95_ms": 3.9507784999999997,
+            "p99_ms": 5.446568189999999,
+            "mean_ms": 2.624749812,
+            "max_ms": 9.402259
+          },
+          "api.request.api.request_handling": {
+            "n": 1000,
+            "p50_ms": 0.011292,
+            "p95_ms": 0.0182885,
+            "p99_ms": 0.02839511999999999,
+            "mean_ms": 0.012504076,
+            "max_ms": 0.142585
+          },
+          "api.request.api.response_write": {
+            "n": 1000,
+            "p50_ms": 0.0900155,
+            "p95_ms": 0.12256399999999999,
+            "p99_ms": 0.15363422999999998,
+            "mean_ms": 0.093724734,
+            "max_ms": 0.204538
+          },
+          "api.request.api.standing_roundtrip": {
+            "n": 1000,
+            "p50_ms": 0.917564,
+            "p95_ms": 1.3144465,
+            "p99_ms": 1.9567749299999992,
+            "mean_ms": 0.968115144,
+            "max_ms": 4.544914
+          },
+          "api.request.crypto.decision_verification": {
+            "n": 1000,
+            "p50_ms": 0.1607925,
+            "p95_ms": 0.21921099999999996,
+            "p99_ms": 0.27342841,
+            "mean_ms": 0.168419092,
+            "max_ms": 0.575838
+          },
+          "api.request.sqlite.ledger_durable_commit": {
+            "n": 1000,
+            "p50_ms": 0.9359765,
+            "p95_ms": 2.033353649999996,
+            "p99_ms": 3.512938259999999,
+            "mean_ms": 1.081153204,
+            "max_ms": 7.628324
+          }
+        },
+        "network_envoy_scheduling_and_profile_output_residual": {
+          "n": 1000,
+          "p50_ms": 1.4864285000000002,
+          "p95_ms": 2.2938378999999998,
+          "p99_ms": 3.916545079999999,
+          "mean_ms": 1.595880379,
+          "max_ms": 5.687388000000001
+        },
+        "note": "Nested stages are inclusive and must not be summed. Residual also includes profiling output, serialization and queueing."
+      },
+      "profile_malformed_lines": 0
+    },
+    {
+      "case": "openline-http-transfer-persistent-c8",
+      "samples_requested": 1000,
+      "concurrency": 8,
+      "client": "persistent",
+      "workload": "transfer",
+      "amount_cents": 1,
+      "passed": false,
+      "status_counts": {
+        "200": 387,
+        "403": 609,
+        "503": 4
+      },
+      "failures": 613,
+      "all_attempted_latency": {
+        "n": 1000,
+        "p50_ms": 10.0505215,
+        "p95_ms": 69.41458994999998,
+        "p99_ms": 106.37545237999996,
+        "mean_ms": 23.192341315,
+        "max_ms": 183.222769
+      },
+      "successful_latency": {
+        "n": 387,
+        "p50_ms": 36.984419,
+        "p95_ms": 83.16583869999998,
+        "p99_ms": 118.79628575999993,
+        "mean_ms": 38.82316847286822,
+        "max_ms": 183.222769
+      },
+      "successful_response_headers_latency": {
+        "n": 387,
+        "p50_ms": 36.977679,
+        "p95_ms": 83.15397199999997,
+        "p99_ms": 118.77945157999993,
+        "mean_ms": 38.80603681136951,
+        "max_ms": 183.206424
+      },
+      "client_prepare": {
+        "n": 1000,
+        "p50_ms": 0.096516,
+        "p95_ms": 0.30210574999999984,
+        "p99_ms": 0.6256122999999998,
+        "mean_ms": 0.129883438,
+        "max_ms": 1.885784
+      },
+      "elapsed_seconds": 3.437430719000986,
+      "achieved_successful_requests_per_second": 112.584087254702,
+      "first_client_request": {
+        "index": -1,
+        "worker": 0,
+        "phase": "first_client_request",
+        "trace_id": "a39e23bc-7c5d-4b8e-bf16-66638b664cdb",
+        "client_prepare_ms": 0.141363,
+        "status": 200,
+        "success": true,
+        "effect_id": "fx-b4d3dc281f5e4f68",
+        "latency_ms": 9.736898,
+        "response_headers_ms": 9.721064,
+        "response_bytes": 180,
+        "error": null
+      },
+      "warmup_requests_per_worker": 20,
+      "ledger": {
+        "passed": true,
+        "before": {
+          "balances": {
+            "treasury": 998979,
+            "ops": 50000,
+            "vendor": 1021
+          },
+          "effects": 1021,
+          "receipts": 2042,
+          "journal_mode": "delete"
+        },
+        "after": {
+          "balances": {
+            "treasury": 998548,
+            "ops": 50000,
+            "vendor": 1452
+          },
+          "effects": 1452,
+          "receipts": 2744,
+          "journal_mode": "delete"
+        },
+        "expected_transfer_count_including_first_and_warmup": 431,
+        "expected_delta_cents": 431
+      },
+      "profiling": {
+        "record_counts": {
+          "authz.request": 387,
+          "api.request": 387
+        },
+        "successful_measured_requests": 387,
+        "unique_traces_with_profiles": 387,
+        "stages": {
+          "authz.request.total": {
+            "n": 387,
+            "p50_ms": 5.531943,
+            "p95_ms": 15.532834099999999,
+            "p99_ms": 22.048396679999996,
+            "mean_ms": 7.040016821705426,
+            "max_ms": 40.659116
+          },
+          "authz.request.authz.claim_decode": {
+            "n": 387,
+            "p50_ms": 0.015413,
+            "p95_ms": 0.025654999999999997,
+            "p99_ms": 0.05332825999999957,
+            "mean_ms": 0.0204212661498708,
+            "max_ms": 1.223094
+          },
+          "authz.request.authz.mandate_compile": {
+            "n": 387,
+            "p50_ms": 0.092951,
+            "p95_ms": 0.1648097,
+            "p99_ms": 0.36204583999999784,
+            "mean_ms": 0.10745156072351421,
+            "max_ms": 0.700696
+          },
+          "authz.request.authz.mandate_preflight": {
+            "n": 387,
+            "p50_ms": 0.05981,
+            "p95_ms": 0.11815809999999997,
+            "p99_ms": 0.2855688799999998,
+            "mean_ms": 0.07317697674418605,
+            "max_ms": 1.212289
+          },
+          "authz.request.authz.request": {
+            "n": 387,
+            "p50_ms": 5.531943,
+            "p95_ms": 15.532834099999999,
+            "p99_ms": 22.048396679999996,
+            "mean_ms": 7.040016821705426,
+            "max_ms": 40.659116
+          },
+          "authz.request.authz.request_handling": {
+            "n": 387,
+            "p50_ms": 0.023296,
+            "p95_ms": 0.04969,
+            "p99_ms": 0.0889404799999998,
+            "mean_ms": 0.027760377260981912,
+            "max_ms": 0.313573
+          },
+          "authz.request.authz.revocation_check": {
+            "n": 387,
+            "p50_ms": 0.614787,
+            "p95_ms": 4.227254899999998,
+            "p99_ms": 9.455247079999985,
+            "mean_ms": 1.2129844780361758,
+            "max_ms": 18.424795
+          },
+          "authz.request.crypto.action_verification": {
+            "n": 387,
+            "p50_ms": 0.164698,
+            "p95_ms": 0.5668891999999994,
+            "p99_ms": 1.2561011599999974,
+            "mean_ms": 0.23797685788113696,
+            "max_ms": 2.31438
+          },
+          "authz.request.crypto.decision_signing": {
+            "n": 387,
+            "p50_ms": 0.111838,
+            "p95_ms": 0.6402850999999999,
+            "p99_ms": 1.844500399999997,
+            "mean_ms": 0.22997988372093023,
+            "max_ms": 5.659915
+          },
+          "authz.request.crypto.receipt_signing": {
+            "n": 387,
+            "p50_ms": 0.088203,
+            "p95_ms": 0.4885722999999998,
+            "p99_ms": 1.2401498199999998,
+            "mean_ms": 0.17633985788113696,
+            "max_ms": 7.911857
+          },
+          "authz.request.sqlite.agent_read": {
+            "n": 387,
+            "p50_ms": 0.609419,
+            "p95_ms": 4.207019999999998,
+            "p99_ms": 9.449159559999986,
+            "mean_ms": 1.208041834625323,
+            "max_ms": 18.416252
+          },
+          "authz.request.sqlite.durable_commit": {
+            "n": 387,
+            "p50_ms": 1.937843,
+            "p95_ms": 4.809145899999998,
+            "p99_ms": 7.762107499999998,
+            "mean_ms": 2.2934121524547804,
+            "max_ms": 12.642225
+          },
+          "authz.request.sqlite.nonce_read": {
+            "n": 387,
+            "p50_ms": 0.077687,
+            "p95_ms": 3.3024976999999995,
+            "p99_ms": 8.29839366,
+            "mean_ms": 0.8704183023255814,
+            "max_ms": 33.750188
+          },
+          "authz.request.sqlite.nonce_transaction": {
+            "n": 387,
+            "p50_ms": 1.383587,
+            "p95_ms": 4.3400495999999995,
+            "p99_ms": 7.474637239999956,
+            "mean_ms": 1.8565208785529717,
+            "max_ms": 12.224965
+          },
+          "authz.request.sqlite.receipt_transaction": {
+            "n": 387,
+            "p50_ms": 1.35903,
+            "p95_ms": 5.7527428999999985,
+            "p99_ms": 10.291912839999988,
+            "mean_ms": 2.1063478604651165,
+            "max_ms": 37.917262
+          },
+          "api.request.total": {
+            "n": 387,
+            "p50_ms": 4.064359,
+            "p95_ms": 21.593463899999996,
+            "p99_ms": 38.51346839999998,
+            "mean_ms": 6.493262640826873,
+            "max_ms": 59.701543
+          },
+          "api.request.api.policy_read": {
+            "n": 387,
+            "p50_ms": 0.059359,
+            "p95_ms": 0.10910279999999997,
+            "p99_ms": 0.15692133999999963,
+            "mean_ms": 0.06556806976744187,
+            "max_ms": 0.339361
+          },
+          "api.request.api.protected_execution": {
+            "n": 387,
+            "p50_ms": 1.455475,
+            "p95_ms": 19.5751398,
+            "p99_ms": 34.817170479999994,
+            "mean_ms": 3.908922542635659,
+            "max_ms": 56.467856
+          },
+          "api.request.api.request": {
+            "n": 387,
+            "p50_ms": 4.064359,
+            "p95_ms": 21.593463899999996,
+            "p99_ms": 38.51346839999998,
+            "mean_ms": 6.493262640826873,
+            "max_ms": 59.701543
+          },
+          "api.request.api.request_handling": {
+            "n": 387,
+            "p50_ms": 0.010325,
+            "p95_ms": 0.019170999999999997,
+            "p99_ms": 0.0522916,
+            "mean_ms": 0.012571186046511628,
+            "max_ms": 0.184888
+          },
+          "api.request.api.response_write": {
+            "n": 387,
+            "p50_ms": 0.088193,
+            "p95_ms": 0.16008340000000001,
+            "p99_ms": 0.25463639999999965,
+            "mean_ms": 0.09852237984496125,
+            "max_ms": 0.331119
+          },
+          "api.request.api.standing_roundtrip": {
+            "n": 387,
+            "p50_ms": 1.574985,
+            "p95_ms": 4.865259899999999,
+            "p99_ms": 10.254824959999981,
+            "mean_ms": 2.1654982868217054,
+            "max_ms": 15.283509
+          },
+          "api.request.crypto.decision_verification": {
+            "n": 387,
+            "p50_ms": 0.163958,
+            "p95_ms": 0.2622454,
+            "p99_ms": 0.3156778599999999,
+            "mean_ms": 0.17827885012919897,
+            "max_ms": 1.019217
+          },
+          "api.request.sqlite.ledger_durable_commit": {
+            "n": 387,
+            "p50_ms": 1.010594,
+            "p95_ms": 3.0766,
+            "p99_ms": 34.61831324,
+            "mean_ms": 2.0230212480620153,
+            "max_ms": 55.138491
+          }
+        },
+        "network_envoy_scheduling_and_profile_output_residual": {
+          "n": 387,
+          "p50_ms": 23.785003999999997,
+          "p95_ms": 62.812443299999956,
+          "p99_ms": 98.41061455999996,
+          "mean_ms": 25.289889010335916,
+          "max_ms": 170.711962
+        },
+        "note": "Nested stages are inclusive and must not be summed. Residual also includes profiling output, serialization and queueing."
+      },
+      "profile_malformed_lines": 0
+    }
+  ],
+  "error": "benchmark case failed: openline-http-transfer-persistent-c8"
+}

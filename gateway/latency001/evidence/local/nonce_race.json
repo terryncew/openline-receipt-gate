@@ -1,0 +1,87 @@
+{
+  "source_sha256": "c6e6875adaac53d4eb3882cfa29897f84f9ce660da112cdac9b0a05114ebdf1f",
+  "schedule": "two workers synchronized after nonce SELECT and before INSERT OR IGNORE; actual original _evaluate and GatewayState writes",
+  "rounds": [
+    [
+      "allow",
+      "allow"
+    ],
+    [
+      "allow",
+      "allow"
+    ],
+    [
+      "allow",
+      "allow"
+    ],
+    [
+      "BrokenBarrierError: ",
+      "deny"
+    ],
+    [
+      "allow",
+      "allow"
+    ],
+    [
+      "allow",
+      "allow"
+    ],
+    [
+      "allow",
+      "allow"
+    ],
+    [
+      "allow",
+      "allow"
+    ],
+    [
+      "allow",
+      "allow"
+    ],
+    [
+      "allow",
+      "allow"
+    ],
+    [
+      "allow",
+      "allow"
+    ],
+    [
+      "allow",
+      "allow"
+    ],
+    [
+      "allow",
+      "allow"
+    ],
+    [
+      "allow",
+      "allow"
+    ],
+    [
+      "allow",
+      "allow"
+    ],
+    [
+      "allow",
+      "allow"
+    ],
+    [
+      "allow",
+      "allow"
+    ],
+    [
+      "allow",
+      "allow"
+    ],
+    [
+      "allow",
+      "allow"
+    ],
+    [
+      "allow",
+      "allow"
+    ]
+  ],
+  "duplicate_allow_rounds": 19
+}

@@ -79,6 +79,8 @@ class Ledger:
 
     def __init__(self, db_path: Path):
         self.db = sqlite3.connect(str(db_path), check_same_thread=False)
+        self.db.execute("PRAGMA journal_mode=WAL")
+        self.db.execute("PRAGMA synchronous=FULL")
         self.db.execute("CREATE TABLE IF NOT EXISTS balances("
                         "acct TEXT PRIMARY KEY, cents INTEGER)")
         self.db.execute("CREATE TABLE IF NOT EXISTS used_decisions("
@@ -275,6 +277,13 @@ class Handler(BaseHTTPRequestHandler):
         return self._send(200 if res["ok"] else 409, res)
 
 
+class LedgerHTTPServer(HTTPServer):
+    # Keep ledger execution serialized. The default five-connection listen
+    # queue drops bursts from concurrent Envoy clients before admission;
+    # queue them before token/standing checks, with unchanged timeouts/TTL.
+    request_queue_size = 128
+
+
 if __name__ == "__main__":
     print(f"[mock-api] on {HOST}:{PORT}", flush=True)
-    HTTPServer((HOST, PORT), Handler).serve_forever()
+    LedgerHTTPServer((HOST, PORT), Handler).serve_forever()

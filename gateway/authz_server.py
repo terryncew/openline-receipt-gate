@@ -29,9 +29,11 @@ import os
 import signal
 import sqlite3
 import sys
+import threading
 import time
 import uuid
 from concurrent import futures
+from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -76,7 +78,12 @@ class GatewayState:
 
     def __init__(self, path: Path):
         path.parent.mkdir(parents=True, exist_ok=True)
+        self._lock = threading.RLock()
         self.db = sqlite3.connect(str(path), check_same_thread=False)
+        # FULL retains an fsync on each acknowledged WAL commit. Never use
+        # NORMAL/OFF or move security state to volatile storage for speed.
+        self.db.execute("PRAGMA journal_mode=WAL")
+        self.db.execute("PRAGMA synchronous=FULL")
         self.db.execute(
             "CREATE TABLE IF NOT EXISTS nonces("
             "nonce TEXT PRIMARY KEY, ts INTEGER)")
@@ -89,34 +96,59 @@ class GatewayState:
             "revoked INTEGER DEFAULT 0)")
         self.db.commit()
 
+    @contextmanager
+    def _locked_db(self):
+        # A connection's transaction belongs to one worker at a time.
+        # check_same_thread=False alone does not provide that guarantee.
+        with span("sqlite.lock_wait"):
+            self._lock.acquire()
+        try:
+            yield self.db
+        finally:
+            self._lock.release()
+
     @profiled("sqlite.nonce_read")
     def nonce_seen(self, nonce: str) -> bool:
-        row = self.db.execute(
-            "SELECT 1 FROM nonces WHERE nonce=?", (nonce,)).fetchone()
+        with self._locked_db() as db:
+            row = db.execute(
+                "SELECT 1 FROM nonces WHERE nonce=?", (nonce,)).fetchone()
         return row is not None
 
     @profiled("sqlite.nonce_transaction")
-    def mark_nonce(self, nonce: str):
-        self.db.execute(
-            "INSERT OR IGNORE INTO nonces(nonce, ts) VALUES(?,?)",
-            (nonce, int(time.time())))
-        with span("sqlite.durable_commit"):
-            self.db.commit()
+    def mark_nonce(self, nonce: str) -> bool:
+        """Atomically consume once; only a durable successful insert allows."""
+        with self._locked_db() as db:
+            try:
+                inserted = db.execute(
+                    "INSERT OR IGNORE INTO nonces(nonce, ts) VALUES(?,?)",
+                    (nonce, int(time.time()))).rowcount == 1
+                with span("sqlite.durable_commit"):
+                    db.commit()
+                return inserted
+            except BaseException:
+                db.rollback()
+                raise
 
     @profiled("sqlite.receipt_transaction")
     def add_receipt(self, receipt: dict):
-        self.db.execute(
-            "INSERT INTO receipts(receipt_id, ts, body) VALUES(?,?,?)",
-            (receipt["receipt_id"], receipt["ts"],
-             json.dumps(receipt, sort_keys=True)))
-        with span("sqlite.durable_commit"):
-            self.db.commit()
+        with self._locked_db() as db:
+            try:
+                db.execute(
+                    "INSERT INTO receipts(receipt_id, ts, body) VALUES(?,?,?)",
+                    (receipt["receipt_id"], receipt["ts"],
+                     json.dumps(receipt, sort_keys=True)))
+                with span("sqlite.durable_commit"):
+                    db.commit()
+            except BaseException:
+                db.rollback()
+                raise
 
     @profiled("sqlite.agent_read")
     def get_agent(self, agent_id: str):
-        row = self.db.execute(
-            "SELECT pubkey, mandate, revoked FROM agents WHERE agent_id=?",
-            (agent_id,)).fetchone()
+        with self._locked_db() as db:
+            row = db.execute(
+                "SELECT pubkey, mandate, revoked FROM agents WHERE agent_id=?",
+                (agent_id,)).fetchone()
         if not row:
             return None
         return {"pubkey": row[0], "mandate": json.loads(row[1]),
@@ -215,6 +247,8 @@ class Authorizer(pb2_grpc.AuthorizationServicer):
         for f in ("action_type", "target", "value_cents", "nonce", "ts"):
             if f not in action:
                 return ("deny", ["action_field_missing:" + f], {})
+        if action.get("agent_id") != agent_id:
+            return ("deny", ["action_agent_mismatch"], {})
         try:
             with span("crypto.action_verification"):
                 pub = Ed25519PublicKey.from_public_bytes(
@@ -259,7 +293,8 @@ class Authorizer(pb2_grpc.AuthorizationServicer):
                     {"error": str(exc)[:120]})
         if not pre["allowed"]:
             return ("deny", pre["reason_codes"], {})
-        self.state.mark_nonce(action["nonce"])
+        if not self.state.mark_nonce(action["nonce"]):
+            return ("deny", ["replay_detected"], {})
         return ("allow", [], {"action": action,
                               "mandate_id": mandate["mandate_id"]})
 
