@@ -42,8 +42,19 @@ from openline_wallet.crypto import public_key_hex  # noqa: E402
 from agent_client import AgentClient  # noqa: E402
 from poppy_receiver import mandate_scope_for_operation  # noqa: E402
 from wallet_bridge import worker_present  # noqa: E402
-import mock_api as _mock_api  # noqa: E402
-_b64u_decode = _mock_api.b64u_decode
+# The verifier intentionally does NOT import mock_api: that would create
+# receiver state and load the configured signing key before test setup.
+def _b64u_decode(value: str) -> bytes:
+    return base64.urlsafe_b64decode(value + "=" * (-len(value) % 4))
+
+
+def _canonical(value: dict) -> bytes:
+    return json.dumps(value, sort_keys=True, separators=(",", ":")).encode()
+
+
+# Local end-to-end probes must not leak loopback traffic through a
+# developer environment's HTTP(S) proxy (which can itself return 403).
+_LOOPBACK = urllib.request.build_opener(urllib.request.ProxyHandler({}))
 
 GW_PY = sys.executable
 ENVOY_BIN = Path(os.environ.get("ENVOY_BIN", str(Path.home()
@@ -61,7 +72,7 @@ def wait_for(url: str, timeout: float = 20.0) -> bool:
     deadline = time.time() + timeout
     while time.time() < deadline:
         try:
-            with urllib.request.urlopen(url, timeout=2) as r:
+            with _LOOPBACK.open(url, timeout=2) as r:
                 if r.status == 200:
                     return True
         except Exception:
@@ -75,7 +86,7 @@ def http_post(url: str, body: dict, headers: dict) -> tuple[int, dict]:
     req = urllib.request.Request(url, data=data, headers=headers,
                                  method="POST")
     try:
-        with urllib.request.urlopen(req, timeout=15) as r:
+        with _LOOPBACK.open(req, timeout=15) as r:
             return r.status, json.loads(r.read())
     except urllib.error.HTTPError as e:
         try:
@@ -87,15 +98,22 @@ def http_post(url: str, body: dict, headers: dict) -> tuple[int, dict]:
 
 
 def http_get(url: str) -> dict:
-    with urllib.request.urlopen(url, timeout=5) as r:
+    with _LOOPBACK.open(url, timeout=5) as r:
         return json.loads(r.read())
 
 
-def verify_receipt_signature(receipt: dict) -> bool:
-    """Independently verify the receiver's signature on the receipt."""
+def verify_receipt_signature(receipt: dict, trusted_pub_b64: str) -> bool:
+    """Verify both signature integrity and receiver key attribution.
+
+    The key embedded in a receipt proves nothing by itself: an attacker can
+    sign with their own key and include that public key. Require a separate,
+    independently configured expected receiver key.
+    """
     sig_b64 = receipt.get("receiver_signature")
     pub_b64 = receipt.get("receiver_public_key")
-    if not sig_b64 or not pub_b64:
+    if not sig_b64 or not pub_b64 or not trusted_pub_b64:
+        return False
+    if _b64u_decode(pub_b64) != _b64u_decode(trusted_pub_b64):
         return False
     try:
         # Reconstruct the signed payload (receipt without signature fields).
@@ -103,7 +121,7 @@ def verify_receipt_signature(receipt: dict) -> bool:
                    if k not in ("receiver_signature", "receiver_public_key",
                                 "signature_error")}
         pub = Ed25519PublicKey.from_public_bytes(_b64u_decode(pub_b64))
-        pub.verify(_b64u_decode(sig_b64), _mock_api.canonical(payload))
+        pub.verify(_b64u_decode(sig_b64), _canonical(payload))
         return True
     except Exception:
         return False
@@ -184,9 +202,10 @@ def main() -> int:
         cfg_src = GWROOT / "envoy" / "envoy-openline.yaml"
         cfg_dst = rundir / "envoy.yaml"
         cfg_dst.write_text(cfg_src.read_text())
+        envlog = (rundir / "envoy.log").open("w")
         penvoy = subprocess.Popen(
             [str(ENVOY_BIN), "-c", str(cfg_dst)],
-            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            stdout=envlog, stderr=subprocess.STDOUT)
         procs.append(penvoy)
 
         if not wait_for("http://127.0.0.1:9000/health", 15):
@@ -195,9 +214,12 @@ def main() -> int:
         # Envoy health: try the poppy endpoint via Envoy (will 403 without
         # auth, but proves Envoy is up and routing).
         if not wait_for("http://127.0.0.1:8080/health", 20):
-            # /health may not be routed; try a POST that should 403.
-            time.sleep(3)
-        print("== stack ready\n")
+            print(f"Envoy /health did not become ready; exit={penvoy.poll()}")
+            if (rundir / "envoy.log").exists():
+                print("\n".join((rundir / "envoy.log").read_text(
+                    errors="replace").splitlines()[-80:]))
+            return 2
+        print("== stack ready\\n")
 
         # Setup: operation, mandate, bundle (via mockapi test endpoints).
         operation = {
@@ -264,11 +286,39 @@ def main() -> int:
         appr = tx_approval(operation, bundle, mid)
         s2, r2 = http_post(envoy_url, body, full_path_headers(4250, appr))
         check("full path -> 200", s2 == 200,
-              f"status {s2} err={r2.get('error')}")
+              f"status {s2} response={str(r2)[:450]}")
         receipt = r2.get("poppy_receipt", {})
         check("receipt present", bool(receipt))
-        check("receipt signature verifies independently",
-              verify_receipt_signature(receipt))
+        trusted_receiver_key = Ed25519PrivateKey.from_private_bytes(
+            _b64u_decode((cfgdir / "receiver.key").read_text().strip()))
+        trusted_pub = base64.urlsafe_b64encode(
+            trusted_receiver_key.public_key().public_bytes_raw()
+        ).rstrip(b"=").decode()
+        check("receipt signature verifies with independently trusted key",
+              verify_receipt_signature(receipt, trusted_pub))
+
+        # A self-signed receipt from a new key is not an authenticated
+        # receiver receipt, even though its Ed25519 signature is valid.
+        impostor_key = Ed25519PrivateKey.generate()
+        forged_payload = {
+            k: v for k, v in receipt.items()
+            if k not in ("receiver_signature", "receiver_public_key")
+        }
+        impostor_receipt = {
+            **forged_payload,
+            "receiver_signature": base64.urlsafe_b64encode(
+                impostor_key.sign(_canonical(forged_payload))
+            ).rstrip(b"=").decode(),
+            "receiver_public_key": base64.urlsafe_b64encode(
+                impostor_key.public_key().public_bytes_raw()
+            ).rstrip(b"=").decode(),
+        }
+        check("self-signed wrong receiver key rejected",
+              not verify_receipt_signature(impostor_receipt, trusted_pub))
+        tampered_receipt = json.loads(json.dumps(receipt))
+        tampered_receipt["effect_evidence"]["amount_cents"] += 1
+        check("modified effect evidence rejected",
+              not verify_receipt_signature(tampered_receipt, trusted_pub))
         de = receipt.get("decision_evidence", {})
         ee = receipt.get("effect_evidence", {})
         check("decision evidence separate",
@@ -299,15 +349,17 @@ def main() -> int:
         # New operation/mandate for a clean approval.
         op4 = dict(operation, order_ref="ord_full_004")
         scope4 = mandate_scope_for_operation(op4)
+        # The Wallet permits only one active mandate per subject.
+        wallet.revoke(mid, reason="TEST_ROTATE_AFTER_ONE_USE")
         m4 = wallet.grant(
-            subject_id="poppy-agent-4",
+            subject_id="poppy-agent",
             subject_public_key=public_key_hex(akey),
             scopes=[scope4], expires_at=now + timedelta(hours=1))
         mid4 = m4["data"]["mandate_id"]
         bundle4 = wallet.export_bundle(ttl_seconds=300)
         http_post("http://127.0.0.1:9000/poppy-admit", {"bundle": bundle4},
                   {"Content-Type": "application/json"})
-        appr4 = tx_approval(op4, bundle4, mid4, "poppy-agent-4")
+        appr4 = tx_approval(op4, bundle4, mid4)
         # Agent signs for $0 but presents $42.50 approval.
         s4, r4 = http_post(envoy_url, {"operation": op4},
                            full_path_headers(0, appr4))
@@ -321,21 +373,76 @@ def main() -> int:
         op5 = dict(operation, order_ref="ord_full_005",
                    merchant="manzanita-supply")
         scope5 = mandate_scope_for_operation(op5)
+        wallet.revoke(mid4, reason="TEST_ROTATE_AFTER_AMOUNT_REFUSAL")
         m5 = wallet.grant(
-            subject_id="poppy-agent-5",
+            subject_id="poppy-agent",
             subject_public_key=public_key_hex(akey),
             scopes=[scope5], expires_at=now + timedelta(hours=1))
         mid5 = m5["data"]["mandate_id"]
         bundle5 = wallet.export_bundle(ttl_seconds=300)
         http_post("http://127.0.0.1:9000/poppy-admit", {"bundle": bundle5},
                   {"Content-Type": "application/json"})
-        appr5 = tx_approval(op5, bundle5, mid5, "poppy-agent-5")
+        appr5 = tx_approval(op5, bundle5, mid5)
         tampered = {"operation": dict(op5, merchant="evil-corp")}
         s5, r5 = http_post(envoy_url, tampered,
                            full_path_headers(4250, appr5))
         check("terms mismatch -> 403", s5 == 403, f"status {s5}")
         check("reason TRANSACTION_TERMS_MISMATCH",
               r5.get("error") == "TRANSACTION_TERMS_MISMATCH")
+
+        # Explicit negative test: a signed Wallet presentation for a
+        # different agent cannot be combined with a valid Gateway token.
+        print("\\n--- Case 5b: cross-agent approval must be refused")
+        op_mixed = dict(operation, order_ref="ord_full_mixed")
+        scope_mixed = mandate_scope_for_operation(op_mixed)
+        m_mixed = wallet.grant(
+            subject_id="unrelated-agent",
+            subject_public_key=public_key_hex(akey),
+            scopes=[scope_mixed], expires_at=now + timedelta(hours=1))
+        mid_mixed = m_mixed["data"]["mandate_id"]
+        bundle_mixed = wallet.export_bundle(ttl_seconds=300)
+        http_post("http://127.0.0.1:9000/poppy-admit", {"bundle": bundle_mixed},
+                  {"Content-Type": "application/json"})
+        mixed_appr = tx_approval(
+            op_mixed, bundle_mixed, mid_mixed, "unrelated-agent")
+        mixed_status, mixed_body = http_post(
+            envoy_url, {"operation": op_mixed},
+            full_path_headers(4250, mixed_appr))
+        check("mixed agent refused -> 403", mixed_status == 403,
+              f"status {mixed_status} response={str(mixed_body)[:450]}")
+        check("mixed agent identity reason", 
+              mixed_body.get("error") == "IDENTITY_MISMATCH")
+
+        # A registered Gateway worker must not sign a request claiming to
+        # BE a different Wallet-approved worker. The raw header selects the
+        # real registered key/mandate; the signed body must match that ID.
+        # Without the authz check, the issued receiver token could carry
+        # "unrelated-agent" and combine with this valid Wallet presentation.
+        print("\\n--- Case 5c: signed action agent ID substitution")
+        impostor = AgentClient("poppy-agent", agent_key_b64)
+        spoof_headers = impostor.headers_for(
+            "authorize_payment", target="ledger", value_cents=4250)
+        spoof_action = json.loads(_b64u_decode(spoof_headers["x-ol-action"]))
+        spoof_action["agent_id"] = "unrelated-agent"
+        spoof_payload = _canonical(spoof_action)
+        spoof_headers["x-ol-action"] = base64.urlsafe_b64encode(
+            spoof_payload).rstrip(b"=").decode()
+        spoof_headers["x-ol-sig"] = base64.urlsafe_b64encode(
+            impostor.key.sign(spoof_payload)).rstrip(b"=").decode()
+        spoof_headers["x-ol-tx-approval"] = mixed_appr
+        spoof_headers["Content-Type"] = "application/json"
+        spoof_status, spoof_body = http_post(
+            envoy_url, {"operation": op_mixed}, spoof_headers)
+        check("signed agent ID substitution -> 403",
+              spoof_status == 403,
+              f"status {spoof_status}, body={str(spoof_body)[:450]}")
+        check("denied at Gateway identity check",
+              "action_agent_id_mismatch" in
+              spoof_body.get("reasons", []),
+              f"body={str(spoof_body)[:450]}")
+        check("forged identity caused no ledger debit",
+              http_get("http://127.0.0.1:9000/balance/treasury")["cents"]
+              == 1000000 - 4250)
 
         # Case 6: Revoked approval.
         print("\n--- Case 6: revoked transaction approval")
@@ -352,6 +459,14 @@ def main() -> int:
 
     finally:
         stop_all()
+        if any(s == FAIL for s, _ in results):
+            # Preserve actionable diagnostics on a failing run, rather than
+            # deleting the temp logs before the failure has been explained.
+            for name in ("authz.log", "mockapi.log", "envoy.log"):
+                log = rundir / name
+                if log.exists():
+                    print(f"\\n--- {name} (last 40 lines) ---")
+                    print("\\n".join(log.read_text(errors="replace").splitlines()[-40:]))
         shutil.rmtree(rundir, ignore_errors=True)
 
     n_fail = sum(1 for s, _ in results if s == FAIL)

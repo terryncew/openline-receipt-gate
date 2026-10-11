@@ -135,36 +135,71 @@ class Ledger:
         self.db.commit()
 
     def transfer_with_approval_and_receipt(self, to_acct: str, cents: int,
-                               decision_id: str, approval_id: str,
-                               receipt_json: str) -> dict:
-        """Atomic transfer + approval + signed receipt storage.
-        
-        All three happen in a single sqlite transaction. If the process
-        crashes, either all persist or none do. A committed effect is
-        never left without its signed evidence.
+                                           decision_id: str, approval_id: str,
+                                           receipt_unsigned: dict,
+                                           receiver_key: Ed25519PrivateKey) -> dict:
+        """Commit approval, effect and its COMPLETE signed evidence atomically.
+
+        Snapshot balances and sign evidence while holding the same SQLite
+        write transaction that executes the effect. Never sign a speculative
+        snapshot outside the transaction or alter a receipt after signing.
+        A crash before COMMIT leaves no effect; a crash after COMMIT leaves a
+        queryable signed receipt in effects.body for reconciliation.
         """
         try:
             self.db.execute("BEGIN IMMEDIATE")
-            
+            if not isinstance(cents, int) or isinstance(cents, bool) or cents <= 0:
+                self.db.execute("ROLLBACK")
+                return {"ok": False, "error": "invalid positive amount"}
+            if not isinstance(to_acct, str) or not to_acct or to_acct == "treasury":
+                self.db.execute("ROLLBACK")
+                return {"ok": False, "error": "invalid merchant account"}
             if self.db.execute(
                 "SELECT 1 FROM used_approvals WHERE approval_id=?",
                 (approval_id,)).fetchone():
                 self.db.execute("ROLLBACK")
                 return {"ok": False, "error": "TRANSACTION_APPROVAL_ALREADY_USED"}
-            
             if self.db.execute(
                 "SELECT 1 FROM used_decisions WHERE decision_id=?",
                 (decision_id,)).fetchone():
                 self.db.execute("ROLLBACK")
                 return {"ok": False, "error": "decision token already used"}
-            
-            cur = self.db.execute("SELECT cents FROM balances WHERE acct=?",
-                                  ("treasury",))
-            bal = cur.fetchone()[0]
-            if bal < cents:
+
+            treasury_row = self.db.execute(
+                "SELECT cents FROM balances WHERE acct=?", ("treasury",)).fetchone()
+            if treasury_row is None:
+                raise ValueError("missing treasury account")
+            treasury_before = treasury_row[0]
+            if treasury_before < cents:
                 self.db.execute("ROLLBACK")
                 return {"ok": False, "error": "insufficient simulated funds"}
-            
+            merchant_row = self.db.execute(
+                "SELECT cents FROM balances WHERE acct=?", (to_acct,)).fetchone()
+            merchant_before = merchant_row[0] if merchant_row else 0
+            effect_id = f"fx-{decision_id}"
+            effect_evidence = {
+                "type": "poppy_ledger_effect",
+                "treasury_before_cents": treasury_before,
+                "treasury_after_cents": treasury_before - cents,
+                "treasury_delta_cents": -cents,
+                "merchant": to_acct,
+                "merchant_before_cents": merchant_before,
+                "merchant_after_cents": merchant_before + cents,
+                "merchant_delta_cents": cents,
+                "amount_cents": cents,
+                "effect_id": effect_id,
+                "measured_at": datetime.now(timezone.utc).isoformat(),
+            }
+            unsigned = {**receipt_unsigned, "effect_evidence": effect_evidence}
+            sig = receiver_key.sign(canonical(unsigned))
+            receipt = {
+                **unsigned,
+                "receiver_signature": b64u_encode(sig),
+                "receiver_public_key": b64u_encode(
+                    receiver_key.public_key().public_bytes_raw()),
+            }
+            receipt_json = json.dumps(receipt, sort_keys=True)
+
             self.db.execute("UPDATE balances SET cents=cents-? WHERE acct=?",
                             (cents, "treasury"))
             self.db.execute("INSERT OR IGNORE INTO balances(acct, cents)"
@@ -175,24 +210,24 @@ class Ledger:
                             (decision_id, int(time.time())))
             self.db.execute("INSERT INTO used_approvals VALUES(?,?)",
                             (approval_id, int(time.time())))
-            
-            effect_id = f"fx-{decision_id}"
             self.db.execute(
                 "INSERT INTO effects VALUES(?,?,?)",
                 (effect_id, time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
                  json.dumps({"to": to_acct, "cents": cents,
                              "decision_id": decision_id,
                              "receipt": receipt_json})))
-            
             self.db.commit()
             return {"ok": True, "effect_id": effect_id,
-                    "treasury_cents": bal - cents}
-        except Exception as e:
+                    "treasury_cents": treasury_before - cents,
+                    "poppy_receipt": receipt}
+        except Exception:
             try:
                 self.db.execute("ROLLBACK")
             except Exception:
                 pass
-            return {"ok": False, "error": f"transaction failed: {e}"}
+            # Do not return the exception text to callers. Errors before
+            # COMMIT leave no effect; an ambiguous commit needs reconciliation.
+            return {"ok": False, "error": "transaction or receipt signing failed"}
 
     def transfer_with_approval(self, to_acct: str, cents: int,
                                decision_id: str, approval_id: str) -> dict:
@@ -561,6 +596,13 @@ class Handler(BaseHTTPRequestHandler):
                 "transaction_approval": "terms_mismatch",
             })
 
+        # The principal asserted in the envelope must equal the principal
+        # in the signed presentation; never put unverified outer fields into
+        # the receiver's evidence.
+        if principal_id != presentation.get("principal_id"):
+            return self._send(403, {"ok": False,
+                                    "error": "PRINCIPAL_IDENTITY_MISMATCH"})
+
         # Verify the Wallet presentation (owner signature, exact terms).
         expected_scope = f"poppy:op:{op_hash[:32]}"
         try:
@@ -594,7 +636,7 @@ class Handler(BaseHTTPRequestHandler):
         # approval issued to Agent A.
         # The presentation contains the subject_id from the mandate.
         mandate_subject = presentation.get("subject_id", "")
-        if mandate_subject and mandate_subject != agent_id:
+        if mandate_subject != agent_id:
             return self._send(403, {
                 "ok": False,
                 "error": "IDENTITY_MISMATCH",
@@ -642,21 +684,17 @@ class Handler(BaseHTTPRequestHandler):
                 "token_amount_cents": token_amount,
                 "operation_amount_cents": amount,
             })
-        # The mock ledger debits treasury and credits the merchant.
-        # The operation's account must be treasury (the funded account).
-        #
-        # TRANSACTION BOUNDARY (corrected):
-        # A committed effect must not leave the system without recoverable
-        # signed evidence. Therefore:
-        # 1. Build receipt with expected post-transfer balances.
-        # 2. Sign it. If signing fails, FAIL BEFORE any state change.
-        # 3. Atomic transfer + store signed receipt in single txn.
-        treasury_before = LEDGER.balance("treasury")
-        merchant_before = LEDGER.balance(merchant)
-        # Expected balances (transfer is atomic, so these WILL be actual)
-        treasury_after = treasury_before - amount
-        merchant_after = merchant_before + amount
-        
+        # Validate and load the signing key before entering the write
+        # transaction. The full receipt is still created and signed INSIDE
+        # that transaction using the actual locked balance snapshot.
+        try:
+            key_b64 = (CONFIG_DIR / "receiver.key").read_text().strip()
+            receiver_key = Ed25519PrivateKey.from_private_bytes(
+                b64u_decode(key_b64))
+        except Exception:
+            return self._send(500, {"ok": False,
+                                    "error": "receipt signing key unavailable"})
+
         decision_evidence = {
             "type": "poppy_decision",
             "decision": "ALLOWED",
@@ -674,47 +712,17 @@ class Handler(BaseHTTPRequestHandler):
             "amount_binding": {
                 "token_amount_cents": token_amount,
                 "operation_amount_cents": amount,
-                "match": token_amount == amount,
+                "match": True,
             },
             "decided_at": datetime.now(timezone.utc).isoformat(),
-        }
-        effect_evidence = {
-            "type": "poppy_ledger_effect",
-            "treasury_before_cents": treasury_before,
-            "treasury_after_cents": treasury_after,
-            "treasury_delta_cents": treasury_after - treasury_before,
-            "merchant": merchant,
-            "merchant_before_cents": merchant_before,
-            "merchant_after_cents": merchant_after,
-            "merchant_delta_cents": merchant_after - merchant_before,
-            "amount_cents": amount,
-            "measured_at": datetime.now(timezone.utc).isoformat(),
         }
         receipt_unsigned = {
             "receipt_id": f"poppy-{uuid.uuid4().hex[:16]}",
             "decision_evidence": decision_evidence,
-            "effect_evidence": effect_evidence,
         }
-        # Sign BEFORE the transfer. If this fails, no effect is committed.
-        try:
-            key_b64 = (CONFIG_DIR / "receiver.key").read_text().strip()
-            rkey = Ed25519PrivateKey.from_private_bytes(b64u_decode(key_b64))
-            sig = rkey.sign(canonical(receipt_unsigned))
-            receipt = dict(receipt_unsigned)
-            receipt["receiver_signature"] = b64u_encode(sig)
-            receipt["receiver_public_key"] = b64u_encode(
-                rkey.public_key().public_bytes_raw())
-        except Exception as e:
-            # Fail closed BEFORE any state change. No committed effect
-            # without signed evidence.
-            return self._send(500, {"ok": False,
-                                    "error": "receipt signing failed",
-                                    "detail": str(e)})
-        
-        # ATOMIC: transfer + approval + store signed receipt in single txn.
         res = LEDGER.transfer_with_approval_and_receipt(
             merchant, amount, f"poppy-{time.time_ns()}", approval_id,
-            json.dumps(receipt, sort_keys=True))
+            receipt_unsigned, receiver_key)
         if not res.get("ok"):
             err = res.get("error", "")
             if "ALREADY_USED" in err:
@@ -725,11 +733,10 @@ class Handler(BaseHTTPRequestHandler):
                     "delegated_authority": "valid",
                     "transaction_approval": "already_used",
                 })
+            # Failure cannot be reported as a successful charge.
             return self._send(409, res)
-
-        # Update effect_id in receipt (from atomic txn)
-        receipt["effect_evidence"]["effect_id"] = res.get("effect_id")
-        res["poppy_receipt"] = receipt
+        # The exact receipt returned here was signed and durably stored
+        # in the same commit. Never mutate any signed field afterward.
         return self._send(200, res)
 
     def _transfer(self, body):
