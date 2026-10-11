@@ -227,7 +227,7 @@ class AtomicReceiptTests(unittest.TestCase):
     def test_crash_while_signing_rolls_back_ledger_effect(self):
         """Process death before SQLite COMMIT must consume no approval."""
         script = self._child_boot() + (
-            "class KillDuringSign:"
+            "\nclass KillDuringSign:"
             "\n  def sign(self, payload):"
             "\n    os._exit(37)"
             "\nmock_api.LEDGER.transfer_with_approval_and_receipt("
