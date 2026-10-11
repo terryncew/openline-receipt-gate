@@ -14,29 +14,72 @@ on the agent's assertion of approval.
 **Pinned spec:** Personal Agent Protocol Draft 0.1, published 2026-10-09
 at https://personalagentprotocol.org (Apache 2.0). Verified 2026-10-11.
 
-## The strict distinction (addition 2026-10-11)
+## Review findings addressed (2026-10-11)
+
+### 1. Complete request path (no substitutions)
+`test_gateway_path.py`: **18/18** via the full path:
+`client -> Envoy :8080 -> authz :50051 (ext_authz) -> mockapi :9000 -> ledger`.
+The direct-header verification bypass was **removed**. The endpoint
+requires a real Gateway decision token minted by the live authz service.
+
+### 2. One-use approval semantics
+A transaction approval authorizes exactly ONE execution. Distinguishes:
+- "Owner approved these terms" (the mandate, scoped to operation hash)
+- "Owner approved this execution" (the one-use approval)
+
+Second execution with a fresh challenge → `403 TRANSACTION_APPROVAL_ALREADY_USED`.
+Tested in `test_gateway_path.py` Case 3.
+
+### 3. Bypass closed, amount binding enforced
+- Direct-header bypass **removed** from `/poppy-charge`.
+- Amount binding: the Gateway token's `value_cents` must **exactly**
+  equal the operation's `amount_cents`. An action signed for $0 cannot
+  authorize a $42.50 execution, even with a $50 mandate ceiling.
+  → `403 AMOUNT_BINDING_MISMATCH` (Case 4).
+- Nonce, timestamp, mandate, revocation, and replay checks preserved
+  (via the live authz + Wallet contracts).
+
+### 4. Signed receiver receipts with separate evidence
+Each successful charge returns a signed receipt with:
+- `decision_evidence`: the business decision (ALLOWED), delegated
+  authority verification, transaction approval verification, amount
+  binding proof.
+- `effect_evidence`: the measured ledger effect (treasury/merchant
+  before/after/delta).
+- `receiver_signature`: Ed25519 signature, independently verifiable
+  with the included public key.
+
+Verified in `test_gateway_path.py` Case 2.
+
+### Concurrency and restart
+`test_concurrent_restart.py`: **5/5**
+- 10 concurrent requests with the same approval: exactly one wins,
+  others rejected (no double-spend).
+- Restart: used approval persists in sqlite; replay after restart
+  → `403 TRANSACTION_APPROVAL_ALREADY_USED`.
+
+### Performance (full path, n=50, local)
+`bench_gateway.py` via Envoy → authz → mockapi:
+- Baseline (delegated only): p50 8.68ms, p95 15.02ms, p99 18.03ms
+- Extended (delegated + approval): p50 8.05ms, p95 19.96ms, p99 28.05ms
+- Incremental: p50 -0.63ms, p95 +4.93ms, p99 +10.02ms (run 1);
+  p50 +1.72ms, p95 +1.61ms, p99 +5.76ms (run 2)
+
+Local only. Not production claims. The 0.66ms standalone result is
+superseded; this is the end-to-end measurement.
+
+## The strict distinction
 
 1. **Delegated authority**: agent permitted within limits (Gateway mandate).
    Proves the AGENT is permitted. Never proof of human approval.
 2. **Transaction approval**: owner explicitly authorized one exact operation
-   (Wallet mandate, scope = operation hash). Proves the HUMAN approved.
+   (Wallet mandate, scope = operation hash). Proves the HUMAN approved
+   THIS execution (one-use).
 
 The business API requires BOTH. Delegated alone →
 `DELEGATED_AUTHORITY_NOT_TRANSACTION_APPROVAL`. Never conflated.
 
-## Gateway integration (addition 2026-10-11)
-
-Tested through the ACTUAL business API (real `mock_api.py` process):
-
-- `gateway/mock_api.py`: experimental `/poppy-charge` endpoint enforcing
-  both layers; test-only `/poppy-admit` and `/poppy-challenge`.
-- `gateway/poppy/test_gateway_path.py`: **18/18** — delegated-only 403,
-  delegated+approval 200 with ledger moving exactly $42.50, terms
-  mismatch 403, revoked 403, bad signature 403, limit exceeded 403.
-- `gateway/poppy/bench_gateway.py`: median incremental cost of
-  transaction approval: **0.66ms** (local, n=30, real process).
-
-## Original prototype (2026-10-11)
+## Original prototype
 
 - `poppy_session.py` — faithful Poppy 0.1: poppy.json, OAuth-style
   sign-in, DPoP-bound JWTs.
@@ -44,7 +87,6 @@ Tested through the ACTUAL business API (real `mock_api.py` process):
 - `demo_poppy_proof.py` — 11/11. `test_poppy_proof.py` — 16/16.
 - `poppy_native_baseline.py` — honest gap: Poppy-native allows $99.99
   the owner never signed for (coarse scopes, not a flaw).
-- `bench_poppy.py` — standalone: +0.38ms median.
 
 ## What remains
 
