@@ -39,8 +39,6 @@ jobs:
     steps:
       - name: Checkout branch
         uses: actions/checkout@v4
-        with:
-          # no ref: checks out the branch that triggered the run
 
       - name: Build and start the gateway stack
         working-directory: gateway/compose
