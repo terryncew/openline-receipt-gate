@@ -1,0 +1,103 @@
+{
+  "case": "opa-a-http-transfer-persistent-c1",
+  "samples_requested": 500,
+  "concurrency": 1,
+  "client": "persistent",
+  "workload": "transfer",
+  "amount_cents": 100,
+  "passed": true,
+  "status_counts": {
+    "200": 500
+  },
+  "failures": 0,
+  "all_attempted_latency": {
+    "n": 500,
+    "p50_ms": 3.2679735,
+    "p95_ms": 4.117480749999998,
+    "p99_ms": 5.7187201,
+    "mean_ms": 3.359703616,
+    "max_ms": 8.1099
+  },
+  "successful_latency": {
+    "n": 500,
+    "p50_ms": 3.2679735,
+    "p95_ms": 4.117480749999998,
+    "p99_ms": 5.7187201,
+    "mean_ms": 3.359703616,
+    "max_ms": 8.1099
+  },
+  "successful_response_headers_latency": {
+    "n": 500,
+    "p50_ms": 3.2601465000000003,
+    "p95_ms": 4.108738899999999,
+    "p99_ms": 5.71120706,
+    "mean_ms": 3.351968156,
+    "max_ms": 8.102129
+  },
+  "client_prepare": {
+    "n": 500,
+    "p50_ms": 0.00982,
+    "p95_ms": 0.013407499999999994,
+    "p99_ms": 0.0311379,
+    "mean_ms": 0.010538306,
+    "max_ms": 0.050767
+  },
+  "elapsed_seconds": 1.6932231889950344,
+  "achieved_successful_requests_per_second": 295.2947982579669,
+  "first_client_request": {
+    "index": -1,
+    "worker": 0,
+    "phase": "first_client_request",
+    "trace_id": "20cc6b11-92c4-456c-97e2-dab553aa5154",
+    "client_prepare_ms": 0.023645,
+    "status": 200,
+    "success": true,
+    "effect_id": "fx-opa-1791741074509490320",
+    "latency_ms": 5.463148,
+    "response_headers_ms": 5.449638,
+    "response_bytes": 133,
+    "error": null
+  },
+  "warmup_requests_per_worker": 10,
+  "ledger": {
+    "passed": true,
+    "before": {
+      "balances": {
+        "treasury": 848700,
+        "ops": 50000,
+        "vendor": 151300
+      },
+      "effects": 1513,
+      "receipts": 0,
+      "journal_mode": "delete"
+    },
+    "after": {
+      "balances": {
+        "treasury": 797600,
+        "ops": 50000,
+        "vendor": 202400
+      },
+      "effects": 2024,
+      "receipts": 0,
+      "journal_mode": "delete"
+    },
+    "expected_transfer_count_including_first_and_warmup": 511,
+    "expected_delta_cents": 51100
+  },
+  "profiling": {
+    "record_counts": {},
+    "successful_measured_requests": 500,
+    "unique_traces_with_profiles": 0,
+    "stages": {},
+    "network_envoy_scheduling_and_profile_output_residual": {
+      "n": 0,
+      "p50_ms": null,
+      "p95_ms": null,
+      "p99_ms": null,
+      "mean_ms": null,
+      "max_ms": null
+    },
+    "note": "Nested stages are inclusive and must not be summed. Residual also includes profiling output, serialization and queueing."
+  },
+  "profile_malformed_lines": 0
+}

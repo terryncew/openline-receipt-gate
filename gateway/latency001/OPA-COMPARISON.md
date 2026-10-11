@@ -87,6 +87,7 @@ policies are fixed demonstration inputs, not production credentials.
 For policy parity and error handling, start a real OPA server:
 
 ```bash
+python3 -m pip install pytest  # needed only for the optional bound-authority tests below
 docker run -d --rm --name latency-policy-parity \
   -p 127.0.0.1:8189:8181 \
   -v "$PWD/gateway/latency001/policy-stateful.rego:/policies/policy.rego:ro" \

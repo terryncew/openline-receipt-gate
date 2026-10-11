@@ -142,10 +142,22 @@ jobs:
       - name: Measure original, optimized, native OPA and stateful OPA fairly
         run: |
           set -o pipefail
+          set +e
           python3 gateway/latency001/run_matrix.py \
             --output /tmp/gateway-latency-ci/matrix \
             --samples 1000 --profile-samples 1000 --concurrency 1 8 32 --historical \
             2>&1 | tee /tmp/gateway-latency-ci/matrix.log
+          matrix_status=${PIPESTATUS[0]}
+          set -e
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          report = Path('/tmp/gateway-latency-ci/matrix/matrix.json')
+          print('MATRIX_REPORT_BEGIN')
+          print(json.dumps(json.loads(report.read_text()), indent=2) if report.exists() else '{"error":"matrix report missing"}')
+          print('MATRIX_REPORT_END')
+          PY
+          exit "$matrix_status"
 
       - name: Preserve diagnostics and clean up verification resources
         if: always()

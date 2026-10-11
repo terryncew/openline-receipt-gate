@@ -77,6 +77,10 @@ checkpoint sidecars. Permission results are never cached. Execution standing
 still has the documented check-to-commit race interval. Increasing the accept
 queue consumes bounded additional socket resources and can increase queue
 latency at overload; it does not increase serial API execution capacity.
+Standing verifies live agent revocation and token expiry; it does not
+reevaluate mandate edits against already issued tokens. Every new
+authorization reads the current mandate. Issued tokens retain the existing
+60-second lifetime and execution-time revocation check.
 
 Final Linux CI measurements and the review verdict are recorded in REPORT.md
 after the complete run; no Docker success is inferred from partial results.

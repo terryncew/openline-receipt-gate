@@ -236,9 +236,14 @@ the server's explicit `request_queue_size` to 128 targets pending
 connections while retaining serial ledger execution, HTTP/1.0, the
 existing timeouts/TTL and fresh security checks. It does not make ledger
 commits concurrent or allow failed requests to count as successes.
-Controlled reruns and the final capacity outcome belong in the final
-comparison report; these initial counters alone do not prove that the
-repair satisfies the complete concurrent workload.
+The controlled local rerun completed 1,000 / 1,000 transfers at each of
+concurrency 1, 8 and 32, including successful warmups. The recreated API
+network namespace recorded zero listen overflows or drops. Its serial
+p50/p95/p99 was 3.793/5.619/7.074 ms; concurrency-8 was
+22.998/29.202/32.944 ms; concurrency-32 was 94.451/121.792/138.326 ms.
+See [the complete controlled report](evidence/local/optimized-backlog128/report.json)
+and [post-repair counters](evidence/local/api-backlog-after.json). Final Linux
+comparisons are reported separately in [REPORT.md](REPORT.md).
 
 ## Independent compute and SQLite cost experiments
 

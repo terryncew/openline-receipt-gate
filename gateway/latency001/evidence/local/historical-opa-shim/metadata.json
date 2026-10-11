@@ -1,0 +1,24 @@
+{
+  "recorded_at_utc": "2026-10-11T17:51:37.286121+00:00",
+  "original_commit": "9461188f44a15766d35dcf034d386c682db403f7",
+  "source": {
+    "opa_shim.py": {
+      "sha256": "45d35ad043a7976dd74141078538e0e61b4a9ad55a16e98700edbe0f17f766d1",
+      "exact_9461188_source": true
+    },
+    "mock_api.py": {
+      "sha256": "62e89b751f5e180b7f37bca25a8027a2be7ca9bea4003d36d186e47409906c86",
+      "exact_9461188_source": true
+    }
+  },
+  "images": {
+    "gateway-latency-original:9461188": "sha256:d8edfdc52d642380bed2bdc3a009fa53fad41994099286b3f1110f64c28c04e4",
+    "envoyproxy/envoy:v1.39.3": "sha256:8f34a3f1f8c804af3f975bc19a50104120482535401d5c8e954156c20ffd5316",
+    "openpolicyagent/opa:1.10.1": "sha256:e9326226bd82267e73a03da2261800b8fec5ab046eb21370e44fb17b978708a1"
+  },
+  "only_shim_change": "OPA_URL=http://opa:8181/v1/data/envoy/authz set at module startup for container DNS; proxy bypass configured for internal destinations",
+  "envoy_workers": 2,
+  "startup_timing": "Functional proxied balance read before measurement; first transfer request separately recorded; process startup not timed",
+  "historical_hardware": "Unknown and not reproduced; this is a current Linux/Docker host rerun of original source",
+  "workload": "100-cent transfer, concurrency 1, 500 measured requests per client/condition, full response/effect/ledger validation; no retries"
+}

@@ -1,0 +1,12 @@
+services:
+  envoy:
+    volumes: !override
+      - latency-historical-opa-config:/etc/envoy:ro
+  opa:
+    volumes: !override
+      - latency-historical-opa-config:/bench:ro
+    command: ["run", "--server", "--addr", "0.0.0.0:8181", "--config-file", "/bench/opa-config-a.yaml", "/bench/policy-a.rego", "/bench/opa-data.json"]
+volumes:
+  latency-historical-opa-config:
+    external: true
+    name: gateway-latency-historical-opa-config
