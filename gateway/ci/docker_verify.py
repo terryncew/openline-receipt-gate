@@ -232,9 +232,10 @@ def main() -> int:
     # Use down/up (not restart): recreates containers fresh, avoiding
     # stale Envoy upstream connections to restarted backends.
     # Volumes persist (no --volumes), so the DB survives.
-    r = compose("down")
+    # Note: --profile openline required (compose() doesn't set it).
+    r = compose("--profile", "openline", "down")
     check("f0a stack down exits 0", r.returncode == 0, r.stderr[:120])
-    r = compose("up", "-d")
+    r = compose("--profile", "openline", "up", "-d")
     check("f0b stack up exits 0", r.returncode == 0, r.stderr[:120])
     # Container IPs change on down/up; re-resolve Envoy.
     refresh_envoy_url()
