@@ -33,9 +33,7 @@ services:
     image: envoyproxy/envoy:v1.39.3
     profiles: [openline, opa-a, opa-b]
     ports:
-      - target: 8080
-        published: 8080
-        protocol: tcp
+      - "8080:8080"
     volumes:
       # Compose variant: upstream endpoints are service names (authz,
       # mockapi), not 127.0.0.1 — each container has its own loopback.
@@ -55,9 +53,7 @@ services:
     image: envoyproxy/envoy:v1.39.3
     profiles: [opa-a, opa-b]
     ports:
-      - target: 8080
-        published: 8080
-        protocol: tcp
+      - "8080:8080"
     volumes:
       - ../envoy/envoy-opa.yaml:/etc/envoy/envoy.yaml:ro
     command: ["-c", "/etc/envoy/envoy.yaml"]

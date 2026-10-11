@@ -67,10 +67,12 @@ jobs:
           curl -sf -m 5 http://127.0.0.1:8080/health || {
             echo "=== DEBUG: envoy unreachable, dumping state ==="
             docker compose --profile openline ps -a
-            docker inspect compose-envoy-1 --format 'ports={{.NetworkSettings.Ports}}' || true
+            docker inspect compose-envoy-1 --format 'ports={{.NetworkSettings.Ports}} hostconfig={{.HostConfig.PortBindings}}' || true
             docker inspect compose-authz-1 --format 'state={{.State.Status}} exit={{.State.ExitCode}}' || true
+            echo "--- envoy listeners (via /proc/net/tcp) ---"
+            docker exec compose-envoy-1 cat /proc/net/tcp 2>/dev/null | awk 'NR>1 {split($2,a,":"); print strtonum("0x" a[2])}' | sort -un || echo "no /proc/net/tcp"
+            echo "--- authz log tail ---"
             docker compose --profile openline logs --no-color --tail=30 authz || true
-            docker exec compose-envoy-1 wget -q -O- http://127.0.0.1:8080/health || echo "in-container health check also failed"
             exit 1
           }
 
