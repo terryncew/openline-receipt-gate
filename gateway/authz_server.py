@@ -266,11 +266,60 @@ class Authorizer(pb2_grpc.AuthorizationServicer):
 
 def serve(port=50051):
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=32))
-    pb2_grpc.add_AuthorizationServicer_to_server(Authorizer(), server)
+    authz = Authorizer()
+    pb2_grpc.add_AuthorizationServicer_to_server(authz, server)
     server.add_insecure_port(f"[::]:{port}")
     server.start()
     print(f"[authz] listening on :{port}", flush=True)
+    # Experimental standing endpoint (HTTP, port+2): lets the business
+    # API re-verify at execution time whether a decision is still
+    # standing. See docs/STANDING-CHECK.md.
+    if os.environ.get("GATEWAY_STANDING_PORT"):
+        _serve_standing(authz, int(os.environ["GATEWAY_STANDING_PORT"]))
     server.wait_for_termination()
+
+
+def _serve_standing(authz: Authorizer, port: int):
+    """Minimal HTTP endpoint: GET /standing?decision_id=&agent_id=&issued_at="""
+    import threading
+    from http.server import BaseHTTPRequestHandler, HTTPServer
+    from urllib.parse import urlparse, parse_qs
+
+    state = authz.state
+
+    class H(BaseHTTPRequestHandler):
+        def log_message(self, *a):
+            pass
+
+        def do_GET(self):
+            q = parse_qs(urlparse(self.path).query)
+            did = q.get("decision_id", [""])[0]
+            aid = q.get("agent_id", [""])[0]
+            try:
+                issued = int(q.get("issued_at", ["0"])[0])
+            except ValueError:
+                issued = 0
+            standing, reason = True, "ok"
+            agent = state.get_agent(aid)
+            if agent is None:
+                standing, reason = False, "unknown_agent"
+            elif agent["revoked"]:
+                standing, reason = False, "agent_revoked"
+            elif time.time() - issued > DECISION_TTL_SECONDS:
+                standing, reason = False, "token_expired"
+            body = json.dumps(
+                {"standing": standing, "reason": reason}).encode()
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+
+    t = threading.Thread(
+        target=HTTPServer(("127.0.0.1", port), H).serve_forever,
+        daemon=True)
+    t.start()
+    print(f"[authz] standing endpoint on :{port}", flush=True)
 
 
 if __name__ == "__main__":
