@@ -42,8 +42,15 @@ from openline_wallet.crypto import public_key_hex  # noqa: E402
 from agent_client import AgentClient  # noqa: E402
 from poppy_receiver import mandate_scope_for_operation  # noqa: E402
 from wallet_bridge import worker_present  # noqa: E402
-import mock_api as _mock_api  # noqa: E402
-_b64u_decode = _mock_api.b64u_decode
+# The verifier intentionally does NOT import mock_api: that would create
+# receiver state and load the configured signing key before test setup.
+def _b64u_decode(value: str) -> bytes:
+    return base64.urlsafe_b64decode(value + "=" * (-len(value) % 4))
+
+
+def _canonical(value: dict) -> bytes:
+    return json.dumps(value, sort_keys=True, separators=(",", ":")).encode()
+
 
 # Local end-to-end probes must not leak loopback traffic through a
 # developer environment's HTTP(S) proxy (which can itself return 403).
@@ -107,7 +114,7 @@ def verify_receipt_signature(receipt: dict) -> bool:
                    if k not in ("receiver_signature", "receiver_public_key",
                                 "signature_error")}
         pub = Ed25519PublicKey.from_public_bytes(_b64u_decode(pub_b64))
-        pub.verify(_b64u_decode(sig_b64), _mock_api.canonical(payload))
+        pub.verify(_b64u_decode(sig_b64), _canonical(payload))
         return True
     except Exception:
         return False
