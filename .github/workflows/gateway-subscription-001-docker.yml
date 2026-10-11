@@ -28,15 +28,13 @@ name: gateway-subscription-001-docker
 # EVIDENCE-docker.md for the full attempt record.
 on:
   workflow_dispatch:
-  # TEMPORARY (5th verification run, coordinator-authorized): GitHub only
-  # discovers workflow_dispatch from the default branch, and this task
-  # forbids touching main. This push trigger fires the verification
-  # exactly once for the MOCK_API_HOST fix, then gets reverted.
-  push:
-    branches: [experiment/gateway-subscription-001]
-    paths:
-      - '.github/workflows/gateway-subscription-001-docker.yml'
-      - 'gateway/ci/**'
+  # NOTE (history): workflow_dispatch is not discoverable by GitHub's API
+  # for a workflow file that exists only on a feature branch (404 "not
+  # found on the default branch"); it becomes dispatchable once the file
+  # lands on main. During step-1 verification the runs were triggered by
+  # a TEMPORARY path-scoped `push` trigger (since removed) because this
+  # task forbids touching main. See gateway/subscription001/
+  # EVIDENCE-docker.md for the full attempt record.
 
 permissions:
   contents: read

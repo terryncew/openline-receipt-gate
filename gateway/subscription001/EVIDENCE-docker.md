@@ -223,3 +223,60 @@ gh run download <id> -n gateway-docker-logs -D /tmp/gwlogs<N>
 Final SHAs on the branch at time of writing: `bb7b945` (attempt-4
 head) plus the pending final commit with the mock_api fix, verifier
 hardening, workflow trigger revert, and this evidence file.
+
+---
+
+## 9. Coordinator follow-up: 5th and 6th runs (2026-10-11)
+
+The step-1 agent stopped at its 4-attempt budget with the
+`MOCK_API_HOST` fix committed but unverified. The coordinator took two
+further runs (temporary push trigger re-added, then reverted again —
+final workflow state is `workflow_dispatch`-only).
+
+### Attempt 5 — run 38122780088 — 20/21 PASS
+
+The `MOCK_API_HOST=0.0.0.0` fix worked: the full HTTP path through the
+Dockerized stack went green — signed transfer 200, exact ±100 cent
+ledger deltas, tamper/replay/revoke denials, `verify-receipts` 0
+invalid, persistence across mockapi restart, full-stack restart with
+receipts surviving.
+
+Single failure: `f3 balances survive full restart` — balance reads via
+Envoy returned -1 (unreadable) right after the full-stack restart.
+Balance persistence itself was proven by adjacent checks (d2:
+mockapi-only restart; f4: DB volume survives full restart), so this
+read as a verifier readiness race: f1/f2 waited for Envoy health and
+the authz chain but nothing waited for the mockapi upstream.
+
+### Attempt 6 — run 38122910173 — 20/22 PASS (verifier fix did not help)
+
+Added the missing wait (`f2b`: poll balance reads until 200, 90 s
+budget) before the f3 assertion. It **timed out**: the mockapi
+upstream stayed unreachable via Envoy for 90 s+ after the full-stack
+restart, while the authz chain (f2) and receipt checks (f4) passed.
+The mockapi container printed no post-restart log lines in the
+captured artifacts.
+
+This is no longer explainable as a brief readiness race. Candidate
+causes (not isolated): Envoy STRICT_DNS not recovering the mockapi
+upstream after a full restart, or a compose restart-ordering issue in
+the packaging. NOT data loss: balances and receipts are proven
+persistent by d2/f4. But the root cause is open, so the Docker path
+stays **NOT fully verified**.
+
+### Final verdict (unchanged)
+
+**20/22 checks pass on real Docker** (`ubuntu-latest`, 6 runs). Every
+product behavior the mission required passes: full HTTP path, exact
+ledger effects, tamper/replay/revoke denials, persistence across
+service restart, receipt verification, full-stack restart recovery of
+receipts. The one gap: balance readability via Envoy after a
+FULL-stack restart (90 s timeout; root cause unisolated —
+Envoy-upstream-recovery vs compose restart ordering).
+
+Per the mission's hard rule, the Docker deployment is **not described
+as verified**. Recommended follow-up: reproduce the full-restart
+upstream stall locally with Docker, isolate (Envoy admin
+`/clusters` output post-restart would settle DNS vs container
+liveness), then re-run. The temporary trigger is reverted; re-running
+needs it re-added or a `main` stub (owner approval).
