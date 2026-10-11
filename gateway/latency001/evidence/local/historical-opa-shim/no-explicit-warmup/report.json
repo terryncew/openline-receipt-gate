@@ -1,0 +1,257 @@
+{
+  "metadata": {
+    "label": "9461188 original OPA urllib shim + original SQLite API; functional readiness performed; no explicit transfer warmup",
+    "mode": "opa-a",
+    "transport": "http",
+    "url": "http://127.0.0.1:18081",
+    "python": "3.12.14",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "command": [
+      "gateway/latency001/benchmark.py",
+      "--mode",
+      "opa-a",
+      "--url",
+      "http://127.0.0.1:18081",
+      "--samples",
+      "500",
+      "--concurrency",
+      "1",
+      "--clients",
+      "close",
+      "persistent",
+      "--workloads",
+      "transfer",
+      "--amount",
+      "100",
+      "--warmup",
+      "0",
+      "--output",
+      "gateway/latency001/evidence/local/historical-opa-shim/no-explicit-warmup",
+      "--label",
+      "9461188 original OPA urllib shim + original SQLite API; functional readiness performed; no explicit transfer warmup"
+    ],
+    "compose_file": "/workspace/openline-receipt-gate/gateway/latency001/compose-opa.yaml:/workspace/openline-receipt-gate/gateway/latency001/compose-opa-historical-shim.yaml:/workspace/gateway-latency-scratch/compose-opa-historical-local.yaml",
+    "compose_project_name": "latency-historical-opa",
+    "agent_id": null,
+    "measurement": "closed-loop, no think time; full response body consumed; request signing separate; elapsed throughput includes client preparation and result collection; no retries",
+    "percentiles": "linear interpolation (n-1)*p; successful samples only, any failure fails case",
+    "runtime_flags": {
+      "mockapi": {
+        "GATEWAY_AUTH_MODE": "opa",
+        "GATEWAY_STANDING_CHECK": null,
+        "GATEWAY_STANDING_URL": null,
+        "GATEWAY_STANDING_PORT": null,
+        "GATEWAY_PROFILE": null,
+        "GATEWAY_TEST_PRE_COMMIT_DELAY_MS": null
+      }
+    }
+  },
+  "passed": true,
+  "cases": [
+    {
+      "case": "opa-a-http-transfer-close-c1",
+      "samples_requested": 500,
+      "concurrency": 1,
+      "client": "close",
+      "workload": "transfer",
+      "amount_cents": 100,
+      "passed": true,
+      "status_counts": {
+        "200": 500
+      },
+      "failures": 0,
+      "all_attempted_latency": {
+        "n": 500,
+        "p50_ms": 3.7642765000000002,
+        "p95_ms": 4.739939649999999,
+        "p99_ms": 6.35537219,
+        "mean_ms": 3.861575796,
+        "max_ms": 7.647442
+      },
+      "successful_latency": {
+        "n": 500,
+        "p50_ms": 3.7642765000000002,
+        "p95_ms": 4.739939649999999,
+        "p99_ms": 6.35537219,
+        "mean_ms": 3.861575796,
+        "max_ms": 7.647442
+      },
+      "successful_response_headers_latency": {
+        "n": 500,
+        "p50_ms": 3.721983,
+        "p95_ms": 4.666347799999999,
+        "p99_ms": 6.30959515,
+        "mean_ms": 3.818288922,
+        "max_ms": 7.609625
+      },
+      "client_prepare": {
+        "n": 500,
+        "p50_ms": 0.011107,
+        "p95_ms": 0.01556355,
+        "p99_ms": 0.0327193,
+        "mean_ms": 0.011869734,
+        "max_ms": 0.034752
+      },
+      "elapsed_seconds": 1.9471742149980855,
+      "achieved_successful_requests_per_second": 256.78236500296487,
+      "first_client_request": {
+        "index": -1,
+        "worker": 0,
+        "phase": "first_client_request",
+        "trace_id": "d95485bd-8a02-419f-9112-202956ff62e2",
+        "client_prepare_ms": 0.024888,
+        "status": 200,
+        "success": true,
+        "effect_id": "fx-opa-1791741030476073133",
+        "latency_ms": 15.535011,
+        "response_headers_ms": 15.496884,
+        "response_bytes": 133,
+        "error": null
+      },
+      "warmup_requests_per_worker": 0,
+      "ledger": {
+        "passed": true,
+        "before": {
+          "balances": {
+            "treasury": 1000000,
+            "ops": 50000
+          },
+          "effects": 0,
+          "receipts": 0,
+          "journal_mode": "delete"
+        },
+        "after": {
+          "balances": {
+            "treasury": 949900,
+            "ops": 50000,
+            "vendor": 50100
+          },
+          "effects": 501,
+          "receipts": 0,
+          "journal_mode": "delete"
+        },
+        "expected_transfer_count_including_first_and_warmup": 501,
+        "expected_delta_cents": 50100
+      },
+      "profiling": {
+        "record_counts": {},
+        "successful_measured_requests": 500,
+        "unique_traces_with_profiles": 0,
+        "stages": {},
+        "network_envoy_scheduling_and_profile_output_residual": {
+          "n": 0,
+          "p50_ms": null,
+          "p95_ms": null,
+          "p99_ms": null,
+          "mean_ms": null,
+          "max_ms": null
+        },
+        "note": "Nested stages are inclusive and must not be summed. Residual also includes profiling output, serialization and queueing."
+      },
+      "profile_malformed_lines": 0
+    },
+    {
+      "case": "opa-a-http-transfer-persistent-c1",
+      "samples_requested": 500,
+      "concurrency": 1,
+      "client": "persistent",
+      "workload": "transfer",
+      "amount_cents": 100,
+      "passed": true,
+      "status_counts": {
+        "200": 500
+      },
+      "failures": 0,
+      "all_attempted_latency": {
+        "n": 500,
+        "p50_ms": 3.5564385,
+        "p95_ms": 7.187957349999997,
+        "p99_ms": 10.486842919999992,
+        "mean_ms": 4.020202796,
+        "max_ms": 16.755428
+      },
+      "successful_latency": {
+        "n": 500,
+        "p50_ms": 3.5564385,
+        "p95_ms": 7.187957349999997,
+        "p99_ms": 10.486842919999992,
+        "mean_ms": 4.020202796,
+        "max_ms": 16.755428
+      },
+      "successful_response_headers_latency": {
+        "n": 500,
+        "p50_ms": 3.5481305,
+        "p95_ms": 7.157505849999996,
+        "p99_ms": 10.478004589999992,
+        "mean_ms": 4.010190496,
+        "max_ms": 16.736189
+      },
+      "client_prepare": {
+        "n": 500,
+        "p50_ms": 0.011372,
+        "p95_ms": 0.02225449999999999,
+        "p99_ms": 0.040326319999999985,
+        "mean_ms": 0.012867932,
+        "max_ms": 0.090546
+      },
+      "elapsed_seconds": 2.0267979670024943,
+      "achieved_successful_requests_per_second": 246.69454387674776,
+      "first_client_request": {
+        "index": -1,
+        "worker": 0,
+        "phase": "first_client_request",
+        "trace_id": "24c7c00d-3825-4530-9b98-c2be66777450",
+        "client_prepare_ms": 0.024046,
+        "status": 200,
+        "success": true,
+        "effect_id": "fx-opa-1791741032761600964",
+        "latency_ms": 6.157035,
+        "response_headers_ms": 6.141281,
+        "response_bytes": 133,
+        "error": null
+      },
+      "warmup_requests_per_worker": 0,
+      "ledger": {
+        "passed": true,
+        "before": {
+          "balances": {
+            "treasury": 949900,
+            "ops": 50000,
+            "vendor": 50100
+          },
+          "effects": 501,
+          "receipts": 0,
+          "journal_mode": "delete"
+        },
+        "after": {
+          "balances": {
+            "treasury": 899800,
+            "ops": 50000,
+            "vendor": 100200
+          },
+          "effects": 1002,
+          "receipts": 0,
+          "journal_mode": "delete"
+        },
+        "expected_transfer_count_including_first_and_warmup": 501,
+        "expected_delta_cents": 50100
+      },
+      "profiling": {
+        "record_counts": {},
+        "successful_measured_requests": 500,
+        "unique_traces_with_profiles": 0,
+        "stages": {},
+        "network_envoy_scheduling_and_profile_output_residual": {
+          "n": 0,
+          "p50_ms": null,
+          "p95_ms": null,
+          "p99_ms": null,
+          "mean_ms": null,
+          "max_ms": null
+        },
+        "note": "Nested stages are inclusive and must not be summed. Residual also includes profiling output, serialization and queueing."
+      },
+      "profile_malformed_lines": 0
+    }
+  ]
+}

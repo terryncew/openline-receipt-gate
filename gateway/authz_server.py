@@ -29,9 +29,11 @@ import os
 import signal
 import sqlite3
 import sys
+import threading
 import time
 import uuid
 from concurrent import futures
+from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -47,6 +49,7 @@ import ext_authz_pb2 as pb2
 import ext_authz_pb2_grpc as pb2_grpc
 from olp_gate.mandate_gate import mandate_preflight
 from olp_gate.mandate import compile_verified_commit_settings
+from profiling import profiled, set_trace, span
 
 CONFIG_DIR = Path(os.environ.get("GATEWAY_CONFIG", HERE / "config"))
 DB_PATH = Path(os.environ.get("GATEWAY_DB", HERE / "state" / "gateway.db"))
@@ -75,7 +78,12 @@ class GatewayState:
 
     def __init__(self, path: Path):
         path.parent.mkdir(parents=True, exist_ok=True)
+        self._lock = threading.RLock()
         self.db = sqlite3.connect(str(path), check_same_thread=False)
+        # FULL retains an fsync on each acknowledged WAL commit. Never use
+        # NORMAL/OFF or move security state to volatile storage for speed.
+        self.db.execute("PRAGMA journal_mode=WAL")
+        self.db.execute("PRAGMA synchronous=FULL")
         self.db.execute(
             "CREATE TABLE IF NOT EXISTS nonces("
             "nonce TEXT PRIMARY KEY, ts INTEGER)")
@@ -88,28 +96,59 @@ class GatewayState:
             "revoked INTEGER DEFAULT 0)")
         self.db.commit()
 
+    @contextmanager
+    def _locked_db(self):
+        # A connection's transaction belongs to one worker at a time.
+        # check_same_thread=False alone does not provide that guarantee.
+        with span("sqlite.lock_wait"):
+            self._lock.acquire()
+        try:
+            yield self.db
+        finally:
+            self._lock.release()
+
+    @profiled("sqlite.nonce_read")
     def nonce_seen(self, nonce: str) -> bool:
-        row = self.db.execute(
-            "SELECT 1 FROM nonces WHERE nonce=?", (nonce,)).fetchone()
+        with self._locked_db() as db:
+            row = db.execute(
+                "SELECT 1 FROM nonces WHERE nonce=?", (nonce,)).fetchone()
         return row is not None
 
-    def mark_nonce(self, nonce: str):
-        self.db.execute(
-            "INSERT OR IGNORE INTO nonces(nonce, ts) VALUES(?,?)",
-            (nonce, int(time.time())))
-        self.db.commit()
+    @profiled("sqlite.nonce_transaction")
+    def mark_nonce(self, nonce: str) -> bool:
+        """Atomically consume once; only a durable successful insert allows."""
+        with self._locked_db() as db:
+            try:
+                inserted = db.execute(
+                    "INSERT OR IGNORE INTO nonces(nonce, ts) VALUES(?,?)",
+                    (nonce, int(time.time()))).rowcount == 1
+                with span("sqlite.durable_commit"):
+                    db.commit()
+                return inserted
+            except BaseException:
+                db.rollback()
+                raise
 
+    @profiled("sqlite.receipt_transaction")
     def add_receipt(self, receipt: dict):
-        self.db.execute(
-            "INSERT INTO receipts(receipt_id, ts, body) VALUES(?,?,?)",
-            (receipt["receipt_id"], receipt["ts"],
-             json.dumps(receipt, sort_keys=True)))
-        self.db.commit()
+        with self._locked_db() as db:
+            try:
+                db.execute(
+                    "INSERT INTO receipts(receipt_id, ts, body) VALUES(?,?,?)",
+                    (receipt["receipt_id"], receipt["ts"],
+                     json.dumps(receipt, sort_keys=True)))
+                with span("sqlite.durable_commit"):
+                    db.commit()
+            except BaseException:
+                db.rollback()
+                raise
 
+    @profiled("sqlite.agent_read")
     def get_agent(self, agent_id: str):
-        row = self.db.execute(
-            "SELECT pubkey, mandate, revoked FROM agents WHERE agent_id=?",
-            (agent_id,)).fetchone()
+        with self._locked_db() as db:
+            row = db.execute(
+                "SELECT pubkey, mandate, revoked FROM agents WHERE agent_id=?",
+                (agent_id,)).fetchone()
         if not row:
             return None
         return {"pubkey": row[0], "mandate": json.loads(row[1]),
@@ -131,13 +170,16 @@ class Authorizer(pb2_grpc.AuthorizationServicer):
             b64u_decode(key_b64))
         print(f"[authz] config reloaded: mode={self.mode}", flush=True)
 
+    @profiled("authz.request")
     def Check(self, request, context):
         t0 = time.perf_counter()
-        http = request.attributes.request.http
-        headers = dict(http.headers)
-        agent_id = headers.get("x-ol-agent", "")
-        action_b64 = headers.get("x-ol-action", "")
-        sig_b64 = headers.get("x-ol-sig", "")
+        with span("authz.request_handling"):
+            http = request.attributes.request.http
+            headers = dict(http.headers)
+            set_trace(headers.get("x-request-id"))
+            agent_id = headers.get("x-ol-agent", "")
+            action_b64 = headers.get("x-ol-action", "")
+            sig_b64 = headers.get("x-ol-sig", "")
         decision, reasons, detail = self._evaluate(
             agent_id, action_b64, sig_b64)
         latency_ms = (time.perf_counter() - t0) * 1000
@@ -154,8 +196,9 @@ class Authorizer(pb2_grpc.AuthorizationServicer):
             "latency_ms": round(latency_ms, 3),
             "detail": detail,
         }
-        sig = self.receiver_key.sign(canonical(
-            {k: receipt[k] for k in sorted(receipt)}))
+        with span("crypto.receipt_signing"):
+            sig = self.receiver_key.sign(canonical(
+                {k: receipt[k] for k in sorted(receipt)}))
         receipt["receiver_sig"] = b64u_encode(sig)
         self.state.add_receipt(receipt)
 
@@ -189,23 +232,28 @@ class Authorizer(pb2_grpc.AuthorizationServicer):
         if not action_b64 or not agent_id or not sig_b64:
             return ("deny", ["missing_action_claim"],
                     {"note": "no OpenLine action headers present"})
-        agent = self.state.get_agent(agent_id)
-        if agent is None:
-            return ("deny", ["unknown_agent"], {})
-        if agent["revoked"]:
-            return ("deny", ["agent_revoked"], {})
+        with span("authz.revocation_check"):
+            agent = self.state.get_agent(agent_id)
+            if agent is None:
+                return ("deny", ["unknown_agent"], {})
+            if agent["revoked"]:
+                return ("deny", ["agent_revoked"], {})
         try:
-            action = json.loads(b64u_decode(action_b64))
-            sig = b64u_decode(sig_b64)
+            with span("authz.claim_decode"):
+                action = json.loads(b64u_decode(action_b64))
+                sig = b64u_decode(sig_b64)
         except Exception:
             return ("deny", ["malformed_action_claim"], {})
         for f in ("action_type", "target", "value_cents", "nonce", "ts"):
             if f not in action:
                 return ("deny", ["action_field_missing:" + f], {})
+        if action.get("agent_id") != agent_id:
+            return ("deny", ["action_agent_mismatch"], {})
         try:
-            pub = Ed25519PublicKey.from_public_bytes(
-                b64u_decode(agent["pubkey"]))
-            pub.verify(sig, canonical(action))
+            with span("crypto.action_verification"):
+                pub = Ed25519PublicKey.from_public_bytes(
+                    b64u_decode(agent["pubkey"]))
+                pub.verify(sig, canonical(action))
         except Exception:
             return ("deny", ["signature_invalid"], {})
         now = time.time()
@@ -233,9 +281,11 @@ class Authorizer(pb2_grpc.AuthorizationServicer):
         }
         try:
             now_dt = datetime.now(timezone.utc)
-            settings = compile_verified_commit_settings(
-                mandate, effect, now=now_dt)
-            pre = mandate_preflight(mandate, settings, now=now_dt)
+            with span("authz.mandate_compile"):
+                settings = compile_verified_commit_settings(
+                    mandate, effect, now=now_dt)
+            with span("authz.mandate_preflight"):
+                pre = mandate_preflight(mandate, settings, now=now_dt)
         except PermissionError as exc:
             return ("deny", str(exc).split(",") or ["mandate_denied"], {})
         except Exception as exc:
@@ -243,10 +293,12 @@ class Authorizer(pb2_grpc.AuthorizationServicer):
                     {"error": str(exc)[:120]})
         if not pre["allowed"]:
             return ("deny", pre["reason_codes"], {})
-        self.state.mark_nonce(action["nonce"])
+        if not self.state.mark_nonce(action["nonce"]):
+            return ("deny", ["replay_detected"], {})
         return ("allow", [], {"action": action,
                               "mandate_id": mandate["mandate_id"]})
 
+    @profiled("crypto.decision_signing")
     def _mint_decision_token(self, detail) -> str:
         action = detail["action"]
         token = {
@@ -292,6 +344,7 @@ def _serve_standing(authz: Authorizer, port: int):
         def log_message(self, *a):
             pass
 
+        @profiled("authz.standing_request")
         def do_GET(self):
             q = parse_qs(urlparse(self.path).query)
             did = q.get("decision_id", [""])[0]
@@ -301,13 +354,14 @@ def _serve_standing(authz: Authorizer, port: int):
             except ValueError:
                 issued = 0
             standing, reason = True, "ok"
-            agent = state.get_agent(aid)
-            if agent is None:
-                standing, reason = False, "unknown_agent"
-            elif agent["revoked"]:
-                standing, reason = False, "agent_revoked"
-            elif time.time() - issued > DECISION_TTL_SECONDS:
-                standing, reason = False, "token_expired"
+            with span("authz.standing_evaluation"):
+                agent = state.get_agent(aid)
+                if agent is None:
+                    standing, reason = False, "unknown_agent"
+                elif agent["revoked"]:
+                    standing, reason = False, "agent_revoked"
+                elif time.time() - issued > DECISION_TTL_SECONDS:
+                    standing, reason = False, "token_expired"
             body = json.dumps(
                 {"standing": standing, "reason": reason}).encode()
             self.send_response(200)
@@ -317,7 +371,8 @@ def _serve_standing(authz: Authorizer, port: int):
             self.wfile.write(body)
 
     t = threading.Thread(
-        target=HTTPServer(("127.0.0.1", port), H).serve_forever,
+        target=HTTPServer((os.environ.get("GATEWAY_STANDING_HOST", "127.0.0.1"),
+                           port), H).serve_forever,
         daemon=True)
     t.start()
     print(f"[authz] standing endpoint on :{port}", flush=True)

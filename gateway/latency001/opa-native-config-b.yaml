@@ -1,0 +1,7 @@
+plugins:
+  envoy_ext_authz_grpc:
+    addr: :50052
+    path: latency_native/decision
+    dry-run: false
+decision_logs:
+  console: true

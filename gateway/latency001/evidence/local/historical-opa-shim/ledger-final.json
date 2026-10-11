@@ -1,0 +1,14 @@
+{
+  "balances": {
+    "treasury": 797600,
+    "ops": 50000,
+    "vendor": 202400
+  },
+  "effects": 2024,
+  "used_decisions": 2024,
+  "nonce_count": 0,
+  "receipt_count": 0,
+  "agent_count": 0,
+  "journal_mode": "delete",
+  "synchronous": 2
+}

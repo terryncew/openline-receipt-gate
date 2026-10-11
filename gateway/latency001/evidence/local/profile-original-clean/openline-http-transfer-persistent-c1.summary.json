@@ -1,0 +1,298 @@
+{
+  "case": "openline-http-transfer-persistent-c1",
+  "samples_requested": 1000,
+  "concurrency": 1,
+  "client": "persistent",
+  "workload": "transfer",
+  "amount_cents": 1,
+  "passed": true,
+  "status_counts": {
+    "200": 1000
+  },
+  "failures": 0,
+  "all_attempted_latency": {
+    "n": 1000,
+    "p50_ms": 6.8467424999999995,
+    "p95_ms": 10.641633399999998,
+    "p99_ms": 12.811820509999997,
+    "mean_ms": 7.294777699,
+    "max_ms": 16.987768
+  },
+  "successful_latency": {
+    "n": 1000,
+    "p50_ms": 6.8467424999999995,
+    "p95_ms": 10.641633399999998,
+    "p99_ms": 12.811820509999997,
+    "mean_ms": 7.294777699,
+    "max_ms": 16.987768
+  },
+  "successful_response_headers_latency": {
+    "n": 1000,
+    "p50_ms": 6.836888,
+    "p95_ms": 10.627663899999998,
+    "p99_ms": 12.794094899999997,
+    "mean_ms": 7.282787653,
+    "max_ms": 16.971824
+  },
+  "client_prepare": {
+    "n": 1000,
+    "p50_ms": 0.104988,
+    "p95_ms": 0.15049999999999997,
+    "p99_ms": 0.18658571,
+    "mean_ms": 0.110098643,
+    "max_ms": 0.976253
+  },
+  "elapsed_seconds": 7.433500407001702,
+  "achieved_successful_requests_per_second": 134.52612433545954,
+  "first_client_request": {
+    "index": -1,
+    "worker": 0,
+    "phase": "first_client_request",
+    "trace_id": "60ab5b05-a88c-4c0a-b280-28abac090a43",
+    "client_prepare_ms": 0.278019,
+    "status": 200,
+    "success": true,
+    "effect_id": "fx-57b0c9c2da4044c8",
+    "latency_ms": 31.226315,
+    "response_headers_ms": 31.205844,
+    "response_bytes": 181,
+    "error": null
+  },
+  "warmup_requests_per_worker": 20,
+  "ledger": {
+    "passed": true,
+    "before": {
+      "balances": {
+        "treasury": 1000000,
+        "ops": 50000
+      },
+      "effects": 0,
+      "receipts": 1021,
+      "journal_mode": "delete"
+    },
+    "after": {
+      "balances": {
+        "treasury": 998979,
+        "ops": 50000,
+        "vendor": 1021
+      },
+      "effects": 1021,
+      "receipts": 2042,
+      "journal_mode": "delete"
+    },
+    "expected_transfer_count_including_first_and_warmup": 1021,
+    "expected_delta_cents": 1021
+  },
+  "profiling": {
+    "record_counts": {
+      "authz.request": 1000,
+      "api.request": 1000
+    },
+    "successful_measured_requests": 1000,
+    "unique_traces_with_profiles": 1000,
+    "stages": {
+      "authz.request.total": {
+        "n": 1000,
+        "p50_ms": 2.800574,
+        "p95_ms": 5.0401145,
+        "p99_ms": 7.37216627,
+        "mean_ms": 3.074147508,
+        "max_ms": 11.095121
+      },
+      "authz.request.authz.claim_decode": {
+        "n": 1000,
+        "p50_ms": 0.016640000000000002,
+        "p95_ms": 0.0239465,
+        "p99_ms": 0.04322612999999998,
+        "mean_ms": 0.017972281,
+        "max_ms": 0.115975
+      },
+      "authz.request.authz.mandate_compile": {
+        "n": 1000,
+        "p50_ms": 0.093947,
+        "p95_ms": 0.14202455,
+        "p99_ms": 0.18152012,
+        "mean_ms": 0.098739205,
+        "max_ms": 0.277859
+      },
+      "authz.request.authz.mandate_preflight": {
+        "n": 1000,
+        "p50_ms": 0.05978,
+        "p95_ms": 0.09551899999999999,
+        "p99_ms": 0.14498867999999995,
+        "mean_ms": 0.067009971,
+        "max_ms": 1.284537
+      },
+      "authz.request.authz.request": {
+        "n": 1000,
+        "p50_ms": 2.800574,
+        "p95_ms": 5.0401145,
+        "p99_ms": 7.37216627,
+        "mean_ms": 3.074147508,
+        "max_ms": 11.095121
+      },
+      "authz.request.authz.request_handling": {
+        "n": 1000,
+        "p50_ms": 0.0260695,
+        "p95_ms": 0.0419445,
+        "p99_ms": 0.05486452999999999,
+        "mean_ms": 0.028175698,
+        "max_ms": 0.085929
+      },
+      "authz.request.authz.revocation_check": {
+        "n": 1000,
+        "p50_ms": 0.053710999999999995,
+        "p95_ms": 0.08474249999999998,
+        "p99_ms": 0.11281641999999999,
+        "mean_ms": 0.058579724,
+        "max_ms": 0.249326
+      },
+      "authz.request.crypto.action_verification": {
+        "n": 1000,
+        "p50_ms": 0.14415250000000002,
+        "p95_ms": 0.19375859999999992,
+        "p99_ms": 0.22658475999999989,
+        "mean_ms": 0.152000389,
+        "max_ms": 0.368686
+      },
+      "authz.request.crypto.decision_signing": {
+        "n": 1000,
+        "p50_ms": 0.0771815,
+        "p95_ms": 0.11448654999999999,
+        "p99_ms": 0.14533573,
+        "mean_ms": 0.084482861,
+        "max_ms": 0.17285
+      },
+      "authz.request.crypto.receipt_signing": {
+        "n": 1000,
+        "p50_ms": 0.06453249999999999,
+        "p95_ms": 0.0968195,
+        "p99_ms": 0.12522301,
+        "mean_ms": 0.070053374,
+        "max_ms": 0.155524
+      },
+      "authz.request.sqlite.agent_read": {
+        "n": 1000,
+        "p50_ms": 0.049935999999999994,
+        "p95_ms": 0.0795375,
+        "p99_ms": 0.10711853999999998,
+        "mean_ms": 0.054626528,
+        "max_ms": 0.243547
+      },
+      "authz.request.sqlite.durable_commit": {
+        "n": 1000,
+        "p50_ms": 1.934873,
+        "p95_ms": 4.0827053,
+        "p99_ms": 6.26048792,
+        "mean_ms": 2.200375289,
+        "max_ms": 10.356207
+      },
+      "authz.request.sqlite.nonce_read": {
+        "n": 1000,
+        "p50_ms": 0.013816,
+        "p95_ms": 0.02210655,
+        "p99_ms": 0.04257641999999999,
+        "mean_ms": 0.015400608,
+        "max_ms": 0.089556
+      },
+      "authz.request.sqlite.nonce_transaction": {
+        "n": 1000,
+        "p50_ms": 1.0805444999999998,
+        "p95_ms": 1.9465972499999988,
+        "p99_ms": 4.064612619999998,
+        "mean_ms": 1.223765586,
+        "max_ms": 6.652232
+      },
+      "authz.request.sqlite.receipt_transaction": {
+        "n": 1000,
+        "p50_ms": 0.992151,
+        "p95_ms": 2.068879999999998,
+        "p99_ms": 3.885704459999999,
+        "mean_ms": 1.151620506,
+        "max_ms": 9.641589
+      },
+      "api.request.total": {
+        "n": 1000,
+        "p50_ms": 2.432593,
+        "p95_ms": 3.9507784999999997,
+        "p99_ms": 5.446568189999999,
+        "mean_ms": 2.624749812,
+        "max_ms": 9.402259
+      },
+      "api.request.api.policy_read": {
+        "n": 1000,
+        "p50_ms": 0.064903,
+        "p95_ms": 0.096734,
+        "p99_ms": 0.14697291,
+        "mean_ms": 0.071918466,
+        "max_ms": 2.124964
+      },
+      "api.request.api.protected_execution": {
+        "n": 1000,
+        "p50_ms": 1.1068544999999999,
+        "p95_ms": 2.2378191499999995,
+        "p99_ms": 3.7723042199999997,
+        "mean_ms": 1.248668307,
+        "max_ms": 7.815015
+      },
+      "api.request.api.request": {
+        "n": 1000,
+        "p50_ms": 2.432593,
+        "p95_ms": 3.9507784999999997,
+        "p99_ms": 5.446568189999999,
+        "mean_ms": 2.624749812,
+        "max_ms": 9.402259
+      },
+      "api.request.api.request_handling": {
+        "n": 1000,
+        "p50_ms": 0.011292,
+        "p95_ms": 0.0182885,
+        "p99_ms": 0.02839511999999999,
+        "mean_ms": 0.012504076,
+        "max_ms": 0.142585
+      },
+      "api.request.api.response_write": {
+        "n": 1000,
+        "p50_ms": 0.0900155,
+        "p95_ms": 0.12256399999999999,
+        "p99_ms": 0.15363422999999998,
+        "mean_ms": 0.093724734,
+        "max_ms": 0.204538
+      },
+      "api.request.api.standing_roundtrip": {
+        "n": 1000,
+        "p50_ms": 0.917564,
+        "p95_ms": 1.3144465,
+        "p99_ms": 1.9567749299999992,
+        "mean_ms": 0.968115144,
+        "max_ms": 4.544914
+      },
+      "api.request.crypto.decision_verification": {
+        "n": 1000,
+        "p50_ms": 0.1607925,
+        "p95_ms": 0.21921099999999996,
+        "p99_ms": 0.27342841,
+        "mean_ms": 0.168419092,
+        "max_ms": 0.575838
+      },
+      "api.request.sqlite.ledger_durable_commit": {
+        "n": 1000,
+        "p50_ms": 0.9359765,
+        "p95_ms": 2.033353649999996,
+        "p99_ms": 3.512938259999999,
+        "mean_ms": 1.081153204,
+        "max_ms": 7.628324
+      }
+    },
+    "network_envoy_scheduling_and_profile_output_residual": {
+      "n": 1000,
+      "p50_ms": 1.4864285000000002,
+      "p95_ms": 2.2938378999999998,
+      "p99_ms": 3.916545079999999,
+      "mean_ms": 1.595880379,
+      "max_ms": 5.687388000000001
+    },
+    "note": "Nested stages are inclusive and must not be summed. Residual also includes profiling output, serialization and queueing."
+  },
+  "profile_malformed_lines": 0
+}

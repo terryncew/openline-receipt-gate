@@ -1,0 +1,184 @@
+name: gateway-latency-001
+
+# Branch-scoped laboratory validation only. Never deploys or merges anything.
+on:
+  workflow_dispatch:
+  push:
+    branches: [codex/gateway-latency-001]
+
+permissions:
+  contents: read
+
+jobs:
+  linux-docker-verification-and-measurement:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      AUTH_MODE: openline
+      COMPOSE_PROJECT_NAME: compose
+    steps:
+      - name: Checkout isolated branch with frozen source history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Record Linux and Docker runtime; install exact test dependencies
+        run: |
+          mkdir -p /tmp/gateway-latency-ci
+          uname -a > /tmp/gateway-latency-ci/runtime.txt
+          docker version >> /tmp/gateway-latency-ci/runtime.txt
+          docker compose version >> /tmp/gateway-latency-ci/runtime.txt
+          lscpu >> /tmp/gateway-latency-ci/runtime.txt
+          free -h >> /tmp/gateway-latency-ci/runtime.txt
+          python3 - <<'PY'
+          import re, subprocess
+          version = subprocess.check_output(['docker', 'compose', 'version', '--short'], text=True)
+          match = re.search(r'(\d+)\.(\d+)\.(\d+)', version)
+          assert match and tuple(map(int, match.groups())) >= (2, 24, 4), version
+          PY
+          python3 -m pip install --break-system-packages \
+            cryptography==50.0.1 grpcio==1.84.0 protobuf==7.36.2
+
+      - name: Build and start the unchanged full verification topology
+        working-directory: gateway/compose
+        run: |
+          docker compose --profile openline up --build -d
+          docker compose --profile openline ps
+          for attempt in $(seq 1 36); do
+            if curl -sf --max-time 3 http://127.0.0.1:8080/health; then
+              break
+            fi
+            sleep 1
+          done
+          curl -sf --max-time 5 http://127.0.0.1:8080/health
+
+      - name: Require every existing Docker verification check to pass
+        run: |
+          set -o pipefail
+          python3 gateway/ci/docker_verify.py 2>&1 | tee /tmp/gateway-latency-ci/docker-verify.log
+
+      - name: Require the same complete Docker suite with execution standing enabled
+        env:
+          COMPOSE_FILE: ${{ github.workspace }}/gateway/compose/docker-compose.yml:${{ github.workspace }}/gateway/latency001/compose-openline.yaml
+        run: |
+          printf 'COMPOSE_FILE=%s\n' "$COMPOSE_FILE" >> "$GITHUB_ENV"
+          docker compose --profile openline up --build -d
+          set -o pipefail
+          python3 gateway/ci/docker_verify.py 2>&1 | tee /tmp/gateway-latency-ci/docker-verify-standing-on.log
+
+      - name: Require complete unit, race, crash and security regression suites
+        working-directory: gateway/compose
+        run: |
+          set -o pipefail
+          docker compose --profile openline exec -T authz \
+            python3 /app/gateway/ci/run_security_tests.py \
+            --output-dir /tmp/gateway-latency-security \
+            2>&1 | tee /tmp/gateway-latency-ci/security-tests.log
+          docker compose --profile openline cp \
+            authz:/tmp/gateway-latency-security/ /tmp/gateway-latency-ci/security-measurements/
+
+      - name: Export public receipts and verify independently outside the Gateway
+        working-directory: gateway/compose
+        run: |
+          docker compose --profile openline exec -T authz python3 - <<'PY' > /tmp/gateway-latency-ci/receipt-export.json
+          import base64, json, os, sqlite3
+          from pathlib import Path
+          from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
+          encoded = (Path(os.environ['GATEWAY_CONFIG']) / 'receiver.key').read_text().strip()
+          private = Ed25519PrivateKey.from_private_bytes(base64.urlsafe_b64decode(encoded + '=' * (-len(encoded) % 4)))
+          public = base64.urlsafe_b64encode(private.public_key().public_bytes_raw()).rstrip(b'=').decode()
+          with sqlite3.connect(os.environ['GATEWAY_DB']) as connection:
+              receipts = [json.loads(row[0]) for row in connection.execute('SELECT body FROM receipts ORDER BY receipt_id')]
+          print(json.dumps({'public_key': public, 'receipts': receipts}))
+          PY
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          directory = Path('/tmp/gateway-latency-ci')
+          exported = json.loads((directory / 'receipt-export.json').read_text())
+          (directory / 'receiver.pubkey').write_text(exported['public_key'] + '\n')
+          (directory / 'receipts.jsonl').write_text(''.join(json.dumps(receipt) + '\n' for receipt in exported['receipts']))
+          PY
+          set -o pipefail
+          python3 ../ci/verify_receipt_export.py \
+            --public-key /tmp/gateway-latency-ci/receiver.pubkey \
+            --receipts /tmp/gateway-latency-ci/receipts.jsonl \
+            2>&1 | tee /tmp/gateway-latency-ci/independent-receipts.log
+
+      - name: Capture verification containers and stop them before timing
+        working-directory: gateway/compose
+        run: |
+          docker compose --profile openline logs --no-color > /tmp/gateway-latency-ci/verification-compose.log 2>&1
+          docker compose --profile openline ps -a >> /tmp/gateway-latency-ci/verification-compose.log
+          docker compose --profile openline down
+
+      - name: Require benchmark integrity tests
+        run: |
+          set -o pipefail
+          python3 -m unittest discover -s gateway/latency001 -p test_benchmark.py -v \
+            2>&1 | tee /tmp/gateway-latency-ci/benchmark-integrity.log
+
+      - name: Require real OPA policy parity and fail-closed validation
+        run: |
+          docker run -d --name gateway-latency-policy-parity \
+            -p 127.0.0.1:8189:8181 \
+            -v "$GITHUB_WORKSPACE/gateway/latency001/policy-stateful.rego:/policies/policy.rego:ro" \
+            openpolicyagent/opa:1.10.1 run --server --addr 0.0.0.0:8181 /policies/policy.rego
+          for attempt in $(seq 1 36); do
+            if curl -sf --max-time 3 http://127.0.0.1:8189/health; then
+              break
+            fi
+            sleep 1
+          done
+          curl -sf --max-time 5 http://127.0.0.1:8189/health
+          set -o pipefail
+          python3 gateway/latency001/test_opa_policy.py \
+            --url http://127.0.0.1:8189/v1/data/gateway_mandate/decision \
+            --output /tmp/gateway-latency-ci/opa-policy-parity.json \
+            2>&1 | tee /tmp/gateway-latency-ci/opa-policy-parity.log
+          docker logs gateway-latency-policy-parity > /tmp/gateway-latency-ci/opa-parity-container.log 2>&1
+          docker rm -f gateway-latency-policy-parity
+
+      - name: Measure original, optimized, native OPA and stateful OPA fairly
+        run: |
+          set -o pipefail
+          set +e
+          python3 gateway/latency001/run_matrix.py \
+            --output /tmp/gateway-latency-ci/matrix \
+            --samples 1000 --profile-samples 1000 --concurrency 1 8 32 --historical \
+            2>&1 | tee /tmp/gateway-latency-ci/matrix.log
+          matrix_status=${PIPESTATUS[0]}
+          set -e
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          report = Path('/tmp/gateway-latency-ci/matrix/matrix.json')
+          print('MATRIX_REPORT_BEGIN')
+          print(json.dumps(json.loads(report.read_text()), indent=2) if report.exists() else '{"error":"matrix report missing"}')
+          print('MATRIX_REPORT_END')
+          PY
+          exit "$matrix_status"
+
+      - name: Preserve diagnostics and clean up verification resources
+        if: always()
+        working-directory: gateway/compose
+        run: |
+          mkdir -p /tmp/gateway-latency-ci
+          docker compose --profile openline logs --no-color > /tmp/gateway-latency-ci/final-verification-compose.log 2>&1 || true
+          docker compose --profile openline ps -a >> /tmp/gateway-latency-ci/final-verification-compose.log 2>&1 || true
+          docker compose --profile openline cp \
+            authz:/tmp/gateway-latency-security/ /tmp/gateway-latency-ci/security-measurements/ || true
+          docker compose --profile openline down || true
+          if docker inspect gateway-latency-policy-parity >/dev/null 2>&1; then
+            docker logs gateway-latency-policy-parity > /tmp/gateway-latency-ci/opa-parity-container.log 2>&1 || true
+            docker rm -f gateway-latency-policy-parity || true
+          fi
+
+      - name: Upload all measurements, failures and verification evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gateway-latency-001-linux-docker
+          path: /tmp/gateway-latency-ci/
+          if-no-files-found: error
+          retention-days: 30

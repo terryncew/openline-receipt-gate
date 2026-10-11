@@ -1,0 +1,9 @@
+# LAB BENCHMARK FLOOR ONLY. Keep authz alive for token minting and standing.
+# This proxy skips authorization; never use this overlay in a deployment.
+# Valid receiver-signed tokens are prepared before timing. The protected API
+# retains signature verification, live standing and durable replay protection.
+services:
+  envoy:
+    command: ["-c", "/etc/envoy/envoy.yaml", "--concurrency", "2"]
+    volumes:
+      - ../latency001/envoy-floor-compose.yaml:/etc/envoy/envoy.yaml:ro

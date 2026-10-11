@@ -1,0 +1,19 @@
+# Historical OPA-A protocol path: original Python shim and protected mock API.
+# Build gateway-latency-original:9461188 from base commit 9461188 first, then use
+# --no-build. Only the shim's OPA destination changes for Docker service DNS.
+# No application code, security checks, policy or SQLite mode is changed.
+services:
+  opa-shim:
+    image: gateway-latency-original:9461188
+    command: ["python3", "-c", "import gateway.opa_shim as s; s.OPA_URL='http://opa:8181/v1/data/envoy/authz'; s.serve(50052)"]
+    environment:
+      HTTP_PROXY: ""
+      HTTPS_PROXY: ""
+      ALL_PROXY: ""
+      http_proxy: ""
+      https_proxy: ""
+      all_proxy: ""
+      NO_PROXY: opa,mockapi,localhost,127.0.0.1
+      no_proxy: opa,mockapi,localhost,127.0.0.1
+  mockapi:
+    image: gateway-latency-original:9461188

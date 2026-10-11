@@ -1,0 +1,19 @@
+Frozen source: 9461188:gateway/authz_server.py
+Controlled schedule: 8 verified contenders; serialize writes only; require exactly 1 authorization.
+test_simultaneous_nonce_claim_mints_exactly_one_token (test_latency_regressions.LatencySecurityRegressions.test_simultaneous_nonce_claim_mints_exactly_one_token)
+Force contenders past verification before the nonce write. ... [authz] config reloaded: mode=enforce
+FAIL
+
+======================================================================
+FAIL: test_simultaneous_nonce_claim_mints_exactly_one_token (test_latency_regressions.LatencySecurityRegressions.test_simultaneous_nonce_claim_mints_exactly_one_token)
+Force contenders past verification before the nonce write.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/gateway/tests/test_latency_regressions.py", line 138, in test_simultaneous_nonce_claim_mints_exactly_one_token
+    self.assertEqual(len(allowed), 1,
+AssertionError: 8 != 1 : a signed nonce authorized more than one decision
+
+----------------------------------------------------------------------
+Ran 1 test in 0.296s
+
+FAILED (failures=1)

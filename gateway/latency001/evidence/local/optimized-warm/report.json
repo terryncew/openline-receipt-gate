@@ -1,0 +1,267 @@
+{
+  "metadata": {
+    "label": "optimized-standing-on",
+    "mode": "openline",
+    "transport": "http",
+    "url": "http://127.0.0.1:8080",
+    "python": "3.12.14",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "command": [
+      "gateway/latency001/benchmark.py",
+      "--mode",
+      "openline",
+      "--samples",
+      "1000",
+      "--concurrency",
+      "1",
+      "8",
+      "32",
+      "--clients",
+      "persistent",
+      "--workloads",
+      "transfer",
+      "--amount",
+      "1",
+      "--warmup",
+      "20",
+      "--output",
+      "/workspace/gateway-latency-scratch/optimized-warm",
+      "--label",
+      "optimized-standing-on"
+    ],
+    "compose_file": "/workspace/openline-receipt-gate/gateway/compose/docker-compose.yml:/workspace/openline-receipt-gate/gateway/latency001/compose-openline.yaml:/workspace/gateway-latency-scratch/compose-original-local.yaml",
+    "compose_project_name": "latency-optimized",
+    "agent_id": "latency-8207ed7d116e",
+    "measurement": "closed-loop, no think time; full response body consumed; request signing separate; elapsed throughput includes client preparation and result collection; no retries",
+    "percentiles": "linear interpolation (n-1)*p; successful samples only, any failure fails case",
+    "runtime_flags": {
+      "mockapi": {
+        "GATEWAY_AUTH_MODE": "openline",
+        "GATEWAY_STANDING_CHECK": "1",
+        "GATEWAY_STANDING_URL": "http://authz:50053/standing",
+        "GATEWAY_STANDING_PORT": null,
+        "GATEWAY_PROFILE": "",
+        "GATEWAY_TEST_PRE_COMMIT_DELAY_MS": null
+      },
+      "authz": {
+        "GATEWAY_AUTH_MODE": null,
+        "GATEWAY_STANDING_CHECK": null,
+        "GATEWAY_STANDING_URL": null,
+        "GATEWAY_STANDING_PORT": "50053",
+        "GATEWAY_PROFILE": "",
+        "GATEWAY_TEST_PRE_COMMIT_DELAY_MS": null
+      }
+    }
+  },
+  "passed": false,
+  "cases": [
+    {
+      "case": "openline-http-transfer-persistent-c1",
+      "samples_requested": 1000,
+      "concurrency": 1,
+      "client": "persistent",
+      "workload": "transfer",
+      "amount_cents": 1,
+      "passed": true,
+      "status_counts": {
+        "200": 1000
+      },
+      "failures": 0,
+      "all_attempted_latency": {
+        "n": 1000,
+        "p50_ms": 3.747276,
+        "p95_ms": 4.9075092499999995,
+        "p99_ms": 6.785329169999998,
+        "mean_ms": 3.890971838,
+        "max_ms": 18.961013
+      },
+      "successful_latency": {
+        "n": 1000,
+        "p50_ms": 3.747276,
+        "p95_ms": 4.9075092499999995,
+        "p99_ms": 6.785329169999998,
+        "mean_ms": 3.890971838,
+        "max_ms": 18.961013
+      },
+      "successful_response_headers_latency": {
+        "n": 1000,
+        "p50_ms": 3.737055,
+        "p95_ms": 4.856782649999998,
+        "p99_ms": 6.7718596899999985,
+        "mean_ms": 3.880783201,
+        "max_ms": 18.943336
+      },
+      "client_prepare": {
+        "n": 1000,
+        "p50_ms": 0.0785435,
+        "p95_ms": 0.1126815,
+        "p99_ms": 0.15852120999999986,
+        "mean_ms": 0.083978401,
+        "max_ms": 0.34492
+      },
+      "elapsed_seconds": 3.994202535999648,
+      "achieved_successful_requests_per_second": 250.3628674277343,
+      "first_client_request": {
+        "index": -1,
+        "worker": 0,
+        "phase": "first_client_request",
+        "trace_id": "b00b61b2-3153-4c54-ae0e-dbb5262f65ee",
+        "client_prepare_ms": 0.267454,
+        "status": 200,
+        "success": true,
+        "effect_id": "fx-7f10acaedc974caa",
+        "latency_ms": 19.07771,
+        "response_headers_ms": 19.060684,
+        "response_bytes": 181,
+        "error": null
+      },
+      "warmup_requests_per_worker": 20,
+      "ledger": {
+        "passed": true,
+        "before": {
+          "balances": {
+            "treasury": 999874,
+            "ops": 50000,
+            "vendor": 126
+          },
+          "effects": 3,
+          "receipts": 19,
+          "journal_mode": "wal"
+        },
+        "after": {
+          "balances": {
+            "treasury": 998853,
+            "ops": 50000,
+            "vendor": 1147
+          },
+          "effects": 1024,
+          "receipts": 1040,
+          "journal_mode": "wal"
+        },
+        "expected_transfer_count_including_first_and_warmup": 1021,
+        "expected_delta_cents": 1021
+      },
+      "profiling": {
+        "record_counts": {},
+        "successful_measured_requests": 1000,
+        "unique_traces_with_profiles": 0,
+        "stages": {},
+        "network_envoy_scheduling_and_profile_output_residual": {
+          "n": 0,
+          "p50_ms": null,
+          "p95_ms": null,
+          "p99_ms": null,
+          "mean_ms": null,
+          "max_ms": null
+        },
+        "note": "Nested stages are inclusive and must not be summed. Residual also includes profiling output, serialization and queueing."
+      },
+      "profile_malformed_lines": 0
+    },
+    {
+      "case": "openline-http-transfer-persistent-c8",
+      "samples_requested": 1000,
+      "concurrency": 8,
+      "client": "persistent",
+      "workload": "transfer",
+      "amount_cents": 1,
+      "passed": false,
+      "status_counts": {
+        "200": 996,
+        "503": 4
+      },
+      "failures": 4,
+      "all_attempted_latency": {
+        "n": 1000,
+        "p50_ms": 23.1232295,
+        "p95_ms": 36.84449625,
+        "p99_ms": 50.53521815999999,
+        "mean_ms": 24.293746857,
+        "max_ms": 62.688944
+      },
+      "successful_latency": {
+        "n": 996,
+        "p50_ms": 23.1555545,
+        "p95_ms": 36.84519725,
+        "p99_ms": 50.577950799999954,
+        "mean_ms": 24.36195016767068,
+        "max_ms": 62.688944
+      },
+      "successful_response_headers_latency": {
+        "n": 996,
+        "p50_ms": 23.114106,
+        "p95_ms": 36.83399225,
+        "p99_ms": 50.569885049999954,
+        "mean_ms": 24.336746409638554,
+        "max_ms": 62.678969
+      },
+      "client_prepare": {
+        "n": 1000,
+        "p50_ms": 0.07832800000000001,
+        "p95_ms": 0.14553154999999993,
+        "p99_ms": 0.2303707799999996,
+        "mean_ms": 0.095649239,
+        "max_ms": 1.722027
+      },
+      "elapsed_seconds": 3.0810979660018347,
+      "achieved_successful_requests_per_second": 323.2613863597633,
+      "first_client_request": {
+        "index": -1,
+        "worker": 0,
+        "phase": "first_client_request",
+        "trace_id": "e430bd40-f576-46f3-85f6-cd4fd671cdaf",
+        "client_prepare_ms": 0.187312,
+        "status": 200,
+        "success": true,
+        "effect_id": "fx-faf18f13b6234054",
+        "latency_ms": 6.06801,
+        "response_headers_ms": 6.056222,
+        "response_bytes": 180,
+        "error": null
+      },
+      "warmup_requests_per_worker": 20,
+      "ledger": {
+        "passed": true,
+        "before": {
+          "balances": {
+            "treasury": 998853,
+            "ops": 50000,
+            "vendor": 1147
+          },
+          "effects": 1024,
+          "receipts": 1040,
+          "journal_mode": "wal"
+        },
+        "after": {
+          "balances": {
+            "treasury": 997697,
+            "ops": 50000,
+            "vendor": 2303
+          },
+          "effects": 2180,
+          "receipts": 2201,
+          "journal_mode": "wal"
+        },
+        "expected_transfer_count_including_first_and_warmup": 1156,
+        "expected_delta_cents": 1156
+      },
+      "profiling": {
+        "record_counts": {},
+        "successful_measured_requests": 996,
+        "unique_traces_with_profiles": 0,
+        "stages": {},
+        "network_envoy_scheduling_and_profile_output_residual": {
+          "n": 0,
+          "p50_ms": null,
+          "p95_ms": null,
+          "p99_ms": null,
+          "mean_ms": null,
+          "max_ms": null
+        },
+        "note": "Nested stages are inclusive and must not be summed. Residual also includes profiling output, serialization and queueing."
+      },
+      "profile_malformed_lines": 0
+    }
+  ],
+  "error": "benchmark case failed: openline-http-transfer-persistent-c8"
+}

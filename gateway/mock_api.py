@@ -27,6 +27,7 @@ from pathlib import Path
 
 from cryptography.hazmat.primitives.asymmetric.ed25519 import (
     Ed25519PrivateKey)
+from profiling import profiled, set_trace, span
 
 HERE = Path(__file__).resolve().parent
 CONFIG_DIR = Path(os.environ.get("GATEWAY_CONFIG", HERE / "config"))
@@ -78,6 +79,8 @@ class Ledger:
 
     def __init__(self, db_path: Path):
         self.db = sqlite3.connect(str(db_path), check_same_thread=False)
+        self.db.execute("PRAGMA journal_mode=WAL")
+        self.db.execute("PRAGMA synchronous=FULL")
         self.db.execute("CREATE TABLE IF NOT EXISTS balances("
                         "acct TEXT PRIMARY KEY, cents INTEGER)")
         self.db.execute("CREATE TABLE IF NOT EXISTS used_decisions("
@@ -89,6 +92,7 @@ class Ledger:
                             (acct, cents))
         self.db.commit()
 
+    @profiled("api.protected_execution")
     def transfer(self, to_acct: str, cents: int, decision_id: str) -> dict:
         if self.db.execute("SELECT 1 FROM used_decisions WHERE decision_id=?",
                            (decision_id,)).fetchone():
@@ -112,7 +116,8 @@ class Ledger:
             (effect_id, time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
              json.dumps({"to": to_acct, "cents": cents,
                          "decision_id": decision_id})))
-        self.db.commit()
+        with span("sqlite.ledger_durable_commit"):
+            self.db.commit()
         return {"ok": True, "effect_id": effect_id,
                 "treasury_cents": bal - cents}
 
@@ -126,6 +131,7 @@ LEDGER = Ledger(DB_PATH)
 PUB = receiver_pubkey()
 
 
+@profiled("crypto.decision_verification")
 def verify_decision_token(token_b64: str):
     """Return the authorized action dict, or None."""
     try:
@@ -139,6 +145,7 @@ def verify_decision_token(token_b64: str):
         return None
 
 
+@profiled("api.standing_roundtrip")
 def _standing_ok(token) -> bool:
     """Ask the authz service whether this decision is still standing."""
     import urllib.request as _url
@@ -159,6 +166,7 @@ def _standing_ok(token) -> bool:
 class Handler(BaseHTTPRequestHandler):
     server_version = "MockLedger/0.1"
 
+    @profiled("api.response_write")
     def _send(self, code, obj):
         body = json.dumps(obj).encode()
         self.send_response(code)
@@ -170,7 +178,9 @@ class Handler(BaseHTTPRequestHandler):
     def log_message(self, *a):
         pass
 
+    @profiled("api.request")
     def do_GET(self):
+        set_trace(self.headers.get("x-request-id"))
         if self.path == "/health":
             return self._send(200, {"ok": True})
         if self.path.startswith("/balance"):
@@ -179,22 +189,27 @@ class Handler(BaseHTTPRequestHandler):
                                    "cents": LEDGER.balance(acct)})
         return self._send(404, {"error": "not found"})
 
+    @profiled("api.request")
     def do_POST(self):
+        set_trace(self.headers.get("x-request-id"))
         if os.environ.get("GW_LOG_HEADERS"):
             with open("/tmp/gw-headers.log", "a") as f:
                 f.write(json.dumps(dict(self.headers)) + "\n")
-        length = int(self.headers.get("Content-Length", 0))
-        raw = self.rfile.read(length) if length else b"{}"
-        try:
-            body = json.loads(raw)
-        except Exception:
-            body = {}
+        with span("api.request_handling"):
+            length = int(self.headers.get("Content-Length", 0))
+            raw = self.rfile.read(length) if length else b"{}"
+            try:
+                body = json.loads(raw)
+            except Exception:
+                body = {}
         if self.path == "/transfer":
             return self._transfer(body)
         return self._send(404, {"error": "not found"})
 
     def _transfer(self, body):
-        if mode() == "observe":
+        with span("api.policy_read"):
+            current_mode = mode()
+        if current_mode == "observe":
             decided = self.headers.get("x-ol-observe-decision", "unknown")
             to_acct = body.get("to", "vendor")
             cents = int(body.get("cents", 0))
@@ -262,6 +277,13 @@ class Handler(BaseHTTPRequestHandler):
         return self._send(200 if res["ok"] else 409, res)
 
 
+class LedgerHTTPServer(HTTPServer):
+    # Keep ledger execution serialized. The default five-connection listen
+    # queue drops bursts from concurrent Envoy clients before admission;
+    # queue them before token/standing checks, with unchanged timeouts/TTL.
+    request_queue_size = 128
+
+
 if __name__ == "__main__":
     print(f"[mock-api] on {HOST}:{PORT}", flush=True)
-    HTTPServer((HOST, PORT), Handler).serve_forever()
+    LedgerHTTPServer((HOST, PORT), Handler).serve_forever()
