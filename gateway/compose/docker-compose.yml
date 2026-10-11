@@ -74,6 +74,9 @@ services:
       GATEWAY_DB: /state/gateway.db
       GATEWAY_AUTH_MODE: ${AUTH_MODE:-openline}
       MOCK_API_PORT: "9000"
+      # Bind all interfaces: Envoy reaches this container via its
+      # bridge-network IP, not loopback (see MOCK_API_HOST in mock_api.py).
+      MOCK_API_HOST: "0.0.0.0"
       PYTHONPATH: /app
     volumes:
       - gateway-config:/config

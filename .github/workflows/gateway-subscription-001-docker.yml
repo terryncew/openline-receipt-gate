@@ -19,23 +19,15 @@
 
 name: gateway-subscription-001-docker
 
-# TEMPORARY (GATEWAY-SUBSCRIPTION-001 step 1): GitHub's workflow_dispatch
-# API returns 404 for a workflow file that exists only on a feature
-# branch ("not found on the default branch") — dispatch is undiscoverable
-# until the file lands on main, which this task forbids touching. So the
-# verification runs are triggered by path-scoped pushes instead: only
-# pushes touching this workflow or the files it verifies can trigger it.
-# This trigger is REMOVED after the verification passes, leaving the
-# deliverable as workflow_dispatch-only per the task spec.
+# NOTE (history): workflow_dispatch is not discoverable by GitHub's API
+# for a workflow file that exists only on a feature branch (404 "not
+# found on the default branch"); it becomes dispatchable once the file
+# lands on main. During step-1 verification the runs were triggered by
+# a TEMPORARY path-scoped `push` trigger (since removed) because this
+# task forbids touching main. See gateway/subscription001/
+# EVIDENCE-docker.md for the full attempt record.
 on:
   workflow_dispatch:
-  push:
-    branches: [experiment/gateway-subscription-001]
-    paths:
-      - .github/workflows/gateway-subscription-001-docker.yml
-      - gateway/ci/docker_verify.py
-      - gateway/compose/**
-      - gateway/gateway_admin.py
 
 permissions:
   contents: read

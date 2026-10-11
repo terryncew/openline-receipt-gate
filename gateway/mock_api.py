@@ -32,6 +32,12 @@ HERE = Path(__file__).resolve().parent
 CONFIG_DIR = Path(os.environ.get("GATEWAY_CONFIG", HERE / "config"))
 DB_PATH = Path(os.environ.get("GATEWAY_DB", HERE / "state" / "gateway.db"))
 PORT = int(os.environ.get("MOCK_API_PORT", "9000"))
+# Bind address: 127.0.0.1 is correct for ./up.sh (all processes share
+# the host loopback), but inside Docker Compose Envoy reaches this API
+# via the container's bridge IP, so it must bind 0.0.0.0 there. Set
+# MOCK_API_HOST=0.0.0.0 in the compose file (the port is not published
+# to the host; only the compose network can reach it).
+HOST = os.environ.get("MOCK_API_HOST", "127.0.0.1")
 # GATEWAY_AUTH_MODE=openline (default): require receiver-signed decision
 # token. =opa: accept OPA's unsigned x-opa-decision header (used for the
 # head-to-head baselines; see the report for the security implications).
@@ -257,5 +263,5 @@ class Handler(BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    print(f"[mock-api] on 127.0.0.1:{PORT}", flush=True)
-    HTTPServer(("127.0.0.1", PORT), Handler).serve_forever()
+    print(f"[mock-api] on {HOST}:{PORT}", flush=True)
+    HTTPServer((HOST, PORT), Handler).serve_forever()
