@@ -4,11 +4,6 @@ on:
   push:
     branches:
       - fix/receiver-proof-gateway-path-001
-    paths:
-      - .github/workflows/receiver-proof-gateway-path.yml
-      - gateway/mock_api.py
-      - gateway/poppy/test_gateway_path.py
-      - gateway/poppy/test_atomic_receipt.py
   workflow_dispatch:
 
 permissions:
