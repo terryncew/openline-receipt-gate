@@ -15,9 +15,9 @@ jobs:
       - name: Exercise real Envoy gateway and Wallet
         run: |
           docker pull envoyproxy/envoy:v1.39.3
-          cat > /tmp/openline-envoy.sh <<'SH'
-          #!/bin/sh
-          exec docker run --rm --network host -v /tmp:/tmp:ro envoyproxy/envoy:v1.39.3 "$@"
-          SH
-          chmod +x /tmp/openline-envoy.sh
-          ENVOY_BIN=/tmp/openline-envoy.sh NO_PROXY=localhost,127.0.0.1 python3 gateway/poppy/test_gateway_path.py
+          docker create --name envoy-binary-extract envoyproxy/envoy:v1.39.3
+          docker cp envoy-binary-extract:/usr/local/bin/envoy /tmp/openline-envoy
+          docker rm envoy-binary-extract
+          chmod +x /tmp/openline-envoy
+          /tmp/openline-envoy --version
+          ENVOY_BIN=/tmp/openline-envoy NO_PROXY=localhost,127.0.0.1 python3 gateway/poppy/test_gateway_path.py
