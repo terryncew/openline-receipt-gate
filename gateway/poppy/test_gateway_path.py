@@ -102,11 +102,18 @@ def http_get(url: str) -> dict:
         return json.loads(r.read())
 
 
-def verify_receipt_signature(receipt: dict) -> bool:
-    """Independently verify the receiver's signature on the receipt."""
+def verify_receipt_signature(receipt: dict, trusted_pub_b64: str) -> bool:
+    """Verify both signature integrity and receiver key attribution.
+
+    The key embedded in a receipt proves nothing by itself: an attacker can
+    sign with their own key and include that public key. Require a separate,
+    independently configured expected receiver key.
+    """
     sig_b64 = receipt.get("receiver_signature")
     pub_b64 = receipt.get("receiver_public_key")
-    if not sig_b64 or not pub_b64:
+    if not sig_b64 or not pub_b64 or not trusted_pub_b64:
+        return False
+    if _b64u_decode(pub_b64) != _b64u_decode(trusted_pub_b64):
         return False
     try:
         # Reconstruct the signed payload (receipt without signature fields).
@@ -282,8 +289,36 @@ def main() -> int:
               f"status {s2} response={str(r2)[:450]}")
         receipt = r2.get("poppy_receipt", {})
         check("receipt present", bool(receipt))
-        check("receipt signature verifies independently",
-              verify_receipt_signature(receipt))
+        trusted_receiver_key = Ed25519PrivateKey.from_private_bytes(
+            _b64u_decode((cfgdir / "receiver.key").read_text().strip()))
+        trusted_pub = base64.urlsafe_b64encode(
+            trusted_receiver_key.public_key().public_bytes_raw()
+        ).rstrip(b"=").decode()
+        check("receipt signature verifies with independently trusted key",
+              verify_receipt_signature(receipt, trusted_pub))
+
+        # A self-signed receipt from a new key is not an authenticated
+        # receiver receipt, even though its Ed25519 signature is valid.
+        impostor_key = Ed25519PrivateKey.generate()
+        forged_payload = {
+            k: v for k, v in receipt.items()
+            if k not in ("receiver_signature", "receiver_public_key")
+        }
+        impostor_receipt = {
+            **forged_payload,
+            "receiver_signature": base64.urlsafe_b64encode(
+                impostor_key.sign(_canonical(forged_payload))
+            ).rstrip(b"=").decode(),
+            "receiver_public_key": base64.urlsafe_b64encode(
+                impostor_key.public_key().public_bytes_raw()
+            ).rstrip(b"=").decode(),
+        }
+        check("self-signed wrong receiver key rejected",
+              not verify_receipt_signature(impostor_receipt, trusted_pub))
+        tampered_receipt = json.loads(json.dumps(receipt))
+        tampered_receipt["effect_evidence"]["amount_cents"] += 1
+        check("modified effect evidence rejected",
+              not verify_receipt_signature(tampered_receipt, trusted_pub))
         de = receipt.get("decision_evidence", {})
         ee = receipt.get("effect_evidence", {})
         check("decision evidence separate",
