@@ -41,7 +41,23 @@ import os
 # Envoy target: defaults to host-published 127.0.0.1:8080, but can be
 # overridden (e.g., to the container's bridge IP) when host port
 # publishing is unavailable. See the workflow's ENVOY_URL.
+# Refreshed after full-stack down/up (container IPs change).
 ENVOY = os.environ.get("ENVOY_URL", "http://127.0.0.1:8080")
+
+
+def refresh_envoy_url() -> None:
+    """Re-resolve the Envoy container's bridge IP after down/up."""
+    global ENVOY
+    try:
+        p = subprocess.run(
+            ["docker", "inspect", "compose-envoy-1",
+             "--format", "{{.NetworkSettings.Networks.compose_gateway.IPAddress}}"],
+            capture_output=True, text=True, timeout=10)
+        ip = p.stdout.strip()
+        if ip:
+            ENVOY = f"http://{ip}:8080"
+    except Exception:
+        pass
 AGENT_ID = "ci-verify-agent"
 RESULTS: list[tuple[str, bool, str]] = []
 LATENCIES: list[float] = []
@@ -213,9 +229,15 @@ def main() -> int:
           s == 403 and "agent_revoked" in b, f"http={s} {b[:120]}")
 
     # (f) Full-stack restart: balances and receipts survive
-    # Restart app services only (not init: it is a one-shot; re-running it
-    # races with the app services and can leave the DB half-initialized).
-    r = compose("restart", "authz", "mockapi", "envoy")
+    # Use down/up (not restart): recreates containers fresh, avoiding
+    # stale Envoy upstream connections to restarted backends.
+    # Volumes persist (no --volumes), so the DB survives.
+    r = compose("down")
+    check("f0a stack down exits 0", r.returncode == 0, r.stderr[:120])
+    r = compose("up", "-d")
+    check("f0b stack up exits 0", r.returncode == 0, r.stderr[:120])
+    # Container IPs change on down/up; re-resolve Envoy.
+    refresh_envoy_url()
     check("f0 stack restart exits 0", r.returncode == 0, r.stderr[:120])
 
     def envoy_back():
