@@ -42,8 +42,8 @@ services:
 
   authz:
     build:
-      context: ..
-      dockerfile: compose/Dockerfile.gateway
+      context: ../..
+      dockerfile: gateway/compose/Dockerfile.gateway
     profiles: [openline]
     # Bootstraps receiver.key + policy.json on a fresh gateway-config
     # volume before the service starts (see entrypoint-gateway.sh).
@@ -60,8 +60,8 @@ services:
 
   mockapi:
     build:
-      context: ..
-      dockerfile: compose/Dockerfile.gateway
+      context: ../..
+      dockerfile: gateway/compose/Dockerfile.gateway
     profiles: [openline, opa-a, opa-b]
     # Same first-boot init as authz (atomic via lock; safe when both
     # boot together, and lets the opa profiles init without authz).
@@ -96,8 +96,8 @@ services:
 
   opa-shim:
     build:
-      context: ..
-      dockerfile: compose/Dockerfile.gateway
+      context: ../..
+      dockerfile: gateway/compose/Dockerfile.gateway
     profiles: [opa-a, opa-b]
     environment:
       PYTHONPATH: /app
