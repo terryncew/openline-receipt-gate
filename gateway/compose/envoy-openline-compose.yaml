@@ -1,10 +1,11 @@
 # Envoy configuration for the Docker Compose profile (openline).
 #
-# Identical to ../envoy/envoy-openline.yaml EXCEPT the upstream
-# endpoints: inside Compose the services are reachable by service name
-# (authz, mockapi), NOT by 127.0.0.1 — each container has its own
-# loopback, so the host-mode config's 127.0.0.1 endpoints would make
-# Envoy talk to itself and fail every request closed (403, empty body).
+# Identical to ../envoy/envoy-openline.yaml EXCEPT the upstreams: inside
+# Compose the services are reachable by service name (authz, mockapi),
+# NOT by 127.0.0.1 — each container has its own loopback, so the
+# host-mode config's 127.0.0.1 endpoints would make Envoy talk to
+# itself. Hostnames require STRICT_DNS clusters (STATIC only accepts
+# literal IPs — Envoy exits critical otherwise).
 #
 # The canonical host-mode file is untouched so ./up.sh keeps working.
 

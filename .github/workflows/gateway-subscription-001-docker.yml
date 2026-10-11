@@ -84,7 +84,7 @@ jobs:
         run: |
           mkdir -p /tmp/gwlogs
           docker compose --profile openline logs --no-color > /tmp/gwlogs/compose.log 2>&1 || true
-          docker compose --profile openline ps >> /tmp/gwlogs/compose.log 2>&1 || true
+          docker compose --profile openline ps -a >> /tmp/gwlogs/compose.log 2>&1 || true
           echo "--- log sizes ---"
           wc -c /tmp/gwlogs/*
 
