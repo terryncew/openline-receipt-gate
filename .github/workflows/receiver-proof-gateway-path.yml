@@ -5,6 +5,19 @@ on:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
-      - run: echo receiver-proof-ci-available
+      - name: Install prerequisites
+        run: python3 -m pip install cryptography grpcio protobuf
+      - name: Check atomic signed receipt
+        run: python3 -m unittest gateway/poppy/test_atomic_receipt.py -v
+      - name: Exercise real Envoy gateway and Wallet
+        run: |
+          docker pull envoyproxy/envoy:v1.39.3
+          cat > /tmp/openline-envoy.sh <<'SH'
+          #!/bin/sh
+          exec docker run --rm --network host -v /tmp:/tmp:ro envoyproxy/envoy:v1.39.3 "$@"
+          SH
+          chmod +x /tmp/openline-envoy.sh
+          ENVOY_BIN=/tmp/openline-envoy.sh NO_PROXY=localhost,127.0.0.1 python3 gateway/poppy/test_gateway_path.py
