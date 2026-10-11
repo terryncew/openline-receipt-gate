@@ -234,6 +234,12 @@ def main() -> int:
         return s == 403 and "missing_action_claim" in b
     check("f2 authz chain live after restart",
           bool(wait_for("authz chain", chain_back)))
+
+    def api_back_full():
+        s, _ = get_balance(client, "treasury")
+        return s == 200
+    wait_for("mockapi balance after full restart", api_back_full)
+
     _, t3 = get_balance(client, "treasury")
     _, v3 = get_balance(client, "vendor")
     check("f3 balances survive full restart",
