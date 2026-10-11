@@ -195,7 +195,8 @@ def main() -> int:
     _, t2 = get_balance(client, "treasury")
     _, v2 = get_balance(client, "vendor")
     check("d2 balances survive mockapi restart",
-          t2 == t1 and v2 == v1, f"treasury={t2} vendor={v2}")
+          t1 >= 0 and v1 >= 0 and t2 == t1 and v2 == v1,
+          f"treasury={t2} vendor={v2} (baseline {t1}/{v1})")
 
     # (e) Revocation
     r = cexec("authz", "python3", "/app/gateway/gateway_admin.py",
@@ -232,7 +233,8 @@ def main() -> int:
     _, t3 = get_balance(client, "treasury")
     _, v3 = get_balance(client, "vendor")
     check("f3 balances survive full restart",
-          t3 == t1 and v3 == v1, f"treasury={t3} vendor={v3}")
+          t1 >= 0 and v1 >= 0 and t3 == t1 and v3 == v1,
+          f"treasury={t3} vendor={v3} (baseline {t1}/{v1})")
     ok, summary = verify_receipts()
     try:
         n1 = int(summary.split(" valid")[0].split(": ")[1])
