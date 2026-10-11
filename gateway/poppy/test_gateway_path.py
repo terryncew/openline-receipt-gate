@@ -378,6 +378,37 @@ def main() -> int:
         check("mixed agent identity reason", 
               mixed_body.get("error") == "IDENTITY_MISMATCH")
 
+        # A registered Gateway worker must not sign a request claiming to
+        # BE a different Wallet-approved worker. The raw header selects the
+        # real registered key/mandate; the signed body must match that ID.
+        # Without the authz check, the issued receiver token could carry
+        # "unrelated-agent" and combine with this valid Wallet presentation.
+        print("\\n--- Case 5c: signed action agent ID substitution")
+        impostor = AgentClient("poppy-agent", agent_key_b64)
+        spoof_headers = impostor.headers_for(
+            "authorize_payment", target="ledger", value_cents=4250)
+        spoof_action = json.loads(_b64u_decode(spoof_headers["x-ol-action"]))
+        spoof_action["agent_id"] = "unrelated-agent"
+        spoof_payload = _canonical(spoof_action)
+        spoof_headers["x-ol-action"] = base64.urlsafe_b64encode(
+            spoof_payload).rstrip(b"=").decode()
+        spoof_headers["x-ol-sig"] = base64.urlsafe_b64encode(
+            impostor.key.sign(spoof_payload)).rstrip(b"=").decode()
+        spoof_headers["x-ol-tx-approval"] = mixed_appr
+        spoof_headers["Content-Type"] = "application/json"
+        spoof_status, spoof_body = http_post(
+            envoy_url, {"operation": op_mixed}, spoof_headers)
+        check("signed agent ID substitution -> 403",
+              spoof_status == 403,
+              f"status {spoof_status}, body={str(spoof_body)[:450]}")
+        check("denied at Gateway identity check",
+              "action_agent_id_mismatch" in
+              spoof_body.get("reasons", []),
+              f"body={str(spoof_body)[:450]}")
+        check("forged identity caused no ledger debit",
+              http_get("http://127.0.0.1:9000/balance/treasury")["cents"]
+              == 1000000 - 4250)
+
         # Case 6: Revoked approval.
         print("\n--- Case 6: revoked transaction approval")
         wallet.revoke(mid5, reason="USER_REVOKED")
