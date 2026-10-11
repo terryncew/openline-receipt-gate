@@ -1,9 +1,9 @@
-# GATEWAY-SUBSCRIPTION-001 Step 1: verify the Docker Compose gateway path
+# OPENLINE-RECEIVER-001 Priority 1: verify the Docker Compose gateway path
 # FOR REAL on a GitHub Actions ubuntu-latest runner (has Docker; the
 # build VM does not).
 #
 # What it does:
-#   1. Checks out branch experiment/gateway-subscription-001.
+#   1. Checks out the branch that triggered the run.
 #   2. `docker compose --profile openline up --build -d` (AUTH_MODE=openline).
 #   3. Waits for Envoy on 127.0.0.1:8080.
 #   4. Runs gateway/ci/docker_verify.py: provisions an agent, sends
@@ -14,28 +14,20 @@
 #   5. Uploads container logs + verifier output as artifacts.
 #   6. `docker compose down` (always).
 #
-# Trigger: workflow_dispatch only. No secrets, no paid APIs, no real
-# payment processing — the ledger is fully simulated.
+# Trigger: workflow_dispatch and pushes to the receiver branch.
+# No secrets, no paid APIs, no real payment processing — the ledger
+# is fully simulated.
 
-name: gateway-subscription-001-docker
+name: gateway-docker-verify
 
-# TEMPORARY (GATEWAY-SUBSCRIPTION-001 step 1): GitHub's workflow_dispatch
-# API returns 404 for a workflow file that exists only on a feature
-# branch ("not found on the default branch") — dispatch is undiscoverable
-# until the file lands on main, which this task forbids touching. So the
-# verification runs are triggered by path-scoped pushes instead: only
-# pushes touching this workflow or the files it verifies can trigger it.
-# This trigger is REMOVED after the verification passes, leaving the
-# deliverable as workflow_dispatch-only per the task spec.
 on:
   workflow_dispatch:
   push:
-    branches: [experiment/gateway-subscription-001]
+    branches: [experiment/openline-receiver-001]
     paths:
-      - .github/workflows/gateway-subscription-001-docker.yml
+      - .github/workflows/gateway-docker-verify.yml
       - gateway/ci/docker_verify.py
       - gateway/compose/**
-      - gateway/gateway_admin.py
 
 permissions:
   contents: read
@@ -48,7 +40,7 @@ jobs:
       - name: Checkout branch
         uses: actions/checkout@v4
         with:
-          ref: experiment/gateway-subscription-001
+          # no ref: checks out the branch that triggered the run
 
       - name: Build and start the gateway stack
         working-directory: gateway/compose
