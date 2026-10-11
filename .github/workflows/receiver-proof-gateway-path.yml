@@ -10,6 +10,12 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install prerequisites
         run: python3 -m pip install cryptography grpcio protobuf
+      - name: Install package in clean environment and run actual sample
+        run: |
+          python3 -m venv /tmp/openline-receiver-venv
+          /tmp/openline-receiver-venv/bin/python -m pip install ./gateway/receiver-package
+          (cd /tmp && /tmp/openline-receiver-venv/bin/python -c "from openline_receiver.wallet_bridge import WalletReceiver; print(WalletReceiver.__name__)")
+          /tmp/openline-receiver-venv/bin/python gateway/receiver-package/example_01.py
       - name: Check atomic signed receipt
         run: python3 -m unittest gateway/poppy/test_atomic_receipt.py -v
       - name: Exercise real Envoy gateway and Wallet
