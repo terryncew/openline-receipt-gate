@@ -57,20 +57,24 @@ jobs:
       - name: Wait for Envoy health
         working-directory: gateway/compose
         run: |
+          # Host port publishing is broken on this runner (HostConfig has
+          # the binding but NetworkSettings.Ports is empty — daemon not
+          # applying NAT). Bypass via the container's bridge IP, which the
+          # host can reach directly.
+          ENVOY_IP=$(docker inspect compose-envoy-1 --format '{{.NetworkSettings.Networks.compose_gateway.IPAddress}}')
+          echo "envoy bridge IP: $ENVOY_IP"
+          echo "ENVOY_URL=http://$ENVOY_IP:8080" >> $GITHUB_ENV
           for i in $(seq 1 36); do
-            if curl -sf -m 3 http://127.0.0.1:8080/health; then
+            if curl -sf -m 3 http://$ENVOY_IP:8080/health; then
               echo; echo "envoy healthy after ~$((i * 5))s"
               break
             fi
             sleep 5
           done
-          curl -sf -m 5 http://127.0.0.1:8080/health || {
+          curl -sf -m 5 http://$ENVOY_IP:8080/health || {
             echo "=== DEBUG: envoy unreachable, dumping state ==="
             docker compose --profile openline ps -a
             docker inspect compose-envoy-1 --format 'ports={{.NetworkSettings.Ports}} hostconfig={{.HostConfig.PortBindings}}' || true
-            docker inspect compose-authz-1 --format 'state={{.State.Status}} exit={{.State.ExitCode}}' || true
-            echo "--- envoy listeners (via /proc/net/tcp) ---"
-            docker exec compose-envoy-1 cat /proc/net/tcp 2>/dev/null | awk 'NR>1 {split($2,a,":"); print strtonum("0x" a[2])}' | sort -un || echo "no /proc/net/tcp"
             echo "--- authz log tail ---"
             docker compose --profile openline logs --no-color --tail=30 authz || true
             exit 1

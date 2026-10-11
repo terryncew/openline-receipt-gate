@@ -37,7 +37,11 @@ COMPOSE_DIR = GWROOT / "compose"
 sys.path.insert(0, str(GWROOT))
 from agent_client import AgentClient  # noqa: E402  (repo code, unmodified)
 
-ENVOY = "http://127.0.0.1:8080"
+import os
+# Envoy target: defaults to host-published 127.0.0.1:8080, but can be
+# overridden (e.g., to the container's bridge IP) when host port
+# publishing is unavailable. See the workflow's ENVOY_URL.
+ENVOY = os.environ.get("ENVOY_URL", "http://127.0.0.1:8080")
 AGENT_ID = "ci-verify-agent"
 RESULTS: list[tuple[str, bool, str]] = []
 LATENCIES: list[float] = []
