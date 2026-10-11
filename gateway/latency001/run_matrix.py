@@ -427,8 +427,39 @@ def main(argv=None):
                 tag = "PASS" if case["passed"] else "FAIL"
                 note = " (original failure retained)" if case.get("allowed_original_failure") and not case["passed"] else ""
                 print(f"{tag} {plan['name']}{note}", flush=True)
-            report["passed"] = all(case["passed"] or case.get("allowed_original_failure", False)
-                                   for case in report["cases"])
+            # The original Gateway is a diagnostic/negative control, not
+            # an acceptance requirement for the optimized implementation.
+            # Its known concurrent shared-connection failure can prevent the
+            # benchmark or receipt exporter from completing at all. Those
+            # failures MUST stay failed, visible, and independently auditable;
+            # they must not be recast as successful latency observations.
+            # Security, receipt, and functional failures in any REQUIRED case
+            # remain fatal, with no exceptions.
+            required = [c for c in report["cases"] if c["plan"]["required"]]
+            optional = [c for c in report["cases"] if not c["plan"]["required"]]
+            failed_required = [c["plan"]["name"] for c in required if not c["passed"]]
+            failed_diagnostics = [
+                {"name": c["plan"]["name"],
+                 "error": c.get("error"),
+                 "benchmark_report_present": c.get("benchmark") is not None,
+                 "benchmark_passed": bool(c.get("benchmark", {}).get("passed"))
+                 if isinstance(c.get("benchmark"), dict) else False,
+                 "receipt_export_verified": any(
+                     "independent-receipt-verification" in cmd.get("log", "")
+                     and cmd["exit_code"] == 0 for cmd in c.get("commands", []))}
+                for c in optional if not c["passed"]]
+            report["acceptance"] = {
+                "semantics": "Required optimized/OPA/floor cases only; original failures preserved as negative controls",
+                "required_passed": len(required) > 0 and not failed_required,
+                "required_count": len(required),
+                "required_failed": failed_required,
+                "diagnostic_count": len(optional),
+                "diagnostics_failed": failed_diagnostics,
+                "all_cases_passed": all(c["passed"] for c in report["cases"]),
+                "all_planned_cases_recorded": len(report["cases"]) == len(plans),
+            }
+            report["passed"] = (report["acceptance"]["required_passed"]
+                                and report["acceptance"]["all_planned_cases_recorded"])
     except Exception as error:
         report["fatal_error"] = str(error) if isinstance(error, RuntimeError) else type(error).__name__
     (output / "matrix.json").write_text(json.dumps(report, indent=2) + "\n")
