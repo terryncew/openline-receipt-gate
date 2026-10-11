@@ -195,9 +195,10 @@ def main() -> int:
         cfg_src = GWROOT / "envoy" / "envoy-openline.yaml"
         cfg_dst = rundir / "envoy.yaml"
         cfg_dst.write_text(cfg_src.read_text())
+        envlog = (rundir / "envoy.log").open("w")
         penvoy = subprocess.Popen(
             [str(ENVOY_BIN), "-c", str(cfg_dst)],
-            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            stdout=envlog, stderr=subprocess.STDOUT)
         procs.append(penvoy)
 
         if not wait_for("http://127.0.0.1:9000/health", 15):
@@ -206,9 +207,12 @@ def main() -> int:
         # Envoy health: try the poppy endpoint via Envoy (will 403 without
         # auth, but proves Envoy is up and routing).
         if not wait_for("http://127.0.0.1:8080/health", 20):
-            # /health may not be routed; try a POST that should 403.
-            time.sleep(3)
-        print("== stack ready\n")
+            print(f"Envoy /health did not become ready; exit={penvoy.poll()}")
+            if (rundir / "envoy.log").exists():
+                print("\n".join((rundir / "envoy.log").read_text(
+                    errors="replace").splitlines()[-80:]))
+            return 2
+        print("== stack ready\\n")
 
         # Setup: operation, mandate, bundle (via mockapi test endpoints).
         operation = {
@@ -310,6 +314,8 @@ def main() -> int:
         # New operation/mandate for a clean approval.
         op4 = dict(operation, order_ref="ord_full_004")
         scope4 = mandate_scope_for_operation(op4)
+        # The Wallet permits only one active mandate per subject.
+        wallet.revoke(mid, reason="TEST_ROTATE_AFTER_ONE_USE")
         m4 = wallet.grant(
             subject_id="poppy-agent",
             subject_public_key=public_key_hex(akey),
@@ -332,6 +338,7 @@ def main() -> int:
         op5 = dict(operation, order_ref="ord_full_005",
                    merchant="manzanita-supply")
         scope5 = mandate_scope_for_operation(op5)
+        wallet.revoke(mid4, reason="TEST_ROTATE_AFTER_AMOUNT_REFUSAL")
         m5 = wallet.grant(
             subject_id="poppy-agent",
             subject_public_key=public_key_hex(akey),
@@ -389,7 +396,7 @@ def main() -> int:
         if any(s == FAIL for s, _ in results):
             # Preserve actionable diagnostics on a failing run, rather than
             # deleting the temp logs before the failure has been explained.
-            for name in ("authz.log", "mockapi.log"):
+            for name in ("authz.log", "mockapi.log", "envoy.log"):
                 log = rundir / name
                 if log.exists():
                     print(f"\\n--- {name} (last 40 lines) ---")
