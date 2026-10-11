@@ -213,7 +213,9 @@ def main() -> int:
           s == 403 and "agent_revoked" in b, f"http={s} {b[:120]}")
 
     # (f) Full-stack restart: balances and receipts survive
-    r = compose("restart")
+    # Restart app services only (not init: it is a one-shot; re-running it
+    # races with the app services and can leave the DB half-initialized).
+    r = compose("restart", "authz", "mockapi", "envoy")
     check("f0 stack restart exits 0", r.returncode == 0, r.stderr[:120])
 
     def envoy_back():
