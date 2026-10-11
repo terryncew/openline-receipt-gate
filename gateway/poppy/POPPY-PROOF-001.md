@@ -134,6 +134,50 @@ Owner                    Agent                    Receiver (business)
 | Signed decision receipts | No | **Yes** |
 | Per-action authorization | Future | **Demonstrated** |
 
+## The strict distinction (added 2026-10-11)
+
+Two different things, never conflated:
+
+1. **Owner-signed delegated authority**: "the agent is permitted to
+   perform certain actions within defined limits."
+   - Gateway-native: the agent is provisioned with a mandate
+     (e.g., "may initiate charges up to $50").
+   - Proves: the AGENT is permitted.
+   - Does NOT prove: the human approved any specific transaction.
+
+2. **Owner-signed transaction approval**: "the owner explicitly
+   authorized one exact operation with specific terms."
+   - Wallet: a mandate whose scope is the hash of the exact operation
+     (merchant, amount, items, order ref).
+   - Proves: the HUMAN approved THIS EXACT transaction.
+
+**The rule**: delegated authority is NEVER represented as proof that
+the human approved a specific transaction. The business API
+(`/poppy-charge`) requires BOTH and returns
+`DELEGATED_AUTHORITY_NOT_TRANSACTION_APPROVAL` when only delegated
+authority is present.
+
+## Gateway integration (added 2026-10-11)
+
+The complete path is tested through the ACTUAL business API
+(real `mock_api.py` process):
+
+- `gateway/mock_api.py` gains an experimental `/poppy-charge` endpoint
+  (plus test-only `/poppy-admit` and `/poppy-challenge`).
+- Layer 1 (delegated): verified via Gateway DB — agent signature and
+  mandate limits, same crypto as `authz_server.py`.
+- Layer 2 (transaction): verified via vendored Wallet contracts —
+  owner signature, exact-terms hash match, revocation, freshness.
+- `gateway/poppy/test_gateway_path.py`: 18/18 through the real
+  mockapi process with real ledger effects.
+- `gateway/poppy/bench_gateway.py`: median incremental cost of
+  transaction approval vs delegated-only baseline: **0.66ms**
+  (local, n=30).
+
+This replaces the standalone `poppy_receiver.py` verifier for the
+integration claim. The standalone verifier remains for unit-level
+Poppy session tests.
+
 ## Results (2026-10-11)
 
 - `demo_poppy_proof.py`: 11/11 — exact-terms allow, ledger moves

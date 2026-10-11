@@ -14,50 +14,47 @@ on the agent's assertion of approval.
 **Pinned spec:** Personal Agent Protocol Draft 0.1, published 2026-10-09
 at https://personalagentprotocol.org (Apache 2.0). Verified 2026-10-11.
 
-## The honest gap
+## The strict distinction (addition 2026-10-11)
 
-Poppy 0.1 gives the company: user identity (OAuth sign-in) + coarse
-scope (read/write). It does not bind the owner's signature to the exact
-operation terms. A valid write-scoped session can charge $99.99 the
-owner never approved for — demonstrated in `poppy_native_baseline.py`.
-This is not a Poppy flaw; per-action authorization is on Poppy's stated
-roadmap. This experiment shows one concrete way to fill it.
+1. **Delegated authority**: agent permitted within limits (Gateway mandate).
+   Proves the AGENT is permitted. Never proof of human approval.
+2. **Transaction approval**: owner explicitly authorized one exact operation
+   (Wallet mandate, scope = operation hash). Proves the HUMAN approved.
 
-## What was built (`gateway/poppy/`)
+The business API requires BOTH. Delegated alone →
+`DELEGATED_AUTHORITY_NOT_TRANSACTION_APPROVAL`. Never conflated.
 
-- `poppy_session.py` — faithful Poppy 0.1: poppy.json discovery,
-  OAuth-style sign-in, DPoP-bound short-lived session JWTs.
-- `poppy_receiver.py` — receiver verifying BOTH layers: Poppy session
-  (identity, draft 0.1) AND owner-signed Wallet mandate matching the
-  exact operation hash (experimental extension). Signed decision
-  receipts, simulated ledger effects only on ALLOWED.
-- `demo_poppy_proof.py` — 11/11: end-to-end $42.50 order.
-- `test_poppy_proof.py` — 16/16: revocation, replay, changed amount,
-  changed merchant, stale bundle head, worker replacement, provider
-  replacement, expired mandate, forged session, DPoP mismatch,
-  company-revoked session.
-- `poppy_native_baseline.py` — fair Poppy-only comparison (not weakened).
-- `bench_poppy.py` — latency/complexity baseline.
-- `POPPY-PROOF-001.md` — full design doc, trust boundaries,
-  experimental-vs-standard table.
+## Gateway integration (addition 2026-10-11)
 
-## Results
+Tested through the ACTUAL business API (real `mock_api.py` process):
 
-- Demo: 11/11. Tests: 16/16. All on the branch, reproducible with
-  `python3` + `cryptography` (no Docker, no network, no paid APIs).
-- Latency (n=50, local): native p50 0.16ms → extended p50 0.53ms.
-  **Median added cost of exact-terms authority: 0.38ms.**
-- Complexity: 4 moving parts (native) → 8 (extended).
+- `gateway/mock_api.py`: experimental `/poppy-charge` endpoint enforcing
+  both layers; test-only `/poppy-admit` and `/poppy-challenge`.
+- `gateway/poppy/test_gateway_path.py`: **18/18** — delegated-only 403,
+  delegated+approval 200 with ledger moving exactly $42.50, terms
+  mismatch 403, revoked 403, bad signature 403, limit exceeded 403.
+- `gateway/poppy/bench_gateway.py`: median incremental cost of
+  transaction approval: **0.66ms** (local, n=30, real process).
+
+## Original prototype (2026-10-11)
+
+- `poppy_session.py` — faithful Poppy 0.1: poppy.json, OAuth-style
+  sign-in, DPoP-bound JWTs.
+- `poppy_receiver.py` — standalone verifier (unit-level).
+- `demo_poppy_proof.py` — 11/11. `test_poppy_proof.py` — 16/16.
+- `poppy_native_baseline.py` — honest gap: Poppy-native allows $99.99
+  the owner never signed for (coarse scopes, not a flaw).
+- `bench_poppy.py` — standalone: +0.38ms median.
 
 ## What remains
 
 1. **Do not merge** without explicit order.
-2. Performance optimization deferred to Codex phase (per work order).
-3. No real OAuth server, no real payments, single receiver —
-   documented in POPPY-PROOF-001.md.
+2. Performance optimization deferred to Codex phase.
+3. No real OAuth, no real payments, single receiver — documented.
 
 ## Divergence
 
-All additive under `gateway/poppy/` on top of
-`experiment/openline-receiver-001`. No existing code modified. No new
-repos. No frozen records altered.
+Additive: `gateway/poppy/` (new) + `/poppy-*` endpoints in
+`gateway/mock_api.py` (experimental, documented). No existing behavior
+changed. No new repos. No frozen records altered. Built on the
+verified Gateway core (identical to subscription-001 post-PR-#103).
