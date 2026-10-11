@@ -1,14 +1,18 @@
 # OpenLine Gateway: Guarantees
 
-DRAFT. Every claim in the first section is pending final measured demo
-evidence from GATEWAY-SUBSCRIPTION-001. The second section is standing:
-it holds regardless of the demo outcome.
+Demo evidence landed 2026-10-11 (GATEWAY-SUBSCRIPTION-001, 25/25 checks,
+`gateway/subscription001/EVIDENCE-demo.md`). Claims below are as narrow
+as that evidence. The Limitations section is standing: it holds
+regardless.
 
-## Established (values pending final demo evidence)
+## Established (demo-measured)
 
 1. Mandate-scoped authority. The owner grants an agent a mandate with
    action types, targets, and a payment ceiling. The worker cannot widen
-   it, grant itself permission, or select the enforcement mode.
+   it, grant itself permission, or select the enforcement mode. Measured:
+   a $200 charge against a $20 mandate was refused with
+   `payment_limit_exceeded`; forged and unsigned tokens were refused at
+   the payment API.
 
 2. Replay protection. Each request carries a nonce. The gateway records
    nonces in sqlite. A replayed request is refused. (Baseline evidence:
@@ -20,9 +24,17 @@ it holds regardless of the demo outcome.
    request body.
 
 4. Revocation with a measured bound. Revoking an agent stops new
-   authorizations immediately. In-flight decision tokens remain valid up
-   to their 60 s TTL. Exact bound values: [PENDING MEASUREMENT] from
-   the demo evidence.
+   authorizations immediately (measured: the first fresh charge after
+   revocation was refused with `agent_revoked`, $0 moved). In-flight
+   decision tokens remain valid up to their 60 s TTL without the
+   standing check (measured: a pre-revocation token presented
+   post-revocation executed on the contrast API). With the
+   execution-time standing check enabled (the demo's configuration),
+   the same late token was refused with $0 moved; the residual window
+   is the check-to-commit interval (single measured sample 116 ms on
+   demo hardware; prior investigation measured ~75 ms steady state —
+   see `gateway/docs/STANDING-CHECK.md`). No instant-revocation claim
+   is made.
 
 5. Independently verifiable receipts. Every decision is a signed receipt
    in the gateway database. `gateway_admin.py verify-receipts` confirms
@@ -32,9 +44,11 @@ it holds regardless of the demo outcome.
    the ext_authz filter before reaching the API. If the authz service is
    unreachable, requests are rejected.
 
-Latency overhead of the bundle vs the OPA baseline: [PENDING
-MEASUREMENT]. (Build-hardware baseline: ~140 ms p50, dominated by
-durable sqlite writes. See `gateway/bench/HEAD-TO-HEAD.md`.)
+Latency overhead of the bundle vs the OPA baseline: ~140 ms p50 on
+the build hardware (Python + durable sqlite), dominated by per-check
+durable writes. See `gateway/bench/HEAD-TO-HEAD.md`. Not separately
+re-measured on the demo hardware; no demo latency claim is made beyond
+the single 116 ms check-to-commit sample above.
 
 ## Limitations (standing)
 

@@ -1,8 +1,11 @@
 # Subscription Demo: Video Storyboard (X, 20–30 s)
 
-DRAFT. Pending measured demo evidence from GATEWAY-SUBSCRIPTION-001.
-Do not publish until the demo has produced its evidence. All on-screen
-claims stay exactly as narrow as the measured behavior.
+Demo evidence landed 2026-10-11 (25/25 checks,
+`gateway/subscription001/EVIDENCE-demo.md`). The permitted line below
+is supported by measured behavior: permission granted (step 1), charge
+succeeded (step 2), permission revoked (step 6), next charge refused
+with 403 `agent_revoked` and $0 moved (step 7). All on-screen claims
+stay exactly as narrow as that evidence.
 
 Target viewer: non-technical. Simple language. One idea per shot.
 
