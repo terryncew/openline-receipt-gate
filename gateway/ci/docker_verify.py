@@ -46,13 +46,13 @@ LATENCIES: list[float] = []
 def check(name: str, cond: bool, evidence: str = ""):
     RESULTS.append((name, bool(cond), str(evidence)[:200]))
     tag = "PASS" if cond else "FAIL"
-    extra = f" -- {evidence[:160]}" if evidence and not cond else ""
+    extra = f" -- {evidence[:160]}" if evidence else ""
     print(f"[{tag}] {name}{extra}", flush=True)
 
 
 def compose(*args: str) -> subprocess.CompletedProcess:
     return subprocess.run(
-        ["docker", "compose", *args],
+        ["docker", "compose", "--profile", "openline", *args],
         cwd=COMPOSE_DIR, capture_output=True, text=True, timeout=180)
 
 
@@ -94,17 +94,41 @@ def wait_for(desc: str, fn, tries: int = 45, gap: float = 2.0):
     return last
 
 
-def provision() -> AgentClient:
-    p = cexec("authz", "python3", "/app/gateway/gateway_admin.py",
-              "provision-agent", AGENT_ID, "--max-cents", "5000")
-    check("provision-agent exits 0", p.returncode == 0, p.stderr[:160])
+def provision(agent_id: str = AGENT_ID) -> AgentClient:
+    if agent_id == AGENT_ID:
+        p = cexec("authz", "python3", "/app/gateway/gateway_admin.py",
+                  "provision-agent", AGENT_ID, "--max-cents", "5000")
+    else:
+        # A separate, inspection-only identity must survive the payment
+        # agent's revocation. Keep its private key in memory, never logs.
+        p = cexec("authz", "python3", "-c",
+                  "from gateway.gateway_admin import cmd_provision; "
+                  f"cmd_provision({agent_id!r}, max_cents=0, actions=('inspect',))")
+    label = "" if agent_id == AGENT_ID else "inspector "
+    check(label + "provision-agent exits 0", p.returncode == 0, p.stderr[:160])
     try:
         key = json.loads(p.stdout)["agent_private_key"]
     except Exception as e:
-        check("provision-agent prints key JSON", False, str(e)[:120])
+        check(label + "provision-agent prints key JSON", False, str(e)[:120])
         sys.exit(1)
-    check("provision-agent prints key JSON", True)
-    return AgentClient(AGENT_ID, key)
+    check(label + "provision-agent prints key JSON", True)
+    return AgentClient(agent_id, key)
+
+
+def service_start_times() -> dict[str, str]:
+    """Prove a full restart occurred; a successful Compose no-op is insufficient."""
+    p = compose("ps", "-q", "envoy", "authz", "mockapi")
+    if p.returncode != 0 or len(p.stdout.split()) != 3:
+        return {}
+    p = subprocess.run(
+        ["docker", "inspect", "--format",
+         '{{ index .Config.Labels "com.docker.compose.service" }} '
+         '{{.State.StartedAt}} {{.State.Running}}', *p.stdout.split()],
+        capture_output=True, text=True, timeout=15)
+    if p.returncode != 0:
+        return {}
+    return {service: started for service, started, running in
+            (line.split() for line in p.stdout.splitlines()) if running == "true"}
 
 
 def get_balance(client: AgentClient, acct: str) -> tuple[int, int]:
@@ -198,6 +222,10 @@ def main() -> int:
           t1 >= 0 and v1 >= 0 and t2 == t1 and v2 == v1,
           f"treasury={t2} vendor={v2} (baseline {t1}/{v1})")
 
+    # Provision the observer before restart, proving its receiver-owned
+    # mandate also persists. Never undo the payment agent's revocation.
+    inspector = provision("ci-verify-inspector")
+
     # (e) Revocation
     r = cexec("authz", "python3", "/app/gateway/gateway_admin.py",
               "revoke-agent", AGENT_ID)
@@ -209,8 +237,16 @@ def main() -> int:
           s == 403 and "agent_revoked" in b, f"http={s} {b[:120]}")
 
     # (f) Full-stack restart: balances and receipts survive
+    before_restart = service_start_times()
     r = compose("restart")
-    check("f0 stack restart exits 0", r.returncode == 0, r.stderr[:120])
+    after_restart = service_start_times()
+    print(f"[restart] before={before_restart} after={after_restart}", flush=True)
+    services = {"envoy", "authz", "mockapi"}
+    restarted = (before_restart.keys() == after_restart.keys() == services
+                 and all(after_restart[s] > before_restart[s] for s in services))
+    check("f0 stack restart exits 0 and all three services restarted",
+          r.returncode == 0 and restarted,
+          f"before={before_restart} after={after_restart} {r.stderr[:120]}")
 
     def envoy_back():
         try:
@@ -230,13 +266,17 @@ def main() -> int:
         return s == 403 and "missing_action_claim" in b
     check("f2 authz chain live after restart",
           bool(wait_for("authz chain", chain_back)))
+    s, b, _ = http("GET", "/api/balance/treasury",
+                   client.headers_for("inspect", value_cents=0))
+    check("f2a revoked agent remains denied after restart",
+          s == 403 and "agent_revoked" in b, f"http={s} {b[:120]}")
     def api_back_full():
-        s, _ = get_balance(client, "treasury")
+        s, _ = get_balance(inspector, "treasury")
         return s == 200
     check("f2b mockapi upstream back after full restart",
           bool(wait_for("mockapi balance (full restart)", api_back_full)))
-    _, t3 = get_balance(client, "treasury")
-    _, v3 = get_balance(client, "vendor")
+    _, t3 = get_balance(inspector, "treasury")
+    _, v3 = get_balance(inspector, "vendor")
     check("f3 balances survive full restart",
           t1 >= 0 and v1 >= 0 and t3 == t1 and v3 == v1,
           f"treasury={t3} vendor={v3} (baseline {t1}/{v1})")
@@ -246,7 +286,7 @@ def main() -> int:
     except Exception:
         n1 = -1
     check("f4 receipts survive full restart (0 invalid, none lost)",
-          ok and (n0 < 0 or n1 >= n0),
+          ok and n0 >= 0 and n1 >= n0,
           f"{summary} (before restart: {n0} valid)")
 
     if LATENCIES:

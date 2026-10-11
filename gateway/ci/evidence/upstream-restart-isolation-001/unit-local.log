@@ -1,0 +1,13 @@
+receiver key created: /tmp/gateway-unit-vb5marzy/config/receiver.key (0600)
+policy created: /tmp/gateway-unit-vb5marzy/config/policy.json (mode=enforce)
+db ready: /tmp/gateway-unit-vb5marzy/state/gateway.db
+test_headers_sign_and_verify (gateway_unit.TestAgentClient.test_headers_sign_and_verify) ... ok
+test_nonce_unique_per_call (gateway_unit.TestAgentClient.test_nonce_unique_per_call) ... ok
+test_token_verify_roundtrip (gateway_unit.TestDecisionToken.test_token_verify_roundtrip) ... ok
+test_check_request_parses (gateway_unit.TestProto.test_check_request_parses) ... ok
+test_ok_response_field_number (gateway_unit.TestProto.test_ok_response_field_number) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.033s
+
+OK

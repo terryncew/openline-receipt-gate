@@ -27,6 +27,11 @@ name: gateway-subscription-001-docker
 # task forbids touching main. See gateway/subscription001/
 # EVIDENCE-docker.md for the full attempt record.
 on:
+  push:
+    branches: [codex/upstream-restart-isolation-001]
+    paths:
+      - '.github/workflows/gateway-subscription-001-docker.yml'
+      - 'gateway/ci/**'
   workflow_dispatch:
   # NOTE (history): workflow_dispatch is not discoverable by GitHub's API
   # for a workflow file that exists only on a feature branch (404 "not
@@ -46,8 +51,6 @@ jobs:
     steps:
       - name: Checkout branch
         uses: actions/checkout@v4
-        with:
-          ref: experiment/gateway-subscription-001
 
       - name: Build and start the gateway stack
         working-directory: gateway/compose
@@ -71,6 +74,21 @@ jobs:
       - name: Install verifier dependencies
         run: python3 -m pip install --break-system-packages -q cryptography grpcio protobuf
 
+      - name: Reproduce the untouched 20-of-22 baseline failure
+        run: |
+          set -o pipefail
+          mkdir -p /tmp/gwlogs
+          git fetch --depth=1 origin f86c23d59dc2a29240c79b8b3628ab98745df12d
+          git show f86c23d59dc2a29240c79b8b3628ab98745df12d:gateway/ci/docker_verify.py > gateway/ci/_restart_baseline.py
+          python3 gateway/ci/reproduce_restart_baseline.py 2>&1 | tee /tmp/gwlogs/baseline-output.log
+
+      - name: Capture direct and proxied baseline diagnostics
+        if: always()
+        run: |
+          set -o pipefail
+          mkdir -p /tmp/gwlogs
+          python3 gateway/ci/restart_diagnostics.py 2>&1 | tee /tmp/gwlogs/baseline-diagnostics.log
+
       - name: Run Docker verification
         run: |
           set -o pipefail
@@ -86,6 +104,12 @@ jobs:
           docker compose --profile openline ps -a >> /tmp/gwlogs/compose.log 2>&1 || true
           echo "--- log sizes ---"
           wc -c /tmp/gwlogs/*
+
+      - name: Capture direct and proxied final diagnostics
+        if: always()
+        run: |
+          set -o pipefail
+          python3 gateway/ci/restart_diagnostics.py 2>&1 | tee /tmp/gwlogs/final-diagnostics.log
 
       - name: Upload logs and verifier output
         if: always()
