@@ -3,7 +3,7 @@
 # build VM does not).
 #
 # What it does:
-#   1. Checks out branch experiment/gateway-subscription-001.
+#   1. Checks out the triggering revision (including the isolated fix branch).
 #   2. `docker compose --profile openline up --build -d` (AUTH_MODE=openline).
 #   3. Waits for Envoy on 127.0.0.1:8080.
 #   4. Runs gateway/ci/docker_verify.py: provisions an agent, sends
@@ -27,11 +27,6 @@ name: gateway-subscription-001-docker
 # task forbids touching main. See gateway/subscription001/
 # EVIDENCE-docker.md for the full attempt record.
 on:
-  push:
-    branches: [codex/upstream-restart-isolation-001]
-    paths:
-      - '.github/workflows/gateway-subscription-001-docker.yml'
-      - 'gateway/ci/**'
   workflow_dispatch:
   # NOTE (history): workflow_dispatch is not discoverable by GitHub's API
   # for a workflow file that exists only on a feature branch (404 "not

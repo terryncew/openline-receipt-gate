@@ -1,0 +1,38 @@
+== GATEWAY-SUBSCRIPTION-001 docker verification ==
+envoy=http://127.0.0.1:8080 compose=/home/runner/work/openline-receipt-gate/openline-receipt-gate/gateway/compose
+[PASS] provision-agent exits 0
+[PASS] provision-agent prints key JSON
+[wait] signed transfer: ready
+[PASS] stack ready (signed transfer -> 200) -- authz/mockapi/envoy chain not live
+[PASS] a1 signed transfer -> 200 -- http=200 body={"ok": true, "effect_id": "fx-a8d6163da166454c", "treasury_cents": 999848, "authorized_params": {"value_cents": 25, "age (6.0ms)
+[PASS] a2 tampered signature -> 403 -- http=403 {"denied": true, "reasons": ["signature_invalid"]}
+[PASS] a3 replay of same headers -> 403 -- http=403 {"denied": true, "reasons": ["replay_detected"]}
+[PASS] b0 balances readable via Envoy -- treasury=999848 vendor=152
+[PASS] b1 100-cent transfer -> 200 -- http=200 (8.2ms) {"ok": true, "effect_id": "fx-dd0912b7f3a44556", "treasury_cents": 999748, "authorized_params": {"value_cents": 100, "ag
+[PASS] b2 treasury decreased by exactly 100 -- 999848 -> 999748 (delta 100)
+[PASS] b3 vendor increased by exactly 100 -- 152 -> 252 (delta 100)
+[PASS] c verify-receipts exits 0, 0 invalid -- receipts: 73 valid, 0 invalid (of 73)
+[PASS] d0 mockapi restart exits 0 --  Container compose-mockapi-1  Restarting
+ Container compose-mockapi-1  Started
+
+[wait] mockapi balance: ready
+[PASS] d1 mockapi back after restart
+[PASS] d2 balances survive mockapi restart -- treasury=999748 vendor=252 (baseline 999748/252)
+[PASS] inspector provision-agent exits 0
+[PASS] inspector provision-agent prints key JSON
+[PASS] e0 revoke-agent reports revoked -- revoked ci-verify-agent
+[PASS] e1 fresh request after revoke -> 403 -- http=403 {"denied": true, "reasons": ["agent_revoked"]}
+[restart] before={'authz': '2026-10-11T08:17:53.175447085Z', 'envoy': '2026-10-11T08:17:53.372053227Z', 'mockapi': '2026-10-11T08:19:52.937794529Z'} after={'authz': '2026-10-11T08:20:05.656879756Z', 'envoy': '2026-10-11T08:19:55.644632176Z', 'mockapi': '2026-10-11T08:20:05.631179895Z'}
+[PASS] f0 stack restart exits 0 and all three services restarted -- before={'authz': '2026-10-11T08:17:53.175447085Z', 'envoy': '2026-10-11T08:17:53.372053227Z', 'mockapi': '2026-10-11T08:19:52.937794529Z'} after={'authz': '2026
+[wait] envoy health: ready
+[PASS] f1 envoy /health after restart
+[wait] authz chain: ready
+[PASS] f2 authz chain live after restart
+[PASS] f2a revoked agent remains denied after restart -- http=403 {"denied": true, "reasons": ["agent_revoked"]}
+[wait] mockapi balance (full restart): ready
+[PASS] f2b mockapi upstream back after full restart
+[PASS] f3 balances survive full restart -- treasury=999748 vendor=252 (baseline 999748/252)
+[PASS] f4 receipts survive full restart (0 invalid, none lost) -- receipts: 83 valid, 0 invalid (of 83) (before restart: 73 valid)
+[latency] transfer samples (ms): 6.0, 8.2
+
+25/25 checks passed

@@ -1,9 +1,14 @@
 # UPSTREAM-RESTART-ISOLATION-001
 
-Verdict: **INCONCLUSIVE for the requested GitHub Actions verification** until a
-complete Actions run is inspected. **PASS locally on Linux with real Docker**:
-25/25 checks, including real full-stack restart, exact balances, persistent
-revocation, and valid receipts. No production service or payment provider used.
+Verdict: **PASS**. GitHub Actions run **38124289732** completed successfully on
+`ubuntu-latest` with real Docker, including the untouched baseline reproduction,
+direct/proxied diagnostics, and the complete repaired verification suite.
+The downloaded CI verifier transcript confirms **25/25** checks, balances
+**999748/252** cents after restart, and **83 valid receipts, 0 invalid**
+(compared with 73 before restart). Local final-source verification also passed
+**25/25** checks, including real
+full-stack restart, exact balances, persistent revocation, and valid receipts.
+No production service or payment provider used.
 
 Base: `experiment/gateway-subscription-001`,
 `f86c23d59dc2a29240c79b8b3628ab98745df12d` (draft PR #102's stated branch).
@@ -102,7 +107,8 @@ checkout bind mount. The temporary Dockerfile replaces the online installation
 with `--no-index --find-links` on those wheels. TLS/checksum verification was
 not disabled. Gateway code, dependency versions, bridge networking, and
 verification assertions remain the same. These workarounds are outside the
-checkout and are **not** a claim that the standard Actions build was verified.
+checkout. The standard Actions run independently built the unmodified
+repository Dockerfile and used the original Compose mounts successfully.
 
 ## GitHub Actions and review boundary
 
@@ -111,15 +117,26 @@ Historical failing CI:
   (reported 20/22 in the preserved base evidence; API inspection is blocked here).
 
 Investigation workflow:
-- https://github.com/terryncew/openline-receipt-gate/actions/workflows/gateway-subscription-001-docker.yml?query=branch%3Acodex%2Fupstream-restart-isolation-001
+- https://github.com/terryncew/openline-receipt-gate/actions/runs/38124289732
+- Tested SHA: `ab60450b1601c53b634df89eb8361d76f810996d`.
+- Every job step reports `success` in the Actions API; metadata is saved in
+  `ci-status.json`. The temporary branch-scoped push trigger was removed after
+  this successful run. Subsequent changes only record evidence and remove that
+  trigger; verifier/application code is identical to the tested revision.
 
-The environment proxy currently rejects CONNECT to `api.github.com` with 403.
-`GH_TOKEN` is present; its value was not inspected. Existing authenticated Git
-reads work. The `api.github.com` domain addition was saved to the environment
-configuration draft; it has not been proven active or published. API access is
-required to inspect Actions results and create the requested draft PR. No
-conclusion or run ID is invented. The investigation limit is three additional
-Docker CI attempts; see `CI-ATTEMPTS.md` for pushes and known outcomes.
+GitHub API access initially failed with proxy CONNECT 403, then became usable.
+The run's status, tested SHA, and individual step conclusions were inspected
+through the authenticated Actions API. Artifact/log downloads require the
+additional hosts `productionresultssa6.blob.core.windows.net` (historical run),
+`productionresultssa8.blob.core.windows.net` (new run), and
+`results-receiver.actions.githubusercontent.com`. Those exact hosts and
+`api.github.com` were saved to the network configuration draft, preserving
+existing rules. Saving does not prove publication or runtime propagation.
+Network access subsequently became usable. The uploaded artifact and full job
+logs were downloaded and inspected. The artifact is preserved in
+`ci-38124289732/`, including baseline failures, startup logs, and both diagnostic
+snapshots. Artifact download status is recorded in `CI-ATTEMPTS.md`. The investigation used one of three allowed Docker CI
+attempts. Existing GitHub authentication was reused, without inspecting its value.
 
 No merge, real money, paid API, production deployment, private-key publication,
 or changes to historical/frozen evidence are authorized or performed.

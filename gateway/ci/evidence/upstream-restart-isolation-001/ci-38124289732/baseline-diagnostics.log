@@ -1,0 +1,213 @@
+
+== container state and networking ==
+exit=0
+/compose-authz-1 {"Status":"running","Running":true,"Paused":false,"Restarting":false,"OOMKilled":false,"Dead":false,"Pid":2661,"ExitCode":0,"Error":"","StartedAt":"2026-10-11T08:17:53.175447085Z","FinishedAt":"0001-01-01T00:00:00Z"} {"compose_gateway":{"IPAMConfig":null,"Links":null,"Aliases":["compose-authz-1","authz"],"MacAddress":"7a:4b:6e:a2:f9:f5","DriverOpts":null,"GwPriority":0,"NetworkID":"64b8ef9bbeceedca74c29e4235fb84093e397fab33ad282279ffad483425b3c1","EndpointID":"0d7f1e0b2206d8250234b72392286133ab2223946f5777b7a97c3f5b219d1bba","Gateway":"172.18.0.1","IPAddress":"172.18.0.2","IPPrefixLen":16,"IPv6Gateway":"","GlobalIPv6Address":"","GlobalIPv6PrefixLen":0,"DNSNames":["compose-authz-1","authz","34674c9cf161"]}}
+/compose-envoy-1 {"Status":"running","Running":true,"Paused":false,"Restarting":false,"OOMKilled":false,"Dead":false,"Pid":2769,"ExitCode":0,"Error":"","StartedAt":"2026-10-11T08:17:53.372053227Z","FinishedAt":"0001-01-01T00:00:00Z"} {"compose_gateway":{"IPAMConfig":null,"Links":null,"Aliases":["compose-envoy-1","envoy"],"MacAddress":"d2:99:23:13:e5:59","DriverOpts":null,"GwPriority":0,"NetworkID":"64b8ef9bbeceedca74c29e4235fb84093e397fab33ad282279ffad483425b3c1","EndpointID":"239ffa94ca8d19b1fd80b30e4ab19e1b14c7c18a7081fdeb15942018b83f2246","Gateway":"172.18.0.1","IPAddress":"172.18.0.4","IPPrefixLen":16,"IPv6Gateway":"","GlobalIPv6Address":"","GlobalIPv6PrefixLen":0,"DNSNames":["compose-envoy-1","envoy","8f94985bced2"]}}
+/compose-mockapi-1 {"Status":"running","Running":true,"Paused":false,"Restarting":false,"OOMKilled":false,"Dead":false,"Pid":3136,"ExitCode":0,"Error":"","StartedAt":"2026-10-11T08:18:08.499642116Z","FinishedAt":"2026-10-11T08:18:08.432608304Z"} {"compose_gateway":{"IPAMConfig":null,"Links":null,"Aliases":["compose-mockapi-1","mockapi"],"MacAddress":"da:f1:5d:8d:c4:d0","DriverOpts":null,"GwPriority":0,"NetworkID":"64b8ef9bbeceedca74c29e4235fb84093e397fab33ad282279ffad483425b3c1","EndpointID":"7615fa27d03383c1ab57422d873f4c3ffeea369ccee7b52141013297e9028a7b","Gateway":"172.18.0.1","IPAddress":"172.18.0.3","IPPrefixLen":16,"IPv6Gateway":"","GlobalIPv6Address":"","GlobalIPv6PrefixLen":0,"DNSNames":["compose-mockapi-1","mockapi","eb6a19eee55b"]}}
+
+
+
+== processes: 34674c9cf1615dda491d0f5fe4f63231bd33ae8b6667930ca4cc6d2433f4c0fd ==
+exit=0
+UID                 PID                 PPID                C                   STIME               TTY                 TIME                CMD
+root                2661                2616                0                   08:17               ?                   00:00:00            python3 /app/gateway/authz_server.py 50051
+
+
+
+== processes: 8f94985bced2e642ce3538de46a0920e473933ffa088d5381540e58789d349e5 ==
+exit=0
+UID                 PID                 PPID                C                   STIME               TTY                 TIME                CMD
+message+            2769                2742                0                   08:17               ?                   00:00:00            envoy -c /etc/envoy/envoy.yaml
+
+
+
+== processes: eb6a19eee55b3fe48cea900851f039f0726e915703c3c234bc54e2ac5b4f29f3 ==
+exit=0
+UID                 PID                 PPID                C                   STIME               TTY                 TIME                CMD
+root                3136                3112                0                   08:18               ?                   00:00:00            python3 /app/gateway/mock_api.py
+
+
+
+== DNS and direct mock API ==
+exit=0
+DNS authz ('authz', [], ['172.18.0.2'])
+DNS mockapi ('mockapi', [], ['172.18.0.3'])
+DNS envoy ('envoy', [], ['172.18.0.4'])
+direct health 200 {"ok": true}
+direct balance/treasury 200 {"acct": "treasury", "cents": 999874}
+direct balance/vendor 200 {"acct": "vendor", "cents": 126}
+
+
+
+== Envoy cluster health ==
+exit=0
+HTTP/1.1 200 OK
+content-type: application/json
+cache-control: no-cache, max-age=0
+x-content-type-options: nosniff
+date: Sun, 11 Oct 2026 08:19:42 GMT
+server: envoy
+connection: close
+transfer-encoding: chunked
+
+a62
+{
+ "cluster_statuses": [
+  {
+   "name": "authz_cluster",
+   "host_statuses": [
+    {
+     "address": {
+      "socket_address": {
+       "address": "172.18.0.2",
+       "port_value": 50051
+      }
+     },
+     "stats": [
+      {
+       "name": "cx_connect_fail"
+      },
+      {
+       "value": "4",
+       "name": "cx_total"
+      },
+      {
+       "name": "rq_error"
+      },
+      {
+       "value": "62",
+       "name": "rq_success"
+      },
+      {
+       "name": "rq_timeout"
+      },
+      {
+       "value": "62",
+       "name": "rq_total"
+      },
+      {
+       "type": "GAUGE",
+       "value": "4",
+       "name": "cx_active"
+      },
+      {
+       "type": "GAUGE",
+       "name": "rq_active"
+      },
+      {
+       "type": "GAUGE",
+       "name": "rq_pending_active"
+      }
+     ],
+     "health_status": {
+      "eds_health_status": "HEALTHY"
+     },
+     "weight": 1,
+     "hostname": "authz",
+     "locality": {}
+    }
+   ],
+   "circuit_breakers": {
+    "thresholds": [
+     {
+      "max_connections": 1024,
+      "max_pending_requests": 1024,
+      "max_requests": 1024,
+      "max_retries": 3
+     },
+     {
+      "priority": "HIGH",
+      "max_connections": 1024,
+      "max_pending_requests": 1024,
+      "max_requests": 1024,
+      "max_retries": 3
+     }
+    ]
+   },
+   "observability_name": "authz_cluster"
+  },
+  {
+   "name": "mock_api",
+   "host_statuses": [
+    {
+     "address": {
+      "socket_address": {
+       "address": "172.18.0.3",
+       "port_value": 9000
+      }
+     },
+     "stats": [
+      {
+       "value": "1",
+       "name": "cx_connect_fail"
+      },
+      {
+       "value": "11",
+       "name": "cx_total"
+      },
+      {
+       "value": "1",
+       "name": "rq_error"
+      },
+      {
+       "value": "10",
+       "name": "rq_success"
+      },
+      {
+       "name": "rq_timeout"
+      },
+      {
+       "value": "10",
+       "name": "rq_total"
+      },
+      {
+       "type": "GAUGE",
+       "name": "cx_active"
+      },
+      {
+       "type": "GAUGE",
+       "name": "rq_active"
+      },
+      {
+       "type": "GAUGE",
+       "name": "rq_pending_active"
+      }
+     ],
+     "health_status": {
+      "eds_health_status": "HEALTHY"
+     },
+     "weight": 1,
+     "hostname": "mockapi",
+     "locality": {}
+    }
+   ],
+   "circuit_breakers": {
+    "thresholds": [
+     {
+      "max_connections": 1024,
+      "max_pending_requests": 1024,
+      "max_requests": 1024,
+      "max_retries": 3
+     },
+     {
+      "priority": "HIGH",
+      "max_connections": 1024,
+      "max_pending_requests": 1024,
+      "max_requests": 1024,
+      "max_retries": 3
+     }
+    ]
+   },
+   "observability_name": "mock_api"
+  }
+ ]
+}
+
+0
+
+
+
+[PASS] inspector provision-agent exits 0
+[PASS] inspector provision-agent prints key JSON
+{"probe": "proxied inspection", "account": "treasury", "http_status": 200, "cents": 999874}
+{"probe": "proxied inspection", "account": "vendor", "http_status": 200, "cents": 126}
