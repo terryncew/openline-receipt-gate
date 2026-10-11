@@ -134,6 +134,74 @@ class Ledger:
                         (approval_id, int(time.time())))
         self.db.commit()
 
+    def transfer_with_approval(self, to_acct: str, cents: int,
+                               decision_id: str, approval_id: str) -> dict:
+        """Atomic transfer + approval consumption.
+        
+        Both the ledger transfer and the approval marking happen in a
+        single sqlite transaction. If the process crashes, either both
+        persist or neither does — no double-spend window.
+        
+        Returns {"ok": True, ...} or {"ok": False, "error": ...}.
+        """
+        try:
+            # Start transaction (sqlite is in autocommit; BEGIN starts txn)
+            self.db.execute("BEGIN IMMEDIATE")
+            
+            # Check approval not already used (within txn)
+            if self.db.execute(
+                "SELECT 1 FROM used_approvals WHERE approval_id=?",
+                (approval_id,)).fetchone():
+                self.db.execute("ROLLBACK")
+                return {"ok": False, "error": "TRANSACTION_APPROVAL_ALREADY_USED"}
+            
+            # Check decision not already used
+            if self.db.execute(
+                "SELECT 1 FROM used_decisions WHERE decision_id=?",
+                (decision_id,)).fetchone():
+                self.db.execute("ROLLBACK")
+                return {"ok": False, "error": "decision token already used"}
+            
+            # Check funds
+            cur = self.db.execute("SELECT cents FROM balances WHERE acct=?",
+                                  ("treasury",))
+            bal = cur.fetchone()[0]
+            if bal < cents:
+                self.db.execute("ROLLBACK")
+                return {"ok": False, "error": "insufficient simulated funds"}
+            
+            # Do transfer
+            self.db.execute("UPDATE balances SET cents=cents-? WHERE acct=?",
+                            (cents, "treasury"))
+            self.db.execute("INSERT OR IGNORE INTO balances(acct, cents)"
+                            " VALUES(?,0)", (to_acct,))
+            self.db.execute("UPDATE balances SET cents=cents+? WHERE acct=?",
+                            (cents, to_acct))
+            self.db.execute("INSERT INTO used_decisions VALUES(?,?)",
+                            (decision_id, int(time.time())))
+            
+            # Mark approval used (within same txn)
+            self.db.execute("INSERT INTO used_approvals VALUES(?,?)",
+                            (approval_id, int(time.time())))
+            
+            # Record effect
+            effect_id = f"fx-{decision_id}"
+            self.db.execute(
+                "INSERT INTO effects VALUES(?,?,?)",
+                (effect_id, time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                 json.dumps({"to": to_acct, "cents": cents,
+                             "decision_id": decision_id})))
+            
+            self.db.commit()
+            return {"ok": True, "effect_id": effect_id,
+                    "treasury_cents": bal - cents}
+        except Exception as e:
+            try:
+                self.db.execute("ROLLBACK")
+            except Exception:
+                pass
+            return {"ok": False, "error": f"transaction failed: {e}"}
+
     def transfer(self, to_acct: str, cents: int, decision_id: str) -> dict:
         if self.db.execute("SELECT 1 FROM used_decisions WHERE decision_id=?",
                            (decision_id,)).fetchone():
@@ -460,6 +528,23 @@ class Handler(BaseHTTPRequestHandler):
         # distinguishes "owner approved these terms" (the mandate) from
         # "owner approved this execution" (the one-use approval).
         mandate_id = presentation.get("mandate_id", "")
+        
+        # Identity binding: the Wallet mandate's subject must match the
+        # Gateway's agent_id. Prevents mixing: Agent B cannot use Owner's
+        # approval issued to Agent A.
+        # The presentation contains the subject_id from the mandate.
+        mandate_subject = presentation.get("subject_id", "")
+        if mandate_subject and mandate_subject != agent_id:
+            return self._send(403, {
+                "ok": False,
+                "error": "IDENTITY_MISMATCH",
+                "detail": f"Wallet mandate issued to '{mandate_subject}' "
+                          f"but Gateway token is for '{agent_id}'. "
+                          f"Owner, agent, and operation identities must match.",
+                "delegated_authority": "valid",
+                "transaction_approval": "valid",
+            })
+        
         approval_id = f"{mandate_id}:{op_hash}"
         if LEDGER.approval_used(approval_id):
             return self._send(403, {
@@ -499,15 +584,24 @@ class Handler(BaseHTTPRequestHandler):
             })
         # The mock ledger debits treasury and credits the merchant.
         # The operation's account must be treasury (the funded account).
+        # ATOMIC: transfer + approval consumption in a single transaction.
+        # No window for double-spend on crash.
         treasury_before = LEDGER.balance("treasury")
         merchant_before = LEDGER.balance(merchant)
-        res = LEDGER.transfer(merchant, amount,
-                              f"poppy-{time.time_ns()}")
+        res = LEDGER.transfer_with_approval(
+            merchant, amount, f"poppy-{time.time_ns()}", approval_id)
         if not res.get("ok"):
+            # Map to the appropriate error code
+            err = res.get("error", "")
+            if "ALREADY_USED" in err:
+                return self._send(403, {
+                    "ok": False,
+                    "error": "TRANSACTION_APPROVAL_ALREADY_USED",
+                    "detail": "This owner approval was already executed.",
+                    "delegated_authority": "valid",
+                    "transaction_approval": "already_used",
+                })
             return self._send(409, res)
-
-        # Mark the approval as used (one-use semantics).
-        LEDGER.mark_approval_used(approval_id)
 
         # Signed receiver receipt (finding 4): separate evidence for
         # the business DECISION and the measured LEDGER EFFECT.
@@ -554,6 +648,8 @@ class Handler(BaseHTTPRequestHandler):
             "effect_evidence": effect_evidence,
         }
         # Sign the canonical receipt with the receiver key.
+        # FAIL-CLOSED: if signing fails, the request fails. An unsigned
+        # receipt is not evidence.
         try:
             key_b64 = (CONFIG_DIR / "receiver.key").read_text().strip()
             rkey = Ed25519PrivateKey.from_private_bytes(b64u_decode(key_b64))
@@ -562,7 +658,12 @@ class Handler(BaseHTTPRequestHandler):
             receipt["receiver_public_key"] = b64u_encode(
                 rkey.public_key().public_bytes_raw())
         except Exception as e:
-            receipt["signature_error"] = str(e)
+            # Fail closed: do not return an unsigned receipt.
+            # The transfer already happened; this is a serious error.
+            # In production, we'd need to reconcile. For now, fail.
+            return self._send(500, {"ok": False,
+                                    "error": "receipt signing failed",
+                                    "detail": str(e)})
         res["poppy_receipt"] = receipt
         return self._send(200, res)
 
