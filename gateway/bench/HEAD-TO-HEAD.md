@@ -88,3 +88,27 @@ See ADOPTION-COST.md for the component/step/dependency comparison.
 - Decision receipts prove the receiver's decision, not downstream
   effects. The gateway never claims a receipt proves an unobserved
   effect.
+
+## Addendum 2026-10-11: execution-time standing check (GATEWAY-SUBSCRIPTION-001)
+
+The 60 s post-revocation token window was investigated with race tests
+(`gateway/tests/test_standing_races.py`, 10/10 pass; evidence in
+`gateway/subscription001/EVIDENCE-races.md`).
+
+- With the standing check enabled, a token minted before revocation and
+  presented after it is refused at execution (403, $0 moved). The
+  residual window is the check-to-commit interval: p50 ~1.4 ms, max
+  35.6 ms measured (n=30) on the test VM. It cannot reach zero — a
+  revocation landing between the check and the commit still executes.
+- Without the check, pre-revocation tokens execute to their 60 s TTL
+  (measured: the control case executed).
+- The check costs ~1.1 ms median per execution and is fail-closed
+  (unreachable standing service → 403, no execution).
+- **Fair-baseline note:** this pattern is not OpenLine-exclusive.
+  OPA-B with a stateful application can re-query policy at execution
+  time the same way — the honest difference under test is that
+  OpenLine ships the check as a documented, measured opt-in while the
+  OPA deployment would build it. The prior investigation's opt-in
+  recommendation stands for production; the subscription demonstration
+  enables it because the demo's central claim (a post-revocation
+  charge is refused) depends on it.
