@@ -2,7 +2,7 @@
   {
     "scenario": "01 valid transfer allowed",
     "pass": true,
-    "evidence": "{\"ok\": true, \"effect_id\": \"fx-f3538039b8134711\", \"treasury_cents\": 896710, \"authorized_params\": {\"value_cents\": 1000, \"agent\": \"s-worker-a\"}}"
+    "evidence": "{\"ok\": true, \"effect_id\": \"fx-a1a4f9a9e25c45d3\", \"treasury_cents\": 895480, \"authorized_params\": {\"value_cents\": 1000, \"agent\": \"s-worker-a\"}}"
   },
   {
     "scenario": "02 replay denied",
@@ -62,6 +62,26 @@
   {
     "scenario": "13 observe mode executes but labels would-deny",
     "pass": true,
-    "evidence": "{\"ok\": true, \"effect_id\": \"fx-observe-1791697539148624379\", \"treasury_cents\": 896480, \"observe_decision\": \"deny:payment_"
+    "evidence": "{\"ok\": true, \"effect_id\": \"fx-observe-1791697589214995711\", \"treasury_cents\": 895250, \"observe_decision\": \"deny:payment_"
+  },
+  {
+    "scenario": "14 replay: treasury debited exactly once",
+    "pass": true,
+    "evidence": "delta=1000 http=200/403"
+  },
+  {
+    "scenario": "15 tampered body: ledger moves authorized 200, not 999999",
+    "pass": true,
+    "evidence": "delta=200"
+  },
+  {
+    "scenario": "16 post-revocation burst: 0 executions, 0 cents moved",
+    "pass": true,
+    "evidence": "allowed=0 delta=0"
+  },
+  {
+    "scenario": "17 pre-revocation token executes within TTL (bound documented)",
+    "pass": true,
+    "evidence": "http=200 delta=50 (TTL=60s is the revocation bound)"
   }
 ]

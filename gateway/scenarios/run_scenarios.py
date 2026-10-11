@@ -90,6 +90,14 @@ def restart_authz():
     return p
 
 
+def treasury():
+    """Read the simulated treasury balance direct from the mock API
+    (read-only; not a consequential action)."""
+    req = urllib.request.Request(API_DIRECT + "/balance/treasury")
+    with urllib.request.urlopen(req, timeout=10) as r:
+        return json.loads(r.read())["cents"]
+
+
 def provision(agent_id, max_cents=10000):
     out = admin("provision-agent", agent_id, f"--max-cents={max_cents}")
     if not out.strip().startswith("{"):
@@ -196,6 +204,74 @@ def main():
           s == 200 and labeled, b[:120])
     admin("set-mode", "enforce")
     restart_authz()
+
+    # 14 EFFECTS: replay executes exactly once (ledger, not just HTTP)
+    key_e = provision("s-worker-eff", max_cents=100000)
+    e_cli = AgentClient("s-worker-eff", key_e)
+    t0 = treasury()
+    h = e_cli.headers_for("authorize_payment", value_cents=1000)
+    s1, _ = post_envoy(h)
+    s2, _ = post_envoy(h)
+    delta = t0 - treasury()
+    check("14 replay: treasury debited exactly once",
+          s1 == 200 and s2 == 403 and delta == 1000,
+          f"delta={delta} http={s1}/{s2}")
+
+    # 15 EFFECTS: tampered body moves exactly the authorized amount
+    t0 = treasury()
+    s, b = post_envoy(
+        e_cli.headers_for("authorize_payment", value_cents=200),
+        body=b'{"to":"attacker","cents":999999}')
+    delta = t0 - treasury()
+    check("15 tampered body: ledger moves authorized 200, not 999999",
+          s == 200 and delta == 200, f"delta={delta}")
+
+    # 16 TIME: revoke, then immediate burst — nothing executes after
+    key_t = provision("s-worker-time", max_cents=100000)
+    t_cli = AgentClient("s-worker-time", key_t)
+    t0 = treasury()
+    admin("revoke-agent", "s-worker-time")
+    allowed = 0
+    for _ in range(10):
+        s, _ = post_envoy(
+            t_cli.headers_for("authorize_payment", value_cents=100))
+        if s == 200:
+            allowed += 1
+    delta = t0 - treasury()
+    check("16 post-revocation burst: 0 executions, 0 cents moved",
+          allowed == 0 and delta == 0,
+          f"allowed={allowed} delta={delta}")
+
+    # 17 TIME: the honest revocation bound. A decision token minted
+    # BEFORE revocation remains valid until its TTL (60s) — revocation
+    # stops new authorizations immediately, not in-flight tokens.
+    import base64 as _b64
+
+    def _b64d(s):
+        return _b64.urlsafe_b64decode(s + "=" * (-len(s) % 4))
+
+    def _cano(o):
+        return json.dumps(o, sort_keys=True,
+                          separators=(",", ":")).encode()
+
+    from cryptography.hazmat.primitives.asymmetric.ed25519 import (
+        Ed25519PrivateKey)
+    rkey = Ed25519PrivateKey.from_private_bytes(_b64d(
+        open(GWROOT / "config" / "receiver.key").read().strip()))
+    tok = {"decision_id": "race-test-001", "agent_id": "s-worker-time",
+           "action_type": "authorize_payment", "target": "ledger",
+           "value_cents": 50, "nonce": "race-nonce-001",
+           "issued_at": int(time.time()), "ttl": 60}
+    tok["sig"] = _b64.urlsafe_b64encode(
+        rkey.sign(_cano(tok))).rstrip(b"=").decode()
+    tok_b64 = _b64.urlsafe_b64encode(
+        _cano(tok)).rstrip(b"=").decode()
+    t0 = treasury()
+    s, b = post_direct({"x-ol-decision": tok_b64}, b'{}')
+    delta = t0 - treasury()
+    check("17 pre-revocation token executes within TTL (bound documented)",
+          s == 200 and delta == 50,
+          f"http={s} delta={delta} (TTL=60s is the revocation bound)")
 
     print(f"\n{sum(1 for _, c, _ in RESULTS if c)}/{len(RESULTS)} passed")
     (GWROOT / "scenarios" / "results.json").write_text(json.dumps(

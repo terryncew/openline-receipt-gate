@@ -50,15 +50,25 @@ writes per Check (nonce store + signed receipt, ~42 ms in-handler).
 OPA's path is stateless. WAL mode / batched commits would reduce this;
 not applied here — reported as measured.
 
-## What OpenLine adds (measured, not claimed)
+## What OpenLine bundles (the actual claim)
 
-1. Replay protection via nonces (OPA: genuinely unaddressed).
-2. Cryptographic decision->action binding (OPA: genuinely unaddressed;
-   relies on network boundary instead).
-3. Signed, independently verifiable decision receipts (OPA decision logs
-   are unsigned and prove evaluation, not enforcement).
-4. Mandate-scoped authority with limits (max_payment_cents) evaluated
-   at consequence time.
+A capable security team *could* combine Envoy, OPA, a stateful
+authorization service, and an idempotent application to implement much
+of this. We do not argue competitors can't do it. The question is
+whether OpenLine delivers this combination with less custom
+engineering and operational burden:
+
+1. Replay protection via nonces (per-request state the team would
+   otherwise build).
+2. Cryptographic decision->action binding (signed token the API
+   verifies; otherwise the team relies on network boundary alone or
+   builds the signing themselves).
+3. Signed, independently verifiable decision receipts (otherwise the
+   team builds the receipt pipeline).
+4. Mandate-scoped authority with limits evaluated at consequence time
+   (otherwise encoded ad-hoc in Rego + app code).
+
+See ADOPTION-COST.md for the component/step/dependency comparison.
 
 ## What OPA already does (do not claim otherwise)
 
