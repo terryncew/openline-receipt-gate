@@ -1,87 +1,77 @@
-# Owner Key Enrollment and Rotation
+# Receiver owner-root enrollment (reference procedure)
 
-How a receiver pins an owner's root key, and how to rotate it.
+**Status: documented manual trust bootstrap, not an automated or
+production-ready enrollment/rotation service.**
 
-## Enrollment (First Time)
+## First enrollment
 
-**Goal:** The receiver obtains the owner's root public key through a
-channel the receiver trusts, and pins it.
+1. The owner creates an OpenLine Wallet and exports its **public**
+   `owner.root_public_key` and `owner.principal_id`. **Never** transfer
+   the private key. The principal ID is **derived from the root public
+   key**, not an arbitrary account ID, email address, or card token.
+2. The receiver operator authenticates the owner using an independently
+   established relationship and checks the root key fingerprint over a
+   separate, trusted channel. A worker/agent cannot nominate its own
+   owner's root key. Plain email or unverified HTTPS alone does not
+   establish ownership.
+3. The receiver pins exactly that owner root, using its real derived ID:
 
-**Procedure:**
-
-1. **Owner generates a root keypair.**
-   The owner runs the OpenLine Wallet. The Wallet creates an Ed25519
-   root keypair on first run. The public key is exported as hex.
-
-2. **Owner transmits the root public key out-of-band.**
-   The channel depends on the relationship:
-   - **In person / video call:** Owner reads the hex aloud; receiver types it.
-   - **Signed email:** Owner emails the hex from a known address; receiver
-     verifies the signature (PGP, etc.).
-   - **API enrollment:** Owner's server exposes `/openline/root-key`;
-     receiver fetches over TLS and pins the certificate.
-   - **For Lithic ASA sandbox:** Test owner emails the hex to the
-     integrator; integrator pastes into sandbox config.
-
-   **The receiver MUST NOT accept a root key from the worker/agent.**
-   The worker is untrusted. The key must come from the owner directly.
-
-3. **Receiver pins the key.**
    ```python
-   receiver.pin_owner("owner-principal-id", "hex-of-root-public-key")
-   ```
-   The `principal_id` is a string the receiver chooses (e.g., the owner's
-   email, account ID, or "lithic-test-owner"). It must be unique per owner.
-
-4. **Receiver verifies the pin.**
-   Ask the owner to sign a test bundle. Admit it. If `BUNDLE_ADMITTED`,
-   the pin is correct. If `BUNDLE_SIGNATURE_INVALID`, the key is wrong.
-
-**Security:** If an attacker substitutes a different root key during
-enrollment, they can forge bundles. The out-of-band channel is the
-trust root. Choose it carefully.
-
-## Rotation (Owner Changes Key)
-
-**Goal:** The owner retires an old root key and the receiver pins the new one,
-without allowing an attacker to substitute.
-
-**Procedure:**
-
-1. **Owner signs a rotation statement with the OLD key.**
-   The statement is: `{"rotate_to": "<new-root-key-hex>", "at": "<iso-timestamp>"}`
-   signed by the old root key.
-
-2. **Owner transmits the rotation statement + new key out-of-band.**
-   Same channel as enrollment (or a new one, but still out-of-band).
-
-3. **Receiver verifies and re-pins.**
-   ```python
-   # Verify the rotation statement was signed by the OLD pinned key
-   old_key = receiver.get_pinned_key("owner-principal-id")
-   assert verify_signature(rotation_statement, old_key)
-   
-   # Pin the new key (replaces the old)
-   receiver.pin_owner("owner-principal-id", new_key_hex)
+   receiver.pin_owner(owner.principal_id, owner.root_public_key)
    ```
 
-4. **Old bundles become invalid.**
-   Bundles signed by the old key will fail signature verification.
-   The owner must issue a new bundle signed by the new key.
+4. Configure the receiver's permitted scopes with
+   `receiver.protect_action(action, required_scopes)`, **then** admit a
+   bundle obtained from the owner:
 
-**Emergency rotation (old key compromised):**
-If the old key is compromised, the owner cannot sign a rotation statement.
-The receiver must:
-1. Remove the pin: `receiver.unpin_owner("owner-principal-id")`
-2. Re-enroll via the full enrollment procedure (out-of-band).
-3. Treat all old bundles as invalid until a new bundle is admitted.
+   ```python
+   admitted = receiver.admit_bundle(owner.export_bundle(ttl_seconds=300))
+   assert admitted["decision"] == "BUNDLE_ADMITTED"
+   ```
 
-## For Lithic ASA Sandbox
+5. The receiver issues a one-use challenge, receives the holder's
+   signed presentation, and calls `receiver.authorize(presentation, action)`.
+   Check `decision["decision"] == "ALLOWED"` before any business effect.
+   The receipt is a **decision receipt**, not proof of completed payment.
 
-**Test enrollment:**
-1. Terrynce (test owner) generates a Wallet and exports the root key hex.
-2. Terrynce emails the hex to the Lithic integrator (out-of-band).
-3. Integrator runs: `receiver.pin_owner("terrynce-test", "<hex>")`
-4. Terrynce sends a test bundle. Integrator admits it.
+A fully executable, **same-process simulation** of these calls is in
+`example_01.py`. The example does *not* implement secure transport,
+identity proofing, or persistent trust registration.
 
-**No production keys.** Sandbox only. No real cardholders.
+## Renewal and revocation
+
+The receiver must admit updated signed Wallet bundles to learn about
+revoked or narrowed mandates. A receiver that never refreshes its
+bundle cannot claim immediate revocation. Preserve the monotonic bundle
+history and deny stale, expired or mismatched presentations.
+
+## Root-key replacement — not implemented as a library API
+
+The current `WalletReceiver` and underlying `ReferenceGate` do **not**
+provide `get_pinned_key`, `unpin_owner`, or in-place root replacement.
+Pinning the same principal ID with a different root raises an error.
+**Do not** interpret an arbitrary signed rotation JSON document as
+permission to replace the trust root.
+
+A change of owner root requires a **new, independently authenticated
+trust enrollment** for the newly derived principal ID, plus receiver-
+operated deactivation/quarantine of the old identity and its mandates.
+A fresh receiver instance may be necessary for the reference library.
+Keep the old history for auditing; prevent all old effects before enabling
+new authority. This is an operational migration with a safety gap until
+proper root succession and persistent state are implemented and tested.
+
+For a compromised root, stop the affected receiver's business effects
+immediately and re-establish trust through independent authentication.
+Do not use a compromised key to self-authorize its own replacement.
+
+## Candidate Lithic ASA integration (not connected)
+
+An integrator would need to authenticate the actual card/account owner,
+map that **account relationship** to the derived OpenLine principal ID,
+pin the approved owner's root using independently verified evidence,
+and handle mapping changes separately from Wallet cryptography. The card
+token itself is not a principal ID.
+
+No test owner keys, webhook URLs, invitations, or external accounts were
+created or contacted by this procedure.
