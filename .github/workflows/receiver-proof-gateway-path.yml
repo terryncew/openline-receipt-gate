@@ -1,0 +1,51 @@
+name: receiver-proof-gateway-path
+
+on:
+  push:
+    branches:
+      - fix/receiver-proof-gateway-path-001
+    paths:
+      - .github/workflows/receiver-proof-gateway-path.yml
+      - gateway/mock_api.py
+      - gateway/poppy/test_gateway_path.py
+      - gateway/poppy/test_atomic_receipt.py
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Python test dependencies
+        run: python3 -m pip install cryptography grpcio protobuf pytest
+      - name: Test atomic evidence without services
+        run: python3 -m unittest gateway/poppy/test_atomic_receipt.py -v
+      - name: Pull known reference Envoy image
+        run: docker pull envoyproxy/envoy:v1.39.3
+      - name: Prepare host-network Envoy launcher
+        run: |
+          cat > /tmp/openline-envoy.sh <<'SH'
+          #!/bin/sh
+          exec docker run --rm --network host -v /tmp:/tmp:ro envoyproxy/envoy:v1.39.3 "$@"
+          SH
+          chmod +x /tmp/openline-envoy.sh
+          docker run --rm envoyproxy/envoy:v1.39.3 --version
+      - name: Full Envoy to authz to business API integration
+        env:
+          ENVOY_BIN: /tmp/openline-envoy.sh
+          NO_PROXY: localhost,127.0.0.1
+          no_proxy: localhost,127.0.0.1
+        run: |
+          set -o pipefail
+          python3 gateway/poppy/test_gateway_path.py 2>&1 | tee /tmp/receiver-proof-gateway-path.log
+      - name: Upload test log even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: receiver-proof-gateway-path
+          path: /tmp/receiver-proof-gateway-path.log
+          retention-days: 14
