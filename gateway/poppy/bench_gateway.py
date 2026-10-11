@@ -1,19 +1,13 @@
 #!/usr/bin/env python3
-"""POPPY-PROOF-001: incremental cost of transaction approval vs Poppy baseline.
+"""POPPY-PROOF-001: full-path benchmark (Envoy -> authz -> mockapi).
 
-Measures through the REAL mockapi process:
-1. Baseline: /transfer with Gateway decision token (delegated authority only).
-   This is the Poppy-native equivalent: agent is permitted, company policy
-   applies, no owner-signed exact terms.
-2. Extended: /poppy-charge with delegated headers + Wallet transaction
-   approval. Both layers verified.
+Measures end-to-end latency for comparable successful operations:
+- Baseline: /transfer via Envoy (delegated authority only, Poppy-native
+  equivalent). Requires a valid Gateway decision token.
+- Extended: /poppy-charge via Envoy (delegated + owner-signed exact
+  terms). Requires decision token + Wallet approval.
 
-The delta is the incremental cost of stronger authorization (owner-signed
-exact terms) against a properly configured Poppy baseline.
-
-Note: the baseline here uses the Gateway's /transfer (which requires a
-decision token). For a fair comparison we measure the mockapi-side
-processing only, not the authz gRPC round-trip (same for both).
+Reports p50, p95, p99. Local only, not production claims.
 """
 
 from __future__ import annotations
@@ -47,15 +41,16 @@ from poppy_receiver import mandate_scope_for_operation  # noqa: E402
 from wallet_bridge import worker_present  # noqa: E402
 
 GW_PY = sys.executable
-N = 30
+ENVOY_BIN = Path.home() / "workspace" / ".envoy-binary"
+N = 50
 
 
-def http_post(url: str, body: dict, headers: dict) -> tuple[int, dict]:
+def http_post(url, body, headers, timeout=15):
     data = json.dumps(body).encode()
     req = urllib.request.Request(url, data=data, headers=headers,
                                  method="POST")
     try:
-        with urllib.request.urlopen(req, timeout=10) as r:
+        with urllib.request.urlopen(req, timeout=timeout) as r:
             return r.status, json.loads(r.read())
     except urllib.error.HTTPError as e:
         return e.code, {}
@@ -63,23 +58,29 @@ def http_post(url: str, body: dict, headers: dict) -> tuple[int, dict]:
         return -1, {}
 
 
-def wait_for(url: str, timeout: float = 15.0) -> bool:
-    deadline = time.time() + timeout
-    while time.time() < deadline:
+def wait_for(url, timeout=20.0):
+    dl = time.time() + timeout
+    while time.time() < dl:
         try:
             with urllib.request.urlopen(url, timeout=2) as r:
                 if r.status == 200:
                     return True
         except Exception:
             pass
-        time.sleep(0.3)
+        time.sleep(0.4)
     return False
 
 
-def main() -> int:
-    print(f"POPPY-PROOF-001 incremental cost benchmark (n={N})")
-    print("Baseline: /transfer (delegated authority only, Poppy-native equiv)")
-    print("Extended: /poppy-charge (delegated + owner-signed exact terms)\n")
+def pct(data, p):
+    s = sorted(data)
+    idx = min(int(len(s) * p / 100), len(s) - 1)
+    return s[idx]
+
+
+def main():
+    print(f"POPPY-PROOF-001 full-path benchmark (n={N})")
+    print("Path: client -> Envoy :8080 -> authz :50051 -> mockapi :9000")
+    print("Baseline: /transfer (delegated only). Extended: /poppy-charge.\n")
 
     rundir = Path(tempfile.mkdtemp(prefix="poppy-bench-"))
     cfgdir = rundir / "config"
@@ -106,111 +107,134 @@ def main() -> int:
         env["GATEWAY_DB"] = str(statedir / "gateway.db")
         env["PYTHONPATH"] = str(GWROOT) + ":" + env.get("PYTHONPATH", "")
 
-        # Owner wallet
         owner_tmp = rundir / "owner"
         owner_tmp.mkdir()
         wallet = Wallet.create(str(owner_tmp))
         pid = wallet.principal_id
         root_pub = wallet.root_public_key
 
-        # Provision agent
         subprocess.run([GW_PY, str(GWROOT / "gateway_admin.py"), "init"],
                        env=env, check=True, capture_output=True)
         r = subprocess.run(
             [GW_PY, str(GWROOT / "gateway_admin.py"),
-             "provision-agent", "bench-agent", "--max-cents", "100000"],
+             "provision-agent", "bench-agent", "--max-cents", "1000000"],
             env=env, check=True, capture_output=True, text=True)
         agent_key_b64 = json.loads(r.stdout)["agent_private_key"]
 
-        # Start mockapi
+        pa = subprocess.Popen(
+            [GW_PY, str(GWROOT / "authz_server.py"), "50051"], env=env,
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        procs.append(pa)
+
         env["POPPY_OWNER_PIN"] = f"{pid}|{root_pub}"
         env["MOCK_API_PORT"] = "9000"
         pm = subprocess.Popen(
             [GW_PY, str(GWROOT / "mock_api.py")], env=env,
             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         procs.append(pm)
-        if not wait_for("http://127.0.0.1:9000/health", 15):
-            print("mockapi failed to start")
-            return 2
+        assert wait_for("http://127.0.0.1:9000/health", 15)
 
-        # Setup operation and mandate
-        operation = {
-            "type": "charge", "merchant": "manzanita-supply",
-            "account": "treasury", "amount_cents": 4250, "currency": "USD",
-            "items": [], "order_ref": "bench_001",
-        }
-        scope = mandate_scope_for_operation(operation)
-        akey = Ed25519PrivateKey.generate()
-        now = datetime.now(timezone.utc)
-        m = wallet.grant(
-            subject_id="bench-agent",
-            subject_public_key=public_key_hex(akey),
-            scopes=[scope], expires_at=now + timedelta(hours=1))
-        mid = m["data"]["mandate_id"]
-        bundle = wallet.export_bundle(ttl_seconds=300)
-        http_post("http://127.0.0.1:9000/poppy-admit", {"bundle": bundle},
-                  {"Content-Type": "application/json"})
+        cfg_path = rundir / "envoy.yaml"
+        cfg_path.write_text(
+            (GWROOT / "envoy" / "envoy-openline.yaml").read_text())
+        pe = subprocess.Popen([str(ENVOY_BIN), "-c", str(cfg_path)],
+                              stdout=subprocess.DEVNULL,
+                              stderr=subprocess.DEVNULL)
+        procs.append(pe)
+        time.sleep(4)
 
-        def delegated_headers():
+        # Baseline: /transfer needs a decision token. We'll use the
+        # /transfer endpoint which requires x-ol-decision (from authz).
+        # The authz mints it via Envoy ext_authz.
+        def baseline_headers():
             c = AgentClient("bench-agent", agent_key_b64)
             h = c.headers_for("authorize_payment", target="ledger",
-                              value_cents=4250)
+                              value_cents=100)
             h["Content-Type"] = "application/json"
             return h
 
-        def tx_approval():
+        # Extended: /poppy-charge needs decision token + Wallet approval.
+        akey = Ed25519PrivateKey.generate()
+        now = datetime.now(timezone.utc)
+
+        def make_extended_headers(idx):
+            op = {
+                "type": "charge", "merchant": "bench-merchant",
+                "account": "treasury", "amount_cents": 100,
+                "currency": "USD", "items": [],
+                "order_ref": f"bench_{idx:04d}",
+            }
+            scope = mandate_scope_for_operation(op)
+            m = wallet.grant(
+                subject_id=f"bench-subj-{idx}",
+                subject_public_key=public_key_hex(akey),
+                scopes=[scope], expires_at=now + timedelta(hours=1))
+            mid = m["data"]["mandate_id"]
+            bundle = wallet.export_bundle(ttl_seconds=300)
+            http_post("http://127.0.0.1:9000/poppy-admit", {"bundle": bundle},
+                      {"Content-Type": "application/json"})
             scode, rch = http_post(
                 "http://127.0.0.1:9000/poppy-challenge",
-                {"principal_id": pid, "subject_id": "bench-agent",
+                {"principal_id": pid, "subject_id": f"bench-subj-{idx}",
                  "action": scope},
                 {"Content-Type": "application/json"})
             pres = worker_present(
-                bundle=bundle, mandate_id=mid, subject_id="bench-agent",
-                subject_key=akey, action=scope,
-                challenge=rch["challenge"])
+                bundle=bundle, mandate_id=mid,
+                subject_id=f"bench-subj-{idx}", subject_key=akey,
+                action=scope, challenge=rch["challenge"])
             tx = {"presentation": pres, "principal_id": pid,
-                  "operation": operation}
-            return base64.urlsafe_b64encode(
+                  "operation": op}
+            appr = base64.urlsafe_b64encode(
                 json.dumps(tx).encode()).rstrip(b"=").decode()
+            c = AgentClient("bench-agent", agent_key_b64)
+            h = c.headers_for("authorize_payment", target="ledger",
+                              value_cents=100)
+            h["Content-Type"] = "application/json"
+            h["x-ol-tx-approval"] = appr
+            return h, op
 
-        # Benchmark 1: delegated-only check (the /poppy-charge endpoint
-        # without tx approval — measures delegated verification cost).
-        # This is the Poppy-baseline equivalent: agent permitted, no
-        # owner-signed exact terms.
+        # Warmup.
+        for _ in range(5):
+            http_post("http://127.0.0.1:8080/api/transfer",
+                      {"to": "vendor", "cents": 100}, baseline_headers())
+
+        # Benchmark baseline.
         base_lat = []
         for _ in range(N):
             t0 = time.perf_counter()
-            http_post("http://127.0.0.1:9000/poppy-charge",
-                      {"operation": operation}, delegated_headers())
-            base_lat.append((time.perf_counter() - t0) * 1000)
+            s, _ = http_post("http://127.0.0.1:8080/api/transfer",
+                             {"to": "vendor", "cents": 100},
+                             baseline_headers())
+            if s == 200:
+                base_lat.append((time.perf_counter() - t0) * 1000)
 
-        # Benchmark 2: full two-layer check.
+        # Benchmark extended.
         ext_lat = []
-        for _ in range(N):
-            h = delegated_headers()
-            h["x-ol-tx-approval"] = tx_approval()
+        for i in range(N):
+            h, op = make_extended_headers(i)
             t0 = time.perf_counter()
-            http_post("http://127.0.0.1:9000/poppy-charge",
-                      {"operation": operation}, h)
-            ext_lat.append((time.perf_counter() - t0) * 1000)
+            s, _ = http_post("http://127.0.0.1:8080/api/poppy-charge",
+                             {"operation": op}, h)
+            if s == 200:
+                ext_lat.append((time.perf_counter() - t0) * 1000)
 
-        def pct(d, p):
-            s = sorted(d)
-            return s[min(int(len(s) * p / 100), len(s) - 1)]
-
-        print(f"{'baseline (delegated only)':30s} "
-              f"p50 {statistics.median(base_lat):6.2f} ms  "
-              f"p95 {pct(base_lat, 95):6.2f} ms")
-        print(f"{'extended (delegated + approval)':30s} "
-              f"p50 {statistics.median(ext_lat):6.2f} ms  "
-              f"p95 {pct(ext_lat, 95):6.2f} ms")
-        delta = statistics.median(ext_lat) - statistics.median(base_lat)
-        print(f"\nMedian incremental cost of transaction approval: "
-              f"{delta:.2f} ms")
-        print("(Includes Wallet presentation verify + challenge; "
-              "excludes challenge issuance which is cached in practice.)")
-        print("\nNote: local-process only, not production claims. "
-              "Optimization deferred to Codex phase.")
+        print(f"Baseline (delegated only, n={len(base_lat)}):")
+        print(f"  p50 {statistics.median(base_lat):7.2f} ms")
+        print(f"  p95 {pct(base_lat, 95):7.2f} ms")
+        print(f"  p99 {pct(base_lat, 99):7.2f} ms")
+        print(f"\nExtended (delegated + approval, n={len(ext_lat)}):")
+        print(f"  p50 {statistics.median(ext_lat):7.2f} ms")
+        print(f"  p95 {pct(ext_lat, 95):7.2f} ms")
+        print(f"  p99 {pct(ext_lat, 99):7.2f} ms")
+        d50 = statistics.median(ext_lat) - statistics.median(base_lat)
+        d95 = pct(ext_lat, 95) - pct(base_lat, 95)
+        d99 = pct(ext_lat, 99) - pct(base_lat, 99)
+        print(f"\nIncremental (extended - baseline):")
+        print(f"  p50 +{d50:.2f} ms")
+        print(f"  p95 +{d95:.2f} ms")
+        print(f"  p99 +{d99:.2f} ms")
+        print("\nNote: local only, includes Envoy+authz+mockapi. "
+              "Not production claims.")
     finally:
         stop_all()
         shutil.rmtree(rundir, ignore_errors=True)

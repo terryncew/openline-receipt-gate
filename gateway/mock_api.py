@@ -35,6 +35,8 @@ import os
 import sqlite3
 import sys
 import time
+import uuid
+from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
 
@@ -79,6 +81,10 @@ def b64u_decode(s: str) -> bytes:
     return base64.urlsafe_b64decode(s + "=" * (-len(s) % 4))
 
 
+def b64u_encode(b: bytes) -> str:
+    return base64.urlsafe_b64encode(b).rstrip(b"=").decode()
+
+
 def canonical(obj) -> bytes:
     return json.dumps(obj, sort_keys=True, separators=(",", ":")).encode()
 
@@ -108,9 +114,24 @@ class Ledger:
                         "decision_id TEXT PRIMARY KEY, ts INTEGER)")
         self.db.execute("CREATE TABLE IF NOT EXISTS effects("
                         "effect_id TEXT PRIMARY KEY, ts TEXT, body TEXT)")
+        # POPPY-PROOF-001: one-use transaction approvals. Each
+        # (mandate_id, operation_hash) may execute at most once.
+        # Survives restart via sqlite.
+        self.db.execute("CREATE TABLE IF NOT EXISTS used_approvals("
+                        "approval_id TEXT PRIMARY KEY, ts INTEGER)")
         for acct, cents in (("treasury", 1_000_000), ("ops", 50_000)):
             self.db.execute("INSERT OR IGNORE INTO balances VALUES(?,?)",
                             (acct, cents))
+        self.db.commit()
+
+    def approval_used(self, approval_id: str) -> bool:
+        return self.db.execute(
+            "SELECT 1 FROM used_approvals WHERE approval_id=?",
+            (approval_id,)).fetchone() is not None
+
+    def mark_approval_used(self, approval_id: str) -> None:
+        self.db.execute("INSERT OR IGNORE INTO used_approvals VALUES(?,?)",
+                        (approval_id, int(time.time())))
         self.db.commit()
 
     def transfer(self, to_acct: str, cents: int, decision_id: str) -> dict:
@@ -207,57 +228,6 @@ def get_poppy_verifier():
     gate.pin_principal(principal_id.strip(), root_key.strip())
     _poppy_verifier = gate
     return _poppy_verifier
-
-
-def verify_delegated_headers(agent_id: str, action_b64: str,
-                             sig_b64: str) -> dict:
-    """Verify Gateway-style delegated authority headers directly.
-
-    Same verification the authz service performs: look up the agent in
-    the Gateway DB, verify the Ed25519 signature, check the mandate
-    limits. Used by /poppy-charge when no decision token is present
-    (integration test path).
-
-    Returns {"ok": True, "max_cents": N} or {"ok": False, "reason": ...}.
-    """
-    from cryptography.hazmat.primitives.asymmetric.ed25519 import (
-        Ed25519PublicKey)
-    try:
-        action = json.loads(b64u_decode(action_b64))
-        sig = b64u_decode(sig_b64)
-    except Exception:
-        return {"ok": False, "reason": "malformed_action_claim"}
-    for f in ("action_type", "target", "value_cents", "nonce", "ts"):
-        if f not in action:
-            return {"ok": False, "reason": f"action_field_missing:{f}"}
-    # Look up the agent in the Gateway DB.
-    db_path = os.environ.get("GATEWAY_DB", "")
-    if not db_path:
-        return {"ok": False, "reason": "gateway_db_not_configured"}
-    try:
-        db = sqlite3.connect(db_path)
-        row = db.execute(
-            "SELECT pubkey, mandate, revoked FROM agents WHERE agent_id=?",
-            (agent_id,)).fetchone()
-        if row is None:
-            return {"ok": False, "reason": "unknown_agent"}
-        pubkey_b64, mandate_json, revoked = row
-        if revoked:
-            return {"ok": False, "reason": "agent_revoked"}
-        pub = Ed25519PublicKey.from_public_bytes(b64u_decode(pubkey_b64))
-        pub.verify(sig, canonical(action))
-    except Exception as e:
-        return {"ok": False, "reason": f"signature_invalid: {e}"}
-    try:
-        mandate = json.loads(mandate_json)
-        max_cents = int(mandate.get("max_payment_cents", 0))
-    except Exception:
-        return {"ok": False, "reason": "mandate_parse_error"}
-    if action["action_type"] not in mandate.get("allowed_action_types", []):
-        return {"ok": False, "reason": "action_not_in_mandate"}
-    if int(action.get("value_cents", 0)) > max_cents:
-        return {"ok": False, "reason": "exceeds_delegated_limit"}
-    return {"ok": True, "max_cents": max_cents}
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -392,45 +362,31 @@ class Handler(BaseHTTPRequestHandler):
             return self._send(500, {"ok": False,
                                     "error": "POPPY_OWNER_PIN not configured"})
 
-        # Layer 1: Delegated authority.
+        # Layer 1: Delegated authority — Gateway decision token ONLY.
         # Proves the agent is permitted. Does NOT prove human approval.
         #
-        # Two modes:
-        # - Full Gateway path: valid x-ol-decision token (minted by authz).
-        # - Direct test path: valid x-ol-agent/x-ol-action/x-ol-sig headers,
-        #   verified against the Gateway DB (same crypto the authz uses).
-        #   Used by the integration test when the gRPC authz is not in the
-        #   loop. The verification logic is identical.
+        # The token must come from the live Gateway authorization service
+        # via Envoy ext_authz. Direct header verification was removed
+        # (2026-10-11 review): the test must exercise the complete path,
+        # not substitute its own verification for the Gateway's.
         token = verify_decision_token(
             self.headers.get("x-ol-decision", ""))
-        delegated_via = None
-        agent_id = None
-        delegated_limit = None
-        if token is not None:
-            if token["action_type"] != "authorize_payment":
-                return self._send(403, {"ok": False,
-                                        "error": "decision token does not "
-                                                 "authorize this endpoint"})
-            delegated_via = "decision_token"
-            agent_id = token.get("agent_id")
-            delegated_limit = int(token.get("value_cents", 0))
-        else:
-            # Direct header verification (test path).
-            agent_id = self.headers.get("x-ol-agent", "")
-            action_b64 = self.headers.get("x-ol-action", "")
-            sig_b64 = self.headers.get("x-ol-sig", "")
-            if not agent_id or not action_b64 or not sig_b64:
-                return self._send(403, {"ok": False,
-                                        "error": "missing or invalid decision "
-                                                 "token (delegated authority "
-                                                 "not established)"})
-            verified = verify_delegated_headers(agent_id, action_b64, sig_b64)
-            if not verified["ok"]:
-                return self._send(403, {"ok": False,
-                                        "error": "delegated authority invalid: "
-                                                 + verified["reason"]})
-            delegated_via = "direct_headers"
-            delegated_limit = verified["max_cents"]
+        if token is None:
+            return self._send(403, {"ok": False,
+                                    "error": "missing or invalid decision "
+                                             "token (delegated authority "
+                                             "not established via Gateway)"})
+        if token["action_type"] != "authorize_payment":
+            return self._send(403, {"ok": False,
+                                    "error": "decision token does not "
+                                             "authorize this endpoint"})
+        delegated_via = "decision_token"
+        agent_id = token.get("agent_id")
+        # Amount binding (finding 3): the token's authorized amount must
+        # EXACTLY match the operation amount. An action signed for $0
+        # cannot authorize a $42.50 execution, even if the mandate
+        # ceiling is $50.
+        token_amount = int(token.get("value_cents", 0))
 
         # Layer 2: Transaction approval — owner-signed exact terms.
         # Proves the human approved THIS transaction. Never inferred
@@ -498,33 +454,117 @@ class Handler(BaseHTTPRequestHandler):
                 "reasons": reasons,
             })
 
-        # Both layers passed: execute the exact approved terms.
-        # The amount comes from the Wallet-approved operation — the human's
-        # approval is authoritative for the terms. The delegated limit must
-        # cover it (defense in depth: both layers constrain).
-        amount = int(operation.get("amount_cents", 0))
-        merchant = operation.get("merchant", "vendor")
-        if delegated_limit < amount:
+        # One-use semantics (finding 2): a transaction approval authorizes
+        # exactly ONE execution. A second execution with a fresh challenge
+        # but the same (mandate_id, operation_hash) is rejected. This
+        # distinguishes "owner approved these terms" (the mandate) from
+        # "owner approved this execution" (the one-use approval).
+        mandate_id = presentation.get("mandate_id", "")
+        approval_id = f"{mandate_id}:{op_hash}"
+        if LEDGER.approval_used(approval_id):
             return self._send(403, {
                 "ok": False,
-                "error": "DELEGATED_LIMIT_EXCEEDED",
-                "detail": "Transaction approval exceeds delegated authority "
-                          "limit.",
+                "error": "TRANSACTION_APPROVAL_ALREADY_USED",
+                "detail": "This owner approval was already executed. A "
+                          "fresh challenge does not create a fresh approval. "
+                          "The owner must issue a new approval for another "
+                          "execution.",
+                "delegated_authority": "valid",
+                "transaction_approval": "already_used",
+            })
+
+        # Both layers passed: execute the exact approved terms.
+        # The amount comes from the Wallet-approved operation — the human's
+        # approval is authoritative for the terms.
+        #
+        # Amount binding (finding 3): the Gateway token's authorized amount
+        # must EXACTLY equal the operation amount. An action signed for $0
+        # cannot authorize a $42.50 execution, even if the mandate ceiling
+        # is $50. The token binds the delegated amount; the Wallet binds
+        # the approved amount; they must agree exactly.
+        amount = int(operation.get("amount_cents", 0))
+        merchant = operation.get("merchant", "vendor")
+        if token_amount != amount:
+            return self._send(403, {
+                "ok": False,
+                "error": "AMOUNT_BINDING_MISMATCH",
+                "detail": f"Gateway authorized ${token_amount/100:.2f} but "
+                          f"operation requests ${amount/100:.2f}. The "
+                          f"delegated amount must exactly match the approved "
+                          f"transaction amount.",
                 "delegated_authority": "valid",
                 "transaction_approval": "valid",
+                "token_amount_cents": token_amount,
+                "operation_amount_cents": amount,
             })
         # The mock ledger debits treasury and credits the merchant.
         # The operation's account must be treasury (the funded account).
+        treasury_before = LEDGER.balance("treasury")
+        merchant_before = LEDGER.balance(merchant)
         res = LEDGER.transfer(merchant, amount,
                               f"poppy-{time.time_ns()}")
-        res["poppy_receipt"] = {
-            "delegated_authority": f"verified (via {delegated_via})",
-            "transaction_approval": "verified (owner-signed exact terms)",
-            "operation_hash": op_hash,
-            "amount_cents": amount,
-            "merchant": merchant,
+        if not res.get("ok"):
+            return self._send(409, res)
+
+        # Mark the approval as used (one-use semantics).
+        LEDGER.mark_approval_used(approval_id)
+
+        # Signed receiver receipt (finding 4): separate evidence for
+        # the business DECISION and the measured LEDGER EFFECT.
+        # Independently verifiable with the receiver's public key.
+        treasury_after = LEDGER.balance("treasury")
+        merchant_after = LEDGER.balance(merchant)
+        decision_evidence = {
+            "type": "poppy_decision",
+            "decision": "ALLOWED",
+            "delegated_authority": {
+                "verified_via": delegated_via,
+                "agent_id": agent_id,
+                "token_amount_cents": token_amount,
+            },
+            "transaction_approval": {
+                "verified": "owner-signed exact terms",
+                "mandate_id": mandate_id,
+                "principal_id": principal_id,
+                "operation_hash": op_hash,
+            },
+            "amount_binding": {
+                "token_amount_cents": token_amount,
+                "operation_amount_cents": amount,
+                "match": token_amount == amount,
+            },
+            "decided_at": datetime.now(timezone.utc).isoformat(),
         }
-        return self._send(200 if res["ok"] else 409, res)
+        effect_evidence = {
+            "type": "poppy_ledger_effect",
+            "treasury_before_cents": treasury_before,
+            "treasury_after_cents": treasury_after,
+            "treasury_delta_cents": treasury_after - treasury_before,
+            "merchant": merchant,
+            "merchant_before_cents": merchant_before,
+            "merchant_after_cents": merchant_after,
+            "merchant_delta_cents": merchant_after - merchant_before,
+            "amount_cents": amount,
+            "effect_id": res.get("effect_id"),
+            "measured_at": datetime.now(timezone.utc).isoformat(),
+        }
+        receipt = {
+            "receipt_id": f"poppy-{uuid.uuid4().hex[:16]}",
+            "decision_evidence": decision_evidence,
+            "effect_evidence": effect_evidence,
+        }
+        # Sign the canonical receipt with the receiver key.
+        try:
+            key_b64 = (CONFIG_DIR / "receiver.key").read_text().strip()
+            rkey = Ed25519PrivateKey.from_private_bytes(b64u_decode(key_b64))
+            sig = rkey.sign(canonical(receipt))
+            receipt["receiver_signature"] = b64u_encode(sig)
+            receipt["receiver_public_key"] = b64u_encode(
+                rkey.public_key().public_bytes_raw())
+        except Exception as e:
+            receipt["signature_error"] = str(e)
+        res["poppy_receipt"] = receipt
+        return self._send(200, res)
 
     def _transfer(self, body):
         if mode() == "observe":
