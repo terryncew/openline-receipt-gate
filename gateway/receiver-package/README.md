@@ -1,70 +1,72 @@
-# OpenLine Receiver
+# OpenLine Receiver — experimental Python library
 
-A minimal package for an **external receiver** — a party that did not issue
-the authority — to verify owner-signed OpenLine mandates and enforce them.
+A receiver can independently validate an owner's signed Wallet authority and
+issue a **receiver-signed authorization decision**. It does not execute the
+business side effect, distribute owner keys, or replace a payment gateway.
 
-## Installation
+**Status:** Reference implementation, not production-ready. No Lithic
+sandbox deployment or external receiver adoption is claimed.
 
-```bash
-pip install ./gateway/receiver-package
-# Or from the repo root:
-# pip install git+https://github.com/terryncew/openline-receipt-gate.git#subdirectory=gateway/receiver-package
+## Install and run the working example
+
+From this repository's root (Python 3.10+):
+
+```sh
+python3 -m venv /tmp/openline-receiver-venv
+/tmp/openline-receiver-venv/bin/pip install ./gateway/receiver-package
+/tmp/openline-receiver-venv/bin/python gateway/receiver-package/example_01.py
 ```
 
-Requires Python 3.10+, `cryptography` package (installed automatically).
+The example creates a throwaway owner and worker, pins the owner's public
+root, admits a signed bundle, issues a receiver challenge, verifies a signed
+worker presentation, and prints `receiver: ALLOWED`.
 
-## 5-Minute Quickstart
+It deliberately simulates delivery of the owner's root key on the same
+machine. An actual receiver must enroll that key over an authenticated,
+separate channel. See [ENROLLMENT.md](ENROLLMENT.md).
 
-```python
-from openline_receiver.wallet_bridge import WalletReceiver
+The supported Python API, as used in the runnable example, is:
 
-# 1. Create a receiver, pin the owner's root key (out-of-band)
-receiver = WalletReceiver(gate_id="my-receiver-1")
-owner_root_key_hex = "..."  # From the owner, via a channel you trust
-receiver.pin_owner("owner-principal-id", owner_root_key_hex)
+- `WalletReceiver(gate_id="...")`
+- `pin_owner(owner.principal_id, owner.root_public_key)`
+- `protect_action("read_reports", ["read_reports"])`
+- `admit_bundle(bundle)` returning a dictionary with `decision`
+- `issue_challenge(principal_id, subject_id, action)`
+- `authorize(presentation, action)` returning a **signed decision dict**,
+  where `decision` is `ALLOWED` or `STOPPED`
+- `worker_present(...)` for the worker-side challenge-bound signature
 
-# 2. Admit the owner's signed bundle (grants, revocations)
-bundle = {...}  # From the owner or their Wallet
-result = receiver.admit_bundle(bundle)
-assert result == "BUNDLE_ADMITTED"
+There is **no** `WalletReceiver.decide()`, `sign_receipt()`,
+`get_pinned_key()`, or `unpin_owner()` API in this package.
 
-# 3. Decide on a worker's presentation
-from openline_receiver.wallet_bridge import worker_present
-# (Worker signs with their mandate key; you verify)
-decision = receiver.decide(presentation, action="read:reports")
-if decision == "ALLOWED":
-    # Do the consequential thing, then sign a receipt
-    receipt = receiver.sign_receipt(decision, presentation)
-else:
-    # STOPPED: presentation was stale, revoked, or invalid
-    pass
-```
+## Trust and consequence boundary
 
-See `examples/` for complete worked examples.
+The owner signs grants and revocations. The receiver pins the owner's real
+root key, admits a fresh, cryptographically verified bundle, issues a
+one-use challenge, and evaluates the signed presentation against its own
+protected-action policy.
 
-## What's Included
+The package's signed decision does **not** by itself prove an external
+business effect occurred. The downstream receiver must enforce the
+decision, durably record any effect, and provide evidence appropriate to
+that effect. The separate Gateway/Poppy mock-ledger proof is experimental.
 
-- `openline_receiver/openline_wallet/`: Vendored OpenLine Wallet contracts.
-  Do not modify. Source: `github.com/terryncew/openline-wallet`.
-- `openline_receiver/wallet_bridge.py`: `WalletReceiver` class and
-  `worker_present()` helper.
+The package contains `openline_receiver.openline_wallet` (vendored Wallet
+contracts) and `openline_receiver.wallet_bridge`. It has no Envoy,
+network listeners, ledger, card integration, or public key infrastructure.
 
-## What's NOT Included
+## Known limitations
 
-- No gateway, no Envoy, no mock ledger. You bring your own consequential API.
-- No network code. You decide how to receive bundles and presentations.
-- No key distribution. See ENROLLMENT.md.
+- No built-in trusted enrollment, key rotation, key revocation registry,
+  or persistent receiver state. The receiver operator must protect its
+  pinned trust roots and maintain state across process restarts.
+- Bundle-based revocation is effective only when the receiver admits
+  a newer revocation-bearing bundle. A freshness window is **not**
+  guaranteed instantaneous revocation.
+- Approval/effect atomicity demonstrated elsewhere is not automatically
+  inherited by consumers of this Python library.
+- The Lithic adapter remains a local test, not a networked ASA integration.
+- Do not install this package into production payment systems as-is.
 
-## Trust Model
-
-See `../receiver-kit/TRUST-MODEL.md` for the full model. Short version:
-1. You pin the owner's root key out-of-band. No PKI.
-2. You admit signed bundles. Check freshness (≤ your max age).
-3. Workers prove key ownership per action. You verify.
-
-## Honest Limits
-
-- Revocation is not instant. New bundles stop new presentations immediately;
-  in-flight presentations live to their challenge TTL (60s default).
-- This is a library, not a service. You operate it.
-- SQLite is used for demo state; use your own store in production.
+See [ENROLLMENT.md](ENROLLMENT.md) for actual supported onboarding
+and [LITHIC_CONTRACT.md](LITHIC_CONTRACT.md) for the proposed sandbox mapping.
