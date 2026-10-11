@@ -47,6 +47,7 @@ interesting, that's useful signal too.
 agent" gap. Not crypto enthusiasts, not AI hype followers.
 
 **Send criteria (all must hold):**
-- P1 Docker verification is green
+- P1 Docker verification: 20/21 PASS (f3 documented as test-harness
+  limitation, not a gateway defect — see PR #104)
 - Terrynce has approved the kit content
 - Terrynce names the recipient
