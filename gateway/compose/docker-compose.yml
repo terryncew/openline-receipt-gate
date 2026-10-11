@@ -16,7 +16,9 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ../envoy/envoy-openline.yaml:/etc/envoy/envoy.yaml:ro
+      # Compose variant: upstream endpoints are service names (authz,
+      # mockapi), not 127.0.0.1 — each container has its own loopback.
+      - ./envoy-openline-compose.yaml:/etc/envoy/envoy.yaml:ro
     command: ["-c", "/etc/envoy/envoy.yaml"]
     depends_on:
       - authz
@@ -43,6 +45,9 @@ services:
       context: ..
       dockerfile: compose/Dockerfile.gateway
     profiles: [openline]
+    # Bootstraps receiver.key + policy.json on a fresh gateway-config
+    # volume before the service starts (see entrypoint-gateway.sh).
+    entrypoint: ["/app/gateway/compose/entrypoint-gateway.sh"]
     environment:
       GATEWAY_CONFIG: /config
       GATEWAY_DB: /state/gateway.db
@@ -58,6 +63,9 @@ services:
       context: ..
       dockerfile: compose/Dockerfile.gateway
     profiles: [openline, opa-a, opa-b]
+    # Same first-boot init as authz (atomic via lock; safe when both
+    # boot together, and lets the opa profiles init without authz).
+    entrypoint: ["/app/gateway/compose/entrypoint-gateway.sh"]
     environment:
       GATEWAY_CONFIG: /config
       GATEWAY_DB: /state/gateway.db

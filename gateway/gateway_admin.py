@@ -153,9 +153,16 @@ def main():
     elif cmd == "provision-agent":
         agent_id = sys.argv[2]
         kw = {}
-        for a in sys.argv[3:]:
+        args = sys.argv[3:]
+        i = 0
+        while i < len(args):
+            a = args[i]
             if a.startswith("--max-cents="):
-                kw["max_cents"] = int(a.split("=")[1])
+                kw["max_cents"] = int(a.split("=", 1)[1])
+            elif a == "--max-cents" and i + 1 < len(args):
+                kw["max_cents"] = int(args[i + 1])
+                i += 1
+            i += 1
         cmd_provision(agent_id, **kw)
     elif cmd == "revoke-agent":
         cmd_revoke(sys.argv[2])
