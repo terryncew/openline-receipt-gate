@@ -3,7 +3,7 @@
 # build VM does not).
 #
 # What it does:
-#   1. Checks out branch experiment/gateway-subscription-001.
+#   1. Checks out the triggering revision (including the isolated fix branch).
 #   2. `docker compose --profile openline up --build -d` (AUTH_MODE=openline).
 #   3. Waits for Envoy on 127.0.0.1:8080.
 #   4. Runs gateway/ci/docker_verify.py: provisions an agent, sends
@@ -46,8 +46,6 @@ jobs:
     steps:
       - name: Checkout branch
         uses: actions/checkout@v4
-        with:
-          ref: experiment/gateway-subscription-001
 
       - name: Build and start the gateway stack
         working-directory: gateway/compose
@@ -71,6 +69,21 @@ jobs:
       - name: Install verifier dependencies
         run: python3 -m pip install --break-system-packages -q cryptography grpcio protobuf
 
+      - name: Reproduce the untouched 20-of-22 baseline failure
+        run: |
+          set -o pipefail
+          mkdir -p /tmp/gwlogs
+          git fetch --depth=1 origin f86c23d59dc2a29240c79b8b3628ab98745df12d
+          git show f86c23d59dc2a29240c79b8b3628ab98745df12d:gateway/ci/docker_verify.py > gateway/ci/_restart_baseline.py
+          python3 gateway/ci/reproduce_restart_baseline.py 2>&1 | tee /tmp/gwlogs/baseline-output.log
+
+      - name: Capture direct and proxied baseline diagnostics
+        if: always()
+        run: |
+          set -o pipefail
+          mkdir -p /tmp/gwlogs
+          python3 gateway/ci/restart_diagnostics.py 2>&1 | tee /tmp/gwlogs/baseline-diagnostics.log
+
       - name: Run Docker verification
         run: |
           set -o pipefail
@@ -86,6 +99,12 @@ jobs:
           docker compose --profile openline ps -a >> /tmp/gwlogs/compose.log 2>&1 || true
           echo "--- log sizes ---"
           wc -c /tmp/gwlogs/*
+
+      - name: Capture direct and proxied final diagnostics
+        if: always()
+        run: |
+          set -o pipefail
+          python3 gateway/ci/restart_diagnostics.py 2>&1 | tee /tmp/gwlogs/final-diagnostics.log
 
       - name: Upload logs and verifier output
         if: always()

@@ -1,0 +1,137 @@
+{
+  "run": {
+    "conclusion": "success",
+    "head_sha": "ab60450b1601c53b634df89eb8361d76f810996d",
+    "html_url": "https://github.com/terryncew/openline-receipt-gate/actions/runs/38124289732",
+    "id": 38124289732,
+    "run_attempt": 1,
+    "status": "completed"
+  },
+  "jobs": [
+    {
+      "conclusion": "success",
+      "id": 114425295922,
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "name": "docker-verify",
+      "runner_group_name": "GitHub Actions",
+      "runner_name": "GitHub Actions 1000017678",
+      "status": "completed",
+      "steps": [
+        {
+          "completed_at": "2026-10-11T08:17:40Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "started_at": "2026-10-11T08:17:39Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-11T08:17:40Z",
+          "conclusion": "success",
+          "name": "Checkout branch",
+          "number": 2,
+          "started_at": "2026-10-11T08:17:40Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-11T08:17:53Z",
+          "conclusion": "success",
+          "name": "Build and start the gateway stack",
+          "number": 3,
+          "started_at": "2026-10-11T08:17:40Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-11T08:17:53Z",
+          "conclusion": "success",
+          "name": "Wait for Envoy health",
+          "number": 4,
+          "started_at": "2026-10-11T08:17:53Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-11T08:17:57Z",
+          "conclusion": "success",
+          "name": "Install verifier dependencies",
+          "number": 5,
+          "started_at": "2026-10-11T08:17:53Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-11T08:19:41Z",
+          "conclusion": "success",
+          "name": "Reproduce the untouched 20-of-22 baseline failure",
+          "number": 6,
+          "started_at": "2026-10-11T08:17:57Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-11T08:19:42Z",
+          "conclusion": "success",
+          "name": "Capture direct and proxied baseline diagnostics",
+          "number": 7,
+          "started_at": "2026-10-11T08:19:41Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-11T08:20:08Z",
+          "conclusion": "success",
+          "name": "Run Docker verification",
+          "number": 8,
+          "started_at": "2026-10-11T08:19:42Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-11T08:20:08Z",
+          "conclusion": "success",
+          "name": "Capture container logs",
+          "number": 9,
+          "started_at": "2026-10-11T08:20:08Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-11T08:20:09Z",
+          "conclusion": "success",
+          "name": "Capture direct and proxied final diagnostics",
+          "number": 10,
+          "started_at": "2026-10-11T08:20:08Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-11T08:20:09Z",
+          "conclusion": "success",
+          "name": "Upload logs and verifier output",
+          "number": 11,
+          "started_at": "2026-10-11T08:20:09Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-11T08:20:20Z",
+          "conclusion": "success",
+          "name": "Tear down the stack",
+          "number": 12,
+          "started_at": "2026-10-11T08:20:09Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-11T08:20:20Z",
+          "conclusion": "success",
+          "name": "Post Checkout branch",
+          "number": 24,
+          "started_at": "2026-10-11T08:20:20Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-11T08:20:20Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 25,
+          "started_at": "2026-10-11T08:20:20Z",
+          "status": "completed"
+        }
+      ]
+    }
+  ]
+}

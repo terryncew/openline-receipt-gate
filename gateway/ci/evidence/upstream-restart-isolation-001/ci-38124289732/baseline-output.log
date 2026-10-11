@@ -1,0 +1,87 @@
+== GATEWAY-SUBSCRIPTION-001 docker verification ==
+envoy=http://127.0.0.1:8080 compose=/home/runner/work/openline-receipt-gate/openline-receipt-gate/gateway/compose
+[PASS] provision-agent exits 0
+[PASS] provision-agent prints key JSON
+[wait] signed transfer: ready
+[PASS] stack ready (signed transfer -> 200)
+[PASS] a1 signed transfer -> 200
+[diagnosis] POST /api/transfer HTTP 403 body={"denied": true, "reasons": ["signature_invalid"]}
+[PASS] a2 tampered signature -> 403
+[diagnosis] POST /api/transfer HTTP 403 body={"denied": true, "reasons": ["replay_detected"]}
+[PASS] a3 replay of same headers -> 403
+[PASS] b0 balances readable via Envoy
+[PASS] b1 100-cent transfer -> 200
+[PASS] b2 treasury decreased by exactly 100
+[PASS] b3 vendor increased by exactly 100
+[PASS] c verify-receipts exits 0, 0 invalid
+[PASS] d0 mockapi restart exits 0
+[diagnosis] GET /api/balance/treasury HTTP 503 body=upstream connect error or disconnect/reset before headers. reset reason: remote connection failure
+[wait] mockapi balance: ready
+[PASS] d1 mockapi back after restart
+[PASS] d2 balances survive mockapi restart
+[PASS] e0 revoke-agent reports revoked
+[diagnosis] POST /api/transfer HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[PASS] e1 fresh request after revoke -> 403
+[diagnosis] before bare restart: {'authz': '2026-10-11T08:17:53.175447085Z', 'envoy': '2026-10-11T08:17:53.372053227Z', 'mockapi': '2026-10-11T08:18:08.499642116Z'}
+[diagnosis] after bare restart: {'authz': '2026-10-11T08:17:53.175447085Z', 'envoy': '2026-10-11T08:17:53.372053227Z', 'mockapi': '2026-10-11T08:18:08.499642116Z'}
+[PASS] f0 stack restart exits 0
+[wait] envoy health: ready
+[PASS] f1 envoy /health after restart
+[diagnosis] POST /api/transfer HTTP 403 body={"denied": true, "reasons": ["missing_action_claim"]}
+[wait] authz chain: ready
+[PASS] f2 authz chain live after restart
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[wait] mockapi balance (full restart): TIMEOUT after 90s
+[FAIL] f2b mockapi upstream back after full restart
+[diagnosis] GET /api/balance/treasury HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[diagnosis] GET /api/balance/vendor HTTP 403 body={"denied": true, "reasons": ["agent_revoked"]}
+[FAIL] f3 balances survive full restart -- treasury=-1 vendor=-1 (baseline 999874/126)
+[PASS] f4 receipts survive full restart (0 invalid, none lost)
+[latency] transfer samples (ms): 6.7, 5.6
+
+20/22 checks passed
+[diagnosis] expected historical failure reproduced: True
