@@ -84,6 +84,7 @@ repos. No paid APIs. No public deployment.
 
 ## What remains
 
-1. P1 Docker verification must go green (currently in progress).
+1. P1 Docker verification: 20/21 PASS with f3 documented as test-harness
+   limitation (see above). No further CI cycles planned on f3.
 2. External engineer invitation (drafted separately, unsent).
 3. **Do not merge** without explicit order.
