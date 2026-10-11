@@ -33,6 +33,7 @@ jobs:
              gateway/receiver-package/test_lithic_atomicity.py \
              gateway/receiver-package/test_lithic_preflight.py \
              gateway/receiver-package/test_lithic_schema.py /tmp/lithic-preflight-tests/
+          cp gateway/receiver-package/test_lithic_live_state.py /tmp/lithic-preflight-tests/
           cp -R gateway/receiver-package/fixtures /tmp/lithic-preflight-tests/
           (cd /tmp && /tmp/lithic-preflight-venv/bin/python -c \
             'import openline_receiver.lithic_adapter as a; assert "site-packages" in a.__file__; print(a.__file__)')
@@ -45,7 +46,7 @@ jobs:
           set -o pipefail
           /tmp/lithic-preflight-venv/bin/python -m unittest -v \
             test_lithic_hmac test_lithic_wallet_revocation test_lithic_atomicity \
-            test_lithic_preflight test_lithic_schema \
+            test_lithic_preflight test_lithic_schema test_lithic_live_state \
             2>&1 | tee /tmp/lithic-preflight-evidence/installed-tests.log
           python3 - <<'PY'
           from pathlib import Path

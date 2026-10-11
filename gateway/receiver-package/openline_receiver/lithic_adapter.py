@@ -7,7 +7,7 @@ transaction token that Lithic has not supplied yet.
 """
 from __future__ import annotations
 
-from contextlib import contextmanager
+from contextlib import closing, contextmanager
 from datetime import datetime, timedelta, timezone
 from decimal import Decimal, InvalidOperation
 import hashlib
@@ -122,7 +122,7 @@ def create_payment_intent(*, gate_id, details, presentation, subject_key):
 class SecureLithicAdapter:
     def __init__(self, db_path, *, gate_id="lithic-pilot-1", signing_secrets=(),
                  sandbox=True, initialize=False, expected_receiver_public_key=None):
-        self.db_path, self.gate_id = Path(db_path), gate_id
+        self.db_path, self.gate_id = Path(db_path).resolve(), gate_id
         self.signing_secrets = (signing_secrets,) if isinstance(signing_secrets, str) else tuple(signing_secrets)
         self.sandbox = sandbox
         if sandbox and not self.signing_secrets:
@@ -131,12 +131,15 @@ class SecureLithicAdapter:
             decode_asa_secret(secret)
         self._lock = threading.RLock()
         self._failed = False
+        self._guard_ready = False
         new = not self.db_path.exists()
         if new and not initialize:
             raise ReceiverStateError("Receiver state unavailable; explicit initialization required")
         if new:
             descriptor = os.open(self.db_path, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
             os.close(descriptor)
+        state = self.db_path.stat()
+        self._state_identity = (state.st_dev, state.st_ino)
         try:
             self.db = sqlite3.connect(str(self.db_path), timeout=1, check_same_thread=False, isolation_level=None)
             self.db.execute("PRAGMA journal_mode=WAL")
@@ -147,6 +150,8 @@ class SecureLithicAdapter:
             self._validate_state()
             if expected_receiver_public_key is not None and self._public_key != normalize_public_key(expected_receiver_public_key):
                 raise ReceiverStateError("Receiver key differs from independent pin")
+            self._guard_ready = True
+            self._check_file_state()
         except Exception as error:
             if hasattr(self, "db"):
                 self.db.close()
@@ -160,8 +165,10 @@ class SecureLithicAdapter:
             if self._failed or not self.db_path.exists():
                 raise ReceiverStateError("Receiver state unavailable")
             try:
+                self._check_file_state()
                 self.db.execute("BEGIN IMMEDIATE")
                 yield
+                self._check_file_state()
                 self.db.execute("COMMIT")
             except BaseException:
                 if self.db.in_transaction:
@@ -169,6 +176,37 @@ class SecureLithicAdapter:
                 raise
         finally:
             self._lock.release()
+
+    def _check_file_state(self):
+        """An open SQLite page cache is not proof of readable durable state."""
+        if not self._guard_ready:
+            return  # Only the explicit fresh initialization transaction.
+        try:
+            state = self.db_path.stat()
+            if (state.st_dev, state.st_ino) != self._state_identity or state.st_size < 100:
+                raise ReceiverStateError("Receiver state file replaced or truncated")
+            with self.db_path.open("rb") as file:
+                if file.read(16) != b"SQLite format 3\x00":
+                    raise ReceiverStateError("Receiver state header corrupt")
+            # A fresh read-only connection observes file corruption that the
+            # transaction owner's cached pages can otherwise conceal in WAL.
+            with closing(sqlite3.connect(self.db_path.as_uri() + "?mode=ro", uri=True, timeout=1)) as reader:
+                if reader.execute("PRAGMA quick_check").fetchall() != [("ok",)] or reader.execute("PRAGMA foreign_key_check").fetchone():
+                    raise ReceiverStateError("Receiver durable state corrupt")
+                metadata = reader.execute("SELECT gate_id,version,private_key,public_key FROM metadata").fetchall()
+                if metadata != [(self.gate_id, 1, self._key.private_bytes_raw().hex(), self._public_key)]:
+                    raise ReceiverStateError("Receiver durable signing identity changed")
+                for principal, root in reader.execute("SELECT principal,root FROM pins").fetchall():
+                    WalletReceiver(self.gate_id).pin_owner(principal, root)
+                for (principal,) in reader.execute("SELECT principal FROM bundles").fetchall():
+                    self._authority(principal, fresh=False, connection=reader)
+                for (token,) in reader.execute("SELECT token FROM decisions").fetchall():
+                    self._stored_decision(token, connection=reader)
+            state = self.db_path.stat()
+            if (state.st_dev, state.st_ino) != self._state_identity:
+                raise ReceiverStateError("Receiver state file replaced during validation")
+        except (OSError, sqlite3.Error, WalletError, ValueError, TypeError) as error:
+            raise ReceiverStateError("Receiver durable state unavailable/corrupt") from error
 
     def _initialize(self):
         # Only explicit fresh initialization creates a key. Receipt signing
@@ -204,8 +242,9 @@ class SecureLithicAdapter:
         if self.db.execute("PRAGMA foreign_key_check").fetchone() is not None:
             raise ReceiverStateError("Receiver references corrupt")
 
-    def _authority(self, principal, *, fresh=True):
-        row = self.db.execute("SELECT b.body,b.sequence,b.head,b.quarantined,p.root FROM bundles b JOIN pins p USING(principal) WHERE principal=?", (principal,)).fetchone()
+    def _authority(self, principal, *, fresh=True, connection=None):
+        connection = connection or self.db
+        row = connection.execute("SELECT b.body,b.sequence,b.head,b.quarantined,p.root FROM bundles b JOIN pins p USING(principal) WHERE principal=?", (principal,)).fetchone()
         if row is None:
             raise WalletError("BUNDLE_NOT_ADMITTED")
         bundle, sequence, head, quarantine, root = row
@@ -391,8 +430,9 @@ class SecureLithicAdapter:
             raise ReceiverStateError("Pending authority proof corrupt")
         return proof
 
-    def _stored_decision(self, token):
-        row = self.db.execute("SELECT fingerprint,result,principal,receipt FROM decisions WHERE token=?", (token,)).fetchone()
+    def _stored_decision(self, token, *, connection=None):
+        connection = connection or self.db
+        row = connection.execute("SELECT fingerprint,result,principal,receipt FROM decisions WHERE token=?", (token,)).fetchone()
         if row is None:
             return None
         receipt = strict_json_loads(row[3])
@@ -502,6 +542,7 @@ class SecureLithicAdapter:
         with self._lock:
             if self._failed or not self.db_path.exists():
                 raise ReceiverStateError("Receiver state unavailable")
+            self._check_file_state()
             token_hash = hashlib.sha256(bearer_token.encode()).hexdigest()
             principal = next((row[1] for row in self.db.execute("SELECT token_hash,principal FROM integrators")
                               if hmac.compare_digest(row[0], token_hash)), None)
