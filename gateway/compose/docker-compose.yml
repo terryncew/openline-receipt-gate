@@ -10,19 +10,44 @@
 #   docker compose --profile opa-b up --build
 
 services:
+  # One-shot initializer: creates receiver.key, policy.json, and the
+  # sqlite schema on the shared volumes. authz and mockapi start only
+  # after it completes successfully (no racy entrypoint lock).
+  init:
+    build:
+      context: ../..
+      dockerfile: gateway/compose/Dockerfile.gateway
+    profiles: [openline, opa-a, opa-b]
+    environment:
+      GATEWAY_CONFIG: /config
+      GATEWAY_DB: /state/gateway.db
+      PYTHONPATH: /app
+    volumes:
+      - gateway-config:/config
+      - gateway-state:/state
+    command: ["python3", "/app/gateway/gateway_admin.py", "init"]
+    networks:
+      - gateway
+
   envoy:
     image: envoyproxy/envoy:v1.39.3
     profiles: [openline, opa-a, opa-b]
     ports:
-      - "8080:8080"
+      - target: 8080
+        published: 8080
+        protocol: tcp
     volumes:
       # Compose variant: upstream endpoints are service names (authz,
       # mockapi), not 127.0.0.1 — each container has its own loopback.
       - ./envoy-openline-compose.yaml:/etc/envoy/envoy.yaml:ro
     command: ["-c", "/etc/envoy/envoy.yaml"]
     depends_on:
-      - authz
-      - mockapi
+      init:
+        condition: service_completed_successfully
+      authz:
+        condition: service_started
+      mockapi:
+        condition: service_started
     networks:
       - gateway
 
@@ -30,13 +55,19 @@ services:
     image: envoyproxy/envoy:v1.39.3
     profiles: [opa-a, opa-b]
     ports:
-      - "8080:8080"
+      - target: 8080
+        published: 8080
+        protocol: tcp
     volumes:
       - ../envoy/envoy-opa.yaml:/etc/envoy/envoy.yaml:ro
     command: ["-c", "/etc/envoy/envoy.yaml"]
     depends_on:
-      - opa
-      - mockapi
+      init:
+        condition: service_completed_successfully
+      opa:
+        condition: service_started
+      mockapi:
+        condition: service_started
     networks:
       - gateway
 
@@ -45,9 +76,7 @@ services:
       context: ../..
       dockerfile: gateway/compose/Dockerfile.gateway
     profiles: [openline]
-    # Bootstraps receiver.key + policy.json on a fresh gateway-config
-    # volume before the service starts (see entrypoint-gateway.sh).
-    entrypoint: ["/app/gateway/compose/entrypoint-gateway.sh"]
+    command: ["python3", "/app/gateway/authz_server.py", "50051"]
     environment:
       GATEWAY_CONFIG: /config
       GATEWAY_DB: /state/gateway.db
@@ -55,6 +84,9 @@ services:
     volumes:
       - gateway-config:/config
       - gateway-state:/state
+    depends_on:
+      init:
+        condition: service_completed_successfully
     networks:
       - gateway
 
@@ -63,9 +95,6 @@ services:
       context: ../..
       dockerfile: gateway/compose/Dockerfile.gateway
     profiles: [openline, opa-a, opa-b]
-    # Same first-boot init as authz (atomic via lock; safe when both
-    # boot together, and lets the opa profiles init without authz).
-    entrypoint: ["/app/gateway/compose/entrypoint-gateway.sh"]
     environment:
       GATEWAY_CONFIG: /config
       GATEWAY_DB: /state/gateway.db
@@ -76,6 +105,9 @@ services:
       - gateway-config:/config
       - gateway-state:/state
     command: ["python3", "/app/gateway/mock_api.py"]
+    depends_on:
+      init:
+        condition: service_completed_successfully
     networks:
       - gateway
 
@@ -103,7 +135,10 @@ services:
       PYTHONPATH: /app
     command: ["python3", "/app/gateway/opa_shim.py", "50052"]
     depends_on:
-      - opa
+      init:
+        condition: service_completed_successfully
+      opa:
+        condition: service_started
     networks:
       - gateway
 
