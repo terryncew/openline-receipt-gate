@@ -1,3 +1,30 @@
+# Superseding correction — STALL-ISOLATION-002
+
+**Current verdict: INCONCLUSIVE** (002 is pending execution at this checkpoint).
+The historical **FAIL / NO_STALL** conclusion below was too broad.
+The recorded ~4ms 403 responses before and after restart are real,
+but requests carried no valid signed inspection authority; ext_authz
+denied them before they reached mockapi. These runs demonstrate that
+Envoy responded, not that its authorized mockapi upstream recovered.
+
+**Original failing evidence:** GHA run 38122910173 (20/22 PASS,
+authorized inspector balance reads unavailable for 90s after full-stack
+restart). See gateway/subscription001/EVIDENCE-docker.md for original
+records. The 001 script's curl code 000 conflates error types, and its
+workflow used an exit-code-masking operator. Do not rewrite 001 history.
+
+The new single-run test is inspection-only with signed authority, a
+valid HTTP 200 and expected balances before restart, the original
+compose restart, a strict 90-second authorized recovery window, and
+separate curl exit/status/body validity measurements. No code fix,
+payments, merge, paid API, or distribution changes are authorized.
+
+Final results will be in STALL-ISOLATION-002-REPORT.md.
+
+---
+
+# Prior STALL-ISOLATION-001 handoff (preserved; conclusion superseded)
+
 # HANDOFF: GATEWAY-SUBSCRIPTION-001 Upstream-Stall Isolation
 
 **Branch:** `temp/stall-isolation-001` (DO NOT MERGE)

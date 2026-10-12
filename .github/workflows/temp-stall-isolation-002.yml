@@ -1,0 +1,41 @@
+# One-shot branch-only diagnostic. DO NOT MERGE.
+name: TEMP STALL-ISOLATION-002 authorized-path
+on:
+  push:
+    branches:
+      - temp/stall-isolation-001
+    paths:
+      - .github/workflows/temp-stall-isolation-002.yml
+permissions:
+  contents: read
+jobs:
+  authorized-restart:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout triggering revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - name: Enforce branch and revision
+        run: |
+          test "$GITHUB_REF" = "refs/heads/temp/stall-isolation-001"
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+      - name: Install verifier dependency
+        run: python3 -m pip install --break-system-packages --disable-pip-version-check -q cryptography
+      - name: Run authorized-path diagnostic
+        env:
+          AUTH_MODE: openline
+        run: python3 gateway/ci/stall_isolation_002.py
+      - name: Preserve artifacts on any result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: STALL-ISOLATION-002-${{ github.run_id }}
+          path: /tmp/stall-isolation-002/
+          if-no-files-found: error
+          retention-days: 30
+      - name: Tear down temporary stack
+        if: always()
+        working-directory: gateway/compose
+        run: docker compose --profile openline down
