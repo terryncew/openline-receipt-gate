@@ -69,8 +69,8 @@ test_balance() {
     echo "{\"label\": \"$label\", \"classification\": \"$classification\", \"http_code\": \"$http_code\", \"time_total\": \"$time_total\", \"elapsed\": \"$elapsed\"}"
 }
 
-echo "[1/5] Starting full stack..."
-docker compose up -d
+echo "[1/5] Starting full stack (openline profile)..."
+docker compose --profile openline up -d --build
 sleep 15
 
 echo "[2/5] Baseline: balance read via Envoy..."
@@ -88,7 +88,7 @@ fi
 echo "Baseline HEALTHY. Proceeding."
 
 echo "[3/5] Full-stack restart..."
-docker compose restart
+docker compose --profile openline restart
 sleep 20
 
 echo "[4/5] Post-restart: balance read via Envoy..."
@@ -97,10 +97,10 @@ echo "$POST"
 POST_CLASS=$(echo "$POST" | python3 -c "import json,sys; print(json.load(sys.stdin)['classification'])")
 
 echo "[5/5] Capturing diagnostics..."
-docker compose ps > /tmp/stall-ps.log 2>&1 || true
-docker compose logs envoy > /tmp/stall-envoy.log 2>&1 || true
-docker compose logs authz > /tmp/stall-authz.log 2>&1 || true
-docker compose logs mockapi > /tmp/stall-mockapi.log 2>&1 || true
+docker compose --profile openline ps > /tmp/stall-ps.log 2>&1 || true
+docker compose --profile openline logs envoy > /tmp/stall-envoy.log 2>&1 || true
+docker compose --profile openline logs authz > /tmp/stall-authz.log 2>&1 || true
+docker compose --profile openline logs mockapi > /tmp/stall-mockapi.log 2>&1 || true
 cp envoy-openline-compose.yaml /tmp/stall-envoy-config.yaml 2>/dev/null || true
 
 # Write results
