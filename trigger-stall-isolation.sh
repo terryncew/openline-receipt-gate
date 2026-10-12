@@ -29,7 +29,10 @@ fi
 
 cd "$COMPOSE_DIR"
 
-# Helper: test balance endpoint, classify the result
+# Helper: test balance endpoint via Envoy, classify the result
+# Note: /api/balance/* requires a decision token (ext_authz).
+# Without a token, Envoy returns 403 = "Envoy responsive, authz working".
+# A TIMEOUT indicates the upstream stall. CONNECTION_REFUSED = Envoy down.
 test_balance() {
     local label="$1"
     local url="http://localhost:8080/api/balance/treasury"
@@ -48,22 +51,22 @@ test_balance() {
     local body=$(echo "$output" | head -n -2)
     
     # Classify
+    # 403 = Envoy responsive, ext_authz denied (no token) = HEALTHY for stall test
+    # 200 = would need a token, not expected here
+    # TIMEOUT = the stall we're looking for
     local classification="UNKNOWN"
     if [ "$output" = "CURL_FAILED" ]; then
         classification="CONNECTION_REFUSED"
     elif [ "$http_code" = "000" ]; then
         classification="TIMEOUT"
+    elif [ "$http_code" = "403" ]; then
+        classification="HEALTHY"
+    elif [ "$http_code" = "200" ]; then
+        classification="HEALTHY"
     elif [ "$http_code" -ge 500 ] 2>/dev/null; then
         classification="HTTP_5XX"
     elif [ "$http_code" -ge 400 ] 2>/dev/null; then
         classification="HTTP_4XX"
-    elif [ "$http_code" = "200" ]; then
-        # Check if body is valid JSON with expected fields
-        if echo "$body" | python3 -c "import json,sys; d=json.load(sys.stdin); assert 'treasury' in str(d) or 'balance' in str(d)" 2>/dev/null; then
-            classification="HEALTHY"
-        else
-            classification="MALFORMED_RESPONSE"
-        fi
     fi
     
     echo "{\"label\": \"$label\", \"classification\": \"$classification\", \"http_code\": \"$http_code\", \"time_total\": \"$time_total\", \"elapsed\": \"$elapsed\"}"
