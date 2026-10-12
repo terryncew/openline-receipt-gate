@@ -1,0 +1,80 @@
+{
+  "openline": {
+    "valid-request": {
+      "pass": true,
+      "note": "http=200"
+    },
+    "bad-credential": {
+      "pass": true,
+      "note": "http=403"
+    },
+    "revoked-credential": {
+      "pass": true,
+      "note": "http=403"
+    },
+    "replay": {
+      "pass": true,
+      "note": "200/403"
+    },
+    "forged-header": {
+      "pass": true,
+      "note": "http=403"
+    },
+    "tampered-amount": {
+      "pass": true,
+      "note": "executed=100"
+    }
+  },
+  "opa-a": {
+    "valid-request": {
+      "pass": true,
+      "note": "http=200"
+    },
+    "bad-credential": {
+      "pass": true,
+      "note": "http=403"
+    },
+    "revoked-credential": {
+      "pass": true,
+      "note": "no revocation in baseline A"
+    },
+    "replay": {
+      "pass": true,
+      "note": "200/200 (no replay check)"
+    },
+    "forged-header": {
+      "pass": true,
+      "note": "http=200 (unsigned header)"
+    },
+    "tampered-amount": {
+      "pass": false,
+      "note": "body amount executed as-is"
+    }
+  },
+  "opa-b": {
+    "valid-request": {
+      "pass": true,
+      "note": "http=200"
+    },
+    "bad-credential": {
+      "pass": true,
+      "note": "http=403"
+    },
+    "revoked-credential": {
+      "pass": true,
+      "note": "http=403 after revoke"
+    },
+    "replay": {
+      "pass": true,
+      "note": "200/200 (no replay check)"
+    },
+    "forged-header": {
+      "pass": true,
+      "note": "http=200 (unsigned header)"
+    },
+    "tampered-amount": {
+      "pass": false,
+      "note": "body amount executed as-is"
+    }
+  }
+}
