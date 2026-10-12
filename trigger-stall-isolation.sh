@@ -90,8 +90,10 @@ if [ "$BASELINE_CLASS" != "HEALTHY" ]; then
 fi
 echo "Baseline HEALTHY. Proceeding."
 
-echo "[3/5] Full-stack restart..."
-docker compose --profile openline restart
+echo "[3/5] Full-stack restart (down + up)..."
+docker compose --profile openline down
+sleep 5
+docker compose --profile openline up -d
 sleep 20
 
 echo "[4/5] Post-restart: balance read via Envoy..."
