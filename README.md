@@ -35,6 +35,22 @@ This repository is not a hosted authorization service or a production
 certification. A production deployment must own its keys, policies, evidence
 providers, replay state, and every route to the protected effect.
 
+## Latest evidence: offline payment-authorization preflight (October 2026)
+
+A worker proposes a $1 purchase. The receiver checks the owner's signed
+permission and the worker's signed purchase terms before making the decision.
+In a controlled offline test: **APPROVED → owner revocation → CARD_PAUSED →
+new worker authorized → APPROVED**. The three signed receipts can be verified
+independently.
+
+**104/104 required Linux checks passed.** This is a synthetic, local proof—not
+a deployed Lithic integration, real payment, or official partnership. The next
+external test remains gated on provider callback matching and failure behavior.
+
+**[Read the plain-English results, public evidence, and exact limitations](docs/LITHIC_OFFLINE_PREFLIGHT_001.md)**
+· [Passing CI](https://github.com/terryncew/openline-receipt-gate/actions/runs/38182746885)
+· [Unmerged PR #108](https://github.com/terryncew/openline-receipt-gate/pull/108)
+
 ## Five-minute demo
 
 From a clean checkout:
