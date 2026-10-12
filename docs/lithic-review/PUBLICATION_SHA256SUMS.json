@@ -1,7 +1,7 @@
 {
   "HANDOFF.md": "0f2998a7af80e0ace53e48f5cf588f153c002df63a3b21d8acbbe58d113449de",
   "docs/lithic-review/README.md": "478ccefc666f8fbe1cac48dc64ca5c24e7e5ae65d1803a16614e9371213c6900",
-  "docs/lithic-review/TRANSFER_ORIGINS.json": "f4194075a52ae8aeab382da2e6e795b1fe33d8d6f34f8b4eca2f436df5867f7e",
+  "docs/lithic-review/TRANSFER_ORIGINS.json": "8cb492d6948a7e533f4cbff72b893551baf24112c2815413f17b075dbb3c8245",
   "docs/lithic-review/acceptance/AUDIT.md": "4dd872081e28e0c7d99553253402fcb314f6b528bcf4e71302e8860a87b59bdf",
   "docs/lithic-review/acceptance/OWNER_APPROVAL_PACKET.md": "2f4854e07a01540ef611ab9e2e13322c605f3022b494985a7a513ba2f5a287ab",
   "docs/lithic-review/acceptance/OWNER_RUNBOOK.md": "874391f3a24312427dab6d3fb9538d1408fd91ffc841c900a0294e84d140a6de",
@@ -11,6 +11,7 @@
   "docs/lithic-review/acceptance/alternatives/verdict-crosscheck.md": "9180c9ad35f3c330bbb4132523577010db62601cacb78ae30b8a7f7f19af93f9",
   "docs/lithic-review/acceptance/authority/AUTHORITY-AUDIT.md": "b86198f4a8949a374862c3802c12e756d06c8753c789207ac26ccc43fc8fe6a7",
   "docs/lithic-review/acceptance/authority/authority-probe-result.json": "d6ecb2fc2bfee1a1529fd61a6e6a0089986ed22581c640f48562d5f41cfabf04",
+  "docs/lithic-review/acceptance/authority/fixtures/official-asa-request.json": "b3c6a8d3851f95c6848c18bdcdc48b1454c221cd5f22386849c06ee8e26b49db",
   "docs/lithic-review/acceptance/authority/probe_authority_limits.py": "e3a3709561a58701a7654040a4c6b8e648b335cf424bce9a9454a4b9a7885c4e",
   "docs/lithic-review/acceptance/authority/public-chain-result.json": "360cc3ca67938cf3c77353c4f85776655c07109cb9b07ded417f51af7ec02d90",
   "docs/lithic-review/acceptance/authority/test_lithic_wallet_revocation.py": "3b8392755160e86f53619f81e662a40b75e5e73f7532e361f032d02ed747c3ba",

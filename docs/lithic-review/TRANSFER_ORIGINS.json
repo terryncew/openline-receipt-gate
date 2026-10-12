@@ -530,5 +530,12 @@
     "original_sha256": "a1582f4f3caf87df510e024b93edd4501c1908b76bbb78f016c9a70cd14950d0",
     "adaptation": "historical manifest filename only; not publication verifier",
     "published_sha256": "a1582f4f3caf87df510e024b93edd4501c1908b76bbb78f016c9a70cd14950d0"
+  },
+  {
+    "path": "docs/lithic-review/acceptance/authority/fixtures/official-asa-request.json",
+    "historical_workspace_source": "/workspace/openline-lithic-acceptance-001/authority/fixtures/official-asa-request.json",
+    "original_sha256": "b3c6a8d3851f95c6848c18bdcdc48b1454c221cd5f22386849c06ee8e26b49db",
+    "published_sha256": "b3c6a8d3851f95c6848c18bdcdc48b1454c221cd5f22386849c06ee8e26b49db",
+    "adaptation": "none; include required public synthetic fixture for preserved authority probe"
   }
 ]
