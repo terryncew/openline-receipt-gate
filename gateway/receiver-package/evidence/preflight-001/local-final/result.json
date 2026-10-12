@@ -1,0 +1,75 @@
+{
+  "base_commit": "8a2ddf2af62374b70908421da6066afb69d5803e",
+  "working_head": "8a2ddf2af62374b70908421da6066afb69d5803e",
+  "versions": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "grpcio": "1.84.0",
+    "protobuf": "7.36.2",
+    "cryptography": "50.0.1",
+    "envoy": "/tmp/openline-envoy  version: 6eb0d2d97489ec1b4e1584a004f5de443d97a41b/1.39.3/Clean/RELEASE/BoringSSL"
+  },
+  "source_assertions_preserved": true,
+  "files": [
+    {
+      "path": "gateway/poppy/test_atomic_receipt.py",
+      "base_sha256": "d321cea0dee3b80d2487fde0f7fcef49f23dc1303550fb031491a21f945b8e9d",
+      "final_sha256": "d321cea0dee3b80d2487fde0f7fcef49f23dc1303550fb031491a21f945b8e9d",
+      "byte_identical": true
+    },
+    {
+      "path": "gateway/poppy/test_gateway_path.py",
+      "base_sha256": "e4428698e9d1b486753d2f26954b9ab722cd77d00a99e6b4837e15fee118506e",
+      "final_sha256": "e4428698e9d1b486753d2f26954b9ab722cd77d00a99e6b4837e15fee118506e",
+      "byte_identical": true
+    },
+    {
+      "path": "gateway/mock_api.py",
+      "base_sha256": "7935b7e6853e302c61d7c96ddc1eb14a4dd4e419d152ae64cfabf274e3b2d39a",
+      "final_sha256": "7935b7e6853e302c61d7c96ddc1eb14a4dd4e419d152ae64cfabf274e3b2d39a",
+      "byte_identical": true
+    },
+    {
+      "path": "gateway/authz_server.py",
+      "base_sha256": "23de449c479ceb703a7c1394b5c6abc156024f0986d6ca0dedc8dd393f96e698",
+      "final_sha256": "23de449c479ceb703a7c1394b5c6abc156024f0986d6ca0dedc8dd393f96e698",
+      "byte_identical": true
+    },
+    {
+      "path": "gateway/poppy/poppy_receiver.py",
+      "base_sha256": "a2b6d2e5c9d04d35e5b96ef48c4e7203ee7e2da08ef6d363bc94a347ee6a4c87",
+      "final_sha256": "a2b6d2e5c9d04d35e5b96ef48c4e7203ee7e2da08ef6d363bc94a347ee6a4c87",
+      "byte_identical": true
+    },
+    {
+      "path": "gateway/wallet_bridge.py",
+      "base_sha256": "19fab627587d09d19eb256b7a2d4881f59eb4f08b6676bc8f1f705312c00be2f",
+      "final_sha256": "19fab627587d09d19eb256b7a2d4881f59eb4f08b6676bc8f1f705312c00be2f",
+      "byte_identical": true
+    },
+    {
+      "path": "gateway/envoy/envoy-openline.yaml",
+      "base_sha256": "9ab433d6488935b3145279872361ab532aae0b06b203ed576e628f3d505e79a9",
+      "final_sha256": "9ab433d6488935b3145279872361ab532aae0b06b203ed576e628f3d505e79a9",
+      "byte_identical": true
+    }
+  ],
+  "checks": [
+    {
+      "name": "atomic_receipt",
+      "command": ".venv/bin/python -m unittest gateway/poppy/test_atomic_receipt.py -v",
+      "exit_code": 0,
+      "result": "PASS",
+      "checks": 7,
+      "seconds": 0.283,
+      "log": "atomic-receipt.log"
+    },
+    {
+      "name": "real_envoy_gateway_path",
+      "command": "ENVOY_BIN=/tmp/openline-envoy NO_PROXY=localhost,127.0.0.1 .venv/bin/python gateway/poppy/test_gateway_path.py",
+      "exit_code": 0,
+      "result": "PASS",
+      "checks": 25,
+      "log": "gateway-path.log"
+    }
+  ]
+}

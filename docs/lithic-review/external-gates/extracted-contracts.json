@@ -1,0 +1,1209 @@
+{
+  "simulator": {
+    "description": "Simulates an authorization request from the card network as if it came from a merchant acquirer.\nIf you are configured for ASA, simulating authorizations requires your ASA client to be set up properly, i.e. be able to respond to the ASA request with a valid JSON. For users that are not configured for ASA, a daily transaction limit of $5000 USD is applied by default. You can update this limit via the [update account](https://docs.lithic.com/reference/patchaccountbytoken) endpoint.\n",
+    "operationId": "postSimulateAuthorize",
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "examples": {
+            "simulateAuthorization": {
+              "summary": "Simulate an authorization",
+              "value": {
+                "amount": 3831,
+                "descriptor": "COFFEE SHOP",
+                "merchant_acceptor_city": "LOS ANGELES",
+                "merchant_acceptor_state": "CA",
+                "merchant_acceptor_country": "USA",
+                "pan": "4111111289144142"
+              }
+            },
+            "simulateBalanceInquiry": {
+              "summary": "Simulate a balance inquiry",
+              "value": {
+                "amount": 0,
+                "descriptor": "NEIGHBORHOOD ATM",
+                "pan": "4111111289144142",
+                "status": "BALANCE_INQUIRY"
+              }
+            },
+            "simulateFinancialCreditAuthorization": {
+              "summary": "Simulate a financial credit authorization",
+              "value": {
+                "amount": 3831,
+                "descriptor": "COFFEE SHOP",
+                "pan": "4111111289144142",
+                "status": "FINANCIAL_CREDIT_AUTHORIZATION"
+              }
+            }
+          },
+          "schema": {
+            "properties": {
+              "amount": {
+                "description": "Amount (in cents) to authorize. For credit authorizations and financial credit authorizations, any value entered will be converted into a negative amount in the simulated transaction. For example, entering 100 in this field will result in a -100 amount in the transaction. For balance inquiries, this field must be set to 0.",
+                "minimum": 0,
+                "maximum": 2000000000,
+                "type": "integer"
+              },
+              "descriptor": {
+                "description": "Merchant descriptor.",
+                "example": "COFFEE SHOP",
+                "maxLength": 25,
+                "minLength": 1,
+                "type": "string"
+              },
+              "mcc": {
+                "description": "Merchant category code for the transaction to be simulated. A four-digit number listed in ISO 18245.\nSupported merchant category codes can be found [here](https://docs.lithic.com/docs/transactions#merchant-category-codes-mccs).\n",
+                "example": "5812",
+                "type": "string"
+              },
+              "merchant_acceptor_id": {
+                "description": "Unique identifier to identify the payment card acceptor.",
+                "example": "OODKZAPJVN4YS7O",
+                "maxLength": 15,
+                "minLength": 1,
+                "type": "string"
+              },
+              "merchant_acceptor_city": {
+                "description": "Merchant acceptor city",
+                "example": "LOS ANGELES",
+                "maxLength": 13,
+                "type": "string"
+              },
+              "merchant_acceptor_state": {
+                "description": "Merchant acceptor state/province (ISO 3166-2 subdivision code)",
+                "example": "CA",
+                "maxLength": 3,
+                "type": "string"
+              },
+              "merchant_acceptor_country": {
+                "description": "Merchant acceptor country code (ISO 3166-1 alpha-3)",
+                "example": "USA",
+                "maxLength": 3,
+                "minLength": 3,
+                "type": "string"
+              },
+              "merchant_amount": {
+                "description": "Amount of the transaction to be simulated in currency specified in merchant_currency, including any acquirer fees.",
+                "type": "integer"
+              },
+              "merchant_currency": {
+                "description": "3-character alphabetic ISO 4217 currency code. Note: Simulator only accepts USD, GBP, EUR and defaults to GBP if another ISO 4217 code is provided",
+                "example": "GBP",
+                "type": "string"
+              },
+              "pan": {
+                "description": "Sixteen digit card number.",
+                "example": "4111111289144142",
+                "maxLength": 16,
+                "minLength": 16,
+                "type": "string"
+              },
+              "partial_approval_capable": {
+                "description": "Set to true if the terminal is capable of partial approval otherwise false.\nPartial approval is when part of a transaction is approved and another\npayment must be used for the remainder.\n",
+                "type": "boolean"
+              },
+              "pin": {
+                "description": "Simulate entering a PIN. If omitted, PIN check will not be performed.",
+                "example": "1234",
+                "maxLength": 12,
+                "minLength": 4,
+                "type": "string"
+              },
+              "status": {
+                "default": "AUTHORIZATION",
+                "description": "Type of event to simulate.\n* `AUTHORIZATION` is a dual message purchase authorization, meaning a subsequent clearing step is required to settle the transaction.\n* `BALANCE_INQUIRY` is a $0 authorization requesting the balance held on the card, and is most often observed when a cardholder requests to view a card's balance at an ATM.\n* `CREDIT_AUTHORIZATION` is a dual message request from a merchant to authorize a refund, meaning a subsequent clearing step is required to settle the transaction.\n* `FINANCIAL_AUTHORIZATION` is a single message request from a merchant to debit funds immediately (such as an ATM withdrawal), and no subsequent clearing is required to settle the transaction.\n* `FINANCIAL_CREDIT_AUTHORIZATION` is a single message request from a merchant to credit funds immediately, and no subsequent clearing is required to settle the transaction.\n",
+                "enum": [
+                  "AUTHORIZATION",
+                  "BALANCE_INQUIRY",
+                  "CREDIT_AUTHORIZATION",
+                  "FINANCIAL_AUTHORIZATION",
+                  "FINANCIAL_CREDIT_AUTHORIZATION"
+                ],
+                "example": "AUTHORIZATION",
+                "type": "string"
+              }
+            },
+            "required": [
+              "amount",
+              "descriptor",
+              "pan"
+            ],
+            "type": "object"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "201": {
+        "content": {
+          "application/json": {
+            "example": {
+              "debugging_request_id": "d31645af-da9e-4952-b7dc-3ffb06618b39",
+              "token": "fabd829d-7f7b-4432-a8f2-07ea4889aaac"
+            },
+            "schema": {
+              "properties": {
+                "debugging_request_id": {
+                  "description": "Debugging request ID to share with Lithic Support team.",
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "token": {
+                  "description": "A unique token to reference this transaction with later calls to void or clear the authorization.",
+                  "format": "uuid",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "description": "OK"
+      },
+      "400": {
+        "$ref": "#/components/responses/BadRequest"
+      },
+      "401": {
+        "$ref": "#/components/responses/Unauthorized"
+      },
+      "422": {
+        "$ref": "#/components/responses/SimulateAuthorizationFailure"
+      },
+      "429": {
+        "$ref": "#/components/responses/TooManyRequests"
+      }
+    },
+    "summary": "Simulate authorization",
+    "tags": [
+      "Transaction"
+    ]
+  },
+  "asa_request": {
+    "title": "Card Authorization",
+    "description": "Card Authorization",
+    "type": "object",
+    "properties": {
+      "merchant": {
+        "$ref": "#/components/schemas/transaction_merchant"
+      },
+      "service_location": {
+        "oneOf": [
+          {
+            "type": "null"
+          },
+          {
+            "$ref": "#/components/schemas/service_location"
+          }
+        ]
+      },
+      "avs": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "description": "Cardholder address",
+            "type": "string"
+          },
+          "zipcode": {
+            "description": "Cardholder ZIP code",
+            "type": "string"
+          },
+          "address_on_file_match": {
+            "$ref": "#/components/schemas/address_match_result"
+          }
+        },
+        "required": [
+          "address_on_file_match",
+          "address",
+          "zipcode"
+        ]
+      },
+      "card": {
+        "$ref": "#/components/schemas/asa_request_card"
+      },
+      "cardholder_authentication": {
+        "$ref": "#/components/schemas/cardholder_authentication"
+      },
+      "pos": {
+        "type": "object",
+        "properties": {
+          "entry_mode": {
+            "$ref": "#/components/schemas/asa_request_pos_entry_mode"
+          },
+          "terminal": {
+            "$ref": "#/components/schemas/asa_pos_terminal"
+          }
+        }
+      },
+      "amount": {
+        "type": "integer",
+        "format": "int64",
+        "deprecated": true,
+        "description": "Deprecated, use `amounts`. Authorization amount of the transaction (in cents), including any acquirer fees. The contents of this field are identical to `authorization_amount`."
+      },
+      "acquirer_fee": {
+        "type": "integer",
+        "format": "int64",
+        "description": "Fee (in cents) assessed by the merchant and paid for by the cardholder. Will be zero if no fee is assessed. Rebates may be transmitted as a negative value to indicate credited fees."
+      },
+      "authorization_amount": {
+        "type": "integer",
+        "format": "int64",
+        "deprecated": true,
+        "description": "Deprecated, use `amounts`. The base transaction amount (in cents) plus the acquirer fee field. This is the amount the issuer should authorize against unless the issuer is paying the acquirer fee on behalf of the cardholder."
+      },
+      "cardholder_currency": {
+        "type": "string",
+        "deprecated": true,
+        "description": "Deprecated, use `amounts`. 3-character alphabetic ISO 4217 code for cardholder's billing currency."
+      },
+      "cash_amount": {
+        "type": "integer",
+        "format": "int64",
+        "description": "The amount of cash requested by the cardholder, in the cardholder billing currency's smallest unit. For purchase-with-cashback transactions this is the cashback portion only; for ATM transactions this is the full amount. This amount includes all acquirer fees.\n\nIf no cash was requested, the value of this field will be 0, and the field will always be present."
+      },
+      "cashback": {
+        "type": "integer",
+        "format": "int64",
+        "description": "Deprecated, use `cash_amount`."
+      },
+      "token_info": {
+        "oneOf": [
+          {
+            "type": "null"
+          },
+          {
+            "$ref": "#/components/schemas/token_info"
+          }
+        ]
+      },
+      "ttl": {
+        "description": "Deprecated: approximate time-to-live for the authorization.",
+        "type": "string",
+        "format": "date-time"
+      },
+      "conversion_rate": {
+        "deprecated": true,
+        "description": "Deprecated, use `amounts`. If the transaction was requested in a currency other than the settlement currency, this field will be populated to indicate the rate used to translate the merchant_amount to the amount (i.e., `merchant_amount` x `conversion_rate` = `amount`). Note that the `merchant_amount` is in the local currency and the amount is in the settlement currency.",
+        "type": "number"
+      },
+      "created": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Date and time when the transaction first occurred in UTC."
+      },
+      "merchant_amount": {
+        "type": "integer",
+        "format": "int64",
+        "deprecated": true,
+        "description": "Deprecated, use `amounts`. The amount that the merchant will receive, denominated in `merchant_currency` and in the smallest currency unit. Note the amount includes `acquirer_fee`, similar to `authorization_amount`. It will be different from `authorization_amount` if the merchant is taking payment in a different currency."
+      },
+      "merchant_currency": {
+        "deprecated": true,
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/merchant_currency"
+          }
+        ],
+        "description": "Deprecated, use `amounts`."
+      },
+      "network": {
+        "type": "string",
+        "description": "Card network of the authorization.",
+        "enum": [
+          "AMEX",
+          "INTERLINK",
+          "MAESTRO",
+          "MASTERCARD",
+          "UNKNOWN",
+          "VISA"
+        ]
+      },
+      "network_risk_score": {
+        "$ref": "#/components/schemas/network_risk_score"
+      },
+      "settled_amount": {
+        "type": "integer",
+        "format": "int64",
+        "deprecated": true,
+        "description": "Deprecated, use `amounts`. Amount (in cents) of the transaction that has been settled, including any acquirer fees."
+      },
+      "amounts": {
+        "description": "Structured amounts for this authorization. The `cardholder` and `merchant` amounts reflect the original network authorization values. For programs with hold adjustments enabled (e.g., automated fuel dispensers or tipping MCCs), the `hold` amount may exceed the `cardholder` and `merchant` amounts to account for anticipated final transaction amounts such as tips or fuel fill-ups",
+        "type": "object",
+        "properties": {
+          "cardholder": {
+            "$ref": "#/components/schemas/converted_amount"
+          },
+          "merchant": {
+            "$ref": "#/components/schemas/amount"
+          },
+          "settlement": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/amount"
+              }
+            ]
+          },
+          "hold": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/amount"
+              }
+            ]
+          }
+        },
+        "required": [
+          "cardholder",
+          "merchant",
+          "settlement",
+          "hold"
+        ]
+      },
+      "status": {
+        "$ref": "#/components/schemas/asa_request_status"
+      },
+      "token": {
+        "description": "The provisional transaction group uuid associated with the authorization",
+        "type": "string",
+        "format": "uuid"
+      },
+      "event_token": {
+        "description": "The event token associated with the authorization. This field is only set for programs enrolled into the beta.",
+        "type": "string",
+        "format": "uuid"
+      },
+      "fleet_info": {
+        "$ref": "#/components/schemas/asa_request_fleet_info"
+      },
+      "network_specific_data": {
+        "$ref": "#/components/schemas/asa_network_specific_data"
+      },
+      "account_type": {
+        "$ref": "#/components/schemas/account_type"
+      },
+      "transaction_initiator": {
+        "type": "string",
+        "description": "The entity that initiated the transaction.",
+        "enum": [
+          "CARDHOLDER",
+          "MERCHANT",
+          "UNKNOWN"
+        ]
+      },
+      "latest_challenge": {
+        "description": "The latest Authorization Challenge that was issued to the cardholder for this merchant.",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "COMPLETED",
+              "DECLINED",
+              "PENDING",
+              "EXPIRED",
+              "ERROR"
+            ],
+            "description": "The status of the Authorization Challenge\n\n* `COMPLETED` - Challenge was successfully completed by the cardholder\n* `DECLINED` - Challenge was declined by the cardholder\n* `PENDING` - Challenge is still open\n* `EXPIRED` - Challenge has expired without being completed\n* `ERROR` - There was an error processing the challenge"
+          },
+          "method": {
+            "type": "string",
+            "enum": [
+              "SMS",
+              "OUT_OF_BAND"
+            ],
+            "description": "The method used to deliver the challenge to the cardholder\n\n* `SMS` - Challenge was delivered via SMS\n* `OUT_OF_BAND` - Challenge was delivered via an out-of-band method"
+          },
+          "phone_number": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The phone number used for sending the Authorization Challenge. Present only when the challenge method is `SMS`."
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date and time when the Authorization Challenge was created in UTC"
+          },
+          "completed_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "The date and time when the Authorization Challenge was completed in UTC. Filled only if the challenge has been completed."
+          }
+        },
+        "required": [
+          "status",
+          "method",
+          "phone_number",
+          "created",
+          "completed_at"
+        ]
+      },
+      "name_validation": {
+        "description": "Network name validation data, present when the card network requested name validation for this transaction. Contains the cardholder name provided by the network and Lithic's computed match result against KYC data on file.",
+        "type": [
+          "object",
+          "null"
+        ],
+        "properties": {
+          "name": {
+            "description": "Cardholder name as provided by the card network.",
+            "type": "object",
+            "properties": {
+              "first": {
+                "description": "First name",
+                "type": "string"
+              },
+              "middle": {
+                "description": "Middle name",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "last": {
+                "description": "Last name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "first",
+              "middle",
+              "last"
+            ]
+          },
+          "name_on_file_match": {
+            "description": "Lithic's computed match result comparing the network-provided name to the name on file.",
+            "$ref": "#/components/schemas/name_validation_result"
+          }
+        },
+        "required": [
+          "name",
+          "name_on_file_match"
+        ]
+      }
+    },
+    "required": [
+      "acquirer_fee",
+      "amount",
+      "amounts",
+      "authorization_amount",
+      "avs",
+      "card",
+      "cardholder_currency",
+      "cash_amount",
+      "created",
+      "merchant",
+      "name_validation",
+      "service_location",
+      "merchant_amount",
+      "merchant_currency",
+      "settled_amount",
+      "status",
+      "token",
+      "transaction_initiator"
+    ],
+    "$defs": {
+      "asa_request_status": {
+        "type": "string",
+        "description": "The type of authorization request that this request is for. Note that `CREDIT_AUTHORIZATION` and `FINANCIAL_CREDIT_AUTHORIZATION` is only available to users with credit decisioning via ASA enabled.",
+        "enum": [
+          "AUTHORIZATION",
+          "CREDIT_AUTHORIZATION",
+          "FINANCIAL_AUTHORIZATION",
+          "FINANCIAL_CREDIT_AUTHORIZATION",
+          "BALANCE_INQUIRY"
+        ]
+      },
+      "asa_request_pos_entry_mode": {
+        "description": "POS > Entry Mode object in ASA",
+        "type": "object",
+        "properties": {
+          "card": {
+            "description": "Card Presence Indicator",
+            "type": "string",
+            "enum": [
+              "PRESENT",
+              "NOT_PRESENT",
+              "UNKNOWN"
+            ]
+          },
+          "cardholder": {
+            "description": "Cardholder Presence Indicator",
+            "type": "string",
+            "enum": [
+              "DEFERRED_BILLING",
+              "ELECTRONIC_ORDER",
+              "INSTALLMENT",
+              "MAIL_ORDER",
+              "NOT_PRESENT",
+              "PRESENT",
+              "REOCCURRING",
+              "TELEPHONE_ORDER",
+              "UNKNOWN"
+            ]
+          },
+          "pan": {
+            "description": "Method of entry for the PAN",
+            "type": "string",
+            "enum": [
+              "AUTO_ENTRY",
+              "BAR_CODE",
+              "CONTACTLESS",
+              "ECOMMERCE",
+              "ERROR_KEYED",
+              "ERROR_MAGNETIC_STRIPE",
+              "ICC",
+              "KEY_ENTERED",
+              "MAGNETIC_STRIPE",
+              "MANUAL",
+              "OCR",
+              "SECURE_CARDLESS",
+              "UNSPECIFIED",
+              "UNKNOWN",
+              "CREDENTIAL_ON_FILE",
+              "ECOMMERCE"
+            ]
+          },
+          "pin_entered": {
+            "type": "boolean",
+            "description": "Indicates whether the cardholder entered the PIN. True if the PIN was entered."
+          }
+        }
+      },
+      "asa_request_fleet_info": {
+        "title": "Fleet Info",
+        "description": "Optional Object containing information if the Card is a part of a Fleet managed program",
+        "type": [
+          "object",
+          "null"
+        ],
+        "properties": {
+          "driver_number": {
+            "oneOf": [
+              {
+                "type": "null",
+                "description": "Driver Number was not provided as part of the transaction "
+              },
+              {
+                "type": "string",
+                "description": "Number representing the driver"
+              }
+            ]
+          },
+          "vehicle_number": {
+            "oneOf": [
+              {
+                "type": "null",
+                "description": "Vehicle Number was not provided as part of the transaction"
+              },
+              {
+                "type": "string",
+                "description": "Number associated with the vehicle"
+              }
+            ]
+          },
+          "fleet_restriction_code": {
+            "type": "string",
+            "description": "Code indicating which restrictions, if any, there are on purchase. This is configured at a program level and is a static configuration, and does not change on a request to request basis",
+            "enum": [
+              "NO_RESTRICTIONS",
+              "FUEL_ONLY"
+            ]
+          },
+          "fleet_prompt_code": {
+            "type": "string",
+            "description": "Code indicating what the driver was prompted to enter at time of purchase. This is configured at a program level and is a static configuration, and does not change on a request to request basis",
+            "enum": [
+              "NO_PROMPT",
+              "VEHICLE_NUMBER",
+              "DRIVER_NUMBER"
+            ]
+          }
+        },
+        "required": [
+          "fleet_restriction_code",
+          "fleet_prompt_code"
+        ]
+      },
+      "asa_network_specific_data": {
+        "title": "Network Specific Data",
+        "description": "Contains raw data provided by the card network, including attributes that provide further context about the authorization. If populated by the network, data is organized by Lithic and passed through without further modification. Please consult the official network documentation for more details about these values and how to use them. This object is only available to certain programs- contact your Customer Success Manager to discuss enabling access.",
+        "type": [
+          "object",
+          "null"
+        ],
+        "properties": {
+          "mastercard": {
+            "oneOf": [
+              {
+                "type": "null",
+                "description": "There was no Mastercard-specific data available for this transaction."
+              },
+              {
+                "$ref": "#/components/schemas/asa_network_specific_data_mastercard"
+              }
+            ]
+          },
+          "visa": {
+            "oneOf": [
+              {
+                "type": "null",
+                "description": "There was no Visa-specific data available for this transaction."
+              },
+              {
+                "$ref": "#/components/schemas/asa_network_specific_data_visa"
+              }
+            ]
+          }
+        }
+      },
+      "asa_network_specific_data_mastercard": {
+        "type": "object",
+        "properties": {
+          "transaction_type_identifier": {
+            "oneOf": [
+              {
+                "type": "null",
+                "description": "Transaction type identifier not available."
+              },
+              {
+                "type": "string",
+                "description": "Indicates the type of additional transaction purpose.",
+                "minLength": 3,
+                "maxLength": 3
+              }
+            ]
+          },
+          "ecommerce_security_level_indicator": {
+            "oneOf": [
+              {
+                "type": "null",
+                "description": "Electronic commerce security level indicator not available."
+              },
+              {
+                "type": "string",
+                "description": "Indicates the electronic commerce security level and UCAF collection.",
+                "minLength": 3,
+                "maxLength": 3
+              }
+            ]
+          },
+          "on_behalf_service_result": {
+            "oneOf": [
+              {
+                "type": "null",
+                "description": "On-behalf service result not available."
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "service": {
+                      "type": "string",
+                      "description": "Indicates the service performed on the transaction.",
+                      "minLength": 2,
+                      "maxLength": 2
+                    },
+                    "result_1": {
+                      "type": "string",
+                      "description": "Indicates the results of the service processing.",
+                      "minLength": 1,
+                      "maxLength": 1
+                    },
+                    "result_2": {
+                      "type": "string",
+                      "description": "Identifies the results of the service processing.",
+                      "minLength": 1,
+                      "maxLength": 1
+                    }
+                  },
+                  "required": [
+                    "service",
+                    "result_1",
+                    "result_2"
+                  ]
+                },
+                "description": "The On-behalf Service performed on the transaction and the results. Contains all applicable, on-behalf service results that were performed on a given transaction.",
+                "maxItems": 10
+              }
+            ]
+          }
+        }
+      },
+      "asa_network_specific_data_visa": {
+        "type": "object",
+        "properties": {
+          "business_application_identifier": {
+            "oneOf": [
+              {
+                "type": "null",
+                "description": "Business application identifier not available."
+              },
+              {
+                "type": "string",
+                "description": "Identifies the purpose or category of a transaction, used to classify and process transactions according to Visa\u2019s rules.",
+                "minLength": 2,
+                "maxLength": 2
+              }
+            ]
+          }
+        }
+      },
+      "asa_request_card": {
+        "description": "Card object in ASA",
+        "type": "object",
+        "required": [
+          "last_four",
+          "memo",
+          "spend_limit",
+          "spend_limit_duration",
+          "state",
+          "token",
+          "type"
+        ],
+        "properties": {
+          "last_four": {
+            "description": "Last four digits of the card number",
+            "type": "string"
+          },
+          "memo": {
+            "description": "Customizable name to identify the card",
+            "type": "string"
+          },
+          "spend_limit": {
+            "description": "Amount (in cents) to limit approved authorizations. Purchase requests above the spend limit will be declined (refunds and credits will be approved).\n\nNote that while spend limits are enforced based on authorized and settled volume on a card, they are not recommended to be used for balance or reconciliation-level accuracy. Spend limits also cannot block force posted charges (i.e., when a merchant sends a clearing message without a prior authorization).",
+            "type": "integer",
+            "format": "int64"
+          },
+          "spend_limit_duration": {
+            "description": "Note that to support recurring monthly payments, which can occur on different day every month, the time window we consider for MONTHLY velocity starts 6 days after the current calendar date one month prior.",
+            "type": "string",
+            "enum": [
+              "ANNUALLY",
+              "FOREVER",
+              "MONTHLY",
+              "TRANSACTION"
+            ]
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "CLOSED",
+              "OPEN",
+              "PAUSED",
+              "PENDING_ACTIVATION",
+              "PENDING_FULFILLMENT"
+            ]
+          },
+          "type": {
+            "$ref": "#/components/schemas/card-type"
+          },
+          "token": {
+            "description": "Globally unique identifier for the card.",
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      }
+    }
+  },
+  "asa_response": {
+    "description": "The Auth Stream Access response payload that an ASA responder may respond with in response to a request.",
+    "type": "object",
+    "properties": {
+      "result": {
+        "description": "Result of the Authorization decision. Provide `APPROVED` to accept the authorization. Any other response will decline the authorization. Result `CHALLENGE` is valid only for cardholder-initiated transactions. If a value not present in the enumeration is returned the transaction will be declined with the `CUSTOM_ASA_RESULT` detailed result.",
+        "type": "string",
+        "enum": [
+          "APPROVED",
+          "AVS_INVALID",
+          "CARD_PAUSED",
+          "INSUFFICIENT_FUNDS",
+          "UNAUTHORIZED_MERCHANT",
+          "VELOCITY_EXCEEDED",
+          "DRIVER_NUMBER_INVALID",
+          "VEHICLE_NUMBER_INVALID",
+          "SUSPECTED_FRAUD",
+          "CHALLENGE"
+        ]
+      },
+      "token": {
+        "type": "string",
+        "description": "The transaction token from the ASA request.",
+        "format": "uuid"
+      },
+      "approved_amount": {
+        "type": "integer",
+        "format": "int64",
+        "description": "The amount approved for the transaction. Note that setting this implies a partial approval. This property should not be present if the intention is to fully approve the transaction. See: https://docs.lithic.com/docs/partial-approval#partial-approval"
+      },
+      "avs_result": {
+        "description": "The ASA responder may return an address verification (AVS) match indicator for evaluation by the acquirer. The merchant can choose whether to proceed with the transaction in the case of an approval with AVS failure. When they do not, this typically appears as a subsequent AUTHORIZATION_REVERSAL event following the AUTHORIZATION. Note that AVS data submitted by merchants can be variable in quality, and we recommend card programs exercise adjust their decisioning logic accordingly.",
+        "type": "string",
+        "enum": [
+          "FAIL",
+          "MATCH",
+          "MATCH_ADDRESS_ONLY",
+          "MATCH_ZIP_ONLY"
+        ]
+      },
+      "balance": {
+        "description": "Respective available amount and settled amount values (in cents). These values can be used by merchants for authorization decisions as well as balance display at point of sale or ATM.",
+        "type": "object",
+        "properties": {
+          "amount": {
+            "oneOf": [
+              {
+                "type": "integer",
+                "format": "int64",
+                "description": "The balance held on the card."
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "available": {
+            "oneOf": [
+              {
+                "type": "integer",
+                "format": "int64",
+                "description": "The balance available for the cardholder to spend. This is calculated as the settled amount minus any pending authorizations on the card."
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "challenge_phone_number": {
+        "type": "string",
+        "description": "The phone number to use for sending an Authorization Challenge SMS. Relevant only when the result is `CHALLENGE`. The expected format is E.164 without hyphens. For example, \"+15555555555\" for a US phone number."
+      },
+      "name_validation_result": {
+        "description": "Name validation result returned by the ASA responder. When present, overrides Lithic's internally computed result. If no response is provided, the `name_on_file_match` value sent on the request will be the value returned to the Network.",
+        "$ref": "#/components/schemas/name_validation_result"
+      }
+    },
+    "required": [
+      "result"
+    ]
+  },
+  "asa_webhook": {
+    "post": {
+      "operationId": "cardAuthorizationApprovalRequestWebhook",
+      "description": "Auth Stream Access Request",
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/webhookId"
+        },
+        {
+          "$ref": "#/components/parameters/webhookTimestamp"
+        },
+        {
+          "$ref": "#/components/parameters/webhookSignature"
+        }
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "event_type": {
+                      "type": "string",
+                      "const": "card_authorization.approval_request",
+                      "example": "card_authorization.approval_request"
+                    }
+                  },
+                  "required": [
+                    "event_type"
+                  ]
+                },
+                {
+                  "description": "The Auth Stream Access request payload that was sent to the ASA responder.",
+                  "$ref": "#/components/schemas/authorization"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Return a HTTP 200 status to indicate that the ASA responder was able to handle the request.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/asa-response"
+              }
+            }
+          }
+        },
+        "5XX": {
+          "description": "Return a HTTP 5XX response to indicate processing failure. This will cause Lithic to immediately retry the request once."
+        }
+      },
+      "summary": "Auth Stream Access Request",
+      "tags": [
+        "Auth Stream Access (ASA)"
+      ]
+    }
+  },
+  "enrollment": {
+    "delete": {
+      "operationId": "deleteResponderEndpoint",
+      "parameters": [
+        {
+          "description": "The type of the endpoint.",
+          "in": "query",
+          "name": "type",
+          "required": true,
+          "schema": {
+            "enum": [
+              "AUTH_STREAM_ACCESS",
+              "THREE_DS_DECISIONING",
+              "TOKENIZATION_DECISIONING"
+            ],
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "content": {},
+          "description": "Endpoint disenrolled successfully"
+        },
+        "400": {
+          "$ref": "#/components/responses/BadRequest"
+        },
+        "401": {
+          "$ref": "#/components/responses/Unauthorized"
+        },
+        "404": {
+          "$ref": "#/components/responses/NotFound"
+        },
+        "422": {
+          "$ref": "#/components/responses/UnprocessableEntity"
+        },
+        "429": {
+          "$ref": "#/components/responses/TooManyRequests"
+        }
+      },
+      "summary": "Disenroll a responder endpoint",
+      "tags": [
+        "Responder Endpoints"
+      ]
+    },
+    "get": {
+      "operationId": "getResponderEndpoints",
+      "parameters": [
+        {
+          "description": "The type of the endpoint.",
+          "in": "query",
+          "name": "type",
+          "required": true,
+          "schema": {
+            "enum": [
+              "AUTH_STREAM_ACCESS",
+              "THREE_DS_DECISIONING",
+              "TOKENIZATION_DECISIONING"
+            ],
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "enrolled": {
+                    "description": "True if the instance has an endpoint enrolled.",
+                    "type": "boolean"
+                  },
+                  "url": {
+                    "description": "The URL of the currently enrolled endpoint or null.",
+                    "format": "uri",
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "type": "object"
+              }
+            }
+          },
+          "description": "Responder endpoint status"
+        },
+        "400": {
+          "$ref": "#/components/responses/BadRequest"
+        },
+        "401": {
+          "$ref": "#/components/responses/Unauthorized"
+        },
+        "404": {
+          "$ref": "#/components/responses/NotFound"
+        },
+        "422": {
+          "$ref": "#/components/responses/UnprocessableEntity"
+        },
+        "429": {
+          "$ref": "#/components/responses/TooManyRequests"
+        }
+      },
+      "summary": "Check the status of a responder endpoint",
+      "tags": [
+        "Responder Endpoints"
+      ]
+    },
+    "post": {
+      "operationId": "postResponderEndpoints",
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "type": {
+                  "description": "The type of the endpoint.",
+                  "enum": [
+                    "AUTH_STREAM_ACCESS",
+                    "THREE_DS_DECISIONING",
+                    "TOKENIZATION_DECISIONING"
+                  ],
+                  "type": "string"
+                },
+                "url": {
+                  "description": "The URL for the responder endpoint (must be http(s)).",
+                  "format": "uri",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "required": true
+      },
+      "responses": {
+        "200": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "enrolled": {
+                    "description": "True if the endpoint was enrolled successfully.",
+                    "type": "boolean"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          },
+          "description": "Endpoint enrolled successfully"
+        },
+        "400": {
+          "$ref": "#/components/responses/BadRequest"
+        },
+        "401": {
+          "$ref": "#/components/responses/Unauthorized"
+        },
+        "404": {
+          "$ref": "#/components/responses/NotFound"
+        },
+        "422": {
+          "$ref": "#/components/responses/UnprocessableEntity"
+        },
+        "429": {
+          "$ref": "#/components/responses/TooManyRequests"
+        }
+      },
+      "summary": "Enroll a responder endpoint",
+      "tags": [
+        "Responder Endpoints"
+      ]
+    }
+  },
+  "detailed_result": {
+    "example": "APPROVED",
+    "title": "Detailed Result",
+    "type": "string",
+    "enum": [
+      "ACCOUNT_DAILY_SPEND_LIMIT_EXCEEDED",
+      "ACCOUNT_DELINQUENT",
+      "ACCOUNT_INACTIVE",
+      "ACCOUNT_LIFETIME_SPEND_LIMIT_EXCEEDED",
+      "ACCOUNT_MONTHLY_SPEND_LIMIT_EXCEEDED",
+      "ACCOUNT_PAUSED",
+      "ACCOUNT_UNDER_REVIEW",
+      "ADDRESS_INCORRECT",
+      "APPROVED",
+      "AUTH_RULE_ALLOWED_COUNTRY",
+      "AUTH_RULE_ALLOWED_MCC",
+      "AUTH_RULE_BLOCKED_COUNTRY",
+      "AUTH_RULE_BLOCKED_MCC",
+      "AUTH_RULE",
+      "CARD_CLOSED",
+      "CARD_CRYPTOGRAM_VALIDATION_FAILURE",
+      "CARD_EXPIRED",
+      "CARD_EXPIRY_DATE_INCORRECT",
+      "CARD_INVALID",
+      "CARD_NOT_ACTIVATED",
+      "CARD_PAUSED",
+      "CARD_PIN_INCORRECT",
+      "CARD_RESTRICTED",
+      "CARD_SECURITY_CODE_INCORRECT",
+      "CARD_SPEND_LIMIT_EXCEEDED",
+      "CONTACT_CARD_ISSUER",
+      "CUSTOMER_ASA_TIMEOUT",
+      "CUSTOM_ASA_RESULT",
+      "DECLINED",
+      "DO_NOT_HONOR",
+      "DRIVER_NUMBER_INVALID",
+      "FORMAT_ERROR",
+      "INSUFFICIENT_FUNDING_SOURCE_BALANCE",
+      "INSUFFICIENT_FUNDS",
+      "LITHIC_SYSTEM_ERROR",
+      "LITHIC_SYSTEM_RATE_LIMIT",
+      "MALFORMED_ASA_RESPONSE",
+      "MERCHANT_INVALID",
+      "MERCHANT_LOCKED_CARD_ATTEMPTED_ELSEWHERE",
+      "MERCHANT_NOT_PERMITTED",
+      "OVER_REVERSAL_ATTEMPTED",
+      "PIN_BLOCKED",
+      "PROGRAM_CARD_SPEND_LIMIT_EXCEEDED",
+      "PROGRAM_SUSPENDED",
+      "PROGRAM_USAGE_RESTRICTION",
+      "REVERSAL_UNMATCHED",
+      "SCA_REQUIRED",
+      "SECURITY_VIOLATION",
+      "SINGLE_USE_CARD_REATTEMPTED",
+      "SUSPECTED_FRAUD",
+      "TRANSACTION_INVALID",
+      "TRANSACTION_NOT_PERMITTED_TO_ACQUIRER_OR_TERMINAL",
+      "TRANSACTION_NOT_PERMITTED_TO_ISSUER_OR_CARDHOLDER",
+      "TRANSACTION_PREVIOUSLY_COMPLETED",
+      "UNAUTHORIZED_MERCHANT",
+      "VEHICLE_NUMBER_INVALID",
+      "CARDHOLDER_CHALLENGED",
+      "CARDHOLDER_CHALLENGE_FAILED"
+    ]
+  }
+}

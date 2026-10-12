@@ -1,0 +1,20 @@
+[
+  {
+    "case": "pinned-original",
+    "accepted": true,
+    "expected_acceptance": true,
+    "passed": true
+  },
+  {
+    "case": "unrelated-pin",
+    "accepted": false,
+    "expected_acceptance": false,
+    "passed": true
+  },
+  {
+    "case": "tampered-receipt",
+    "accepted": false,
+    "expected_acceptance": false,
+    "passed": true
+  }
+]

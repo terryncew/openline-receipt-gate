@@ -1,0 +1,60 @@
+{
+  "base_commit": "8a2ddf2af62374b70908421da6066afb69d5803e",
+  "branch": "codex/openline-lithic-preflight-001",
+  "dependencies": {
+    "gateway_python": "3.12.14",
+    "grpcio": "1.84.0",
+    "protobuf": "7.36.2",
+    "cryptography": "50.0.1",
+    "clean_package_cryptography": "50.0.2"
+  },
+  "envoy_image": "envoyproxy/envoy:v1.39.3",
+  "envoy_version": "/tmp/openline-envoy  version: 6eb0d2d97489ec1b4e1584a004f5de443d97a41b/1.39.3/Clean/RELEASE/BoringSSL",
+  "sha256": {
+    "gateway/poppy/test_atomic_receipt.py": "d321cea0dee3b80d2487fde0f7fcef49f23dc1303550fb031491a21f945b8e9d",
+    "gateway/poppy/test_gateway_path.py": "e4428698e9d1b486753d2f26954b9ab722cd77d00a99e6b4837e15fee118506e",
+    "gateway/mock_api.py": "7935b7e6853e302c61d7c96ddc1eb14a4dd4e419d152ae64cfabf274e3b2d39a",
+    "gateway/authz_server.py": "23de449c479ceb703a7c1394b5c6abc156024f0986d6ca0dedc8dd393f96e698",
+    "gateway/poppy/poppy_receiver.py": "a2b6d2e5c9d04d35e5b96ef48c4e7203ee7e2da08ef6d363bc94a347ee6a4c87"
+  },
+  "checks": [
+    {
+      "name": "legacy atomic signed receipts",
+      "command": ".venv/bin/python -m unittest gateway/poppy/test_atomic_receipt.py -v",
+      "result": "PASS",
+      "count": 7,
+      "seconds": 0.519,
+      "log": "atomic-receipt.log"
+    },
+    {
+      "name": "real Envoy complete Gateway + Wallet path",
+      "command": "ENVOY_BIN=/tmp/openline-envoy NO_PROXY=localhost,127.0.0.1 .venv/bin/python gateway/poppy/test_gateway_path.py",
+      "result": "PASS",
+      "count": 25,
+      "log": "gateway-path.log"
+    },
+    {
+      "name": "clean installed package import",
+      "command": "(cd /tmp && /workspace/lithic-preflight-scratch/baseline/package-venv/bin/python -c \"from openline_receiver.wallet_bridge import WalletReceiver; print(WalletReceiver.__name__)\")",
+      "result": "PASS",
+      "log": "package-import.log"
+    },
+    {
+      "name": "clean installed complete Wallet example",
+      "command": "(cd /tmp && /workspace/lithic-preflight-scratch/baseline/package-venv/bin/python /workspace/openline-receipt-gate/gateway/receiver-package/example_01.py)",
+      "result": "PASS",
+      "log": "example-01.log"
+    },
+    {
+      "name": "preexisting quickstart",
+      "command": "(cd /tmp && /workspace/lithic-preflight-scratch/baseline/package-venv/bin/python /workspace/openline-receipt-gate/gateway/receiver-package/quickstart.py)",
+      "result": "FAIL",
+      "reason": "PINNED_PRINCIPAL_ROOT_MISMATCH: placeholder principal_id quickstart-owner is not derived from generated owner public key",
+      "log": "quickstart.log"
+    }
+  ],
+  "limitations": [
+    "Unchanged quickstart.py is a preexisting incomplete simulated API example; the real owner-signed bundle workflow is tested in example_01.py and Gateway integration.",
+    "No external CI, Lithic API requests, real cards, or funds used."
+  ]
+}

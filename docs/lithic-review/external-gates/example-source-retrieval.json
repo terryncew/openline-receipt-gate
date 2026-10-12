@@ -1,0 +1,26 @@
+[
+  {
+    "name": "sdk-tree",
+    "url": "https://api.github.com/repos/lithic-com/lithic-python/git/trees/826a8c940571e88bd4682a38e22b1c9f999cef93?recursive=1",
+    "sha256": "b4da11739bf99f81daeb2b34b05f1e209ae31dbeb2b88895a43f419696bee611",
+    "bytes": 200885
+  },
+  {
+    "name": "node-demo-head",
+    "url": "https://api.github.com/repos/lithic-com/asa-demo-node/commits/main",
+    "sha256": "75d854d8a88de1d0179ecb9bddef2887b2e19d7fdbfd54d2aba709972418aa57",
+    "bytes": 30919
+  },
+  {
+    "name": "node-demo-readme",
+    "url": "https://raw.githubusercontent.com/lithic-com/asa-demo-node/main/README.md",
+    "sha256": "9e1c8257452c5072e9cbb93ed025466c701c453a82b854e8406b6a32eb6b1ad0",
+    "bytes": 6316
+  },
+  {
+    "name": "node-demo-tree",
+    "url": "https://api.github.com/repos/lithic-com/asa-demo-node/git/trees/main?recursive=1",
+    "sha256": "5bb0342b1d07f2b457a663b9b45ada148fb4f4779a0a083543a327287c995dde",
+    "bytes": 5259
+  }
+]

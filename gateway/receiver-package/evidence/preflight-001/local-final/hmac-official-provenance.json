@@ -1,0 +1,28 @@
+{
+  "sdk": "lithic",
+  "version": "0.132.0",
+  "official_tag": "v0.132.0",
+  "official_commit": "a1e8c1861ecb7053ef97aad80dcb48aa8fda8b3f",
+  "verifier_dependency": {
+    "standardwebhooks": "1.1.0"
+  },
+  "files": {
+    "src/lithic/resources/webhooks.py": "8dbf14d9a58e692eaf9d354ab08afaebea04398aae2a625019f1a1c3205799c2",
+    "src/lithic/resources/auth_stream_enrollment.py": "e20f630b4e7f794dbc4d5e4a89e46946b62d047a31a0a7823a7aa4ef2549bbe1",
+    "tests/api_resources/test_webhooks.py": "42fae1e50fe06d23ab72326ffd2cd2c2e07b6b6d0bcf7a9fec46bbc9cbc591f5",
+    "src/lithic/types/card_authorization_approval_request_webhook_event.py": "65d881d34139c16b9f316d135bcead9d79fab2a42caa8c9c659484e406c26575"
+  },
+  "result": {
+    "tests": 12,
+    "failures": 0,
+    "skips": 0
+  },
+  "test_command": "cd gateway/receiver-package && OPENLINE_REQUIRE_OFFICIAL_LITHIC=1 /workspace/lithic-hmac-sdk-venv/bin/python -m unittest -v test_lithic_hmac",
+  "published_vector_scope": "general webhook signing vector, not an ASA payload vector",
+  "independent_fixtures": "Original raw bytes of complete synthetic fixtures/official-asa-request.json, independently official-OpenAPI-schema validated; signed by separate HMAC-SHA256 fixture with explicit raw key; official verifier also tested",
+  "implementation_files": {
+    "fixtures/official-asa-request.json": "b3c6a8d3851f95c6848c18bdcdc48b1454c221cd5f22386849c06ee8e26b49db",
+    "openline_receiver/lithic_hmac.py": "6cacf2818b3f1f2b5b653b641f2cc25be6841b539884f0bbf95c245eb96fe7c6",
+    "test_lithic_hmac.py": "e416ee9f1b4878a69942717f1f6cba6fe8f5774b87b3353fdf82396d250de12d"
+  }
+}

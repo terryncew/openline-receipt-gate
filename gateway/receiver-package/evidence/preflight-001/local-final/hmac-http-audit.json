@@ -1,0 +1,52 @@
+{
+  "result": "PASS",
+  "sandbox_missing_secret_rejected": true,
+  "committed_decisions": 1,
+  "cases": [
+    {
+      "case": "valid-auth-no-pending",
+      "status": 200,
+      "elapsed_seconds": 0.0019234210049035028
+    },
+    {
+      "case": "missing-headers",
+      "status": 401,
+      "elapsed_seconds": 0.0006320129978121258
+    },
+    {
+      "case": "duplicate-identical-id",
+      "status": 401,
+      "elapsed_seconds": 0.000579312996705994
+    },
+    {
+      "case": "duplicate-signature",
+      "status": 401,
+      "elapsed_seconds": 0.0005537149991141632
+    },
+    {
+      "case": "wrong-signature",
+      "status": 401,
+      "elapsed_seconds": 0.0006728349981131032
+    },
+    {
+      "case": "tampered-body",
+      "status": 401,
+      "elapsed_seconds": 0.0005804750035167672
+    },
+    {
+      "case": "expired-timestamp",
+      "status": 401,
+      "elapsed_seconds": 0.0005288370011840016
+    },
+    {
+      "case": "duplicate-length",
+      "status": 400,
+      "elapsed_seconds": 0.0005525629967451096
+    },
+    {
+      "case": "transfer-encoding",
+      "status": 400,
+      "elapsed_seconds": 0.0005082659990875982
+    }
+  ]
+}

@@ -1,0 +1,676 @@
+{
+  "receiver_public_key_pinned_before_asa": "5228885f8f4f95d6aed09512c7de242bce9da684e45dcc9aee227375cf804dad",
+  "owner_root_public_key_pinned_before_admission": "905c9e27f1a3c20d1c166df46b5faea15a8f4f3e68f8e50ff236bc09270227bf",
+  "principal_id": "openline:principal:afda0f8450702280c50b9e42a2ef88d4ae4d0270d62f35b5d1f7c605424c937f",
+  "bundles": [
+    {
+      "schema": "openline.wallet.receiver_bundle.v1",
+      "principal": {
+        "principal_id": "openline:principal:afda0f8450702280c50b9e42a2ef88d4ae4d0270d62f35b5d1f7c605424c937f",
+        "root_public_key": "905c9e27f1a3c20d1c166df46b5faea15a8f4f3e68f8e50ff236bc09270227bf"
+      },
+      "epoch_certificate": {
+        "authority": "ISSUE_AND_NARROW_MANDATES",
+        "epoch_id": "epoch_903bc3ea829db7b5",
+        "epoch_public_key": "b6c2276c789361bbd8fbb269b99123bafce2e59645afa57a0f6d3d90332eff4b",
+        "expires_at": "2027-10-12T22:54:57.777628Z",
+        "issued_at": "2026-10-11T22:54:57.777628Z",
+        "payload_hash": "6e5ba4117b0c626aa29104de81fc5c8d6251ffc48c2593a5f48b5e51b4282fc7",
+        "principal_id": "openline:principal:afda0f8450702280c50b9e42a2ef88d4ae4d0270d62f35b5d1f7c605424c937f",
+        "schema": "openline.wallet.epoch_certificate.v1",
+        "sequence": 1,
+        "signature": {
+          "algorithm": "Ed25519",
+          "public_key": "905c9e27f1a3c20d1c166df46b5faea15a8f4f3e68f8e50ff236bc09270227bf",
+          "value": "902357b1abb87f21b7b6620320d922bbb542084008a9e9fdd84975fea17232571ae5fced2c1289eb35ea8c2a1a66bda00769e11c5a2230f8b8fe20ac94feb908"
+        }
+      },
+      "events": [
+        {
+          "data": {
+            "expires_at": "2026-10-11T23:54:57.779393Z",
+            "mandate_id": "mandate_c28e603d51cf34e0",
+            "predecessor_mandate_id": null,
+            "scopes": [
+              "lithic:authorize"
+            ],
+            "subject_id": "pilot-worker-1",
+            "subject_public_key": "e6060681ccb9bcc710f42035e38e50e997683b26ea3987e52c3fad39087546f3"
+          },
+          "event_type": "MANDATE_ISSUED",
+          "issued_at": "2026-10-11T22:54:57.779398Z",
+          "payload_hash": "25ee3e30a243aae173e18a15171aa12f9d68dc24da053f52aefcf725dfaaa52a",
+          "previous_event_hash": null,
+          "principal_id": "openline:principal:afda0f8450702280c50b9e42a2ef88d4ae4d0270d62f35b5d1f7c605424c937f",
+          "schema": "openline.wallet.timeline_event.v1",
+          "sequence": 1,
+          "signature": {
+            "algorithm": "Ed25519",
+            "public_key": "b6c2276c789361bbd8fbb269b99123bafce2e59645afa57a0f6d3d90332eff4b",
+            "value": "fa5275a7521db2d2099daa01090459c3660f3d5c4b3dd8d369b550186bc0feb236e919700cb959d5e0f0e1469d627cef667a114168804ccbca73848e52d6390a"
+          }
+        }
+      ],
+      "receipts": [],
+      "head": {
+        "sequence": 1,
+        "event_hash": "d7d7a63ef699004c161dfcbd0d710e2bf87eab5ae1caa31ef311a44304f8c091"
+      },
+      "issued_at": "2026-10-11T22:54:57.781311Z",
+      "expires_at": "2026-10-11T23:04:57.781311Z",
+      "canonicalization": "olp-canonical-json-int-v1",
+      "wallet_policy_authority": "NONE",
+      "decision_authority": "RECEIVER_GATE",
+      "payload_hash": "51b5e83fd39e3b6317e26b0df504abb11e0286f11841456c34da42a4ae2a69ec",
+      "signature": {
+        "algorithm": "Ed25519",
+        "public_key": "905c9e27f1a3c20d1c166df46b5faea15a8f4f3e68f8e50ff236bc09270227bf",
+        "value": "c6f7f9b6c682e9880a2129538994b8097610d843c5b7a5ed0468832f3c2783ec7e6e4d65f131fef12d779405d20ec64d2323f178195fd0bb653b58d1f534cc05"
+      }
+    },
+    {
+      "schema": "openline.wallet.receiver_bundle.v1",
+      "principal": {
+        "principal_id": "openline:principal:afda0f8450702280c50b9e42a2ef88d4ae4d0270d62f35b5d1f7c605424c937f",
+        "root_public_key": "905c9e27f1a3c20d1c166df46b5faea15a8f4f3e68f8e50ff236bc09270227bf"
+      },
+      "epoch_certificate": {
+        "authority": "ISSUE_AND_NARROW_MANDATES",
+        "epoch_id": "epoch_903bc3ea829db7b5",
+        "epoch_public_key": "b6c2276c789361bbd8fbb269b99123bafce2e59645afa57a0f6d3d90332eff4b",
+        "expires_at": "2027-10-12T22:54:57.777628Z",
+        "issued_at": "2026-10-11T22:54:57.777628Z",
+        "payload_hash": "6e5ba4117b0c626aa29104de81fc5c8d6251ffc48c2593a5f48b5e51b4282fc7",
+        "principal_id": "openline:principal:afda0f8450702280c50b9e42a2ef88d4ae4d0270d62f35b5d1f7c605424c937f",
+        "schema": "openline.wallet.epoch_certificate.v1",
+        "sequence": 1,
+        "signature": {
+          "algorithm": "Ed25519",
+          "public_key": "905c9e27f1a3c20d1c166df46b5faea15a8f4f3e68f8e50ff236bc09270227bf",
+          "value": "902357b1abb87f21b7b6620320d922bbb542084008a9e9fdd84975fea17232571ae5fced2c1289eb35ea8c2a1a66bda00769e11c5a2230f8b8fe20ac94feb908"
+        }
+      },
+      "events": [
+        {
+          "data": {
+            "expires_at": "2026-10-11T23:54:57.779393Z",
+            "mandate_id": "mandate_c28e603d51cf34e0",
+            "predecessor_mandate_id": null,
+            "scopes": [
+              "lithic:authorize"
+            ],
+            "subject_id": "pilot-worker-1",
+            "subject_public_key": "e6060681ccb9bcc710f42035e38e50e997683b26ea3987e52c3fad39087546f3"
+          },
+          "event_type": "MANDATE_ISSUED",
+          "issued_at": "2026-10-11T22:54:57.779398Z",
+          "payload_hash": "25ee3e30a243aae173e18a15171aa12f9d68dc24da053f52aefcf725dfaaa52a",
+          "previous_event_hash": null,
+          "principal_id": "openline:principal:afda0f8450702280c50b9e42a2ef88d4ae4d0270d62f35b5d1f7c605424c937f",
+          "schema": "openline.wallet.timeline_event.v1",
+          "sequence": 1,
+          "signature": {
+            "algorithm": "Ed25519",
+            "public_key": "b6c2276c789361bbd8fbb269b99123bafce2e59645afa57a0f6d3d90332eff4b",
+            "value": "fa5275a7521db2d2099daa01090459c3660f3d5c4b3dd8d369b550186bc0feb236e919700cb959d5e0f0e1469d627cef667a114168804ccbca73848e52d6390a"
+          }
+        },
+        {
+          "data": {
+            "mandate_id": "mandate_c28e603d51cf34e0",
+            "reason": "OFFLINE_PILOT_OWNER_REVOCATION"
+          },
+          "event_type": "MANDATE_REVOKED",
+          "issued_at": "2026-10-11T22:54:58.307072Z",
+          "payload_hash": "a7e7cde2e005b51fb72eb49a438e11a1c61f737a3188caa5ad016f141667dd03",
+          "previous_event_hash": "d7d7a63ef699004c161dfcbd0d710e2bf87eab5ae1caa31ef311a44304f8c091",
+          "principal_id": "openline:principal:afda0f8450702280c50b9e42a2ef88d4ae4d0270d62f35b5d1f7c605424c937f",
+          "schema": "openline.wallet.timeline_event.v1",
+          "sequence": 2,
+          "signature": {
+            "algorithm": "Ed25519",
+            "public_key": "905c9e27f1a3c20d1c166df46b5faea15a8f4f3e68f8e50ff236bc09270227bf",
+            "value": "eee7d2100603bed4cedaf2ab872ab7254ac832af3f14f96ffe1bb961d606f259c974f391ea4924014c84d5838d7f7961ec9ec6c70f7c1fff486d81914f275100"
+          }
+        }
+      ],
+      "receipts": [],
+      "head": {
+        "sequence": 2,
+        "event_hash": "4791675552a57a5c05b076d479802ba21ebbdf5161059d0eae645e9e37f07d6d"
+      },
+      "issued_at": "2026-10-11T22:54:58.309539Z",
+      "expires_at": "2026-10-11T23:04:58.309539Z",
+      "canonicalization": "olp-canonical-json-int-v1",
+      "wallet_policy_authority": "NONE",
+      "decision_authority": "RECEIVER_GATE",
+      "payload_hash": "b11d4070027c32cced7f782fba9f9ed40a7f77eedce3c895c8b0c78fd4a7c901",
+      "signature": {
+        "algorithm": "Ed25519",
+        "public_key": "905c9e27f1a3c20d1c166df46b5faea15a8f4f3e68f8e50ff236bc09270227bf",
+        "value": "3d62d9c9f2096d5334a0693b7de227d87344564c7cbebcdcac0649b2b01508ddd14d7669283e38268c5ddf3365da152da3ccfa965a45d31b81478696be508409"
+      }
+    },
+    {
+      "schema": "openline.wallet.receiver_bundle.v1",
+      "principal": {
+        "principal_id": "openline:principal:afda0f8450702280c50b9e42a2ef88d4ae4d0270d62f35b5d1f7c605424c937f",
+        "root_public_key": "905c9e27f1a3c20d1c166df46b5faea15a8f4f3e68f8e50ff236bc09270227bf"
+      },
+      "epoch_certificate": {
+        "authority": "ISSUE_AND_NARROW_MANDATES",
+        "epoch_id": "epoch_903bc3ea829db7b5",
+        "epoch_public_key": "b6c2276c789361bbd8fbb269b99123bafce2e59645afa57a0f6d3d90332eff4b",
+        "expires_at": "2027-10-12T22:54:57.777628Z",
+        "issued_at": "2026-10-11T22:54:57.777628Z",
+        "payload_hash": "6e5ba4117b0c626aa29104de81fc5c8d6251ffc48c2593a5f48b5e51b4282fc7",
+        "principal_id": "openline:principal:afda0f8450702280c50b9e42a2ef88d4ae4d0270d62f35b5d1f7c605424c937f",
+        "schema": "openline.wallet.epoch_certificate.v1",
+        "sequence": 1,
+        "signature": {
+          "algorithm": "Ed25519",
+          "public_key": "905c9e27f1a3c20d1c166df46b5faea15a8f4f3e68f8e50ff236bc09270227bf",
+          "value": "902357b1abb87f21b7b6620320d922bbb542084008a9e9fdd84975fea17232571ae5fced2c1289eb35ea8c2a1a66bda00769e11c5a2230f8b8fe20ac94feb908"
+        }
+      },
+      "events": [
+        {
+          "data": {
+            "expires_at": "2026-10-11T23:54:57.779393Z",
+            "mandate_id": "mandate_c28e603d51cf34e0",
+            "predecessor_mandate_id": null,
+            "scopes": [
+              "lithic:authorize"
+            ],
+            "subject_id": "pilot-worker-1",
+            "subject_public_key": "e6060681ccb9bcc710f42035e38e50e997683b26ea3987e52c3fad39087546f3"
+          },
+          "event_type": "MANDATE_ISSUED",
+          "issued_at": "2026-10-11T22:54:57.779398Z",
+          "payload_hash": "25ee3e30a243aae173e18a15171aa12f9d68dc24da053f52aefcf725dfaaa52a",
+          "previous_event_hash": null,
+          "principal_id": "openline:principal:afda0f8450702280c50b9e42a2ef88d4ae4d0270d62f35b5d1f7c605424c937f",
+          "schema": "openline.wallet.timeline_event.v1",
+          "sequence": 1,
+          "signature": {
+            "algorithm": "Ed25519",
+            "public_key": "b6c2276c789361bbd8fbb269b99123bafce2e59645afa57a0f6d3d90332eff4b",
+            "value": "fa5275a7521db2d2099daa01090459c3660f3d5c4b3dd8d369b550186bc0feb236e919700cb959d5e0f0e1469d627cef667a114168804ccbca73848e52d6390a"
+          }
+        },
+        {
+          "data": {
+            "mandate_id": "mandate_c28e603d51cf34e0",
+            "reason": "OFFLINE_PILOT_OWNER_REVOCATION"
+          },
+          "event_type": "MANDATE_REVOKED",
+          "issued_at": "2026-10-11T22:54:58.307072Z",
+          "payload_hash": "a7e7cde2e005b51fb72eb49a438e11a1c61f737a3188caa5ad016f141667dd03",
+          "previous_event_hash": "d7d7a63ef699004c161dfcbd0d710e2bf87eab5ae1caa31ef311a44304f8c091",
+          "principal_id": "openline:principal:afda0f8450702280c50b9e42a2ef88d4ae4d0270d62f35b5d1f7c605424c937f",
+          "schema": "openline.wallet.timeline_event.v1",
+          "sequence": 2,
+          "signature": {
+            "algorithm": "Ed25519",
+            "public_key": "905c9e27f1a3c20d1c166df46b5faea15a8f4f3e68f8e50ff236bc09270227bf",
+            "value": "eee7d2100603bed4cedaf2ab872ab7254ac832af3f14f96ffe1bb961d606f259c974f391ea4924014c84d5838d7f7961ec9ec6c70f7c1fff486d81914f275100"
+          }
+        },
+        {
+          "data": {
+            "expires_at": "2026-10-11T23:54:58.809432Z",
+            "mandate_id": "mandate_1461c4b6a544fcff",
+            "predecessor_mandate_id": null,
+            "scopes": [
+              "lithic:authorize"
+            ],
+            "subject_id": "pilot-worker-2",
+            "subject_public_key": "726e8d7bb0814ce06208dad191eab14d8e02555fd7cd2ee64d6dc2b5fa05cf1e"
+          },
+          "event_type": "MANDATE_ISSUED",
+          "issued_at": "2026-10-11T22:54:58.809438Z",
+          "payload_hash": "183f87ba8c3d77bd3ada27c9573a1a99631c2c9c090d66428327423baa9cc6a2",
+          "previous_event_hash": "4791675552a57a5c05b076d479802ba21ebbdf5161059d0eae645e9e37f07d6d",
+          "principal_id": "openline:principal:afda0f8450702280c50b9e42a2ef88d4ae4d0270d62f35b5d1f7c605424c937f",
+          "schema": "openline.wallet.timeline_event.v1",
+          "sequence": 3,
+          "signature": {
+            "algorithm": "Ed25519",
+            "public_key": "b6c2276c789361bbd8fbb269b99123bafce2e59645afa57a0f6d3d90332eff4b",
+            "value": "7a682995e8c60c9b549280f7a5f6215bbbae20cc5f94f927fef4c7f7873537c2d97ca41547a630981e2736508430b5e1505ef9fadb8827d7ca2edebdcc238909"
+          }
+        }
+      ],
+      "receipts": [],
+      "head": {
+        "sequence": 3,
+        "event_hash": "296385a26baa71bc3103c66c920af27b716d8800083954602231580721d1d4c8"
+      },
+      "issued_at": "2026-10-11T22:54:58.812562Z",
+      "expires_at": "2026-10-11T23:04:58.812562Z",
+      "canonicalization": "olp-canonical-json-int-v1",
+      "wallet_policy_authority": "NONE",
+      "decision_authority": "RECEIVER_GATE",
+      "payload_hash": "50986fbf7d41474c230e4db6b07b0a72653b62b87fed9c86046abdb4b0048dda",
+      "signature": {
+        "algorithm": "Ed25519",
+        "public_key": "905c9e27f1a3c20d1c166df46b5faea15a8f4f3e68f8e50ff236bc09270227bf",
+        "value": "82d86a15d842a6c9c20dc3cac07425d04fd7f13bdbcd859cfb9a8fd83bea3e1a36cad84bd25b0693e2ebfad7be344271a99ddc702112b9050ae3e312c919bf0e"
+      }
+    }
+  ],
+  "receipts": [
+    {
+      "authority_proof": {
+        "wallet_decision": {
+          "action": "lithic:authorize",
+          "decided_at": "2026-10-11T22:54:57.791996Z",
+          "decision": "ALLOWED",
+          "decision_authority": "RECEIVER_GATE",
+          "gate_id": "lithic-pilot-http",
+          "gate_public_key": "5228885f8f4f95d6aed09512c7de242bce9da684e45dcc9aee227375cf804dad",
+          "mandate_id": "mandate_c28e603d51cf34e0",
+          "payload_hash": "c185a270db9c0e11af506ae2d903531acabbd6a03b91f53a2b3fd8cae48557b3",
+          "presentation_hash": "1b9ba98a082bc922c2ad47286b394eba0c955545c47e67b7ec56742d59ad0f7e",
+          "principal_id": "openline:principal:afda0f8450702280c50b9e42a2ef88d4ae4d0270d62f35b5d1f7c605424c937f",
+          "reason_codes": [],
+          "schema": "openline.gate.action_receipt.v1",
+          "signature": {
+            "algorithm": "Ed25519",
+            "public_key": "5228885f8f4f95d6aed09512c7de242bce9da684e45dcc9aee227375cf804dad",
+            "value": "9598d80647fcf7069d0027fcb13f7230298317358a68d652c8d234fd0541042fc92c9776d0c2ce58b51aa0796477dfc57cddd701f8065f4bce202386d600620f"
+          },
+          "subject_id": "pilot-worker-1",
+          "wallet_policy_authority": "NONE"
+        },
+        "worker_intent": {
+          "details": {
+            "account_type": null,
+            "acquirer_fee": 0,
+            "amounts": {
+              "cardholder": {
+                "amount": 100,
+                "conversion_rate": "1.000000",
+                "currency": "USD"
+              },
+              "hold": null,
+              "merchant": {
+                "amount": 100,
+                "currency": "USD"
+              },
+              "settlement": null
+            },
+            "avs": {
+              "address": "",
+              "address_on_file_match": "NOT_PRESENT",
+              "zipcode": ""
+            },
+            "card_token": "00000000-0000-4000-8000-000000000001",
+            "cardholder_authentication": null,
+            "cash_amount": 0,
+            "fleet_info": null,
+            "latest_challenge": null,
+            "merchant": {
+              "acceptor_id": "OPENLINE-SYNTHETIC-001",
+              "acquiring_institution_id": "000001",
+              "city": "NEW YORK",
+              "country": "USA",
+              "descriptor": "OPENLINE OFFLINE PILOT",
+              "mcc": "5999",
+              "phone_number": null,
+              "postal_code": null,
+              "state": "NY",
+              "street_address": null
+            },
+            "name_validation": null,
+            "network": "VISA",
+            "network_risk_score": null,
+            "network_specific_data": null,
+            "pos": {
+              "entry_mode": {
+                "card": "NOT_PRESENT",
+                "cardholder": "ELECTRONIC_ORDER",
+                "pan": "ECOMMERCE",
+                "pin_entered": false
+              }
+            },
+            "service_location": null,
+            "status": "AUTHORIZATION",
+            "token_info": null,
+            "transaction_initiator": "CARDHOLDER"
+          },
+          "gate_id": "lithic-pilot-http",
+          "mandate_id": "mandate_c28e603d51cf34e0",
+          "payload_hash": "3938d014c2d41149eb21af5b341f4a37d9fbb1bd59c7b92442c172dd691ce822",
+          "presentation_hash": "1b9ba98a082bc922c2ad47286b394eba0c955545c47e67b7ec56742d59ad0f7e",
+          "principal_id": "openline:principal:afda0f8450702280c50b9e42a2ef88d4ae4d0270d62f35b5d1f7c605424c937f",
+          "schema": "openline.lithic.payment_intent.v1",
+          "signature": {
+            "algorithm": "Ed25519",
+            "public_key": "e6060681ccb9bcc710f42035e38e50e997683b26ea3987e52c3fad39087546f3",
+            "value": "add100471fd4909b9afe6d483a3f2d6c6f326c5aabcc4563d3cd4e32519c7f20d5663e779e86cb5eecca68f1a5cff61bd555d0e1796707ca9809541deac24e03"
+          },
+          "subject_id": "pilot-worker-1"
+        }
+      },
+      "authorization_semantics": "One use by next matching ASA purchase within 60s; transaction token bound only at ASA decision; no settlement claim",
+      "decided_at": "2026-10-11T22:54:57.795015+00:00",
+      "gate_id": "lithic-pilot-http",
+      "mandate_id": "mandate_c28e603d51cf34e0",
+      "payload_hash": "78023f482c983506aacd7c5c8695920300911b1f9d201da6f8393ac3fe1f1530",
+      "payment_details": {
+        "account_type": null,
+        "acquirer_fee": 0,
+        "amounts": {
+          "cardholder": {
+            "amount": 100,
+            "conversion_rate": "1.000000",
+            "currency": "USD"
+          },
+          "hold": null,
+          "merchant": {
+            "amount": 100,
+            "currency": "USD"
+          },
+          "settlement": null
+        },
+        "avs": {
+          "address": "",
+          "address_on_file_match": "NOT_PRESENT",
+          "zipcode": ""
+        },
+        "card_token": "00000000-0000-4000-8000-000000000001",
+        "cardholder_authentication": null,
+        "cash_amount": 0,
+        "fleet_info": null,
+        "latest_challenge": null,
+        "merchant": {
+          "acceptor_id": "OPENLINE-SYNTHETIC-001",
+          "acquiring_institution_id": "000001",
+          "city": "NEW YORK",
+          "country": "USA",
+          "descriptor": "OPENLINE OFFLINE PILOT",
+          "mcc": "5999",
+          "phone_number": null,
+          "postal_code": null,
+          "state": "NY",
+          "street_address": null
+        },
+        "name_validation": null,
+        "network": "VISA",
+        "network_risk_score": null,
+        "network_specific_data": null,
+        "pos": {
+          "entry_mode": {
+            "card": "NOT_PRESENT",
+            "cardholder": "ELECTRONIC_ORDER",
+            "pan": "ECOMMERCE",
+            "pin_entered": false
+          }
+        },
+        "service_location": null,
+        "status": "AUTHORIZATION",
+        "token_info": null,
+        "transaction_initiator": "CARDHOLDER"
+      },
+      "principal_id": "openline:principal:afda0f8450702280c50b9e42a2ef88d4ae4d0270d62f35b5d1f7c605424c937f",
+      "reason": "VERIFIED_NEXT_MATCHING_AUTHORIZATION",
+      "request_fingerprint": "6659be2b74c8831059477eb43f48837f49fea38025f3dcc5877d80ea8e881f64",
+      "result": "APPROVED",
+      "schema": "openline.lithic.asa_receipt.v1",
+      "signature": {
+        "algorithm": "Ed25519",
+        "public_key": "5228885f8f4f95d6aed09512c7de242bce9da684e45dcc9aee227375cf804dad",
+        "value": "60f9d897b4069bc5d9a477fc9d23ca8778148d37d748be4fbbe0c1152744792d83b7bb863ece0ff7bd1c07e71b778ef363767dc17d9f447e8e34404d801c7c0e"
+      },
+      "subject_id": "pilot-worker-1",
+      "txn_token": "fdee8872-f3af-42f7-8727-69a51bfdc23d"
+    },
+    {
+      "authority_proof": null,
+      "authorization_semantics": "One use by next matching ASA purchase within 60s; transaction token bound only at ASA decision; no settlement claim",
+      "decided_at": "2026-10-11T22:54:58.807059+00:00",
+      "gate_id": "lithic-pilot-http",
+      "mandate_id": "mandate_c28e603d51cf34e0",
+      "payload_hash": "0b1c344d668ec137ae8b772b1f4f9068348e3b2447f3c141d07fd47f5cb0dff3",
+      "payment_details": {
+        "account_type": null,
+        "acquirer_fee": 0,
+        "amounts": {
+          "cardholder": {
+            "amount": 100,
+            "conversion_rate": "1.000000",
+            "currency": "USD"
+          },
+          "hold": null,
+          "merchant": {
+            "amount": 100,
+            "currency": "USD"
+          },
+          "settlement": null
+        },
+        "avs": {
+          "address": "",
+          "address_on_file_match": "NOT_PRESENT",
+          "zipcode": ""
+        },
+        "card_token": "00000000-0000-4000-8000-000000000001",
+        "cardholder_authentication": null,
+        "cash_amount": 0,
+        "fleet_info": null,
+        "latest_challenge": null,
+        "merchant": {
+          "acceptor_id": "OPENLINE-SYNTHETIC-001",
+          "acquiring_institution_id": "000001",
+          "city": "NEW YORK",
+          "country": "USA",
+          "descriptor": "OPENLINE OFFLINE PILOT",
+          "mcc": "5999",
+          "phone_number": null,
+          "postal_code": null,
+          "state": "NY",
+          "street_address": null
+        },
+        "name_validation": null,
+        "network": "VISA",
+        "network_risk_score": null,
+        "network_specific_data": null,
+        "pos": {
+          "entry_mode": {
+            "card": "NOT_PRESENT",
+            "cardholder": "ELECTRONIC_ORDER",
+            "pan": "ECOMMERCE",
+            "pin_entered": false
+          }
+        },
+        "service_location": null,
+        "status": "AUTHORIZATION",
+        "token_info": null,
+        "transaction_initiator": "CARDHOLDER"
+      },
+      "principal_id": "openline:principal:afda0f8450702280c50b9e42a2ef88d4ae4d0270d62f35b5d1f7c605424c937f",
+      "reason": "NO_PENDING_AUTHORIZATION",
+      "request_fingerprint": "809332b588b5cc34dc22a40a49384a2bddf9b94ef231708058dcabf4841be971",
+      "result": "CARD_PAUSED",
+      "schema": "openline.lithic.asa_receipt.v1",
+      "signature": {
+        "algorithm": "Ed25519",
+        "public_key": "5228885f8f4f95d6aed09512c7de242bce9da684e45dcc9aee227375cf804dad",
+        "value": "73942b67d1b0e3dfff031a6d16747e4dbe7ccf45628b17b3111adc938bab79dd04620de39d6131096647607460d60be330a9f048780519c28026589e0c48880e"
+      },
+      "subject_id": "pilot-worker-1",
+      "txn_token": "d9ed06a4-0321-43ff-9aac-8cffab8e0259"
+    },
+    {
+      "authority_proof": {
+        "wallet_decision": {
+          "action": "lithic:authorize",
+          "decided_at": "2026-10-11T22:54:58.822111Z",
+          "decision": "ALLOWED",
+          "decision_authority": "RECEIVER_GATE",
+          "gate_id": "lithic-pilot-http",
+          "gate_public_key": "5228885f8f4f95d6aed09512c7de242bce9da684e45dcc9aee227375cf804dad",
+          "mandate_id": "mandate_1461c4b6a544fcff",
+          "payload_hash": "9c23d89256500503ab853c93c5aceaf4c5812aea11d49c46dfa847414e9caccd",
+          "presentation_hash": "f4183759bb59b9863b8271ff937645f78ecdb2ca9fabd6d50953fba9dca9619d",
+          "principal_id": "openline:principal:afda0f8450702280c50b9e42a2ef88d4ae4d0270d62f35b5d1f7c605424c937f",
+          "reason_codes": [],
+          "schema": "openline.gate.action_receipt.v1",
+          "signature": {
+            "algorithm": "Ed25519",
+            "public_key": "5228885f8f4f95d6aed09512c7de242bce9da684e45dcc9aee227375cf804dad",
+            "value": "39f1f90a4f66f6c664a78dfe8cd72f4aebd172be0dadf91c5082c8d96cb8af7fe9b064a06424a51eaa2459ee069f52ecff26b7121e63ee7c8ec314e3c07f430a"
+          },
+          "subject_id": "pilot-worker-2",
+          "wallet_policy_authority": "NONE"
+        },
+        "worker_intent": {
+          "details": {
+            "account_type": null,
+            "acquirer_fee": 0,
+            "amounts": {
+              "cardholder": {
+                "amount": 100,
+                "conversion_rate": "1.000000",
+                "currency": "USD"
+              },
+              "hold": null,
+              "merchant": {
+                "amount": 100,
+                "currency": "USD"
+              },
+              "settlement": null
+            },
+            "avs": {
+              "address": "",
+              "address_on_file_match": "NOT_PRESENT",
+              "zipcode": ""
+            },
+            "card_token": "00000000-0000-4000-8000-000000000001",
+            "cardholder_authentication": null,
+            "cash_amount": 0,
+            "fleet_info": null,
+            "latest_challenge": null,
+            "merchant": {
+              "acceptor_id": "OPENLINE-SYNTHETIC-001",
+              "acquiring_institution_id": "000001",
+              "city": "NEW YORK",
+              "country": "USA",
+              "descriptor": "OPENLINE OFFLINE PILOT",
+              "mcc": "5999",
+              "phone_number": null,
+              "postal_code": null,
+              "state": "NY",
+              "street_address": null
+            },
+            "name_validation": null,
+            "network": "VISA",
+            "network_risk_score": null,
+            "network_specific_data": null,
+            "pos": {
+              "entry_mode": {
+                "card": "NOT_PRESENT",
+                "cardholder": "ELECTRONIC_ORDER",
+                "pan": "ECOMMERCE",
+                "pin_entered": false
+              }
+            },
+            "service_location": null,
+            "status": "AUTHORIZATION",
+            "token_info": null,
+            "transaction_initiator": "CARDHOLDER"
+          },
+          "gate_id": "lithic-pilot-http",
+          "mandate_id": "mandate_1461c4b6a544fcff",
+          "payload_hash": "2464c913db68d36c21b8a21ba49b4bdd8c67c0753b27962889ee9ba9643c6be7",
+          "presentation_hash": "f4183759bb59b9863b8271ff937645f78ecdb2ca9fabd6d50953fba9dca9619d",
+          "principal_id": "openline:principal:afda0f8450702280c50b9e42a2ef88d4ae4d0270d62f35b5d1f7c605424c937f",
+          "schema": "openline.lithic.payment_intent.v1",
+          "signature": {
+            "algorithm": "Ed25519",
+            "public_key": "726e8d7bb0814ce06208dad191eab14d8e02555fd7cd2ee64d6dc2b5fa05cf1e",
+            "value": "f1a59414956984de71c9553f24736892d3c074e4bf3ddd56dfb21a1a54ed0c55ba07f98a2771156750991014516ad1c16e596e408c33bc95c3f931718c989905"
+          },
+          "subject_id": "pilot-worker-2"
+        }
+      },
+      "authorization_semantics": "One use by next matching ASA purchase within 60s; transaction token bound only at ASA decision; no settlement claim",
+      "decided_at": "2026-10-11T22:54:59.315289+00:00",
+      "gate_id": "lithic-pilot-http",
+      "mandate_id": "mandate_1461c4b6a544fcff",
+      "payload_hash": "3e2a37d39eaba7baeddfca3afc5560f4b47f2e3a9231765b5972ee15a7b136c1",
+      "payment_details": {
+        "account_type": null,
+        "acquirer_fee": 0,
+        "amounts": {
+          "cardholder": {
+            "amount": 100,
+            "conversion_rate": "1.000000",
+            "currency": "USD"
+          },
+          "hold": null,
+          "merchant": {
+            "amount": 100,
+            "currency": "USD"
+          },
+          "settlement": null
+        },
+        "avs": {
+          "address": "",
+          "address_on_file_match": "NOT_PRESENT",
+          "zipcode": ""
+        },
+        "card_token": "00000000-0000-4000-8000-000000000001",
+        "cardholder_authentication": null,
+        "cash_amount": 0,
+        "fleet_info": null,
+        "latest_challenge": null,
+        "merchant": {
+          "acceptor_id": "OPENLINE-SYNTHETIC-001",
+          "acquiring_institution_id": "000001",
+          "city": "NEW YORK",
+          "country": "USA",
+          "descriptor": "OPENLINE OFFLINE PILOT",
+          "mcc": "5999",
+          "phone_number": null,
+          "postal_code": null,
+          "state": "NY",
+          "street_address": null
+        },
+        "name_validation": null,
+        "network": "VISA",
+        "network_risk_score": null,
+        "network_specific_data": null,
+        "pos": {
+          "entry_mode": {
+            "card": "NOT_PRESENT",
+            "cardholder": "ELECTRONIC_ORDER",
+            "pan": "ECOMMERCE",
+            "pin_entered": false
+          }
+        },
+        "service_location": null,
+        "status": "AUTHORIZATION",
+        "token_info": null,
+        "transaction_initiator": "CARDHOLDER"
+      },
+      "principal_id": "openline:principal:afda0f8450702280c50b9e42a2ef88d4ae4d0270d62f35b5d1f7c605424c937f",
+      "reason": "VERIFIED_NEXT_MATCHING_AUTHORIZATION",
+      "request_fingerprint": "52cba55fa9af70081894531637bd1e53e40933a966e3b6f6e8f29640eef28167",
+      "result": "APPROVED",
+      "schema": "openline.lithic.asa_receipt.v1",
+      "signature": {
+        "algorithm": "Ed25519",
+        "public_key": "5228885f8f4f95d6aed09512c7de242bce9da684e45dcc9aee227375cf804dad",
+        "value": "06d19c0d75340ee921c9688578b29b07fb384cafd6be40323fc7997df516fb1808b257d1ba294bd5f3d439cc06a008fcab0ae6f248b36db1ce3bec014c3e9c04"
+      },
+      "subject_id": "pilot-worker-2",
+      "txn_token": "db10cfb5-4ee6-492b-b315-8e498f6bfe6f"
+    }
+  ],
+  "stage_order": [
+    "owner-approved",
+    "owner-revoked",
+    "successor-authorized"
+  ]
+}

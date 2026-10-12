@@ -1,0 +1,46 @@
+{
+  "concurrency": 8,
+  "timing": "client through localhost HTTP; complete response body; seconds",
+  "samples": [
+    {
+      "status": 503,
+      "result": null,
+      "elapsed_seconds": 1.0038324329999995
+    },
+    {
+      "status": 503,
+      "result": null,
+      "elapsed_seconds": 1.0047273920000066
+    },
+    {
+      "status": 503,
+      "result": null,
+      "elapsed_seconds": 1.0027262290000039
+    },
+    {
+      "status": 503,
+      "result": null,
+      "elapsed_seconds": 1.0027308960000028
+    },
+    {
+      "status": 503,
+      "result": null,
+      "elapsed_seconds": 1.0032582099999985
+    },
+    {
+      "status": 503,
+      "result": null,
+      "elapsed_seconds": 1.002614244
+    },
+    {
+      "status": 503,
+      "result": null,
+      "elapsed_seconds": 1.002785578000001
+    },
+    {
+      "status": 503,
+      "result": null,
+      "elapsed_seconds": 2.0044925650000067
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "name": "docs-asa",
+    "url": "https://docs.lithic.com/docs/auth-stream-access-asa",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "name": "docs-simulator",
+    "url": "https://docs.lithic.com/reference/simulate-authorization",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  {
+    "name": "sdk-head",
+    "url": "https://api.github.com/repos/lithic-com/lithic-python/commits/main",
+    "status": 200,
+    "bytes": 20056,
+    "sha256": "5de4ef9c2413526a929b6218367d1330a40e86499d0867f0b945e7f32ded5204",
+    "path": "/workspace/openline-lithic-external-gates-001/sdk-head.json"
+  },
+  {
+    "name": "openapi-head",
+    "url": "https://api.github.com/repos/lithic-com/lithic-openapi/commits/main",
+    "status": 200,
+    "bytes": 4835,
+    "sha256": "3e4a0ef9c1285cbe1c0573ae6d1dcdb873756df1636a866b7815bd52d3ef8d7d",
+    "path": "/workspace/openline-lithic-external-gates-001/openapi-head.json"
+  },
+  {
+    "name": "demo-readme",
+    "url": "https://raw.githubusercontent.com/lithic-com/asa-demo-python/main/README.md",
+    "status": 200,
+    "bytes": 6808,
+    "sha256": "0c0ba7f0266aa9f7791d067be7e3c386992cd79f70b8a481b08bffba18f169fd",
+    "path": "/workspace/openline-lithic-external-gates-001/demo-readme.txt"
+  },
+  {
+    "name": "openapi-current",
+    "url": "https://raw.githubusercontent.com/lithic-com/lithic-openapi/main/lithic-openapi.yml",
+    "status": 200,
+    "bytes": 1174181,
+    "sha256": "13f01516dfbc129804b5086b1a45beb8e413b24148458af234e01e46a1a4f09c",
+    "path": "/workspace/openline-lithic-external-gates-001/openapi-current.yml"
+  }
+]

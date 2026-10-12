@@ -1,0 +1,76 @@
+{
+  "audit": "OPENLINE-LITHIC-ACCEPTANCE-001",
+  "offline_acceptance": "PASS / ACCEPT within documented narrow contract",
+  "external_sandbox_readiness": "NOT READY for main sequence; provider-specific gates unresolved",
+  "tested_implementation": "abf6bc72f4375bd43d2c274812e5dadd68f03e41",
+  "delivery": "8a537d4ff598541bb21cc564b3220ec97ef09fb3",
+  "fresh_checks": {
+    "receiver": 72,
+    "gateway_atomic": 7,
+    "gateway_actual_envoy": 25,
+    "total": 104,
+    "skips": 0,
+    "failures": 0
+  },
+  "preserved_evidence_hashes_verified": 39,
+  "ci_measurements_byte_matched": 4,
+  "runtime": {
+    "module": "/workspace/openline-lithic-acceptance-001/venv/lib/python3.12/site-packages/openline_receiver/lithic_adapter.py",
+    "module_sha256": "8b2f91b3e6c05169c6cee5eb37dee1681ff10c7edba421838f1ddf8bccfce92d",
+    "installed_matches_delivery": true,
+    "versions": {
+      "cryptography": "50.0.1",
+      "lithic": "0.132.0",
+      "standardwebhooks": "1.1.0",
+      "jsonschema": "4.26.0",
+      "grpcio": "1.84.0",
+      "protobuf": "7.36.2"
+    }
+  },
+  "local_timing": [
+    {
+      "name": "asa-sequence-budget.json",
+      "samples": 3,
+      "concurrency": 1,
+      "max_ms": 7.213356999272946,
+      "statuses": [
+        200
+      ]
+    },
+    {
+      "name": "http-duplicate-budget.json",
+      "samples": 80,
+      "concurrency": 8,
+      "max_ms": 33.86101600335678,
+      "statuses": [
+        200
+      ]
+    },
+    {
+      "name": "http-unavailable-writer-budget.json",
+      "samples": 8,
+      "concurrency": 8,
+      "max_ms": 1008.900225002435,
+      "statuses": [
+        503
+      ]
+    }
+  ],
+  "blockers": [
+    {
+      "id": "E1",
+      "severity": "HIGH: external functional gate",
+      "property": "provider generated exact intent fields not preconstructible from simulator parameters; fixture ID exceeds simulator max",
+      "minimal_step": "confirmed provider template or separately approved unarmed calibration; review constraints only if unstable"
+    },
+    {
+      "id": "E2",
+      "severity": "HIGH: external enforcement gate",
+      "property": "actual program provider failure/default decision and deadline unestablished",
+      "minimal_step": "authoritative program evidence or separately approved bounded fault confirmation"
+    }
+  ],
+  "repo_modified": false,
+  "pr_modified": false,
+  "provider_actions": 0
+}

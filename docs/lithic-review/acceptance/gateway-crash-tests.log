@@ -1,0 +1,15 @@
+test_crash_after_commit_preserves_verifiable_evidence (gateway.poppy.test_atomic_receipt.AtomicReceiptTests.test_crash_after_commit_preserves_verifiable_evidence)
+Lost HTTP response must not erase a committed receipt. ... ok
+test_crash_while_signing_rolls_back_ledger_effect (gateway.poppy.test_atomic_receipt.AtomicReceiptTests.test_crash_while_signing_rolls_back_ledger_effect)
+Process death before SQLite COMMIT must consume no approval. ... ok
+test_four_separate_processes_one_approval_one_effect (gateway.poppy.test_atomic_receipt.AtomicReceiptTests.test_four_separate_processes_one_approval_one_effect)
+SQLite atomicity must hold across independent OS processes. ... ok
+test_invalid_amount_and_self_payment_cannot_move_money (gateway.poppy.test_atomic_receipt.AtomicReceiptTests.test_invalid_amount_and_self_payment_cannot_move_money) ... ok
+test_reuse_of_approval_does_not_double_execute (gateway.poppy.test_atomic_receipt.AtomicReceiptTests.test_reuse_of_approval_does_not_double_execute) ... ok
+test_signed_receipt_is_identical_to_durable_evidence (gateway.poppy.test_atomic_receipt.AtomicReceiptTests.test_signed_receipt_is_identical_to_durable_evidence) ... ok
+test_signing_failure_cannot_commit_effect_or_use_approval (gateway.poppy.test_atomic_receipt.AtomicReceiptTests.test_signing_failure_cannot_commit_effect_or_use_approval) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.270s
+
+OK

@@ -1,0 +1,20 @@
+{
+  "owner_approval_in_principle": true,
+  "execution_authorized": false,
+  "armed_testing": "NO-GO",
+  "actual_containment": "UNVERIFIED",
+  "provider_written_answers_first": true,
+  "five_cases_are_catalogue_not_budget": true,
+  "required_plan_corrections": [
+    "fresh separate state with no historical APPROVED rows",
+    "resolved sandbox destination guarded; overrides/redirects controlled",
+    "latched serial caller, reconciliation before next POST, preapproved abort mode"
+  ],
+  "credential_access": false,
+  "network_calls": 0,
+  "deployments": 0,
+  "test_reruns": 0,
+  "pr_changes": false,
+  "preserved_research_hashes_verified": 29,
+  "review_sha256": "2f47cbe0eb650b6773f552bd688727fff25a8679628666f4357547d49591e0d4"
+}

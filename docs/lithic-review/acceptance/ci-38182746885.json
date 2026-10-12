@@ -1,0 +1,80 @@
+{
+  "conclusion": "success",
+  "databaseId": 38182746885,
+  "headSha": "abf6bc72f4375bd43d2c274812e5dadd68f03e41",
+  "jobs": [
+    {
+      "completedAt": "2026-10-11T23:02:59Z",
+      "conclusion": "success",
+      "databaseId": 114598583682,
+      "name": "offline-preflight",
+      "startedAt": "2026-10-11T23:02:12Z",
+      "status": "completed",
+      "steps": [
+        {
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@v4",
+          "number": 2,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Require the verified PR 107 base and unchanged Gateway protections",
+          "number": 3,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Install pinned tests and receiver package in clean environment",
+          "number": 4,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Require official verifier, real signed Wallet flow and offline pilot regressions",
+          "number": 5,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Require unchanged atomic receipt and crash tests",
+          "number": 6,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Require unchanged actual Envoy Gateway and Wallet integration",
+          "number": 7,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Preserve public evidence only",
+          "number": 8,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v4",
+          "number": 16,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 17,
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/terryncew/openline-receipt-gate/actions/runs/38182746885/job/114598583682"
+    }
+  ],
+  "status": "completed",
+  "url": "https://github.com/terryncew/openline-receipt-gate/actions/runs/38182746885"
+}

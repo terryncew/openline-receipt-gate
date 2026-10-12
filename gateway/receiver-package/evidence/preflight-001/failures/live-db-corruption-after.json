@@ -1,0 +1,74 @@
+[
+  {
+    "case": "replace-corrupt",
+    "checkpoint": [
+      [
+        0,
+        0,
+        0
+      ]
+    ],
+    "inode_changed": true,
+    "size_before": 73728,
+    "size_after": 13,
+    "error": "ReceiverStateError",
+    "cause": "ReceiverStateError",
+    "cause_message": "Receiver state file replaced or truncated",
+    "restart_error": "ReceiverStateError",
+    "restart_cause": "file is not a database"
+  },
+  {
+    "case": "replace-empty",
+    "checkpoint": [
+      [
+        0,
+        0,
+        0
+      ]
+    ],
+    "inode_changed": true,
+    "size_before": 73728,
+    "size_after": 0,
+    "error": "ReceiverStateError",
+    "cause": "ReceiverStateError",
+    "cause_message": "Receiver state file replaced or truncated",
+    "restart_error": "ReceiverStateError",
+    "restart_cause": "no such table: metadata"
+  },
+  {
+    "case": "overwrite-header",
+    "checkpoint": [
+      [
+        0,
+        0,
+        0
+      ]
+    ],
+    "inode_changed": false,
+    "size_before": 73728,
+    "size_after": 73728,
+    "error": "ReceiverStateError",
+    "cause": "ReceiverStateError",
+    "cause_message": "Receiver state header corrupt",
+    "restart_error": "ReceiverStateError",
+    "restart_cause": "file is not a database"
+  },
+  {
+    "case": "truncate-main",
+    "checkpoint": [
+      [
+        0,
+        0,
+        0
+      ]
+    ],
+    "inode_changed": false,
+    "size_before": 73728,
+    "size_after": 13,
+    "error": "ReceiverStateError",
+    "cause": "ReceiverStateError",
+    "cause_message": "Receiver state file replaced or truncated",
+    "restart_error": "ReceiverStateError",
+    "restart_cause": "file is not a database"
+  }
+]

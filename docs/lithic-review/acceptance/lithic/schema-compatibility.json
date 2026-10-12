@@ -1,0 +1,82 @@
+{
+  "head": "8a537d4ff598541bb21cc564b3220ec97ef09fb3",
+  "official_openapi_sha256": "13f01516dfbc129804b5086b1a45beb8e413b24148458af234e01e46a1a4f09c",
+  "fixture_valid_against_full_pinned_official_openapi": true,
+  "minimal_responses_valid_against_full_pinned_official_openapi": [
+    "APPROVED",
+    "CARD_PAUSED",
+    "UNAUTHORIZED_MERCHANT",
+    "SUSPECTED_FRAUD"
+  ],
+  "extracted_request_schema_exact": true,
+  "extracted_response_schema_exact": true,
+  "simulator_parameters": [
+    "amount",
+    "descriptor",
+    "mcc",
+    "merchant_acceptor_city",
+    "merchant_acceptor_country",
+    "merchant_acceptor_id",
+    "merchant_acceptor_state",
+    "merchant_amount",
+    "merchant_currency",
+    "pan",
+    "partial_approval_capable",
+    "pin",
+    "status"
+  ],
+  "fixture_acceptor_id_length": 22,
+  "simulator_acceptor_id_max_length": 15,
+  "fixture_acceptor_id_replay_errors": [
+    "'OPENLINE-SYNTHETIC-001' is too long"
+  ],
+  "simulator_schema_has_transaction_token": false,
+  "simulator_schema_has_acquiring_institution_id": false,
+  "simulator_schema_has_pos": false,
+  "simulator_schema_has_avs": false,
+  "simulator_schema_has_transaction_initiator": false,
+  "no_external_calls": true,
+  "extracted_resolved_response_schema_exact": true,
+  "current_sdk_simulator_commit": "826a8c940571e88bd4682a38e22b1c9f999cef93",
+  "current_sdk_simulator_parameters": [
+    "amount",
+    "descriptor",
+    "pan",
+    "billing_currency",
+    "mcc",
+    "merchant_acceptor_city",
+    "merchant_acceptor_country",
+    "merchant_acceptor_id",
+    "merchant_acceptor_state",
+    "merchant_amount",
+    "merchant_currency",
+    "partial_approval_capable",
+    "pin",
+    "settlement_currency",
+    "status"
+  ],
+  "current_sdk_simulator_additional_currency_parameters": [
+    "billing_currency",
+    "settlement_currency"
+  ],
+  "current_sdk_simulator_sha256": "8d0b6f89f1deae693d8b8e02f7922223bbc078e9dfb1b9ae01ab2ba86ef72329",
+  "current_sdk_simulator_still_cannot_set_bound_fields": [
+    "merchant.acquiring_institution_id",
+    "transaction_initiator",
+    "acquirer_fee",
+    "cash_amount",
+    "amounts.hold",
+    "amounts.settlement",
+    "pos",
+    "avs",
+    "network",
+    "network_risk_score",
+    "cardholder_authentication",
+    "token_info",
+    "service_location",
+    "name_validation",
+    "network_specific_data",
+    "fleet_info",
+    "latest_challenge"
+  ]
+}

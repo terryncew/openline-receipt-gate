@@ -1,0 +1,41 @@
+test_corrupt_cached_fingerprint_cannot_rebind_valid_receipt_to_other_purchase (test_lithic_atomicity.AtomicityTests.test_corrupt_cached_fingerprint_cannot_rebind_valid_receipt_to_other_purchase) ... FAIL
+test_corrupt_cached_result_cannot_turn_signed_decline_into_approval (test_lithic_atomicity.AtomicityTests.test_corrupt_cached_result_cannot_turn_signed_decline_into_approval) ... FAIL
+test_database_corruption_is_not_reinitialized (test_lithic_atomicity.AtomicityTests.test_database_corruption_is_not_reinitialized) ... ok
+test_independent_process_duplicate_retries_commit_one_identical_decision (test_lithic_atomicity.AtomicityTests.test_independent_process_duplicate_retries_commit_one_identical_decision) ... ok
+test_independent_processes_unique_tokens_consume_pending_exactly_once (test_lithic_atomicity.AtomicityTests.test_independent_processes_unique_tokens_consume_pending_exactly_once) ... ok
+test_live_missing_or_corrupt_receiver_signing_metadata_fails_closed (test_lithic_atomicity.AtomicityTests.test_live_missing_or_corrupt_receiver_signing_metadata_fails_closed) ... ok
+test_missing_state_is_not_implicitly_recreated_and_live_unavailability_declines (test_lithic_atomicity.AtomicityTests.test_missing_state_is_not_implicitly_recreated_and_live_unavailability_declines) ... ok
+test_pending_details_corruption_cannot_change_worker_approved_merchant (test_lithic_atomicity.AtomicityTests.test_pending_details_corruption_cannot_change_worker_approved_merchant) ... ok
+test_pending_expiry_corruption_cannot_extend_signed_authorization_lifetime (test_lithic_atomicity.AtomicityTests.test_pending_expiry_corruption_cannot_extend_signed_authorization_lifetime) ... ok
+test_process_exit_after_commit_before_response_preserves_retry_and_signed_receipt (test_lithic_atomicity.AtomicityTests.test_process_exit_after_commit_before_response_preserves_retry_and_signed_receipt) ... ok
+test_process_exit_during_signing_rolls_back_consumption_and_recovers_after_restart (test_lithic_atomicity.AtomicityTests.test_process_exit_during_signing_rolls_back_consumption_and_recovers_after_restart) ... ok
+test_restart_rejects_changed_receiver_private_key (test_lithic_atomicity.AtomicityTests.test_restart_rejects_changed_receiver_private_key) ... ok
+test_reused_token_with_changed_contents_declines_without_replacing_receipt (test_lithic_atomicity.AtomicityTests.test_reused_token_with_changed_contents_declines_without_replacing_receipt) ... ok
+test_signed_wallet_decision_tampering_cannot_authorize_pending (test_lithic_atomicity.AtomicityTests.test_signed_wallet_decision_tampering_cannot_authorize_pending) ... ok
+test_signing_exception_rolls_back_pending_and_decision_without_key_change (test_lithic_atomicity.AtomicityTests.test_signing_exception_rolls_back_pending_and_decision_without_key_change) ... ok
+test_sqlite_writer_unavailability_declines_within_six_second_budget (test_lithic_atomicity.AtomicityTests.test_sqlite_writer_unavailability_declines_within_six_second_budget) ... ok
+
+======================================================================
+FAIL: test_corrupt_cached_fingerprint_cannot_rebind_valid_receipt_to_other_purchase (test_lithic_atomicity.AtomicityTests.test_corrupt_cached_fingerprint_cannot_rebind_valid_receipt_to_other_purchase)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/gateway/receiver-package/test_lithic_atomicity.py", line 304, in test_corrupt_cached_fingerprint_cannot_rebind_valid_receipt_to_other_purchase
+    self.assertEqual(self.adapter.handle_asa(changed), {"result": "SUSPECTED_FRAUD"})
+AssertionError: {'result': 'APPROVED'} != {'result': 'SUSPECTED_FRAUD'}
+- {'result': 'APPROVED'}
++ {'result': 'SUSPECTED_FRAUD'}
+
+======================================================================
+FAIL: test_corrupt_cached_result_cannot_turn_signed_decline_into_approval (test_lithic_atomicity.AtomicityTests.test_corrupt_cached_result_cannot_turn_signed_decline_into_approval)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/gateway/receiver-package/test_lithic_atomicity.py", line 291, in test_corrupt_cached_result_cannot_turn_signed_decline_into_approval
+    self.assertEqual(self.adapter.handle_asa(changed), {"result": "SUSPECTED_FRAUD"})
+AssertionError: {'result': 'APPROVED'} != {'result': 'SUSPECTED_FRAUD'}
+- {'result': 'APPROVED'}
++ {'result': 'SUSPECTED_FRAUD'}
+
+----------------------------------------------------------------------
+Ran 16 tests in 2.647s
+
+FAILED (failures=2)

@@ -1,0 +1,9 @@
+{
+  "baseRefName": "fix/receiver-proof-gateway-path-001",
+  "headRefName": "codex/openline-lithic-preflight-001",
+  "headRefOid": "8a537d4ff598541bb21cc564b3220ec97ef09fb3",
+  "isDraft": true,
+  "number": 108,
+  "state": "OPEN",
+  "url": "https://github.com/terryncew/openline-receipt-gate/pull/108"
+}

@@ -1,0 +1,39 @@
+test_concurrent_same_process_writer_unavailability_has_bounded_lock_wait (test_lithic_atomicity.AtomicityTests.test_concurrent_same_process_writer_unavailability_has_bounded_lock_wait) ... ok
+test_corrupt_cached_fingerprint_cannot_rebind_valid_receipt_to_other_purchase (test_lithic_atomicity.AtomicityTests.test_corrupt_cached_fingerprint_cannot_rebind_valid_receipt_to_other_purchase) ... ok
+test_corrupt_cached_result_cannot_turn_signed_decline_into_approval (test_lithic_atomicity.AtomicityTests.test_corrupt_cached_result_cannot_turn_signed_decline_into_approval) ... ok
+test_database_corruption_is_not_reinitialized (test_lithic_atomicity.AtomicityTests.test_database_corruption_is_not_reinitialized) ... ok
+test_independent_process_duplicate_retries_commit_one_identical_decision (test_lithic_atomicity.AtomicityTests.test_independent_process_duplicate_retries_commit_one_identical_decision) ... ok
+test_independent_processes_unique_tokens_consume_pending_exactly_once (test_lithic_atomicity.AtomicityTests.test_independent_processes_unique_tokens_consume_pending_exactly_once) ... ok
+test_live_missing_or_corrupt_receiver_signing_metadata_fails_closed (test_lithic_atomicity.AtomicityTests.test_live_missing_or_corrupt_receiver_signing_metadata_fails_closed) ... ok
+test_malformed_pending_proof_declines_without_consuming_authorization (test_lithic_atomicity.AtomicityTests.test_malformed_pending_proof_declines_without_consuming_authorization) ... ERROR
+test_missing_state_is_not_implicitly_recreated_and_live_unavailability_declines (test_lithic_atomicity.AtomicityTests.test_missing_state_is_not_implicitly_recreated_and_live_unavailability_declines) ... ok
+test_pending_details_corruption_cannot_change_worker_approved_merchant (test_lithic_atomicity.AtomicityTests.test_pending_details_corruption_cannot_change_worker_approved_merchant) ... ok
+test_pending_expiry_corruption_cannot_extend_signed_authorization_lifetime (test_lithic_atomicity.AtomicityTests.test_pending_expiry_corruption_cannot_extend_signed_authorization_lifetime) ... ok
+test_process_exit_after_commit_before_response_preserves_retry_and_signed_receipt (test_lithic_atomicity.AtomicityTests.test_process_exit_after_commit_before_response_preserves_retry_and_signed_receipt) ... ok
+test_process_exit_during_signing_rolls_back_consumption_and_recovers_after_restart (test_lithic_atomicity.AtomicityTests.test_process_exit_during_signing_rolls_back_consumption_and_recovers_after_restart) ... ok
+test_restart_rejects_changed_receiver_private_key (test_lithic_atomicity.AtomicityTests.test_restart_rejects_changed_receiver_private_key) ... ok
+test_reused_token_with_changed_contents_declines_without_replacing_receipt (test_lithic_atomicity.AtomicityTests.test_reused_token_with_changed_contents_declines_without_replacing_receipt) ... ok
+test_signed_wallet_decision_tampering_cannot_authorize_pending (test_lithic_atomicity.AtomicityTests.test_signed_wallet_decision_tampering_cannot_authorize_pending) ... ok
+test_signing_exception_rolls_back_pending_and_decision_without_key_change (test_lithic_atomicity.AtomicityTests.test_signing_exception_rolls_back_pending_and_decision_without_key_change) ... ok
+test_sqlite_writer_unavailability_declines_within_six_second_budget (test_lithic_atomicity.AtomicityTests.test_sqlite_writer_unavailability_declines_within_six_second_budget) ... ok
+test_writer_connection_preserves_wal_full_and_independent_receiver_pin (test_lithic_atomicity.AtomicityTests.test_writer_connection_preserves_wal_full_and_independent_receiver_pin) ... ok
+
+======================================================================
+ERROR: test_malformed_pending_proof_declines_without_consuming_authorization (test_lithic_atomicity.AtomicityTests.test_malformed_pending_proof_declines_without_consuming_authorization)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/gateway/receiver-package/test_lithic_atomicity.py", line 292, in test_malformed_pending_proof_declines_without_consuming_authorization
+    self.assertEqual(self.adapter.handle_asa(self.request), {"result": "SUSPECTED_FRAUD"})
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/openline-receipt-gate/gateway/receiver-package/openline_receiver/lithic_adapter.py", line 441, in handle_asa
+    proof = self._verify_pending_proof(pending, details, timeline)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/openline-receipt-gate/gateway/receiver-package/openline_receiver/lithic_adapter.py", line 359, in _verify_pending_proof
+    "presentation_hash": decision.get("presentation_hash"), "details": details}
+                         ^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+
+----------------------------------------------------------------------
+Ran 19 tests in 3.760s
+
+FAILED (errors=1)

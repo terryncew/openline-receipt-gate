@@ -1,0 +1,5 @@
+# Test-only: no Lithic API call, API key, enrollment or card needed.
+cryptography==50.0.1
+jsonschema==4.26.0
+standardwebhooks==1.1.0
+lithic[webhooks] @ git+https://github.com/lithic-com/lithic-python.git@a1e8c1861ecb7053ef97aad80dcb48aa8fda8b3f

@@ -1,0 +1,80 @@
+{
+  "scope": "synthetic offline one-owner one-card exactly 100 USD cents; protected host, no old state restoration",
+  "probes": {
+    "preserved_evidence_manifest": {
+      "files": 39,
+      "hash_mismatches": []
+    },
+    "preserved_signed_sequence": {
+      "receipts_verified": 3,
+      "unique_transaction_tokens": 3,
+      "receiver_pin_matches_explicit_file": true,
+      "results": [
+        "APPROVED",
+        "CARD_PAUSED",
+        "APPROVED"
+      ]
+    },
+    "public_evidence_sensitive_field_scan": {
+      "sensitive_field_names": []
+    },
+    "standalone_verifier_positive_and_negatives": {
+      "original": {
+        "exit_code": 0,
+        "expected_acceptance": true
+      },
+      "wrong_pin": {
+        "exit_code": 1,
+        "expected_acceptance": false
+      },
+      "changed_result": {
+        "exit_code": 1,
+        "expected_acceptance": false
+      },
+      "changed_signature": {
+        "exit_code": 1,
+        "expected_acceptance": false
+      }
+    },
+    "receipt_credential_isolation": {
+      "http_statuses": {
+        "correct_bearer": 200,
+        "asa_secret_as_bearer": 401,
+        "receiver_public_pin_as_bearer": 401,
+        "worker_private_key_as_bearer": 401,
+        "unrelated_bearer": 401,
+        "correct_bearer_unknown_receipt": 401
+      },
+      "receipt_reads_application_changes": 0,
+      "stored_only_sha256_bearer_hash": true,
+      "receiver_file_permissions": {
+        "main": "0o600",
+        "-wal": "0o600",
+        "-shm": "0o600"
+      }
+    },
+    "coherent_complete_database_restore_boundary": {
+      "cached_old_retry_after_revocation": [
+        200,
+        {
+          "result": "APPROVED"
+        }
+      ],
+      "new_token_after_revocation": [
+        200,
+        {
+          "result": "CARD_PAUSED"
+        }
+      ],
+      "new_token_after_unsupported_backup_restore": [
+        200,
+        {
+          "result": "APPROVED"
+        }
+      ],
+      "same_independently_pinned_receiver_key": true,
+      "classification": "Documented unsupported boundary, not an in-scope material blocker; protect storage and do not restore old state."
+    }
+  },
+  "result": "PASS; no material state or receipt blocker reproduced within documented offline pilot scope"
+}

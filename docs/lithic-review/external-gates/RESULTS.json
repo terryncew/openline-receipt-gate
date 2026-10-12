@@ -1,0 +1,30 @@
+{
+  "task": "OPENLINE-LITHIC-EXTERNAL-GATES-001",
+  "callback_matching": "PARTIALLY RESOLVED",
+  "provider_failure_behavior": "PARTIALLY RESOLVED",
+  "recommendation": "NO-GO armed; unarmed calibration justified for explicit owner review",
+  "current_sdk_commit": "826a8c940571e88bd4682a38e22b1c9f999cef93",
+  "current_openapi_commit": "0afad9e69e57f2e0bbace17c1f03f79c97c07c76",
+  "documented": [
+    "15 current SDK inputs vs13 OpenAPI inputs",
+    "no advance simulator token input; token present in ASA before decision",
+    "unknown string result declines CUSTOM_ASA_RESULT",
+    "HTTP5XX immediate retry once",
+    "ttl deprecated and approximate"
+  ],
+  "unknown": [
+    "complete matching callback template",
+    "exact provider deadline/time origin",
+    "final default behavior after timeout/exhausted503/malformedJSON/invalidshape",
+    "actual deployed signature/response interoperability"
+  ],
+  "calibration_maximum_new_simulator_posts": 5,
+  "calibration_armed": false,
+  "calibration_executed": false,
+  "tests_rerun": 0,
+  "provider_api_calls": 0,
+  "repository_unchanged": true,
+  "pr_unchanged": true,
+  "prior_audit_hashes_verified": 42,
+  "documentation_site_status": "proxy403; content not read"
+}

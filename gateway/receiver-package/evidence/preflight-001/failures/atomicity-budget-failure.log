@@ -1,0 +1,14 @@
+Before the bounded RLock repair, the real eight-thread SQLite writer-lock test failed:
+
+FAIL: test_concurrent_same_process_writer_unavailability_has_bounded_lock_wait
+AssertionError: 8.01887345900468 not less than 6
+
+Ran 1 test in 8.033s
+FAILED (failures=1)
+
+Command:
+/workspace/openline-receipt-gate/.venv/bin/python -m unittest -v test_lithic_atomicity.AtomicityTests.test_concurrent_same_process_writer_unavailability_has_bounded_lock_wait
+
+The subprocess runner returned exit code 1. The writer held BEGIN IMMEDIATE
+throughout all eight simultaneous requests. This is a captured failure summary,
+not a complete raw log (the complete tool output remains in conversation history).

@@ -1,0 +1,40 @@
+{
+  "sdk_version": "0.132.0",
+  "transport": "httpx.MockTransport only; no network or provider requests",
+  "results": [
+    {
+      "setting": "sdk-default",
+      "request_count": 3,
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/v1/simulate/authorize",
+          "has_idempotency_header": false
+        },
+        {
+          "method": "POST",
+          "path": "/v1/simulate/authorize",
+          "has_idempotency_header": false
+        },
+        {
+          "method": "POST",
+          "path": "/v1/simulate/authorize",
+          "has_idempotency_header": false
+        }
+      ],
+      "final_exception": "InternalServerError"
+    },
+    {
+      "setting": "max_retries=0",
+      "request_count": 1,
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/v1/simulate/authorize",
+          "has_idempotency_header": false
+        }
+      ],
+      "final_exception": "InternalServerError"
+    }
+  ]
+}

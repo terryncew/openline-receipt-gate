@@ -1,0 +1,13 @@
+{
+  "module": "/workspace/openline-lithic-acceptance-001/venv/lib/python3.12/site-packages/openline_receiver/lithic_adapter.py",
+  "module_sha256": "8b2f91b3e6c05169c6cee5eb37dee1681ff10c7edba421838f1ddf8bccfce92d",
+  "installed_matches_delivery": true,
+  "versions": {
+    "cryptography": "50.0.1",
+    "lithic": "0.132.0",
+    "standardwebhooks": "1.1.0",
+    "jsonschema": "4.26.0",
+    "grpcio": "1.84.0",
+    "protobuf": "7.36.2"
+  }
+}
