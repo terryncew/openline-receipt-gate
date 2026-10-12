@@ -1,25 +1,31 @@
-# Superseding correction — STALL-ISOLATION-002
+# Superseding scientific record — STALL-ISOLATION-002
 
-**Current verdict: INCONCLUSIVE** (002 is pending execution at this checkpoint).
-The historical **FAIL / NO_STALL** conclusion below was too broad.
-The recorded ~4ms 403 responses before and after restart are real,
-but requests carried no valid signed inspection authority; ext_authz
-denied them before they reached mockapi. These runs demonstrate that
-Envoy responded, not that its authorized mockapi upstream recovered.
+**Final verdict: INCONCLUSIVE** — one bounded authorized-path GHA run
+[38198187700](https://github.com/terryncew/openline-receipt-gate/actions/runs/38198187700)
+on test commit 1efbb5ee4c44638d6bd72ba2cd12ff8d76077845.
+The inspection-only mandate and containment passed, but the first
+pre-restart signed GET /api/balance/treasury returned HTTP 403
+(curl exit=0; curl time=0.002056s; 0.011450s local wall time).
+The strict authorization stop condition fired. There was no valid
+authorized baseline and **no full-stack restart was attempted**.
+This is neither REPRODUCED nor NOT_REPRODUCED for the original failure.
 
-**Original failing evidence:** GHA run 38122910173 (20/22 PASS,
-authorized inspector balance reads unavailable for 90s after full-stack
-restart). See gateway/subscription001/EVIDENCE-docker.md for original
-records. The 001 script's curl code 000 conflates error types, and its
-workflow used an exit-code-masking operator. Do not rewrite 001 history.
+The original 001 **FAIL / NO_STALL** conclusion was unsupported:
+its ~4ms 403s were unauthenticated denies and never measured the
+mockapi upstream. The original failing authorized path is recorded in
+GHA [38122910173](https://github.com/terryncew/openline-receipt-gate/actions/runs/38122910173)
+(20/22 checks; authorized recovery failed for 90 seconds).
+Keep these records separate and unchanged.
 
-The new single-run test is inspection-only with signed authority, a
-valid HTTP 200 and expected balances before restart, the original
-compose restart, a strict 90-second authorized recovery window, and
-separate curl exit/status/body validity measurements. No code fix,
-payments, merge, paid API, or distribution changes are authorized.
-
-Final results will be in STALL-ISOLATION-002-REPORT.md.
+002 cluster evidence showed authz_cluster cx_connect_fail=1 and
+rq_error=1; direct mockapi GET from inside authz container returned
+HTTP 200 (treasury 1,000,000). This indicates a failing or unavailable
+authorization hop at the first probe, **not a proven root cause**.
+See [STALL-ISOLATION-002-REPORT.md](STALL-ISOLATION-002-REPORT.md)
+and the preserved [GHA artifact](https://github.com/terryncew/openline-receipt-gate/actions/runs/38198187700/artifacts/11724102133).
+Run budget exhausted: **one run, no retry**. Temporary trigger removed;
+no gateway fix, merge, payment, public deployment, paid API, or baseline
+change.
 
 ---
 
