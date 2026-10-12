@@ -1,0 +1,31 @@
+{
+  "passed": 6,
+  "failures": 0,
+  "errors": 0,
+  "observations": [
+    {
+      "property": "owner scope is repeatable; no aggregate $1 or exact-merchant owner cap",
+      "observed": "two distinct $1 purchases at different merchants APPROVED under the same owner scope grant"
+    },
+    {
+      "property": "first-match covers previously initiated/unseen ASA as well as newly initiated purchases",
+      "observed": "matching purchase created and authenticated 120 seconds before the intent was APPROVED when first delivered after preauthorization"
+    },
+    {
+      "property": "no exact transaction/order binding before ASA",
+      "observed": "different token with identical details APPROVED; intended token then CARD_PAUSED"
+    },
+    {
+      "property": "revocation boundary is receiver admission, not owner signing",
+      "observed": "signed but undelivered owner revocation did not stop pending APPROVED decision"
+    },
+    {
+      "property": "cryptographic independence from worker assertion",
+      "observed": "foreign key claiming legitimate mandate refused before pending permission"
+    },
+    {
+      "property": "old worker cannot use successor mandate",
+      "observed": "old key refused on rebound successor authority; successor key APPROVED"
+    }
+  ]
+}

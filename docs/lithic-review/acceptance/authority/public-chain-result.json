@@ -1,0 +1,35 @@
+{
+  "result": "PASS",
+  "signatures_checked_including_repeated_history": 19,
+  "bundle_head_sequences": [
+    1,
+    2,
+    3
+  ],
+  "event_types_by_bundle": [
+    [
+      "MANDATE_ISSUED"
+    ],
+    [
+      "MANDATE_ISSUED",
+      "MANDATE_REVOKED"
+    ],
+    [
+      "MANDATE_ISSUED",
+      "MANDATE_REVOKED",
+      "MANDATE_ISSUED"
+    ]
+  ],
+  "receiver_receipt_sequence": [
+    "APPROVED",
+    "CARD_PAUSED",
+    "APPROVED"
+  ],
+  "source_keys": "separate receiver pin file and stated public owner pin",
+  "evidence_limits": [
+    "external provenance of owner and receiver pins is not demonstrated",
+    "worker presentation bytes and durable receiver challenges are not published",
+    "ASA authenticated raw bodies and HMAC credentials are not published",
+    "public evidence alone cannot prove pending invalidation, actual restart or SQLite commit atomicity"
+  ]
+}

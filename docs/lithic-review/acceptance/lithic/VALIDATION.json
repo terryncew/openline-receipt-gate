@@ -1,0 +1,16 @@
+{
+  "audited_delivery_commit": "8a537d4ff598541bb21cc564b3220ec97ef09fb3",
+  "hmac_test_command": "PYTHONDONTWRITEBYTECODE=1 OPENLINE_REQUIRE_OFFICIAL_LITHIC=1 /workspace/lithic-hmac-sdk-venv/bin/python -m unittest -v test_lithic_hmac",
+  "hmac_test_cwd": "/workspace/openline-receipt-gate/gateway/receiver-package",
+  "hmac_test_observed_exit_code": 0,
+  "hmac_tests_executed": 12,
+  "hmac_tests_passed": 12,
+  "hmac_tests_skipped": 0,
+  "official_sdk_version": "0.132.0",
+  "schema_report": "schema-compatibility.json",
+  "sdk_retry_mock_report": "sdk-simulation-retries.json",
+  "repository_modified": false,
+  "provider_api_calls": 0,
+  "external_transactions": 0,
+  "note": "Outcome record of the actual observed tool run; test output is in the conversation tool result."
+}

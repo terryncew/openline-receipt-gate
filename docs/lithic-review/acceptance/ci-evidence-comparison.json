@@ -1,0 +1,26 @@
+[
+  {
+    "path": "asa-sequence-budget.json",
+    "same_json_as_preserved": true,
+    "same_bytes_as_preserved": true,
+    "preserved_sha256": "a778803ff4adf72e470754999c468a15e4c8f3b20793b93e4e9bd529af2ca453"
+  },
+  {
+    "path": "asa-sequence-public-evidence.json",
+    "same_json_as_preserved": true,
+    "same_bytes_as_preserved": true,
+    "preserved_sha256": "7862e70d302c1bd71b6d80b57a0252c080765964528b4aaad167aeca722941cd"
+  },
+  {
+    "path": "http-duplicate-budget.json",
+    "same_json_as_preserved": true,
+    "same_bytes_as_preserved": true,
+    "preserved_sha256": "e9af3d7fec7534068b885abe1c647a5fa6a2dd42e7ce257d84b5adb94dce772f"
+  },
+  {
+    "path": "http-unavailable-writer-budget.json",
+    "same_json_as_preserved": true,
+    "same_bytes_as_preserved": true,
+    "preserved_sha256": "0fb696d77fbdbdb98a3bacf340a541f58c8e16709920161d820677a0412c71b6"
+  }
+]

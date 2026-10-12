@@ -1,0 +1,566 @@
+{
+  "concurrency": 8,
+  "timing": "client through localhost HTTP; complete response body; seconds",
+  "samples": [
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.013602840997918975
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.019231038000725675
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.012985711000510491
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.028838013000495266
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.0241758629999822
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.02040996499999892
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.03141343600145774
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.03386101600335678
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.03135589900193736
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.029846502999134827
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.02911152500018943
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.03364629200223135
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.029667983995750546
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.03288308100309223
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.029069992000586353
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.029628164003952406
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.028018728000461124
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.029094067998812534
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.028951914006029256
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.028141541995864827
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.028769219003152102
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.028806145004637074
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.02861637799651362
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.03198692999285413
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.027910673998121638
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.029416751000098884
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.028873475996078923
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.026362038996012416
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.03245777999836719
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.025635594000050332
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.0327854950010078
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.025315680999483448
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.029382394001004286
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.03227033800067147
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.028978378999454435
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.030090656997344922
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.03059357999882195
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.026540118000411894
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.030096886002866086
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.02656192099675536
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.029040679000900127
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.026717435001046397
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.030308940004033502
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.029582315000880044
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.029649485994013958
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.02961431400035508
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.03002197799651185
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.029896102998463903
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.03353259199502645
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.02884856900345767
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.02997659899847349
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.03093962199636735
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.031269043996871915
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.030994354994618334
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.03098914699512534
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.030800841996097006
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.027779477000876796
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.03112846599833574
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.030088137005805038
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.02895273600006476
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.028626022998651024
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.028721406997647136
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.028532172000268474
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.028786360002413858
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.029101450003508944
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.02918342300108634
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.02949115199589869
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.029751179994491395
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.02961839400086319
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.029475834999175277
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.02988422999624163
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.030077736999373883
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.029644389003806282
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.028968058002647012
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.028169741002784576
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.027947450005740393
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.027613131001999136
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.028639052994549274
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.02643097300460795
+    },
+    {
+      "status": 200,
+      "result": {
+        "result": "APPROVED"
+      },
+      "elapsed_seconds": 0.02558764100103872
+    }
+  ]
+}

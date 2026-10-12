@@ -1,0 +1,52 @@
+POPPY-PROOF-001 full-path Gateway integration test
+Path: client -> Envoy :8080 -> authz :50051 -> mockapi :9000
+No substitutions: real Gateway enforcement, real Wallet.
+
+owner: openline:principal:c31bf9c504db4...
+== gateway init
+== provision agent (up to $50)
+== start authz :50051
+== start mockapi :9000
+== start Envoy :8080
+== stack ready\n
+[PASS] bundle admitted
+
+--- Case 1: delegated only, no transaction approval
+[PASS] delegated-only -> 403 — status 403
+[PASS] reason DELEGATED_AUTHORITY_NOT_TRANSACTION_APPROVAL
+
+--- Case 2: full path, both layers
+[PASS] full path -> 200 — status 200 response={'ok': True, 'effect_id': 'fx-poppy-1791761466016648984', 'treasury_cents': 995750, 'poppy_receipt': {'receipt_id': 'poppy-12fe69edb90b4ca4', 'decision_evidence': {'type': 'poppy_decision', 'decision': 'ALLOWED', 'delegated_authority': {'verified_via': 'decision_token', 'agent_id': 'poppy-agent', 'token_amount_cents': 4250}, 'transaction_approval': {'verified': 'owner-signed exact terms', 'mandate_id': 'mandate_928b892b9ecac620', 'principal_id': 
+[PASS] receipt present
+[PASS] receipt signature verifies with independently trusted key
+[PASS] self-signed wrong receiver key rejected
+[PASS] modified effect evidence rejected
+[PASS] decision evidence separate
+[PASS] effect evidence separate
+[PASS] amount binding documented
+
+--- Case 3: replay approval with fresh challenge
+[PASS] second execution -> 403 — status 403
+[PASS] reason TRANSACTION_APPROVAL_ALREADY_USED — err=TRANSACTION_APPROVAL_ALREADY_USED
+[PASS] ledger unchanged after replay — treasury=995750
+
+--- Case 4: amount binding ($0 token vs $42.50 op)
+[PASS] $0 token -> 403 — status 403
+[PASS] reason AMOUNT_BINDING_MISMATCH — err=AMOUNT_BINDING_MISMATCH
+
+--- Case 5: approval for different terms
+[PASS] terms mismatch -> 403 — status 403
+[PASS] reason TRANSACTION_TERMS_MISMATCH
+\n--- Case 5b: cross-agent approval must be refused
+[PASS] mixed agent refused -> 403 — status 403 response={'ok': False, 'error': 'IDENTITY_MISMATCH', 'detail': "Wallet mandate issued to 'unrelated-agent' but Gateway token is for 'poppy-agent'. Owner, agent, and operation identities must match.", 'delegated_authority': 'valid', 'transaction_approval': 'valid'}
+[PASS] mixed agent identity reason
+\n--- Case 5c: signed action agent ID substitution
+[PASS] signed agent ID substitution -> 403 — status 403, body={'denied': True, 'reasons': ['action_agent_id_mismatch']}
+[PASS] denied at Gateway identity check — body={'denied': True, 'reasons': ['action_agent_id_mismatch']}
+[PASS] forged identity caused no ledger debit
+
+--- Case 6: revoked transaction approval
+[PASS] revoked -> 403 — status 403
+[PASS] reason TRANSACTION_APPROVAL_INVALID
+
+25/25 checks passed
