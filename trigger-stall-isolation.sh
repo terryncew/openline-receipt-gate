@@ -32,7 +32,7 @@ cd "$COMPOSE_DIR"
 # Helper: test balance endpoint, classify the result
 test_balance() {
     local label="$1"
-    local url="http://localhost:8080/balance/treasury"
+    local url="http://localhost:8080/api/balance/treasury"
     local start=$(date +%s.%N)
     
     # Use curl with explicit timeout, capture HTTP code and body
