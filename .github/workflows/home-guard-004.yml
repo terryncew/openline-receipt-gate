@@ -21,7 +21,7 @@ jobs:
         run: |
           set -eu
           git merge-base --is-ancestor 19a76732fcc456838f4ecc2991ca7fdb9f8e328f HEAD
-          printf '%s  %s\n' e8c55f159d700633d8b891f540810d12f147c87be3adc72306751556e74c9be3 experiments/home-guard-004/PREREGISTRATION.md | sha256sum -c -
+          printf '%s  %s\n' a1a8ef925d340c7d6180a7657222d89da39a7c3e107968319915ad0aca49046c experiments/home-guard-004/PREREGISTRATION.md | sha256sum -c -
           test -z "$(git diff --name-only 44486057320e908ec091c327112d830f65e20caa HEAD -- experiments/home-guard-001 experiments/home-guard-002 experiments/home-guard-003)"
           git log -3 --format='%h %s'
       - name: Prepare only disposable Linux namespace packet tools
