@@ -254,7 +254,9 @@ def scenario(c,store,mode,action):
             result['tv_after']=probe(c,'tv-missing-policy','hg4-tv','10.73.2.2',8080)
             result['hvac_after']=probe(c,'hvac-missing-policy','hg4-thermo','10.73.4.2',9000)
         else:raise RuntimeError('bad action '+str(action))
-    time.sleep(0.25)
+    # Capture an entire post-policy TCP exchange before SIGINT: tcpdump can
+    # otherwise report received kernel-filter packets it has not flushed.
+    time.sleep(2.2)
     result['final_rules']=show_rules(c,'final.rules')
     result['final_counters']=ns('hg4-fw','iptables-save','-c').stdout
     save(c,'final-counters.rules',result['final_counters'])
