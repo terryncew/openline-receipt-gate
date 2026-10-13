@@ -1,0 +1,37 @@
+name: HOME-GUARD-002 disposable virtual-network packet falsifier
+on:
+  push:
+    branches: [study/home-guard-002-virtual-net]
+permissions:
+  contents: read
+jobs:
+  kernel-firewall:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Ensure isolated VM has actual packet/filter tooling
+        run: |
+          set -eu
+          if ! command -v ip >/dev/null || ! command -v iptables >/dev/null || ! command -v tcpdump >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y --no-install-recommends iproute2 iptables tcpdump
+          fi
+          sudo ip netns list
+      - name: Check syntax without changing any network
+        run: |
+          bash -n experiments/home-guard-002/run_virtual_network.sh
+          python3 -m py_compile experiments/home-guard-002/*.py
+      - name: Execute disposable namespace and kernel-firewall attack matrix
+        run: |
+          bash experiments/home-guard-002/run_virtual_network.sh "$RUNNER_TEMP/home-guard-002-evidence"
+      - name: Preserve independent pcap and kernel rule evidence even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: HOME-GUARD-002-packet-evidence
+          path: "$RUNNER_TEMP/home-guard-002-evidence"
+          if-no-files-found: warn
+          retention-days: 30
