@@ -14,7 +14,7 @@ for folder in (str(EXP),str(ROOT)):
     if folder not in sys.path:
         sys.path.insert(0,folder)
 from home_guard import keys
-from olp_gate.crypto import strict_json_load,verify_olp_signature
+from olp_gate.crypto import strict_json_loads,verify_olp_signature
 
 
 def require(ok,why):
@@ -129,7 +129,7 @@ def main(root):
     for key in ("revoked_existing_and_new_drop","spoof_altport_drop","legitimate_hvac_accept"):
         require(counts.get(key,0)>0,"no kernel firewall counter: "+key)
 
-    receipts=[strict_json_load(s) for s in (root/"apply-receipts.jsonl").read_text().splitlines()]
+    receipts=[strict_json_loads(s) for s in (root/"apply-receipts.jsonl").read_text().splitlines()]
     applied=[r for r in receipts if r["decision"]=="APPLIED"]
     rejected=[r for r in receipts if r["decision"]=="REJECTED"]
     require(len(receipts)==7 and len(applied)==2 and len(rejected)==5,
@@ -160,7 +160,7 @@ def main(root):
     version,policy_hash,saved_kernel=db.execute(
         "SELECT version,policy_hash,kernel_hash FROM applied WHERE slot=1").fetchone()
     db.close()
-    v2=strict_json_load((root/"policies/v2-owner-revoke.json").read_text())
+    v2=strict_json_loads((root/"policies/v2-owner-revoke.json").read_text())
     valid,why=verify_olp_signature(v2)
     require(valid and v2["signature"]["public_key"]==keys.public_key_hex_of("owner"),
             "owner revocation signature invalid")

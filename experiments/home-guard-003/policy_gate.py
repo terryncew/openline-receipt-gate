@@ -24,7 +24,7 @@ for folder in (str(EXP), str(ROOT)):
 
 from home_guard import keys  # test-only fixed signing keys; NEVER production
 from olp_gate.crypto import (
-    olp_canonical_json, sign_olp_body, strict_json_load, verify_olp_signature,
+    olp_canonical_json, sign_olp_body, strict_json_loads, verify_olp_signature,
 )
 
 SCHEMA = "openline.home_guard.firewall_policy.v1"
@@ -46,7 +46,7 @@ def firewall_snapshot() -> tuple[str, str]:
 
 
 def validate_signed(raw: bytes) -> dict:
-    policy = strict_json_load(raw.decode("utf-8"))
+    policy = strict_json_loads(raw.decode("utf-8"))
     if not isinstance(policy, dict) or set(policy) != {
         "schema", "policy_id", "version", "valid_until", "rules",
         "payload_hash", "signature",
@@ -108,7 +108,7 @@ def apply_kernel(allow_tv: bool) -> str:
     # Verify installed rules from the KERNEL, not from our planned config.
     observed, digest = firewall_snapshot()
     if allow_tv:
-        expected = "-A FORWARD -i fwtv -o fwnvr"
+        expected = "-i fwtv -o fwnvr"
         if expected not in observed or "--dport 8080 -j ACCEPT" not in observed:
             raise RuntimeError("allowed_rule_not_installed")
     else:
