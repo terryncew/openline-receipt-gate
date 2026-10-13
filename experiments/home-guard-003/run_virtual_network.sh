@@ -175,7 +175,14 @@ reject_policy tampered v3-tampered-unsigned.json
 reject_policy duplicate v2-owner-revoke.json
 
 # Unrelated *authorized* control remains usable.
+# Independent short-lived packet capture STARTED AFTER revocation. It must
+# see the second authorized control directly on kernel forwarding egress.
+sudo ip netns exec hg3-fw tcpdump -nn -U -s 0 -c 5 -i fwhvac \
+  -w "$E/hvac-post-egress.pcap" ip > "$E/hvac-post-egress-capture.log" 2>&1 &
+POST_CAPTURE_PID=$!
+sleep 0.45
 probe hg3-thermo --label control-after --host 10.73.4.2 --port 9000 --expect ok-hvac
+wait "$POST_CAPTURE_PID"
 sleep 0.55
 touch "$E/tv-flow-stop.flag"
 wait "$FLOW_PID"

@@ -65,7 +65,8 @@ def main(root):
     tv=pcap(root/"tv-ingress.pcap")
     nvr=pcap(root/"nvr-egress.pcap")
     hvac=pcap(root/"hvac-egress.pcap")
-    require(tv and nvr and hvac,"missing independent packet capture")
+    hvac_post=pcap(root/"hvac-post-egress.pcap")
+    require(tv and nvr and hvac and hvac_post,"missing independent packet capture")
     target=lambda p:p["src"]=="10.73.1.2" and p["dst"]=="10.73.2.2" and p["dport"]==8080
     before=[p for p in nvr if target(p) and p["us"]<barrier and p["payload"]>0]
     after=[p for p in nvr if target(p) and p["us"]>=barrier+200000]
@@ -83,9 +84,11 @@ def main(root):
             "spoofed packet reached legitimate HVAC system")
     control=[p for p in hvac if p["src"]=="10.73.3.2" and
              p["dst"]=="10.73.4.2" and p["dport"]==9000]
+    control_post=[p for p in hvac_post if p["src"]=="10.73.3.2" and
+                  p["dst"]=="10.73.4.2" and p["dport"]==9000]
     require(any(p["us"]<barrier for p in control) and
-            any(p["us"]>barrier for p in control),
-            "authorized thermostat flow not seen before and after revocation")
+            any(p["us"]>barrier for p in control_post),
+            "authorized thermostat flow not packet-captured before AND after revocation")
 
     probes=[json.loads(s) for s in (root/"client-probes.jsonl").read_text().splitlines()]
     expected=["control-before","new-TV-connection-after-revoke",
@@ -173,6 +176,7 @@ def main(root):
     packet_provenance={f.name:{"sha256":hashlib.sha256(f.read_bytes()).hexdigest(),
                               "bytes":f.stat().st_size,"tcp_packets":len(pcap(f))}
                        for f in sorted(root.glob("*.pcap"))}
+    require(len(packet_provenance)==4,"missing dedicated post-revocation capture")
     report={"experiment":"HOME-GUARD-003",
             "verdict":"PASS_SIGNED_POLICY_TO_KERNEL_REVOCATION_IN_VIRTUAL_NETWORK",
             "allowed_nvr_payload_packets_before":len(before),

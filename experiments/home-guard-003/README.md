@@ -6,7 +6,7 @@ TCP stream while legitimate thermostat-to-HVAC traffic stays up. Reject
 forged-owner, rollback/replayed, expired and tampered signed policy updates.
 
 Five disposable Linux namespaces, actual kernel iptables-restore rules,
-actual conntrack and TCP traffic, three independent PCAP captures. A
+actual conntrack and TCP traffic, four independent PCAP captures. A
 separate trusted updater verifies pinned owner Ed25519 public key (fixture
 only), schema and time; accepts strictly increasing policy versions; installs
 only hard-coded veth-specific rules; observes kernel configuration and signs
@@ -35,7 +35,7 @@ Independent verifier:
 
 CI uploads the signed test policy files, the signed apply/refusal receipts,
 SQLite durable sequence ledger, actual kernel installed rules/counters,
-persistent-flow attempts and all raw PCAPs. If namespace capabilities are
+persistent-flow attempts and all raw PCAPs, including dedicated post-revoke HVAC capture. If namespace capabilities are
 missing this experiment is INCONCLUSIVE, never simulator PASS.
 
 No real devices, real credentials, household or public network, paid API,
