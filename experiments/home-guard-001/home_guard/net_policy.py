@@ -90,14 +90,14 @@ class ContainmentLayer:
         """
         if dst_id not in self.registry:
             verdict, reason = "DENY", "unknown_destination"
-        elif via is not None:
-            verdict, reason = "OUT_OF_SCOPE", "forwarding_not_modeled"
         else:
             caller = session_id if session_id is not None else src_id
             if caller not in self.registry:
                 verdict, reason = "DENY", "unknown_source"
-            elif claimed_src is not None and claimed_src != caller:
+            elif caller != src_id or (claimed_src is not None and claimed_src != caller):
                 verdict, reason = "DENY", "identity_mismatch"
+            elif via is not None:
+                verdict, reason = "OUT_OF_SCOPE", "forwarding_not_modeled"
             else:
                 verdict, reason = self._policy_lookup(caller, dst_id)
                 if verdict == "ALLOW" and self.registry[caller].get("compromised"):
@@ -105,6 +105,7 @@ class ContainmentLayer:
                     # regardless of any ALLOW rule naming it.
                     verdict, reason = "DENY", "device_quarantined"
 
+        # Finalize and sign once. DENY creates no route.
         decision = sign_olp_body(
             {
                 "schema": NET_DECISION_SCHEMA,
@@ -114,18 +115,13 @@ class ContainmentLayer:
                 "dst": dst_id,
                 "dst_port": dst_port,
                 "via": via,
-                "route_created": False,
+                "route_created": verdict == "ALLOW",
                 "decided_at": self.clock.now(),
             },
             self._key,
         )
         if verdict == "ALLOW":
             self.routes.add((src_id, dst_id))
-            decision = dict(decision)  # re-sign with route_created=true
-            body = {k: v for k, v in decision.items()
-                    if k not in ("signature", "payload_hash")}
-            body["route_created"] = True
-            decision = sign_olp_body(body, self._key)
         self.decisions.append(decision)
         return decision
 

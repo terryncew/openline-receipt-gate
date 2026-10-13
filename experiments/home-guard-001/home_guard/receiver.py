@@ -17,6 +17,7 @@ Receipts reuse openline-receipt-gate's OLP signing contract
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from datetime import datetime, timezone
 from typing import Any, Mapping
 
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
@@ -25,10 +26,19 @@ from olp_gate.crypto import sign_olp_body, verify_olp_signature
 from olp_gate.receipts import sha256_json
 
 from . import keys
+from .durable import DurableSafetyState
 
 MANDATE_SCHEMA = "openline.home_guard.mandate.v1"
 DECISION_SCHEMA = "openline.home_guard.decision.v1"
 REVOCATION_SCHEMA = "openline.home_guard.revocation.v1"
+
+
+def _time_utc(value: str) -> datetime:
+    """Reject naive timestamps and compare expiry across timezone offsets."""
+    dt = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    if dt.tzinfo is None or dt.utcoffset() is None:
+        raise ValueError("timezone-qualified timestamp required")
+    return dt.astimezone(timezone.utc)
 
 
 class FixedClock:
@@ -97,10 +107,14 @@ class Proposal:
 class HomeGuardReceiver:
     """Evaluates assistant proposals against admitted mandates; signs decisions."""
 
-    def __init__(self, owner_pub: str, clock: FixedClock | None = None):
+    def __init__(self, owner_pub: str, clock: FixedClock | None = None,
+                 *, durable_state: DurableSafetyState | None = None,
+                 require_authenticated_requester: bool = False):
         self.owner_pub = owner_pub
         self.clock = clock or FixedClock()
         self._key: Ed25519PrivateKey = keys.private_key("receiver")
+        self.durable_state = durable_state
+        self.require_authenticated_requester = require_authenticated_requester
         self.mandates: dict[str, Mandate] = {}
         self.revoked: dict[str, dict[str, Any]] = {}
         self.seen_nonces: set[str] = set()
@@ -121,8 +135,10 @@ class HomeGuardReceiver:
             raise ValueError("mandate not signed by registered owner")
         if body.get("schema") != MANDATE_SCHEMA:
             raise ValueError("unexpected mandate schema")
-        if body.get("expires_at", "") <= self.clock.now():
+        if _time_utc(body.get("expires_at", "")) <= _time_utc(self.clock.now()):
             raise ValueError("mandate expired at admission")
+        if self.durable_state and self.durable_state.is_revoked(body["mandate_id"]):
+            raise ValueError("mandate revoked in durable owner state")
         m = Mandate(
             mandate_id=body["mandate_id"],
             grantee_pub=body["grantee_pub"],
@@ -144,13 +160,21 @@ class HomeGuardReceiver:
             },
             self._key,
         )
+        if self.durable_state:
+            self.durable_state.revoke(mandate_id)
         self.revoked[mandate_id] = record
         return record
 
     # -- authorization ------------------------------------------------------
-    def authorize(self, proposal: Proposal) -> Mapping[str, Any]:
+    def authorize(self, proposal: Proposal, *,
+                  authenticated_requester_pub: str | None = None) -> Mapping[str, Any]:
         p = proposal.as_dict()
         decision, reason = self._evaluate(p)
+        if decision == "ALLOW" and self.require_authenticated_requester:
+            if authenticated_requester_pub is None:
+                decision, reason = "DENY", "requester_identity_missing"
+            elif authenticated_requester_pub != self.mandates[p["mandate_id"]].grantee_pub:
+                decision, reason = "DENY", "requester_identity_mismatch"
         body = {
             "schema": DECISION_SCHEMA,
             "decision": decision,
@@ -173,14 +197,16 @@ class HomeGuardReceiver:
         m = self.mandates.get(p["mandate_id"])
         if m is None:
             return "DENY", "unknown_mandate"
-        if p["mandate_id"] in self.revoked:
+        if p["mandate_id"] in self.revoked or (self.durable_state and self.durable_state.is_revoked(p["mandate_id"])):
             return "DENY", "mandate_revoked"
-        if m.expires_at <= self.clock.now():
+        if _time_utc(m.expires_at) <= _time_utc(self.clock.now()):
             return "DENY", "mandate_expired"
+        if _time_utc(p["proposed_at"]) > _time_utc(self.clock.now()):
+            return "DENY", "proposal_from_future"
         if not any(s["device"] == p["device"] and s["action"] == p["action"]
                    for s in m.scope):
             return "DENY", "not_in_mandate_scope"
-        if p["nonce"] in self.seen_nonces:
+        if p["nonce"] in self.seen_nonces or (self.durable_state and self.durable_state.is_consumed(p["nonce"])):
             return "DENY", "replay_nonce"
         return "ALLOW", "in_scope"
 

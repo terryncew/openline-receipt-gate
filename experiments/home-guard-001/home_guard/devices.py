@@ -14,7 +14,8 @@ firmware, which is explicitly out of scope (see THREAT_MODEL.md).
 """
 from __future__ import annotations
 
-from typing import Any, Mapping
+from typing import Any, Mapping, Callable
+from .durable import DurableSafetyState
 
 from olp_gate.crypto import verify_olp_signature
 from olp_gate.receipts import sha256_json
@@ -33,6 +34,7 @@ class SimulatedDevice:
         decision: Mapping[str, Any],
         proposal: Mapping[str, Any],
         receiver_pub: str,
+        consumption_guard: Callable[[Mapping[str, Any]], tuple[bool, str]] | None = None,
     ) -> tuple[bool, str]:
         """Apply the proposed action iff the decision receipt authorizes it.
 
@@ -57,6 +59,10 @@ class SimulatedDevice:
         nonce = decision["nonce"]
         if nonce in self.executed_nonces:
             return False, "replay_rejected"
+        if consumption_guard is not None:
+            admitted, reason = consumption_guard(decision)
+            if not admitted:
+                return False, reason
         # Effect.
         self._effect(proposal["action"], proposal.get("params", {}))
         self.executed_nonces.add(nonce)
@@ -88,10 +94,29 @@ class DirectDeviceAPI:
     receiver-signed, exactly-bound, fresh-nonce check, or nothing happens.
     """
 
-    def __init__(self, devices: dict[str, SimulatedDevice], receiver_pub: str):
+    def __init__(self, devices: dict[str, SimulatedDevice], receiver_pub: str,
+                 *, durable_state: DurableSafetyState | None = None,
+                 admitted_mandates: Mapping[str, Any] | None = None):
+        # Strict mode requires BOTH the durable state and trusted mandates.
+        # No such dependency is injected in the frozen single-run demo.
+        if (durable_state is None) != (admitted_mandates is None):
+            raise ValueError("durable enforcement requires admitted mandate registry")
         self.devices = devices
         self.receiver_pub = receiver_pub
+        self.durable_state = durable_state
+        self.admitted_mandates = admitted_mandates
         self.rejected_calls: list[dict[str, Any]] = []
+
+    def _durable_guard(self, decision: Mapping[str, Any]) -> tuple[bool, str]:
+        assert self.durable_state is not None and self.admitted_mandates is not None
+        mid = decision.get("mandate_id")
+        mandate = self.admitted_mandates.get(mid)
+        if mandate is None:
+            return False, "unknown_mandate"
+        if not any(s["device"] == decision.get("device") and s["action"] == decision.get("action")
+                   for s in mandate.scope):
+            return False, "mandate_scope_mismatch"
+        return self.durable_state.consume(mid, decision["nonce"])
 
     def raw_call(
         self,
@@ -110,7 +135,8 @@ class DirectDeviceAPI:
         if device is None:
             self._log_reject(device_id, action, "unknown_device")
             return False, "unknown_device"
-        applied, reason = device.apply(token, proposal, self.receiver_pub)
+        applied, reason = device.apply(token, proposal, self.receiver_pub,
+                                       self._durable_guard if self.durable_state else None)
         if not applied:
             self._log_reject(device_id, action, reason)
         return applied, reason
