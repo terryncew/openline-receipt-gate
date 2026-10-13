@@ -32,6 +32,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: HOME-GUARD-002-packet-evidence
-          path: "$RUNNER_TEMP/home-guard-002-evidence"
-          if-no-files-found: warn
+          path: ${{ runner.temp }}/home-guard-002-evidence
+          if-no-files-found: error
           retention-days: 30
