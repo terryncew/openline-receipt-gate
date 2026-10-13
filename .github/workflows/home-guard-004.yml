@@ -1,0 +1,52 @@
+name: HOME-GUARD-004 isolated reboot and local-state falsifiers
+on:
+  push:
+    branches:
+      - study/home-guard-004-reboot-tamper
+permissions:
+  contents: read
+jobs:
+  reboot-and-tamper:
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Confirm preregistration was frozen before any apparatus code
+        run: |
+          set -eu
+          git merge-base --is-ancestor 19a76732fcc456838f4ecc2991ca7fdb9f8e328f HEAD
+          printf '%s  %s\n' e8c55f159d700633d8b891f540810d12f147c87be3adc72306751556e74c9be3 experiments/home-guard-004/PREREGISTRATION.md | sha256sum -c -
+          test -z "$(git diff --name-only 44486057320e908ec091c327112d830f65e20caa HEAD -- experiments/home-guard-001 experiments/home-guard-002 experiments/home-guard-003)"
+          git log -3 --format='%h %s'
+      - name: Prepare only disposable Linux namespace packet tools
+        run: |
+          set -eu
+          python -m pip install cryptography==50.0.1
+          if ! command -v ip >/dev/null || ! command -v iptables >/dev/null || ! command -v tcpdump >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y --no-install-recommends iproute2 iptables tcpdump
+          fi
+          sudo ip netns list
+      - name: Syntax check; no host network setup
+        run: |
+          python -m py_compile experiments/home-guard-004/*.py
+      - name: Run freezer-defined six disposable cold-start scenarios
+        run: |
+          python experiments/home-guard-004/run_experiment.py "$RUNNER_TEMP/home-guard-004-evidence"
+      - name: Independently decode packet evidence and signed witness
+        run: |
+          python experiments/home-guard-004/verify_evidence.py "$RUNNER_TEMP/home-guard-004-evidence"
+      - name: Preserve raw captures, policy copies, witness, kernel counters and exceptions
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: HOME-GUARD-004-raw-reboot-evidence
+          path: ${{ runner.temp }}/home-guard-004-evidence
+          if-no-files-found: error
+          retention-days: 30
