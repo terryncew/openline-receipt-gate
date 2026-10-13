@@ -1,0 +1,44 @@
+name: HOME-GUARD-003 static proof preparation
+on:
+  push:
+    branches: [study/home-guard-003-signed-kernel-revocation]
+permissions:
+  contents: read
+jobs:
+  static:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m py_compile experiments/home-guard-003/*.py
+      - name: Prepare test-only dependencies
+        run: |
+          set -eu
+          python -m pip install cryptography==50.0.1
+          if ! command -v ip >/dev/null || ! command -v iptables >/dev/null || ! command -v tcpdump >/dev/null || ! command -v conntrack >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y --no-install-recommends iproute2 iptables conntrack tcpdump
+          fi
+      - name: Verify frozen earlier research remains unchanged
+        run: |
+          set -eu
+          printf '%s  %s\n' 209ac00995cf5678749c16b0fe6fd2ce619a91132d62fbd0e81b212c0f3a5c86 experiments/home-guard-001/tests/test_home_guard_001.py | sha256sum -c -
+          printf '%s  %s\n' 3bc49332c75315a305d84e2afcf55cde6acf546e6f265f5c6fb04e40e31e49aa experiments/home-guard-001/results/receipts.jsonl | sha256sum -c -
+          python -m unittest discover -s experiments/home-guard-001/tests -v
+          python -m unittest discover -s experiments/home-guard-001/hardening_tests -v
+          bash -n experiments/home-guard-003/run_virtual_network.sh
+      - name: Execute only disposable named network namespaces
+        run: |
+          bash experiments/home-guard-003/run_virtual_network.sh "$RUNNER_TEMP/home-guard-003-evidence"
+      - name: Preserve independent evidence on success or failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: HOME-GUARD-003-signed-kernel-evidence
+          path: ${{ runner.temp }}/home-guard-003-evidence
+          if-no-files-found: error
+          retention-days: 30
