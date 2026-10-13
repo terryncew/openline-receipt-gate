@@ -28,9 +28,9 @@ jobs:
         run: |
           set -eu
           python -m pip install cryptography==50.0.1
-          if ! command -v ip >/dev/null || ! command -v iptables >/dev/null || ! command -v tcpdump >/dev/null; then
+          if ! command -v ip >/dev/null || ! command -v iptables >/dev/null || ! command -v tcpdump >/dev/null || ! command -v conntrack >/dev/null; then
             sudo apt-get update -qq
-            sudo apt-get install -y --no-install-recommends iproute2 iptables tcpdump
+            sudo apt-get install -y --no-install-recommends iproute2 iptables conntrack tcpdump
           fi
           sudo ip netns list
       - name: Syntax check; no host network setup
