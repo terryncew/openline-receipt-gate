@@ -92,7 +92,7 @@ def main(root):
 
     probes=[json.loads(s) for s in (root/"client-probes.jsonl").read_text().splitlines()]
     expected=["control-before","new-TV-connection-after-revoke",
-              "TV-alternative-port-after-revoke","TV-forged-thermostat-after-revoke",
+              "TV-alternative-port-after-revoke","tv-spoofed-thermostat",
               "control-after"]
     require([p["label"] for p in probes]==expected,"probe matrix incomplete")
     require(all(p.get("pass",p.get("status")=="RAW_SYN_SENT") for p in probes),
