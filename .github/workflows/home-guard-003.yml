@@ -1,0 +1,17 @@
+name: HOME-GUARD-003 static proof preparation
+on:
+  push:
+    branches: [study/home-guard-003-signed-kernel-revocation]
+permissions:
+  contents: read
+jobs:
+  static:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m py_compile experiments/home-guard-003/*.py
