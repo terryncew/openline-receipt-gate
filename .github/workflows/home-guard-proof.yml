@@ -1,0 +1,38 @@
+name: HOME-GUARD-001 frozen proof plus optional hardening
+on:
+  push:
+    branches: [study/home-guard-001]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install only offline simulator signing dependency
+        run: python -m pip install cryptography==50.0.1
+      - name: Verify frozen test bytes and unchanged signed receipt fixture
+        run: |
+          set -eu
+          printf '%s  %s\n' 209ac00995cf5678749c16b0fe6fd2ce619a91132d62fbd0e81b212c0f3a5c86 experiments/home-guard-001/tests/test_home_guard_001.py | sha256sum -c -
+          printf '%s  %s\n' 3bc49332c75315a305d84e2afcf55cde6acf546e6f265f5c6fb04e40e31e49aa experiments/home-guard-001/results/receipts.jsonl | sha256sum -c -
+      - name: Run eight original frozen tests untouched
+        run: |
+          python -m unittest discover -s experiments/home-guard-001/tests -v
+      - name: Run seven post-freeze hardening regressions
+        run: python -m unittest discover -s experiments/home-guard-001/hardening_tests -v
+      - name: Run deterministic demo and re-check original receipts hash
+        run: |
+          set -eu
+          python experiments/home-guard-001/home_guard/demo.py
+          printf '%s  %s\n' 3bc49332c75315a305d84e2afcf55cde6acf546e6f265f5c6fb04e40e31e49aa experiments/home-guard-001/results/receipts.jsonl | sha256sum -c -
+      - name: Ensure original frozen test and evidence files are untouched
+        run: |
+          git diff --exit-code -- experiments/home-guard-001/tests/test_home_guard_001.py experiments/home-guard-001/results/receipts.jsonl
