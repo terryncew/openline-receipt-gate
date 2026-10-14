@@ -1,0 +1,68 @@
+name: HOME-GUARD-005 signed witness recovery versus conventional nftables
+on:
+  push:
+    branches: [study/home-guard-005-safe-recovery]
+permissions:
+  contents: read
+jobs:
+  recovery-comparison:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify preregistration frozen before any implementation; preserve old proofs
+        run: |
+          set -eu
+          git merge-base --is-ancestor c7509eaee5ec80868caba44db040cf6c0eab4514 HEAD
+          test -z "$(git diff --name-only 1866f62109b81a4457b3124a209c32d7382ebf94 HEAD -- experiments/home-guard-001 experiments/home-guard-002 experiments/home-guard-003 experiments/home-guard-004)"
+          cmp experiments/home-guard-005/PREREGISTRATION.md <(git show c7509eaee5ec80868caba44db040cf6c0eab4514:experiments/home-guard-005/PREREGISTRATION.md)
+          sha256sum experiments/home-guard-005/PREREGISTRATION.md
+          git log -8 --oneline
+      - name: Install only offline verifier and isolated kernel tools
+        run: |
+          set -eu
+          python -m pip install cryptography==50.0.1
+          if ! command -v nft >/dev/null || ! command -v tcpdump >/dev/null || ! command -v conntrack >/dev/null || ! command -v ip >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y --no-install-recommends nftables tcpdump conntrack iproute2
+          fi
+          python --version
+          nft --version
+          sudo ip netns list
+      - name: Check syntax only, without touching network
+        run: python -m py_compile experiments/home-guard-005/*.py
+      - name: Execute independent-witness comparative recovery in disposable namespaces
+        run: |
+          python experiments/home-guard-005/run_experiment.py "$RUNNER_TEMP/home-guard-005-evidence"
+      - name: Independently verify captured kernel packets and cryptographic receipts
+        run: |
+          python experiments/home-guard-005/verify_evidence.py "$RUNNER_TEMP/home-guard-005-evidence"
+          python - <<'PY'
+          import json,os,pathlib
+          p=pathlib.Path(os.environ['RUNNER_TEMP'])/'home-guard-005-evidence'/'REPORT.json'
+          x=json.loads(p.read_text())
+          for arm,items in x['outcomes'].items():
+              print(arm,items)
+          print('PARITY:',x['comparison'])
+          PY
+      - name: Hash final packet, witness, owner and receipt evidence
+        if: always()
+        run: |
+          if test -d "$RUNNER_TEMP/home-guard-005-evidence"; then
+            cd "$RUNNER_TEMP/home-guard-005-evidence"
+            find . -type f ! -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS
+          fi
+      - name: Preserve ALL raw evidence including failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: HOME-GUARD-005-discriminating-packet-and-witness-evidence
+          path: ${{ runner.temp }}/home-guard-005-evidence
+          if-no-files-found: error
+          retention-days: 30
