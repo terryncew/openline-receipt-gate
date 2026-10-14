@@ -43,7 +43,7 @@ jobs:
           rows[0]["receipt"]["decision"]="STOPPED" if rows[0]["receipt"]["decision"]=="ALLOWED" else "ALLOWED"
           negative=root/"negative-tampered-receipt"
           negative.mkdir()
-          (negative/"decision_receipts.json").write_text(json.dumps(rows,indent=2)+"\\n")
+          (negative/"decision_receipts.json").write_text(json.dumps(rows,indent=2))
           PY
           if python gateway/receiver-kit/verify_two_receivers.py "$RUNNER_TEMP/receiver-001/negative-tampered-receipt" --trusted-keys "$RUNNER_TEMP/receiver-001/trusted_receiver_keys.json" > "$RUNNER_TEMP/receiver-001/negative-tampered-receipt/verifier.log" 2>&1; then
             echo "FAIL: TAMPERED RECEIPT VERIFIED" >&2
