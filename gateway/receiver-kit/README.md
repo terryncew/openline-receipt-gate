@@ -1,7 +1,8 @@
 # OpenLine External Receiver Starter Kit
 
-**Status:** Prototype (OPENLINE-RECEIVER-001). The Docker Compose gateway
-path is verified in CI; the Wallet integration demo passes 10/10 locally.
+**Status:** Prototype (OPENLINE-RECEIVER-001). The existing Docker Compose gateway had 20/21 checks passing in prior CI
+(one restart balance-read case unresolved); the Wallet demo has a 10/10
+regression. The independent two-process review is synthetic.
 No external engineer has adopted this yet.
 
 ## What this is
@@ -89,3 +90,27 @@ bounds and what happens when bundles expire.
 No Docker, no network, no paid APIs for the examples. The full gateway
 (Envoy + authz service) is a separate deployment; see
 `gateway/docs/ARCHITECTURE.md`.
+
+## Independent receiver integration study (separate Draft PR)
+
+`RECEIVER-001-FREEZE.md` freezes a narrower security review over the existing
+kit. The bridge now refuses **unconfigured receiver actions** and verifies
+that the owner's actual mandate includes *all* receiver-required scopes
+(not merely the action itself). It signs local-policy STOPPED receipts using
+the existing Wallet Gate format.
+
+Two independently configured local processes, each with its own receiver
+signing key and trust store, exercise the same signed owner bundle:
+
+```sh
+python gateway/receiver-kit/examples/04-two-independent-receivers.py --out /tmp/openline-receiver-001
+python gateway/receiver-kit/verify_two_receivers.py /tmp/openline-receiver-001 --trusted-keys /tmp/openline-receiver-001/trusted_receiver_keys.json
+```
+
+Read [the adoption guide](INDEPENDENT-RECEIVER-ADOPTION.md) for the
+independent owner/receiver key decisions and known limitations, and
+[the matched-baseline assessment](MATCHED-BASELINE.md) before claiming a
+competitive win. Prior OPA-A timing/installation counts are *not* a
+security-equivalent comparison. The signed receipts prove receiver **decisions**,
+not the synthetic effect traces or any production consequence. No external
+receiver has evaluated or adopted this code.
