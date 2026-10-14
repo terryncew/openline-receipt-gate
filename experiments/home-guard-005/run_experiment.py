@@ -168,6 +168,10 @@ def setup_net(case):
     for ns in NS:
         root("ip","netns","add",ns)
         root("ip","-n",ns,"link","set","lo","up")
+    # A freshly created namespace can inherit kernel ip_forward=1 from the
+    # hosted runner. Force forwarding OFF before creating any veth path.
+    fw("sysctl","-qw","net.ipv4.ip_forward=0")
+    fw("sysctl","-qw","net.ipv6.conf.all.forwarding=0")
     for num,ns,fwif,hostif in [(1,"hg5-tv","fwtv","tveth"),
                                (2,"hg5-nvr","fwnvr","nvreth"),
                                (3,"hg5-thermo","fwthermo","tmeth"),
