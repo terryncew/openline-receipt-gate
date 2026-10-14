@@ -1,0 +1,4 @@
+# Pinned Python dependencies for OPENLINE-GATEWAY-001.
+grpcio==1.84.0
+protobuf==7.36.2
+cryptography==50.0.1

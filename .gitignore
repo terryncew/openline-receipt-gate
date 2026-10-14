@@ -24,3 +24,6 @@ decision_receipts.jsonl
 
 # CPG-001 Jain publisher supplements are local evidence inputs, never vendored.
 benchmarks/candidate_promotion/jain_sources/
+
+# GATEWAY-SUBSCRIPTION-001 demo runtime (keys, DB, logs stay local)
+gateway/subscription001/run/

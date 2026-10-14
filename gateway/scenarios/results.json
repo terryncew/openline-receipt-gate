@@ -1,0 +1,87 @@
+[
+  {
+    "scenario": "01 valid transfer allowed",
+    "pass": true,
+    "evidence": "{\"ok\": true, \"effect_id\": \"fx-a1a4f9a9e25c45d3\", \"treasury_cents\": 895480, \"authorized_params\": {\"value_cents\": 1000, \"agent\": \"s-worker-a\"}}"
+  },
+  {
+    "scenario": "02 replay denied",
+    "pass": true,
+    "evidence": "200/403"
+  },
+  {
+    "scenario": "03 tampered signature denied",
+    "pass": true,
+    "evidence": "{\"denied\": true, \"reasons\": [\"signature_invalid\"]}"
+  },
+  {
+    "scenario": "04 over-mandate-limit denied",
+    "pass": true,
+    "evidence": "{\"denied\": true, \"reasons\": [\"payment_limit_exceeded\"]}"
+  },
+  {
+    "scenario": "05 unknown agent denied",
+    "pass": true,
+    "evidence": "{\"denied\": true, \"reasons\": [\"unknown_agent\"]}"
+  },
+  {
+    "scenario": "06 revoked agent denied",
+    "pass": true,
+    "evidence": "200/403"
+  },
+  {
+    "scenario": "07 worker replacement: old stopped, new continues",
+    "pass": true,
+    "evidence": "old=403 new=200"
+  },
+  {
+    "scenario": "08 bypass without token refused",
+    "pass": true,
+    "evidence": "{\"ok\": false, \"error\": \"missing or invalid decision token (bypass refused)\"}"
+  },
+  {
+    "scenario": "09 forged decision token refused",
+    "pass": true,
+    "evidence": "{\"ok\": false, \"error\": \"missing or invalid decision token (bypass refused)\"}"
+  },
+  {
+    "scenario": "10 authorized params win over body",
+    "pass": true,
+    "evidence": "executed=100"
+  },
+  {
+    "scenario": "11 stale action claim denied",
+    "pass": true,
+    "evidence": "{\"denied\": true, \"reasons\": [\"stale_action_claim\"]}"
+  },
+  {
+    "scenario": "12 replay survives receiver restart",
+    "pass": true,
+    "evidence": "200/403"
+  },
+  {
+    "scenario": "13 observe mode executes but labels would-deny",
+    "pass": true,
+    "evidence": "{\"ok\": true, \"effect_id\": \"fx-observe-1791697589214995711\", \"treasury_cents\": 895250, \"observe_decision\": \"deny:payment_"
+  },
+  {
+    "scenario": "14 replay: treasury debited exactly once",
+    "pass": true,
+    "evidence": "delta=1000 http=200/403"
+  },
+  {
+    "scenario": "15 tampered body: ledger moves authorized 200, not 999999",
+    "pass": true,
+    "evidence": "delta=200"
+  },
+  {
+    "scenario": "16 post-revocation burst: 0 executions, 0 cents moved",
+    "pass": true,
+    "evidence": "allowed=0 delta=0"
+  },
+  {
+    "scenario": "17 pre-revocation token executes within TTL (bound documented)",
+    "pass": true,
+    "evidence": "http=200 delta=50 (TTL=60s is the revocation bound)"
+  }
+]

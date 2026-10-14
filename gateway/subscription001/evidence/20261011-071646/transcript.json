@@ -1,0 +1,154 @@
+[
+  {
+    "narrative": "1. You give permission: merchant-acme may charge up to $20"
+  },
+  {
+    "check": "mandate recorded with $20 cap",
+    "ok": true,
+    "evidence": "treasury=1000000 vendor=0"
+  },
+  {
+    "narrative": "2. The merchant charges $20 \u2014 the receiver allows it"
+  },
+  {
+    "check": "charge accepted",
+    "ok": true,
+    "evidence": "{\"ok\": true, \"effect_id\": \"fx-3393ce6829c8463c\", \"treasury_cents\": 998000, \"standing_to_commit_ms\": 125.153, \"authorized_params\": {\"value_cents\": 2000, \"agent\":"
+  },
+  {
+    "check": "ledger moved exactly $20",
+    "ok": true,
+    "evidence": "treasury=998000 vendor=2000"
+  },
+  {
+    "check": "API executed the authorized params, not the body",
+    "ok": true,
+    "evidence": ""
+  },
+  {
+    "narrative": "3. The merchant bills the same charge twice \u2014 refused"
+  },
+  {
+    "check": "replayed charge denied",
+    "ok": true,
+    "evidence": "{\"denied\": true, \"reasons\": [\"replay_detected\"]}"
+  },
+  {
+    "check": "no ledger movement on replay",
+    "ok": true,
+    "evidence": ""
+  },
+  {
+    "check": "token executes once",
+    "ok": true,
+    "evidence": ""
+  },
+  {
+    "check": "token replay refused",
+    "ok": true,
+    "evidence": "{\"ok\": false, \"error\": \"decision token already used\", \"standing_to_commit_ms\": 2.601, \"authorized_params\": {\"value_cents\": 2000, \"agent\": \"merchant-acme\"}}"
+  },
+  {
+    "check": "ledger moved exactly once for the token",
+    "ok": true,
+    "evidence": ""
+  },
+  {
+    "narrative": "4. The merchant tries to raise the charge to $200 \u2014 refused"
+  },
+  {
+    "check": "over-cap charge denied",
+    "ok": true,
+    "evidence": "{\"denied\": true, \"reasons\": [\"payment_limit_exceeded\"]}"
+  },
+  {
+    "check": "mandate cap is the reason",
+    "ok": true,
+    "evidence": "{\"denied\": true, \"reasons\": [\"payment_limit_exceeded\"]}"
+  },
+  {
+    "check": "no ledger movement",
+    "ok": true,
+    "evidence": ""
+  },
+  {
+    "narrative": "5. The merchant tries to cheat the receiver \u2014 fails"
+  },
+  {
+    "check": "forged decision token refused",
+    "ok": true,
+    "evidence": "{\"ok\": false, \"error\": \"missing or invalid decision token (bypass refused)\"}"
+  },
+  {
+    "check": "unsigned direct API call refused",
+    "ok": true,
+    "evidence": "{\"ok\": false, \"error\": \"missing or invalid decision token (bypass refused)\"}"
+  },
+  {
+    "check": "tampered body: authorized $20 wins, not the claimed $999.99",
+    "ok": true,
+    "evidence": "{\"ok\": true, \"effect_id\": \"fx-e9fcc71d76fa4d73\", \"treasury_cents\": 994000, \"standing_to_commit_ms\": 116.186, \"authorized_params\": {\"value_cents\": 2000, \"agent\":"
+  },
+  {
+    "narrative": "6. You cancel it: the mandate is revoked"
+  },
+  {
+    "narrative": "7. The merchant charges again \u2014 your payment system refuses"
+  },
+  {
+    "check": "post-revocation charge denied",
+    "ok": true,
+    "evidence": "{\"denied\": true, \"reasons\": [\"agent_revoked\"]}"
+  },
+  {
+    "check": "revocation is the reason",
+    "ok": true,
+    "evidence": "{\"denied\": true, \"reasons\": [\"agent_revoked\"]}"
+  },
+  {
+    "check": "no ledger movement after revocation",
+    "ok": true,
+    "evidence": ""
+  },
+  {
+    "narrative": "8. The refusal is recorded as a signed, checkable receipt"
+  },
+  {
+    "check": "refusal receipt verifies with receiver public key only",
+    "ok": true,
+    "evidence": "VALID: receipt gw-9fe97fd49a02 decision=deny agent=merchant-acme ts=2026-10-11T07:16:50.972612+00:00"
+  },
+  {
+    "check": "all gateway receipts verify",
+    "ok": true,
+    "evidence": "receipts: 6 valid, 0 invalid (of 6)"
+  },
+  {
+    "narrative": "9. The hard case: an authorization minted BEFORE you canceled"
+  },
+  {
+    "check": "late token refused by the final standing check",
+    "ok": true,
+    "evidence": "{\"ok\": false, \"error\": \"decision no longer standing at execution\"}"
+  },
+  {
+    "check": "standing is the reason",
+    "ok": true,
+    "evidence": "{\"ok\": false, \"error\": \"decision no longer standing at execution\"}"
+  },
+  {
+    "check": "zero ledger movement on refused late token",
+    "ok": true,
+    "evidence": ""
+  },
+  {
+    "check": "WITHOUT the final check the late token executes (the measured 60s window \u2014 disclosed, not hidden)",
+    "ok": true,
+    "evidence": "{\"ok\": true, \"effect_id\": \"fx-12c3567cdb4044a4\", \"treasury_cents\": 992000, \"authorized_params\": {\"value_cents\": 2000, \"agent\": \"merchant-acme-twin\"}}"
+  },
+  {
+    "check": "contrast ledger shows the window's cost exactly",
+    "ok": true,
+    "evidence": ""
+  }
+]
