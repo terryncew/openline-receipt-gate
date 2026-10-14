@@ -1,0 +1,41 @@
+cff-version: 1.2.0
+title: OpenLine Receipt Gate
+version: 0.1.0
+date-released: 2026-10-14
+authors:
+  - family-names: White
+    given-names: Terrynce
+repository-code: 'https://github.com/terryncew/openline-receipt-gate'
+url: 'https://github.com/terryncew/openline-receipt-gate'
+license: MIT
+abstract: >-
+  Receiver-owned authorization for AI agents: the system receiving an
+  agent's request decides what the agent may do. Signed decision
+  receipts record what was allowed, denied, or stopped, and why.
+keywords:
+  - ai-agents
+  - authorization
+  - receiver-owned-policy
+  - signed-receipts
+  - revocation
+# The identifiers below are RELATED RESEARCH, not software releases.
+# Cite the software via this file; cite the reports via their DOIs.
+references:
+  - type: report
+    title: 'Receiver-Side Authorization Failures in Cross-Boundary AI Agent Systems: A Case Study of Scope Reflection, Fail-Closed Policy Checks, and Signed Decisions'
+    authors:
+      - family-names: White
+        given-names: Terrynce A.
+    year: 2026
+    doi: 10.5281/zenodo.23358012
+    url: 'https://doi.org/10.5281/zenodo.23358012'
+    notes: 'OpenLine Technical Report 001 (OPENLINE-TR-2026-RECEIVER-001)'
+  - type: report
+    title: 'Receiver-Owned Authority for AI Agents: Portable Mandates, Receiver Enforcement, and Verifiable Receipts'
+    authors:
+      - family-names: White
+        given-names: Terrynce A.
+    year: 2026
+    doi: 10.5281/zenodo.23219814
+    url: 'https://doi.org/10.5281/zenodo.23219814'
+    notes: 'OpenLine technical paper I (v1.0)'
