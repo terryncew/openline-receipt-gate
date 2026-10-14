@@ -25,8 +25,11 @@ Those vendored files keep their Apache-2.0 license. This repository's MIT
 license does **not** replace, relicense, or weaken the Apache-2.0 terms on
 the vendored Wallet components — redistribution of those files must still
 satisfy Apache-2.0's notice requirements (license copy, retained copyright
-and attribution notices, stated changes). See `NOTICE` and the vendored
-directories' own license documentation.
+and attribution notices, stated changes). The experimental vendored directory
+currently lacks a colocated Apache-2.0 license copy. Add the license and
+applicable notices before distributing those components. See `NOTICE` and
+the experimental branch's `gateway/openline_wallet/VENDOR-README.md` for
+source provenance.
 
 ## Related research
 
