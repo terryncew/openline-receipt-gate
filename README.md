@@ -418,7 +418,12 @@ evidence. The legacy wrapper remains for backward compatibility.
 
 ## License
 
-[MIT](LICENSE)
+[MIT](LICENSE) — copyright 2026 Terrynce White.
+
+See [NOTICE](NOTICE) for attribution notices (including the Apache-2.0
+terms that continue to cover vendored OpenLine Wallet components),
+[CITATION.cff](CITATION.cff) for a ready-made software citation, and
+[ATTRIBUTION.md](ATTRIBUTION.md) for what the licenses require and do not require.
 
 Proof travels. Permission belongs to the receiver.
 

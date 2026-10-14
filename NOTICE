@@ -1,0 +1,17 @@
+OpenLine Receipt Gate
+Copyright 2026 Terrynce White
+
+This product is licensed under the MIT License.
+See LICENSE for the full license text.
+
+Vendored components: experimental branches of this repository vendor
+authority-contract modules from OpenLine Wallet
+(github.com/terryncew/openline-wallet), which remain under the
+Apache License, Version 2.0. The MIT license of this repository does
+not replace or relicense those vendored Apache-2.0 components. When
+redistributed, those modules must be accompanied by the applicable
+Apache-2.0 license and required attribution notices. The experimental
+vendored directories do not yet have their own Apache-2.0 license copy.
+
+The MIT license grants no trademark rights. Use of the name "OpenLine"
+does not imply endorsement by the author.
