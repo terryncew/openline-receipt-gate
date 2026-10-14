@@ -107,7 +107,7 @@ def inspect_case(arm,scenario):
     require("policy drop" in kernel,"no final kernel drop "+name)
     receipts_path=root/"receipts.jsonl"
     receipts=[json.loads(x) for x in receipts_path.read_text().splitlines()] if receipts_path.exists() else []
-    receiver_pub="65ee0751bca8ca1bf80b41a78d9d4a67e6520627d6f595493f7c54d2ed5567df"
+    receiver_pub="55154f42065ea5a1bea05463826be2684eb92df92c100027aabaae57ca554207"
     owner_pub="bc7cbcb5636375fa1d82434d466724d92377f53b980695dd49d26d0ce12205a5"
     # Both pinned keys are test fixtures; signature verification is independent of the updater.
     verified=0
