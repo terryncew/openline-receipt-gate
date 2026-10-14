@@ -32,6 +32,7 @@ captures=[]
 servers=[]
 witness_proc=None
 active_flow=None
+CURRENT_CASE=None
 D={"experiment":"HOME-GUARD-005","cases":{},"limits":["namespace restart not physical power loss","test fixture public owner keys","privileged host/kernel assumed uncompromised","witness only independent under local-file attacker model"]}
 
 
@@ -70,7 +71,11 @@ def kill_process(p):
 
 
 def cleanup_network():
-    global captures,servers,active_flow
+    global captures,servers,active_flow,CURRENT_CASE
+    if CURRENT_CASE is not None:
+        state=fw("nft","-a","list","table","inet","hg5",ok=False)
+        if state.returncode==0:
+            (E/CURRENT_CASE/"final-kernel.rules").write_text(state.stdout)
     kill_process(active_flow)
     active_flow=None
     for p,handle in captures:
@@ -88,6 +93,7 @@ def cleanup_network():
     for p,handle in servers:
         kill_process(p);handle.close()
     servers=[]
+    CURRENT_CASE=None
 
 
 def stop_witness():
@@ -153,7 +159,8 @@ def marker(case,name):
 
 
 def setup_net(case):
-    global captures,servers
+    global captures,servers,CURRENT_CASE
+    CURRENT_CASE=case
     for name in NS:
         found=root("ip","netns","list").stdout
         if any(line.split()[0]==name for line in found.splitlines() if line):
@@ -218,6 +225,7 @@ def ctl(case,arm,policy,local,trusted,sock,stage,*,crash=None,replay=None,monito
           "--arm",arm,"--policy",str(policy),"--local",str(local),
           "--socket",str(sock),"--witness-pub",str(trusted/"witness-public.hex"),
           "--receipts",str(E/case/"receipts.jsonl"),
+          "--witness-responses",str(E/case/"witness-responses.jsonl"),
           "--snapshot",str(E/case/(stage+".rules"))]
     if crash:args+=["--crash",crash]
     if replay:args+=["--replay",str(replay)]
@@ -321,6 +329,7 @@ def run_witness_outage(arm):
           "--arm",arm,"--policy",str(cache),"--local",str(db),
           "--socket",str(sock),"--witness-pub",str(trusted/"witness-public.hex"),
           "--receipts",str(E/case/"receipts.jsonl"),
+          "--witness-responses",str(E/case/"witness-responses.jsonl"),
           "--snapshot",str(E/case/"watcher-quarantine.rules"),
           "--monitor","--monitor-seconds","4"]
     watcher=subprocess.Popen(args,stdout=monitor_log,stderr=subprocess.STDOUT)

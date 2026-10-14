@@ -103,10 +103,23 @@ def install(allow):
     return state,h
 
 
-def owner_policy(raw):
+def owner_policy(raw, arm="olp"):
     p=strict_json_loads(raw.decode())
     if not isinstance(p,dict):raise ValueError("invalid owner document")
-    valid,reason=verify_olp_signature(p)
+    if arm=="olp":
+        valid,reason=verify_olp_signature(p)
+    else:
+        # Conventional verification uses only Ed25519+canonical JSON, no
+        # OpenLine verifier. The signed owner fixture is *identical*.
+        body={k:v for k,v in p.items() if k not in ("signature","payload_hash")}
+        digest=sha(canon(body))
+        valid=digest==p.get("payload_hash")
+        reason="conventional canonical digest/signature failure"
+        if valid:
+            try:
+                Ed25519PublicKey.from_public_bytes(bytes.fromhex(OWNER_PUB)).verify(
+                  bytes.fromhex(p["signature"]["value"]),canon(body))
+            except (ValueError,InvalidSignature,KeyError):valid=False
     if not valid or p["signature"]["public_key"]!=OWNER_PUB:
         raise ValueError("owner signature or trust root invalid: "+str(reason))
     if p.get("schema")!=OWNER_SCHEMA or p.get("policy_id")!=OWNER_POLICY_ID:
@@ -121,7 +134,7 @@ def owner_policy(raw):
     return p
 
 
-def witness_query(socket_path,pub_path,replay=None):
+def witness_query(socket_path,pub_path,replay=None,evidence=None):
     nonce=secrets.token_hex(16)
     if replay:
         response=json.loads(Path(replay).read_text())
@@ -136,6 +149,10 @@ def witness_query(socket_path,pub_path,replay=None):
                 if not piece:break
                 incoming+=piece
         response=json.loads(bytes(incoming).decode())
+    if evidence is not None:
+        evidence.parent.mkdir(parents=True,exist_ok=True)
+        with evidence.open("a") as f:
+            f.write(json.dumps(response,sort_keys=True)+"\n")
     body=response["body"]
     pub=bytes.fromhex(Path(pub_path).read_text().strip())
     Ed25519PublicKey.from_public_bytes(pub).verify(bytes.fromhex(response["signature"]),canon(body))
@@ -204,9 +221,9 @@ def recover(a):
     try:
         if a.crash=="before-witness":
             os._exit(73)
-        witness_response=witness_query(a.socket,a.witness_pub,a.replay)
+        witness_response=witness_query(a.socket,a.witness_pub,a.replay,a.witness_responses)
         if not policybytes:raise ValueError("policy bytes missing")
-        policy=owner_policy(policybytes)
+        policy=owner_policy(policybytes,a.arm)
         info=witness_response["body"]
         if (policy["version"]!=info["version"] or
             sha(policybytes)!=info["policy_sha256"]):
@@ -246,9 +263,9 @@ def monitor(a):
     deadline=time.monotonic()+a.monitor_seconds
     while time.monotonic()<deadline:
         try:
-            info=witness_query(a.socket,a.witness_pub,a.replay)["body"]
+            info=witness_query(a.socket,a.witness_pub,a.replay,a.witness_responses)["body"]
             raw=a.policy.read_bytes()
-            p=owner_policy(raw)
+            p=owner_policy(raw,a.arm)
             if p["version"]!=info["version"] or sha(raw)!=info["policy_sha256"]:
                 raise ValueError("stale current permission")
         except Exception as exc:
@@ -272,6 +289,7 @@ def main():
     p.add_argument("--socket",type=Path,required=True)
     p.add_argument("--witness-pub",type=Path,required=True)
     p.add_argument("--receipts",type=Path,required=True)
+    p.add_argument("--witness-responses",type=Path,required=True)
     p.add_argument("--snapshot",type=Path,required=True)
     p.add_argument("--replay",type=Path)
     p.add_argument("--crash",choices=["before-witness","after-witness-before-install",
