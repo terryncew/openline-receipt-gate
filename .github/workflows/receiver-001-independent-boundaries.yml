@@ -1,0 +1,65 @@
+name: RECEIVER-001 local independent-boundaries falsifier
+on:
+  push:
+    branches: [experiment/receiver-001-independent-boundaries]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  two-receivers:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Enforce frozen plan and unchanged earlier sources
+        run: |
+          set -eu
+          git merge-base --is-ancestor 7f7f832b34c44b4bb487123b7db0b18aa00a6321 HEAD
+          git diff --exit-code 792dbc34a333fcc2150114558fe1ee7008cd354b HEAD -- gateway/openline_wallet gateway/compose gateway/opa gateway/authz_server.py
+          cmp gateway/receiver-kit/RECEIVER-001-FREEZE.md <(git show 7f7f832b34c44b4bb487123b7db0b18aa00a6321:gateway/receiver-kit/RECEIVER-001-FREEZE.md)
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install only reference crypto, no paid APIs
+        run: python -m pip install cryptography==50.0.1
+      - name: Syntax and single receiver regression
+        run: |
+          python -m py_compile gateway/wallet_bridge.py gateway/receiver-kit/verify_two_receivers.py gateway/receiver-kit/examples/04-two-independent-receivers.py
+          python gateway/demo_wallet_integration.py
+      - name: Two receiver processes, different policies and roots
+        run: |
+          python gateway/receiver-kit/examples/04-two-independent-receivers.py --out "$RUNNER_TEMP/receiver-001"
+          python gateway/receiver-kit/verify_two_receivers.py "$RUNNER_TEMP/receiver-001" --trusted-keys "$RUNNER_TEMP/receiver-001/trusted_receiver_keys.json"
+      - name: Negative tampered receipt must fail independent verification
+        run: |
+          python - <<'PY'
+          import json,os,pathlib
+          root=pathlib.Path(os.environ["RUNNER_TEMP"])/"receiver-001"
+          path=root/"decision_receipts.json"
+          rows=json.loads(path.read_text())
+          rows[0]["receipt"]["decision"]="STOPPED" if rows[0]["receipt"]["decision"]=="ALLOWED" else "ALLOWED"
+          path.write_text(json.dumps(rows))
+          PY
+          if python gateway/receiver-kit/verify_two_receivers.py "$RUNNER_TEMP/receiver-001" --trusted-keys "$RUNNER_TEMP/receiver-001/trusted_receiver_keys.json"; then
+            echo "FAIL: TAMPERED RECEIPT VERIFIED" >&2
+            exit 1
+          fi
+          echo "EXPECTED REFUSAL: tampered receipt"
+      - name: Preserve raw evidence and checksums including on failure
+        if: always()
+        run: |
+          if test -d "$RUNNER_TEMP/receiver-001"; then
+            cd "$RUNNER_TEMP/receiver-001"
+            find . -type f ! -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS
+          fi
+      - name: Upload proof and failure evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: RECEIVER-001-two-process-synthetic-evidence
+          path: ${{ runner.temp }}/receiver-001
+          if-no-files-found: warn
+          retention-days: 30
