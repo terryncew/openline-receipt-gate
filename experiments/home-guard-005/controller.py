@@ -249,7 +249,7 @@ def recover(a):
           "previous_kernel_sha256":first_hash,
           "observed_kernel_sha256":after_hash,
           "local_state_seen":local,
-          "observed_ns":time.time_ns()}
+          "observed_ns":str(time.time_ns())}
     a.snapshot.parent.mkdir(parents=True,exist_ok=True)
     a.snapshot.write_text(state if state else kernel_snapshot()[0])
     log_event(a,body)
@@ -273,7 +273,7 @@ def monitor(a):
             a.snapshot.parent.mkdir(parents=True,exist_ok=True)
             a.snapshot.write_text(state)
             log_event(a,{"mode":a.arm,"decision":"FRESHNESS_LOST","reason":str(exc),
-                         "observed_kernel_sha256":h,"observed_ns":time.time_ns()})
+                         "observed_kernel_sha256":h,"observed_ns":str(time.time_ns())})
             print("MONITOR_QUARANTINED",flush=True)
             return 0
         time.sleep(0.12)

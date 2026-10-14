@@ -206,7 +206,7 @@ def check_arm(arm):
     cold=stage_one(o,"offline-cold")
     freshness_receipts=[body(x,arm) for x in outage["receipts"] if
                         body(x,arm).get("decision")=="FRESHNESS_LOST"]
-    freshness_t=min([x["observed_ns"] for x in freshness_receipts],default=0)
+    freshness_t=min([int(x["observed_ns"]) for x in freshness_receipts],default=0)
     # The test's bound starts at last known confirmed live witness moment.
     outage_tail=[x for x in outage["protected"] if
                  x["ns"]>freshness_t+200_000_000]
