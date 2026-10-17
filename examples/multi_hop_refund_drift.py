@@ -164,16 +164,27 @@ def run(otel=False, verbose=True, *, owner_cap_cents=CAP, receiver_cap_cents=CAP
                     or args["endpoint"] != REFUND
                     or receiver_state["invoice_hash"] != owner_intent["state_hash"]):
                 return None
-            # This limit is read from the independently VERIFIED signed
-            # owner payload, never from the script's default CAP constant.
-            # A failed owner limit is a separate local callback refusal;
-            # the receiver's policy compiler still checks its own cap.
+            # Even if called directly (bypassing the outer demo preflight),
+            # no evidence of owner approval is issued above the signed cap.
             if args["amount_cents"] > owner_intent["max_amount_cents"]:
-                raise AuthorizationBlocked("DENY", ["owner_signed_limit_exceeded"])
+                return None
             return {"manager_signature_verified": True,
                     "ticket_id": owner_intent["ticket_id"],
                     "cap_cents": owner_intent["max_amount_cents"],
                     "invoice_hash": receiver_state["invoice_hash"]}
+
+        def owner_signed_preflight(*, endpoint, amount_cents, ticket_id, currency):
+            # Explicit receiver-owned preflight for an exact refund request.
+            # This runs before @authorize; its denial is NOT a signed
+            # Receipt Gate compiler decision or a receiver-signed receipt.
+            try:
+                owner_pub.verify(owner_sig, canonical(owner_intent))
+            except Exception as exc:
+                raise AuthorizationBlocked(
+                    "DENY", ["owner_signed_instruction_invalid"]
+                ) from exc
+            if endpoint == REFUND and amount_cents > owner_intent["max_amount_cents"]:
+                raise AuthorizationBlocked("DENY", ["owner_signed_limit_exceeded"])
 
         @authorize(
             policy=receiver_policy(max_payment_cents=receiver_cap_cents),
@@ -187,8 +198,17 @@ def run(otel=False, verbose=True, *, owner_cap_cents=CAP, receiver_cap_cents=CAP
             runtime_dir=Path(tmp) / "receiver",
             producer_model="billing-subagent",
         )
-        def payment_api_post(*, endpoint, amount_cents, ticket_id, currency):
+        def _receiver_gate_post(*, endpoint, amount_cents, ticket_id, currency):
             return effects.post(endpoint, amount_cents, ticket_id)
+
+        def payment_api_post(*, endpoint, amount_cents, ticket_id, currency):
+            # The only protected entry point used in this replay.
+            # For a wrong payout route, @authorize produces both mandate
+            # denial reasons; a refund over the signed cap is refused here.
+            owner_signed_preflight(endpoint=endpoint, amount_cents=amount_cents,
+                                   ticket_id=ticket_id, currency=currency)
+            return _receiver_gate_post(endpoint=endpoint, amount_cents=amount_cents,
+                                       ticket_id=ticket_id, currency=currency)
 
         if verbose:
             print("THREE-HOP REFUND DRIFT — OFFLINE SIMULATION")
