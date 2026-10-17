@@ -1,13 +1,10 @@
 name: Multi-hop refund drift — offline demo checks
 on:
   push:
-    branches: [demo/multi-hop-refund-drift-day1]
-    paths:
-      - "examples/multi_hop_refund_drift.py"
-      - "examples/multi_hop_refund_drift/README.md"
-      - "tests/test_multi_hop_refund_drift_demo.py"
-      - ".github/workflows/multi-hop-refund-drift.yml"
-      - "README.md"
+    branches: [demo/multi-hop-refund-drift-day1, main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
 permissions:
   contents: read
 jobs:
