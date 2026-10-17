@@ -1,0 +1,25 @@
+{
+  "consumed_nonces": {
+    "450e04d8ad5d3b26c0bd81f87f8d07fe": {
+      "consumed_at": "2026-10-17T18:00:00Z",
+      "decision_hash": "8d8da0e5b1ec0ebcbeb621a91a46ce219ac403d9c06387b236ef7755ee154059",
+      "run_id": "consequence-002-default",
+      "sequence": 1,
+      "session_id": "session-default",
+      "source_hash": "3564a6c974b4e708ace401111978fad869a6974a8b4a392926b8aef786c7da3c"
+    }
+  },
+  "schema": "openline.proof_to_policy.sessions.v0.2",
+  "sessions": {
+    "consequence-002-default\u001fsession-default": {
+      "next_sequence": 2,
+      "parent_decision_hash": "8d8da0e5b1ec0ebcbeb621a91a46ce219ac403d9c06387b236ef7755ee154059",
+      "pending": {},
+      "run_id": "consequence-002-default",
+      "seen_source_hashes": [
+        "3564a6c974b4e708ace401111978fad869a6974a8b4a392926b8aef786c7da3c"
+      ],
+      "session_id": "session-default"
+    }
+  }
+}

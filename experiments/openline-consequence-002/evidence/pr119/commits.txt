@@ -1,0 +1,47 @@
+commit 1749a226b5f77cabc98f04a8655636229e0b11c2
+Author:     Terrynce White <terryncew@gmail.com>
+AuthorDate: Sat Oct 17 09:07:08 2026 -0700
+Commit:     Terrynce White <terryncew@gmail.com>
+CommitDate: Sat Oct 17 09:07:08 2026 -0700
+
+    docs(demo): distinguish preflight refusal from signed gate compilation
+
+commit 78eff8a0247b9033cc074f2c46deb09b23f982bf
+Author:     Terrynce White <terryncew@gmail.com>
+AuthorDate: Sat Oct 17 09:06:48 2026 -0700
+Commit:     Terrynce White <terryncew@gmail.com>
+CommitDate: Sat Oct 17 09:06:48 2026 -0700
+
+    fix(demo): explicit owner-signed preflight, compiler policy denial remains independent
+
+commit e9724ea06dfa2eea3ec15004c1be060c577d16a6
+Author:     Terrynce White <terryncew@gmail.com>
+AuthorDate: Sat Oct 17 09:04:33 2026 -0700
+Commit:     Terrynce White <terryncew@gmail.com>
+CommitDate: Sat Oct 17 09:04:33 2026 -0700
+
+    docs(demo): preserve cold-run finding and distinguish the two cap checks
+
+commit 1f0ebb5b6879fad5d7d88802e597c51792219f77
+Author:     Terrynce White <terryncew@gmail.com>
+AuthorDate: Sat Oct 17 09:04:12 2026 -0700
+Commit:     Terrynce White <terryncew@gmail.com>
+CommitDate: Sat Oct 17 09:04:12 2026 -0700
+
+    docs(demo): show both observed denial reasons and independent owner cap
+
+commit 766072bbf41126212bf74d5089c6412e34eebab2
+Author:     Terrynce White <terryncew@gmail.com>
+AuthorDate: Sat Oct 17 09:03:40 2026 -0700
+Commit:     Terrynce White <terryncew@gmail.com>
+CommitDate: Sat Oct 17 09:03:40 2026 -0700
+
+    test(demo): separately assert signed-owner and receiver-policy denial codes
+
+commit 0616f497b5aa09da5e33c5eba18fb42af2bf0879
+Author:     Terrynce White <terryncew@gmail.com>
+AuthorDate: Sat Oct 17 09:03:21 2026 -0700
+Commit:     Terrynce White <terryncew@gmail.com>
+CommitDate: Sat Oct 17 09:03:21 2026 -0700
+
+    fix(demo): enforce verified signed owner cap independently of receiver limit

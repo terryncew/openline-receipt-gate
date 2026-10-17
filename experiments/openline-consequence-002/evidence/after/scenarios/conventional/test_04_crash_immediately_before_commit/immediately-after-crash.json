@@ -1,0 +1,46 @@
+{
+  "receiver": [
+    {
+      "id": 1,
+      "roots": "{\"gate_keys\":[\"a7f6dfaf8f38b89ba8ce649b594f91e4d01fdc57f9c9493df43b5e50a9987367\"],\"outcome_key\":\"555f469c22188e90015bdd85b889678d459f86bdf8f7bd34971b10b9b3858609\",\"owner_id\":\"owner:local\",\"owner_key\":\"e2fe2a39b7326642827d6d82d497622cd6c297fe78270eaa436b01f086b6f3cb\",\"slot_id\":\"commissioning/site-1\"}",
+      "policy_hash": "79cf081a695afb6f5a64d420c50db97f033e9faabd0ab8d70d4dc575715e7333",
+      "enabled": 1,
+      "time_watermark": "2026-10-17T18:00:00+00:00",
+      "implementation": "conventional"
+    }
+  ],
+  "sites": [
+    {
+      "site_id": "site-1",
+      "version": 1,
+      "simulation_digest": "d0b8e7cb8a6d2ec2fa0c706f112a2a575ee14fdc7e208959a1e915e76d55109d",
+      "robot_config_digest": "e297bc93f589180f9edd73e692367d0e50bd0f44b64bceb153008b4f5076be08",
+      "commissioned": 0
+    }
+  ],
+  "owner_history": [
+    {
+      "sequence": 1,
+      "hash": "c6f90771ded06baf486fe468dc70695116169f179a7c19c01a91825b81803010",
+      "authorization": "{\"authorization_id\":\"commissioning/site-1:1\",\"expires_at\":\"2026-10-17T18:05:00Z\",\"issued_at\":\"2026-10-17T18:00:00Z\",\"mandate_hash\":\"0472cff4f300ee7e5c768cea2f30d7ddd1aed001f2625f6096911d8a9f619df8\",\"owner_id\":\"owner:local\",\"payload_hash\":\"c6f90771ded06baf486fe468dc70695116169f179a7c19c01a91825b81803010\",\"predecessor_hash\":null,\"schema\":\"openline.mandate_owner_authorization.v1\",\"sequence\":1,\"signature\":{\"algorithm\":\"Ed25519\",\"public_key\":\"e2fe2a39b7326642827d6d82d497622cd6c297fe78270eaa436b01f086b6f3cb\",\"value\":\"561a8b2d5d8c058d2da79ed46b395f7fce9fde3d2ee0e4eac9b6d5af6bfa5326e9f5fcb673d311cec309e1c904fe067a797a96381832678601100e8aa3259d07\"},\"slot_id\":\"commissioning/site-1\",\"state\":\"ACTIVE\"}",
+      "mandate": "{\"agent_id\":\"operator:alice\",\"allowed_action_types\":[\"send\"],\"allowed_disclosure_classes\":[],\"allowed_targets\":[\"sqlite://commissioning/site-1\"],\"delegation_allowed\":false,\"expires_at\":\"2026-10-17T18:05:00Z\",\"forbidden_disclosure_classes\":[],\"mandate_id\":\"commission-site-1\",\"max_payment_cents\":0,\"max_settlement_cents\":0,\"principal_id\":\"owner:local\",\"profile\":\"principal_mandate/v1\",\"purpose\":\"commission site\",\"version\":\"1\"}"
+    }
+  ],
+  "artifacts": [
+    {
+      "digest": "d0b8e7cb8a6d2ec2fa0c706f112a2a575ee14fdc7e208959a1e915e76d55109d",
+      "body": "{\"approved\":true,\"simulation\":{\"fixture_only\":true,\"result\":\"commissioning prerequisites satisfied\",\"site_id\":\"site-1\"}}"
+    },
+    {
+      "digest": "e297bc93f589180f9edd73e692367d0e50bd0f44b64bceb153008b4f5076be08",
+      "body": "{\"fixture_only\":true,\"mode\":\"local\",\"robot_id\":\"simulated-robot-1\"}"
+    }
+  ],
+  "ledger": [
+    {
+      "id": 1,
+      "body": "{\"attempts\":[],\"commit_seq_next\":1,\"consumed_codes\":{},\"consumed_decisions\":{},\"consumed_replay_scopes\":{},\"schema\":\"openline.proof_to_policy.commit-ledger.v1.1\"}"
+    }
+  ],
+  "commitments": []
+}

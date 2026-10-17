@@ -1,0 +1,25 @@
+{"case": "after_json_spend_before_sqlite", "child_exit_status": 73, "sqlite_rows": [["local-fixture", 0]], "authorization_consumed": true, "execution_status": "started", "restart_authorized": false, "restart_reasons": ["authorization_replay", "one_use_code_replay"]}
+{"case": "after_sqlite_commit_before_json_completion", "child_exit_status": 74, "sqlite_rows": [["local-fixture", 1]], "authorization_consumed": true, "execution_status": "started", "restart_authorized": false, "restart_reasons": ["authorization_replay", "one_use_code_replay"]}
+test_committed_mutation_must_have_durable_completed_outcome (__main__.main.<locals>.AtomicConsequenceContract.test_committed_mutation_must_have_durable_completed_outcome) ... FAIL
+test_crash_before_mutation_must_not_consume_authorization (__main__.main.<locals>.AtomicConsequenceContract.test_crash_before_mutation_must_not_consume_authorization) ... FAIL
+
+======================================================================
+FAIL: test_committed_mutation_must_have_durable_completed_outcome (__main__.main.<locals>.AtomicConsequenceContract.test_committed_mutation_must_have_durable_completed_outcome)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/reproduce_dual_write.py", line 142, in test_committed_mutation_must_have_durable_completed_outcome
+    self.assertEqual(len(observed["completed_outcomes"]), 1, "OUTCOME CONTINUITY FALSIFIED: SQLite effect committed with no durable completed outcome in authorization ledger")
+AssertionError: 0 != 1 : OUTCOME CONTINUITY FALSIFIED: SQLite effect committed with no durable completed outcome in authorization ledger
+
+======================================================================
+FAIL: test_crash_before_mutation_must_not_consume_authorization (__main__.main.<locals>.AtomicConsequenceContract.test_crash_before_mutation_must_not_consume_authorization)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/reproduce_dual_write.py", line 136, in test_crash_before_mutation_must_not_consume_authorization
+    self.assertFalse(observed["authorization_consumed"], "ATOMICITY FALSIFIED: permission durably consumed while SQLite protected mutation is absent")
+AssertionError: True is not false : ATOMICITY FALSIFIED: permission durably consumed while SQLite protected mutation is absent
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+FAILED (failures=2)

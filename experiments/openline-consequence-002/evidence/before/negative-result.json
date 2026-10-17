@@ -1,0 +1,17 @@
+{
+  "classification": "NEGATIVE: EXISTING JSON/SQLITE DUAL WRITE IS NOT ATOMIC",
+  "errors": 0,
+  "failure_reports": [
+    {
+      "test": "test_committed_mutation_must_have_durable_completed_outcome (__main__.main.<locals>.AtomicConsequenceContract.test_committed_mutation_must_have_durable_completed_outcome)",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/openline-receipt-gate/experiments/openline-consequence-002/reproduce_dual_write.py\", line 142, in test_committed_mutation_must_have_durable_completed_outcome\n    self.assertEqual(len(observed[\"completed_outcomes\"]), 1, \"OUTCOME CONTINUITY FALSIFIED: SQLite effect committed with no durable completed outcome in authorization ledger\")\nAssertionError: 0 != 1 : OUTCOME CONTINUITY FALSIFIED: SQLite effect committed with no durable completed outcome in authorization ledger\n"
+    },
+    {
+      "test": "test_crash_before_mutation_must_not_consume_authorization (__main__.main.<locals>.AtomicConsequenceContract.test_crash_before_mutation_must_not_consume_authorization)",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/openline-receipt-gate/experiments/openline-consequence-002/reproduce_dual_write.py\", line 136, in test_crash_before_mutation_must_not_consume_authorization\n    self.assertFalse(observed[\"authorization_consumed\"], \"ATOMICITY FALSIFIED: permission durably consumed while SQLite protected mutation is absent\")\nAssertionError: True is not false : ATOMICITY FALSIFIED: permission durably consumed while SQLite protected mutation is absent\n"
+    }
+  ],
+  "failures": 2,
+  "interpretation": "Controlled os._exit process crashes; local SQLite only; no physical device or packet effect. Original signed authorization is valid, but its JSON spend and external SQLite consequence do not share a transaction.",
+  "tests_run": 2
+}

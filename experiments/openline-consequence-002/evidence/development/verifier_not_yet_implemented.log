@@ -1,0 +1,275 @@
+test_01_success_and_exact_idempotent_retry (test_atomic.AtomicConsequenceTests.test_01_success_and_exact_idempotent_retry) ... FAIL
+test_02_forgery_binding_and_code (test_atomic.AtomicConsequenceTests.test_02_forgery_binding_and_code) ... FAIL
+test_03_concurrent_writers (test_atomic.AtomicConsequenceTests.test_03_concurrent_writers) ... FAIL
+test_04_crash_immediately_before_commit (test_atomic.AtomicConsequenceTests.test_04_crash_immediately_before_commit) ... FAIL
+test_05_crash_immediately_after_commit (test_atomic.AtomicConsequenceTests.test_05_crash_immediately_after_commit) ... FAIL
+test_06_revocation_and_stale_worker (test_atomic.AtomicConsequenceTests.test_06_revocation_and_stale_worker) ... FAIL
+test_07_expiry_after_waiting_for_lock (test_atomic.AtomicConsequenceTests.test_07_expiry_after_waiting_for_lock) ... FAIL
+test_08_stale_evidence_config_or_site (test_atomic.AtomicConsequenceTests.test_08_stale_evidence_config_or_site) ... FAIL
+test_09_current_receiver_policy (test_atomic.AtomicConsequenceTests.test_09_current_receiver_policy) ... FAIL
+test_10_worker_succession_and_subject (test_atomic.AtomicConsequenceTests.test_10_worker_succession_and_subject) ... FAIL
+test_11_new_receipt_same_transition_and_one_use_code (test_atomic.AtomicConsequenceTests.test_11_new_receipt_same_transition_and_one_use_code) ... FAIL
+test_12_outcome_and_evidence_tampering (test_atomic.AtomicConsequenceTests.test_12_outcome_and_evidence_tampering) ... FAIL
+test_13_missing_store_and_reinitialization (test_atomic.AtomicConsequenceTests.test_13_missing_store_and_reinitialization) ... FAIL
+test_14_clock_rollback_and_mutable_input (test_atomic.AtomicConsequenceTests.test_14_clock_rollback_and_mutable_input) ... FAIL
+test_15_foreign_owner_principal_and_root_swap (test_atomic.AtomicConsequenceTests.test_15_foreign_owner_principal_and_root_swap) ... FAIL
+test_01_success_and_exact_idempotent_retry (test_atomic.ConventionalTests.test_01_success_and_exact_idempotent_retry) ... FAIL
+test_02_forgery_binding_and_code (test_atomic.ConventionalTests.test_02_forgery_binding_and_code) ... FAIL
+test_03_concurrent_writers (test_atomic.ConventionalTests.test_03_concurrent_writers) ... FAIL
+test_04_crash_immediately_before_commit (test_atomic.ConventionalTests.test_04_crash_immediately_before_commit) ... FAIL
+test_05_crash_immediately_after_commit (test_atomic.ConventionalTests.test_05_crash_immediately_after_commit) ... FAIL
+test_06_revocation_and_stale_worker (test_atomic.ConventionalTests.test_06_revocation_and_stale_worker) ... FAIL
+test_07_expiry_after_waiting_for_lock (test_atomic.ConventionalTests.test_07_expiry_after_waiting_for_lock) ... FAIL
+test_08_stale_evidence_config_or_site (test_atomic.ConventionalTests.test_08_stale_evidence_config_or_site) ... FAIL
+test_09_current_receiver_policy (test_atomic.ConventionalTests.test_09_current_receiver_policy) ... FAIL
+test_10_worker_succession_and_subject (test_atomic.ConventionalTests.test_10_worker_succession_and_subject) ... FAIL
+test_11_new_receipt_same_transition_and_one_use_code (test_atomic.ConventionalTests.test_11_new_receipt_same_transition_and_one_use_code) ... FAIL
+test_12_outcome_and_evidence_tampering (test_atomic.ConventionalTests.test_12_outcome_and_evidence_tampering) ... FAIL
+test_13_missing_store_and_reinitialization (test_atomic.ConventionalTests.test_13_missing_store_and_reinitialization) ... FAIL
+test_14_clock_rollback_and_mutable_input (test_atomic.ConventionalTests.test_14_clock_rollback_and_mutable_input) ... FAIL
+test_15_foreign_owner_principal_and_root_swap (test_atomic.ConventionalTests.test_15_foreign_owner_principal_and_root_swap) ... FAIL
+
+======================================================================
+FAIL: test_01_success_and_exact_idempotent_retry (test_atomic.AtomicConsequenceTests.test_01_success_and_exact_idempotent_retry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 77, in tearDown
+    self.fail('independent verifier missing')
+AssertionError: independent verifier missing
+
+======================================================================
+FAIL: test_02_forgery_binding_and_code (test_atomic.AtomicConsequenceTests.test_02_forgery_binding_and_code)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 77, in tearDown
+    self.fail('independent verifier missing')
+AssertionError: independent verifier missing
+
+======================================================================
+FAIL: test_03_concurrent_writers (test_atomic.AtomicConsequenceTests.test_03_concurrent_writers)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 77, in tearDown
+    self.fail('independent verifier missing')
+AssertionError: independent verifier missing
+
+======================================================================
+FAIL: test_04_crash_immediately_before_commit (test_atomic.AtomicConsequenceTests.test_04_crash_immediately_before_commit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 77, in tearDown
+    self.fail('independent verifier missing')
+AssertionError: independent verifier missing
+
+======================================================================
+FAIL: test_05_crash_immediately_after_commit (test_atomic.AtomicConsequenceTests.test_05_crash_immediately_after_commit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 77, in tearDown
+    self.fail('independent verifier missing')
+AssertionError: independent verifier missing
+
+======================================================================
+FAIL: test_06_revocation_and_stale_worker (test_atomic.AtomicConsequenceTests.test_06_revocation_and_stale_worker)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 77, in tearDown
+    self.fail('independent verifier missing')
+AssertionError: independent verifier missing
+
+======================================================================
+FAIL: test_07_expiry_after_waiting_for_lock (test_atomic.AtomicConsequenceTests.test_07_expiry_after_waiting_for_lock)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 77, in tearDown
+    self.fail('independent verifier missing')
+AssertionError: independent verifier missing
+
+======================================================================
+FAIL: test_08_stale_evidence_config_or_site (test_atomic.AtomicConsequenceTests.test_08_stale_evidence_config_or_site)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 77, in tearDown
+    self.fail('independent verifier missing')
+AssertionError: independent verifier missing
+
+======================================================================
+FAIL: test_09_current_receiver_policy (test_atomic.AtomicConsequenceTests.test_09_current_receiver_policy)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 77, in tearDown
+    self.fail('independent verifier missing')
+AssertionError: independent verifier missing
+
+======================================================================
+FAIL: test_10_worker_succession_and_subject (test_atomic.AtomicConsequenceTests.test_10_worker_succession_and_subject)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 77, in tearDown
+    self.fail('independent verifier missing')
+AssertionError: independent verifier missing
+
+======================================================================
+FAIL: test_11_new_receipt_same_transition_and_one_use_code (test_atomic.AtomicConsequenceTests.test_11_new_receipt_same_transition_and_one_use_code)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 77, in tearDown
+    self.fail('independent verifier missing')
+AssertionError: independent verifier missing
+
+======================================================================
+FAIL: test_12_outcome_and_evidence_tampering (test_atomic.AtomicConsequenceTests.test_12_outcome_and_evidence_tampering)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 77, in tearDown
+    self.fail('independent verifier missing')
+AssertionError: independent verifier missing
+
+======================================================================
+FAIL: test_13_missing_store_and_reinitialization (test_atomic.AtomicConsequenceTests.test_13_missing_store_and_reinitialization)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 77, in tearDown
+    self.fail('independent verifier missing')
+AssertionError: independent verifier missing
+
+======================================================================
+FAIL: test_14_clock_rollback_and_mutable_input (test_atomic.AtomicConsequenceTests.test_14_clock_rollback_and_mutable_input)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 77, in tearDown
+    self.fail('independent verifier missing')
+AssertionError: independent verifier missing
+
+======================================================================
+FAIL: test_15_foreign_owner_principal_and_root_swap (test_atomic.AtomicConsequenceTests.test_15_foreign_owner_principal_and_root_swap)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 77, in tearDown
+    self.fail('independent verifier missing')
+AssertionError: independent verifier missing
+
+======================================================================
+FAIL: test_01_success_and_exact_idempotent_retry (test_atomic.ConventionalTests.test_01_success_and_exact_idempotent_retry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 77, in tearDown
+    self.fail('independent verifier missing')
+AssertionError: independent verifier missing
+
+======================================================================
+FAIL: test_02_forgery_binding_and_code (test_atomic.ConventionalTests.test_02_forgery_binding_and_code)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 77, in tearDown
+    self.fail('independent verifier missing')
+AssertionError: independent verifier missing
+
+======================================================================
+FAIL: test_03_concurrent_writers (test_atomic.ConventionalTests.test_03_concurrent_writers)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 77, in tearDown
+    self.fail('independent verifier missing')
+AssertionError: independent verifier missing
+
+======================================================================
+FAIL: test_04_crash_immediately_before_commit (test_atomic.ConventionalTests.test_04_crash_immediately_before_commit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 77, in tearDown
+    self.fail('independent verifier missing')
+AssertionError: independent verifier missing
+
+======================================================================
+FAIL: test_05_crash_immediately_after_commit (test_atomic.ConventionalTests.test_05_crash_immediately_after_commit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 77, in tearDown
+    self.fail('independent verifier missing')
+AssertionError: independent verifier missing
+
+======================================================================
+FAIL: test_06_revocation_and_stale_worker (test_atomic.ConventionalTests.test_06_revocation_and_stale_worker)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 77, in tearDown
+    self.fail('independent verifier missing')
+AssertionError: independent verifier missing
+
+======================================================================
+FAIL: test_07_expiry_after_waiting_for_lock (test_atomic.ConventionalTests.test_07_expiry_after_waiting_for_lock)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 77, in tearDown
+    self.fail('independent verifier missing')
+AssertionError: independent verifier missing
+
+======================================================================
+FAIL: test_08_stale_evidence_config_or_site (test_atomic.ConventionalTests.test_08_stale_evidence_config_or_site)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 77, in tearDown
+    self.fail('independent verifier missing')
+AssertionError: independent verifier missing
+
+======================================================================
+FAIL: test_09_current_receiver_policy (test_atomic.ConventionalTests.test_09_current_receiver_policy)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 77, in tearDown
+    self.fail('independent verifier missing')
+AssertionError: independent verifier missing
+
+======================================================================
+FAIL: test_10_worker_succession_and_subject (test_atomic.ConventionalTests.test_10_worker_succession_and_subject)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 77, in tearDown
+    self.fail('independent verifier missing')
+AssertionError: independent verifier missing
+
+======================================================================
+FAIL: test_11_new_receipt_same_transition_and_one_use_code (test_atomic.ConventionalTests.test_11_new_receipt_same_transition_and_one_use_code)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 77, in tearDown
+    self.fail('independent verifier missing')
+AssertionError: independent verifier missing
+
+======================================================================
+FAIL: test_12_outcome_and_evidence_tampering (test_atomic.ConventionalTests.test_12_outcome_and_evidence_tampering)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 77, in tearDown
+    self.fail('independent verifier missing')
+AssertionError: independent verifier missing
+
+======================================================================
+FAIL: test_13_missing_store_and_reinitialization (test_atomic.ConventionalTests.test_13_missing_store_and_reinitialization)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 77, in tearDown
+    self.fail('independent verifier missing')
+AssertionError: independent verifier missing
+
+======================================================================
+FAIL: test_14_clock_rollback_and_mutable_input (test_atomic.ConventionalTests.test_14_clock_rollback_and_mutable_input)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 77, in tearDown
+    self.fail('independent verifier missing')
+AssertionError: independent verifier missing
+
+======================================================================
+FAIL: test_15_foreign_owner_principal_and_root_swap (test_atomic.ConventionalTests.test_15_foreign_owner_principal_and_root_swap)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 77, in tearDown
+    self.fail('independent verifier missing')
+AssertionError: independent verifier missing
+
+----------------------------------------------------------------------
+Ran 30 tests in 2.776s
+
+FAILED (failures=30)

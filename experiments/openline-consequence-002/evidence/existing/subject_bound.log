@@ -1,0 +1,14 @@
+test_concurrent_wrong_and_rightful_subject_only_spend_once (test_stolen_authority_001.StolenAuthority001Tests.test_concurrent_wrong_and_rightful_subject_only_spend_once) ... ok
+test_provider_label_is_not_an_authority_identity_input (test_stolen_authority_001.StolenAuthority001Tests.test_provider_label_is_not_an_authority_identity_input) ... ok
+test_real_authorize_owned_runtime_is_subject_bound (test_stolen_authority_001.StolenAuthority001Tests.test_real_authorize_owned_runtime_is_subject_bound)
+The production local runtime must not leave the new gate on a side path. ... ok
+test_revoked_current_mandate_fails_before_ledger (test_stolen_authority_001.StolenAuthority001Tests.test_revoked_current_mandate_fails_before_ledger) ... ok
+test_subject_bound_owned_rejects_runtime_that_can_bypass_compiler_spend (test_stolen_authority_001.StolenAuthority001Tests.test_subject_bound_owned_rejects_runtime_that_can_bypass_compiler_spend) ... ok
+test_subject_source_error_fails_closed_before_ledger (test_stolen_authority_001.StolenAuthority001Tests.test_subject_source_error_fails_closed_before_ledger) ... ok
+test_thief_cannot_burn_rightful_permission (test_stolen_authority_001.StolenAuthority001Tests.test_thief_cannot_burn_rightful_permission) ... ok
+test_wrong_subject_is_blocked_before_ledger_or_effect (test_stolen_authority_001.StolenAuthority001Tests.test_wrong_subject_is_blocked_before_ledger_or_effect) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.071s
+
+OK

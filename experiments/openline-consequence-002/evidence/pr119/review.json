@@ -1,0 +1,25 @@
+{
+  "changes": "Refund simulation verifies actual signed manager cap independently from receiver policy, and documents preflight refusal versus signed compiler decisions.",
+  "findings": [],
+  "limitations": [
+    "Owner key generated and held in local simulation process.",
+    "Owner-scope preflight refusal is not a receiver-signed denial receipt.",
+    "PaymentSimulator effects only; no durable atomic outcome, restart recovery, portable owner trust, or real consequence enforcement established by this PR.",
+    "This review covers the exact fetched Git head, not live PR metadata."
+  ],
+  "mission_relation": "No Verified Commit, subject binding, cryptography, SQLite, or consequence atomicity changes; mission implementation does not depend on this PR.",
+  "pr": 119,
+  "reference_revision": "81db6acb72149df989aac1827e5f621b0873d57b",
+  "review_method": "Read-only Git-object diff and isolated tests; no PR API read available and no PR API/network writes.",
+  "reviewed_head_revision": "1749a226b5f77cabc98f04a8655636229e0b11c2",
+  "scenario_specification": {
+    "availability": "No OPENLINE-CONSEQUENCE-001 or commissioning scenario specification found in reference checkout or reachable historic filenames.",
+    "consequence": "Reconstructed mission scenarios must be identified as reconstructed rather than canonical original twelve.",
+    "scope": "Repository text/filename search and read-only remote branch discovery; not a claim that no external specification exists.",
+    "starting_branch_observed": "feature/openline-consequence-001",
+    "starting_branch_revision_observed": "81db6acb72149df989aac1827e5f621b0873d57b"
+  },
+  "test_command": "python experiments/openline-consequence-002/evidence/pr119/reproduce.py",
+  "test_count": 4,
+  "test_exit_code": 0
+}

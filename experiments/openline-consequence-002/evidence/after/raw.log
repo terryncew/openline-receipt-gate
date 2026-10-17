@@ -1,0 +1,47 @@
+test_01_success_and_exact_idempotent_retry (test_atomic.AtomicConsequenceTests.test_01_success_and_exact_idempotent_retry) ... ok
+test_02_forgery_binding_and_code (test_atomic.AtomicConsequenceTests.test_02_forgery_binding_and_code) ... ok
+test_03_concurrent_writers (test_atomic.AtomicConsequenceTests.test_03_concurrent_writers) ... ok
+test_04_crash_immediately_before_commit (test_atomic.AtomicConsequenceTests.test_04_crash_immediately_before_commit) ... ok
+test_05_crash_immediately_after_commit (test_atomic.AtomicConsequenceTests.test_05_crash_immediately_after_commit) ... ok
+test_06_revocation_and_stale_worker (test_atomic.AtomicConsequenceTests.test_06_revocation_and_stale_worker) ... ok
+test_07_expiry_after_waiting_for_lock (test_atomic.AtomicConsequenceTests.test_07_expiry_after_waiting_for_lock) ... ok
+test_08_stale_evidence_config_or_site (test_atomic.AtomicConsequenceTests.test_08_stale_evidence_config_or_site) ... ok
+test_09_current_receiver_policy (test_atomic.AtomicConsequenceTests.test_09_current_receiver_policy) ... ok
+test_10_worker_succession_and_subject (test_atomic.AtomicConsequenceTests.test_10_worker_succession_and_subject) ... ok
+test_11_new_receipt_same_transition_and_one_use_code (test_atomic.AtomicConsequenceTests.test_11_new_receipt_same_transition_and_one_use_code) ... ok
+test_12_outcome_and_evidence_tampering (test_atomic.AtomicConsequenceTests.test_12_outcome_and_evidence_tampering) ... ok
+test_13_missing_store_and_reinitialization (test_atomic.AtomicConsequenceTests.test_13_missing_store_and_reinitialization) ... ok
+test_14_clock_rollback_and_mutable_input (test_atomic.AtomicConsequenceTests.test_14_clock_rollback_and_mutable_input) ... ok
+test_15_foreign_owner_principal_and_root_swap (test_atomic.AtomicConsequenceTests.test_15_foreign_owner_principal_and_root_swap) ... ok
+test_16_expiry_during_authentication (test_atomic.AtomicConsequenceTests.test_16_expiry_during_authentication) ... ok
+test_17_ledger_schema_fail_closed (test_atomic.AtomicConsequenceTests.test_17_ledger_schema_fail_closed) ... ok
+test_18_database_uniqueness_constraints (test_atomic.AtomicConsequenceTests.test_18_database_uniqueness_constraints) ... ok
+test_19_revocation_serializes_waiting_writer (test_atomic.AtomicConsequenceTests.test_19_revocation_serializes_waiting_writer) ... ok
+test_20_independent_verifier_detects_state_disagreement (test_atomic.AtomicConsequenceTests.test_20_independent_verifier_detects_state_disagreement) ... ok
+test_21_independent_verifier_detects_consumption_tampering (test_atomic.AtomicConsequenceTests.test_21_independent_verifier_detects_consumption_tampering) ... ok
+test_01_success_and_exact_idempotent_retry (test_atomic.ConventionalTests.test_01_success_and_exact_idempotent_retry) ... ok
+test_02_forgery_binding_and_code (test_atomic.ConventionalTests.test_02_forgery_binding_and_code) ... ok
+test_03_concurrent_writers (test_atomic.ConventionalTests.test_03_concurrent_writers) ... ok
+test_04_crash_immediately_before_commit (test_atomic.ConventionalTests.test_04_crash_immediately_before_commit) ... ok
+test_05_crash_immediately_after_commit (test_atomic.ConventionalTests.test_05_crash_immediately_after_commit) ... ok
+test_06_revocation_and_stale_worker (test_atomic.ConventionalTests.test_06_revocation_and_stale_worker) ... ok
+test_07_expiry_after_waiting_for_lock (test_atomic.ConventionalTests.test_07_expiry_after_waiting_for_lock) ... ok
+test_08_stale_evidence_config_or_site (test_atomic.ConventionalTests.test_08_stale_evidence_config_or_site) ... ok
+test_09_current_receiver_policy (test_atomic.ConventionalTests.test_09_current_receiver_policy) ... ok
+test_10_worker_succession_and_subject (test_atomic.ConventionalTests.test_10_worker_succession_and_subject) ... ok
+test_11_new_receipt_same_transition_and_one_use_code (test_atomic.ConventionalTests.test_11_new_receipt_same_transition_and_one_use_code) ... ok
+test_12_outcome_and_evidence_tampering (test_atomic.ConventionalTests.test_12_outcome_and_evidence_tampering) ... ok
+test_13_missing_store_and_reinitialization (test_atomic.ConventionalTests.test_13_missing_store_and_reinitialization) ... ok
+test_14_clock_rollback_and_mutable_input (test_atomic.ConventionalTests.test_14_clock_rollback_and_mutable_input) ... ok
+test_15_foreign_owner_principal_and_root_swap (test_atomic.ConventionalTests.test_15_foreign_owner_principal_and_root_swap) ... ok
+test_16_expiry_during_authentication (test_atomic.ConventionalTests.test_16_expiry_during_authentication) ... ok
+test_17_ledger_schema_fail_closed (test_atomic.ConventionalTests.test_17_ledger_schema_fail_closed) ... skipped 'conventional consumption has no JSON-ledger state'
+test_18_database_uniqueness_constraints (test_atomic.ConventionalTests.test_18_database_uniqueness_constraints) ... ok
+test_19_revocation_serializes_waiting_writer (test_atomic.ConventionalTests.test_19_revocation_serializes_waiting_writer) ... ok
+test_20_independent_verifier_detects_state_disagreement (test_atomic.ConventionalTests.test_20_independent_verifier_detects_state_disagreement) ... ok
+test_21_independent_verifier_detects_consumption_tampering (test_atomic.ConventionalTests.test_21_independent_verifier_detects_consumption_tampering) ... ok
+
+----------------------------------------------------------------------
+Ran 42 tests in 10.470s
+
+OK (skipped=1)

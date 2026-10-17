@@ -1,0 +1,573 @@
+test_01_success_and_exact_idempotent_retry (test_atomic.AtomicConsequenceTests.test_01_success_and_exact_idempotent_retry) ... FAIL
+test_02_forgery_binding_and_code (test_atomic.AtomicConsequenceTests.test_02_forgery_binding_and_code) ... ok
+test_03_concurrent_writers (test_atomic.AtomicConsequenceTests.test_03_concurrent_writers) ... FAIL
+test_04_crash_immediately_before_commit (test_atomic.AtomicConsequenceTests.test_04_crash_immediately_before_commit) ... FAIL
+test_05_crash_immediately_after_commit (test_atomic.AtomicConsequenceTests.test_05_crash_immediately_after_commit) ... FAIL
+test_06_revocation_and_stale_worker (test_atomic.AtomicConsequenceTests.test_06_revocation_and_stale_worker) ... ok
+test_07_expiry_after_waiting_for_lock (test_atomic.AtomicConsequenceTests.test_07_expiry_after_waiting_for_lock) ... ok
+test_08_stale_evidence_config_or_site (test_atomic.AtomicConsequenceTests.test_08_stale_evidence_config_or_site) ... ok
+test_09_current_receiver_policy (test_atomic.AtomicConsequenceTests.test_09_current_receiver_policy) ... ok
+test_10_worker_succession_and_subject (test_atomic.AtomicConsequenceTests.test_10_worker_succession_and_subject) ... FAIL
+test_11_new_receipt_same_transition_and_one_use_code (test_atomic.AtomicConsequenceTests.test_11_new_receipt_same_transition_and_one_use_code) ... FAIL
+test_12_outcome_and_evidence_tampering (test_atomic.AtomicConsequenceTests.test_12_outcome_and_evidence_tampering) ... ok
+test_13_missing_store_and_reinitialization (test_atomic.AtomicConsequenceTests.test_13_missing_store_and_reinitialization) ... ok
+test_14_clock_rollback_and_mutable_input (test_atomic.AtomicConsequenceTests.test_14_clock_rollback_and_mutable_input) ... FAIL
+test_15_foreign_owner_principal_and_root_swap (test_atomic.AtomicConsequenceTests.test_15_foreign_owner_principal_and_root_swap) ... ok
+test_16_expiry_during_authentication (test_atomic.AtomicConsequenceTests.test_16_expiry_during_authentication) ... ok
+test_17_ledger_schema_fail_closed (test_atomic.AtomicConsequenceTests.test_17_ledger_schema_fail_closed) ... ok
+test_18_database_uniqueness_constraints (test_atomic.AtomicConsequenceTests.test_18_database_uniqueness_constraints) ... FAIL
+test_19_revocation_serializes_waiting_writer (test_atomic.AtomicConsequenceTests.test_19_revocation_serializes_waiting_writer) ... ok
+test_20_independent_verifier_detects_state_disagreement (test_atomic.AtomicConsequenceTests.test_20_independent_verifier_detects_state_disagreement) ... ok
+test_01_success_and_exact_idempotent_retry (test_atomic.ConventionalTests.test_01_success_and_exact_idempotent_retry) ... FAIL
+test_02_forgery_binding_and_code (test_atomic.ConventionalTests.test_02_forgery_binding_and_code) ... ok
+test_03_concurrent_writers (test_atomic.ConventionalTests.test_03_concurrent_writers) ... FAIL
+test_04_crash_immediately_before_commit (test_atomic.ConventionalTests.test_04_crash_immediately_before_commit) ... FAIL
+test_05_crash_immediately_after_commit (test_atomic.ConventionalTests.test_05_crash_immediately_after_commit) ... FAIL
+test_06_revocation_and_stale_worker (test_atomic.ConventionalTests.test_06_revocation_and_stale_worker) ... ok
+test_07_expiry_after_waiting_for_lock (test_atomic.ConventionalTests.test_07_expiry_after_waiting_for_lock) ... ok
+test_08_stale_evidence_config_or_site (test_atomic.ConventionalTests.test_08_stale_evidence_config_or_site) ... ok
+test_09_current_receiver_policy (test_atomic.ConventionalTests.test_09_current_receiver_policy) ... ok
+test_10_worker_succession_and_subject (test_atomic.ConventionalTests.test_10_worker_succession_and_subject) ... FAIL
+test_11_new_receipt_same_transition_and_one_use_code (test_atomic.ConventionalTests.test_11_new_receipt_same_transition_and_one_use_code) ... FAIL
+test_12_outcome_and_evidence_tampering (test_atomic.ConventionalTests.test_12_outcome_and_evidence_tampering) ... ok
+test_13_missing_store_and_reinitialization (test_atomic.ConventionalTests.test_13_missing_store_and_reinitialization) ... ok
+test_14_clock_rollback_and_mutable_input (test_atomic.ConventionalTests.test_14_clock_rollback_and_mutable_input) ... FAIL
+test_15_foreign_owner_principal_and_root_swap (test_atomic.ConventionalTests.test_15_foreign_owner_principal_and_root_swap) ... ok
+test_16_expiry_during_authentication (test_atomic.ConventionalTests.test_16_expiry_during_authentication) ... ok
+test_17_ledger_schema_fail_closed (test_atomic.ConventionalTests.test_17_ledger_schema_fail_closed) ... skipped 'conventional consumption has no JSON-ledger state'
+test_18_database_uniqueness_constraints (test_atomic.ConventionalTests.test_18_database_uniqueness_constraints) ... FAIL
+test_19_revocation_serializes_waiting_writer (test_atomic.ConventionalTests.test_19_revocation_serializes_waiting_writer) ... ok
+test_20_independent_verifier_detects_state_disagreement (test_atomic.ConventionalTests.test_20_independent_verifier_detects_state_disagreement) ... ok
+
+======================================================================
+FAIL: test_01_success_and_exact_idempotent_retry (test_atomic.AtomicConsequenceTests.test_01_success_and_exact_idempotent_retry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 75, in tearDown
+    self.assertEqual(run.returncode, 0 if self.expected_verifier else 1, run.stdout+run.stderr)
+AssertionError: 1 != 0 : {
+  "database": "/tmp/consequence-validation-2/openline/test_01_success_and_exact_idempotent_retry/state.sqlite3",
+  "errors": [
+    "ValueError:commissioned_site_without_signed_commitment:site-1",
+    "commitment_1:ValueError:outcome_body_reconstruction_mismatch"
+  ],
+  "ledger": null,
+  "row_counts": {
+    "artifacts": 2,
+    "commitments": 1,
+    "ledger": 1,
+    "owner_history": 1,
+    "receiver": 1,
+    "sites": 1
+  },
+  "signed_outcomes": 0,
+  "trust_assumptions": [
+    "Externally supplied roots and verifier dependencies are trusted.",
+    "The receiver, its clock, subject authentication source, outcome signer and database write access are trusted.",
+    "Signed owner-head/policy observations attest historical checks; admission ordering is not independently witnessed.",
+    "Whole-database rollback, signer compromise and public fixture-key forgery require an external checkpoint or stronger custody.",
+    "Only local SQLite state is appraised; no robot, packet, provider identity or external effect is established."
+  ],
+  "valid": false
+}
+
+
+======================================================================
+FAIL: test_03_concurrent_writers (test_atomic.AtomicConsequenceTests.test_03_concurrent_writers)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 75, in tearDown
+    self.assertEqual(run.returncode, 0 if self.expected_verifier else 1, run.stdout+run.stderr)
+AssertionError: 1 != 0 : {
+  "database": "/tmp/consequence-validation-2/openline/test_03_concurrent_writers/state.sqlite3",
+  "errors": [
+    "ValueError:commissioned_site_without_signed_commitment:site-1",
+    "commitment_1:ValueError:outcome_body_reconstruction_mismatch"
+  ],
+  "ledger": null,
+  "row_counts": {
+    "artifacts": 2,
+    "commitments": 1,
+    "ledger": 1,
+    "owner_history": 1,
+    "receiver": 1,
+    "sites": 1
+  },
+  "signed_outcomes": 0,
+  "trust_assumptions": [
+    "Externally supplied roots and verifier dependencies are trusted.",
+    "The receiver, its clock, subject authentication source, outcome signer and database write access are trusted.",
+    "Signed owner-head/policy observations attest historical checks; admission ordering is not independently witnessed.",
+    "Whole-database rollback, signer compromise and public fixture-key forgery require an external checkpoint or stronger custody.",
+    "Only local SQLite state is appraised; no robot, packet, provider identity or external effect is established."
+  ],
+  "valid": false
+}
+
+
+======================================================================
+FAIL: test_04_crash_immediately_before_commit (test_atomic.AtomicConsequenceTests.test_04_crash_immediately_before_commit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 75, in tearDown
+    self.assertEqual(run.returncode, 0 if self.expected_verifier else 1, run.stdout+run.stderr)
+AssertionError: 1 != 0 : {
+  "database": "/tmp/consequence-validation-2/openline/test_04_crash_immediately_before_commit/state.sqlite3",
+  "errors": [
+    "ValueError:commissioned_site_without_signed_commitment:site-1",
+    "commitment_1:ValueError:outcome_body_reconstruction_mismatch"
+  ],
+  "ledger": null,
+  "row_counts": {
+    "artifacts": 2,
+    "commitments": 1,
+    "ledger": 1,
+    "owner_history": 1,
+    "receiver": 1,
+    "sites": 1
+  },
+  "signed_outcomes": 0,
+  "trust_assumptions": [
+    "Externally supplied roots and verifier dependencies are trusted.",
+    "The receiver, its clock, subject authentication source, outcome signer and database write access are trusted.",
+    "Signed owner-head/policy observations attest historical checks; admission ordering is not independently witnessed.",
+    "Whole-database rollback, signer compromise and public fixture-key forgery require an external checkpoint or stronger custody.",
+    "Only local SQLite state is appraised; no robot, packet, provider identity or external effect is established."
+  ],
+  "valid": false
+}
+
+
+======================================================================
+FAIL: test_05_crash_immediately_after_commit (test_atomic.AtomicConsequenceTests.test_05_crash_immediately_after_commit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 75, in tearDown
+    self.assertEqual(run.returncode, 0 if self.expected_verifier else 1, run.stdout+run.stderr)
+AssertionError: 1 != 0 : {
+  "database": "/tmp/consequence-validation-2/openline/test_05_crash_immediately_after_commit/state.sqlite3",
+  "errors": [
+    "ValueError:commissioned_site_without_signed_commitment:site-1",
+    "commitment_1:ValueError:outcome_body_reconstruction_mismatch"
+  ],
+  "ledger": null,
+  "row_counts": {
+    "artifacts": 2,
+    "commitments": 1,
+    "ledger": 1,
+    "owner_history": 1,
+    "receiver": 1,
+    "sites": 1
+  },
+  "signed_outcomes": 0,
+  "trust_assumptions": [
+    "Externally supplied roots and verifier dependencies are trusted.",
+    "The receiver, its clock, subject authentication source, outcome signer and database write access are trusted.",
+    "Signed owner-head/policy observations attest historical checks; admission ordering is not independently witnessed.",
+    "Whole-database rollback, signer compromise and public fixture-key forgery require an external checkpoint or stronger custody.",
+    "Only local SQLite state is appraised; no robot, packet, provider identity or external effect is established."
+  ],
+  "valid": false
+}
+
+
+======================================================================
+FAIL: test_10_worker_succession_and_subject (test_atomic.AtomicConsequenceTests.test_10_worker_succession_and_subject)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 75, in tearDown
+    self.assertEqual(run.returncode, 0 if self.expected_verifier else 1, run.stdout+run.stderr)
+AssertionError: 1 != 0 : {
+  "database": "/tmp/consequence-validation-2/openline/test_10_worker_succession_and_subject/state.sqlite3",
+  "errors": [
+    "ValueError:commissioned_site_without_signed_commitment:site-1",
+    "commitment_1:ValueError:outcome_body_reconstruction_mismatch"
+  ],
+  "ledger": null,
+  "row_counts": {
+    "artifacts": 2,
+    "commitments": 1,
+    "ledger": 1,
+    "owner_history": 2,
+    "receiver": 1,
+    "sites": 1
+  },
+  "signed_outcomes": 0,
+  "trust_assumptions": [
+    "Externally supplied roots and verifier dependencies are trusted.",
+    "The receiver, its clock, subject authentication source, outcome signer and database write access are trusted.",
+    "Signed owner-head/policy observations attest historical checks; admission ordering is not independently witnessed.",
+    "Whole-database rollback, signer compromise and public fixture-key forgery require an external checkpoint or stronger custody.",
+    "Only local SQLite state is appraised; no robot, packet, provider identity or external effect is established."
+  ],
+  "valid": false
+}
+
+
+======================================================================
+FAIL: test_11_new_receipt_same_transition_and_one_use_code (test_atomic.AtomicConsequenceTests.test_11_new_receipt_same_transition_and_one_use_code)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 75, in tearDown
+    self.assertEqual(run.returncode, 0 if self.expected_verifier else 1, run.stdout+run.stderr)
+AssertionError: 1 != 0 : {
+  "database": "/tmp/consequence-validation-2/openline/test_11_new_receipt_same_transition_and_one_use_code/state.sqlite3",
+  "errors": [
+    "ValueError:commissioned_site_without_signed_commitment:site-1",
+    "commitment_1:ValueError:outcome_body_reconstruction_mismatch"
+  ],
+  "ledger": null,
+  "row_counts": {
+    "artifacts": 2,
+    "commitments": 1,
+    "ledger": 1,
+    "owner_history": 1,
+    "receiver": 1,
+    "sites": 1
+  },
+  "signed_outcomes": 0,
+  "trust_assumptions": [
+    "Externally supplied roots and verifier dependencies are trusted.",
+    "The receiver, its clock, subject authentication source, outcome signer and database write access are trusted.",
+    "Signed owner-head/policy observations attest historical checks; admission ordering is not independently witnessed.",
+    "Whole-database rollback, signer compromise and public fixture-key forgery require an external checkpoint or stronger custody.",
+    "Only local SQLite state is appraised; no robot, packet, provider identity or external effect is established."
+  ],
+  "valid": false
+}
+
+
+======================================================================
+FAIL: test_14_clock_rollback_and_mutable_input (test_atomic.AtomicConsequenceTests.test_14_clock_rollback_and_mutable_input)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 75, in tearDown
+    self.assertEqual(run.returncode, 0 if self.expected_verifier else 1, run.stdout+run.stderr)
+AssertionError: 1 != 0 : {
+  "database": "/tmp/consequence-validation-2/openline/test_14_clock_rollback_and_mutable_input/state.sqlite3",
+  "errors": [
+    "ValueError:commissioned_site_without_signed_commitment:site-1",
+    "commitment_1:ValueError:outcome_body_reconstruction_mismatch"
+  ],
+  "ledger": null,
+  "row_counts": {
+    "artifacts": 2,
+    "commitments": 1,
+    "ledger": 1,
+    "owner_history": 1,
+    "receiver": 1,
+    "sites": 1
+  },
+  "signed_outcomes": 0,
+  "trust_assumptions": [
+    "Externally supplied roots and verifier dependencies are trusted.",
+    "The receiver, its clock, subject authentication source, outcome signer and database write access are trusted.",
+    "Signed owner-head/policy observations attest historical checks; admission ordering is not independently witnessed.",
+    "Whole-database rollback, signer compromise and public fixture-key forgery require an external checkpoint or stronger custody.",
+    "Only local SQLite state is appraised; no robot, packet, provider identity or external effect is established."
+  ],
+  "valid": false
+}
+
+
+======================================================================
+FAIL: test_18_database_uniqueness_constraints (test_atomic.AtomicConsequenceTests.test_18_database_uniqueness_constraints)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 75, in tearDown
+    self.assertEqual(run.returncode, 0 if self.expected_verifier else 1, run.stdout+run.stderr)
+AssertionError: 1 != 0 : {
+  "database": "/tmp/consequence-validation-2/openline/test_18_database_uniqueness_constraints/state.sqlite3",
+  "errors": [
+    "ValueError:commissioned_site_without_signed_commitment:site-1",
+    "commitment_1:ValueError:outcome_body_reconstruction_mismatch"
+  ],
+  "ledger": null,
+  "row_counts": {
+    "artifacts": 2,
+    "commitments": 1,
+    "ledger": 1,
+    "owner_history": 1,
+    "receiver": 1,
+    "sites": 1
+  },
+  "signed_outcomes": 0,
+  "trust_assumptions": [
+    "Externally supplied roots and verifier dependencies are trusted.",
+    "The receiver, its clock, subject authentication source, outcome signer and database write access are trusted.",
+    "Signed owner-head/policy observations attest historical checks; admission ordering is not independently witnessed.",
+    "Whole-database rollback, signer compromise and public fixture-key forgery require an external checkpoint or stronger custody.",
+    "Only local SQLite state is appraised; no robot, packet, provider identity or external effect is established."
+  ],
+  "valid": false
+}
+
+
+======================================================================
+FAIL: test_01_success_and_exact_idempotent_retry (test_atomic.ConventionalTests.test_01_success_and_exact_idempotent_retry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 75, in tearDown
+    self.assertEqual(run.returncode, 0 if self.expected_verifier else 1, run.stdout+run.stderr)
+AssertionError: 1 != 0 : {
+  "database": "/tmp/consequence-validation-2/conventional/test_01_success_and_exact_idempotent_retry/state.sqlite3",
+  "errors": [
+    "ValueError:commissioned_site_without_signed_commitment:site-1",
+    "commitment_1:ValueError:outcome_body_reconstruction_mismatch"
+  ],
+  "ledger": null,
+  "row_counts": {
+    "artifacts": 2,
+    "commitments": 1,
+    "ledger": 1,
+    "owner_history": 1,
+    "receiver": 1,
+    "sites": 1
+  },
+  "signed_outcomes": 0,
+  "trust_assumptions": [
+    "Externally supplied roots and verifier dependencies are trusted.",
+    "The receiver, its clock, subject authentication source, outcome signer and database write access are trusted.",
+    "Signed owner-head/policy observations attest historical checks; admission ordering is not independently witnessed.",
+    "Whole-database rollback, signer compromise and public fixture-key forgery require an external checkpoint or stronger custody.",
+    "Only local SQLite state is appraised; no robot, packet, provider identity or external effect is established."
+  ],
+  "valid": false
+}
+
+
+======================================================================
+FAIL: test_03_concurrent_writers (test_atomic.ConventionalTests.test_03_concurrent_writers)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 75, in tearDown
+    self.assertEqual(run.returncode, 0 if self.expected_verifier else 1, run.stdout+run.stderr)
+AssertionError: 1 != 0 : {
+  "database": "/tmp/consequence-validation-2/conventional/test_03_concurrent_writers/state.sqlite3",
+  "errors": [
+    "ValueError:commissioned_site_without_signed_commitment:site-1",
+    "commitment_1:ValueError:outcome_body_reconstruction_mismatch"
+  ],
+  "ledger": null,
+  "row_counts": {
+    "artifacts": 2,
+    "commitments": 1,
+    "ledger": 1,
+    "owner_history": 1,
+    "receiver": 1,
+    "sites": 1
+  },
+  "signed_outcomes": 0,
+  "trust_assumptions": [
+    "Externally supplied roots and verifier dependencies are trusted.",
+    "The receiver, its clock, subject authentication source, outcome signer and database write access are trusted.",
+    "Signed owner-head/policy observations attest historical checks; admission ordering is not independently witnessed.",
+    "Whole-database rollback, signer compromise and public fixture-key forgery require an external checkpoint or stronger custody.",
+    "Only local SQLite state is appraised; no robot, packet, provider identity or external effect is established."
+  ],
+  "valid": false
+}
+
+
+======================================================================
+FAIL: test_04_crash_immediately_before_commit (test_atomic.ConventionalTests.test_04_crash_immediately_before_commit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 75, in tearDown
+    self.assertEqual(run.returncode, 0 if self.expected_verifier else 1, run.stdout+run.stderr)
+AssertionError: 1 != 0 : {
+  "database": "/tmp/consequence-validation-2/conventional/test_04_crash_immediately_before_commit/state.sqlite3",
+  "errors": [
+    "ValueError:commissioned_site_without_signed_commitment:site-1",
+    "commitment_1:ValueError:outcome_body_reconstruction_mismatch"
+  ],
+  "ledger": null,
+  "row_counts": {
+    "artifacts": 2,
+    "commitments": 1,
+    "ledger": 1,
+    "owner_history": 1,
+    "receiver": 1,
+    "sites": 1
+  },
+  "signed_outcomes": 0,
+  "trust_assumptions": [
+    "Externally supplied roots and verifier dependencies are trusted.",
+    "The receiver, its clock, subject authentication source, outcome signer and database write access are trusted.",
+    "Signed owner-head/policy observations attest historical checks; admission ordering is not independently witnessed.",
+    "Whole-database rollback, signer compromise and public fixture-key forgery require an external checkpoint or stronger custody.",
+    "Only local SQLite state is appraised; no robot, packet, provider identity or external effect is established."
+  ],
+  "valid": false
+}
+
+
+======================================================================
+FAIL: test_05_crash_immediately_after_commit (test_atomic.ConventionalTests.test_05_crash_immediately_after_commit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 75, in tearDown
+    self.assertEqual(run.returncode, 0 if self.expected_verifier else 1, run.stdout+run.stderr)
+AssertionError: 1 != 0 : {
+  "database": "/tmp/consequence-validation-2/conventional/test_05_crash_immediately_after_commit/state.sqlite3",
+  "errors": [
+    "ValueError:commissioned_site_without_signed_commitment:site-1",
+    "commitment_1:ValueError:outcome_body_reconstruction_mismatch"
+  ],
+  "ledger": null,
+  "row_counts": {
+    "artifacts": 2,
+    "commitments": 1,
+    "ledger": 1,
+    "owner_history": 1,
+    "receiver": 1,
+    "sites": 1
+  },
+  "signed_outcomes": 0,
+  "trust_assumptions": [
+    "Externally supplied roots and verifier dependencies are trusted.",
+    "The receiver, its clock, subject authentication source, outcome signer and database write access are trusted.",
+    "Signed owner-head/policy observations attest historical checks; admission ordering is not independently witnessed.",
+    "Whole-database rollback, signer compromise and public fixture-key forgery require an external checkpoint or stronger custody.",
+    "Only local SQLite state is appraised; no robot, packet, provider identity or external effect is established."
+  ],
+  "valid": false
+}
+
+
+======================================================================
+FAIL: test_10_worker_succession_and_subject (test_atomic.ConventionalTests.test_10_worker_succession_and_subject)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 75, in tearDown
+    self.assertEqual(run.returncode, 0 if self.expected_verifier else 1, run.stdout+run.stderr)
+AssertionError: 1 != 0 : {
+  "database": "/tmp/consequence-validation-2/conventional/test_10_worker_succession_and_subject/state.sqlite3",
+  "errors": [
+    "ValueError:commissioned_site_without_signed_commitment:site-1",
+    "commitment_1:ValueError:outcome_body_reconstruction_mismatch"
+  ],
+  "ledger": null,
+  "row_counts": {
+    "artifacts": 2,
+    "commitments": 1,
+    "ledger": 1,
+    "owner_history": 2,
+    "receiver": 1,
+    "sites": 1
+  },
+  "signed_outcomes": 0,
+  "trust_assumptions": [
+    "Externally supplied roots and verifier dependencies are trusted.",
+    "The receiver, its clock, subject authentication source, outcome signer and database write access are trusted.",
+    "Signed owner-head/policy observations attest historical checks; admission ordering is not independently witnessed.",
+    "Whole-database rollback, signer compromise and public fixture-key forgery require an external checkpoint or stronger custody.",
+    "Only local SQLite state is appraised; no robot, packet, provider identity or external effect is established."
+  ],
+  "valid": false
+}
+
+
+======================================================================
+FAIL: test_11_new_receipt_same_transition_and_one_use_code (test_atomic.ConventionalTests.test_11_new_receipt_same_transition_and_one_use_code)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 75, in tearDown
+    self.assertEqual(run.returncode, 0 if self.expected_verifier else 1, run.stdout+run.stderr)
+AssertionError: 1 != 0 : {
+  "database": "/tmp/consequence-validation-2/conventional/test_11_new_receipt_same_transition_and_one_use_code/state.sqlite3",
+  "errors": [
+    "ValueError:commissioned_site_without_signed_commitment:site-1",
+    "commitment_1:ValueError:outcome_body_reconstruction_mismatch"
+  ],
+  "ledger": null,
+  "row_counts": {
+    "artifacts": 2,
+    "commitments": 1,
+    "ledger": 1,
+    "owner_history": 1,
+    "receiver": 1,
+    "sites": 1
+  },
+  "signed_outcomes": 0,
+  "trust_assumptions": [
+    "Externally supplied roots and verifier dependencies are trusted.",
+    "The receiver, its clock, subject authentication source, outcome signer and database write access are trusted.",
+    "Signed owner-head/policy observations attest historical checks; admission ordering is not independently witnessed.",
+    "Whole-database rollback, signer compromise and public fixture-key forgery require an external checkpoint or stronger custody.",
+    "Only local SQLite state is appraised; no robot, packet, provider identity or external effect is established."
+  ],
+  "valid": false
+}
+
+
+======================================================================
+FAIL: test_14_clock_rollback_and_mutable_input (test_atomic.ConventionalTests.test_14_clock_rollback_and_mutable_input)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 75, in tearDown
+    self.assertEqual(run.returncode, 0 if self.expected_verifier else 1, run.stdout+run.stderr)
+AssertionError: 1 != 0 : {
+  "database": "/tmp/consequence-validation-2/conventional/test_14_clock_rollback_and_mutable_input/state.sqlite3",
+  "errors": [
+    "ValueError:commissioned_site_without_signed_commitment:site-1",
+    "commitment_1:ValueError:outcome_body_reconstruction_mismatch"
+  ],
+  "ledger": null,
+  "row_counts": {
+    "artifacts": 2,
+    "commitments": 1,
+    "ledger": 1,
+    "owner_history": 1,
+    "receiver": 1,
+    "sites": 1
+  },
+  "signed_outcomes": 0,
+  "trust_assumptions": [
+    "Externally supplied roots and verifier dependencies are trusted.",
+    "The receiver, its clock, subject authentication source, outcome signer and database write access are trusted.",
+    "Signed owner-head/policy observations attest historical checks; admission ordering is not independently witnessed.",
+    "Whole-database rollback, signer compromise and public fixture-key forgery require an external checkpoint or stronger custody.",
+    "Only local SQLite state is appraised; no robot, packet, provider identity or external effect is established."
+  ],
+  "valid": false
+}
+
+
+======================================================================
+FAIL: test_18_database_uniqueness_constraints (test_atomic.ConventionalTests.test_18_database_uniqueness_constraints)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 75, in tearDown
+    self.assertEqual(run.returncode, 0 if self.expected_verifier else 1, run.stdout+run.stderr)
+AssertionError: 1 != 0 : {
+  "database": "/tmp/consequence-validation-2/conventional/test_18_database_uniqueness_constraints/state.sqlite3",
+  "errors": [
+    "ValueError:commissioned_site_without_signed_commitment:site-1",
+    "commitment_1:ValueError:outcome_body_reconstruction_mismatch"
+  ],
+  "ledger": null,
+  "row_counts": {
+    "artifacts": 2,
+    "commitments": 1,
+    "ledger": 1,
+    "owner_history": 1,
+    "receiver": 1,
+    "sites": 1
+  },
+  "signed_outcomes": 0,
+  "trust_assumptions": [
+    "Externally supplied roots and verifier dependencies are trusted.",
+    "The receiver, its clock, subject authentication source, outcome signer and database write access are trusted.",
+    "Signed owner-head/policy observations attest historical checks; admission ordering is not independently witnessed.",
+    "Whole-database rollback, signer compromise and public fixture-key forgery require an external checkpoint or stronger custody.",
+    "Only local SQLite state is appraised; no robot, packet, provider identity or external effect is established."
+  ],
+  "valid": false
+}
+
+
+----------------------------------------------------------------------
+Ran 40 tests in 9.121s
+
+FAILED (failures=16, skipped=1)

@@ -1,0 +1,265 @@
+test_01_success_and_exact_idempotent_retry (test_atomic.AtomicConsequenceTests.test_01_success_and_exact_idempotent_retry) ... ok
+test_02_forgery_binding_and_code (test_atomic.AtomicConsequenceTests.test_02_forgery_binding_and_code) ... ok
+test_03_concurrent_writers (test_atomic.AtomicConsequenceTests.test_03_concurrent_writers) ... ok
+test_04_crash_immediately_before_commit (test_atomic.AtomicConsequenceTests.test_04_crash_immediately_before_commit) ... ok
+test_05_crash_immediately_after_commit (test_atomic.AtomicConsequenceTests.test_05_crash_immediately_after_commit) ... ok
+test_06_revocation_and_stale_worker (test_atomic.AtomicConsequenceTests.test_06_revocation_and_stale_worker) ... ok
+test_07_expiry_after_waiting_for_lock (test_atomic.AtomicConsequenceTests.test_07_expiry_after_waiting_for_lock) ... ok
+test_08_stale_evidence_config_or_site (test_atomic.AtomicConsequenceTests.test_08_stale_evidence_config_or_site) ... ok
+test_09_current_receiver_policy (test_atomic.AtomicConsequenceTests.test_09_current_receiver_policy) ... ok
+test_10_worker_succession_and_subject (test_atomic.AtomicConsequenceTests.test_10_worker_succession_and_subject) ... ok
+test_11_new_receipt_same_transition_and_one_use_code (test_atomic.AtomicConsequenceTests.test_11_new_receipt_same_transition_and_one_use_code) ... ok
+test_12_outcome_and_evidence_tampering (test_atomic.AtomicConsequenceTests.test_12_outcome_and_evidence_tampering) ... ok
+test_13_missing_store_and_reinitialization (test_atomic.AtomicConsequenceTests.test_13_missing_store_and_reinitialization) ... ok
+test_14_clock_rollback_and_mutable_input (test_atomic.AtomicConsequenceTests.test_14_clock_rollback_and_mutable_input) ... ok
+test_15_foreign_owner_principal_and_root_swap (test_atomic.AtomicConsequenceTests.test_15_foreign_owner_principal_and_root_swap) ... ok
+test_16_expiry_during_authentication (test_atomic.AtomicConsequenceTests.test_16_expiry_during_authentication) ... ok
+test_17_ledger_schema_fail_closed (test_atomic.AtomicConsequenceTests.test_17_ledger_schema_fail_closed) ... ok
+test_18_database_uniqueness_constraints (test_atomic.AtomicConsequenceTests.test_18_database_uniqueness_constraints) ... ok
+test_19_revocation_serializes_waiting_writer (test_atomic.AtomicConsequenceTests.test_19_revocation_serializes_waiting_writer) ... ok
+test_20_independent_verifier_detects_state_disagreement (test_atomic.AtomicConsequenceTests.test_20_independent_verifier_detects_state_disagreement) ... ok
+test_01_success_and_exact_idempotent_retry (test_atomic.ConventionalTests.test_01_success_and_exact_idempotent_retry) ... ok
+test_02_forgery_binding_and_code (test_atomic.ConventionalTests.test_02_forgery_binding_and_code) ... ok
+test_03_concurrent_writers (test_atomic.ConventionalTests.test_03_concurrent_writers) ... ok
+test_04_crash_immediately_before_commit (test_atomic.ConventionalTests.test_04_crash_immediately_before_commit) ... ok
+test_05_crash_immediately_after_commit (test_atomic.ConventionalTests.test_05_crash_immediately_after_commit) ... ok
+test_06_revocation_and_stale_worker (test_atomic.ConventionalTests.test_06_revocation_and_stale_worker) ... ok
+test_07_expiry_after_waiting_for_lock (test_atomic.ConventionalTests.test_07_expiry_after_waiting_for_lock) ... ok
+test_08_stale_evidence_config_or_site (test_atomic.ConventionalTests.test_08_stale_evidence_config_or_site) ... ok
+test_09_current_receiver_policy (test_atomic.ConventionalTests.test_09_current_receiver_policy) ... ok
+test_10_worker_succession_and_subject (test_atomic.ConventionalTests.test_10_worker_succession_and_subject) ... ok
+test_11_new_receipt_same_transition_and_one_use_code (test_atomic.ConventionalTests.test_11_new_receipt_same_transition_and_one_use_code) ... ok
+test_12_outcome_and_evidence_tampering (test_atomic.ConventionalTests.test_12_outcome_and_evidence_tampering) ... ok
+test_13_missing_store_and_reinitialization (test_atomic.ConventionalTests.test_13_missing_store_and_reinitialization) ... ok
+test_14_clock_rollback_and_mutable_input (test_atomic.ConventionalTests.test_14_clock_rollback_and_mutable_input) ... ok
+test_15_foreign_owner_principal_and_root_swap (test_atomic.ConventionalTests.test_15_foreign_owner_principal_and_root_swap) ... ok
+test_16_expiry_during_authentication (test_atomic.ConventionalTests.test_16_expiry_during_authentication) ... ok
+test_17_ledger_schema_fail_closed (test_atomic.ConventionalTests.test_17_ledger_schema_fail_closed) ... skipped 'conventional consumption has no JSON-ledger state'
+test_18_database_uniqueness_constraints (test_atomic.ConventionalTests.test_18_database_uniqueness_constraints) ... ok
+test_19_revocation_serializes_waiting_writer (test_atomic.ConventionalTests.test_19_revocation_serializes_waiting_writer) ... ok
+test_20_independent_verifier_detects_state_disagreement (test_atomic.ConventionalTests.test_20_independent_verifier_detects_state_disagreement) ... ok
+test_01_success_and_exact_idempotent_retry (test_atomic.ConventionalTests.test_01_success_and_exact_idempotent_retry) ... ERROR
+test_02_forgery_binding_and_code (test_atomic.ConventionalTests.test_02_forgery_binding_and_code) ... ERROR
+test_03_concurrent_writers (test_atomic.ConventionalTests.test_03_concurrent_writers) ... ERROR
+test_04_crash_immediately_before_commit (test_atomic.ConventionalTests.test_04_crash_immediately_before_commit) ... ERROR
+test_05_crash_immediately_after_commit (test_atomic.ConventionalTests.test_05_crash_immediately_after_commit) ... ERROR
+test_06_revocation_and_stale_worker (test_atomic.ConventionalTests.test_06_revocation_and_stale_worker) ... ERROR
+test_07_expiry_after_waiting_for_lock (test_atomic.ConventionalTests.test_07_expiry_after_waiting_for_lock) ... ERROR
+test_08_stale_evidence_config_or_site (test_atomic.ConventionalTests.test_08_stale_evidence_config_or_site) ... ERROR
+test_09_current_receiver_policy (test_atomic.ConventionalTests.test_09_current_receiver_policy) ... ERROR
+test_10_worker_succession_and_subject (test_atomic.ConventionalTests.test_10_worker_succession_and_subject) ... ERROR
+test_11_new_receipt_same_transition_and_one_use_code (test_atomic.ConventionalTests.test_11_new_receipt_same_transition_and_one_use_code) ... ERROR
+test_12_outcome_and_evidence_tampering (test_atomic.ConventionalTests.test_12_outcome_and_evidence_tampering) ... ERROR
+test_13_missing_store_and_reinitialization (test_atomic.ConventionalTests.test_13_missing_store_and_reinitialization) ... ERROR
+test_14_clock_rollback_and_mutable_input (test_atomic.ConventionalTests.test_14_clock_rollback_and_mutable_input) ... ERROR
+test_15_foreign_owner_principal_and_root_swap (test_atomic.ConventionalTests.test_15_foreign_owner_principal_and_root_swap) ... ERROR
+test_16_expiry_during_authentication (test_atomic.ConventionalTests.test_16_expiry_during_authentication) ... ERROR
+test_17_ledger_schema_fail_closed (test_atomic.ConventionalTests.test_17_ledger_schema_fail_closed) ... ERROR
+test_18_database_uniqueness_constraints (test_atomic.ConventionalTests.test_18_database_uniqueness_constraints) ... ERROR
+test_19_revocation_serializes_waiting_writer (test_atomic.ConventionalTests.test_19_revocation_serializes_waiting_writer) ... ERROR
+test_20_independent_verifier_detects_state_disagreement (test_atomic.ConventionalTests.test_20_independent_verifier_detects_state_disagreement) ... ERROR
+
+======================================================================
+ERROR: test_01_success_and_exact_idempotent_retry (test_atomic.ConventionalTests.test_01_success_and_exact_idempotent_retry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 28, in setUp
+    self.root.mkdir(parents=True, exist_ok=False)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+FileExistsError: [Errno 17] File exists: '/tmp/consequence-validation-1/conventional/test_01_success_and_exact_idempotent_retry'
+
+======================================================================
+ERROR: test_02_forgery_binding_and_code (test_atomic.ConventionalTests.test_02_forgery_binding_and_code)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 28, in setUp
+    self.root.mkdir(parents=True, exist_ok=False)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+FileExistsError: [Errno 17] File exists: '/tmp/consequence-validation-1/conventional/test_02_forgery_binding_and_code'
+
+======================================================================
+ERROR: test_03_concurrent_writers (test_atomic.ConventionalTests.test_03_concurrent_writers)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 28, in setUp
+    self.root.mkdir(parents=True, exist_ok=False)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+FileExistsError: [Errno 17] File exists: '/tmp/consequence-validation-1/conventional/test_03_concurrent_writers'
+
+======================================================================
+ERROR: test_04_crash_immediately_before_commit (test_atomic.ConventionalTests.test_04_crash_immediately_before_commit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 28, in setUp
+    self.root.mkdir(parents=True, exist_ok=False)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+FileExistsError: [Errno 17] File exists: '/tmp/consequence-validation-1/conventional/test_04_crash_immediately_before_commit'
+
+======================================================================
+ERROR: test_05_crash_immediately_after_commit (test_atomic.ConventionalTests.test_05_crash_immediately_after_commit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 28, in setUp
+    self.root.mkdir(parents=True, exist_ok=False)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+FileExistsError: [Errno 17] File exists: '/tmp/consequence-validation-1/conventional/test_05_crash_immediately_after_commit'
+
+======================================================================
+ERROR: test_06_revocation_and_stale_worker (test_atomic.ConventionalTests.test_06_revocation_and_stale_worker)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 28, in setUp
+    self.root.mkdir(parents=True, exist_ok=False)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+FileExistsError: [Errno 17] File exists: '/tmp/consequence-validation-1/conventional/test_06_revocation_and_stale_worker'
+
+======================================================================
+ERROR: test_07_expiry_after_waiting_for_lock (test_atomic.ConventionalTests.test_07_expiry_after_waiting_for_lock)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 28, in setUp
+    self.root.mkdir(parents=True, exist_ok=False)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+FileExistsError: [Errno 17] File exists: '/tmp/consequence-validation-1/conventional/test_07_expiry_after_waiting_for_lock'
+
+======================================================================
+ERROR: test_08_stale_evidence_config_or_site (test_atomic.ConventionalTests.test_08_stale_evidence_config_or_site)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 28, in setUp
+    self.root.mkdir(parents=True, exist_ok=False)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+FileExistsError: [Errno 17] File exists: '/tmp/consequence-validation-1/conventional/test_08_stale_evidence_config_or_site'
+
+======================================================================
+ERROR: test_09_current_receiver_policy (test_atomic.ConventionalTests.test_09_current_receiver_policy)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 28, in setUp
+    self.root.mkdir(parents=True, exist_ok=False)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+FileExistsError: [Errno 17] File exists: '/tmp/consequence-validation-1/conventional/test_09_current_receiver_policy'
+
+======================================================================
+ERROR: test_10_worker_succession_and_subject (test_atomic.ConventionalTests.test_10_worker_succession_and_subject)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 28, in setUp
+    self.root.mkdir(parents=True, exist_ok=False)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+FileExistsError: [Errno 17] File exists: '/tmp/consequence-validation-1/conventional/test_10_worker_succession_and_subject'
+
+======================================================================
+ERROR: test_11_new_receipt_same_transition_and_one_use_code (test_atomic.ConventionalTests.test_11_new_receipt_same_transition_and_one_use_code)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 28, in setUp
+    self.root.mkdir(parents=True, exist_ok=False)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+FileExistsError: [Errno 17] File exists: '/tmp/consequence-validation-1/conventional/test_11_new_receipt_same_transition_and_one_use_code'
+
+======================================================================
+ERROR: test_12_outcome_and_evidence_tampering (test_atomic.ConventionalTests.test_12_outcome_and_evidence_tampering)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 28, in setUp
+    self.root.mkdir(parents=True, exist_ok=False)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+FileExistsError: [Errno 17] File exists: '/tmp/consequence-validation-1/conventional/test_12_outcome_and_evidence_tampering'
+
+======================================================================
+ERROR: test_13_missing_store_and_reinitialization (test_atomic.ConventionalTests.test_13_missing_store_and_reinitialization)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 28, in setUp
+    self.root.mkdir(parents=True, exist_ok=False)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+FileExistsError: [Errno 17] File exists: '/tmp/consequence-validation-1/conventional/test_13_missing_store_and_reinitialization'
+
+======================================================================
+ERROR: test_14_clock_rollback_and_mutable_input (test_atomic.ConventionalTests.test_14_clock_rollback_and_mutable_input)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 28, in setUp
+    self.root.mkdir(parents=True, exist_ok=False)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+FileExistsError: [Errno 17] File exists: '/tmp/consequence-validation-1/conventional/test_14_clock_rollback_and_mutable_input'
+
+======================================================================
+ERROR: test_15_foreign_owner_principal_and_root_swap (test_atomic.ConventionalTests.test_15_foreign_owner_principal_and_root_swap)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 28, in setUp
+    self.root.mkdir(parents=True, exist_ok=False)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+FileExistsError: [Errno 17] File exists: '/tmp/consequence-validation-1/conventional/test_15_foreign_owner_principal_and_root_swap'
+
+======================================================================
+ERROR: test_16_expiry_during_authentication (test_atomic.ConventionalTests.test_16_expiry_during_authentication)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 28, in setUp
+    self.root.mkdir(parents=True, exist_ok=False)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+FileExistsError: [Errno 17] File exists: '/tmp/consequence-validation-1/conventional/test_16_expiry_during_authentication'
+
+======================================================================
+ERROR: test_17_ledger_schema_fail_closed (test_atomic.ConventionalTests.test_17_ledger_schema_fail_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 28, in setUp
+    self.root.mkdir(parents=True, exist_ok=False)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+FileExistsError: [Errno 17] File exists: '/tmp/consequence-validation-1/conventional/test_17_ledger_schema_fail_closed'
+
+======================================================================
+ERROR: test_18_database_uniqueness_constraints (test_atomic.ConventionalTests.test_18_database_uniqueness_constraints)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 28, in setUp
+    self.root.mkdir(parents=True, exist_ok=False)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+FileExistsError: [Errno 17] File exists: '/tmp/consequence-validation-1/conventional/test_18_database_uniqueness_constraints'
+
+======================================================================
+ERROR: test_19_revocation_serializes_waiting_writer (test_atomic.ConventionalTests.test_19_revocation_serializes_waiting_writer)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 28, in setUp
+    self.root.mkdir(parents=True, exist_ok=False)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+FileExistsError: [Errno 17] File exists: '/tmp/consequence-validation-1/conventional/test_19_revocation_serializes_waiting_writer'
+
+======================================================================
+ERROR: test_20_independent_verifier_detects_state_disagreement (test_atomic.ConventionalTests.test_20_independent_verifier_detects_state_disagreement)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/openline-receipt-gate/experiments/openline-consequence-002/test_atomic.py", line 28, in setUp
+    self.root.mkdir(parents=True, exist_ok=False)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+FileExistsError: [Errno 17] File exists: '/tmp/consequence-validation-1/conventional/test_20_independent_verifier_detects_state_disagreement'
+
+----------------------------------------------------------------------
+Ran 60 tests in 10.021s
+
+FAILED (errors=20, skipped=1)

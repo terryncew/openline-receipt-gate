@@ -1,0 +1,8 @@
+[
+  {
+    "exit_status": 0,
+    "expected": 0,
+    "stdout": "{\"status\": \"REFUSED\", \"reason_codes\": [\"owner_revoked_or_mismatched\"]}\n",
+    "stderr": ""
+  }
+]
