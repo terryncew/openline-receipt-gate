@@ -1,0 +1,48 @@
+name: Multi-hop refund drift — offline demo checks
+on:
+  push:
+    branches: [demo/multi-hop-refund-drift-day1]
+    paths:
+      - "examples/multi_hop_refund_drift.py"
+      - "examples/multi_hop_refund_drift/README.md"
+      - "tests/test_multi_hop_refund_drift_demo.py"
+      - ".github/workflows/multi-hop-refund-drift.yml"
+      - "README.md"
+permissions:
+  contents: read
+jobs:
+  demo-proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install local Receipt Gate
+        run: python -m pip install -e .
+      - name: Run deterministic local replay and checks
+        run: |
+          python -m unittest tests.test_multi_hop_refund_drift_demo -v
+          python examples/multi_hop_refund_drift.py
+          python examples/multi_hop_refund_drift.py --json > /tmp/olp-multi-hop.json
+      - uses: actions/checkout@v4
+        with:
+          repository: terryncew/openline-otel
+          ref: f8c05bf933c725aa1d108aebe7b2030867277dfb
+          path: .deps/openline-otel
+          persist-credentials: false
+      - name: Install existing openline-otel and verify native spans
+        run: |
+          python -m pip install -e .deps/openline-otel
+          python examples/multi_hop_refund_drift.py --otel --json > /tmp/olp-multi-hop-otel.json
+          python - <<'PY'
+          import json
+          row = json.load(open("/tmp/olp-multi-hop-otel.json"))
+          t = row["telemetry"]
+          assert t["actual_spans"] >= 3, t
+          assert any(s["decision"] == "DENY" for s in t["receiver_decisions"]), t
+          assert t["integrity_verified_provisional_receipts"] >= 1, t
+          assert row["guarded_payout_effects"] == 0
+          print("REAL_OTEL_CAPTURE_VERIFIED; still provisional, synthetic effect only")
+          PY
