@@ -4,7 +4,7 @@
   "tested_commit": "09b821da175f8dd3dbe2b0bcaf051b1fa0b840d3",
   "trust": "Public TEST-ONLY key, no independent certification or organizational adoption",
   "files": {
-    "README.md": "549dfc7de7f74cab170a9fb15d815849905cc2eacbf9c8fb943331f5f0c10918",
+    "README.md": "67b4482c6349d000b674d3a8111ebb9f2bece019e836279609c9e9462ae78c2d",
     "REPORT.md": "7f0da21ee1b63a717e17bbd08ee9953dbad3083d9ae40df72ccdfee956e3691b",
     "SOURCE_AUDIT.md": "c65f0e1c12e5aa8bed9f2fe0a9ec13052b516e7ff8d6bcc06b0f5594f3cd31f5",
     "clean_install.py": "c14aaae5a7c821bbc7ee895510ab2d6429a892b95ddb197198aa5f1e22511d3d",
@@ -223,10 +223,10 @@
     "test_receiver.py": "7fc375990450df88bf2cdae0a637b9f453631e48dd4114f4c198c78cd2b102f9",
     "verify.py": "36212d75077772f41242875f4ce6d2c7d4b0cca231629cf81ce4e9272ab8c808"
   },
-  "payload_hash": "6e42d8682ac01a2e4280035e4d411293577198c89ae4f47ae8501b47fc272182",
+  "payload_hash": "46591041c67a61a2f821e9e4551d3864d1c611c27565fec3e96cfd44510f0273",
   "signature": {
     "algorithm": "Ed25519",
     "public_key": "555f469c22188e90015bdd85b889678d459f86bdf8f7bd34971b10b9b3858609",
-    "value": "a3796d9ee5ae13a6cd41ec4651ddb7dfaf1708acffaef5a1aeb4b57696af02fcb12be1db96f69b049cb047bcb611d2959b634cecdbaa7f5ea67e3c84ef665801"
+    "value": "4c5d6f07be368aad1567cfc05b752599c241f114b4e5e4aa9efa6fcaedfec8f19f9dd11f14a53cfdc83ba98567881e067869dad3da586583e6dc7bf9a439c500"
   }
 }

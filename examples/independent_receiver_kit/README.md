@@ -11,9 +11,12 @@ internal reproducibility experiment, not an independent organization adoption te
 
 ## Fresh checkout and install
 
-From a fresh clone, select `study/independent-receiver-kit-001`, then from repo root:
+Draft PR: https://github.com/terryncew/openline-receipt-gate/pull/121 (unmerged).
+Clone and run from repository root:
 
 ```sh
+git clone --branch study/independent-receiver-kit-001 https://github.com/terryncew/openline-receipt-gate.git
+cd openline-receipt-gate
 python3 -m venv /tmp/receiver-kit-env
 /tmp/receiver-kit-env/bin/python -m pip install --no-cache-dir -e . -r examples/independent_receiver_kit/requirements.txt
 /tmp/receiver-kit-env/bin/python -m examples.independent_receiver_kit.demo --output /tmp/receiver-kit-demo
