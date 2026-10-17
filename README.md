@@ -1,25 +1,61 @@
 # OpenLine Receipt Gate
 
-**Let the agent propose. Make the receiver decide.**
+**Stop a delegated agent from spending beyond its human-approved limit—at the receiving tool boundary.**
 
-OpenLine Receipt Gate is a Python safety boundary for consequential AI actions:
-refunds, payments, deployments, file changes, data access, or any other tool call
-that should require more than the model saying it is a good idea.
+Your IAM may authenticate the agent's service identity, and OpenTelemetry may report that its API call succeeded. Those facts **do not by themselves verify that a three-hop agent handoff preserved the human's exact task authority**. Conventional IAM/OPA can enforce this when properly configured; OpenLine's local reference gate checks the receiver's explicit bounds before calling the Python tool.
 
-Before the protected function runs, the gate checks the exact call against:
+[**Run the 60-second multi-hop replay**](examples/multi_hop_refund_drift/README.md) · [Guard a Python tool](#guard-a-python-function) · [OpenTelemetry integration](https://github.com/terryncew/openline-otel) · [Evidence and limits](#status)
 
-- a receiver-owned mandate and permission policy;
-- current receiver-owned state;
-- fresh evidence from receiver-controlled providers;
-- trusted receipt keys and source history; and
-- local replay and one-use state.
+## Green trace. Broken authority.
 
-If the evidence is sufficient, the call executes. If evidence is missing, the
-call is quarantined. If a hard rule or integrity check fails, the call is
-denied. The model cannot approve itself by writing a persuasive explanation.
+A manager authorizes a **$500 refund** for ticket **8842**, bound to **invoice_v1**. The orchestrator's compressed handoff says to clear the **$4,800** disputed balance. A billing sub-agent proposes a **$4,800 payout**.
 
-> A receipt records what happened. A receiver-owned gate decides whether the
-> next thing may happen.
+```mermaid
+sequenceDiagram
+    participant H as Human (Refund up to $500)
+    participant O as Orchestrator
+    participant S as Billing sub-agent
+    participant G as OpenLine Receipt Gate
+    participant P as Payment simulator
+    H->>O: Approve refund, ticket 8842, invoice_v1
+    O->>S: Resolve full disputed balance
+    S->>G: Propose $4,800 payout
+    Note over G: Verify route, cap and receiver current state
+    G-->>S: DENY (wrong payout target)
+    Note over P: Protected payout never executes
+```
+
+**Two-run replay:** An *intentionally coarse* service IAM rule lets the simulated payout return HTTP 200. The same proposal through real `olp_gate.authorize` **DENIES** it before the payment function executes. Separate tests confirm that a **$4,800 refund** also violates the amount cap and a proper **$500 refund** remains allowed.
+
+```bash
+git clone https://github.com/terryncew/openline-receipt-gate.git
+cd openline-receipt-gate
+python -m pip install -e .
+python examples/multi_hop_refund_drift.py
+```
+
+**No money is moved.** The ordinary terminal replay is illustrative, not live SDK telemetry. To capture actual spans and signed *provisional* OpenTelemetry trace receipts, install the separate [`openline-otel`](https://github.com/terryncew/openline-otel) package and run `python examples/multi_hop_refund_drift.py --otel` ([instructions](examples/multi_hop_refund_drift/README.md)). Signed capture does not prove complete or truthful observation. We do not claim a fixed 2 ms latency or production-ready payment interception.
+
+## Protect the final Python function
+
+```python
+from olp_gate import authorize, payment_semantics
+
+@authorize(
+    policy="refund_policy.json",     # receiver-owned mandate and route
+    tool="process_refund",
+    target="refund://process",
+    semantics=payment_semantics("amount_cents"),
+    state_source=current_state,      # receiver-owned, not model output
+    evidence_sources={"refund_authority": refund_authority},
+)
+def process_refund(amount_cents: int, customer_id: str):
+    return payment_api.refund(amount_cents, customer_id)
+```
+
+The `current_state` and `refund_authority` callbacks must be controlled by the receiver ([working example](examples/langgraph_refund_guard/demo.py)). This uses the real `@authorize` interface, not an invented decorator, and only protects paths actually wrapped by the gate. See the existing reference guide below for limits and receiver requirements.
+
+---
 
 ## Status
 
