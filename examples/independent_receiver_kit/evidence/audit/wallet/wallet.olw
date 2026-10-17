@@ -1,0 +1,65 @@
+{
+  "canonicalization": "olp-canonical-json-int-v1",
+  "decision_authority": "RECEIVER_GATE",
+  "epoch_certificate": {
+    "authority": "ISSUE_AND_NARROW_MANDATES",
+    "epoch_id": "epoch_c404ecd80afec358",
+    "epoch_public_key": "2384707584c3d7e6b5771aa853eae9515da5cc9364808f9e9e312b7e04d389e0",
+    "expires_at": "2027-10-18T18:48:37.042291Z",
+    "issued_at": "2026-10-17T18:48:37.042291Z",
+    "payload_hash": "6c662bea3604bc506091e9fb473d21e6b1502e21074868acb31150b904993eca",
+    "principal_id": "openline:principal:a1858fdc619bdc2cbbe724171ef2fa0a16c4efd186f472a066d2a342dba87f7d",
+    "schema": "openline.wallet.epoch_certificate.v1",
+    "sequence": 1,
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "3556de5bcb7b0b718501f7985ff1cd246a2e313408b07e1553a0654398415dc7",
+      "value": "bae1eaae7ff9fddaddc512e208651dddfe8f6e2519acc8c3ef492425369095854c3a8327463ef84d6b0089840f942dd4c8420b621445036f6c72f275438d610e"
+    }
+  },
+  "events": [
+    {
+      "data": {
+        "expires_at": "2026-10-17T20:48:37.322719Z",
+        "mandate_id": "mandate_71cf8f0d9bb8511b",
+        "predecessor_mandate_id": null,
+        "scopes": [
+          "local.commission"
+        ],
+        "subject_id": "codex-audit",
+        "subject_public_key": "b525b4b939f4b3f9d594c61c25d5ea25a54928eadfd302e9196ce1a52afb170c"
+      },
+      "event_type": "MANDATE_ISSUED",
+      "issued_at": "2026-10-17T18:48:37.322719Z",
+      "payload_hash": "f4e814ea96c98615eed42c1059e729d8e2e1b4a3db9b2cfc341dc70147c3dd00",
+      "previous_event_hash": null,
+      "principal_id": "openline:principal:a1858fdc619bdc2cbbe724171ef2fa0a16c4efd186f472a066d2a342dba87f7d",
+      "schema": "openline.wallet.timeline_event.v1",
+      "sequence": 1,
+      "signature": {
+        "algorithm": "Ed25519",
+        "public_key": "2384707584c3d7e6b5771aa853eae9515da5cc9364808f9e9e312b7e04d389e0",
+        "value": "1b9ef0720b1b22333a8e7aa0d0db3e68f31c50f9cf70c6cfc4fe3984da449572e1203cb799416df7847b3e55f164cf9700e5cfebe4d8271ee0735ae7bfd90408"
+      }
+    }
+  ],
+  "expires_at": "2026-10-17T18:58:37.472524Z",
+  "head": {
+    "event_hash": "9a54cf28aa8bd2c5fa8526bef0db61940cf29020b9491fed1c91589d5bae413c",
+    "sequence": 1
+  },
+  "issued_at": "2026-10-17T18:48:37.472524Z",
+  "payload_hash": "f0f9b81bf424bc9f7e1b7ea7ad9d55558fe30498f17676cf7e54c2bdf2b419b4",
+  "principal": {
+    "principal_id": "openline:principal:a1858fdc619bdc2cbbe724171ef2fa0a16c4efd186f472a066d2a342dba87f7d",
+    "root_public_key": "3556de5bcb7b0b718501f7985ff1cd246a2e313408b07e1553a0654398415dc7"
+  },
+  "receipts": [],
+  "schema": "openline.wallet.receiver_bundle.v1",
+  "signature": {
+    "algorithm": "Ed25519",
+    "public_key": "3556de5bcb7b0b718501f7985ff1cd246a2e313408b07e1553a0654398415dc7",
+    "value": "910e910b8fd14e5ae60fd402702ad12c22a8cf08d839599a504cd1e9a213b3dcab64bc20d4bfc694a3ea2e619ccbb91ae95d164c17108d52a4f7146f2cf5a202"
+  },
+  "wallet_policy_authority": "NONE"
+}
