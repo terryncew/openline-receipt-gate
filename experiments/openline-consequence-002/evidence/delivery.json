@@ -1,0 +1,34 @@
+{
+  "120": {
+    "baseRefName": "feature/openline-consequence-001",
+    "headRefName": "feature/openline-consequence-002",
+    "headRefOid": "a9e13c950070ee5f0fcf631eee43b2d9f97c5ad3",
+    "isDraft": true,
+    "number": 120,
+    "state": "OPEN",
+    "url": "https://github.com/terryncew/openline-receipt-gate/pull/120"
+  },
+  "119": {
+    "baseRefName": "main",
+    "headRefName": "fix/demo-signed-manager-limit",
+    "headRefOid": "1749a226b5f77cabc98f04a8655636229e0b11c2",
+    "isDraft": true,
+    "number": 119,
+    "state": "OPEN",
+    "url": "https://github.com/terryncew/openline-receipt-gate/pull/119"
+  },
+  "tested_implementation_commit": "a9e13c950070ee5f0fcf631eee43b2d9f97c5ad3",
+  "branch": "feature/openline-consequence-002",
+  "starting_reference": "81db6acb72149df989aac1827e5f621b0873d57b",
+  "creation_command": "gh pr create --repo terryncew/openline-receipt-gate --base feature/openline-consequence-001 --head feature/openline-consequence-002 --draft --title \"OPENLINE-CONSEQUENCE-002: atomic SQLite consequence and parity evidence\" --body-file experiments/openline-consequence-002/PR_BODY.md",
+  "creation_exit_status": 0,
+  "creation_stdout": "https://github.com/terryncew/openline-receipt-gate/pull/120",
+  "local_matrix": "42 run, 41 passed, 1 skipped",
+  "existing_tests_passed": 27,
+  "pr119_tests_passed": 4,
+  "mission_verdict": "PARTIAL",
+  "local_comparison": "PARITY",
+  "remaining_requirement": "Canonical CONSEQUENCE-001 twelve-scenario specification absent from supplied repository.",
+  "earlier_network_failure": "GitHub API CONNECT proxy response 403; later access succeeded. Existing GH_TOKEN reused without disclosure.",
+  "configuration_draft": "api.github.com added; saved but environment publication is not established."
+}

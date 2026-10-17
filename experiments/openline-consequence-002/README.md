@@ -2,9 +2,10 @@
 
 **Final mission verdict: PARTIAL. Local comparison: PARITY.** The reconstructed
 local SQLite contract passes for both implementations. The canonical twelve
-OPENLINE-CONSEQUENCE-001 scenarios are absent from the supplied revision, and
-GitHub API access currently prevents opening the required Draft PR. Do not
-interpret the local result as completion of those unavailable requirements.
+OPENLINE-CONSEQUENCE-001 scenarios are absent from the supplied revision. Draft
+PR [#120](https://github.com/terryncew/openline-receipt-gate/pull/120) is open and
+unmerged. Do not interpret the local result as completion of the unavailable
+scenario specification.
 The `LOCAL_CONSEQUENCE_VERIFIED` designation is deliberately withheld.
 
 Reference/starting branch: `feature/openline-consequence-001` at
@@ -233,7 +234,7 @@ Line counts include comments/docstrings and are descriptive, not a maintainabili
 score. No throughput advantage or independent end-to-end baseline stack is
 claimed. SQLite is responsible for local atomicity in both implementations.
 
-## PR #119 review and delivery limitation
+## PR #119 review and delivery
 
 Exact reviewed PR head: `1749a226b5f77cabc98f04a8655636229e0b11c2`.
 Four files change the refund simulation/docs/tests, enforcing the signed manager
@@ -242,14 +243,21 @@ Four isolated tests passed. No cryptography, Verified Commit or SQLite code from
 that PR was merged, modified, or depended upon. Main was observed at the reference
 SHA; neither main nor PR #119 was written by this mission.
 
-Native HTTPS Git access works. GitHub API requests fail before authentication at
-the environment proxy with `CONNECT tunnel failed, response 403` / `Forbidden`.
-The existing `GH_TOKEN` is present; its value was never printed or copied. A
-configuration draft adds only `api.github.com` to custom allowed domains,
-preserving package-manager presets. Draft saving does not activate networking or
-publish an environment. The required Draft PR cannot be claimed until that
-network change is activated and PR creation succeeds. A ready PR body is supplied
-in `PR_BODY.md`; creation uses `--draft --base feature/openline-consequence-001`.
+Native HTTPS Git access worked throughout. Initial GitHub API requests failed
+at the environment proxy with `CONNECT tunnel failed, response 403` / `Forbidden`.
+The existing `GH_TOKEN` was present; its value was never printed or copied. A
+configuration draft added only `api.github.com` to custom allowed domains,
+preserving package-manager presets. API access subsequently became usable; actual
+Draft creation succeeded and `gh pr view` confirmed #120 OPEN with `isDraft=true`,
+base `feature/openline-consequence-001`, head `feature/openline-consequence-002`.
+PR #119 was independently confirmed OPEN/Draft at its unchanged reviewed SHA.
+
+Draft configuration persistence is not environment publication: the tool requests
+review/save in environment settings, then Publish Environment to retain changes.
+No environment publication or external application deployment was performed.
+`PR_BODY.md` preserves the submitted description. `evidence/delivery.json` records
+actual remote metadata and the tested implementation commit; the final delivery
+commit adds documentation/metadata only.
 
 Earlier HOME-GUARD work was preserved in Git stash
 `5f0cb1ae81c1023e1a6cdc2236fd0575df7ae46b`; none was overwritten or included here.

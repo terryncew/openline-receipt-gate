@@ -6,7 +6,7 @@
   "warning": "Public TEST-ONLY key: integrity contract, not independent certification.",
   "files_sha256": {
     "experiments/openline-consequence-002/PR_BODY.md": "31eaf7b611d721df406b1a73a236fdfe78445e2ec1532be0f91421ca77d62210",
-    "experiments/openline-consequence-002/README.md": "a4cb685588b90d874373ffdaafedda612255cab959927191783ab4e02cf18a16",
+    "experiments/openline-consequence-002/README.md": "5c4139c26bff2266bfae8e3fb11cc09fc66d48da6dbeb3f043bf23fd775ebf90",
     "experiments/openline-consequence-002/evidence/after/manifest.json": "f329f205b62ac09ecf80d3721300665d9af067c0593693757dab484f9f7cb396",
     "experiments/openline-consequence-002/evidence/after/raw.log": "a7fb9b524017b442c92e73e972ddeb352334733361513740f767bc0aa2cd85b0",
     "experiments/openline-consequence-002/evidence/after/scenarios/conventional/test_01_success_and_exact_idempotent_retry/fixture.json": "9878eb5e13ab0be5008737073ed525931e2c938e5ca94fd49d5fd8b6154bb4e5",
@@ -516,6 +516,7 @@
     "experiments/openline-consequence-002/evidence/before/raw.log": "722ce51f850e3a35b559cac286a9e33fab5b3e06a638058c56e8069398c423e1",
     "experiments/openline-consequence-002/evidence/before/signed-fixture.json": "36ad0817076e2f6a07a19ab95fba2a5c8e194db651c4aaf8a7c66c00435b1e40",
     "experiments/openline-consequence-002/evidence/before/source-and-fixture-hashes.json": "1523a1e96e93335f20dd872b6cce904d73ee122a974bf1b27af91a5ffa0a91f8",
+    "experiments/openline-consequence-002/evidence/delivery.json": "c90df3a184950fc0943e550808ff222992c0f55936a14b4cbe47465160dc9254",
     "experiments/openline-consequence-002/evidence/development/unittest_alias_collection_error.log": "648e35935c226434a0e57e8adfd5ba3fd790edfef6c2d2aef0ef6f5002f3dc1e",
     "experiments/openline-consequence-002/evidence/development/verifier_not_yet_implemented.log": "6f014a60a1cd5c1646ea8a458a0f2cdb4253e5248a48f9866446691f3efbbfb5",
     "experiments/openline-consequence-002/evidence/development/verifier_schema_update_pending.log": "9f8a2d80fa6f4b4814ee112428523db9bdcdb391dac0a5bbf5100ee975a7bddc",
@@ -544,10 +545,10 @@
     "olp_gate/subject_bound_commit.py": "bc44bccd5660615788d5ab5aae693ec1905d3a2d5496c5480eb5c969de38f557",
     "olp_gate/verified_commit.py": "0725a580ce380fa478410e68d91172553616d6111be07672c6882ff63f73c4a3"
   },
-  "payload_hash": "801525cce1777696275bdfb6594696ee85a286b5852d7046c03d3b7b3ae1285f",
+  "payload_hash": "fabb2ddf35860352d37b2df6226da7362f6b7e8d4a0aa873a699077125878281",
   "signature": {
     "algorithm": "Ed25519",
     "public_key": "555f469c22188e90015bdd85b889678d459f86bdf8f7bd34971b10b9b3858609",
-    "value": "1ce9005983ce8c68439814e20a91cb45984fc7d79f6246eab8415085e4483f368e1793f51eaac1cb05390e6b1cd5ced7bbf72a6c59ec03ef18ad36f009e49d05"
+    "value": "a070975db61c9a661fc2390b88bed6a38d83048ca2043c55c769e90b6f882a00f28bdbdfbfac4901053d186cfd6d699a3293c1b1507ab55a1076de4f952fe805"
   }
 }
