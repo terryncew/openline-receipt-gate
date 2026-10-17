@@ -1,0 +1,294 @@
+[
+  {
+    "case": "openline-clean-cli",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "/workspace/openline-receipt-gate/examples/independent_receiver_kit/verify.py",
+      "--state",
+      "/tmp/independent-verifier-evidence/openline-clean.db",
+      "--config",
+      "/tmp/independent-verifier-evidence/openline-config.json",
+      "--mode",
+      "openline"
+    ],
+    "returncode": 0,
+    "stdout": "{\"counts\": {\"allows\": 1, \"authority_accepts\": 1, \"consumed\": 1, \"decisions\": 2, \"denies\": 0, \"documents\": 1, \"history\": 1}, \"errors\": [], \"mode\": \"openline\", \"trust_assumptions\": [\"External configuration pins the owner and receiver public roots.\", \"Receiver signatures attest its local clock and policy snapshots.\", \"The captured SQLite snapshot is the database being evaluated.\", \"Whole-database rollback and omitted suffixes need an external checkpoint.\", \"Denial reasons are signed testimony; successful effects are replayed.\"], \"valid\": true}\n",
+    "stderr": ""
+  },
+  {
+    "case": "openline-document",
+    "result": {
+      "valid": false,
+      "errors": [
+        "durable_documents_differ_from_signed_replay"
+      ],
+      "mode": "openline",
+      "counts": {
+        "decisions": 2,
+        "allows": 1,
+        "denies": 0,
+        "authority_accepts": 1,
+        "history": 0,
+        "documents": 0,
+        "consumed": 0
+      },
+      "trust_assumptions": [
+        "External configuration pins the owner and receiver public roots.",
+        "Receiver signatures attest its local clock and policy snapshots.",
+        "The captured SQLite snapshot is the database being evaluated.",
+        "Whole-database rollback and omitted suffixes need an external checkpoint.",
+        "Denial reasons are signed testimony; successful effects are replayed."
+      ]
+    }
+  },
+  {
+    "case": "openline-consumption",
+    "result": {
+      "valid": false,
+      "errors": [
+        "durable_consumption_differs_from_signed_replay"
+      ],
+      "mode": "openline",
+      "counts": {
+        "decisions": 2,
+        "allows": 1,
+        "denies": 0,
+        "authority_accepts": 1,
+        "history": 0,
+        "documents": 0,
+        "consumed": 0
+      },
+      "trust_assumptions": [
+        "External configuration pins the owner and receiver public roots.",
+        "Receiver signatures attest its local clock and policy snapshots.",
+        "The captured SQLite snapshot is the database being evaluated.",
+        "Whole-database rollback and omitted suffixes need an external checkpoint.",
+        "Denial reasons are signed testimony; successful effects are replayed."
+      ]
+    }
+  },
+  {
+    "case": "openline-history-time",
+    "result": {
+      "valid": false,
+      "errors": [
+        "durable_history_differs_from_signed_replay"
+      ],
+      "mode": "openline",
+      "counts": {
+        "decisions": 2,
+        "allows": 1,
+        "denies": 0,
+        "authority_accepts": 1,
+        "history": 0,
+        "documents": 0,
+        "consumed": 0
+      },
+      "trust_assumptions": [
+        "External configuration pins the owner and receiver public roots.",
+        "Receiver signatures attest its local clock and policy snapshots.",
+        "The captured SQLite snapshot is the database being evaluated.",
+        "Whole-database rollback and omitted suffixes need an external checkpoint.",
+        "Denial reasons are signed testimony; successful effects are replayed."
+      ]
+    }
+  },
+  {
+    "case": "openline-decision-signature",
+    "result": {
+      "valid": false,
+      "errors": [
+        "decision_signature_invalid:payload_hash_mismatch"
+      ],
+      "mode": "openline",
+      "counts": {
+        "decisions": 1,
+        "allows": 0,
+        "denies": 0,
+        "authority_accepts": 1,
+        "history": 0,
+        "documents": 0,
+        "consumed": 0
+      },
+      "trust_assumptions": [
+        "External configuration pins the owner and receiver public roots.",
+        "Receiver signatures attest its local clock and policy snapshots.",
+        "The captured SQLite snapshot is the database being evaluated.",
+        "Whole-database rollback and omitted suffixes need an external checkpoint.",
+        "Denial reasons are signed testimony; successful effects are replayed."
+      ]
+    }
+  },
+  {
+    "case": "openline-signed-expiry",
+    "result": {
+      "valid": false,
+      "errors": [
+        "allow_expired_before_effect"
+      ],
+      "mode": "openline",
+      "counts": {
+        "decisions": 1,
+        "allows": 0,
+        "denies": 0,
+        "authority_accepts": 1,
+        "history": 0,
+        "documents": 0,
+        "consumed": 0
+      },
+      "trust_assumptions": [
+        "External configuration pins the owner and receiver public roots.",
+        "Receiver signatures attest its local clock and policy snapshots.",
+        "The captured SQLite snapshot is the database being evaluated.",
+        "Whole-database rollback and omitted suffixes need an external checkpoint.",
+        "Denial reasons are signed testimony; successful effects are replayed."
+      ]
+    }
+  },
+  {
+    "case": "conventional-clean-cli",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "/workspace/openline-receipt-gate/examples/independent_receiver_kit/verify.py",
+      "--state",
+      "/tmp/independent-verifier-evidence/conventional-clean.db",
+      "--config",
+      "/tmp/independent-verifier-evidence/conventional-config.json",
+      "--mode",
+      "conventional"
+    ],
+    "returncode": 0,
+    "stdout": "{\"counts\": {\"allows\": 1, \"authority_accepts\": 1, \"consumed\": 1, \"decisions\": 2, \"denies\": 0, \"documents\": 1, \"history\": 1}, \"errors\": [], \"mode\": \"conventional\", \"trust_assumptions\": [\"External configuration pins the owner and receiver public roots.\", \"Receiver signatures attest its local clock and policy snapshots.\", \"The captured SQLite snapshot is the database being evaluated.\", \"Whole-database rollback and omitted suffixes need an external checkpoint.\", \"Denial reasons are signed testimony; successful effects are replayed.\"], \"valid\": true}\n",
+    "stderr": ""
+  },
+  {
+    "case": "conventional-document",
+    "result": {
+      "valid": false,
+      "errors": [
+        "durable_documents_differ_from_signed_replay"
+      ],
+      "mode": "conventional",
+      "counts": {
+        "decisions": 2,
+        "allows": 1,
+        "denies": 0,
+        "authority_accepts": 1,
+        "history": 0,
+        "documents": 0,
+        "consumed": 0
+      },
+      "trust_assumptions": [
+        "External configuration pins the owner and receiver public roots.",
+        "Receiver signatures attest its local clock and policy snapshots.",
+        "The captured SQLite snapshot is the database being evaluated.",
+        "Whole-database rollback and omitted suffixes need an external checkpoint.",
+        "Denial reasons are signed testimony; successful effects are replayed."
+      ]
+    }
+  },
+  {
+    "case": "conventional-consumption",
+    "result": {
+      "valid": false,
+      "errors": [
+        "durable_consumption_differs_from_signed_replay"
+      ],
+      "mode": "conventional",
+      "counts": {
+        "decisions": 2,
+        "allows": 1,
+        "denies": 0,
+        "authority_accepts": 1,
+        "history": 0,
+        "documents": 0,
+        "consumed": 0
+      },
+      "trust_assumptions": [
+        "External configuration pins the owner and receiver public roots.",
+        "Receiver signatures attest its local clock and policy snapshots.",
+        "The captured SQLite snapshot is the database being evaluated.",
+        "Whole-database rollback and omitted suffixes need an external checkpoint.",
+        "Denial reasons are signed testimony; successful effects are replayed."
+      ]
+    }
+  },
+  {
+    "case": "conventional-history-time",
+    "result": {
+      "valid": false,
+      "errors": [
+        "durable_history_differs_from_signed_replay"
+      ],
+      "mode": "conventional",
+      "counts": {
+        "decisions": 2,
+        "allows": 1,
+        "denies": 0,
+        "authority_accepts": 1,
+        "history": 0,
+        "documents": 0,
+        "consumed": 0
+      },
+      "trust_assumptions": [
+        "External configuration pins the owner and receiver public roots.",
+        "Receiver signatures attest its local clock and policy snapshots.",
+        "The captured SQLite snapshot is the database being evaluated.",
+        "Whole-database rollback and omitted suffixes need an external checkpoint.",
+        "Denial reasons are signed testimony; successful effects are replayed."
+      ]
+    }
+  },
+  {
+    "case": "conventional-decision-signature",
+    "result": {
+      "valid": false,
+      "errors": [
+        "decision_signature_invalid:payload_hash_mismatch"
+      ],
+      "mode": "conventional",
+      "counts": {
+        "decisions": 1,
+        "allows": 0,
+        "denies": 0,
+        "authority_accepts": 1,
+        "history": 0,
+        "documents": 0,
+        "consumed": 0
+      },
+      "trust_assumptions": [
+        "External configuration pins the owner and receiver public roots.",
+        "Receiver signatures attest its local clock and policy snapshots.",
+        "The captured SQLite snapshot is the database being evaluated.",
+        "Whole-database rollback and omitted suffixes need an external checkpoint.",
+        "Denial reasons are signed testimony; successful effects are replayed."
+      ]
+    }
+  },
+  {
+    "case": "conventional-signed-expiry",
+    "result": {
+      "valid": false,
+      "errors": [
+        "allow_expired_before_effect"
+      ],
+      "mode": "conventional",
+      "counts": {
+        "decisions": 1,
+        "allows": 0,
+        "denies": 0,
+        "authority_accepts": 1,
+        "history": 0,
+        "documents": 0,
+        "consumed": 0
+      },
+      "trust_assumptions": [
+        "External configuration pins the owner and receiver public roots.",
+        "Receiver signatures attest its local clock and policy snapshots.",
+        "The captured SQLite snapshot is the database being evaluated.",
+        "Whole-database rollback and omitted suffixes need an external checkpoint.",
+        "Denial reasons are signed testimony; successful effects are replayed."
+      ]
+    }
+  }
+]
