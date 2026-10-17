@@ -21,11 +21,11 @@ sequenceDiagram
     O->>S: Resolve full disputed balance
     S->>G: Propose $4,800 payout
     Note over G: Verify route, cap and receiver current state
-    G-->>S: DENY (wrong payout target)
+    G-->>S: DENY (mandate:payment_limit_exceeded + mandate:target_not_allowed)
     Note over P: Protected payout never executes
 ```
 
-**Two-run replay:** An *intentionally coarse* service IAM rule lets the simulated payout return HTTP 200. The same proposal through real `olp_gate.authorize` **DENIES** it before the payment function executes. Separate tests confirm that a **$4,800 refund** also violates the amount cap and a proper **$500 refund** remains allowed.
+**Two-run replay:** An *intentionally coarse* service IAM rule lets the simulated payout return HTTP 200. The same proposal through real `olp_gate.authorize` **DENIES** it before the payment function executes. Separate tests confirm that a **$4,800 refund** also violates the amount cap and a proper **$500 refund** remains allowed. Two regression cases independently lower the **verified manager-signed cap** and the **receiver's policy cap** to $100: either one alone stops a $500 refund with a distinct refusal reason. The stricter limit always wins.
 
 ```bash
 git clone https://github.com/terryncew/openline-receipt-gate.git
