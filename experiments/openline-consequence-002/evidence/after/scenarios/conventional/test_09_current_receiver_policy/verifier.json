@@ -1,0 +1,31 @@
+{
+  "database": "/tmp/consequence-final/scenarios/conventional/test_09_current_receiver_policy/state.sqlite3",
+  "errors": [],
+  "implementation": "conventional",
+  "ledger": {
+    "attempts": [],
+    "commit_seq_next": 1,
+    "consumed_codes": {},
+    "consumed_decisions": {},
+    "consumed_replay_scopes": {},
+    "schema": "openline.proof_to_policy.commit-ledger.v1.1"
+  },
+  "ledger_mode": "conventional",
+  "row_counts": {
+    "artifacts": 2,
+    "commitments": 0,
+    "ledger": 1,
+    "owner_history": 1,
+    "receiver": 1,
+    "sites": 1
+  },
+  "signed_outcomes": 0,
+  "trust_assumptions": [
+    "Externally supplied roots and verifier dependencies are trusted.",
+    "The receiver, its clock, subject authentication source, outcome signer and database write access are trusted.",
+    "Signed owner-head/policy observations attest historical checks; admission ordering is not independently witnessed.",
+    "Whole-database rollback, signer compromise and public fixture-key forgery require an external checkpoint or stronger custody.",
+    "Only local SQLite state is appraised; no robot, packet, provider identity or external effect is established."
+  ],
+  "valid": true
+}

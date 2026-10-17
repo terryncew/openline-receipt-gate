@@ -1,0 +1,16 @@
+{
+  "action_hash": "5d1e7ba14e58806379853b25e781156495edc4e97c2124c016f583913c7ac41f",
+  "authorization_hash": "b1f4d7b4c8016b82fd31daedd23fabfd73d3d831757a088cd71a1570f1bcf574",
+  "command": "python experiments/openline-consequence-002/reproduce_dual_write.py > experiments/openline-consequence-002/evidence/before/raw.log 2>&1",
+  "expected_exit_status": 1,
+  "fixture_file_sha256": "36ad0817076e2f6a07a19ab95fba2a5c8e194db651c4aaf8a7c66c00435b1e40",
+  "git_revision": "81db6acb72149df989aac1827e5f621b0873d57b",
+  "original_files_sha256": {
+    "olp_gate/evidence.py": "6831c7bc7248ffda105ac267fcd6fdba75acb11027e8ee40cba4cdb684c20a5b",
+    "olp_gate/subject_bound_commit.py": "bc44bccd5660615788d5ab5aae693ec1905d3a2d5496c5480eb5c969de38f557",
+    "olp_gate/verified_commit.py": "0725a580ce380fa478410e68d91172553616d6111be07672c6882ff63f73c4a3",
+    "tests/test_verified_commit.py": "3557aec6cf65520a81485f6ab8d3aa32d13a83b0f262e3cd1f3f20bbb5b0f9ab"
+  },
+  "receipt_signature_verified": true,
+  "signed_decision_payload_hash": "85a669f0828ffaab4438a7dba7f440b7356e7b4b5f49e9e840d26c79b751e504"
+}

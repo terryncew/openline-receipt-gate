@@ -1,0 +1,65 @@
+{
+  "authorization_consumed": true,
+  "child_exit_status": 74,
+  "child_stderr": "",
+  "child_stdout": "",
+  "completed_outcomes": [],
+  "ledger_after_crash": {
+    "attempts": [
+      {
+        "attempt_action_hash": "5d1e7ba14e58806379853b25e781156495edc4e97c2124c016f583913c7ac41f",
+        "attempt_id": "44a0646d5ba6d9445a4178dd",
+        "attempt_label": "after_sqlite_commit_before_json_completion",
+        "authorization_hash": "b1f4d7b4c8016b82fd31daedd23fabfd73d3d831757a088cd71a1570f1bcf574",
+        "checked_at": "2026-10-17T18:16:48.189998Z",
+        "commit_seq": 1,
+        "decision_payload_hash": "85a669f0828ffaab4438a7dba7f440b7356e7b4b5f49e9e840d26c79b751e504",
+        "execution_status": "started",
+        "execution_updated_at": "2026-10-17T18:16:48.194279Z",
+        "reason_codes": [],
+        "replay_scope_hash": null,
+        "result": "AUTHORIZED",
+        "tool_result_hash": null
+      }
+    ],
+    "commit_seq_next": 2,
+    "consumed_codes": {
+      "3d3e57aa119967661bfdd4b2fb89120b7c4bf3e43a76349cb970ea929e1bb023": {
+        "attempt_id": "44a0646d5ba6d9445a4178dd",
+        "consumed_at": "2026-10-17T18:16:48.189998Z",
+        "decision_payload_hash": "85a669f0828ffaab4438a7dba7f440b7356e7b4b5f49e9e840d26c79b751e504"
+      }
+    },
+    "consumed_decisions": {
+      "85a669f0828ffaab4438a7dba7f440b7356e7b4b5f49e9e840d26c79b751e504": {
+        "action_hash": "5d1e7ba14e58806379853b25e781156495edc4e97c2124c016f583913c7ac41f",
+        "attempt_id": "44a0646d5ba6d9445a4178dd",
+        "authorization_hash": "b1f4d7b4c8016b82fd31daedd23fabfd73d3d831757a088cd71a1570f1bcf574",
+        "consumed_at": "2026-10-17T18:16:48.189998Z",
+        "one_use_code_hash": "3d3e57aa119967661bfdd4b2fb89120b7c4bf3e43a76349cb970ea929e1bb023"
+      }
+    },
+    "consumed_replay_scopes": {},
+    "schema": "openline.proof_to_policy.commit-ledger.v1.1"
+  },
+  "restart_retry": {
+    "action_hash": "5d1e7ba14e58806379853b25e781156495edc4e97c2124c016f583913c7ac41f",
+    "attempt_id": "6540c172f7fa5f8796717bcd",
+    "authorization_hash": "b1f4d7b4c8016b82fd31daedd23fabfd73d3d831757a088cd71a1570f1bcf574",
+    "authorized": false,
+    "decision_payload_hash": "85a669f0828ffaab4438a7dba7f440b7356e7b4b5f49e9e840d26c79b751e504",
+    "reason_codes": [
+      "authorization_replay",
+      "one_use_code_replay"
+    ],
+    "replay_scope_hash": null
+  },
+  "sqlite_file_sha256": "f1f0af0dfbd533a38319aada04904e12d053c42697b3f00c769112f508bbcef4",
+  "sqlite_integrity": "ok",
+  "sqlite_rows_after_crash": [
+    [
+      "local-fixture",
+      1
+    ]
+  ]
+}

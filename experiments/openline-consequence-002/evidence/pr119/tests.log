@@ -1,0 +1,14 @@
+PR #119 head: 1749a226b5f77cabc98f04a8655636229e0b11c2
+Reference application imports: 81db6acb72149df989aac1827e5f621b0873d57b
+Isolated temporary extraction; no branch checkout or PR application.
+Command: PYTHONPATH=<temp>/source PYTHONDONTWRITEBYTECODE=1 python -m unittest discover -s tests -p test_multi_hop_refund_drift_demo.py -v
+
+test_baseline_and_bounded_receiver_comparison (test_multi_hop_refund_drift_demo.MultiHopRefundDriftTests.test_baseline_and_bounded_receiver_comparison) ... ok
+test_owner_signed_100_blocks_500_even_if_receiver_allows_500 (test_multi_hop_refund_drift_demo.MultiHopRefundDriftTests.test_owner_signed_100_blocks_500_even_if_receiver_allows_500) ... ok
+test_policy_has_both_route_and_amount_bound (test_multi_hop_refund_drift_demo.MultiHopRefundDriftTests.test_policy_has_both_route_and_amount_bound) ... ok
+test_receiver_100_blocks_500_even_if_owner_signs_500 (test_multi_hop_refund_drift_demo.MultiHopRefundDriftTests.test_receiver_100_blocks_500_even_if_owner_signs_500) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.043s
+
+OK

@@ -1,0 +1,77 @@
+{
+  "database": "/tmp/consequence-final/scenarios/openline/test_05_crash_immediately_after_commit/state.sqlite3",
+  "errors": [],
+  "implementation": "openline",
+  "ledger": {
+    "attempts": [
+      {
+        "attempt_action_hash": "5d8269642fbbcde1b07877e7315e1f2a77b51fc1eef4c4357c60347bb55e2dda",
+        "attempt_id": "3bf487d4378c022f47ba71b9",
+        "attempt_label": null,
+        "authorization_hash": "6b0f7d04e2774ab1ba6603cc9df6fa17c6600c0f7c0a3a934f570efc3ce06836",
+        "checked_at": "2026-10-17T18:00:00Z",
+        "commit_seq": 1,
+        "decision_payload_hash": "cc04b38e090e5094cae1863069b58bbd4c04bd39b96ee9dc27bb206761e850b2",
+        "execution_status": "permitted",
+        "reason_codes": [],
+        "replay_scope_hash": null,
+        "result": "AUTHORIZED",
+        "tool_result_hash": null
+      },
+      {
+        "attempt_action_hash": "5d8269642fbbcde1b07877e7315e1f2a77b51fc1eef4c4357c60347bb55e2dda",
+        "attempt_id": "8b2d3cb05a0cb4ce5a54825f",
+        "attempt_label": null,
+        "authorization_hash": "6b0f7d04e2774ab1ba6603cc9df6fa17c6600c0f7c0a3a934f570efc3ce06836",
+        "checked_at": "2026-10-17T18:00:00Z",
+        "commit_seq": 2,
+        "decision_payload_hash": "cc04b38e090e5094cae1863069b58bbd4c04bd39b96ee9dc27bb206761e850b2",
+        "execution_status": "not_started",
+        "reason_codes": [
+          "authorization_replay",
+          "one_use_code_replay"
+        ],
+        "replay_scope_hash": null,
+        "result": "BLOCKED",
+        "tool_result_hash": null
+      }
+    ],
+    "commit_seq_next": 3,
+    "consumed_codes": {
+      "3d258272ed047731b13a4ba2e22e84117b7b2897f3dbec9e163fdc288a041c67": {
+        "attempt_id": "3bf487d4378c022f47ba71b9",
+        "consumed_at": "2026-10-17T18:00:00Z",
+        "decision_payload_hash": "cc04b38e090e5094cae1863069b58bbd4c04bd39b96ee9dc27bb206761e850b2"
+      }
+    },
+    "consumed_decisions": {
+      "cc04b38e090e5094cae1863069b58bbd4c04bd39b96ee9dc27bb206761e850b2": {
+        "action_hash": "5d8269642fbbcde1b07877e7315e1f2a77b51fc1eef4c4357c60347bb55e2dda",
+        "attempt_id": "3bf487d4378c022f47ba71b9",
+        "authorization_hash": "6b0f7d04e2774ab1ba6603cc9df6fa17c6600c0f7c0a3a934f570efc3ce06836",
+        "consumed_at": "2026-10-17T18:00:00Z",
+        "one_use_code_hash": "3d258272ed047731b13a4ba2e22e84117b7b2897f3dbec9e163fdc288a041c67"
+      }
+    },
+    "consumed_replay_scopes": {},
+    "schema": "openline.proof_to_policy.commit-ledger.v1.1"
+  },
+  "ledger_mode": "openline",
+  "row_counts": {
+    "artifacts": 2,
+    "commitments": 1,
+    "ledger": 1,
+    "owner_history": 1,
+    "receiver": 1,
+    "sites": 1
+  },
+  "signed_outcomes": 1,
+  "trust_assumptions": [
+    "Externally supplied roots and verifier dependencies are trusted.",
+    "The receiver, its clock, subject authentication source, outcome signer and database write access are trusted.",
+    "Signed owner-head/policy observations attest historical checks; admission ordering is not independently witnessed.",
+    "Whole-database rollback, signer compromise and public fixture-key forgery require an external checkpoint or stronger custody.",
+    "Only local SQLite state is appraised; no robot, packet, provider identity or external effect is established."
+  ],
+  "valid": true
+}

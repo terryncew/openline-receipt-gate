@@ -1,0 +1,11 @@
+$ git ls-remote --heads origin 'feature/*consequence*'
+exit_code=0
+81db6acb72149df989aac1827e5f621b0873d57b	refs/heads/feature/openline-consequence-001
+
+$ git grep -n -i -E 'OPENLINE[-_]CONSEQUENCE|CONSEQUENCE[-_]001|commissioning' 81db6acb72149df989aac1827e5f621b0873d57b -- '*.md' '*.py'
+exit_code=1
+
+
+$ git log <reference> --name-only --pretty=format: | case-insensitive filename match for openline-consequence, openline_consequence, commissioning, consequence-001
+git_exit_code=0
+matches=[]
