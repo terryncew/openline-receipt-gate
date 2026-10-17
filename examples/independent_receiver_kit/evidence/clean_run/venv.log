@@ -1,0 +1,3 @@
+{"command": ["/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python", "-m", "venv", "/tmp/independent-receiver-clean-001/venv"], "cwd": "/tmp/independent-receiver-clean-001/source"}
+
+{"exit_status": 0}

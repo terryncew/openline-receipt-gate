@@ -1,0 +1,5 @@
+{"case": "replay_effect_time", "mode": "openline", "first": "ALLOW", "retry": "DENY", "retry_effect_at": null, "reason": "UNIQUE constraint failed: consumed.proof_hash", "documents": 1}
+{"case": "nonzero_send_value", "mode": "openline", "verdict": "DENY", "reason": "protected_action_mismatch", "documents": 0}
+{"case": "replay_effect_time", "mode": "conventional", "first": "ALLOW", "retry": "DENY", "retry_effect_at": null, "reason": "UNIQUE constraint failed: consumed.proof_hash", "documents": 1}
+{"case": "nonzero_send_value", "mode": "conventional", "verdict": "DENY", "reason": "fixture_money_forbidden", "documents": 0}
+artifact_root /tmp/receiver-boundary-audit-ywr3889e

@@ -1,0 +1,128 @@
+[
+  {
+    "path": "README.md",
+    "url": "https://raw.githubusercontent.com/agent-passport-system/agent-passport-system/bbd5a7d4cd77b5068b1023ccd418682ba8924109/README.md",
+    "sha256": "af6715dafc739aa7b921c1795869fff8d97e7f67d997f28c151175312ef434ad",
+    "bytes": 22163
+  },
+  {
+    "path": "THREAT_MODEL.md",
+    "url": "https://raw.githubusercontent.com/agent-passport-system/agent-passport-system/bbd5a7d4cd77b5068b1023ccd418682ba8924109/THREAT_MODEL.md",
+    "sha256": "2525549d42615493f477ca70a7628e8db63b824fba788e97340b13f7f02e862c",
+    "bytes": 11086
+  },
+  {
+    "path": "package.json",
+    "url": "https://raw.githubusercontent.com/agent-passport-system/agent-passport-system/bbd5a7d4cd77b5068b1023ccd418682ba8924109/package.json",
+    "sha256": "7ba3940946bca27fb824760ff124843bd69daccc42cbde0f3a3db7858b07cbf6",
+    "bytes": 25126
+  },
+  {
+    "path": "src/v2/authority-delegation/verify.ts",
+    "url": "https://raw.githubusercontent.com/agent-passport-system/agent-passport-system/bbd5a7d4cd77b5068b1023ccd418682ba8924109/src/v2/authority-delegation/verify.ts",
+    "sha256": "8242ae5527dbe81854806b18927b15e9a6bec81f66ba9fe4a809acea2f2e5add",
+    "bytes": 15163
+  },
+  {
+    "path": "src/v2/authority-delegation/types.ts",
+    "url": "https://raw.githubusercontent.com/agent-passport-system/agent-passport-system/bbd5a7d4cd77b5068b1023ccd418682ba8924109/src/v2/authority-delegation/types.ts",
+    "sha256": "fc5553b79e5244ffdf5c1d4a32dd69bc193dd7baecb157be1ed25030817ef9ad",
+    "bytes": 5836
+  },
+  {
+    "path": "src/v2/authority-revocation/resolver.ts",
+    "url": "https://raw.githubusercontent.com/agent-passport-system/agent-passport-system/bbd5a7d4cd77b5068b1023ccd418682ba8924109/src/v2/authority-revocation/resolver.ts",
+    "sha256": "6b58c785e7f1d4c7fae6ccaff52a3b2e7dc065679a60d5b8a9056734a88bd5ab",
+    "bytes": 2933
+  },
+  {
+    "path": "src/v2/authority-revocation/types.ts",
+    "url": "https://raw.githubusercontent.com/agent-passport-system/agent-passport-system/bbd5a7d4cd77b5068b1023ccd418682ba8924109/src/v2/authority-revocation/types.ts",
+    "sha256": "7f055ebceaec8ad0a2905bae38b90507655883f3515f36970ec8b4477637d887",
+    "bytes": 8582
+  },
+  {
+    "path": "src/v2/revocation-enforcement/observation.ts",
+    "url": "https://raw.githubusercontent.com/agent-passport-system/agent-passport-system/bbd5a7d4cd77b5068b1023ccd418682ba8924109/src/v2/revocation-enforcement/observation.ts",
+    "sha256": "5861829cb3df5f9fe5d0bcc6e2826227cb8a63362157ff93107896ef2fb156f5",
+    "bytes": 16518
+  },
+  {
+    "path": "src/storage/types.ts",
+    "url": "https://raw.githubusercontent.com/agent-passport-system/agent-passport-system/bbd5a7d4cd77b5068b1023ccd418682ba8924109/src/storage/types.ts",
+    "sha256": "795b0b32f27399ba77385b22f1354019dcb2082022153d1b28f9bba1a70a7e10",
+    "bytes": 8958
+  },
+  {
+    "path": "interop/oauth-liu-composition/README.md",
+    "url": "https://raw.githubusercontent.com/agent-passport-system/agent-passport-system/bbd5a7d4cd77b5068b1023ccd418682ba8924109/interop/oauth-liu-composition/README.md",
+    "sha256": "55283bb3187bde4cae1cc95b95e8def042825609e695c1c968cee9e84f464c1f",
+    "bytes": 1974
+  },
+  {
+    "path": "docs/CASCADE-REVOCATION-SPEC.md",
+    "url": "https://raw.githubusercontent.com/agent-passport-system/agent-passport-system/bbd5a7d4cd77b5068b1023ccd418682ba8924109/docs/CASCADE-REVOCATION-SPEC.md",
+    "sha256": "7642947105e90913bb4e4d80ba59fb248d1c0da6e56857ee089402ced1cf7df0",
+    "bytes": 9776
+  },
+  {
+    "path": "tests/conformance/README.md",
+    "url": "https://raw.githubusercontent.com/agent-passport-system/agent-passport-system/bbd5a7d4cd77b5068b1023ccd418682ba8924109/tests/conformance/README.md",
+    "sha256": "99988c3b5a98f65587a7069038493c6a2a54cfe79ebe1c8a5a9fecfcdfc09c88",
+    "bytes": 3362
+  },
+  {
+    "path": "docs/ENFORCEMENT-TRUST-ANCHOR.md",
+    "url": "https://raw.githubusercontent.com/agent-passport-system/agent-passport-system/bbd5a7d4cd77b5068b1023ccd418682ba8924109/docs/ENFORCEMENT-TRUST-ANCHOR.md",
+    "sha256": "8f2621bd877d296c7e6a7c6b6d9949dba2fd93c7a5c732d85a271ce66a6d3a37",
+    "bytes": 39203
+  },
+  {
+    "path": "src/core/gateway.ts",
+    "url": "https://raw.githubusercontent.com/agent-passport-system/agent-passport-system/bbd5a7d4cd77b5068b1023ccd418682ba8924109/src/core/gateway.ts",
+    "sha256": "73e74b135210f783ac560fe4be2e6361782630dd40802839c0ba1907d7116712",
+    "bytes": 346
+  },
+  {
+    "path": "src/v2/trust-policy/policy.ts",
+    "url": "https://raw.githubusercontent.com/agent-passport-system/agent-passport-system/bbd5a7d4cd77b5068b1023ccd418682ba8924109/src/v2/trust-policy/policy.ts",
+    "sha256": "e67419e9fdc6c8214afd92ce7c314928cee38cd5ca867b620427e540ee0f71f8",
+    "bytes": 7922
+  },
+  {
+    "path": "src/v2/trust-policy/types.ts",
+    "url": "https://raw.githubusercontent.com/agent-passport-system/agent-passport-system/bbd5a7d4cd77b5068b1023ccd418682ba8924109/src/v2/trust-policy/types.ts",
+    "sha256": "bfe1750b11ce4e33079028b21f501101901a49452750fee19731d7b8885efbc6",
+    "bytes": 11412
+  },
+  {
+    "path": "src/v2/authority-revocation/verify.ts",
+    "url": "https://raw.githubusercontent.com/agent-passport-system/agent-passport-system/bbd5a7d4cd77b5068b1023ccd418682ba8924109/src/v2/authority-revocation/verify.ts",
+    "sha256": "7dbfe60508e49921dc5dc21c3549d614adce9fe59350e9494b962cb6726433bd",
+    "bytes": 8090
+  },
+  {
+    "path": "src/v2/authority-delegation/issue.ts",
+    "url": "https://raw.githubusercontent.com/agent-passport-system/agent-passport-system/bbd5a7d4cd77b5068b1023ccd418682ba8924109/src/v2/authority-delegation/issue.ts",
+    "sha256": "66378cade3b1d16778b8a99fdb4a6b1152500e7bd094ffb842cacd9832e4ccdc",
+    "bytes": 12502
+  },
+  {
+    "path": "MIGRATION.md",
+    "url": "https://raw.githubusercontent.com/agent-passport-system/agent-passport-system/bbd5a7d4cd77b5068b1023ccd418682ba8924109/MIGRATION.md",
+    "sha256": "4e9d41ed41161ff0b0d11ef14c846902d1d0ac4e467e4a79796b80ebfaedaa59",
+    "bytes": 35714
+  },
+  {
+    "path": "docs/verification-boundary.md",
+    "url": "https://raw.githubusercontent.com/agent-passport-system/agent-passport-system/bbd5a7d4cd77b5068b1023ccd418682ba8924109/docs/verification-boundary.md",
+    "sha256": "a910976993cb9a6b4226814d4d40d132f644eac74803a5890d9304e82346a691",
+    "bytes": 2395
+  },
+  {
+    "path": "src/types/gateway.ts",
+    "url": "https://raw.githubusercontent.com/agent-passport-system/agent-passport-system/bbd5a7d4cd77b5068b1023ccd418682ba8924109/src/types/gateway.ts",
+    "sha256": "189e7d6d72c606398b02880c8f0acf8e0a2690c27024f09033d123e8a8a76c08",
+    "bytes": 37063
+  }
+]

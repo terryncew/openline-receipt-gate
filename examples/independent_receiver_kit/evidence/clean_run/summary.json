@@ -1,0 +1,136 @@
+{
+  "schema": "openline_internal_clean_install/v1",
+  "started_utc": "2026-10-17T18:56:04.137414+00:00",
+  "scope": "Internal isolated committed source and new venv on existing host",
+  "fresh_operating_system": false,
+  "external_cold_user_test": false,
+  "independent_organizational_adoption": false,
+  "package_download_cache_disabled": true,
+  "host_python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "host_platform": "Linux-6.18.55-x86_64-with-glibc2.41",
+  "source_repository": "/workspace/openline-receipt-gate",
+  "output": "/tmp/independent-receiver-clean-001",
+  "stages": [
+    {
+      "name": "archive",
+      "command": [
+        "git",
+        "archive",
+        "--format=tar",
+        "--output",
+        "/tmp/independent-receiver-clean-001/source.tar",
+        "09b821da175f8dd3dbe2b0bcaf051b1fa0b840d3"
+      ],
+      "cwd": "/workspace/openline-receipt-gate",
+      "started_after_seconds": 0.010600825000437908,
+      "log": "archive.log",
+      "exit_status": 0,
+      "elapsed_seconds": 0.09845018399937544,
+      "finished_after_seconds": 0.10905180199915776
+    },
+    {
+      "name": "extract",
+      "elapsed_seconds": 0.26451495500077726,
+      "started_after_seconds": 0.13056686599884415,
+      "finished_after_seconds": 0.39508331599790836,
+      "exit_status": 0
+    },
+    {
+      "name": "venv",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-m",
+        "venv",
+        "/tmp/independent-receiver-clean-001/venv"
+      ],
+      "cwd": "/tmp/independent-receiver-clean-001/source",
+      "started_after_seconds": 0.3953954680036986,
+      "log": "venv.log",
+      "exit_status": 0,
+      "elapsed_seconds": 2.415340430998185,
+      "finished_after_seconds": 2.8107366550029838
+    },
+    {
+      "name": "install",
+      "command": [
+        "/tmp/independent-receiver-clean-001/venv/bin/python",
+        "-m",
+        "pip",
+        "install",
+        "--no-cache-dir",
+        "-e",
+        ".",
+        "-r",
+        "examples/independent_receiver_kit/requirements.txt"
+      ],
+      "cwd": "/tmp/independent-receiver-clean-001/source",
+      "started_after_seconds": 2.8112134330003755,
+      "log": "install.log",
+      "exit_status": 0,
+      "elapsed_seconds": 6.600882685997931,
+      "finished_after_seconds": 9.41209707300004
+    },
+    {
+      "name": "versions",
+      "command": [
+        "/tmp/independent-receiver-clean-001/venv/bin/python",
+        "-c",
+        "import importlib.metadata,json,platform,site,sys; from pathlib import Path; data={'python':sys.version,'executable':sys.executable,'platform':platform.platform(),'prefix':sys.prefix,'base_prefix':sys.base_prefix,'enable_user_site':site.ENABLE_USER_SITE,'packages':sorted([{'name':d.metadata['Name'],'version':d.version} for d in importlib.metadata.distributions()],key=lambda d:d['name'].lower())}; Path(sys.argv[1]).write_text(json.dumps(data,indent=2)+'\\n'); print(json.dumps(data,indent=2))",
+        "/tmp/independent-receiver-clean-001/versions.json"
+      ],
+      "cwd": "/tmp/independent-receiver-clean-001/source",
+      "started_after_seconds": 9.412586056998407,
+      "log": "versions.log",
+      "exit_status": 0,
+      "elapsed_seconds": 0.1496809279997251,
+      "finished_after_seconds": 9.562267683002574
+    },
+    {
+      "name": "demo",
+      "command": [
+        "/tmp/independent-receiver-clean-001/venv/bin/python",
+        "-m",
+        "examples.independent_receiver_kit.demo",
+        "--output",
+        "/tmp/independent-receiver-clean-001/demo"
+      ],
+      "cwd": "/tmp/independent-receiver-clean-001/source",
+      "started_after_seconds": 9.562742595997406,
+      "log": "demo.log",
+      "exit_status": 0,
+      "elapsed_seconds": 3.0580790690000867,
+      "finished_after_seconds": 12.620822149998276
+    },
+    {
+      "name": "tests",
+      "command": [
+        "/tmp/independent-receiver-clean-001/venv/bin/python",
+        "-m",
+        "unittest",
+        "examples.independent_receiver_kit.test_receiver",
+        "-v"
+      ],
+      "cwd": "/tmp/independent-receiver-clean-001/source",
+      "started_after_seconds": 12.621558601000288,
+      "log": "tests.log",
+      "exit_status": 0,
+      "elapsed_seconds": 10.656257349997759,
+      "finished_after_seconds": 23.277816207002616
+    }
+  ],
+  "first_successful_end_to_end_seconds": 12.621342717000516,
+  "status": "passed",
+  "elapsed_seconds": 23.27811168199696,
+  "source_commit": "09b821da175f8dd3dbe2b0bcaf051b1fa0b840d3",
+  "source_archive_sha256": "b32d5472f4ae32a8db3d825929e34032282c2abf33b88dc681af7ee91a71931c",
+  "first_successful_end_to_end_includes": [
+    "source metadata",
+    "git archive",
+    "extraction",
+    "venv with ensurepip",
+    "dependency installation",
+    "version inventory",
+    "complete demo and independent verifiers"
+  ],
+  "exit_status": 0
+}

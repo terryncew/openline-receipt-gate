@@ -1,0 +1,80 @@
+[
+  {
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-m",
+      "openline_wallet",
+      "--wallet",
+      "/tmp/wallet-audit-evidence/wallet",
+      "init",
+      "--label",
+      "INDEPENDENT-RECEIVER-001 audit fixture"
+    ],
+    "returncode": 0,
+    "stdout": "Created      openline:principal:a1858fdc619bdc2cbbe724171ef2fa0a16c4efd186f472a066d2a342dba87f7d\nAuthority    wallet evidence only; receiver Gate decides effects\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-m",
+      "openline_wallet",
+      "--wallet",
+      "/tmp/wallet-audit-evidence/wallet",
+      "keygen-subject",
+      "codex-audit",
+      "--output",
+      "/tmp/wallet-audit-evidence/subject.key"
+    ],
+    "returncode": 0,
+    "stdout": "Private key  /tmp/wallet-audit-evidence/subject.key\nPublic key   /tmp/wallet-audit-evidence/subject.key.pub\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-m",
+      "openline_wallet",
+      "--wallet",
+      "/tmp/wallet-audit-evidence/wallet",
+      "grant",
+      "codex-audit",
+      "local.commission",
+      "--subject-key",
+      "/tmp/wallet-audit-evidence/subject.key.pub"
+    ],
+    "returncode": 0,
+    "stdout": "Granted      mandate_71cf8f0d9bb8511b\nSubject      codex-audit\nScopes       local.commission\nEffect       eligible for receiver verification\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-m",
+      "openline_wallet",
+      "--wallet",
+      "/tmp/wallet-audit-evidence/wallet",
+      "export",
+      "--output",
+      "/tmp/wallet-audit-evidence/wallet.olw"
+    ],
+    "returncode": 0,
+    "stdout": "Exported     /tmp/wallet-audit-evidence/wallet.olw\nFresh until  2026-10-17T18:58:37.472524Z\nPrivate keys  excluded\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-m",
+      "openline_wallet",
+      "--wallet",
+      "/tmp/wallet-audit-evidence/wallet",
+      "verify",
+      "/tmp/wallet-audit-evidence/wallet.olw",
+      "--json"
+    ],
+    "returncode": 0,
+    "stdout": "{\n  \"current_mandates\": 1,\n  \"decision_authority\": \"RECEIVER_GATE\",\n  \"head_hash\": \"9a54cf28aa8bd2c5fa8526bef0db61940cf29020b9491fed1c91589d5bae413c\",\n  \"head_sequence\": 1,\n  \"principal_id\": \"openline:principal:a1858fdc619bdc2cbbe724171ef2fa0a16c4efd186f472a066d2a342dba87f7d\",\n  \"status\": \"EVIDENCE_VALID\",\n  \"wallet_policy_authority\": \"NONE\"\n}\n",
+    "stderr": ""
+  }
+]

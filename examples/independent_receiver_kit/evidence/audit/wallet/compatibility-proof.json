@@ -1,0 +1,20 @@
+{
+  "wallet_revision": "f309aac8aecae36c4f354c7455281af6dbce486a",
+  "bundle_sha256": "e3eacc3a9a415dc30f023a76a8ead2544bdf75804a661feafea5b59e02a1a6bd",
+  "bundle_schema": "openline.wallet.receiver_bundle.v1",
+  "receipt_gate_signature_check": [
+    true,
+    null
+  ],
+  "wallet_current_mandates": 1,
+  "wallet_cli_verification": {
+    "current_mandates": 1,
+    "decision_authority": "RECEIVER_GATE",
+    "head_hash": "9a54cf28aa8bd2c5fa8526bef0db61940cf29020b9491fed1c91589d5bae413c",
+    "head_sequence": 1,
+    "principal_id": "openline:principal:a1858fdc619bdc2cbbe724171ef2fa0a16c4efd186f472a066d2a342dba87f7d",
+    "status": "EVIDENCE_VALID",
+    "wallet_policy_authority": "NONE"
+  },
+  "direct_MandateOwnerView_authorization_admission": "mandate_authorization_shape_invalid"
+}
