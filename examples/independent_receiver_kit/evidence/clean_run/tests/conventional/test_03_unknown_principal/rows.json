@@ -1,0 +1,19 @@
+{
+  "settings": [
+    {
+      "id": 1,
+      "body": "{\"outcome_key\":\"555f469c22188e90015bdd85b889678d459f86bdf8f7bd34971b10b9b3858609\",\"owner_id\":\"owner:external\",\"owner_key\":\"e2fe2a39b7326642827d6d82d497622cd6c297fe78270eaa436b01f086b6f3cb\",\"policy\":{\"freshness_seconds\":60,\"max_document_chars\":128,\"target\":\"records://local-lab/intake\",\"tool\":\"intake.submit\",\"version\":1},\"receiver_id\":\"receiver:local-lab\",\"slot_id\":\"intake/default\"}",
+      "mode": "conventional"
+    }
+  ],
+  "history": [],
+  "documents": [],
+  "consumed": [],
+  "decisions": [
+    {
+      "seq": 1,
+      "request": "{\"path\":\"/authority\",\"request\":{\"credential\":\"eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJyZWNlaXZlcjpsb2NhbC1sYWIiLCJleHAiOjE3OTIyNjAzMDAsImlhdCI6MTc5MjI2MDAwMCwiaXNzIjoidW5rbm93biIsImp0aSI6ImhlYWQtMSIsIm1hbmRhdGVfaGFzaCI6IjE2YWVkNmI0YjZmMTI5YTEwZTVmMjhjZTBkNDQwZDdmYWRkMjhkOWNmMWM0ZGE3N2RiNTNlNDIxZjExZmQzN2UiLCJtYW5kYXRlX2lkIjoibWFuZGF0ZTp3b3JrZXItYSIsIm5iZiI6MTc5MjI2MDAwMCwicHJldiI6bnVsbCwicHVycG9zZSI6InN1Ym1pdCBsb2NhbCBkb2N1bWVudCIsInNjb3BlIjpbInNlbmQiXSwic2VxIjoxLCJzdGF0ZSI6IkFDVElWRSIsInN1YiI6IjViNjQ4OWM5YzdmZDBkY2Y1MDU0NWU3YzE2NDg4NmVmNDA0OTFlYzA2YzdmMWIxMjMwNDE3OTdlODExNzUzNWUiLCJ0YXJnZXRzIjpbInJlY29yZHM6Ly9sb2NhbC1sYWIvaW50YWtlIl19.L85NOwUIRBJbuF2kDO-KqMI_n2ZQxgu94Fk_YzrUtyAl9MCWMRANBPOrW_vo-dHbw5ehI5zN2x4uJwP_jz6bAA\"}}",
+      "body": "{\"documents_after\":0,\"documents_before\":0,\"effect_at\":null,\"mode\":\"conventional\",\"observed_at\":1792260020,\"owner_head\":null,\"owner_sequence\":0,\"payload_hash\":\"b0da91e330f12fa5d47936176839a2f199f6b41aaed682aaf948acca1c4ec8b8\",\"policy\":{\"freshness_seconds\":60,\"max_document_chars\":128,\"target\":\"records://local-lab/intake\",\"tool\":\"intake.submit\",\"version\":1},\"policy_hash\":\"835ba791e08e13d93b7386a968898326d6090aa0d0aa507cb2a724121a23d133\",\"reason\":\"jwt_invalid:InvalidIssuerError\",\"receiver_id\":\"receiver:local-lab\",\"request_hash\":\"a4882aabd59fcaf5dab9d43847057a5cef4232f306deeabb0fc06b08211e3ad2\",\"schema\":\"receiver-kit-decision/v1\",\"seq\":1,\"signature\":{\"algorithm\":\"Ed25519\",\"public_key\":\"555f469c22188e90015bdd85b889678d459f86bdf8f7bd34971b10b9b3858609\",\"value\":\"6add47c3aa9548fbf600a2bf246160622ce7099f4e239bdbcc4fab436ce088a43993edd2003020f16da1de0a8249d95537aa09d810b79dd663267b90f8db7d0c\"},\"subject\":null,\"verdict\":\"DENY\"}"
+    }
+  ]
+}

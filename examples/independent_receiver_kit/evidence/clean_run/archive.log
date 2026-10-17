@@ -1,0 +1,3 @@
+{"command": ["git", "archive", "--format=tar", "--output", "/tmp/independent-receiver-clean-001/source.tar", "09b821da175f8dd3dbe2b0bcaf051b1fa0b840d3"], "cwd": "/workspace/openline-receipt-gate"}
+
+{"exit_status": 0}

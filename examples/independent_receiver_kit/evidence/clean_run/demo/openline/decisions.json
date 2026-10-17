@@ -1,0 +1,212 @@
+[
+  {
+    "documents_after": 0,
+    "documents_before": 0,
+    "effect_at": null,
+    "mode": "openline",
+    "observed_at": 1792260000,
+    "owner_head": "f440426c6bf5d403342d4958784c5e27d4aa03e9a76e80d1e91524317815bcff",
+    "owner_sequence": 1,
+    "payload_hash": "2a98b89e9ae970fcb357a2c557a087c0c7ed8e9411c20aa14d4a420a9b759c0d",
+    "policy": {
+      "freshness_seconds": 60,
+      "max_document_chars": 128,
+      "target": "records://local-lab/intake",
+      "tool": "intake.submit",
+      "version": 1
+    },
+    "policy_hash": "835ba791e08e13d93b7386a968898326d6090aa0d0aa507cb2a724121a23d133",
+    "reason": "authority_admitted",
+    "receiver_id": "receiver:local-lab",
+    "request_hash": "fc9b0d3cb5878a7babe5c2f52518a09621a226c274360a3d702b24b71a3e1310",
+    "schema": "receiver-kit-decision/v1",
+    "seq": 1,
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "555f469c22188e90015bdd85b889678d459f86bdf8f7bd34971b10b9b3858609",
+      "value": "c5b225c59dc59e3f30930c39ce116a92ac6cf0b6b9a97db6f22fe9a1c9853e31fb9ca635041690803e5f248a011c8cf75e4cb4bc4e2b978999ebab605ebe5907"
+    },
+    "subject": null,
+    "verdict": "ACCEPT"
+  },
+  {
+    "documents_after": 1,
+    "documents_before": 0,
+    "effect_at": 1792260000,
+    "mode": "openline",
+    "observed_at": 1792260000,
+    "owner_head": "f440426c6bf5d403342d4958784c5e27d4aa03e9a76e80d1e91524317815bcff",
+    "owner_sequence": 1,
+    "payload_hash": "82959b318146f0efa68a4c103c77ab7e24bc73a39a43b9a6ee8582c88a27e73c",
+    "policy": {
+      "freshness_seconds": 60,
+      "max_document_chars": 128,
+      "target": "records://local-lab/intake",
+      "tool": "intake.submit",
+      "version": 1
+    },
+    "policy_hash": "835ba791e08e13d93b7386a968898326d6090aa0d0aa507cb2a724121a23d133",
+    "reason": "local_document_committed",
+    "receiver_id": "receiver:local-lab",
+    "request_hash": "d62559e1f5f997050f7c0cb2c818fb814f88b923b9f7dc5697b6e4b46aa0783c",
+    "schema": "receiver-kit-decision/v1",
+    "seq": 2,
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "555f469c22188e90015bdd85b889678d459f86bdf8f7bd34971b10b9b3858609",
+      "value": "6d4e2e8bed638354346f758ca692e6c98607203b9e5f525c5970e0e1dc4bf8a45e6809103a84ecd1cf9f3176628f810257922698f2092af115deb7ab8449040a"
+    },
+    "subject": "5b6489c9c7fd0dcf50545e7c164886ef40491ec06c7f1b123041797e8117535e",
+    "verdict": "ALLOW"
+  },
+  {
+    "documents_after": 1,
+    "documents_before": 1,
+    "effect_at": null,
+    "mode": "openline",
+    "observed_at": 1792260010,
+    "owner_head": "8c52d49b20c67a248ab904f2de086953a6ed5df9123c983e420a18e3a4b9f13c",
+    "owner_sequence": 2,
+    "payload_hash": "ac1f53000fa3d18c4243cb25b266db6bc0d40acf6739497aa066f6911bf0ee26",
+    "policy": {
+      "freshness_seconds": 60,
+      "max_document_chars": 128,
+      "target": "records://local-lab/intake",
+      "tool": "intake.submit",
+      "version": 1
+    },
+    "policy_hash": "835ba791e08e13d93b7386a968898326d6090aa0d0aa507cb2a724121a23d133",
+    "reason": "authority_admitted",
+    "receiver_id": "receiver:local-lab",
+    "request_hash": "0edf3a98534006c8d0131cc4a2474d82004ce19175c11c8501325914c10b230b",
+    "schema": "receiver-kit-decision/v1",
+    "seq": 3,
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "555f469c22188e90015bdd85b889678d459f86bdf8f7bd34971b10b9b3858609",
+      "value": "fb6362bde70017b7924e5cc7a0f77089c7427899ef5111f0e5723024ef48aa32a9790bf103ebf5daf8e45506123935443302282384f705c4dd6d72159d007f05"
+    },
+    "subject": null,
+    "verdict": "ACCEPT"
+  },
+  {
+    "documents_after": 1,
+    "documents_before": 1,
+    "effect_at": null,
+    "mode": "openline",
+    "observed_at": 1792260010,
+    "owner_head": "8c52d49b20c67a248ab904f2de086953a6ed5df9123c983e420a18e3a4b9f13c",
+    "owner_sequence": 2,
+    "payload_hash": "3008ae4ee3a29fbb1941407e27b847769643651c5cc003486d7503441348b6d9",
+    "policy": {
+      "freshness_seconds": 60,
+      "max_document_chars": 128,
+      "target": "records://local-lab/intake",
+      "tool": "intake.submit",
+      "version": 1
+    },
+    "policy_hash": "835ba791e08e13d93b7386a968898326d6090aa0d0aa507cb2a724121a23d133",
+    "reason": "owner_revoked",
+    "receiver_id": "receiver:local-lab",
+    "request_hash": "87e496fc16f9a7e28c805a517364bfd568a0218ffcc1837d007bc82024765fe1",
+    "schema": "receiver-kit-decision/v1",
+    "seq": 4,
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "555f469c22188e90015bdd85b889678d459f86bdf8f7bd34971b10b9b3858609",
+      "value": "4c8b052b59c768a67b35eb7a47cd66fca644d2c89730593f8f0740d2c09e6cfaabf97a36a8741b4d5d6a6a650dfe17fa6af6a8cfdfd5c409a09817f07bb2ce0b"
+    },
+    "subject": null,
+    "verdict": "DENY"
+  },
+  {
+    "documents_after": 1,
+    "documents_before": 1,
+    "effect_at": null,
+    "mode": "openline",
+    "observed_at": 1792260020,
+    "owner_head": "1c9860381d58f636e4183df1419aca6dc69c3f13ae04b9279d4905e28b36f491",
+    "owner_sequence": 3,
+    "payload_hash": "e21ebac592667c5aaddcb10aa61918118a6e1de1a24cfbede8d09dc752e20333",
+    "policy": {
+      "freshness_seconds": 60,
+      "max_document_chars": 128,
+      "target": "records://local-lab/intake",
+      "tool": "intake.submit",
+      "version": 1
+    },
+    "policy_hash": "835ba791e08e13d93b7386a968898326d6090aa0d0aa507cb2a724121a23d133",
+    "reason": "authority_admitted",
+    "receiver_id": "receiver:local-lab",
+    "request_hash": "8e941c1e2ac678ac494c1d71e593da8399feca10e17744abb67136f2991e3dbe",
+    "schema": "receiver-kit-decision/v1",
+    "seq": 5,
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "555f469c22188e90015bdd85b889678d459f86bdf8f7bd34971b10b9b3858609",
+      "value": "9ba0e27f6f91b8c989c4804df0c214bfd123bd806919d739569e87ad3bc721452d32dadbcfeb827e6cb75c2a7a16cd322d2e9bbce21c069c476afe4ca6567107"
+    },
+    "subject": null,
+    "verdict": "ACCEPT"
+  },
+  {
+    "documents_after": 2,
+    "documents_before": 1,
+    "effect_at": 1792260020,
+    "mode": "openline",
+    "observed_at": 1792260020,
+    "owner_head": "1c9860381d58f636e4183df1419aca6dc69c3f13ae04b9279d4905e28b36f491",
+    "owner_sequence": 3,
+    "payload_hash": "e70f0448f066cfdb3825cfe8687d19950e75660d967593a648bc7457dbfa993f",
+    "policy": {
+      "freshness_seconds": 60,
+      "max_document_chars": 128,
+      "target": "records://local-lab/intake",
+      "tool": "intake.submit",
+      "version": 1
+    },
+    "policy_hash": "835ba791e08e13d93b7386a968898326d6090aa0d0aa507cb2a724121a23d133",
+    "reason": "local_document_committed",
+    "receiver_id": "receiver:local-lab",
+    "request_hash": "247815c9084e1df2829eefb2c9627f268ff664ee9fea17da98af79deb1ac145f",
+    "schema": "receiver-kit-decision/v1",
+    "seq": 6,
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "555f469c22188e90015bdd85b889678d459f86bdf8f7bd34971b10b9b3858609",
+      "value": "068cd0c71bffec5fa18c52979c261044d577b0aa750f57fc3ccebe78ecaead1a97a9885a74d741e437b45ce1606ef92f09b2c1b7dff003c6dac712497944f00b"
+    },
+    "subject": "fec1428673f6afe89264b3807344ae8b269d125a503855202687db5a7128579f",
+    "verdict": "ALLOW"
+  },
+  {
+    "documents_after": 2,
+    "documents_before": 2,
+    "effect_at": null,
+    "mode": "openline",
+    "observed_at": 1792260020,
+    "owner_head": "1c9860381d58f636e4183df1419aca6dc69c3f13ae04b9279d4905e28b36f491",
+    "owner_sequence": 3,
+    "payload_hash": "16e6c7f1bdf050864d9137103000fadc956766257c5a64f7c807247c54413350",
+    "policy": {
+      "freshness_seconds": 60,
+      "max_document_chars": 128,
+      "target": "records://local-lab/intake",
+      "tool": "intake.submit",
+      "version": 1
+    },
+    "policy_hash": "835ba791e08e13d93b7386a968898326d6090aa0d0aa507cb2a724121a23d133",
+    "reason": "call_worker_key_mismatch",
+    "receiver_id": "receiver:local-lab",
+    "request_hash": "1e5a53736ebf12ee487762e5eae93ff859e72b5320852fc6dde6e64c091d800f",
+    "schema": "receiver-kit-decision/v1",
+    "seq": 7,
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "555f469c22188e90015bdd85b889678d459f86bdf8f7bd34971b10b9b3858609",
+      "value": "23d1158e586ffa6b2cbafc46c109a5c64399bc735f86efe35ff65f024c78de49ea02013ca94db6c4bc2415897362dd941ddd15722e001be6e4456997782c0100"
+    },
+    "subject": null,
+    "verdict": "DENY"
+  }
+]

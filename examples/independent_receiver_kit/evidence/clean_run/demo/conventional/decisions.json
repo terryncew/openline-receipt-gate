@@ -1,0 +1,212 @@
+[
+  {
+    "documents_after": 0,
+    "documents_before": 0,
+    "effect_at": null,
+    "mode": "conventional",
+    "observed_at": 1792260000,
+    "owner_head": "6d5abfa7af22cf7db40911e029ac7774beeabb00279690350b4beac52d7c3caa",
+    "owner_sequence": 1,
+    "payload_hash": "44f73d27408edd6ac93737dae2ba6974ce8cc38ea7aecff9927d0008aeaebce9",
+    "policy": {
+      "freshness_seconds": 60,
+      "max_document_chars": 128,
+      "target": "records://local-lab/intake",
+      "tool": "intake.submit",
+      "version": 1
+    },
+    "policy_hash": "835ba791e08e13d93b7386a968898326d6090aa0d0aa507cb2a724121a23d133",
+    "reason": "authority_admitted",
+    "receiver_id": "receiver:local-lab",
+    "request_hash": "bcdc70fb753f4dab65800743cfbe51185996a2db19ebe0e906d1b7c1a93875e3",
+    "schema": "receiver-kit-decision/v1",
+    "seq": 1,
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "555f469c22188e90015bdd85b889678d459f86bdf8f7bd34971b10b9b3858609",
+      "value": "bcc4eb689df65a19a099a582cd13f160b661b3fa41851d2d83d2148ad5afe1810b7fc50e9e4b2889188c2723887ecdeceaf474ef573678e631efccb793b4ac09"
+    },
+    "subject": null,
+    "verdict": "ACCEPT"
+  },
+  {
+    "documents_after": 1,
+    "documents_before": 0,
+    "effect_at": 1792260000,
+    "mode": "conventional",
+    "observed_at": 1792260000,
+    "owner_head": "6d5abfa7af22cf7db40911e029ac7774beeabb00279690350b4beac52d7c3caa",
+    "owner_sequence": 1,
+    "payload_hash": "4ec4d26329c99334fc4f3574394e18783f22d4f730d518b5b19a5fcf3147f241",
+    "policy": {
+      "freshness_seconds": 60,
+      "max_document_chars": 128,
+      "target": "records://local-lab/intake",
+      "tool": "intake.submit",
+      "version": 1
+    },
+    "policy_hash": "835ba791e08e13d93b7386a968898326d6090aa0d0aa507cb2a724121a23d133",
+    "reason": "local_document_committed",
+    "receiver_id": "receiver:local-lab",
+    "request_hash": "ce1b212fdf300c2b44bb803df130b7ba0cdda29d382f240f079f1ceb72cbcbdd",
+    "schema": "receiver-kit-decision/v1",
+    "seq": 2,
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "555f469c22188e90015bdd85b889678d459f86bdf8f7bd34971b10b9b3858609",
+      "value": "2c8e48771146a4987c3c5c7a37f9f1b3ad30d38a3a8f4dfab0ec70cc63faf2575870775e835d0957a1457906344ced2c7547ed5c9ee9f5aac2bf48a028721f02"
+    },
+    "subject": "5b6489c9c7fd0dcf50545e7c164886ef40491ec06c7f1b123041797e8117535e",
+    "verdict": "ALLOW"
+  },
+  {
+    "documents_after": 1,
+    "documents_before": 1,
+    "effect_at": null,
+    "mode": "conventional",
+    "observed_at": 1792260010,
+    "owner_head": "ca770a198e8779f90818c0cd6e3b5d609fa2c1c22d908c1f5991e6bf1c4e8cc8",
+    "owner_sequence": 2,
+    "payload_hash": "081a232f34b64be77e5cef33ee9f01aefdcb24f6a2fe7b008dcab7408ad7de02",
+    "policy": {
+      "freshness_seconds": 60,
+      "max_document_chars": 128,
+      "target": "records://local-lab/intake",
+      "tool": "intake.submit",
+      "version": 1
+    },
+    "policy_hash": "835ba791e08e13d93b7386a968898326d6090aa0d0aa507cb2a724121a23d133",
+    "reason": "authority_admitted",
+    "receiver_id": "receiver:local-lab",
+    "request_hash": "feb2b2063f1eda967d01657512eeec4c5b43bb3792feefb7a74734ac8ffcfaea",
+    "schema": "receiver-kit-decision/v1",
+    "seq": 3,
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "555f469c22188e90015bdd85b889678d459f86bdf8f7bd34971b10b9b3858609",
+      "value": "22aff3a383e6fc7bb8843bdcc05f9432141550ee4348c88f6817ccb6a45ba5f1f21b778a2de07a103478d73ba35c6b5ccb342ce5465fed907a178a584dabbb09"
+    },
+    "subject": null,
+    "verdict": "ACCEPT"
+  },
+  {
+    "documents_after": 1,
+    "documents_before": 1,
+    "effect_at": null,
+    "mode": "conventional",
+    "observed_at": 1792260010,
+    "owner_head": "ca770a198e8779f90818c0cd6e3b5d609fa2c1c22d908c1f5991e6bf1c4e8cc8",
+    "owner_sequence": 2,
+    "payload_hash": "2169b1b67141375b6aa44305cab08f2e5f312e20708d6e1dd1ed54d71a1d9dc3",
+    "policy": {
+      "freshness_seconds": 60,
+      "max_document_chars": 128,
+      "target": "records://local-lab/intake",
+      "tool": "intake.submit",
+      "version": 1
+    },
+    "policy_hash": "835ba791e08e13d93b7386a968898326d6090aa0d0aa507cb2a724121a23d133",
+    "reason": "owner_revoked",
+    "receiver_id": "receiver:local-lab",
+    "request_hash": "167e2280c95356ad4885b9981284d1c528db78699e1e32bb5dceffb60988a621",
+    "schema": "receiver-kit-decision/v1",
+    "seq": 4,
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "555f469c22188e90015bdd85b889678d459f86bdf8f7bd34971b10b9b3858609",
+      "value": "0052ac33ba554afaa3f32d4da1de5a2603630eeb9ac6dc5aae46c8543609d9c156c635d95b69bcbafbf52e7543b2c4d9e0c91328301c7c0af420f6dba0c15500"
+    },
+    "subject": null,
+    "verdict": "DENY"
+  },
+  {
+    "documents_after": 1,
+    "documents_before": 1,
+    "effect_at": null,
+    "mode": "conventional",
+    "observed_at": 1792260020,
+    "owner_head": "2d158415c1a146c6147c692403de13d90e95cf3d38754ea69ea0897b34a485cb",
+    "owner_sequence": 3,
+    "payload_hash": "3ccd75374702a425bb47cbe0cf14cebf64090007695e1919329fe5bd889efbcb",
+    "policy": {
+      "freshness_seconds": 60,
+      "max_document_chars": 128,
+      "target": "records://local-lab/intake",
+      "tool": "intake.submit",
+      "version": 1
+    },
+    "policy_hash": "835ba791e08e13d93b7386a968898326d6090aa0d0aa507cb2a724121a23d133",
+    "reason": "authority_admitted",
+    "receiver_id": "receiver:local-lab",
+    "request_hash": "cde4b35d6106238090b960e8b12972cc457a34c9c4a2c1fff573c3b635d068d1",
+    "schema": "receiver-kit-decision/v1",
+    "seq": 5,
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "555f469c22188e90015bdd85b889678d459f86bdf8f7bd34971b10b9b3858609",
+      "value": "f14415f19ff9e326a25c1f4cbaffd4bfc82b867caec2230264d8e0923c3c33e86d47ee0b02371bcfe23aad89c760b0372f997d3d0fd077fc36b267d748a6090b"
+    },
+    "subject": null,
+    "verdict": "ACCEPT"
+  },
+  {
+    "documents_after": 2,
+    "documents_before": 1,
+    "effect_at": 1792260020,
+    "mode": "conventional",
+    "observed_at": 1792260020,
+    "owner_head": "2d158415c1a146c6147c692403de13d90e95cf3d38754ea69ea0897b34a485cb",
+    "owner_sequence": 3,
+    "payload_hash": "73d53afbe0b7bddf5b54d842a278607904ebe8ccfb4f0a36cb007522d7391e44",
+    "policy": {
+      "freshness_seconds": 60,
+      "max_document_chars": 128,
+      "target": "records://local-lab/intake",
+      "tool": "intake.submit",
+      "version": 1
+    },
+    "policy_hash": "835ba791e08e13d93b7386a968898326d6090aa0d0aa507cb2a724121a23d133",
+    "reason": "local_document_committed",
+    "receiver_id": "receiver:local-lab",
+    "request_hash": "3182a5d70a5f851455a53c710466290cf9a8774cc58eeaf40893f138ddbd43f7",
+    "schema": "receiver-kit-decision/v1",
+    "seq": 6,
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "555f469c22188e90015bdd85b889678d459f86bdf8f7bd34971b10b9b3858609",
+      "value": "ade0f02663b504591fbf6ed78fbc813b941a02da007e840d26307e0e8790a5324d8ee67830a41eace22e7499552cb94cdb4c134c81edece26a80a76121f9180c"
+    },
+    "subject": "fec1428673f6afe89264b3807344ae8b269d125a503855202687db5a7128579f",
+    "verdict": "ALLOW"
+  },
+  {
+    "documents_after": 2,
+    "documents_before": 2,
+    "effect_at": null,
+    "mode": "conventional",
+    "observed_at": 1792260020,
+    "owner_head": "2d158415c1a146c6147c692403de13d90e95cf3d38754ea69ea0897b34a485cb",
+    "owner_sequence": 3,
+    "payload_hash": "d532d07a5cea9898a7232f351b9d8de8ad8d97d55e2e80bc91be231836776041",
+    "policy": {
+      "freshness_seconds": 60,
+      "max_document_chars": 128,
+      "target": "records://local-lab/intake",
+      "tool": "intake.submit",
+      "version": 1
+    },
+    "policy_hash": "835ba791e08e13d93b7386a968898326d6090aa0d0aa507cb2a724121a23d133",
+    "reason": "jwt_invalid:InvalidSignatureError",
+    "receiver_id": "receiver:local-lab",
+    "request_hash": "19d7c74da0420d281c38f3980c4eaeaaf6a150ba4ee6601e89ff3069ac5fd204",
+    "schema": "receiver-kit-decision/v1",
+    "seq": 7,
+    "signature": {
+      "algorithm": "Ed25519",
+      "public_key": "555f469c22188e90015bdd85b889678d459f86bdf8f7bd34971b10b9b3858609",
+      "value": "aba8659dc42c724a9f46c00ba562bc186849dc7ec257c5cadd060ccd7f72add4b5547d58d53ea78934f94efe871764f4bdc86e87cf0dbaea89aa1efb8ddc0902"
+    },
+    "subject": null,
+    "verdict": "DENY"
+  }
+]

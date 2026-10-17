@@ -1,0 +1,19 @@
+{
+  "settings": [
+    {
+      "id": 1,
+      "body": "{\"outcome_key\":\"555f469c22188e90015bdd85b889678d459f86bdf8f7bd34971b10b9b3858609\",\"owner_id\":\"owner:external\",\"owner_key\":\"e2fe2a39b7326642827d6d82d497622cd6c297fe78270eaa436b01f086b6f3cb\",\"policy\":{\"freshness_seconds\":60,\"max_document_chars\":128,\"target\":\"records://local-lab/intake\",\"tool\":\"intake.submit\",\"version\":1},\"receiver_id\":\"receiver:local-lab\",\"slot_id\":\"intake/default\"}",
+      "mode": "openline"
+    }
+  ],
+  "history": [],
+  "documents": [],
+  "consumed": [],
+  "decisions": [
+    {
+      "seq": 1,
+      "request": "{\"path\":\"/authority\",\"request\":{\"authorization\":{\"authorization_id\":\"head-1\",\"expires_at\":\"2026-10-17T18:05:00Z\",\"issued_at\":\"2026-10-17T18:00:00Z\",\"mandate_hash\":\"16aed6b4b6f129a10e5f28ce0d440d7fadd28d9cf1c4da77db53e421f11fd37e\",\"owner_id\":\"unknown\",\"payload_hash\":\"8697781381b58c1fae689b767359f7400c92e0751407b0ba3c2a8241633d49f9\",\"predecessor_hash\":null,\"schema\":\"openline.mandate_owner_authorization.v1\",\"sequence\":1,\"signature\":{\"algorithm\":\"Ed25519\",\"public_key\":\"e2fe2a39b7326642827d6d82d497622cd6c297fe78270eaa436b01f086b6f3cb\",\"value\":\"bd22e26facd9353e87b4e11b613e8adbe2319144836d674e406e8ad267583d7f08b6652b4b1ba290390e9e63cfdaddcbc66ce1a64586f5ce0281fc8100c99b0a\"},\"slot_id\":\"intake/default\",\"state\":\"ACTIVE\"},\"mandate\":{\"agent_id\":\"5b6489c9c7fd0dcf50545e7c164886ef40491ec06c7f1b123041797e8117535e\",\"allowed_action_types\":[\"send\"],\"allowed_disclosure_classes\":[],\"allowed_targets\":[\"records://local-lab/intake\"],\"delegation_allowed\":false,\"expires_at\":\"2026-10-17T18:05:00Z\",\"forbidden_disclosure_classes\":[],\"mandate_id\":\"mandate:worker-a\",\"max_payment_cents\":0,\"max_settlement_cents\":0,\"principal_id\":\"owner:external\",\"profile\":\"principal_mandate/v1\",\"purpose\":\"submit local document\",\"version\":\"1\"}}}",
+      "body": "{\"documents_after\":0,\"documents_before\":0,\"effect_at\":null,\"mode\":\"openline\",\"observed_at\":1792260020,\"owner_head\":null,\"owner_sequence\":0,\"payload_hash\":\"c44912abd95a4c6e87a439cec55d6fd26e86dfafeea6dd2420ff63f86d88961e\",\"policy\":{\"freshness_seconds\":60,\"max_document_chars\":128,\"target\":\"records://local-lab/intake\",\"tool\":\"intake.submit\",\"version\":1},\"policy_hash\":\"835ba791e08e13d93b7386a968898326d6090aa0d0aa507cb2a724121a23d133\",\"reason\":\"mandate_authorization_owner_mismatch\",\"receiver_id\":\"receiver:local-lab\",\"request_hash\":\"aa51115fe26d78dbcca5a2c0f5789594df541d11d937a46bf1dbee940fb252d1\",\"schema\":\"receiver-kit-decision/v1\",\"seq\":1,\"signature\":{\"algorithm\":\"Ed25519\",\"public_key\":\"555f469c22188e90015bdd85b889678d459f86bdf8f7bd34971b10b9b3858609\",\"value\":\"664a9ae7dde4cc08394c46e9d2c948f01e3ac56bb4900ee5a9e17f8e4e93ad802d837aedb0d8950142b674ba5fb8dae7863332fd23d0bcf4bd3901dfe91c200c\"},\"subject\":null,\"verdict\":\"DENY\"}"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{"command": ["/tmp/independent-receiver-clean-001/venv/bin/python", "-m", "pip", "install", "--no-cache-dir", "-e", ".", "-r", "examples/independent_receiver_kit/requirements.txt"], "cwd": "/tmp/independent-receiver-clean-001/source"}
+Obtaining file:///tmp/independent-receiver-clean-001/source
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Getting requirements to build editable: started
+  Getting requirements to build editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Collecting cryptography==50.0.0 (from -r examples/independent_receiver_kit/requirements.txt (line 1))
+  Downloading cryptography-50.0.0-cp311-abi3-manylinux_2_34_x86_64.whl.metadata (4.3 kB)
+Collecting PyJWT==2.10.1 (from -r examples/independent_receiver_kit/requirements.txt (line 2))
+  Downloading PyJWT-2.10.1-py3-none-any.whl.metadata (4.0 kB)
+Collecting cffi>=2.0.0 (from cryptography==50.0.0->-r examples/independent_receiver_kit/requirements.txt (line 1))
+  Downloading cffi-2.1.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.5 kB)
+Collecting pycparser (from cffi>=2.0.0->cryptography==50.0.0->-r examples/independent_receiver_kit/requirements.txt (line 1))
+  Downloading pycparser-3.11-py3-none-any.whl.metadata (8.2 kB)
+Downloading cryptography-50.0.0-cp311-abi3-manylinux_2_34_x86_64.whl (4.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.7/4.7 MB 33.4 MB/s eta 0:00:00
+Downloading PyJWT-2.10.1-py3-none-any.whl (22 kB)
+Downloading cffi-2.1.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (221 kB)
+Downloading pycparser-3.11-py3-none-any.whl (51 kB)
+Building wheels for collected packages: openline-receipt-gate
+  Building editable for openline-receipt-gate (pyproject.toml): started
+  Building editable for openline-receipt-gate (pyproject.toml): finished with status 'done'
+  Created wheel for openline-receipt-gate: filename=openline_receipt_gate-0.6.0rc6-0.editable-py3-none-any.whl size=13480 sha256=97f57bdf00e859740639141f21fbddee28c501674e6e590424455253597d5a17
+  Stored in directory: /tmp/pip-ephem-wheel-cache-f9uce97z/wheels/b3/14/cc/99091b02451ac23dbeadcbd74e5234512c57cbe395f40d96b4
+Successfully built openline-receipt-gate
+Installing collected packages: PyJWT, pycparser, cffi, cryptography, openline-receipt-gate
+Successfully installed PyJWT-2.10.1 cffi-2.1.1 cryptography-50.0.0 openline-receipt-gate-0.6.0rc6 pycparser-3.11
+
+[notice] A new release of pip is available: 25.0.1 -> 26.2.1
+[notice] To update, run: python -m pip install --upgrade pip
+
+{"exit_status": 0}

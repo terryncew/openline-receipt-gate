@@ -1,0 +1,45 @@
+{"command": ["/tmp/independent-receiver-clean-001/venv/bin/python", "-m", "examples.independent_receiver_kit.demo", "--output", "/tmp/independent-receiver-clean-001/demo"], "cwd": "/tmp/independent-receiver-clean-001/source"}
+{
+  "openline": {
+    "scenarios": [
+      "ACCEPT",
+      "ALLOW",
+      "ACCEPT",
+      "DENY",
+      "ACCEPT",
+      "ALLOW",
+      "DENY"
+    ],
+    "provider_labels_are_simulated": true,
+    "receiver_process_boots": 3,
+    "startup_seconds": [
+      0.35126597600174136,
+      0.31355995799822267,
+      0.24220772500120802
+    ],
+    "total_seconds": 1.3310442680012784,
+    "verifier_exit": 0
+  },
+  "conventional": {
+    "scenarios": [
+      "ACCEPT",
+      "ALLOW",
+      "ACCEPT",
+      "DENY",
+      "ACCEPT",
+      "ALLOW",
+      "DENY"
+    ],
+    "provider_labels_are_simulated": true,
+    "receiver_process_boots": 3,
+    "startup_seconds": [
+      0.26713023699994665,
+      0.26292131200170843,
+      0.17378542399819707
+    ],
+    "total_seconds": 1.129061580002599,
+    "verifier_exit": 0
+  }
+}
+
+{"exit_status": 0}
