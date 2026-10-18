@@ -51,8 +51,8 @@ jobs:
           # Corrupt the signature field of the first receipt
           import json
           r = json.loads(lines[0])
-          sig = r["signature"]["signature"]
-          r["signature"]["signature"] = ("0" if sig[0] != "0" else "1") + sig[1:]
+          sig = r["signature"]["value"]
+          r["signature"]["value"] = ("0" if sig[0] != "0" else "1") + sig[1:]
           lines[0] = json.dumps(r, sort_keys=True)
           open(p, "w").write("\n".join(lines) + "\n")
           print("tampered first receipt signature")
