@@ -1,0 +1,70 @@
+{
+  "blockers": [
+    "iptables",
+    "iptables-restore",
+    "iptables-save",
+    "conntrack",
+    "tcpdump",
+    "host network administration absent; standalone unshare user+net namespace possible but does not supply required binaries",
+    "required cryptography==50.0.1 per frozen README; local 46.0.4"
+  ],
+  "capabilities": {
+    "CapEff_hex": "00000000800405fb",
+    "host_NET_ADMIN": false,
+    "host_SYS_ADMIN": false
+  },
+  "classification": "ENV_BLOCKED",
+  "commands": [
+    {
+      "argv": [
+        "unshare",
+        "--user",
+        "--map-root-user",
+        "--net",
+        "--mount",
+        "--fork",
+        "--",
+        "sh",
+        "-c",
+        "id; ip -V; ip link show lo"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "uid=0(root) gid=0(root) groups=0(root)\nip utility, iproute2-6.15.0, libbpf 1.5.0\n1: lo: <LOOPBACK> mtu 65536 qdisc noop state DOWN mode DEFAULT group qlen 1000\n    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00\n"
+    }
+  ],
+  "conclusion": "BLOCKED: do not execute original script or invent PCAP/counters/signatures/latency",
+  "cryptography": "46.0.4",
+  "demo_receipts": 0,
+  "execution": "offline read-only toolchain preflight; no kernel firewall or device actions attempted",
+  "experiment": "HOME-GUARD-REPRODUCIBILITY-001",
+  "frozen_candidate": "44486057320e908ec091c327112d830f65e20caa",
+  "native_kernel_test_executed": false,
+  "original_script_command": "bash experiments/home-guard-003/run_virtual_network.sh /tmp/hg3-evidence",
+  "original_verifier_command": "python experiments/home-guard-003/verify_evidence.py /tmp/hg3-evidence",
+  "pcaps_generated": 0,
+  "python": "3.13.5",
+  "required_tools": {
+    "conntrack": null,
+    "ip": "/usr/sbin/ip",
+    "iptables": null,
+    "iptables-restore": null,
+    "iptables-save": null,
+    "python3": "/opt/pyvenv/bin/python3",
+    "sha256sum": "/usr/bin/sha256sum",
+    "sudo": "/usr/bin/sudo",
+    "tcpdump": null,
+    "unshare": "/usr/bin/unshare"
+  },
+  "timestamp_utc": "2026-10-18T17:47:48.724720+00:00",
+  "timing_measured": false,
+  "uid": 0,
+  "uname": {
+    "machine": "x86_64",
+    "node": "5ae12d813ae3",
+    "processor": "",
+    "release": "6.18.55",
+    "system": "Linux",
+    "version": "#1 SMP Wed Oct 14 19:45:18 UTC 2026"
+  }
+}
