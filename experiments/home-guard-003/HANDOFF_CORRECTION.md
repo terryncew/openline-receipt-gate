@@ -12,7 +12,7 @@
 | CI-tested execution (run 39152946810) | commit `708dc537` |
 | Reviewed documentation (PR #123) | commit `2ce3bd05` |
 | Original artifact SHA256SUMS digest | `67f5f7e7f8fb821b0bfc00b5fdd884ed964f5716fdce1ecfa8ef1b417a011c1c` |
-| This correction commit | (to be filled on push) |
+| This correction commit | a6c1f095427b5d7edaa5ed2c4b583ddaea43a183 |
 
 The corrected runner reuses PR #113's six protected files byte-identical; it
 executes a copied orchestration script (`run_measured.sh`) and temporary
