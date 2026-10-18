@@ -30,7 +30,7 @@
       ],
       "returncode": 0,
       "stderr": "",
-      "stdout": "uid=0(root) gid=0(root) groups=0(root)\nip utility, iproute2-6.15.0, libbpf 1.5.0\n1: lo: <LOOPBACK> mtu 65536 qdisc noop state DOWN mode DEFAULT group qlen 1000\n    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00\n"
+      "stdout": "uid=0(root) gid=0(root) groups=0(root)\nip utility, iproute2-6.15.0, libbpf 1.5.0\n1: lo: <LOOPBACK> mtu 65536 qdisc noop state DOWN mode DEFAULT group default qlen 1000\n    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00\n"
     }
   ],
   "conclusion": "BLOCKED: do not execute original script or invent PCAP/counters/signatures/latency",
