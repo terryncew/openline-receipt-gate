@@ -52,10 +52,11 @@ wrappers (`measure_phases.py`) around `policy_gate` functions and
 Commit lineage (newest last):
 - `a6c1f095` — first correction pass (PR #124 base content)
 - `4dca2d32` — SHA-record amendment; reviewed head at second review
-- (this pass) — substantive content: recursive manifest, dual tamper
-  requirement, non-vacuous tests, handoff updates
+- `eceb6a11` — substantive content of THIS pass (recursive manifest, dual
+  tamper requirement, non-vacuous tests, handoff updates)
 - final head — administrative; no content change. The substantive correction
-  is the content commit; the tip only records provenance.
+  is `eceb6a11`; the tip only records provenance. Resolve the tip via
+  `git rev-parse study/home-guard-003-reproducer-costs`.
 
 No frozen mechanism file was touched in any of these commits.
 
