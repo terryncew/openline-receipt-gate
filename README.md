@@ -4,7 +4,7 @@
 
 Your IAM may authenticate the agent's service identity, and OpenTelemetry may report that its API call succeeded. Those facts **do not by themselves verify that a three-hop agent handoff preserved the human's exact task authority**. Conventional IAM/OPA can enforce this when properly configured; OpenLine's local reference gate checks the receiver's explicit bounds before calling the Python tool.
 
-[**Run the 60-second multi-hop replay**](examples/multi_hop_refund_drift/README.md) · [Guard a Python tool](#guard-a-python-function) · [OpenTelemetry integration](https://github.com/terryncew/openline-otel) · [Evidence and limits](#status)
+[**Run the 60-second multi-hop replay**](examples/multi_hop_refund_drift/README.md) · [Evaluate an independent receiver against JWT](examples/independent_receiver_kit/README.md) · [Guard a Python tool](#guard-a-python-function) · [OpenTelemetry integration](https://github.com/terryncew/openline-otel) · [Evidence and limits](#status)
 
 ## Green trace. Broken authority.
 
@@ -124,6 +124,7 @@ policy are in
 | If you need to... | Start here |
 |---|---|
 | Protect a Python or LangGraph tool in the same process | @authorize |
+| Protect a fixed action at a separate receiver's HTTP boundary, with signed evidence | [Independent receiver evaluation kit](examples/independent_receiver_kit/README.md) — matched JWT baseline; Wallet export not directly compatible |
 | Turn existing receipts into a signed receiver decision | olp-gate decide |
 | Carry one exact permission to another service or process | VerifiedCommitLedger |
 | Check whether explicit decision state survived an agent handoff | Handoff Check |

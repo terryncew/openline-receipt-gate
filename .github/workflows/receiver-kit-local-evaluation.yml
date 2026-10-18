@@ -1,0 +1,37 @@
+name: receiver-kit-local-evaluation
+on:
+  pull_request:
+    paths:
+      - 'examples/independent_receiver_kit/**'
+      - '.github/workflows/receiver-kit-local-evaluation.yml'
+      - 'olp_gate/**'
+  push:
+    branches: [main]
+    paths:
+      - 'examples/independent_receiver_kit/**'
+      - '.github/workflows/receiver-kit-local-evaluation.yml'
+      - 'olp_gate/**'
+permissions:
+  contents: read
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install local pinned dependencies
+        run: |
+          python -m pip install 'setuptools==82.0.1' 'wheel==0.47.0'
+          python -m pip install --no-build-isolation -e . -r examples/independent_receiver_kit/requirements.txt
+      - name: Run both local receivers and independently verify signed evidence
+        run: |
+          python -m examples.independent_receiver_kit.demo --output "$RUNNER_TEMP/receiver-eval"
+          python -m examples.independent_receiver_kit.verify --state "$RUNNER_TEMP/receiver-eval/openline/state.sqlite3" --config "$RUNNER_TEMP/receiver-eval/openline/config.json" --mode openline
+          python -m examples.independent_receiver_kit.verify --state "$RUNNER_TEMP/receiver-eval/conventional/state.sqlite3" --config "$RUNNER_TEMP/receiver-eval/conventional/config.json" --mode conventional
+      - name: Matched adversarial HTTP test matrix (32 cases)
+        run: python -m unittest examples.independent_receiver_kit.test_receiver -v
