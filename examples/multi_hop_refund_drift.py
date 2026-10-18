@@ -94,12 +94,12 @@ class Observability:
         }
 
 
-def receiver_policy():
+def receiver_policy(*, max_payment_cents=CAP):
     return {
         "schema": "openline.authorized_tool_policy.v1",
         "mandate": {
             "profile": "principal_mandate/v1",
-            "mandate_id": "ticket-8842-refund-max-500",
+            "mandate_id": f"ticket-8842-refund-max-{max_payment_cents}",
             "principal_id": "manager",
             "agent_id": "billing-subagent",
             "purpose": "ticket 8842 capped refund",
@@ -108,7 +108,7 @@ def receiver_policy():
             "allowed_disclosure_classes": [],
             "forbidden_disclosure_classes": [],
             "max_settlement_cents": 0,
-            "max_payment_cents": CAP,
+            "max_payment_cents": max_payment_cents,
             "delegation_allowed": False,
             "expires_at": "2035-01-01T00:00:00Z",
             "version": "1",
@@ -135,14 +135,17 @@ def receiver_policy():
     }
 
 
-def run(otel=False, verbose=True):
+def run(otel=False, verbose=True, *, owner_cap_cents=CAP, receiver_cap_cents=CAP):
+    for label, limit in (("owner", owner_cap_cents), ("receiver", receiver_cap_cents)):
+        if type(limit) is not int or limit < 0:
+            raise ValueError(f"{label}_cap_must_be_nonnegative_integer_cents")
     effects = PaymentSimulator([])
     obs = Observability(otel)
     # This independently signed manager instruction is checked by a
     # receiver-owned callback, NOT trusted from the compressed agent handoff.
     manager_key = Ed25519PrivateKey.generate()
     owner_intent = {
-        "action": "issue_refund", "ticket_id": TICKET, "max_amount_cents": CAP,
+        "action": "issue_refund", "ticket_id": TICKET, "max_amount_cents": owner_cap_cents,
         "currency": "USD", "state_hash": "invoice_v1",
     }
     owner_sig = manager_key.sign(canonical(owner_intent))
@@ -159,15 +162,32 @@ def run(otel=False, verbose=True):
             if (args["ticket_id"] != owner_intent["ticket_id"]
                     or args["currency"] != owner_intent["currency"]
                     or args["endpoint"] != REFUND
-                    or args["amount_cents"] > CAP
                     or receiver_state["invoice_hash"] != owner_intent["state_hash"]):
                 return None
+            # Even if called directly (bypassing the outer demo preflight),
+            # no evidence of owner approval is issued above the signed cap.
+            if args["amount_cents"] > owner_intent["max_amount_cents"]:
+                return None
             return {"manager_signature_verified": True,
-                    "ticket_id": TICKET, "cap_cents": CAP,
+                    "ticket_id": owner_intent["ticket_id"],
+                    "cap_cents": owner_intent["max_amount_cents"],
                     "invoice_hash": receiver_state["invoice_hash"]}
 
+        def owner_signed_preflight(*, endpoint, amount_cents, ticket_id, currency):
+            # Explicit receiver-owned preflight for an exact refund request.
+            # This runs before @authorize; its denial is NOT a signed
+            # Receipt Gate compiler decision or a receiver-signed receipt.
+            try:
+                owner_pub.verify(owner_sig, canonical(owner_intent))
+            except Exception as exc:
+                raise AuthorizationBlocked(
+                    "DENY", ["owner_signed_instruction_invalid"]
+                ) from exc
+            if endpoint == REFUND and amount_cents > owner_intent["max_amount_cents"]:
+                raise AuthorizationBlocked("DENY", ["owner_signed_limit_exceeded"])
+
         @authorize(
-            policy=receiver_policy(),
+            policy=receiver_policy(max_payment_cents=receiver_cap_cents),
             tool="payment_api_post",
             target=lambda call: ("refund://ticket/8842"
                                  if call.arguments["endpoint"] == REFUND
@@ -178,12 +198,22 @@ def run(otel=False, verbose=True):
             runtime_dir=Path(tmp) / "receiver",
             producer_model="billing-subagent",
         )
-        def payment_api_post(*, endpoint, amount_cents, ticket_id, currency):
+        def _receiver_gate_post(*, endpoint, amount_cents, ticket_id, currency):
             return effects.post(endpoint, amount_cents, ticket_id)
+
+        def payment_api_post(*, endpoint, amount_cents, ticket_id, currency):
+            # The only protected entry point used in this replay.
+            # For a wrong payout route, @authorize produces both mandate
+            # denial reasons; a refund over the signed cap is refused here.
+            owner_signed_preflight(endpoint=endpoint, amount_cents=amount_cents,
+                                   ticket_id=ticket_id, currency=currency)
+            return _receiver_gate_post(endpoint=endpoint, amount_cents=amount_cents,
+                                       ticket_id=ticket_id, currency=currency)
 
         if verbose:
             print("THREE-HOP REFUND DRIFT — OFFLINE SIMULATION")
-            print("Hop 1: manager signs issue_refund, ticket 8842, $500 USD, invoice_v1")
+            print("Hop 1: manager signs issue_refund, ticket 8842, "
+                  f"${owner_cap_cents / 100:,.2f} USD, invoice_v1")
             print("Hop 2: orchestrator handoff says 'clear the $4,800 disputed balance'")
             print("Hop 3: billing sub-agent proposes POST /v1/payouts for $4,800")
             print()
@@ -224,7 +254,8 @@ def run(otel=False, verbose=True):
                     span.set_attribute("openline.decision", decision)
                     span.set_attribute("openline.reason_codes", ",".join(reasons))
                     span.set_attribute("openline.requested_amount_cents", ATTACK)
-                    span.set_attribute("openline.owner_cap_cents", CAP)
+                    span.set_attribute("openline.owner_cap_cents", owner_cap_cents)
+                    span.set_attribute("openline.receiver_cap_cents", receiver_cap_cents)
         assert decision == "DENY", ("Payout route should hard-deny", decision, reasons)
         assert len(effects.effects) == 0
         if verbose:
@@ -244,16 +275,31 @@ def run(otel=False, verbose=True):
         assert cap_decision == "DENY", (cap_decision, cap_reasons)
         assert not effects.effects
 
-        # Positive control rules out a gate which rejects everything.
-        good = payment_api_post(endpoint=REFUND, amount_cents=CAP,
+        # Independent $500 probe when one boundary is set to $100.
+        # The distinct codes prove that neither cap shadows the other.
+        cap_probe_decision, cap_probe_reasons = None, []
+        if min(owner_cap_cents, receiver_cap_cents) < CAP:
+            try:
+                payment_api_post(endpoint=REFUND, amount_cents=CAP,
+                                 ticket_id=TICKET, currency="USD")
+            except AuthorizationBlocked as exc:
+                cap_probe_decision, cap_probe_reasons = exc.decision, list(exc.reason_codes)
+            else:
+                raise AssertionError("One independent cap was incorrectly ignored")
+            assert cap_probe_decision == "DENY", (cap_probe_decision, cap_probe_reasons)
+            assert not effects.effects
+
+        # Positive control: the stricter bound still allows legitimate work.
+        positive_cents = min(owner_cap_cents, receiver_cap_cents)
+        good = payment_api_post(endpoint=REFUND, amount_cents=positive_cents,
                                 ticket_id=TICKET, currency="USD")
         assert good["http_status"] == 200
-        assert len(effects.effects) == 1 and effects.effects[0]["amount_cents"] == CAP
+        assert len(effects.effects) == 1 and effects.effects[0]["amount_cents"] == positive_cents
 
         # State-bound failure with previously valid amount (not model-owned state).
         receiver_state["invoice_hash"] = "invoice_v2"
         try:
-            payment_api_post(endpoint=REFUND, amount_cents=CAP,
+            payment_api_post(endpoint=REFUND, amount_cents=positive_cents,
                              ticket_id=TICKET, currency="USD")
         except AuthorizationBlocked as exc:
             stale_state_decision = exc.decision
@@ -264,7 +310,7 @@ def run(otel=False, verbose=True):
         telemetry = obs.finish()
         if verbose:
             print("NEGATIVE CONTROL  /v1/refunds $4,800 -> " + cap_decision + " " + repr(cap_reasons))
-            print("POSITIVE CONTROL  /v1/refunds $500 -> executed once")
+            print(f"POSITIVE CONTROL  /v1/refunds ${positive_cents / 100:,.2f} -> executed once")
             print("STATE CONTROL     invoice_v2 -> " + stale_state_decision + "; no extra effect")
             print("OTEL:", json.dumps(telemetry, sort_keys=True))
             print("PASS: receiver blocked the $4,800 mutation at the final local function boundary.")
@@ -273,6 +319,11 @@ def run(otel=False, verbose=True):
                 "payout_decision": decision, "payout_reasons": reasons,
                 "over_cap_decision": cap_decision, "over_cap_reasons": cap_reasons,
                 "positive_refund_effects": len(effects.effects),
+                "positive_refund_amount_cents": positive_cents,
+                "owner_cap_cents": owner_cap_cents,
+                "receiver_cap_cents": receiver_cap_cents,
+                "independent_cap_probe_decision": cap_probe_decision,
+                "independent_cap_probe_reasons": cap_probe_reasons,
                 "stale_state_decision": stale_state_decision,
                 "measured_gate_ms": round(elapsed_ms, 3),
                 "telemetry": telemetry, "funds_transferred": 0}

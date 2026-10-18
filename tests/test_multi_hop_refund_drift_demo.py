@@ -24,6 +24,30 @@ class MultiHopRefundDriftTests(unittest.TestCase):
         self.assertEqual(report["funds_transferred"], 0)
         self.assertIn(report["stale_state_decision"], ("DENY", "QUARANTINE"))
 
+    def test_owner_signed_100_blocks_500_even_if_receiver_allows_500(self):
+        report = module.run(
+            otel=False, verbose=False,
+            owner_cap_cents=10_000, receiver_cap_cents=50_000,
+        )
+        self.assertEqual(report["independent_cap_probe_decision"], "DENY")
+        self.assertEqual(report["independent_cap_probe_reasons"],
+                         ["owner_signed_limit_exceeded"])
+        self.assertEqual(report["positive_refund_amount_cents"], 10_000)
+        self.assertEqual(report["positive_refund_effects"], 1)
+        self.assertEqual(report["guarded_payout_effects"], 0)
+
+    def test_receiver_100_blocks_500_even_if_owner_signs_500(self):
+        report = module.run(
+            otel=False, verbose=False,
+            owner_cap_cents=50_000, receiver_cap_cents=10_000,
+        )
+        self.assertEqual(report["independent_cap_probe_decision"], "DENY")
+        self.assertEqual(report["independent_cap_probe_reasons"],
+                         ["mandate:payment_limit_exceeded"])
+        self.assertEqual(report["positive_refund_amount_cents"], 10_000)
+        self.assertEqual(report["positive_refund_effects"], 1)
+        self.assertEqual(report["guarded_payout_effects"], 0)
+
     def test_policy_has_both_route_and_amount_bound(self):
         p = module.receiver_policy()
         mandate = p["mandate"]
