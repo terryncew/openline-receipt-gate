@@ -80,26 +80,32 @@ jobs:
           rc=$?
           set -e
           echo "tampered-evidence verifier exit code: $rc"
-          # Require the SPECIFIC signature_invalid failure, not just nonzero exit.
+          # Require BOTH a nonzero exit AND the specific signature_invalid
+          # failure. Either condition alone is insufficient.
+          if [ "$rc" -eq 0 ]; then
+            echo "FALSIFIER: verifier ACCEPTED tampered evidence (exit 0)" >&2
+            exit 1
+          fi
           if ! grep -q "bad signed receipt: signature_invalid" "$T/tamper-test.log"; then
             echo "FALSIFIER: tamper test did not produce signature_invalid" >&2
             tail -5 "$T/tamper-test.log" >&2
             exit 1
           fi
-          echo "TAMPER_TEST_PASS: verifier rejected with signature_invalid"
+          echo "TAMPER_TEST_PASS: nonzero exit AND signature_invalid confirmed"
           cp "$T/tamper-test.log" "$E/tamper-test.log"
-      - name: Finalize evidence manifest (all files, strict self-check)
+      - name: Finalize evidence manifest (recursive, strict self-check)
         run: |
           set -eu
           E="$RUNNER_TEMP/home-guard-003-evidence"
-          # tamper-test.log was added after the script's manifest; regenerate
-          # to cover every file, then require all hashes to match.
-          (cd "$E" && sha256sum *.pcap *.rules *.txt *.json *.jsonl applied.sqlite > SHA256SUMS)
-          (cd "$E" && sha256sum -c SHA256SUMS > manifest-check.log 2>&1) || {
+          # tamper-test.log was added after the script's manifest; rebuild
+          # recursively to cover every file. Verification output stays outside
+          # the hashed tree (workflow log only).
+          (cd "$E" && find . -type f ! -name 'SHA256SUMS*' | LC_ALL=C sort | xargs sha256sum > SHA256SUMS.tmp \
+            && mv SHA256SUMS.tmp SHA256SUMS)
+          if ! (cd "$E" && sha256sum -c SHA256SUMS 2>&1); then
             echo "FALSIFIER: final evidence manifest self-check failed" >&2
-            cat "$E/manifest-check.log" >&2
             exit 1
-          }
+          fi
           echo "MANIFEST_OK: all declared hashes match"
       - name: Preserve evidence on success or failure
         if: always()

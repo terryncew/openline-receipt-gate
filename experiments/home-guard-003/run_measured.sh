@@ -219,16 +219,35 @@ done
 cost_mark "verification_start"
 "$PY" "$EXP/verify_evidence.py" "$E"
 cost_mark "verification_end"
-# EVIDENCE FINALIZATION (correction 2026-10-18): ALL writes to the evidence
-# directory must complete BEFORE hashing. The run_complete marker is the last
-# write; nothing may append afterwards. The manifest covers every evidence
-# file type produced by this script.
+# EVIDENCE FINALIZATION (correction 2026-10-18, refined 2026-10-18):
+# ALL writes to the evidence directory must complete BEFORE hashing. The
+# run_complete marker is the last write; nothing may append afterwards.
+# The manifest is recursive and deterministic: every regular file under $E
+# except the manifest itself, sorted byte-wise. Verification output
+# (manifest-check.log) is written OUTSIDE the hashed tree so that checking
+# the manifest can never invalidate it.
 cost_mark "run_complete"
-(cd "$E" && sha256sum *.pcap *.rules *.txt *.json *.jsonl applied.sqlite > SHA256SUMS)
-# Strict self-check: every declared hash must match, or the run fails here.
-(cd "$E" && sha256sum -c SHA256SUMS > manifest-check.log 2>&1) || {
-  echo "FALSIFIER: evidence manifest self-check failed" >&2
-  cat "$E/manifest-check.log" >&2
+# Reject unexpected missing evidence before hashing.
+for required in tv-ingress.pcap nvr-egress.pcap hvac-egress.pcap hvac-post-egress.pcap \
+    apply-receipts.jsonl client-probes.jsonl cost-timeline.jsonl tv-active-flow.jsonl \
+    report.json revocation-timings.json applied.sqlite kernel-final.rules \
+    kernel-counters.rules kernel-counters.txt; do
+  if [[ ! -f "$E/$required" ]]; then
+    echo "FALSIFIER: expected evidence file missing: $required" >&2
+    exit 1
+  fi
+done
+if [[ ! -f "$E/policies/v2-owner-revoke.json" ]]; then
+  echo "FALSIFIER: expected evidence file missing: policies/v2-owner-revoke.json" >&2
   exit 1
-}
+fi
+(cd "$E" && find . -type f ! -name 'SHA256SUMS*' | LC_ALL=C sort | xargs sha256sum > SHA256SUMS.tmp \
+  && mv SHA256SUMS.tmp SHA256SUMS)
+# Strict self-check: every declared hash must match, or the run fails here.
+# Check output goes outside the evidence tree (stdout/stderr only).
+if ! (cd "$E" && sha256sum -c SHA256SUMS 2>&1); then
+  echo "FALSIFIER: evidence manifest self-check failed" >&2
+  exit 1
+fi
+echo "MANIFEST_OK: recursive manifest covers all evidence files"
 echo "HOME-GUARD-003 PACKET_AND_SIGNATURE_EVIDENCE_READY $E"

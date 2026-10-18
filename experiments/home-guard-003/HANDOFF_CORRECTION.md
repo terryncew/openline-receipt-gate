@@ -40,11 +40,31 @@ wrappers (`measure_phases.py`) around `policy_gate` functions and
 | 15 | Provenance SHAs not distinguished | FIXED | Table above; per-section labels |
 | 16 | Receipt timestamp presented as enforcement instant | FIXED | Explicit non-claim in §3c and RESULTS |
 
+## Second correction pass (2026-10-18, PR #124 residual safeguards)
+
+| # | Finding | Status | Evidence |
+|---|---|---|---|
+| S1 | Manifest globs omitted nested policies/ and .log files | FIXED | Recursive `find . -type f` manifest in `run_measured.sh` + workflow; 48/48 files on real evidence; negative test [2] covers policies/ and .log |
+| S2 | Tamper check required only error text, not nonzero exit | FIXED | Workflow requires BOTH `rc != 0` AND `signature_invalid`; negative test [3] asserts both |
+| S3 | Negative tests vacuous (no baseline, hash-only, no exit check) | FIXED | Rewritten `test_safeguards.py`: baseline-then-fault for all three; real `git diff --quiet` on disposable checkout; dual tamper assertion. 3/3 pass locally, unprivileged |
+| S4 | Handoff correction SHA vs final head | FIXED | Lineage below; substantive content commit named; tip is administrative |
+
+Commit lineage (newest last):
+- `a6c1f095` — first correction pass (PR #124 base content)
+- `4dca2d32` — SHA-record amendment; reviewed head at second review
+- (this pass) — substantive content: recursive manifest, dual tamper
+  requirement, non-vacuous tests, handoff updates
+- final head — administrative; no content change. The substantive correction
+  is the content commit; the tip only records provenance.
+
+No frozen mechanism file was touched in any of these commits.
+
 ## Negative findings preserved
 
 PR #114 startup leak + rollback failure; PR #115 nftables parity / no unique
 advantage; public test keys; trusted updater; single receiver/run; no
-real-home proof; no onboarding/commercial superiority claim.
+real-home proof; no onboarding/commercial superiority claim. Corrected cost
+numbers unchanged from the first pass.
 
 ## Safe review mechanism
 
