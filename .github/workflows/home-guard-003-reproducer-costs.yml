@@ -1,0 +1,111 @@
+name: HOME-GUARD-003 Reproducer and Cost Study
+# Disposable kernel experiment + cost measurements.
+# MANUAL TRIGGER ONLY (workflow_dispatch) — pushing does not run the privileged
+# experiment. Never merge. No real networks, no production credentials, $0.
+#
+# Correction 2026-10-18: renamed from HOME-GUARD-004 to avoid confusion with
+# PR #114's HOME-GUARD-004 reboot/tamper study. This reuses PR #113's frozen
+# mechanism (44486057) with a copied orchestration script and timing wrappers.
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  measured:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m py_compile experiments/home-guard-003/*.py
+      - name: Prepare test-only dependencies
+        run: |
+          set -eu
+          python -m pip install cryptography==50.0.1
+          if ! command -v ip >/dev/null || ! command -v iptables >/dev/null || ! command -v tcpdump >/dev/null || ! command -v conntrack >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y --no-install-recommends iproute2 iptables conntrack tcpdump
+          fi
+          command -v ip && command -v iptables && command -v tcpdump && command -v conntrack
+      - name: Enforce frozen PR #113 mechanism unchanged (FAIL on any diff)
+        run: |
+          set -eu
+          # Six protected files must be byte-identical to the frozen candidate.
+          # Any difference fails the run — printing the diff is not enough.
+          if ! git diff --quiet 44486057320e908ec091c327112d830f65e20caa -- \
+              experiments/home-guard-003/policy_gate.py \
+              experiments/home-guard-003/verify_evidence.py \
+              experiments/home-guard-003/make_policies.py \
+              experiments/home-guard-003/run_virtual_network.sh \
+              experiments/home-guard-003/active_flow.py \
+              experiments/home-guard-003/echo_endpoint.py; then
+            echo "FALSIFIER: frozen mechanism files differ from 44486057" >&2
+            git diff 44486057320e908ec091c327112d830f65e20caa --stat -- \
+              experiments/home-guard-003/policy_gate.py \
+              experiments/home-guard-003/verify_evidence.py \
+              experiments/home-guard-003/make_policies.py \
+              experiments/home-guard-003/run_virtual_network.sh \
+              experiments/home-guard-003/active_flow.py \
+              experiments/home-guard-003/echo_endpoint.py >&2
+            exit 1
+          fi
+          echo "FROZEN_MECHANISM_OK: six protected files byte-identical to 44486057"
+      - name: Execute measured disposable run
+        run: |
+          bash experiments/home-guard-003/run_measured.sh "$RUNNER_TEMP/home-guard-003-evidence"
+      - name: Hostile evidence-tampering test (must fail with signature_invalid)
+        run: |
+          set -eu
+          E="$RUNNER_TEMP/home-guard-003-evidence"
+          T="$RUNNER_TEMP/home-guard-003-tampered"
+          cp -a "$E" "$T"
+          # Tamper: flip one byte in the first signed receipt's signature value
+          python3 - "$T/apply-receipts.jsonl" <<'EOF'
+          import sys, json
+          p = sys.argv[1]
+          lines = open(p).read().splitlines()
+          r = json.loads(lines[0])
+          sig = r["signature"]["value"]
+          r["signature"]["value"] = ("0" if sig[0] != "0" else "1") + sig[1:]
+          lines[0] = json.dumps(r, sort_keys=True)
+          open(p, "w").write("\n".join(lines) + "\n")
+          print("tampered first receipt signature")
+          EOF
+          set +e
+          python3 experiments/home-guard-003/verify_evidence.py "$T" > "$T/tamper-test.log" 2>&1
+          rc=$?
+          set -e
+          echo "tampered-evidence verifier exit code: $rc"
+          # Require the SPECIFIC signature_invalid failure, not just nonzero exit.
+          if ! grep -q "bad signed receipt: signature_invalid" "$T/tamper-test.log"; then
+            echo "FALSIFIER: tamper test did not produce signature_invalid" >&2
+            tail -5 "$T/tamper-test.log" >&2
+            exit 1
+          fi
+          echo "TAMPER_TEST_PASS: verifier rejected with signature_invalid"
+          cp "$T/tamper-test.log" "$E/tamper-test.log"
+      - name: Finalize evidence manifest (all files, strict self-check)
+        run: |
+          set -eu
+          E="$RUNNER_TEMP/home-guard-003-evidence"
+          # tamper-test.log was added after the script's manifest; regenerate
+          # to cover every file, then require all hashes to match.
+          (cd "$E" && sha256sum *.pcap *.rules *.txt *.json *.jsonl applied.sqlite > SHA256SUMS)
+          (cd "$E" && sha256sum -c SHA256SUMS > manifest-check.log 2>&1) || {
+            echo "FALSIFIER: final evidence manifest self-check failed" >&2
+            cat "$E/manifest-check.log" >&2
+            exit 1
+          }
+          echo "MANIFEST_OK: all declared hashes match"
+      - name: Preserve evidence on success or failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: HOME-GUARD-003-reproducer-cost-evidence
+          path: ${{ runner.temp }}/home-guard-003-evidence
+          if-no-files-found: error
+          retention-days: 30

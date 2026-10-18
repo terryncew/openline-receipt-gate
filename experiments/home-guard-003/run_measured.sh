@@ -219,6 +219,16 @@ done
 cost_mark "verification_start"
 "$PY" "$EXP/verify_evidence.py" "$E"
 cost_mark "verification_end"
-(cd "$E" && sha256sum *.pcap *.rules *.txt *.jsonl report.json > SHA256SUMS)
+# EVIDENCE FINALIZATION (correction 2026-10-18): ALL writes to the evidence
+# directory must complete BEFORE hashing. The run_complete marker is the last
+# write; nothing may append afterwards. The manifest covers every evidence
+# file type produced by this script.
 cost_mark "run_complete"
+(cd "$E" && sha256sum *.pcap *.rules *.txt *.json *.jsonl applied.sqlite > SHA256SUMS)
+# Strict self-check: every declared hash must match, or the run fails here.
+(cd "$E" && sha256sum -c SHA256SUMS > manifest-check.log 2>&1) || {
+  echo "FALSIFIER: evidence manifest self-check failed" >&2
+  cat "$E/manifest-check.log" >&2
+  exit 1
+}
 echo "HOME-GUARD-003 PACKET_AND_SIGNATURE_EVIDENCE_READY $E"

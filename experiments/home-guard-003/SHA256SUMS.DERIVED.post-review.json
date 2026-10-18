@@ -1,0 +1,177 @@
+{
+  "_derived": "2026-10-18, covers all files present in the preserved download including revocation-timings.json, applied.sqlite, tamper-test.log",
+  "_label": "POST-REVIEW DERIVED MANIFEST \u2014 not the original CI artifact",
+  "_original_SHA256SUMS_digest": "67f5f7e7f8fb821b0bfc00b5fdd884ed964f5716fdce1ecfa8ef1b417a011c1c",
+  "_original_SHA256SUMS_status": "29 entries, 28 match; cost-timeline.jsonl FAILED (run_complete appended after hashing)",
+  "_original_artifact": "CI run 39152946810, artifact HOME-GUARD-004-measured-evidence",
+  "files": {
+    "applied.sqlite": {
+      "bytes": 8192,
+      "sha256": "6764de1db1327fcce4d67f424ec63aead33d74984ec93ade50b9af089050c4b2"
+    },
+    "apply-receipts.jsonl": {
+      "bytes": 6088,
+      "sha256": "12a3dd9a2938edb7031368e06c23e8ac16a62c919ddf3ccd07d72272e61c3a41"
+    },
+    "client-probes.jsonl": {
+      "bytes": 734,
+      "sha256": "ce107bedaa90617010e379f9e9494110fd0f9c235f0d632fb20f5756ff408e4e"
+    },
+    "conntrack-after-revoke.txt": {
+      "bytes": 68,
+      "sha256": "8648d57f0408074ff3522cd5301ec8503de210fdc3f085b898ff10acc2abb301"
+    },
+    "conntrack-before-revoke.txt": {
+      "bytes": 223,
+      "sha256": "1f02adc06af664015f13e27587268fe871010a829e183e3a678eb439ebf337fc"
+    },
+    "cost-timeline.jsonl": {
+      "bytes": 1001,
+      "sha256": "4a0a729bfa327db26ebc3fc244298d5ea2aa56b37cfa0e5c9a4d6787f054f747"
+    },
+    "environment.txt": {
+      "bytes": 324,
+      "sha256": "a228bb3d4be6a3e322d27d23eb3e370afdd66b0419274ee0a750943f5a998801"
+    },
+    "fw-interfaces.txt": {
+      "bytes": 353,
+      "sha256": "b4559f9150bfc37e0488210a08127fb8af27f59e720535b48b50b2309a13f8da"
+    },
+    "gate-log.txt": {
+      "bytes": 2826,
+      "sha256": "69c10333a76ae5141dff5ed3e1400155bda57c90b772db110dde9b67edc108d8"
+    },
+    "hvac-egress-capture.log": {
+      "bytes": 239,
+      "sha256": "2d89628a2853a071309d08f345ca9e877f55fba88bf4e6129ab861f1e094c22e"
+    },
+    "hvac-egress-decode.log": {
+      "bytes": 136,
+      "sha256": "2faa13b0e6c98d922527cef09306b24303e1287c3e3726230db891aecd04f019"
+    },
+    "hvac-egress.pcap": {
+      "bytes": 1754,
+      "sha256": "1179f5e840011e4b23522965af4400c3347ca73db86fdf6874c27e23b64555ab"
+    },
+    "hvac-egress.txt": {
+      "bytes": 3051,
+      "sha256": "c3ca422210be4b0e71f27fad21aec2d79211e9a30865c5515710e3630366b232"
+    },
+    "hvac-post-egress-capture.log": {
+      "bytes": 238,
+      "sha256": "409051c07ba87a844b111d4f0b5f6c95832e64b44f743fc87337eacb1e8f7b71"
+    },
+    "hvac-post-egress.pcap": {
+      "bytes": 472,
+      "sha256": "f48e199832bd7b107dc2d2946249410400677d634a97fa6c7f3166d80087f0b5"
+    },
+    "hvac-server.log": {
+      "bytes": 34,
+      "sha256": "c6957908bb9c1b07228b63e635381ad0dcdaec9ee1db07e2c33364b9490edf6d"
+    },
+    "initial-namespaces.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "installed-initial.rules": {
+      "bytes": 558,
+      "sha256": "2b2dc6dbf8e3915d14688f604f8123b42cc44109c832bafaab059770f325a229"
+    },
+    "installed-revoked.rules": {
+      "bytes": 554,
+      "sha256": "db04efb664e0c1b2de6d0d30cf23abe7f9f8bd0a50783787fedd6bf976ea86e6"
+    },
+    "kernel-counters.rules": {
+      "bytes": 781,
+      "sha256": "84dd6e79f8fd14c09381b9ddb47b0b108092bd036b6e8c7f72557a80d06d4899"
+    },
+    "kernel-counters.txt": {
+      "bytes": 905,
+      "sha256": "9fc657fe8253c618028d50ee2f8ba6a5af71f5eb5c23031e002ddb16f8bed53b"
+    },
+    "kernel-final.rules": {
+      "bytes": 554,
+      "sha256": "db04efb664e0c1b2de6d0d30cf23abe7f9f8bd0a50783787fedd6bf976ea86e6"
+    },
+    "nvr-egress-capture.log": {
+      "bytes": 238,
+      "sha256": "4f375e892a6cb44c03513a43d9d3ef3e7a1e1465411eaf4a314c844469ee6605"
+    },
+    "nvr-egress-decode.log": {
+      "bytes": 135,
+      "sha256": "f404519888c3b306a0730d3e5364169367d7de24cf197a8e9305d762d8a97dec"
+    },
+    "nvr-egress.pcap": {
+      "bytes": 2654,
+      "sha256": "17318c67f6a306da6e8771df8f7aef6be6ed8c574c9adbd7e6ee99618d391783"
+    },
+    "nvr-egress.txt": {
+      "bytes": 4810,
+      "sha256": "3c5ee1f4e9ab0f84010fdb0e941760b22890a8a5158cda8e82cbf9de6372d00e"
+    },
+    "nvr-server.log": {
+      "bytes": 33,
+      "sha256": "52e0da895e9db3e7b30b7f81e8cea489fc9bbaf4deb00f7e6b53783e8133e836"
+    },
+    "policy-events.txt": {
+      "bytes": 927,
+      "sha256": "e9372b88ed64fea08542841ba355fbfd3f200473353c2f4abd00bed3dde9e0c1"
+    },
+    "report.json": {
+      "bytes": 1461,
+      "sha256": "3ca6ab50a37a4c1ea3b317c5981c572a5528b7afddda9a8258002133b840e66a"
+    },
+    "revocation-barrier-us.txt": {
+      "bytes": 17,
+      "sha256": "818a3b80082378f37453830d721de3ffea6851f0bc09002d364103978c67ddba"
+    },
+    "revocation-timings.json": {
+      "bytes": 661,
+      "sha256": "3c325adf10807ec23fd026c3cf5f46ec320d25e98fc3f8e2a02c9292a2065e03"
+    },
+    "revoked-firewall-rules.txt": {
+      "bytes": 905,
+      "sha256": "a6b0068d6bf920de81c883fa7efb07efdf8cf032995b008dff21e6ef251e36c0"
+    },
+    "tamper-test.log": {
+      "bytes": 667,
+      "sha256": "4f51dd2ca260e0793421d1df5db2f127238d0650a414e30e05d694d16a1e1220"
+    },
+    "test-key-disclosure.txt": {
+      "bytes": 109,
+      "sha256": "a25aa9d9091113cb9e0a74dbf1ac43d93356e5e624bb0a6d961318ba116e078a"
+    },
+    "tv-active-flow.jsonl": {
+      "bytes": 4297,
+      "sha256": "bb3441c5cd51c7b675e616bd73af5b3b2a155b0fababb034a80ddfa6fa049492"
+    },
+    "tv-flow-ready.txt": {
+      "bytes": 17,
+      "sha256": "1bcd307f0c52e580b58c7dab02c35611ceb173f0cae1c2049c73e24d3f405430"
+    },
+    "tv-flow-stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "tv-flow-stop.flag": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "tv-ingress-capture.log": {
+      "bytes": 237,
+      "sha256": "a993062f7b753a01a5de5ef9d2f08123b3995c1e94d5f55705d63ac5eed989a6"
+    },
+    "tv-ingress-decode.log": {
+      "bytes": 135,
+      "sha256": "4897a9a90b42894f34f6355c29dc7f74ee71f3a00878c2cd1746224f0e0ed19c"
+    },
+    "tv-ingress.pcap": {
+      "bytes": 3594,
+      "sha256": "4a7369cff5101b04769ae6ca031dc5e4e04ea8ee51a4d31b7b6ddfd5bcaae60b"
+    },
+    "tv-ingress.txt": {
+      "bytes": 6543,
+      "sha256": "f7a4116355d4329740fd767a0d9d43582262dd1b7e15ea2e77a64583d75ef4e5"
+    }
+  }
+}
