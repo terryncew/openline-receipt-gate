@@ -25,7 +25,7 @@ from olp_gate.crypto import (
     verify_olp_signature,
 )
 
-from examples.independent_receiver_kit.formats import assess, decode_call, parse_head
+from examples.independent_receiver_kit import formats
 
 
 _ROOTS = ("owner_id", "owner_key", "slot_id", "receiver_id", "outcome_key")
@@ -84,8 +84,9 @@ def _policy(value: Any) -> dict[str, Any]:
     return value
 
 
-def verify(state: str | Path, config: Mapping[str, Any], mode: str) -> dict[str, Any]:
+def verify(state: str | Path, config: Mapping[str, Any], mode: str, codec=None) -> dict[str, Any]:
     """Return a machine-readable verdict; no private key or receiver import."""
+    codec = codec or formats
     counts = {"decisions": 0, "allows": 0, "denies": 0, "authority_accepts": 0,
               "history": 0, "documents": 0, "consumed": 0}
     result: dict[str, Any] = {
@@ -99,7 +100,7 @@ def verify(state: str | Path, config: Mapping[str, Any], mode: str) -> dict[str,
         ],
     }
     try:
-        _require(mode in {"openline", "conventional"}, "mode_invalid")
+        codec._mode(mode)
         rows = _snapshot(state)
         _require(len(rows["settings"]) == 1, "settings_row_count_invalid")
         settings = rows["settings"][0]
@@ -111,6 +112,7 @@ def verify(state: str | Path, config: Mapping[str, Any], mode: str) -> dict[str,
         # Local administration may have changed policy after the last request.
         _policy(saved_config["policy"])
 
+        quarantined = False
         history: list[dict[str, Any]] = []
         documents: dict[str, dict[str, str]] = {}
         consumed: dict[str, dict[str, str]] = {}
@@ -146,23 +148,28 @@ def verify(state: str | Path, config: Mapping[str, Any], mode: str) -> dict[str,
             _require(decision["documents_before"] == len(documents), "decision_before_count_mismatch")
             verdict = decision["verdict"]
 
+            if verdict in {"ACCEPT","ALLOW"}:
+                _require(not quarantined,"admission_after_fork_quarantine")
             if verdict == "ACCEPT":
                 _require(route == "/authority", "authority_accept_route_invalid")
-                parsed = parse_head(mode, request, historical_config, at)
+                parsed = codec.parse_head(mode, request, historical_config, at)
                 if head is not None and parsed["hash"] == head["hash"]:
                     _require(decision["reason"] == "authority_duplicate_no_refresh",
                              "authority_duplicate_reason_mismatch")
                     # A repeated credential never changes accepted_at or expiry.
                 else:
-                    _require(parsed["seq"] == (head["seq"] + 1 if head else 1),
-                             "authority_sequence_invalid")
-                    _require(parsed["prev"] == (head["hash"] if head else None),
-                             "authority_predecessor_invalid")
-                    _require(head is not None or parsed["state"] == "ACTIVE",
-                             "initial_authority_not_active")
-                    if parsed["state"] == "REVOKED" and head is not None:
-                        _require(parsed["mandate_hash"] == head["mandate_hash"],
-                                 "revocation_target_mismatch")
+                    if hasattr(codec,"transition"):
+                        codec.transition(head,parsed)
+                    else:
+                        _require(parsed["seq"] == (head["seq"] + 1 if head else 1),
+                                 "authority_sequence_invalid")
+                        _require(parsed["prev"] == (head["hash"] if head else None),
+                                 "authority_predecessor_invalid")
+                        _require(head is not None or parsed["state"] == "ACTIVE",
+                                 "initial_authority_not_active")
+                        if parsed["state"] == "REVOKED" and head is not None:
+                            _require(parsed["mandate_hash"] == head["mandate_hash"],
+                                     "revocation_target_mismatch")
                     _require(decision["reason"] == "authority_admitted", "authority_reason_mismatch")
                     head, packet = parsed, request
                     history.append({"seq": parsed["seq"], "hash": parsed["hash"],
@@ -179,11 +186,11 @@ def verify(state: str | Path, config: Mapping[str, Any], mode: str) -> dict[str,
                 _require(head["state"] == "ACTIVE", "allow_after_revocation")
                 _require(0 <= at - head["issued"] < policy["freshness_seconds"]
                          and at < head["expires"], "allow_with_stale_authority")
-                claims = decode_call(mode, request["proof"], head["subject"], historical_config, at)
+                claims = codec.decode_call(mode, request["proof"], head["subject"], historical_config, at)
                 _require(claims["head_hash"] == head["hash"], "allow_head_hash_mismatch")
                 _require(claims["policy_hash"] == _digest(policy), "allow_policy_hash_mismatch")
                 effect, document = claims["effect"], claims["document"]
-                _require(not assess(mode, packet, effect, at), "allow_effect_outside_mandate")
+                _require(not codec.assess(mode, packet, effect, at), "allow_effect_outside_mandate")
                 _require(isinstance(document, dict) and set(document) == {"record_id", "text"},
                          "allow_document_shape_invalid")
                 record_id = document["record_id"]
@@ -213,6 +220,16 @@ def verify(state: str | Path, config: Mapping[str, Any], mode: str) -> dict[str,
 
             elif verdict == "DENY":
                 _require(decision["effect_at"] is None, "denial_effect_time_invalid")
+                if hasattr(codec,"transition") and decision["reason"]=="authority_fork_quarantined":
+                    if not quarantined:
+                        candidate=codec.parse_head(mode,request,historical_config,at)
+                        try:
+                            codec.transition(head,candidate)
+                        except ValueError as exc:
+                            _require(str(exc)=="authority_fork_quarantined","invalid_quarantine_reason")
+                        else:
+                            raise ValueError("quarantine_without_fork")
+                    quarantined=True
                 counts["denies"] += 1
             else:
                 raise ValueError("decision_verdict_invalid")
@@ -223,6 +240,7 @@ def verify(state: str | Path, config: Mapping[str, Any], mode: str) -> dict[str,
             _require(decision["documents_after"] == len(documents), "decision_after_count_mismatch")
             counts["decisions"] += 1
 
+        _require(bool(saved_config.get("_quarantined",False))==quarantined,"quarantine_state_mismatch")
         _require(sorted(rows["history"], key=lambda row: row["seq"]) == history,
                  "durable_history_differs_from_signed_replay")
         _require(sorted(rows["documents"], key=lambda row: row["id"])

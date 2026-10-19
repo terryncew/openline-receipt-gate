@@ -13,7 +13,7 @@ import time
 sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 from olp_gate.crypto import olp_canonical_json, public_key_hex, sha256_hex, sign_olp_body, strict_json_loads
-from examples.independent_receiver_kit.formats import parse_head, decode_call, assess
+from examples.independent_receiver_kit import formats
 
 
 def canonical(value):return olp_canonical_json(value).decode('ascii')
@@ -22,8 +22,9 @@ def digest(value):return sha256_hex(olp_canonical_json(value))
 
 class Receiver:
     """Config, key and SQLite write access belong only to the receiving organization."""
-    def __init__(self,path,config,key,mode,clock=None):
-        if mode not in ('openline','conventional'):raise ValueError('mode_invalid')
+    def __init__(self,path,config,key,mode,clock=None,codec=None):
+        self.codec = codec or formats
+        self.codec._mode(mode)
         if public_key_hex(key)!=config['outcome_key']:raise ValueError('receiver_key_not_pinned')
         self.path,self.config,self.key,self.mode=Path(path),config,key,mode
         self.clock=clock or (lambda:int(time.time()))
@@ -66,23 +67,27 @@ class Receiver:
             config=json.loads(c.execute('SELECT body FROM settings').fetchone()[0])
             before=c.execute('SELECT COUNT(*) FROM documents').fetchone()[0]
             history=c.execute('SELECT * FROM history ORDER BY seq').fetchall()
-            head=parse_head(self.mode,json.loads(history[-1]['packet']),config,history[-1]['accepted_at']) if history else None
+            head=self.codec.parse_head(self.mode,json.loads(history[-1]['packet']),config,history[-1]['accepted_at']) if history else None
             verdict,reason,subject='DENY','unsupported_route',None
             effect_at=None
             # Refused attempts have a signed durable decision and zero mutation.
             c.execute('SAVEPOINT effect')
             try:
+                if config.get('_quarantined',False):raise ValueError('authority_fork_quarantined')
                 if path=='/authority':
-                    parsed=parse_head(self.mode,request,config,now)
+                    parsed=self.codec.parse_head(self.mode,request,config,now)
                     if parsed['issued']>now:raise ValueError('future_authority')
                     if head and parsed['hash']==head['hash']:
                         verdict,reason='ACCEPT','authority_duplicate_no_refresh'
                     else:
-                        if parsed['seq']!=(head['seq']+1 if head else 1) or parsed['prev']!=(head['hash'] if head else None):
-                            raise ValueError('authority_history_gap_or_rollback')
-                        if not head and parsed['state']!='ACTIVE':raise ValueError('initial_authority_not_active')
-                        if parsed['state']=='REVOKED' and head and parsed['mandate_hash']!=head['mandate_hash']:
-                            raise ValueError('revocation_target_mismatch')
+                        if hasattr(self.codec,'transition'):
+                            self.codec.transition(head,parsed)
+                        else:
+                            if parsed['seq']!=(head['seq']+1 if head else 1) or parsed['prev']!=(head['hash'] if head else None):
+                                raise ValueError('authority_history_gap_or_rollback')
+                            if not head and parsed['state']!='ACTIVE':raise ValueError('initial_authority_not_active')
+                            if parsed['state']=='REVOKED' and head and parsed['mandate_hash']!=head['mandate_hash']:
+                                raise ValueError('revocation_target_mismatch')
                         c.execute('INSERT INTO history VALUES(?,?,?,?)',(parsed['seq'],parsed['hash'],canonical(request),now))
                         head=parsed;verdict,reason='ACCEPT','authority_admitted'
                 elif path=='/submit':
@@ -93,12 +98,12 @@ class Receiver:
                     freshness=config['policy']['freshness_seconds']
                     if not 0<=now-head['issued']<freshness or now>=head['expires']:
                         raise ValueError('authority_history_stale')
-                    claims=decode_call(self.mode,request['proof'],head['subject'],config,now)
+                    claims=self.codec.decode_call(self.mode,request['proof'],head['subject'],config,now)
                     subject=claims['sub']
                     if claims['head_hash']!=head['hash']:raise ValueError('authority_head_changed')
                     if claims['policy_hash']!=digest(config['policy']):raise ValueError('receiver_policy_changed')
                     effect,document=claims['effect'],claims['document']
-                    reasons=assess(self.mode,json.loads(history[-1]['packet']),effect,now)
+                    reasons=self.codec.assess(self.mode,json.loads(history[-1]['packet']),effect,now)
                     if reasons:raise ValueError(','.join(reasons))
                     if set(document)!={'record_id','text'} or not isinstance(document['record_id'],str) or not document['record_id']:
                         raise ValueError('document_shape_invalid')
@@ -122,7 +127,10 @@ class Receiver:
                 reason=str(exc) or type(exc).__name__
                 # Rollback must also restore the observed head if validation failed.
                 history=c.execute('SELECT * FROM history ORDER BY seq').fetchall()
-                head=parse_head(self.mode,json.loads(history[-1]['packet']),config,history[-1]['accepted_at']) if history else None
+                head=self.codec.parse_head(self.mode,json.loads(history[-1]['packet']),config,history[-1]['accepted_at']) if history else None
+            if reason=='authority_fork_quarantined' and hasattr(self.codec,'transition'):
+                config['_quarantined']=True
+                c.execute('UPDATE settings SET body=?',(canonical(config),))
             c.execute('RELEASE effect')
             after=c.execute('SELECT COUNT(*) FROM documents').fetchone()[0]
             seq=c.execute('SELECT COALESCE(MAX(seq),0)+1 FROM decisions').fetchone()[0]

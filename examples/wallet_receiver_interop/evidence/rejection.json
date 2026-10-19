@@ -1,0 +1,10 @@
+{
+  "wallet_verify": true,
+  "signature": [
+    true,
+    null
+  ],
+  "kit": "head_packet_shape_invalid",
+  "initial_harness_error": "validate_mandate_authorization() missing 3 required keyword-only arguments: 'expected_slot_id', 'expected_owner_id', and 'expected_public_key'",
+  "native_corrected_invocation": "mandate_authorization_shape_invalid"
+}

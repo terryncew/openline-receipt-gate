@@ -1,0 +1,8 @@
+{
+  "final_run": "run-003",
+  "files_checked": 551,
+  "mismatches": [],
+  "case_count": 48,
+  "elapsed_seconds": 25.789388185999996,
+  "prior_run_002_manifest_discrepancy": "wallet-jwt/policy/state.sqlite3 changed after delayed connection cleanup; superseded, original manifest preserved"
+}
