@@ -1,0 +1,79 @@
+// Minimal wire-compatible subset of the Envoy ext_authz v3 API.
+//
+// Field numbers match api/envoy/service/auth/v3/*.proto exactly
+// (envoy v1.39.3). CRITICAL: in CheckResponse, ok_response is field 3
+// and denied_response is field 2 (verified against the real proto;
+// getting this wrong silently drops ok_response headers).
+// Unknown fields sent by the real Envoy are ignored on parse.
+
+syntax = "proto3";
+
+package envoy.service.auth.v3;
+
+message CheckRequest {
+  AttributeContext attributes = 1;
+}
+
+message AttributeContext {
+  message HttpRequest {
+    string id = 1;
+    string method = 2;
+    map<string, string> headers = 3;
+    string path = 4;
+    string host = 5;
+    string scheme = 6;
+    string query = 7;
+    string fragment = 8;
+    string protocol = 10;
+    string body = 11;
+    bytes raw_body = 12;
+  }
+  message Request {
+    HttpRequest http = 2;
+  }
+  Request request = 4;
+  map<string, string> context_extensions = 10;
+}
+
+// google.rpc.Status, inlined to avoid the google/rpc import chain.
+message RpcStatus {
+  int32 code = 1;
+  string message = 2;
+}
+
+message HeaderValue {
+  string key = 1;
+  string value = 2;
+}
+
+message HeaderValueOption {
+  HeaderValue header = 1;
+  bool append = 2;
+}
+
+// envoy.type.v3.HttpStatus, code-only subset.
+message HttpStatus {
+  int32 code = 1;
+}
+
+message OkHttpResponse {
+  repeated HeaderValueOption headers = 2;
+}
+
+message DeniedHttpResponse {
+  HttpStatus status = 1;
+  repeated HeaderValueOption headers = 2;
+  string body = 3;
+}
+
+message CheckResponse {
+  RpcStatus status = 1;
+  oneof http_response {
+    DeniedHttpResponse denied_response = 2;
+    OkHttpResponse ok_response = 3;
+  }
+}
+
+service Authorization {
+  rpc Check(CheckRequest) returns (CheckResponse);
+}

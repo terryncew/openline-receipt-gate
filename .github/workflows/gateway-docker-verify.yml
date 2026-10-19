@@ -1,0 +1,113 @@
+# OPENLINE-RECEIVER-001 Priority 1: verify the Docker Compose gateway path
+# FOR REAL on a GitHub Actions ubuntu-latest runner (has Docker; the
+# build VM does not).
+#
+# What it does:
+#   1. Checks out the branch that triggered the run.
+#   2. `docker compose --profile openline up --build -d` (AUTH_MODE=openline).
+#   3. Waits for Envoy on 127.0.0.1:8080.
+#   4. Runs gateway/ci/docker_verify.py: provisions an agent, sends
+#      signed transfers through Envoy, and asserts the HTTP path
+#      (200 / tampered-403 / replay-403), ACTUAL ledger deltas
+#      (+/- exactly 100 cents), receipt verification, persistence
+#      across mockapi restart, revocation, and full-stack restart.
+#   5. Uploads container logs + verifier output as artifacts.
+#   6. `docker compose down` (always).
+#
+# Trigger: workflow_dispatch and pushes to the receiver branch.
+# No secrets, no paid APIs, no real payment processing — the ledger
+# is fully simulated.
+
+name: gateway-docker-verify
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [experiment/openline-receiver-001]
+    paths:
+      - .github/workflows/gateway-docker-verify.yml
+      - gateway/ci/docker_verify.py
+      - gateway/compose/**
+
+permissions:
+  contents: read
+
+jobs:
+  docker-verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Build and start the gateway stack
+        working-directory: gateway/compose
+        env:
+          AUTH_MODE: openline
+        run: |
+          # Clean slate: remove stale networks/volumes from earlier runs.
+          # Docker reuses existing networks; a network created with
+          # internal:true (before the fix) silently drops port publishing
+          # even after the compose file is corrected.
+          docker compose --profile openline down --volumes 2>/dev/null || true
+          docker network rm compose_gateway 2>/dev/null || true
+          docker compose --profile openline up --build -d
+          docker compose --profile openline ps
+
+      - name: Wait for Envoy health
+        working-directory: gateway/compose
+        run: |
+          # Host port publishing is broken on this runner (HostConfig has
+          # the binding but NetworkSettings.Ports is empty — daemon not
+          # applying NAT). Bypass via the container's bridge IP, which the
+          # host can reach directly.
+          ENVOY_IP=$(docker inspect compose-envoy-1 --format '{{.NetworkSettings.Networks.compose_gateway.IPAddress}}')
+          echo "envoy bridge IP: $ENVOY_IP"
+          echo "ENVOY_URL=http://$ENVOY_IP:8080" >> $GITHUB_ENV
+          for i in $(seq 1 36); do
+            if curl -sf -m 3 http://$ENVOY_IP:8080/health; then
+              echo; echo "envoy healthy after ~$((i * 5))s"
+              break
+            fi
+            sleep 5
+          done
+          curl -sf -m 5 http://$ENVOY_IP:8080/health || {
+            echo "=== DEBUG: envoy unreachable, dumping state ==="
+            docker compose --profile openline ps -a
+            docker inspect compose-envoy-1 --format 'ports={{.NetworkSettings.Ports}} hostconfig={{.HostConfig.PortBindings}}' || true
+            echo "--- authz log tail ---"
+            docker compose --profile openline logs --no-color --tail=30 authz || true
+            exit 1
+          }
+
+      - name: Install verifier dependencies
+        run: python3 -m pip install --break-system-packages -q cryptography grpcio protobuf
+
+      - name: Run Docker verification
+        run: |
+          set -o pipefail
+          mkdir -p /tmp/gwlogs
+          python3 gateway/ci/docker_verify.py 2>&1 | tee /tmp/gwlogs/verify-output.log
+
+      - name: Capture container logs
+        if: always()
+        working-directory: gateway/compose
+        run: |
+          mkdir -p /tmp/gwlogs
+          docker compose --profile openline logs --no-color > /tmp/gwlogs/compose.log 2>&1 || true
+          docker compose --profile openline ps >> /tmp/gwlogs/compose.log 2>&1 || true
+          echo "--- log sizes ---"
+          wc -c /tmp/gwlogs/*
+
+      - name: Upload logs and verifier output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gateway-docker-logs
+          path: /tmp/gwlogs/
+          retention-days: 14
+
+      - name: Tear down the stack
+        if: always()
+        working-directory: gateway/compose
+        run: docker compose --profile openline down

@@ -1,0 +1,64 @@
+{
+  "generated_at": "2026-10-11T07:21:48Z",
+  "note": "localhost VM; authz_server + mock_api subprocesses; Envoy bypassed (see EVIDENCE-races.md).",
+  "standing_endpoint_rtt_ms": {
+    "n": 100,
+    "mean": 0.932,
+    "p50": 0.605,
+    "p99": 7.197,
+    "max": 7.197
+  },
+  "standing_to_commit_ms": {
+    "n": 30,
+    "mean": 2.937,
+    "p50": 1.368,
+    "p99": 43.44,
+    "max": 43.44
+  },
+  "post_rtt_ms_check_on": {
+    "n": 50,
+    "p50": 2.769
+  },
+  "post_rtt_ms_check_off": {
+    "n": 20,
+    "p50": 2.524
+  },
+  "race_rounds": [
+    {
+      "round": 0,
+      "pre_attempts": 0,
+      "pre_executed": 0,
+      "post_attempts": 0,
+      "post_executed": 0,
+      "straddle_attempts": 20,
+      "straddle_executed": 7,
+      "straddle_refused": 7,
+      "straddle_errored": 6,
+      "revoke_subprocess_ms": 75.4
+    },
+    {
+      "round": 1,
+      "pre_attempts": 0,
+      "pre_executed": 0,
+      "post_attempts": 0,
+      "post_executed": 0,
+      "straddle_attempts": 20,
+      "straddle_executed": 7,
+      "straddle_refused": 7,
+      "straddle_errored": 6,
+      "revoke_subprocess_ms": 81.1
+    },
+    {
+      "round": 2,
+      "pre_attempts": 0,
+      "pre_executed": 0,
+      "post_attempts": 0,
+      "post_executed": 0,
+      "straddle_attempts": 20,
+      "straddle_executed": 7,
+      "straddle_refused": 7,
+      "straddle_errored": 6,
+      "revoke_subprocess_ms": 107.5
+    }
+  ]
+}
