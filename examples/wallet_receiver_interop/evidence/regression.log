@@ -1,0 +1,37 @@
+test_01_external_owner_provider_succession (examples.independent_receiver_kit.test_receiver.ConventionalTests.test_01_external_owner_provider_succession) ... ok
+test_02_forged_signatures (examples.independent_receiver_kit.test_receiver.ConventionalTests.test_02_forged_signatures) ... ok
+test_03_unknown_principal (examples.independent_receiver_kit.test_receiver.ConventionalTests.test_03_unknown_principal) ... ok
+test_04_wrong_subject_or_audience (examples.independent_receiver_kit.test_receiver.ConventionalTests.test_04_wrong_subject_or_audience) ... ok
+test_05_changed_target_or_action_parameters (examples.independent_receiver_kit.test_receiver.ConventionalTests.test_05_changed_target_or_action_parameters) ... ok
+test_06_expired_call (examples.independent_receiver_kit.test_receiver.ConventionalTests.test_06_expired_call) ... ok
+test_07_revoked_and_old_history_cannot_reinstall (examples.independent_receiver_kit.test_receiver.ConventionalTests.test_07_revoked_and_old_history_cannot_reinstall) ... ok
+test_08_missing_or_stale_history (examples.independent_receiver_kit.test_receiver.ConventionalTests.test_08_missing_or_stale_history) ... ok
+test_09_replay (examples.independent_receiver_kit.test_receiver.ConventionalTests.test_09_replay) ... ok
+test_10_changed_receiver_policy (examples.independent_receiver_kit.test_receiver.ConventionalTests.test_10_changed_receiver_policy) ... ok
+test_11_unauthorized_successor (examples.independent_receiver_kit.test_receiver.ConventionalTests.test_11_unauthorized_successor) ... ok
+test_12_unguarded_http_route (examples.independent_receiver_kit.test_receiver.ConventionalTests.test_12_unguarded_http_route) ... ok
+test_13_privileged_database_bypass_out_of_scope (examples.independent_receiver_kit.test_receiver.ConventionalTests.test_13_privileged_database_bypass_out_of_scope) ... ok
+test_14_concurrent_replay (examples.independent_receiver_kit.test_receiver.ConventionalTests.test_14_concurrent_replay) ... ok
+test_15_zero_value_and_request_binding (examples.independent_receiver_kit.test_receiver.ConventionalTests.test_15_zero_value_and_request_binding) ... ok
+test_16_duplicate_history_never_renews_freshness (examples.independent_receiver_kit.test_receiver.ConventionalTests.test_16_duplicate_history_never_renews_freshness) ... ok
+test_01_external_owner_provider_succession (examples.independent_receiver_kit.test_receiver.OpenLineTests.test_01_external_owner_provider_succession) ... ok
+test_02_forged_signatures (examples.independent_receiver_kit.test_receiver.OpenLineTests.test_02_forged_signatures) ... ok
+test_03_unknown_principal (examples.independent_receiver_kit.test_receiver.OpenLineTests.test_03_unknown_principal) ... ok
+test_04_wrong_subject_or_audience (examples.independent_receiver_kit.test_receiver.OpenLineTests.test_04_wrong_subject_or_audience) ... ok
+test_05_changed_target_or_action_parameters (examples.independent_receiver_kit.test_receiver.OpenLineTests.test_05_changed_target_or_action_parameters) ... ok
+test_06_expired_call (examples.independent_receiver_kit.test_receiver.OpenLineTests.test_06_expired_call) ... ok
+test_07_revoked_and_old_history_cannot_reinstall (examples.independent_receiver_kit.test_receiver.OpenLineTests.test_07_revoked_and_old_history_cannot_reinstall) ... ok
+test_08_missing_or_stale_history (examples.independent_receiver_kit.test_receiver.OpenLineTests.test_08_missing_or_stale_history) ... ok
+test_09_replay (examples.independent_receiver_kit.test_receiver.OpenLineTests.test_09_replay) ... ok
+test_10_changed_receiver_policy (examples.independent_receiver_kit.test_receiver.OpenLineTests.test_10_changed_receiver_policy) ... ok
+test_11_unauthorized_successor (examples.independent_receiver_kit.test_receiver.OpenLineTests.test_11_unauthorized_successor) ... ok
+test_12_unguarded_http_route (examples.independent_receiver_kit.test_receiver.OpenLineTests.test_12_unguarded_http_route) ... ok
+test_13_privileged_database_bypass_out_of_scope (examples.independent_receiver_kit.test_receiver.OpenLineTests.test_13_privileged_database_bypass_out_of_scope) ... ok
+test_14_concurrent_replay (examples.independent_receiver_kit.test_receiver.OpenLineTests.test_14_concurrent_replay) ... ok
+test_15_zero_value_and_request_binding (examples.independent_receiver_kit.test_receiver.OpenLineTests.test_15_zero_value_and_request_binding) ... ok
+test_16_duplicate_history_never_renews_freshness (examples.independent_receiver_kit.test_receiver.OpenLineTests.test_16_duplicate_history_never_renews_freshness) ... ok
+
+----------------------------------------------------------------------
+Ran 32 tests in 8.341s
+
+OK
