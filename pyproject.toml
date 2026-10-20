@@ -15,6 +15,7 @@ model-swap = [
 
 [project.scripts]
 olp-gate = "olp_gate.command:main"
+openline = "olp_gate.handoff.adoption:main"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
