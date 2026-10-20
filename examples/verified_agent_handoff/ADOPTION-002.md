@@ -4,7 +4,7 @@
 
 ## Why ADOPTION-001 alone was unsafe
 
-With a worker under the **same OS user** as the controller, `standing.json` was an unsigned, writable file. A revoked state could be rewritten to its initial `{"revoked":false,"sequence":0}` and `openline handoff continue --agent codex` would issue its original informational packet. `tests/test_adoption_002_launch.py::LegacyStandingAttack` reproduces that failure unchanged. The old packet is **not a permission to launch a process**. ADOPTION-002 marks the legacy packet `authority_verified:false`, `permission_standing:UNAUTHENTICATED_LEGACY_SHARED_UID`, and `launch_authority:false`; its insecure standing file is never accepted by the protected launch path.
+With a worker under the **same OS user** as the controller, `standing.json` was an unsigned, writable file. A revoked state could be rewritten to its initial `{"revoked":false,"sequence":0}` and `openline handoff continue --agent codex` would issue its original informational packet. `tests/adoption_002_launch_checks.py::LegacyStandingAttack` reproduces that failure unchanged. The old packet is **not a permission to launch a process**. ADOPTION-002 marks the legacy packet `authority_verified:false`, `permission_standing:UNAUTHENTICATED_LEGACY_SHARED_UID`, and `launch_authority:false`; its insecure standing file is never accepted by the protected launch path.
 
 ## Supported execution model and owner root
 
@@ -43,7 +43,7 @@ A mutation in the original repository after snapshot but before child creation i
 ```sh
 python3 -m pip install -e .
 python3 -m unittest tests.test_adoption_handoff -v
-sudo env PATH="$PATH" PYTHONPATH="$PWD" python3 -m unittest tests.test_adoption_002_launch -v
+sudo env PATH="$PATH" PYTHONPATH="$PWD" python3 -m unittest tests.adoption_002_launch_checks -v
 openline handoff launch --help
 ```
 
