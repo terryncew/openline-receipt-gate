@@ -160,7 +160,7 @@ def continue_to(repo,control,agent):
             "permission_standing":"CURRENT_FOR_PACKET_ONLY",
             "runtime_permission":"NONE",
             "handoff_sha256":digest(packet),
-            "warning":"This packet does not constrain Codex/Claude shell or filesystem access."}
+            "warning":"This packet does not constrain unrestricted Codex/Claude shell, filesystem, or network access."}
     name=control/("continuation-"+agent+".json")
     write_new(name,output)
     return {"verdict":"CONTINUATION_PACKET_VERIFIED",
