@@ -134,8 +134,50 @@ def _lock(control):
     fcntl.flock(fd,fcntl.LOCK_EX)
     return fd
 
+def _checked_tests(repo,approval,worker,head,files):
+    """Run only approved Python unittest names from an immutable root snapshot.
+
+    No model calls. Unit-test code can still make arbitrary permitted syscalls
+    as worker UID: only use preapproved synthetic repositories.
+    """
+    results=[]
+    stage=Path(tempfile.mkdtemp(prefix="openline-tests-"))
+    os.chmod(stage,0o755)
+    try:
+        _snapshot_copy(repo,{"git_commit":head,"file_sha256":files},stage)
+        for item in approval["tests"]:
+            if not isinstance(item,dict) or set(item)!={"name","argv"}:
+                raise ValueError("test_definition_invalid")
+            args=item["argv"]
+            if (not isinstance(args,list) or len(args)<4
+                    or args[0] not in ("python3","python")
+                    or args[1:3]!=["-m","unittest"]
+                    or any(not isinstance(t,str) or not t or t.startswith("-") for t in args[3:])):
+                raise ValueError("unapproved_test_command")
+            def drop():
+                os.setgroups([]);os.setgid(worker.pw_gid);os.setuid(worker.pw_uid)
+            try:
+                result=subprocess.run([sys.executable,*args[1:]],cwd=stage/"project",
+                                      stdin=subprocess.DEVNULL,stdout=subprocess.PIPE,
+                                      stderr=subprocess.PIPE,timeout=10,
+                                      preexec_fn=drop,start_new_session=True,
+                                      env={"PATH":"/usr/bin:/bin",
+                                           "PYTHONDONTWRITEBYTECODE":"1",
+                                           "HOME":"/tmp"})
+                code=result.returncode
+                output=result.stdout+result.stderr
+            except subprocess.TimeoutExpired as exc:
+                code=124
+                output=(exc.stdout or b"")+(exc.stderr or b"")
+            results.append({"name":item["name"],"argv":args,"exit_code":code,
+                            "output_sha256":hash_bytes(output),
+                            "standing":"RECEIVER_OBSERVED_EXIT_ONLY"})
+        return results
+    finally:
+        shutil.rmtree(stage,ignore_errors=True)
+
 def owner_init(repo,approval,control,pin,uid):
-    _root_only();_worker(uid)
+    _root_only();worker=_worker(uid)
     repo=Path(repo).resolve()
     ctl=Path(os.path.abspath(control))
     pin=Path(os.path.abspath(pin))
@@ -146,6 +188,7 @@ def owner_init(repo,approval,control,pin,uid):
     _safe_admin_path(ctl.parent)
     auth,approval_sha=read_approval(approval)
     head,files=snapshot(repo)
+    observed_tests=_checked_tests(repo,auth,worker,head,files)
     key=Ed25519PrivateKey.generate()
     ctl.mkdir(mode=0o700)
     (ctl/"receipts").mkdir(mode=0o700)
@@ -159,6 +202,7 @@ def owner_init(repo,approval,control,pin,uid):
             "approved_task_id":auth["task_id"],
             "approved_requirements":auth["requirements"],
             "approved_tests":auth["tests"],
+            "receiver_observed_tests":observed_tests,
             "unfinished_asserted":auth["unfinished"],
             "notes_unverified":auth["notes"],
             "approval_sha256":approval_sha,
