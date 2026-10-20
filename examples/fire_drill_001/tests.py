@@ -97,6 +97,7 @@ class FireDrill(unittest.TestCase):
             value=json.loads(raw)
             value["reason"]="forged_admissible_reason"
             c.execute("UPDATE decisions SET body=? WHERE seq=2",(json.dumps(value),))
+        c.close()  # Close SQLite to remove its temporary WAL/-shm sidecars.
         journal=root/"openline"/"events.jsonl"
         entries=[json.loads(line) for line in journal.read_text().splitlines()]
         entries[1]["decision"]=value
