@@ -1,0 +1,57 @@
+name: OPENLINE-FIRE-DRILL-001 $0 independent receiver challenge
+on:
+  pull_request:
+    branches:
+      - feature/adoption-001-native-wallet-handoff-20261019
+    paths:
+      - 'examples/fire_drill_001/**'
+      - '.github/workflows/fire-drill-001.yml'
+permissions:
+  contents: read
+jobs:
+  fire-drill-offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install existing receiver kit; no API clients or model download
+        run: |
+          set -euo pipefail
+          python3 -m pip install -e . -r examples/independent_receiver_kit/requirements.txt
+      - name: Existing competent JWT and OpenLine adversarial controls
+        run: |
+          python3 -m unittest examples.independent_receiver_kit.test_receiver -v
+      - name: New $0 drill, adversarial evidence and manifest tests
+        run: |
+          python3 -m unittest examples.fire_drill_001.tests -v
+      - name: Make fresh self-contained evidence and independently verify
+        run: |
+          set -euo pipefail
+          python3 -m examples.fire_drill_001.run --out "$RUNNER_TEMP/fire-drill-001"
+          sum="$(sha256sum "$RUNNER_TEMP/fire-drill-001/MANIFEST.json" | cut -d' ' -f1)"
+          python3 -m examples.fire_drill_001.verify             --bundle "$RUNNER_TEMP/fire-drill-001" --expected-sha256 "$sum"             > "$RUNNER_TEMP/fire-drill-verified.json"
+          python3 - "$RUNNER_TEMP/fire-drill-verified.json" <<'PY'
+          import json,sys
+          d=json.load(open(sys.argv[1]))
+          assert d["verdict"]=="PASS_SCOPED_EVIDENCE",d
+          for name in ("conventional","openline"):
+              assert d["modes"][name]["protected_unauthorized_effects"]==0
+              assert d["modes"][name]["successor_work"]
+              assert d["modes"][name]["unrelated_slot_effects"]==1
+              assert d["modes"][name]["outside_receiver_effects"]==1
+          assert d["modes"]["intentionally_weak"]["protected_unauthorized_effects"]==4
+          print(json.dumps({"verdict":d["verdict"],
+                            "weak_post_revocation_effects":4,
+                            "conventional_post_revocation_effects":0,
+                            "openline_post_revocation_effects":0,
+                            "outside_receiver_effects_per_mode":1,
+                            "successor_work_each_mode":True,
+                            "unrelated_slot_each_mode":True,
+                            "manifest_sha256":d["manifest_sha256"]},sort_keys=True))
+          PY
+          test -s "$RUNNER_TEMP/fire-drill-001/fire-drill-40s.html"
+          tar -C "$RUNNER_TEMP" -czf "$RUNNER_TEMP/fire-drill-001-local-evidence.tar.gz" fire-drill-001
+          sha256sum "$RUNNER_TEMP/fire-drill-001-local-evidence.tar.gz"
+          echo "Evidence is runner-local, not uploaded or published."
