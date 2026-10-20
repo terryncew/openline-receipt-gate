@@ -93,15 +93,18 @@ class FireDrill(unittest.TestCase):
         root=self.clone()
         path=root/"openline"/"state.sqlite3"
         with sqlite3.connect(path) as c:
-            raw=c.execute("SELECT body FROM decisions WHERE seq=4").fetchone()[0]
+            raw=c.execute("SELECT body FROM decisions WHERE seq=2").fetchone()[0]
             value=json.loads(raw)
-            value["verdict"]="ALLOW"
-            c.execute("UPDATE decisions SET body=? WHERE seq=4",(json.dumps(value),))
+            value["reason"]="forged_admissible_reason"
+            c.execute("UPDATE decisions SET body=? WHERE seq=2",(json.dumps(value),))
+        journal=root/"openline"/"events.jsonl"
+        entries=[json.loads(line) for line in journal.read_text().splitlines()]
+        entries[1]["decision"]=value
+        journal.write_text("".join(json.dumps(item)+"\\n" for item in entries))
         reseal(root)
         report=verify(root)
         self.assertEqual(report["verdict"],"BLOCKED")
-        self.assertTrue(any("reported_decision" in str(x) or "signed_receiver" in str(x)
-                            for x in report["errors"]))
+        self.assertTrue(any("signed_receiver" in str(x) for x in report["errors"]),report)
     def test_hidden_external_write_cannot_be_erased_and_resealed(self):
         root=self.clone()
         path=root/"conventional"/"unprotected.sqlite3"
@@ -111,7 +114,6 @@ class FireDrill(unittest.TestCase):
     def test_runner_summary_cannot_substitute_missing_signed_evidence(self):
         root=self.clone()
         (root/"openline"/"state.sqlite3").unlink()
-        reseal(root)
         self.assertEqual(verify(root)["verdict"],"BLOCKED")
     def test_malformed_case_claim_rejected_despite_valid_untrusted_manifest(self):
         root=self.clone()
