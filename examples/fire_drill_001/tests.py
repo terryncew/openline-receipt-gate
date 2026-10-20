@@ -101,7 +101,7 @@ class FireDrill(unittest.TestCase):
         journal=root/"openline"/"events.jsonl"
         entries=[json.loads(line) for line in journal.read_text().splitlines()]
         entries[1]["decision"]=value
-        journal.write_text("".join(json.dumps(item)+"\\n" for item in entries))
+        journal.write_text("".join(json.dumps(item)+"\n" for item in entries))
         reseal(root)
         report=verify(root)
         self.assertEqual(report["verdict"],"BLOCKED")
