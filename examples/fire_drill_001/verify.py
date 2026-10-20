@@ -19,7 +19,7 @@ from examples.independent_receiver_kit.verify import verify as verify_receiver
 MODES=("intentionally_weak","conventional","openline")
 A_POST=("a_new_effect_1","a_reuses_shared_bearer",
         "a_outside_named_http_route","fired_a_after_b_grant")
-SECURE={"approved_a_work":"ALLOW","exact_replay_before_revocation":"DENY",
+SECURE={"owner_grants_a":"ACCEPT","approved_a_work":"ALLOW","exact_replay_before_revocation":"DENY",
         "owner_revokes_a":"ACCEPT","a_new_effect_1":"DENY",
         "a_exact_replay":"DENY","a_reuses_shared_bearer":"DENY",
         "a_outside_named_http_route":"DENY","a_replays_old_grant":"DENY",
@@ -76,7 +76,7 @@ def query(root,mode):
 def verify_mode(root,mode):
     rows,documents=query(root,mode)
     log=[strict_json_loads(line) for line in (root/mode/"events.jsonl").read_text().splitlines()]
-    require(len(log)==len(rows)==13,"missing_duplicate_or_extra_http_decision:"+mode)
+    require(len(log)==len(rows)==14,"missing_duplicate_or_extra_http_decision:"+mode)
     expected=WEAK if mode=="intentionally_weak" else SECURE
     labels=[x["label"] for x in log]
     require(set(labels)==set(expected) and len(labels)==len(expected),"scenario_coverage_invalid:"+mode)
