@@ -4,7 +4,7 @@ Two real independent Receiver Kit codecs and verifiers stay untouched.
 The intentionally weak shared-credential arm is NOT a competitor claim.
 """
 from __future__ import annotations
-from contextlib import contextmanager
+from contextlib import contextmanager,closing
 from datetime import datetime,timezone
 import argparse
 import copy
@@ -48,8 +48,13 @@ def weak_running(root):
         err.close()
 
 def checkpoint(db):
-    with sqlite3.connect(db) as c:
-        c.execute("PRAGMA wal_checkpoint(TRUNCATE)")
+    # The DB, not ephemeral WAL/-shm sidecars, is the portable evidence.
+    # Context-managing sqlite3.Connection only commits; it does NOT close.
+    with closing(sqlite3.connect(db)) as c:
+        status=c.execute("PRAGMA wal_checkpoint(TRUNCATE)").fetchone()
+        if status[0]!=0:
+            raise RuntimeError("sqlite_checkpoint_busy")
+        c.commit()
 
 def _other_authority(mode):
     """A genuinely distinct receiver ID and owner authority slot, same owner."""
