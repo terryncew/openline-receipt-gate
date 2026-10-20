@@ -6,7 +6,7 @@
 
 ## Root cause / reproduced regression
 
-Muse reported that a same-UID worker could overwrite the unsigned `standing.json` to resurrect an allegedly current continuation. An exact $0 demonstration in `tests/test_adoption_002_launch.py::LegacyStandingAttack` first uses real ADOPTION-001 `prepare`/`continue_to`, then (a) marks standing revoked at sequence 1, (b) resets it to active sequence 0, (c) witnesses that a legacy continuation *informational* packet still issues. The attack remains detectable/reproducible for historical honesty; there is no credible secure same-UID standing under that threat model.
+Muse reported that a same-UID worker could overwrite the unsigned `standing.json` to resurrect an allegedly current continuation. An exact $0 demonstration in `tests/adoption_002_launch_checks.py::LegacyStandingAttack` first uses real ADOPTION-001 `prepare`/`continue_to`, then (a) marks standing revoked at sequence 1, (b) resets it to active sequence 0, (c) witnesses that a legacy continuation *informational* packet still issues. The attack remains detectable/reproducible for historical honesty; there is no credible secure same-UID standing under that threat model.
 
 **Change to old artifact:** The legacy output is now explicitly `permission_standing=UNAUTHENTICATED_LEGACY_SHARED_UID`, `authority_verified=false`, `launch_authority=false`; it still issues an information packet to keep original 10 tests and scripted quickstart usable. **The old packet is not a launch token**. New controlled launch never reads `standing.json`, `trusted-receiver.json`, the old continuation packet or the old same-UID signer.
 
@@ -28,7 +28,7 @@ Run from repo root:
 ```sh
 python3 -m pip install -e .
 python3 -m unittest tests.test_adoption_handoff -v
-sudo env PATH="$PATH" PYTHONPATH="$PWD" python3 -m unittest tests.test_adoption_002_launch -v
+sudo env PATH="$PATH" PYTHONPATH="$PWD" python3 -m unittest tests.adoption_002_launch_checks -v
 openline handoff owner-init --help
 openline handoff owner-revoke --help
 openline handoff launch --help
