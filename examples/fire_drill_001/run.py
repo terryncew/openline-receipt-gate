@@ -54,7 +54,16 @@ def checkpoint(db):
         status=c.execute("PRAGMA wal_checkpoint(TRUNCATE)").fetchone()
         if status[0]!=0:
             raise RuntimeError("sqlite_checkpoint_busy")
+        # Convert the offline EVIDENCE COPY to one-file rollback-journal mode:
+        # an orphan -shm or -wal from a terminated server must never become an
+        # unstable manifest dependency. The live server is already stopped.
+        resulting=c.execute("PRAGMA journal_mode=DELETE").fetchone()[0]
+        if resulting.lower()!="delete":
+            raise RuntimeError("sqlite_evidence_journal_mode_not_final")
         c.commit()
+    for suffix in ("-shm","-wal"):
+        if Path(str(db)+suffix).exists():
+            raise RuntimeError("sqlite_evidence_sidecar_not_final")
 
 def _other_authority(mode):
     """A genuinely distinct receiver ID and owner authority slot, same owner."""
