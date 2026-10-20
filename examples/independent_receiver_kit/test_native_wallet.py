@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import sqlite3
 import tempfile
+import threading
 import unittest
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 from openline_wallet import Wallet
@@ -13,6 +14,9 @@ from olp_gate.crypto import public_key_hex
 from .fixtures import A,B,OUTCOME,T0
 from .formats import encode_call
 from .native_wallet import NativeWalletReceiver,digest
+from .verify_native_wallet import verify
+from .receiver import make_server
+from .demo import post
 
 def when(seconds):
     return datetime.fromtimestamp(T0+seconds,timezone.utc)
@@ -121,6 +125,31 @@ class NativeWalletKitTests(unittest.TestCase):
         self.gate=NativeWalletReceiver(self.db,self.config,OUTCOME,clock=lambda:self.now)
         self.assertEqual(self.submit()["verdict"],"DENY")
         self.assertEqual(self.nrows(),0)
+    def test_readonly_independent_verifier_and_tampered_sqlite_detected(self):
+        self.assertEqual(self.admit()["verdict"],"ACCEPT")
+        self.assertEqual(self.submit()["verdict"],"ALLOW")
+        self.assertTrue(verify(self.db,self.config)["valid"])
+        with sqlite3.connect(self.db) as c:
+            c.execute("UPDATE documents SET body=? WHERE id=?",('{"record_id":"changed","text":"forged"}',"record-a"))
+            c.commit()
+        self.assertFalse(verify(self.db,self.config)["valid"])
+
+    def test_http_receiver_enforces_before_local_effect(self):
+        from .demo import post
+        from .receiver import make_server
+        server=make_server(self.gate)
+        worker=threading.Thread(target=server.serve_forever,kwargs={"poll_interval":0.01},daemon=True)
+        worker.start()
+        try:
+            port=server.server_address[1]
+            self.assertEqual(post(port,"/authority",self.bundle)["verdict"],"ACCEPT")
+            self.assertEqual(post(port,"/submit",{"proof":self.proof()})["verdict"],"ALLOW")
+            self.assertEqual(post(port,"/submit",{"proof":self.proof()})["verdict"],"DENY")
+            self.assertEqual(self.nrows(),1)
+            self.assertTrue(verify(self.db,self.config)["valid"])
+        finally:
+            server.shutdown();worker.join(timeout=5);server.server_close()
+
     def test_invalid_scope_and_receiver_policy(self):
         self.assertEqual(self.admit()["verdict"],"ACCEPT")
         p=self.proof();p["effect"]["target"]="records://another-service"
