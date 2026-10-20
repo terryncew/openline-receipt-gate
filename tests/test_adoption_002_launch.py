@@ -67,14 +67,22 @@ class ProtectedLaunch(unittest.TestCase):
         git("init","-q",cwd=self.repo)
         git("config","user.email","test@example.invalid",cwd=self.repo)
         git("config","user.name","Test",cwd=self.repo)
-        (self.repo/"calculator.py").write_text("def total(items):return sum(items)\n")
+        (self.repo/"calculator.py").write_text("def total(items):\n    items.sort()\n    return sum(items)\n")
+        (self.repo/"test_code.py").write_text(
+            "import unittest\nfrom calculator import total\n"
+            "class Ordinary(unittest.TestCase):\n"
+            " def test_total(self):self.assertEqual(total([3,1,2]),6)\n"
+            "class NoMutation(unittest.TestCase):\n"
+            " def test_unchanged(self):\n"
+            "  values=[3,1,2];total(values);self.assertEqual(values,[3,1,2])\n")
         git("add",".",cwd=self.repo);git("commit","-qm","checkpoint",cwd=self.repo)
         self.approval=self.base/"approved.json"
         self.approval.write_text(json.dumps({
             "schema":"openline.approved_job.v1","task_id":"safe",
             "requirements":["Sum the items, without modifying them"],
-            "tests":[{"name":"unit","argv":["python3","-m","unittest","test_code.T"]}],
-            "unfinished":[],"notes":["Previous agent asserts tests passed: UNVERIFIED"]}))
+            "tests":[{"name":"ordinary","argv":["python3","-m","unittest","test_code.Ordinary"]},
+                     {"name":"no_mutation","argv":["python3","-m","unittest","test_code.NoMutation"]}],
+            "unfinished":["NoMutation test fails at the partial checkpoint"],"notes":["Previous agent asserts all tests passed: FALSE"]}))
         self.ctl=self.base/"owner-control"
         self.pin=self.base/"owner-pin.json"
         self.uid=pwd.getpwnam("nobody").pw_uid
@@ -87,6 +95,18 @@ class ProtectedLaunch(unittest.TestCase):
         r=load(files[-1])
         self.assertTrue(verify_receipt(r,self.pin))
         return r
+
+    def test_observed_partial_tests_are_signed_not_promoted_from_notes(self):
+        packet=load(self.ctl/"checkpoint.json")
+        self.assertEqual([t["exit_code"] for t in packet["receiver_observed_tests"]],[0,1])
+        self.assertEqual(packet["notes_unverified"],["Previous agent asserts all tests passed: FALSE"])
+        self.assertEqual(launch(self.repo,self.ctl,self.pin,self.uid)["decision"],"LAUNCHED")
+        tampered=dict(packet)
+        tampered["receiver_observed_tests"]=[{**packet["receiver_observed_tests"][1],"exit_code":0}]
+        (self.ctl/"checkpoint.json").write_text(json.dumps(tampered))
+        refused=launch(self.repo,self.ctl,self.pin,self.uid)
+        self.assertEqual(refused["decision"],"REFUSED")
+        self.assertEqual(self.last_receipt()["decision"],"REFUSED")
 
     def test_valid_launch_real_distinct_worker_and_protected_control(self):
         v=launch(self.repo,self.ctl,self.pin,self.uid)
