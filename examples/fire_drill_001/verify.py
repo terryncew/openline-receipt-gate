@@ -61,8 +61,8 @@ def manifest_check(root,expected):
         require(metadata=={"sha256":sha(data),"bytes":len(data)},"bundle_file_integrity_mismatch:"+rel)
     return actual_sha
 
-def query(root,mode):
-    db=root/mode/"state.sqlite3"
+def query(root,mode,*,unrelated=False):
+    db=root/mode/("unrelated/state.sqlite3" if unrelated else "state.sqlite3")
     with closing(sqlite3.connect(db.as_uri()+"?mode=ro",uri=True)) as c:
         c.row_factory=sqlite3.Row
         if mode=="intentionally_weak":
@@ -74,14 +74,18 @@ def query(root,mode):
     return rows,documents
 
 def verify_mode(root,mode):
-    rows,documents=query(root,mode)
+    main_rows,documents=query(root,mode)
+    unrelated_rows,_=query(root,mode,unrelated=True)
+    rows=main_rows+unrelated_rows
     log=[strict_json_loads(line) for line in (root/mode/"events.jsonl").read_text().splitlines()]
-    require(len(log)==len(rows)==14,"missing_duplicate_or_extra_http_decision:"+mode)
+    require(len(log)==14 and len(main_rows)==12 and len(unrelated_rows)==2,
+            "missing_duplicate_or_extra_http_decision:"+mode)
     expected=WEAK if mode=="intentionally_weak" else SECURE
     labels=[x["label"] for x in log]
     require(set(labels)==set(expected) and len(labels)==len(expected),"scenario_coverage_invalid:"+mode)
     for n,(ev,row) in enumerate(zip(log,rows),start=1):
-        require(ev["event_number"]==n==row["seq"],"decision_sequence_wrong:"+mode)
+        require(ev["event_number"]==n and row["seq"]==(n if n<=12 else n-12),
+                "decision_sequence_wrong:"+mode)
         require(ev["label"] in expected and ev["decision"]["verdict"]==expected[ev["label"]],
                 "unexpected_case_outcome:"+mode+":"+ev["label"])
         if mode=="intentionally_weak":
