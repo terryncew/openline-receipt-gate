@@ -124,11 +124,12 @@ policy are in
 | If you need to... | Start here |
 |---|---|
 | Protect a Python or LangGraph tool in the same process | @authorize |
-| Protect a fixed action at a separate receiver's HTTP boundary, with signed evidence | [Independent receiver evaluation kit](examples/independent_receiver_kit/README.md) — matched JWT baseline; Wallet export not directly compatible |
+| Protect a fixed action at a separate receiver's HTTP boundary, with signed evidence | [Independent receiver evaluation kit](examples/independent_receiver_kit/README.md) — matched JWT baseline; original mode unchanged, [new native Wallet path](examples/independent_receiver_kit/NATIVE_WALLET.md) |
 | Turn existing receipts into a signed receiver decision | olp-gate decide |
 | Carry one exact permission to another service or process | VerifiedCommitLedger |
 | Check whether explicit decision state survived an agent handoff | Handoff Check |
 | Keep sensitive action fields out of a portable audit receipt | Field-tier projections |
+| Continue a scripted, approved coding job from a verified Git checkpoint | [OPENLINE-ADOPTION-001](examples/verified_agent_handoff/README.md) — `openline handoff prepare`, then `continue --agent codex`; no unrestricted-shell enforcement |
 
 ## Guard a Python function
 
