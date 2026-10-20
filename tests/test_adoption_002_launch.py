@@ -145,6 +145,27 @@ class ProtectedLaunch(unittest.TestCase):
         self.assertEqual(v["decision"],"REFUSED")
         self.assertIn("signature",v["reason"])
 
+    def test_worker_uid_cannot_replace_any_owner_authority_file(self):
+        identity=pwd.getpwuid(self.uid)
+        for protected in (self.pin, self.ctl/"owner-key.hex",
+                          self.ctl/"checkpoint.json", self.ctl/"authority.jsonl",
+                          self.ctl/"frontier.json", self.ctl/"controller.lock"):
+            original=protected.read_bytes()
+            attacker=subprocess.run([sys.executable,"-c",
+                  "import pathlib,sys;pathlib.Path(sys.argv[1]).write_bytes(b'worker-rollback')",
+                  str(protected)],
+                  preexec_fn=lambda:(os.setgroups([]),os.setgid(identity.pw_gid),
+                                     os.setuid(identity.pw_uid)),
+                  stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+            self.assertNotEqual(attacker.returncode,0,protected)
+            self.assertEqual(protected.read_bytes(),original,protected)
+        self.assertEqual(launch(self.repo,self.ctl,self.pin,self.uid)["decision"],"LAUNCHED")
+
+    def test_bad_legacy_trusted_receiver_is_never_launch_trust_root(self):
+        # The old unpinned trust file is ignored entirely by the v2 controller.
+        (self.base/"trusted-receiver.json").write_text('{"public_key":"00"}')
+        self.assertEqual(launch(self.repo,self.ctl,self.pin,self.uid)["decision"],"LAUNCHED")
+
     def test_controller_pin_or_key_replacement_fails(self):
         owner=load(self.pin)
         (self.pin).write_text(json.dumps({"schema":owner["schema"],"owner_public_key":"00"*32}))
