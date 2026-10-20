@@ -5,7 +5,7 @@ on:
       - feature/adoption-001-native-wallet-handoff-20261019
     paths:
       - 'olp_gate/handoff/isolated_launch.py'
-      - 'tests/test_adoption_002_launch.py'
+      - 'tests/adoption_002_launch_checks.py'
       - '.github/workflows/adoption-002.yml'
       - 'examples/verified_agent_handoff/ADOPTION-002*'
 permissions:
@@ -24,7 +24,7 @@ jobs:
         run: python3 -m unittest tests.test_adoption_handoff -v
       - name: Reproduce historical vulnerability, then test root-only launch
         run: |
-          sudo env PATH="$PATH" PYTHONPATH="$PWD" python3 -m unittest tests.test_adoption_002_launch -v
+          sudo env PATH="$PATH" PYTHONPATH="$PWD" python3 -m unittest tests.adoption_002_launch_checks -v
       - name: Ensure same UID non-root launch refuses rather than claims safety
         run: |
           python3 - <<'PY'
