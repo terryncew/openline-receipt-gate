@@ -121,7 +121,7 @@ def _read_state(control,pin):
 
 def _seal_receipt(control,pin,status,reason,details=None):
     root=_owner_public(pin)
-    key=Ed25519PrivateKey.from_private_bytes(bytes.fromhex((control/"owner-key.hex").read_text().strip()))
+    key=Ed25519PrivateKey.from_private_bytes(bytes.fromhex(load(control/"owner-key.hex")))
     if public_key_hex(key)!=root:raise ValueError("owner_private_key_not_pinned")
     seq=len(list((control/"receipts").glob("*.json")))
     record=sign_olp_body({"schema":RECEIPT,"seq":seq,"decision":status,"reason":reason,
