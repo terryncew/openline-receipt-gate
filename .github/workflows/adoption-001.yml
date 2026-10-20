@@ -1,0 +1,51 @@
+# Offline, separate proposed adoption receiver/CLI checks. No provider credentials.
+name: Adoption 001 native Wallet and verified handoff
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'examples/independent_receiver_kit/native_wallet.py'
+      - 'examples/independent_receiver_kit/verify_native_wallet.py'
+      - 'examples/independent_receiver_kit/test_native_wallet.py'
+      - 'olp_gate/handoff/adoption.py'
+      - 'tests/test_adoption_handoff.py'
+      - 'examples/verified_agent_handoff/**'
+      - 'pyproject.toml'
+      - '.github/workflows/adoption-001.yml'
+permissions:
+  contents: read
+jobs:
+  adoption-offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: terryncew/openline-wallet
+          ref: f309aac8aecae36c4f354c7455281af6dbce486a
+          path: .deps/openline-wallet
+          persist-credentials: false
+      - name: Install open source pinned receiver and Wallet code (no model)
+        run: |
+          python3 -m pip install -e . -e .deps/openline-wallet -r examples/independent_receiver_kit/requirements.txt
+      - name: Check version pins and syntax
+        run: |
+          python3 -m compileall -q olp_gate/handoff/adoption.py examples/independent_receiver_kit/{native_wallet,verify_native_wallet,test_native_wallet}.py tests/test_adoption_handoff.py
+      - name: Native unchanged Wallet export and signed action tests
+        run: |
+          python3 -m unittest examples.independent_receiver_kit.test_native_wallet -v
+      - name: Conventional EdDSA JWT versus native OLP kit regression
+        run: |
+          python3 -m unittest examples.independent_receiver_kit.test_receiver -v
+      - name: Standalone verified handoff adversarial tests
+        run: |
+          python3 -m unittest tests.test_adoption_handoff -v
+      - name: CLI help and zero-cost synthetic quickstart
+        run: |
+          openline handoff prepare --help
+          openline handoff continue --help
+          python3 -m examples.verified_agent_handoff.quickstart
