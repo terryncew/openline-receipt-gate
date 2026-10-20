@@ -157,15 +157,15 @@ def continue_to(repo,control,agent):
             "observed_test_exit_codes":packet["receiver_executed_tests"],
             "unfinished_asserted_not_verified":packet["unfinished_asserted"],
             "notes_unverified":packet["notes_unverified"],
-            "permission_standing":"CURRENT_FOR_PACKET_ONLY",
-            "runtime_permission":"NONE",
+            "permission_standing":"UNAUTHENTICATED_LEGACY_SHARED_UID",
+            "runtime_permission":"NONE","authority_verified":False,
             "handoff_sha256":digest(packet),
             "warning":"This packet does not constrain unrestricted Codex/Claude shell, filesystem, or network access."}
     name=control/("continuation-"+agent+".json")
     write_new(name,output)
     return {"verdict":"CONTINUATION_PACKET_VERIFIED",
             "packet":str(name),"agent_invoked":False,"successor":agent,
-            "runtime_enforcement":False}
+            "runtime_enforcement":False,"launch_authority":False}
 
 def main(argv=None):
     parser=argparse.ArgumentParser(prog="openline",description="Verified synthetic developer handoff")
@@ -178,12 +178,35 @@ def main(argv=None):
     cont=ops.add_parser("continue")
     cont.add_argument("--repo",required=True);cont.add_argument("--control",required=True)
     cont.add_argument("--agent",required=True)
+    owner=ops.add_parser("owner-init",help="Root-owned owner/worker authority bootstrap, Linux only")
+    owner.add_argument("--repo",required=True);owner.add_argument("--approval",required=True)
+    owner.add_argument("--control",required=True);owner.add_argument("--pin",required=True)
+    owner.add_argument("--worker-uid",required=True,type=int)
+    revoke=ops.add_parser("owner-revoke",help="Root-only signed irreversible revocation")
+    revoke.add_argument("--control",required=True);revoke.add_argument("--pin",required=True)
+    launch=ops.add_parser("launch",help="Real root-owned launch of one disposable scripted worker")
+    launch.add_argument("--repo",required=True);launch.add_argument("--control",required=True)
+    launch.add_argument("--pin",required=True);launch.add_argument("--worker-uid",required=True,type=int)
+    launch.add_argument("--baseline",action="store_true",help="Fair conventional OS-isolated control")
     args=parser.parse_args(argv)
     try:
-        result=(prepare(args.repo,args.control,args.approval) if args.verb=="prepare"
-                else continue_to(args.repo,args.control,args.agent))
+        if args.verb=="prepare":
+            result=prepare(args.repo,args.control,args.approval)
+        elif args.verb=="continue":
+            result=continue_to(args.repo,args.control,args.agent)
+        elif args.verb in ("owner-init","owner-revoke","launch"):
+            from olp_gate.handoff import isolated_launch
+            if args.verb=="owner-init":
+                result=isolated_launch.owner_init(args.repo,args.approval,args.control,args.pin,args.worker_uid)
+            elif args.verb=="owner-revoke":
+                result=isolated_launch.revoke(args.control,args.pin)
+            else:
+                result=isolated_launch.launch(args.repo,args.control,args.pin,args.worker_uid,
+                                             mode="conventional" if args.baseline else "openline")
+        else:
+            raise ValueError("unsupported_handoff_verb")
     except (ValueError,KeyError,OSError,subprocess.CalledProcessError) as exc:
         print(json.dumps({"verdict":"BLOCKED","reason":str(exc)}));return 2
-    print(json.dumps(result,sort_keys=True));return 0
+    print(json.dumps(result,sort_keys=True));return 0 if result.get("decision") not in ("REFUSED","BLOCKED") else 2
 
 if __name__=="__main__":raise SystemExit(main())
