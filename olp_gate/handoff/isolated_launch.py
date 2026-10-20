@@ -125,7 +125,7 @@ def _seal_receipt(control,pin,status,reason,details=None):
     if public_key_hex(key)!=root:raise ValueError("owner_private_key_not_pinned")
     seq=len(list((control/"receipts").glob("*.json")))
     record=sign_olp_body({"schema":RECEIPT,"seq":seq,"decision":status,"reason":reason,
-                          "time_ns":time.time_ns(),"facts":details or {}},key)
+                          "time_utc_seconds":int(time.time()),"facts":details or {}},key)
     _json(control/"receipts"/("%06d.json"%seq),record)
     return record
 
@@ -259,7 +259,7 @@ def launch(repo,control,pin,uid,*,before_spawn=None,mode="openline"):
                               timeout=12,start_new_session=True,preexec_fn=become_worker,
                               env={"PATH":"/usr/bin:/bin","PYTHONDONTWRITEBYTECODE":"1",
                                    "HOME":str(scratch)})
-        runtime_ms=round((time.perf_counter_ns()-start)/1e6,2)
+        runtime_ms=int((time.perf_counter_ns()-start)//1000000)
         result=load(scratch/"worker-result.json") if (scratch/"worker-result.json").exists() else {}
         if worker.returncode!=0 or result.get("controller_write_succeeded") is not False:
             raise ValueError("worker_failed_or_control_modified")
