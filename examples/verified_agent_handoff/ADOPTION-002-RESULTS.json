@@ -1,0 +1,59 @@
+{
+  "experiment": "OPENLINE-ADOPTION-002",
+  "assessed_utc": "2026-10-20",
+  "verdict": "CONDITIONAL",
+  "scoped_engineering": "PASS Linux root-owned separate Unix UID, fixed scripted successor only",
+  "commercial_acceptance": "NOT PROVEN advantage over competent conventional launcher",
+  "pr_base": "3d1ea84c93a7778a7bdbcfca7ebc9c50ef05bb32",
+  "prior_weakness": "Legacy same-UID unsigned standing file reverted from revoked sequence 1 to active sequence 0, then untrusted continuation packet issued; reproducible",
+  "security_boundary": "new root-only owner-init/revoke/launch; separate worker UID; root-only owner-pinned public key, signed authority chain, separate root-owned frontier, exclusive lock and immutable checked snapshot",
+  "verified": {
+    "ci_url": "https://github.com/terryncew/openline-receipt-gate/actions/runs/39361902523",
+    "ci_conclusion": "success",
+    "historical_regressions": 10,
+    "launch_and_attack_cases": 14,
+    "total_focused_tests": 24,
+    "paid_provider_calls": 0,
+    "real_claude_or_codex_runs": 0,
+    "production_effects": 0,
+    "root_adversarial_model": "worker UID without access to root-owned control paths",
+    "attacks": [
+      "shared-UID legacy unsigned rollback reproduced",
+      "new old checkpoint refused after revocation",
+      "worker-UID cannot write pinned root",
+      "worker-UID cannot write root-only owner signing key",
+      "worker-UID cannot write signed checkpoint",
+      "worker-UID cannot write authority ledger",
+      "worker-UID cannot write monotonic frontier",
+      "worker-UID cannot write controller lock",
+      "root-side rollback of authority without frontier rejected",
+      "tampered signed checkpoint refused",
+      "pre-launch Git mutation refused",
+      "current signed authority launches real separate-UID scripted process",
+      "unrelated permission retains standing",
+      "non-root/unsupported launch refused",
+      "existing OpenLine/JWT and prior suite untouched"
+    ]
+  },
+  "comparable_alternative": {
+    "model": "standard POSIX root/UID separation and Ed25519-signed owner authority with identical source pinning, revocation and staging",
+    "code_independence": "Same security kernel as OpenLine mode; parity by construction, not independent alternate implementation",
+    "paired_scoped_outcome": "current authority LAUNCHED; owner revocation REFUSED",
+    "inference": "No unique security, latency, reliability or cost benefit demonstrated",
+    "integration": "Both need root-controlled installation, protected owner key/public pin, dedicated worker UID, approved disposable repo, approval JSON and three owner CLI operations",
+    "full_clean_install_minutes": "not measured for ADOPTION-002",
+    "prior_muse_43_5_seconds": "user-reported ADOPTION-001 installation, not measured or transferable to root-isolated ADOPTION-002",
+    "end_to_end_latency_comparison": "not measured with matched repeated independent external subjects",
+    "dollar_cost": "$0 additional paid APIs"
+  },
+  "remaining_limits": [
+    "Unrestricted prior ADOPTION-001 continue_to still produces a legacy informational packet after shared-UID standing spoof, explicitly marked authority_verified=false and launch_authority=false; protected launcher never accepts it.",
+    "Root and privileged system administrator are fully trusted; signer key and durable frontier cannot resist privileged root or whole-root-filesystem rollback.",
+    "Only a fixed synthetic Python script is launched, not real Claude or Codex. No general shell/network sandbox for arbitrary worker code.",
+    "Root initializer executes owner-approved untrusted unittest code as the unprivileged worker UID; it is not network sandboxed and must be used on disposable approved repos only.",
+    "Concurrent changes are rejected before spawn and worker consumes immutable staging snapshot. No mid-execution revocation or zombie-agent termination.",
+    "Signed receipts prove owner-controller testimony, not independent observation that every consequence occurred or code is correct.",
+    "Conventional comparator shares implementation and has expected parity; separate operator experience, integration effort and adoption not established."
+  ],
+  "protected_scope": "No merges/deployments/releases/publication/outreach, no Wallet/Lite/Half-Life/Airlock/NMF/protected-branch edits, no models/APIs/paid inference, no production effects"
+}
