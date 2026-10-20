@@ -1,0 +1,39 @@
+name: Adoption 002 owner-isolated launch security ($0)
+on:
+  pull_request:
+    branches:
+      - feature/adoption-001-native-wallet-handoff-20261019
+    paths:
+      - 'olp_gate/handoff/isolated_launch.py'
+      - 'tests/test_adoption_002_launch.py'
+      - '.github/workflows/adoption-002.yml'
+      - 'examples/verified_agent_handoff/ADOPTION-002*'
+permissions:
+  contents: read
+jobs:
+  isolated-launch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install only this local Python package
+        run: python3 -m pip install -e .
+      - name: Verify normal prior handoff regressions unchanged
+        run: python3 -m unittest tests.test_adoption_handoff -v
+      - name: Reproduce historical vulnerability, then test root-only launch
+        run: |
+          sudo env PATH="$PATH" PYTHONPATH="$PWD" python3 -m unittest tests.test_adoption_002_launch -v
+      - name: Ensure same UID non-root launch refuses rather than claims safety
+        run: |
+          python3 - <<'PY'
+          from olp_gate.handoff.isolated_launch import launch
+          try:
+              launch("/tmp/no-repo","/tmp/no-controller","/tmp/no-pin",65534)
+          except ValueError as e:
+              assert "BLOCKED_OS_ROOT_SEPARATION_REQUIRED" in str(e), str(e)
+              print("PASS: unsupported unprivileged controller blocked")
+          else:
+              raise AssertionError("nonroot not blocked")
+          PY
