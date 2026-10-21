@@ -1,0 +1,75 @@
+{
+  "study": "OPENLINE-FIRE-DRILL-001",
+  "date_utc": "2026-10-20",
+  "scientific_product_scope": "DISPOSABLE_LOCAL_RECEIVER_CHALLENGE_ONLY",
+  "verdict": "PASS_SCOPED_EVIDENCE",
+  "build_base": "3d1ea84c93a7778a7bdbcfca7ebc9c50ef05bb32",
+  "engineering_ci": {
+    "workflow_run_id": 39366003560,
+    "url": "https://github.com/terryncew/openline-receipt-gate/actions/runs/39366003560",
+    "conclusion": "success",
+    "test_suites": [
+      {
+        "name": "unchanged matched receiver baseline",
+        "tests": 32,
+        "failures": 0
+      },
+      {
+        "name": "Fire Drill new adversarial evidence tests",
+        "tests": 14,
+        "failures": 0
+      }
+    ],
+    "sum_tests": 46,
+    "paid_api_calls": 0,
+    "live_model_calls": 0,
+    "local_receivers": "12 main HTTP requests and 2 unrelated-slot HTTP requests per mode",
+    "independently_verified_bundle_runner_temp_only": true,
+    "temporary_bundle_manifest_sha256": "31c45cf27c668964a3e13d0b3297b280f70dfb36827de846550976ce77159f40",
+    "temporary_tar_sha256": "ce93b1be16fb658ac84d0ebf1af5b2dd635bb1677832d76e907ebb3193731ae8",
+    "critical_note": "The CI evidence bundle and tar were intentionally NOT uploaded or published; ephemeral SHA-256 values identify that CI run's former bytes only. Re-run the generator and pin its new MANIFEST.json SHA-256 to inspect bytes independently."
+  },
+  "verified_effect_counts": {
+    "fired_agent_protected_accepted_after_revocation": {
+      "intentionally_weak_teaching_fixture": 4,
+      "properly_configured_conventional_EdDSA_JWT": 0,
+      "openline_receipt_gate": 0
+    },
+    "fired_agent_protected_denials_after_revocation": {
+      "conventional_EdDSA_JWT": 4,
+      "openline_receipt_gate": 4
+    },
+    "before_revocation_approved_action_retained_in_all_modes": true,
+    "authorized_successor_completed_one_local_document_per_mode": true,
+    "separate_owner_signed_unrelated_permission_continued": true,
+    "unprotected_direct_SQLite_write_after_revocation_per_mode": 1,
+    "outside_effect_origin_assurance": "UNSIGNED_DISPOSABLE_SQLITE_ONLY"
+  },
+  "fair_comparison": {
+    "weak_fixture": "deliberately weak illustrative shared bearer, not present-day competent vendor",
+    "conventional_baseline": "unchanged competent Receiver Kit EdDSA JWT mode, signed owner authority, exact worker action, current revocation/replay, signed receipts, independent verifier",
+    "outcome": "parity at protected receiving service boundary",
+    "superiority": "NONE_ESTABLISHED",
+    "time_advantage": "NOT_MEASURED",
+    "costs": "$0 external model/API",
+    "outsider_installation_or_demand": "NOT_MEASURED"
+  },
+  "demo": {
+    "format": "40-second self-contained autoplay HTML, not filmed MP4",
+    "generator": "examples/fire_drill_001/render.py",
+    "materialization": "examples.fire_drill_001.run creates fire-drill-40s.html next to MANIFEST.json",
+    "evidence": "live disposable HTTP decisions and SQLite rows from same run",
+    "publication": "NOT_PUBLISHED"
+  },
+  "untested": [
+    "arbitrary external or commercial AI agents",
+    "unknown or unprotected tools and API credentials",
+    "operating system isolation, shell access or network egress",
+    "revocation withheld from a receiver",
+    "full observation completeness or independent source/operator honesty",
+    "real developer integration time, user experience, external adoption",
+    "independent benchmark methodology beyond this disposable receiving service"
+  ],
+  "historical_evidence_not_reused": true,
+  "guardrails": "no deploy, public launch, outreach, paid inference, protected-main or other repo changes"
+}
