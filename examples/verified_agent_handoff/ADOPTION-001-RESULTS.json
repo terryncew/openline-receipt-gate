@@ -1,0 +1,51 @@
+{
+  "experiment": "OPENLINE-ADOPTION-001",
+  "status": "ENGINEERING_PASS_ADOPTION_VALUE_NOT_YET_ESTABLISHED",
+  "utc_date": "2026-10-20",
+  "scope": "Native Wallet receiver and scripted coding-agent checkpoint continuation in a disposable local repository",
+  "source_pins": {
+    "receipt_gate_base": "76f72ccccce79622f40163763cf614bd1d7ff776",
+    "wallet_source": "f309aac8aecae36c4f354c7455281af6dbce486a",
+    "platform_exit_live_proof": "711ced888befc6ed9f64dd22cc30e9a14f7b5cb1",
+    "approved_job_live_proof": "7d4e8fe501528e3e7758921d28b58e2cecd3f18c"
+  },
+  "verification": {
+    "job_url": "https://github.com/terryncew/openline-receipt-gate/actions/runs/39358431504",
+    "job_conclusion": "success",
+    "native_wallet_tests": 9,
+    "original_receiver_kit_tests_total": 32,
+    "adoption_handoff_tests": 10,
+    "total": 51,
+    "additional_repository_workflows": "six workflows completed successfully at commit e023c4f; historical evidence not rerun by this script",
+    "native_wallet": "Unmodified official Wallet export admitted, independently signed worker call enforced at local SQLite boundary, signed replay verifier, live local HTTP test, revocation, replay, tampering and restart",
+    "original_jwt_arm": "All existing 16 OpenLine/16 conventional matched tests passed; original implementation unmodified",
+    "handoff": "Actual Git checkpoint, committed file hash set, ordinary test PASS and no-mutation test FAIL, signed continuation packet, scripted successor passed both tests at descendant commit",
+    "mock_scripts_paid_api_usd": 0,
+    "production_effects": 0,
+    "real_claude_or_codex_model_calls": 0
+  },
+  "adoption_comparison": {
+    "ordinary_baseline": "CLAUDE.md-like owner notes + Git status, diff, commits + same unittest and manual permissions",
+    "competent_baseline_correct": true,
+    "new_tool_correct": true,
+    "false_note_promoted_as_verified": false,
+    "baseline_result": "PARITY on scripted continuation with competent human checks",
+    "fresh_install_minutes": "NOT_MEASURED",
+    "ten_minute_outsider_target": "NOT_VALIDATED",
+    "scripted_demo_wall_seconds": 0.186,
+    "conventional_post_successor_check_ms": 41,
+    "timing_comparability": "These timings cover different scopes; cannot infer speed advantage",
+    "unnecessary_repeated_work": "NOT_MEASURED with real workers",
+    "actual_worker_successor": "NOT_INVOKED: scripted worker only",
+    "unrestricted_shell_enforcement": false,
+    "protected_effect": "only emission of signed continuation packet, NOT Codex filesystem or shell effects"
+  },
+  "remaining_gates": [
+    "independent new developer install without assistance within 10 minutes",
+    "real separate provider successors using approved control directory and no shared shell authority",
+    "independent receiver root enrollment and durable revocation freshness under production conditions",
+    "practical per-buyer integration hours and fully matched end-to-end timing/cost/error rates",
+    "production-grade sandbox or receiver enforcing all consequential tool effects",
+    "no observed security or cost superiority to strong JWT/OPA/standard Git test workflow"
+  ]
+}
