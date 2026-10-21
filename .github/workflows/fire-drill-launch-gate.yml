@@ -1,0 +1,57 @@
+name: Fire Drill fresh clone test
+on:
+  pull_request:
+    branches: [main]
+    paths: ['examples/fire_drill_001/**','.github/workflows/fire-drill-launch-gate.yml','README.md']
+permissions:
+  contents: read
+jobs:
+  clean-public-checkout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Fresh public clone at proposed SHA
+        env:
+          SHA: ${{ github.event.pull_request.head.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone https://github.com/terryncew/openline-receipt-gate.git "$RUNNER_TEMP/fresh"
+          cd "$RUNNER_TEMP/fresh"
+          git checkout --detach "$SHA"
+          test "$(git rev-parse HEAD)" = "$SHA"
+          test -f examples/fire_drill_001/run.py
+          test ! -f examples/independent_receiver_kit/native_wallet.py
+          test ! -f examples/verified_agent_handoff/quickstart.py
+      - name: Isolated install, original JWT tests and Fire Drill adversarial tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/fresh"
+          python3 -m venv .venv
+          .venv/bin/python -m pip install -e . -r examples/independent_receiver_kit/requirements.txt
+          .venv/bin/python -m unittest examples.independent_receiver_kit.test_receiver -v
+          .venv/bin/python -m unittest examples.fire_drill_001.tests -v
+      - name: Generate and independently verify new evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/fresh"
+          .venv/bin/python -m examples.fire_drill_001.run --out "$RUNNER_TEMP/drill"
+          sum="$(sha256sum "$RUNNER_TEMP/drill/MANIFEST.json" | awk '{print $1}')"
+          echo "OUT_OF_BAND_MANIFEST_SHA256=$sum"
+          cd "$RUNNER_TEMP"
+          PYTHONPATH="$RUNNER_TEMP/fresh" "$RUNNER_TEMP/fresh/.venv/bin/python" -m examples.fire_drill_001.verify --bundle "$RUNNER_TEMP/drill" --expected-sha256 "$sum" > "$RUNNER_TEMP/verifier.json"
+          python3 - "$RUNNER_TEMP/verifier.json" <<'PY'
+          import json,sys
+          d=json.load(open(sys.argv[1]))
+          assert d['verdict']=='PASS_SCOPED_EVIDENCE',d
+          assert d['modes']['intentionally_weak']['protected_unauthorized_effects']==4
+          for k in ['conventional','openline']:
+              assert d['modes'][k]['protected_unauthorized_effects']==0
+              assert d['modes'][k]['protected_denied_old_agent_attempts']==4
+              assert d['modes'][k]['outside_receiver_effects']==1
+              assert d['modes'][k]['unrelated_slot_effects']==1
+          print('FRESH_CLONE_PROTECTED_PARITY_AND_UNGUARDED_BYPASS_PASS')
+          PY
+          test -s "$RUNNER_TEMP/drill/fire-drill-40s.html"
