@@ -10,9 +10,13 @@ This is **OPENLINE-FIRE-DRILL-001**, a challenge prototype—not a production to
 
 ## Run it yourself
 
-Requires Python 3.10+ and Git. From Draft PR branch `feature/openline-fire-drill-001-20261020`, based on existing ADOPTION-001 Receipt Gate code. Use a fresh disposable output directory.
+Requires Python 3.10+ and Git. These instructions target the **proposed standalone public Fire Drill** in Draft launch PR (not yet merged). After owner-authorized promotion, a normal public clone of Receipt Gate main suffices; no PR #127 checkout, Wallet installation, login or paid service is needed. Before that promotion, check out the launch Draft PR branch explicitly. Use a fresh disposable output directory.
 
 ```sh
+git clone https://github.com/terryncew/openline-receipt-gate.git
+cd openline-receipt-gate
+# REMOVE the following checkout line after the owner explicitly promotes the launch PR:
+git checkout launch/fire-drill-fresh-clone-20261020
 python3 -m venv .venv
 .venv/bin/python -m pip install -e . -r examples/independent_receiver_kit/requirements.txt
 .venv/bin/python -m examples.fire_drill_001.run --out /tmp/my-fire-drill
