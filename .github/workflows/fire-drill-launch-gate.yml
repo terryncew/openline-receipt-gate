@@ -55,3 +55,65 @@ jobs:
           print('FRESH_CLONE_PROTECTED_PARITY_AND_UNGUARDED_BYPASS_PASS')
           PY
           test -s "$RUNNER_TEMP/drill/fire-drill-40s.html"
+      - name: Install free browser driver client
+        run: python3 -m pip install selenium==4.38.0
+      - name: Test live production #proof, Fire Drill links and illustrative guesthouse
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json,shutil,time,urllib.request,urllib.error
+          from selenium import webdriver
+          from selenium.webdriver.common.by import By
+          from selenium.webdriver.chrome.options import Options
+          from selenium.webdriver.chrome.service import Service
+          chrome=shutil.which('google-chrome') or shutil.which('chromium') or shutil.which('chromium-browser')
+          print('CHROME_EXECUTABLE',chrome,flush=True)
+          assert chrome, 'real_chrome_not_available'
+          o=Options()
+          o.binary_location=chrome
+          for a in ('--headless=new','--no-sandbox','--disable-gpu','--disable-dev-shm-usage','--window-size=1440,900'):
+              o.add_argument(a)
+          driver=webdriver.Chrome(options=o)
+          try:
+              url='https://openlineprotocol.org/'
+              driver.set_page_load_timeout(45)
+              driver.get(url)
+              print('LIVE_URL',driver.current_url)
+              print('TITLE',driver.title)
+              print('PAGE_LENGTH',len(driver.page_source))
+              print('FIRST_VISIBLE_TEXT',driver.find_element(By.TAG_NAME,'body').text[:350])
+              print('PROOF_TARGET_COUNT',len(driver.find_elements(By.ID,'proof')))
+              links=driver.find_elements(By.CSS_SELECTOR,"a[href='#proof']")
+              print('PROOF_TRIGGER_COUNT',len(links))
+              before=driver.execute_script('return window.scrollY')
+              if links:
+                  driver.execute_script("arguments[0].click()", links[-1])
+                  time.sleep(0.3)
+              after=driver.execute_script('return window.scrollY')
+              print('AFTER_PROOF_CLICK',json.dumps({'hash':driver.execute_script('return location.hash'),'scroll_before':before,'scroll_after':after,'target_exists':len(driver.find_elements(By.ID,'proof'))>0}))
+              assert len(links)>0 and len(driver.find_elements(By.ID,'proof'))>0, 'PROOF_ANCHOR_BROKEN'
+              assert driver.execute_script('return location.hash')=='#proof' and after>before,'PROOF_NOT_SCROLLING'
+              html=driver.page_source.lower()
+              assert '75' in html and ('illustrative' in html or 'simulated' in html),'GUESTHOUSE_CAVEAT_NOT_FOUND'
+              assert len(driver.find_elements(By.ID,'model-form'))==1,'CALCULATOR_MISSING'
+              checked={}
+              hrefs=sorted({a.get_attribute('href') for a in driver.find_elements(By.CSS_SELECTOR,'a[href]') if a.get_attribute('href') and ('fire_drill' in a.get_attribute('href') or '/pull/129' in a.get_attribute('href'))})
+              print('FIRE_DRILL_LINKS',json.dumps(hrefs))
+              assert any('/VERIFIED-RESULTS.json' in h for h in hrefs),'RESULTS_LINK_MISSING'
+              assert any('/verify.py' in h for h in hrefs),'VERIFIER_LINK_MISSING'
+              assert any('/README.md' in h for h in hrefs),'QUICKSTART_LINK_MISSING'
+              for href in hrefs:
+                  try:
+                      req=urllib.request.Request(href,headers={'User-Agent':'Mozilla/5.0 OpenLine launch review'})
+                      with urllib.request.urlopen(req,timeout=20) as response:
+                          checked[href]=response.status
+                  except urllib.error.HTTPError as exc:
+                      checked[href]=exc.code
+                  except Exception as exc:
+                      checked[href]=str(exc)
+              print('LINK_STATUS',json.dumps(checked,sort_keys=True))
+              assert all(x==200 for x in checked.values()),'BROKEN_FIRE_DRILL_LINKS'
+              print('BROWSER_PRODUCTION_PASS')
+          finally:
+              driver.quit()
+          PY
