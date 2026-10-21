@@ -4,7 +4,13 @@
 
 Your IAM may authenticate the agent's service identity, and OpenTelemetry may report that its API call succeeded. Those facts **do not by themselves verify that a three-hop agent handoff preserved the human's exact task authority**. Conventional IAM/OPA can enforce this when properly configured; OpenLine's local reference gate checks the receiver's explicit bounds before calling the Python tool.
 
-[**Run the 60-second multi-hop replay**](examples/multi_hop_refund_drift/README.md) · [Evaluate an independent receiver against JWT](examples/independent_receiver_kit/README.md) · [Guard a Python tool](#guard-a-python-function) · [OpenTelemetry integration](https://github.com/terryncew/openline-otel) · [Evidence and limits](#status)
+[**Run the local Fire Drill**](examples/fire_drill_001/README.md) · [**Run the 60-second multi-hop replay**](examples/multi_hop_refund_drift/README.md) · [Evaluate an independent receiver against JWT](examples/independent_receiver_kit/README.md) · [Guard a Python tool](#guard-a-python-function) · [OpenTelemetry integration](https://github.com/terryncew/openline-otel) · [Evidence and limits](#status)
+
+## Fire Drill — an honest local revocation challenge (proposed Draft PR, not yet on main)
+
+After separate owner authorization to promote this Draft PR, a normal clone runs the scripted Fire Drill with no PR #127 dependency. Before promotion, select the task branch `launch/fire-drill-fresh-clone-20261020`. [Exact instructions](examples/fire_drill_001/README.md) and [independent verifier](examples/fire_drill_001/verify.py).
+
+This is **synthetic local HTTP/SQLite** with public fixture keys and **no live AI, merchant or payment**. After the receiver learns Agent A is revoked, **competent EdDSA JWT and OpenLine both refuse 4/4 protected attempts**; both also allow **one direct unguarded SQLite write**. The intentionally weak shared-bearer arm is a **teaching fixture, not a competent competitor**. Signed decisions prove what the local receiver recorded, not payment settlement or completeness of all backend effects. No commercial or production superiority is established.
 
 ## Green trace. Broken authority.
 
