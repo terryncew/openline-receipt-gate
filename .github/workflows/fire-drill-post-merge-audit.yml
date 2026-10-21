@@ -1,0 +1,100 @@
+name: Post-merge Fire Drill released-main fresh clone
+on:
+  pull_request:
+    branches: [main]
+    paths: ['.github/workflows/fire-drill-post-merge-audit.yml']
+permissions:
+  contents: read
+jobs:
+  released-main-clone:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Clone actual public main, not the validating PR branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone --depth 1 --branch main https://github.com/terryncew/openline-receipt-gate.git "$RUNNER_TEMP/openline-receipt-gate"
+          cd "$RUNNER_TEMP/openline-receipt-gate"
+          actual="$(git rev-parse HEAD)"
+          echo "RELEASED_PUBLIC_MAIN_SHA=$actual"
+          test "$actual" = "4f3c5c512f91f181f9448ef52fb8c8a03188cba7"
+          test -f examples/fire_drill_001/run.py
+          test -f examples/fire_drill_001/verify.py
+          test ! -e examples/independent_receiver_kit/native_wallet.py
+          test ! -e examples/verified_agent_handoff/quickstart.py
+          git ls-tree HEAD examples/fire_drill_001/VERIFIED-RESULTS.json examples/fire_drill_001/run.py examples/fire_drill_001/verify.py
+          python3 - <<'PY'
+          from pathlib import Path
+          assert '[**Run the local Fire Drill**](examples/fire_drill_001/README.md)' in Path('README.md').read_text()
+          doc=Path('examples/fire_drill_001/README.md').read_text()
+          assert 'git clone https://github.com/terryncew/openline-receipt-gate.git' in doc
+          assert 'git checkout launch/' not in doc
+          assert 'python3 -m examples.fire_drill_001.run' in doc or '.venv/bin/python -m examples.fire_drill_001.run' in doc
+          assert 'examples.fire_drill_001.verify' in doc
+          assert Path('examples/fire_drill_001/VERIFIED-RESULTS.json').exists()
+          print("PUBLIC_README_QUICKSTART_LINKS_PASS")
+          PY
+      - name: Install documented dependencies from scratch in a new virtualenv
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/openline-receipt-gate"
+          python3 -m venv .venv
+          .venv/bin/python -m pip install -e . -r examples/independent_receiver_kit/requirements.txt
+          .venv/bin/python -m pip freeze | tee "$RUNNER_TEMP/released-main-dependencies.txt"
+      - name: Existing full-featured JWT/OpenLine receiver parity tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/openline-receipt-gate"
+          .venv/bin/python -m unittest examples.independent_receiver_kit.test_receiver -v 2>&1 | tee "$RUNNER_TEMP/released-main-original-tests.log"
+      - name: Fire Drill adversarial and tamper tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/openline-receipt-gate"
+          .venv/bin/python -m unittest examples.fire_drill_001.tests -v 2>&1 | tee "$RUNNER_TEMP/released-main-adversarial-tests.log"
+      - name: Generate independent fresh evidence from released main
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/openline-receipt-gate"
+          .venv/bin/python -m examples.fire_drill_001.run --out "$RUNNER_TEMP/released-main-evidence" | tee "$RUNNER_TEMP/released-main-run.log"
+          sha256sum "$RUNNER_TEMP/released-main-evidence/MANIFEST.json" | tee "$RUNNER_TEMP/released-main-manifest.sha256"
+          sum="$(cut -d' ' -f1 "$RUNNER_TEMP/released-main-manifest.sha256")"
+          cd "$RUNNER_TEMP"
+          PYTHONPATH="$RUNNER_TEMP/openline-receipt-gate" "$RUNNER_TEMP/openline-receipt-gate/.venv/bin/python" -m examples.fire_drill_001.verify --bundle "$RUNNER_TEMP/released-main-evidence" --expected-sha256 "$sum" > "$RUNNER_TEMP/released-main-verifier.json"
+          python3 - "$RUNNER_TEMP/released-main-verifier.json" <<'PY'
+          import json,sys
+          d=json.load(open(sys.argv[1]))
+          assert d['verdict']=='PASS_SCOPED_EVIDENCE',d
+          assert d['modes']['intentionally_weak']['protected_unauthorized_effects']==4
+          for mode in ('conventional','openline'):
+              x=d['modes'][mode]
+              assert x['protected_unauthorized_effects']==0, x
+              assert x['protected_denied_old_agent_attempts']==4, x
+              assert x['outside_receiver_effects']==1, x
+              assert x['successor_work'] is True, x
+              assert x['unrelated_slot_effects']==1, x
+              assert x['retained_original_work'] is True, x
+          assert d['modes']['intentionally_weak']['outside_receiver_effects']==1
+          print("RELEASED_MAIN_SYNTHETIC_LOCAL_EVIDENCE_PASS")
+          print("VERIFIED_FRESH_MANIFEST_SHA256="+d['manifest_sha256'])
+          PY
+          test -s "$RUNNER_TEMP/released-main-evidence/fire-drill-40s.html"
+          echo "Evidence scope: scripted loopback HTTP, local SQLite and public test signing keys, NOT settlement or comprehensive backend truth"
+      - name: Save new release-verification logs without publishing credentials or a second release
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: released-main-verification-logs
+          path: |
+            ${{ runner.temp }}/released-main-dependencies.txt
+            ${{ runner.temp }}/released-main-original-tests.log
+            ${{ runner.temp }}/released-main-adversarial-tests.log
+            ${{ runner.temp }}/released-main-run.log
+            ${{ runner.temp }}/released-main-verifier.json
+            ${{ runner.temp }}/released-main-manifest.sha256
+          if-no-files-found: warn
+          retention-days: 14
