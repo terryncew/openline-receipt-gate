@@ -1,0 +1,15 @@
+{
+  "agent_id": "merchant-acme",
+  "decision": "deny",
+  "detail": {},
+  "http_method": "POST",
+  "http_path": "/api/transfer",
+  "latency_ms": 0.146,
+  "mode": "enforce",
+  "reasons": [
+    "agent_revoked"
+  ],
+  "receipt_id": "gw-9fe97fd49a02",
+  "receiver_sig": "KUh8OlXrP3-kFFoIWNHB3xGQhgG497IAdyjBgOWHyOuIW_eziwJOzUuEuYbPJiGVVPExWUnFmH8qYk9IWGUMAQ",
+  "ts": "2026-10-11T07:16:50.972612+00:00"
+}
